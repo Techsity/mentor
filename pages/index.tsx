@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import HomepageTemplate from "../components/templates/home";
 
 const Homepage = () => {
-  return (
-    <div>
-      Homepage
-    </div>
-  )
-}
+	return (
+		<div>
+			<HomepageTemplate />
+		</div>
+	);
+};
 
-export default Homepage
+export default Homepage;
