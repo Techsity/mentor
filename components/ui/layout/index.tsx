@@ -5,7 +5,7 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<>
 			<Navbar />
-			<div className="pt-10">{children}</div>
+			<div className="pt-10 overflow-x-hidden">{children}</div>
 		</>
 	);
 };

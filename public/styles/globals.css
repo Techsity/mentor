@@ -20,3 +20,24 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+
+@keyframes slide-forward {
+  0% {
+    transform: translateX(5%);
+  }
+
+  100% {
+    transform: translateX(-10%);
+  }
+}
+
+.animate-slider {
+  animation: slide-forward 3s ease-in-out infinite alternate;
+}
+
+
+
+.pause-slider-container:hover .animate-slider {
+  animation-play-state: paused;
+}
