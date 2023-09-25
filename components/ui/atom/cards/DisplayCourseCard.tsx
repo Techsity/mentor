@@ -1,16 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { ICourse } from "../../../../interfaces";
+import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
-		<div className="animate__animated animate__fadeInUp bg-white overflow-hidden shadow h-full hover:shadow-lg cursor-pointer duration-300 pb-6">
+		<div className="animate__animated relative animate__fadeInUp group bg-white overflow-hidden shadow h-full hover:shadow-lg cursor-pointer duration-300 pb-6">
+			<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full p-6 hidden group-hover:flex">
+				<div>
+					<HeartOutline color="#fff" height="30px" width="30px" />
+					{/* <HeartSharp color="#FFB100" height="30px" width="30px" /> */}
+				</div>
+				<div>
+					<ArrowForwardSharp color="#fff" height="30px" width="30px" />
+				</div>
+			</div>
 			<div className="grid gap-4">
-				<img
-					src={course.imgUrl || "/assets/images/mockups/course_one.png"}
-					className="w-full h-full"
-					alt=""
-				/>
+				<div className="relative">
+					<div className="bg-black w-full h-full bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute"></div>
+					<img
+						src={course.imgUrl || "/assets/images/mockups/course_one.png"}
+						className="w-full h-full"
+						alt=""
+					/>
+				</div>
 				<h1 className="px-5 font-medium tracking-tight">{course.title}</h1>
 				<div className="flex items-center justify-between px-5 text-sm mt-2">
 					<span className="">{course.level}</span>
@@ -29,7 +42,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 				</div>
 				<p className="text-sm px-5">{course.description.slice(0, 110)}...</p>
 				<div className="flex items-center justify-between mt-10 px-5">
-					<div className="flex gap-2 items-center text-sm group relative">
+					<div className="flex gap-2 items-center text-sm relative">
 						<img
 							src={course.mentor.avatar || "/assets/images/avatar.png"}
 							alt={course.mentor.name}

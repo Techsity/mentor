@@ -7,7 +7,7 @@ import Link from "next/link";
 const HomepageHero = () => {
 	return (
 		<div
-			className="min-w-screen max-w-screen min-h-screen text-white relative overflow-hidden z-10"
+			className="min-w-screen max-w-screen min-h-screen text-white relative overflow-hidden z-10 bg-[#0C202B]"
 			style={{
 				background: `url("/assets/images/landing_hero.png")`,
 				backgroundSize: "100% 100%",
