@@ -12,6 +12,7 @@ const CoursesList = ({
 	const [windowWidth, setWindowWidth] = useState<number>(0);
 
 	useEffect(() => {
+		setWindowWidth(window.innerWidth);
 		window.addEventListener("resize", () => setWindowWidth(window.innerWidth));
 		return () =>
 			window.removeEventListener("resize", () =>
