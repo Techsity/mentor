@@ -31,6 +31,7 @@ import "@fontsource/poppins/600-italic.css";
 import "@fontsource/poppins/700-italic.css";
 import "@fontsource/poppins/800-italic.css";
 import "@fontsource/poppins/900-italic.css";
+import "@fontsource/days-one";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const [initialLoad, setInitialLoad] = useState<boolean>(true);

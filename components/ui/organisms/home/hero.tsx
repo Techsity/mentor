@@ -7,13 +7,19 @@ import Link from "next/link";
 const HomepageHero = () => {
 	return (
 		<div
-			className="min-w-screen max-w-screen min-h-screen text-white relative overflow-hidden"
+			className="min-w-screen max-w-screen min-h-screen text-white relative overflow-hidden z-10"
 			style={{
 				background: `url("/assets/images/landing_hero.png")`,
 				backgroundSize: "100% 100%",
 				backgroundRepeat: "no-repeat",
 			}}
 		>
+			<div
+				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[400px] h-[400px]`}
+				style={{
+					filter: "blur(100px)",
+				}}
+			/>
 			<div className="absolute -left-20 p-20 h-auto md:w-[65%]  animate__animated animate__slideInDown animate__slow">
 				<img src="/assets/images/map.png" className="h-full w-full" alt="" />
 			</div>
@@ -89,7 +95,7 @@ const HomepageHero = () => {
 						</div>
 					</div>
 				</div>
-				<div className="animate__animated animate__slideInRight">
+				<div className="animate__animated animate__slideInRight animate__slow">
 					<div className="xl:grid hidden">
 						<HomepageHeroSvg />
 					</div>
