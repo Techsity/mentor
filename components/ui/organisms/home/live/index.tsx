@@ -15,7 +15,7 @@ const LiveWorkshops = () => {
 					<h1 className="text-2xl max-w-lg" style={{ fontFamily: "Days One" }}>
 						Live Mentorship Workshop anytime, anywhere, at your convenience!
 					</h1>
-					<p className="text-sm">
+					<p className="text-sm max-w-lg">
 						We understand how it&apos;s hard to create or join a mentorship event can
 						be, so we have tried our best to self the issue for you.
 					</p>
@@ -31,7 +31,7 @@ const LiveWorkshops = () => {
 					</div>
 				</div>
 			</AnimationOnScroll>
-			<div className="flex-grow pb-10 md:pb-0">
+			<div className="pb-10 md:pb-0">
 				<AnimationOnScroll animateIn="animate__fadeInRight" animateOnce={true}>
 					<div className="relative">
 						<div className="absolute left-[23%]">

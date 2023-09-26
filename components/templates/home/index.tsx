@@ -9,6 +9,8 @@ import Companies from "../../ui/organisms/home/companies";
 import HomepageCourseSection from "../../ui/organisms/home/courses";
 import LiveWorkshops from "../../ui/organisms/home/live";
 import InstantHelp from "../../ui/organisms/home/instant";
+import Services from "../../ui/organisms/home/services";
+import MeetOurMentors from "../../ui/organisms/home/mentors";
 
 const HomepageTemplate = () => {
 	return (
@@ -19,6 +21,8 @@ const HomepageTemplate = () => {
 			<HomepageCourseSection />
 			<LiveWorkshops />
 			<InstantHelp />
+			<Services />
+			<MeetOurMentors />
 		</>
 	);
 };

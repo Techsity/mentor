@@ -6,7 +6,7 @@ import CoursesNav from "./CoursesNav";
 import courses from "../../../../../data/courses";
 import { ChevronForwardSharp } from "react-ionicons";
 import Link from "next/link";
-import DisplayCourseCard from "../../../atom/cards/DisplayCourseCard";
+import DisplayCourseCard from "../../../atom/cards/home/DisplayCourseCard";
 import CoursesList from "./CoursesList";
 
 const HomepageCourseSection = () => {

@@ -1,0 +1,66 @@
+import { IMentor } from "../interfaces";
+
+const mentors: IMentor[] = [
+	{
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+	},
+	{
+		name: "John Doe",
+		jobTitle: "Senior product designer / Brand Identity Designer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Wed", "Fri", "Sat"],
+		skills: ["Figma", "Photoshop", "JavaScript", "Figma", "Figma", "Figma"],
+	},
+	{
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Tue", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+	},
+	{
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+	},
+	{
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+	},
+	{
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: 6,
+		rating: 4,
+		sessions: 2,
+		avatar: "/assets/images/avatar.png",
+		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+	},
+];
+
+export default mentors;

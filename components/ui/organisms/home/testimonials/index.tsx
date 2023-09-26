@@ -1,7 +1,7 @@
 import React from "react";
-import HomepageTestimonialSectionCard from "./HomepageTestimonialSectionCard";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import Link from "next/link";
+import HomepageTestimonialSectionCard from "../../../atom/cards/home/HomepageTestimonialSectionCard";
 
 const HomepageTestimonialSection = () => {
 	return (

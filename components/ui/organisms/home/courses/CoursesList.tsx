@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import DisplayCourseCard from "../../../atom/cards/DisplayCourseCard";
+import DisplayCourseCard from "../../../atom/cards/home/DisplayCourseCard";
 import courses from "../../../../../data/courses";
+import useWindowSize from "../../../../../hooks/useWindowSize";
 
 const CoursesList = ({
 	activeLink,
@@ -9,18 +10,7 @@ const CoursesList = ({
 	activeLink: string;
 	activeCategory: string;
 }) => {
-	const [windowWidth, setWindowWidth] = useState<number>(0);
-
-	useEffect(() => {
-		setWindowWidth(window.innerWidth);
-		window.addEventListener("resize", () => setWindowWidth(window.innerWidth));
-		return () =>
-			window.removeEventListener("resize", () =>
-				setWindowWidth(window.innerWidth),
-			);
-	}, []);
-	const isLargeScreen = windowWidth >= 1024;
-	const isExtraLargeScreen = windowWidth >= 1600;
+	const { isExtraLargeScreen, isLargeScreen } = useWindowSize();
 	return (
 		<div>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden md:mx-10 md:border md:p-10 h-auto">

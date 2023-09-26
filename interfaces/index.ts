@@ -15,3 +15,14 @@ export interface ICourseCategory {
 	title: string;
 	availableCourses: ICourse[];
 }
+
+export interface IMentor {
+	name: string;
+	jobTitle: string;
+	experience: number;
+	sessions: number;
+	rating: number;
+	avatar: string;
+	skills: string[];
+	daysOpen: string[];
+}

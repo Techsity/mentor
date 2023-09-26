@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { ICourse } from "../../../../interfaces";
+import { ICourse } from "../../../../../interfaces";
 import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
