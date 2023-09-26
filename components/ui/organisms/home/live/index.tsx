@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const LiveWorkshops = () => {
 	return (
-		<div className="bg-[#021A05] relative tracking-tight overflow-hidden py-5 w-screen mb-20 text-white tracking-tight md:flex justify-center items-center lg:px-44 sm:px-16 px-6">
+		<div className="bg-[#021A05] relative tracking-tight overflow-hidden py-5 w-screen text-white tracking-tight md:flex justify-center items-center lg:px-44 sm:px-16 px-6">
 			<div className="flex justify-center h-full absolute w-full left-0 top-0">
 				<img src="/assets/images/map2.png" className="" alt="" />
 			</div>

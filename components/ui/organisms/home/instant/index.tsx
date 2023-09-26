@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const InstantHelp = () => {
 	return (
-		<div className="flex justify-center relative overflow-hidden">
+		<div className="flex justify-center items-center relative overflow-hidden mb-6">
 			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
-				<div className="min-h-[50vh] flex justify-between gap-20 items-center px-28">
+				<div className="min-h-[50vh] md:flex justify-between gap-20 items-center md:items-end lg:px-28 md:px-10 px-6">
 					<div className="absolute top-0 left-0 w-full h-full px-6">
 						<svg width="1475" height="459" viewBox="0 0 1475 469" fill="none">
 							<path
@@ -43,11 +43,11 @@ const InstantHelp = () => {
 							/>
 						</svg>
 					</div>
-					<div className="flex-grow">
+					<div className="flex-grow md:inline-block hidden">
 						<InstantHelpSvg />
 					</div>
 
-					<div className="max-w-lg grid gap-5 md:py-0 py-10 z-20">
+					<div className="lg:max-w-lg grid gap-5 md:my-10 my-24 relative z-20">
 						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<h1 className="text-2xl max-w-lg" style={{ fontFamily: "Days One" }}>
 								Get instant help from Verified Professionals
