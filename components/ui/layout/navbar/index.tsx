@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LandingSearchBar from "../../atom/forms/LandingSearchBar";
-import { MentorLogo } from "../../atom/icons";
+import { MentorLogo } from "../../atom/icons/svgs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import navLinks from "../../../../data/navlinks";
@@ -145,7 +145,7 @@ const Navbar = () => {
 						</span>
 					</Link>
 					<Link href="#">
-						<span className="bg-[#FFB100] duration-300 hover:bg-[#C68900] p-2 px-5 text-[#094B10] cursor-pointer rounded-lg">
+						<span className="bg-[#FFB100] select-none duration-300 hover:bg-[#C68900] p-2 px-5 text-[#094B10] cursor-pointer rounded-lg">
 							Signup
 						</span>
 					</Link>

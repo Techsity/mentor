@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { CheckmarkSharp } from "react-ionicons";
-import { HomepageHeroSvg } from "../../atom/icons";
+import { HomepageHeroSvg } from "../../../atom/icons/svgs";
 import Link from "next/link";
 
 const HomepageHero = () => {
@@ -65,7 +65,7 @@ const HomepageHero = () => {
 						<div className="grid gap-1 sm:mt-10">
 							<p className="text-sm">Start monetizing your events/course</p>
 							<Link href="#">
-								<div className="text-center bg-[#FFB100] p-2 px-4 cursor-pointer">
+								<div className="text-center bg-[#FFB100] select-none p-2 px-4 cursor-pointer">
 									Become a Premium Member
 								</div>
 							</Link>
