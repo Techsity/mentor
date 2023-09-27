@@ -12,6 +12,7 @@ const HomepageHero = () => {
 				background: `url("/assets/images/landing_hero.png")`,
 				backgroundSize: "100% 100%",
 				backgroundRepeat: "no-repeat",
+				backgroundColor: "#0C202B",
 			}}
 		>
 			<div

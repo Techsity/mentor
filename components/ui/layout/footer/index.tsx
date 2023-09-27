@@ -9,7 +9,7 @@ const Footer = () => {
 	return (
 		<footer className="bg-[#021A05] pt-5">
 			<div className="mx-auto w-full max-w-screen-2xl">
-				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-10 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">
+				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-20 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">
 					<div>
 						<h2
 							className="mb-6 text-sm font-medium text-white uppercase"
@@ -18,7 +18,7 @@ const Footer = () => {
 							Company
 						</h2>
 						<ul className="text-white" style={{ fontWeight: "300" }}>
-							<Link href="#">
+							<Link href="/about">
 								<li className="mb-4 cursor-pointer text-[14px]">About Us</li>
 							</Link>
 							<div className="flex gap-4 items-center">

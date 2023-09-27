@@ -14,7 +14,7 @@ const Navbar = () => {
 
 	return (
 		<nav className="fixed w-full z-20 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-6 sm:px-12 tracking-tight oveflow-hidden">
-			<Link href="#">
+			<Link href="/">
 				<div>
 					<MentorLogoDark className="cursor-pointer" />
 				</div>
@@ -40,7 +40,7 @@ const Navbar = () => {
 								</span>
 								<span
 									className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-										router.asPath == link ? "w-full" : "hover:w-full"
+										router.asPath.includes(link) ? "w-full" : "hover:w-full"
 									}`}
 								/>
 								{activeSublink === index && sublinks && sublinks?.length > 0 ? (
@@ -101,7 +101,7 @@ const Navbar = () => {
 									</span>
 									<span
 										className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-											router.asPath == link ? "w-full" : "hover:w-full"
+											router.asPath.includes(link) ? "w-full" : "hover:w-full"
 										}`}
 									/>
 									{/* <span

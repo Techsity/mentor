@@ -1,4 +1,5 @@
 import React from "react";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 import { SettingsOutline } from "react-ionicons";
 
 const Services = () => {
@@ -19,8 +20,10 @@ const Services = () => {
 						Technical
 					</h1>
 					<p className="text-sm">
-						Get mentored on any digital/technical courses such as; Programming, Data
-						analysis, Cloud computing, Digital marketing, and many more...
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+							Get mentored on any digital/technical courses such as; Programming, Data
+							analysis, Cloud computing, Digital marketing, and many more...
+						</AnimationOnScroll>
 					</p>
 				</div>
 				<div className="bg-[#EAFFF4] grid gap-3 py-14 text-[#0C202B] p-5 w-full relative">
@@ -38,8 +41,10 @@ const Services = () => {
 						Vocational
 					</h1>
 					<p className="text-sm">
-						Get mentored on any vocational courses such as; Fashion design,
-						Auto-mechanics, Welding, Farming, Laptop/phone repair, and many more...
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+							Get mentored on any vocational courses such as; Fashion design,
+							Auto-mechanics, Welding, Farming, Laptop/phone repair, and many more...
+						</AnimationOnScroll>
 					</p>
 				</div>
 				<div className="bg-[#EAFFF4] grid gap-3 py-14 text-[#0C202B] p-5 w-full relative">
@@ -61,8 +66,10 @@ const Services = () => {
 						Educational
 					</h1>
 					<p className="text-sm">
-						Having problem with your school courses, Get mentored by our verified
-						tutors who will put you through your courses as easy as possible.
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+							Having problem with your school courses, Get mentored by our verified
+							tutors who will put you through your courses as easy as possible.
+						</AnimationOnScroll>
 					</p>
 				</div>
 			</div>

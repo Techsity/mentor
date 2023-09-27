@@ -9,7 +9,7 @@ const navLinks: {
 	}[];
 }[] = [
 	{
-		link: "#courses",
+		link: "/#courses",
 		name: "Courses",
 		sublinks: [
 			{
@@ -26,23 +26,23 @@ const navLinks: {
 					</>
 				),
 				dropdown: [
-					{ link: "#courses", name: "Digital Marketing" },
-					{ link: "#courses", name: "C++" },
-					{ link: "#courses", name: "Motion Design" },
-					{ link: "#courses", name: "Programming" },
-					{ link: "#courses", name: "Graphics Design" },
-					{ link: "#courses", name: "Adobe After Effect" },
-					{ link: "#courses", name: "Python" },
-					{ link: "#courses", name: "Figma" },
-					{ link: "#courses", name: "Premier Pro" },
-					{ link: "#courses", name: "Flutter" },
-					{ link: "#courses", name: "UX Research" },
-					{ link: "#courses", name: "Cinema 4D" },
-					{ link: "#courses", name: "Data Analysis" },
-					{ link: "#courses", name: "SQL" },
-					{ link: "#courses", name: "Auto CAD" },
-					{ link: "#courses", name: "Excel" },
-					{ link: "#courses", name: "Cloud Engineering" },
+					{ link: "/#courses", name: "Digital Marketing" },
+					{ link: "/#courses", name: "C++" },
+					{ link: "/#courses", name: "Motion Design" },
+					{ link: "/#courses", name: "Programming" },
+					{ link: "/#courses", name: "Graphics Design" },
+					{ link: "/#courses", name: "Adobe After Effect" },
+					{ link: "/#courses", name: "Python" },
+					{ link: "/#courses", name: "Figma" },
+					{ link: "/#courses", name: "Premier Pro" },
+					{ link: "/#courses", name: "Flutter" },
+					{ link: "/#courses", name: "UX Research" },
+					{ link: "/#courses", name: "Cinema 4D" },
+					{ link: "/#courses", name: "Data Analysis" },
+					{ link: "/#courses", name: "SQL" },
+					{ link: "/#courses", name: "Auto CAD" },
+					{ link: "/#courses", name: "Excel" },
+					{ link: "/#courses", name: "Cloud Engineering" },
 				],
 			},
 			{
@@ -59,9 +59,9 @@ const navLinks: {
 					</svg>
 				),
 				dropdown: [
-					{ link: "#courses", name: "Digital Marketing" },
-					{ link: "#courses", name: "Programming" },
-					{ link: "#courses", name: "Flutter" },
+					{ link: "/#courses", name: "Digital Marketing" },
+					{ link: "/#courses", name: "Programming" },
+					{ link: "/#courses", name: "Flutter" },
 				],
 			},
 			{
@@ -83,11 +83,11 @@ const navLinks: {
 		],
 	},
 	{
-		link: "#live-workshop",
+		link: "/#live-workshop",
 		name: "Live Workshop",
 	},
 	{
-		link: "#mentors",
+		link: "/#mentors",
 		name: "Mentors",
 	},
 ];
