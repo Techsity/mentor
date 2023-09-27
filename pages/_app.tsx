@@ -12,6 +12,7 @@ import PagePreLoader from "../components/ui/atom/loader/PagePreLoader";
 import LayoutContainer from "../components/ui/layout";
 import "../public/styles/globals.css";
 import "../public/styles/nprogress.css";
+import "react-multi-carousel/lib/styles.css";
 // Fonts
 import "@fontsource/poppins/100.css";
 import "@fontsource/poppins/200.css";

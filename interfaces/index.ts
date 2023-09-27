@@ -26,3 +26,9 @@ export interface IMentor {
 	skills: string[];
 	daysOpen: string[];
 }
+
+export interface IAboutHeroCarouselData {
+	title: string;
+	paragraph: string;
+	video?: string;
+}
