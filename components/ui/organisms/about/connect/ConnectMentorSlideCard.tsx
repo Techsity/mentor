@@ -11,7 +11,7 @@ const ConnectMentorSlideCard = ({
 	return (
 		<div className="w-full h-full select-none flex gap-10 justify-between items-center">
 			{/* <div className="flex just"></div> */}
-			<div className="ml-10 flex-grow max-w-sm xl:max-w-lg h-full py-10">
+			<div className="ml-10 flex-grow max-w-sm xl:max-w-lg h-full py-6">
 				<h1 style={{ fontFamily: "Days One" }} className="text-2xl text-[#33AC15]">
 					{title.slice(0, 65)}...
 				</h1>
