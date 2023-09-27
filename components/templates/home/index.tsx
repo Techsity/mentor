@@ -11,6 +11,8 @@ import LiveWorkshops from "../../ui/organisms/home/live";
 import InstantHelp from "../../ui/organisms/home/instant";
 import Services from "../../ui/organisms/home/services";
 import MeetOurMentors from "../../ui/organisms/home/mentors";
+import BecomeMentor from "../../ui/organisms/home/become-a-mentor";
+import NewsLetterForm from "../../ui/atom/forms/NewsLetterForm";
 
 const HomepageTemplate = () => {
 	return (
@@ -23,6 +25,15 @@ const HomepageTemplate = () => {
 			<InstantHelp />
 			<Services />
 			<MeetOurMentors />
+			<BecomeMentor />
+			<>
+				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
+					Subscribe to our Newsletter
+				</h1>
+				<div className="flex justify-center my-5 mb-10">
+					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
+				</div>
+			</>
 		</>
 	);
 };

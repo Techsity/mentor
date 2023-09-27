@@ -3,7 +3,7 @@ import { SettingsOutline } from "react-ionicons";
 
 const Services = () => {
 	return (
-		<div className="mx-6 md:mx-20 my-20 2xl:mx-[15dvw]">
+		<div className="mx-6 md:mx-20 my-10 md:my-20 2xl:mx-[15dvw]">
 			<div className="grid md:grid-cols-3 gap-10 md:gap-5 items-center">
 				<div className="bg-[#EAFFF4] grid gap-3 py-14 text-[#0C202B] p-5 w-full relative">
 					<div className="absolute -top-8 grid gap-5 left-0">

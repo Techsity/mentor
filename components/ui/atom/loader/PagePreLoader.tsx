@@ -6,7 +6,7 @@ const PagePreLoader = () => {
 	return (
 		<div
 			ref={bgRef}
-			className="z-50 fixed h-full w-full bg-[whitesmoke] top-0 left-0 overflow-hidden min-h-screen min-w-screen flex justify-center items-center text-white"
+			className="select-none z-50 fixed h-full w-full bg-[whitesmoke] top-0 left-0 overflow-hidden min-h-screen min-w-screen flex justify-center items-center text-white"
 		>
 			<div className="absolute w-full bg-[#CCFFE9] h-full left-0 animate__animated animate__slideInLeft animate__slow"></div>
 			<div

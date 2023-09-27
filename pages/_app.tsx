@@ -57,31 +57,25 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		};
 	}, [router]);
 
-	return initialLoad ? (
+	return (
 		<>
 			<Head>
-				<title>Mentö</title>
+				<title>Mentör</title>
 				<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 				/>
 			</Head>
-			<PagePreLoader />
+			{initialLoad ? (
+				<PagePreLoader />
+			) : (
+				<LayoutContainer>
+					<ToastContainer />
+					<Component {...pageProps} />
+				</LayoutContainer>
+			)}
 		</>
-	) : (
-		<LayoutContainer>
-			<Head>
-				<title>Mentö</title>
-				<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-				/>
-			</Head>
-			<ToastContainer />
-			<Component {...pageProps} />
-		</LayoutContainer>
 	);
 };
 

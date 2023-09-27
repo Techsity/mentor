@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LandingSearchBar from "../../atom/forms/LandingSearchBar";
-import { MentorLogo } from "../../atom/icons/svgs";
+import { MentorLogoDark } from "../../atom/icons/svgs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import navLinks from "../../../../data/navlinks";
@@ -16,7 +16,7 @@ const Navbar = () => {
 		<nav className="fixed w-full z-20 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-6 sm:px-12 tracking-tight oveflow-hidden">
 			<Link href="#">
 				<div>
-					<MentorLogo className="cursor-pointer" />
+					<MentorLogoDark className="cursor-pointer" />
 				</div>
 			</Link>
 			<div className="ml-6 xl:grid hidden flex-grow relative">
@@ -35,24 +35,14 @@ const Navbar = () => {
 									setActiveDropdown(null);
 								}}
 							>
-								{/* <span
-										className={`duration-500 ${
-											router.asPath.includes(link) ? "text-white" : "group-hover:text-white"
-										} relative z-10`}
-									> */}
 								<span className={`duration-500 relative z-10 cursor-pointer`}>
 									{name}
 								</span>
 								<span
 									className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-										router.asPath.includes(link) ? "w-full" : "hover:w-full"
+										router.asPath == link ? "w-full" : "hover:w-full"
 									}`}
 								/>
-								{/* <span
-										className={`absolute h-full w-0 right-0 bottom-0 bg-[#094B10] duration-300 ${
-											router.asPath.includes(link) ? "w-full" : "group-hover:w-full"
-										}`}
-									/> */}
 								{activeSublink === index && sublinks && sublinks?.length > 0 ? (
 									<div>
 										<div className="h-[100px] group duration-300 absolute top-6 left-0 bg-white w-auto items-center gap-3 flex justify-between divide-x  animate__animate animate__fadeIn">
@@ -100,17 +90,10 @@ const Navbar = () => {
 							</li>
 						) : (
 							<Link href={link} key={index}>
-								<li
-									className="relative px-2 font-[300] select-none"
-									onMouseEnter={() => setActiveSublink(index)}
-									onMouseLeave={() => {
-										setActiveSublink(null);
-										setActiveDropdown(null);
-									}}
-								>
+								<li className="relative px-2 font-[300] select-none">
 									{/* <span
 								className={`duration-500 ${
-									router.asPath.includes(link) ? "text-white" : "group-hover:text-white"
+									router.asPath==link ? "text-white" : "group-hover:text-white"
 								} relative z-10`}
 							> */}
 									<span className={`duration-500 relative z-10 cursor-pointer`}>
@@ -118,12 +101,12 @@ const Navbar = () => {
 									</span>
 									<span
 										className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-											router.asPath.includes(link) ? "w-full" : "hover:w-full"
+											router.asPath == link ? "w-full" : "hover:w-full"
 										}`}
 									/>
 									{/* <span
 								className={`absolute h-full w-0 right-0 bottom-0 bg-[#094B10] duration-300 ${
-									router.asPath.includes(link) ? "w-full" : "group-hover:w-full"
+									router.asPath==link ? "w-full" : "group-hover:w-full"
 								}`}
 							/> */}
 								</li>

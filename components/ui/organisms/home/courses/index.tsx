@@ -24,7 +24,7 @@ const HomepageCourseSection = () => {
 			className="min-h-screen py-20 scroll-mt-20 overflow-hidden mx-5"
 			id="courses"
 		>
-			<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={!true}>
+			<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 				<div className="flex justify-center text-center items-center">
 					<h1
 						className="text-lg sm:text-xl md:text-3xl max-w-3xl"
