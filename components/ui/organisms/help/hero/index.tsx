@@ -2,7 +2,7 @@ import React from "react";
 
 const HelpPageHero = () => {
 	return (
-		<div className="pt-20 relative min-h-[50vh] overlow-hidden">
+		<div className="pt-20 relative overlow-hidden">
 			<svg
 				width="136"
 				height="136"
@@ -43,7 +43,7 @@ const HelpPageHero = () => {
 				/>
 			</svg>
 
-			<div className="flex items-center justify-center min-h-[60vh] -mt-10">
+			<div className="flex items-center justify-center min-h-[50vh] -mt-10">
 				<div className="animate__animated animate__backInDown text-center text-[#094B10] grid gap-2">
 					<div className="flex justify-center animate__animated animate__bounce animate__infinite animate__slow mt-10">
 						<svg width="65" height="65" viewBox="0 0 65 65" fill="none">

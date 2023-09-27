@@ -32,10 +32,7 @@ const HelpFAQS = () => {
 				}`}
 				ref={faqNavRef}
 			> */}
-			<div
-				className="flex justify-center w-full top-[9vh] sm:top-24 z-20"
-				ref={faqNavRef}
-			>
+			<div className="flex justify-center w-full" ref={faqNavRef}>
 				<div className="flex items-center md:gap-[1px] bg-white">
 					<div
 						onClick={() => setCurrentFaq("mentee")}
