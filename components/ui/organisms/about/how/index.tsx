@@ -10,7 +10,7 @@ const HowMentorsCanMentorYou = () => {
 			>
 				How mentors on Mentör can help you
 			</h1>
-			<div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 mt-8 px-6 sm:px-10 lg:px-24">
+			<div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-5 mt-8 px-6 sm:px-10 lg:px-24">
 				<div className="max-w-sm bg-white border border-[#70C5A1] cursor-default hover:shadow-lg duration-300 pb-6">
 					<a href="#">
 						<img

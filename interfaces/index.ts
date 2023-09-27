@@ -32,3 +32,13 @@ export interface IAboutHeroCarouselData {
 	paragraph: string;
 	video?: string;
 }
+
+export interface IBlogPost {
+	title: string;
+	category: string;
+	createdAt: string;
+	postedBy: { avatar: string; name: string };
+	caption: string;
+	thumbnail?: string;
+	content: string;
+}

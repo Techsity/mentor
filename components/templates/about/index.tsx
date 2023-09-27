@@ -17,7 +17,7 @@ const AboutPageTemplate = () => {
 			<HowToAttendWorkshop />
 			<HowMentorsCanMentorYou />
 			<AboutBlogSection />
-			<HomepageTestimonialSection />
+			<HomepageTestimonialSection className="mt-10" />
 			<>
 				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter
