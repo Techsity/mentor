@@ -22,7 +22,7 @@ const Footer = () => {
 								<li className="mb-4 cursor-pointer text-[14px]">About Us</li>
 							</Link>
 							<div className="flex gap-4 items-center">
-								<Link href="#">
+								<Link href="/help">
 									<li className="mb-4 cursor-pointer text-[14px]">Help</li>
 								</Link>
 								<Link href="#">

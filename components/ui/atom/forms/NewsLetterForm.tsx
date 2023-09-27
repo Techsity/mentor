@@ -18,6 +18,7 @@ const NewsLetterForm = ({
 		>
 			<input
 				type="email"
+				required
 				name="waitlist-input-email"
 				id="waitlist-input-email"
 				className="h-full w-full bg-transparent p-3 flex-grow focus:ring-0 outline-none border-none placeholder:italic placeholder:font-[300] text-[#2D3D43] placeholder:text-[#2D3D43]"
