@@ -3,13 +3,13 @@ import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const HowToAttendWorkshop = () => {
 	return (
-		<div className="relative min-h-[50vh] py-10 lg:py-20 bg-[#021A05] mb-10 flex items-center justify-center overflow-hidden">
+		<div className="relative min-h-[50vh] py-32 bg-[#021A05] mb-10 flex items-center justify-center">
 			<svg
 				width="89"
 				height="89"
 				viewBox="0 0 89 89"
 				fill="none"
-				className="absolute left-0 -top-5 animate-[spin_4s_linear_infinite]"
+				className="absolute left-0 -top-6 animate-[spin_4s_linear_infinite]"
 			>
 				<path
 					d="M44.5 55.625C50.6442 55.625 55.625 50.6442 55.625 44.5C55.625 38.3558 50.6442 33.375 44.5 33.375C38.3558 33.375 33.375 38.3558 33.375 44.5C33.375 50.6442 38.3558 55.625 44.5 55.625Z"
@@ -22,17 +22,31 @@ const HowToAttendWorkshop = () => {
 					strokeWidth="5"
 				/>
 			</svg>
-
+			<svg
+				width="121"
+				height="120"
+				viewBox="0 0 121 120"
+				fill="none"
+				className="absolute right-0 -bottom-12 animate__animated animate__headShake animate__infinite"
+			>
+				<path
+					d="M67.6505 1.48731L5.80354 38.5252C3.46028 39.9285 1.77045 42.2051 1.10579 44.8543C0.44113 47.5036 0.85609 50.3083 2.25938 52.6516L39.2972 114.499C40.7005 116.842 42.9772 118.532 45.6264 119.196C48.2756 119.861 51.0804 119.446 53.4236 118.043L71.0942 107.46L92.2838 112.777L97.6 91.5871L115.271 81.0048C120.13 78.0947 121.725 71.7378 118.815 66.8784L81.7769 5.03147C78.8668 0.172068 72.5099 -1.4228 67.6505 1.48731ZM109.979 72.1696L88.6423 84.9476L87.5968 89.1149L84.7969 100.275L73.5664 97.4572L69.4697 96.4294L48.1325 109.207L11.0947 47.3604L72.9416 10.3226L109.979 72.1696ZM66.7017 80.0811L75.537 74.79L80.8281 83.6253L71.9928 88.9164L66.7017 80.0811ZM49.9548 42.0944C54.8142 39.1843 61.1711 40.7792 64.0812 45.6386C69.3724 54.4739 55.458 61.3062 64.0561 75.6635L72.8914 70.3724C66.9389 60.4327 79.5304 51.3916 72.9165 40.3475C67.0698 30.5845 54.4267 27.4125 44.6637 33.2592C34.9007 39.1058 31.7287 51.749 37.5754 61.512L46.4107 56.2208C43.5006 51.3614 45.0954 45.0046 49.9548 42.0944Z"
+					fill="#70C5A1"
+					fillOpacity="0.2"
+				/>
+			</svg>
 			<div className="">
-				<h1
-					className="text-center text-xl md:text-2xl text-white"
-					style={{ fontFamily: "Days One" }}
-				>
-					How to attend a workshop
-				</h1>
-				<div className="flex justify-between gap-6 px-5 lg:px-20 mt-20">
-					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
+				<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+					<h1
+						className="text-center text-xl md:text-3xl text-white"
+						style={{ fontFamily: "Days One" }}
+					>
+						How to attend a workshop
+					</h1>
+				</AnimationOnScroll>
+				<div className="grid lg:grid-cols-4 sm:grid-cols-2 justify-between gap-6 px-5 lg:px-20 mt-10">
+					<div className="flex justify-start w-full md:overflow-hidden overflow-x-auto bg-white p-5">
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
 								<svg width="72" height="76" viewBox="0 0 72 76" fill="none">
 									<path
@@ -60,7 +74,7 @@ const HowToAttendWorkshop = () => {
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
 								<svg width="66" height="66" viewBox="0 0 66 66" fill="none">
 									<path
@@ -82,7 +96,7 @@ const HowToAttendWorkshop = () => {
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
 								<svg width="95" height="69" viewBox="0 0 95 69" fill="none">
 									<path
@@ -102,7 +116,7 @@ const HowToAttendWorkshop = () => {
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
 								<svg width="78" height="70" viewBox="0 0 78 70" fill="none">
 									<path

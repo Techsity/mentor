@@ -3,9 +3,11 @@ import { AnimationOnScroll } from "react-animation-on-scroll";
 import Link from "next/link";
 import HomepageTestimonialSectionCard from "../../../atom/cards/home/HomepageTestimonialSectionCard";
 
-const HomepageTestimonialSection = () => {
+const HomepageTestimonialSection = ({ className }: { className?: string }) => {
 	return (
-		<div className="lg:flex justify-between items-start gap-6 px-5 sm:px-10 lg:px-12 xl:px-24 bg-[#E9E8E7] -mt-60 pt-52 lg:pt-80 py-16">
+		<div
+			className={`lg:flex justify-between items-start gap-6 px-5 sm:px-10 lg:px-12 xl:px-24 bg-[#E9E8E7] -mt-60 py-16 ${className}`}
+		>
 			<AnimationOnScroll animateIn="animate__fadeInDown" animateOnce={true}>
 				<div className="lg:hidden grid gap-6 py-10 flex-grow">
 					<p

@@ -18,7 +18,7 @@ const HomepageTemplate = () => {
 	return (
 		<>
 			<HomepageHero />
-			<HomepageTestimonialSection />
+			<HomepageTestimonialSection className="pt-52 lg:pt-80" />
 			<Companies />
 			<HomepageCourseSection />
 			<LiveWorkshops />
