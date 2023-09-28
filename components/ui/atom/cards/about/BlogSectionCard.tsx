@@ -11,6 +11,7 @@ const BlogSectionCard = ({
 	content,
 	createdAt,
 	postedBy,
+	slug,
 }: IBlogPost) => {
 	return (
 		<div className="select-none bg-white shadow hover:shadow-lg group duration-300 cursor-default text-black min-h-[400px] h-full">
@@ -23,7 +24,7 @@ const BlogSectionCard = ({
 					/>
 				</div>
 				<div className="bg-black absolute top-0 justify-center items-center w-full h-[50%] bg-opacity-40 hidden group-hover:flex animate__faster animate__animated animate__fadeIn text-white">
-					<Link href="#">
+					<Link href={`/blog/${slug}`}>
 						<div className="text-sm cursor-pointer hover:bg-[#70C5A1] duration-300 border border-white px-4 p-1">
 							Continue Reading
 						</div>

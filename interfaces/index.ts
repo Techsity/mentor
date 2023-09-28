@@ -36,6 +36,7 @@ export interface IAboutHeroCarouselData {
 export interface IBlogPost {
 	title: string;
 	category: string;
+	slug: string;
 	createdAt: string;
 	postedBy: { avatar: string; name: string };
 	caption: string;
