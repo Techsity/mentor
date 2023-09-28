@@ -10,7 +10,7 @@ const NotFoundPage = () => {
 	}, []);
 
 	return (
-		<div className="text-black">
+		<div className="text-black pt-20">
 			<h1>Page Not Found</h1>
 			<p>Redirecting...</p>
 		</div>

@@ -239,16 +239,15 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 };
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
-	const { id } = ctx.query;
-	const postId = id?.toString();
-	const post = blogs.find((post) => post.slug === id);
-	if (!id) {
+	const { slug } = ctx.query;
+	const postSlug = slug?.toString();
+	const post = blogs.filter((post) => post.slug === postSlug)[0];
+	if (!postSlug) {
 		return { props: {}, redirect: { destination: "/blog", permanent: false } };
 	}
 	if (!post) {
 		return { props: {}, redirect: { destination: "/blog", permanent: false } };
 	}
-
 	return { props: { post } };
 };
 
