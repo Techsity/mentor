@@ -29,7 +29,7 @@ const Footer = () => {
 									<li className="mb-4 cursor-pointer text-[14px]">Blog</li>
 								</Link>
 							</div>
-							<Link href="#">
+							<Link href="/privacy">
 								<li className="mb-4 cursor-pointer text-[14px]">Privacy Policy</li>
 							</Link>
 						</ul>
