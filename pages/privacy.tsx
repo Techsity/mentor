@@ -30,7 +30,7 @@ const PrivacyAndPolicyPage = () => {
 					<select
 						name=""
 						id=""
-						className="px-10 w-full p-2 absolute top-5 md:hidden z-10"
+						className="px-10 w-full p-2 absolute top-5 md:hidden z-10 border border-[#70C5A1] rounded"
 						value={selectedPolicy.title}
 					>
 						{policies.map((policy, i) => (
@@ -50,7 +50,7 @@ const PrivacyAndPolicyPage = () => {
 						))}
 					</select>
 					<div
-						className="col-span-8 overflow-hidden my-10 md:ml-6 animate__animated animate__fadeInRight "
+						className="md:pt-auto pt-20 col-span-8 overflow-hidden my-10 md:ml-6 animate__animated animate__fadeInRight "
 						id={selectedPolicy.title}
 					>
 						<h1 className="text-3xl font-semibold mb-10">{selectedPolicy.title}</h1>
