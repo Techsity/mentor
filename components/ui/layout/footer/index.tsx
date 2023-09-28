@@ -7,7 +7,7 @@ import { MentorLogoLight } from "../../atom/icons/svgs";
 
 const Footer = () => {
 	return (
-		<footer className="bg-[#021A05] pt-5">
+		<footer className="bg-[#021A05] pt-5 relative z-10">
 			<div className="mx-auto w-full max-w-screen-2xl">
 				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-20 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">
 					<div>
