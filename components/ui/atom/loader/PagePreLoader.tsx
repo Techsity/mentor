@@ -10,7 +10,7 @@ const PagePreLoader = () => {
 		>
 			<div className="absolute w-full bg-[#CCFFE9] h-full left-0 animate__animated animate__slideInLeft animate__slow"></div>
 			<div
-				className="flex gap-6 font-bold items-center lg:text-9xl text-7xl"
+				className="flex gap-6 font-bold items-center lg:text-9xl text-8xl"
 				style={{ fontFamily: "Days One" }}
 			>
 				<h1 className="text-[#094B10] animate__animated animate__slideInDown">m</h1>
