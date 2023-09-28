@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomTextInput from "../../inputs";
 import { PrimaryButton } from "../../buttons";
 import ActivityIndicator from "../../loader/ActivityIndicator";
+import Link from "next/link";
 
 const LoginForm = () => {
 	const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +32,7 @@ const LoginForm = () => {
 						"border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
 				}}
 			/>
-			<div className="flex justify-between mt-5 items-center">
+			<div className="sm:flex grid gap-5 justify-between mt-5 items-center">
 				<PrimaryButton
 					onClick={() => {
 						setLoading(true);
@@ -41,12 +42,20 @@ const LoginForm = () => {
 					}}
 					disabled={loading}
 					title={!loading ? "Login" : ""}
-					icon={loading ? <ActivityIndicator /> : null}
-					className="px-10 p-3 rounded"
+					icon={
+						loading ? (
+							<div className="flex justify-center">
+								<ActivityIndicator />
+							</div>
+						) : null
+					}
+					className="px-10 p-3 rounded text-center"
 				/>
-				<div className="cursor-pointer">
-					Forget Password? <span className="font-semibold">Reset it!</span>
-				</div>
+				<Link href="/auth/forgot-password">
+					<div className="cursor-pointer">
+						Forgot Password? <span className="font-semibold">Reset it!</span>
+					</div>
+				</Link>
 			</div>
 		</div>
 	);

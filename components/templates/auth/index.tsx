@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect } from "react";
 import AuthForm from "../../ui/atom/forms/auth";
 import { useRouter } from "next/router";
 
