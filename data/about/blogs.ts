@@ -2,7 +2,9 @@ import { IBlogPost } from "../../interfaces";
 
 const blogs: IBlogPost[] = [
 	{
-		caption: "Sddjhjjslkdsjhvskdlsjfkh",
+		thumbnail: "/assets/images/thumbnails/tmb_2.png",
+		caption:
+			"The Goal of mentor is to serve as a public free educational service. we want to give knowledg....",
 		category: "Wdkfjfcksd",
 		content: "sdfkjbdmskldvbnm",
 		createdAt: new Date().toLocaleDateString(),
@@ -10,7 +12,9 @@ const blogs: IBlogPost[] = [
 		title: "Lorem Ipsum1",
 	},
 	{
-		caption: "Sddjhjjslkdsjhvskdlsjfkh",
+		thumbnail: "/assets/images/thumbnails/tmb_3.png",
+		caption:
+			"The Goal of mentor is to serve as a public free educational service. we want to give knowledg....",
 		category: "Wdkfjfcksd",
 		content: "sdfkjbdmskldvbnm",
 		createdAt: new Date().toLocaleDateString(),
@@ -18,7 +22,9 @@ const blogs: IBlogPost[] = [
 		title: "Lorem Ipsum2",
 	},
 	{
-		caption: "Sddjhjjslkdsjhvskdlsjfkh",
+		thumbnail: "/assets/images/thumbnails/tmb_3.png",
+		caption:
+			"The Goal of mentor is to serve as a public free educational service. we want to give knowledg....",
 		category: "Wdkfjfcksd",
 		content: "sdfkjbdmskldvbnm",
 		createdAt: new Date().toLocaleDateString(),
@@ -26,7 +32,9 @@ const blogs: IBlogPost[] = [
 		title: "Lorem Ipsum3",
 	},
 	{
-		caption: "Sddjhjjslkdsjhvskdlsjfkh",
+		thumbnail: "/assets/images/thumbnails/tmb_2.png",
+		caption:
+			"The Goal of mentor is to serve as a public free educational service. we want to give knowledg....",
 		category: "Wdkfjfcksd",
 		content: "sdfkjbdmskldvbnm",
 		createdAt: new Date().toLocaleDateString(),

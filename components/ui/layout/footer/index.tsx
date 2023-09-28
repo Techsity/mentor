@@ -25,7 +25,7 @@ const Footer = () => {
 								<Link href="/help">
 									<li className="mb-4 cursor-pointer text-[14px]">Help</li>
 								</Link>
-								<Link href="#">
+								<Link href="/blog">
 									<li className="mb-4 cursor-pointer text-[14px]">Blog</li>
 								</Link>
 							</div>

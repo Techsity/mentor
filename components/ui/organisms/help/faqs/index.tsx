@@ -36,7 +36,7 @@ const HelpFAQS = () => {
 				<div className="flex items-center md:gap-[1px] bg-white">
 					<div
 						onClick={() => setCurrentFaq("mentee")}
-						className={`border-[#094B10] border md:border-r-transparent duration-300 text-[#094B10] px-20 p-6 text-lg cursor-pointer ${
+						className={`animate__animated animate__slideInLeft border-[#094B10] border md:border-r-transparent duration-300 text-[#094B10] px-20 p-6 text-lg cursor-pointer ${
 							currentFaq === "mentee"
 								? "bg-[#094B10] text-white"
 								: "hover:bg-[#094B10] hover:text-white bg-white"
@@ -47,7 +47,7 @@ const HelpFAQS = () => {
 					</div>
 					<div
 						onClick={() => setCurrentFaq("mentor")}
-						className={`border-[#094B10] border md:border-l-transparent duration-300 px-20 p-6 text-lg cursor-pointer ${
+						className={`animate__animated animate__slideInRight border-[#094B10] border md:border-l-transparent duration-300 px-20 p-6 text-lg cursor-pointer ${
 							currentFaq === "mentor"
 								? "bg-[#094B10] text-white"
 								: "hover:bg-[#094B10] hover:text-white bg-white"

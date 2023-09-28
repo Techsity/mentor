@@ -1,15 +1,19 @@
 import React from "react";
-import NewsLetterForm from "../../ui/atom/forms/NewsLetterForm";
-import HelpPageHero from "../../ui/organisms/help/hero";
-import HelpFAQS from "../../ui/organisms/help/faqs";
+import BlogPageHero from "../../ui/organisms/blog/hero";
 import { ChevronUpOutline } from "react-ionicons";
+import NewsLetterForm from "../../ui/atom/forms/NewsLetterForm";
 import { scrollToTop } from "../../../utils";
+import PopularBlogs from "../../ui/organisms/blog/popular";
+import LatestBlogs from "../../ui/organisms/blog/latest";
+import SimilarInterest from "../../ui/organisms/blog/interest";
 
-const HelpPageTemplate = () => {
+const BlogPageTemplate = () => {
 	return (
 		<>
-			<HelpPageHero />
-			<HelpFAQS />
+			<BlogPageHero />
+			<PopularBlogs />
+			<LatestBlogs />
+			<SimilarInterest />
 			<div className="mt-28">
 				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter
@@ -29,4 +33,4 @@ const HelpPageTemplate = () => {
 	);
 };
 
-export default HelpPageTemplate;
+export default BlogPageTemplate;
