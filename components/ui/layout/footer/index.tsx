@@ -80,7 +80,7 @@ const Footer = () => {
 								<li className="mb-3 cursor-pointer text-[14px]">mentor@tecsity.io</li>
 							</Link>
 							<SocialIcons />
-							<Link href="#">
+							<Link href="/premium">
 								<li className="mb-4 cursor-pointer text-[15px] font-medium">
 									Mentor Premium
 								</li>
