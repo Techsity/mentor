@@ -17,7 +17,7 @@ const Navbar = () => {
 	);
 
 	return (
-		<nav className="fixed w-full z-20 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-6 sm:px-12 tracking-tight oveflow-hidden">
+		<nav className="fixed w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-6 sm:px-12 tracking-tight oveflow-hidden">
 			<Link href="/">
 				<div>
 					<MentorLogoDark className="cursor-pointer" />

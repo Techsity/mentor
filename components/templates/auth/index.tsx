@@ -33,17 +33,12 @@ const AuthPageTemplate = () => {
 					backgroundSize: "100% 100%",
 					backgroundRepeat: "no-repeat",
 				}}
-			>
-				{/* <div className="bg-[red]">
-					<img src="/assets/images/map.png" className="h-52 w-full" alt="" />
-					efg
-				</div> */}
-			</div>
+			></div>
 		</div>
 	);
 };
 
-const Particles = () => {
+export const Particles = () => {
 	return (
 		<div className="sm:block hidden">
 			<svg

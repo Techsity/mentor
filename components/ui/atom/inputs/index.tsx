@@ -13,7 +13,12 @@ const CustomTextInput = (props: {
 
 	return (
 		<div className={"relative" + combinedContainerClassName} {...containerProps}>
-			<input {...inputProps} className={combinedInputClassName} />
+			<input
+				{...inputProps}
+				type={inputProps?.type}
+				required={inputProps?.required}
+				className={combinedInputClassName}
+			/>
 			{rightIcon ? (
 				<div className="absolute top-[30%] right-5">{rightIcon}</div>
 			) : null}

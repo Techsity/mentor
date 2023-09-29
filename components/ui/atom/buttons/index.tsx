@@ -25,7 +25,7 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 		<button
 			disabled={disabled}
 			onClick={onClick}
-			className={` bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
+			className={`bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
 		>
 			{title}
 			{icon ? icon : null}

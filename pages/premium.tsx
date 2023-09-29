@@ -21,7 +21,7 @@ const PremiumPage = () => {
 				</div>
 			</AnimationOnScroll>
 			<div
-				className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-50"
+				className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-30"
 				onClick={scrollToTop}
 			>
 				<ChevronUpOutline color="green" height="30px" width="30px" />

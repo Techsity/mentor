@@ -55,7 +55,7 @@ const PremiumPackages = () => {
 		},
 	];
 	return (
-		<div className="min-h-screen py-20">
+		<div className="min-h-screen py-20 px-2">
 			<div className="flex justify-center">
 				<div className="sm:flex justify-between items-start gap-8 grid max-w-5xl">
 					{packages.map(({ perks, title, ctaButton }, i) => {
