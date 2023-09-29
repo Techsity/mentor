@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { OTPInputProps } from "../../../../interfaces/otp-form-interface";
 import { useMemo } from "react";
-import { RE_DIGIT } from "../forms/auth/OTPForm";
 
 const OTPInput = (props: OTPInputProps) => {
 	const {

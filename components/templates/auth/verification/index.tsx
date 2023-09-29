@@ -64,18 +64,21 @@ const OtpTemplate = ({ timeLimit = 60, handleSubmit }: IOTPTemplateProps) => {
 		);
 	};
 	return (
-		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative px-5 md:px-24">
+		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative px-10 md:px-24">
 			<form className="" onSubmit={handleSubmit}>
-				<h1 className="text-3xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
+				<h1
+					className="text-3xl text-[#00D569] px-5 sm:px-auto"
+					style={{ fontFamily: "Days One" }}
+				>
 					Enter OTP
 				</h1>
-				<p className="my-5 sm:my-10">
+				<p className="my-5 sm:my-10 px-5 sm:px-auto">
 					Enter the One Time Password sent to the mail you provided
 				</p>
-				<div className="flex justify-center">
-					<OTPForm isNumberOTP length={6} />
+				<OTPForm isNumberOTP length={6} />
+				<div className="px-5 sm:px-auto">
+					<ActionButtons />
 				</div>
-				<ActionButtons />
 			</form>
 		</div>
 	);

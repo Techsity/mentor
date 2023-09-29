@@ -7,8 +7,6 @@ import OTPInput from "../../inputs/OTPInput";
 import classNames from "classnames";
 import { toast } from "react-toastify";
 
-export const RE_DIGIT = new RegExp(/^\d+$/);
-
 const OTPForm = (formProps: OTPFormProps) => {
 	const { length = 6, isNumberOTP = true, inputClassName } = formProps;
 	const [otp, setOtp] = useState<string>("");
@@ -16,6 +14,7 @@ const OTPForm = (formProps: OTPFormProps) => {
 		className: inputClassName,
 		value: otp,
 	};
+
 	useEffect(() => {
 		console.log("otp", otp);
 	}, [otp]);
@@ -50,20 +49,27 @@ const OTPForm = (formProps: OTPFormProps) => {
 			}
 		};
 	return (
-		<div className="flexgap-5 items-center">
-			{Array.from({ length }).map((_, index) => (
-				<OTPInput
-					key={index}
-					{...inputProps}
-					// inputMode={isNumberOTP ? "numeric" : "text"}
-					type="tel"
-					pattern="\d{1}"
-					className={classNames("py-5 text-center", inputProps.className)}
-					placeholder="-"
-					onChange={handleChange(index)}
-					maxLength={5}
-				/>
-			))}
+		<div className="flex flex-col justify-start px-5">
+			<div className="flex flex-row gap-1 items-center justify-between w-full max-w-lg">
+				{Array.from({ length }).map((_, index) => (
+					<div className="sm:w-16 sm:h-16 w-14 h-14" key={index}>
+						<OTPInput
+							{...inputProps}
+							inputMode={isNumberOTP ? "numeric" : "text"}
+							type="tel"
+							pattern="\d{1}"
+							className={classNames(
+								" text-center",
+								inputProps.className,
+								"w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none border border-[#094B10] text-lg bg-white focus:bg-[#094B101A] focus:ring-0",
+							)}
+							placeholder="-"
+							onChange={handleChange(index)}
+							maxLength={5}
+						/>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
