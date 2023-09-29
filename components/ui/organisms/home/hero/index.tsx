@@ -65,7 +65,7 @@ const HomepageHero = () => {
 					<div className="flex lg:justify-center items-center whitespace-nowrap">
 						<div className="grid gap-1 sm:mt-10">
 							<p className="text-sm">Start monetizing your events/course</p>
-							<Link href="#">
+							<Link href="/premium">
 								<div className="text-center bg-[#FFB100] select-none p-2 px-4 cursor-pointer">
 									Become a Premium Member
 								</div>

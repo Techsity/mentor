@@ -5,18 +5,11 @@ import { Particles } from "../../../../../components/templates/auth";
 
 const PasswordResetOtpVerificationPage = () => {
 	return (
-		<div className="pt-20 min-h-screen relative lg:px-20 px-6 flex justify-center mt-12">
-			<Particles />
-			<div className="">
-				<h1 className="text-3xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
-					Enter OTP
-				</h1>
-				<p className="my-5 sm:my-10">
-					Enter the One Time Password sent to the mail provided earlier
-				</p>
-				<OtpTemplate />
-			</div>
-		</div>
+		<OtpTemplate
+			handleSubmit={(e) => {
+				e.preventDefault();
+			}}
+		/>
 	);
 };
 

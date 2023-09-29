@@ -1,15 +1,17 @@
 import React, { Dispatch, FormEvent, SetStateAction } from "react";
 import { PrimaryButton } from "../../buttons";
 import CustomTextInput from "../../inputs";
-import { IForgotPassowordState } from "../../../../../interfaces/auth.interface";
+import { IForgotPasswordState } from "../../../../../interfaces/auth.interface";
+import ActivityIndicator from "../../loader/ActivityIndicator";
+import { isEmail } from "../../../../../utils";
 
 const ForgotPasswordForm = ({
 	state,
 	handleSubmit,
 	setState,
 }: {
-	state: IForgotPassowordState;
-	setState: Dispatch<SetStateAction<IForgotPassowordState>>;
+	state: IForgotPasswordState;
+	setState: Dispatch<SetStateAction<IForgotPasswordState>>;
 	handleSubmit: (e?: FormEvent) => void;
 }) => {
 	const { error } = state;
@@ -27,7 +29,9 @@ const ForgotPasswordForm = ({
 					required: true,
 					className: "bg-transparent",
 					value: state.email,
-					onChange: (e) => setState({ error: "", email: e.target.value }),
+					onChange: (e) =>
+						setState({ error: "", email: e.target.value, loading: false }),
+					disabled: state.loading,
 				}}
 				containerProps={{
 					className: `border ${
@@ -38,8 +42,16 @@ const ForgotPasswordForm = ({
 			<div className="sm:flex grid gap-5 items-center mt-10 w-full">
 				<PrimaryButton
 					onClick={handleSubmit}
-					title="Continue"
-					className="px-12 p-4"
+					disabled={state.loading}
+					title={!state.loading ? "Continue" : ""}
+					icon={
+						state.loading ? (
+							<div className="flex justify-center">
+								<ActivityIndicator />
+							</div>
+						) : null
+					}
+					className="px-12 duration-300 p-3 text-center"
 				/>
 				<div className="flex flex-col gap-2">
 					<p className="">-you can still Login with-</p>

@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
+import OTPForm from "../../../ui/atom/forms/auth/OTPForm";
 
-const OtpTemplate = ({ timeLimit = 60 }: { timeLimit?: number }) => {
+export interface IOTPTemplateProps {
+	timeLimit?: number;
+	handleSubmit: (e: FormEvent) => void;
+}
+
+const OtpTemplate = ({ timeLimit = 60, handleSubmit }: IOTPTemplateProps) => {
 	const [countdown, setCountdown] = useState<number>(timeLimit);
 	const [loading, setLoading] = useState<boolean>(false);
-
 	useEffect(() => {
 		const countDownInterval = setInterval(function () {
 			if (countdown > 0) {
@@ -15,13 +20,11 @@ const OtpTemplate = ({ timeLimit = 60 }: { timeLimit?: number }) => {
 		}, 1000);
 		return () => clearInterval(countDownInterval);
 	}, [countdown]);
-
-	return (
-		<div className="min-w-[30vw]">
-			{/* <div className="">{countdown >= 1 ? countdown : null}</div> */}
+	const ActionButtons = () => {
+		return (
 			<div className="sm:flex grid gap-5 mt-5 items-center">
 				<PrimaryButton
-					onClick={() => {
+					onClick={(e) => {
 						setLoading(true);
 						setTimeout(function () {
 							setLoading(!true);
@@ -38,7 +41,11 @@ const OtpTemplate = ({ timeLimit = 60 }: { timeLimit?: number }) => {
 					}
 					className="px-12 duration-300 p-3 text-center"
 				/>
-				<div className="flex flex-col items-center sm:items-start font-[300]">
+				<div
+					className={`flex flex-col items-center sm:items-start font-[300] ${
+						countdown > 0 ? "cursor-not-allowed" : ""
+					}`}
+				>
 					<button
 						onClick={() => setCountdown(timeLimit)} //handleResendOtp
 						className={countdown > 0 ? "cursor-not-allowed" : "font-medium"}
@@ -54,6 +61,22 @@ const OtpTemplate = ({ timeLimit = 60 }: { timeLimit?: number }) => {
 					) : null}
 				</div>
 			</div>
+		);
+	};
+	return (
+		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative px-5 md:px-24">
+			<form className="" onSubmit={handleSubmit}>
+				<h1 className="text-3xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
+					Enter OTP
+				</h1>
+				<p className="my-5 sm:my-10">
+					Enter the One Time Password sent to the mail you provided
+				</p>
+				<div className="flex justify-center">
+					<OTPForm isNumberOTP length={6} />
+				</div>
+				<ActionButtons />
+			</form>
 		</div>
 	);
 };

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 
 interface IPrimaryButton {
 	title: string;
@@ -6,7 +7,7 @@ interface IPrimaryButton {
 	disabled?: boolean;
 	className?: string;
 	icon?: JSX.Element | null;
-	onClick?: any;
+	onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export const PrimaryButton = (props: IPrimaryButton) => {
 	const { title, className, icon, link, onClick, disabled } = props;

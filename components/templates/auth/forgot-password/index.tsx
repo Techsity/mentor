@@ -5,24 +5,26 @@ import ForgotPasswordForm from "../../../ui/atom/forms/auth/ForgotPasswordForm";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { isEmail } from "../../../../utils";
-import { IForgotPassowordState } from "../../../../interfaces/auth.interface";
+import { IForgotPasswordState } from "../../../../interfaces/auth.interface";
 
 const ForgotPasswordTemplate = () => {
 	const router = useRouter();
-	const [loading, setLoading] = useState<boolean>(false);
-	const [state, setState] = useState<IForgotPassowordState>({
+
+	const [state, setState] = useState<IForgotPasswordState>({
 		email: "",
 		error: "",
+		loading: false,
 	});
 
 	const { email } = state;
 
 	const handleSubmit = async (e?: FormEvent) => {
 		e?.preventDefault();
-		setLoading(true);
+		setState({ ...state, error: "", loading: true });
+		// toast.dismiss("forgot_password_pop");
 		if (email) {
 			if (isEmail(email)) {
-				const hashedToken = "toendjsdhjkjckenwd"; // auth token from the server
+				const hashedToken = "toendjsdhjkjckenwd"; // auth token gotten from the server
 				// store the token in cookies
 				// cookies.store(hashedToken)
 				// redirect to verification page
@@ -30,7 +32,7 @@ const ForgotPasswordTemplate = () => {
 					router.push(`/auth/verification/${hashedToken}/reset-password`);
 				}, 2000);
 			} else {
-				setLoading(false);
+				setState({ ...state, loading: false });
 				setState({ ...state, error: "Please enter a valid email" });
 				toast.error("Please enter a valid email", {
 					autoClose: 5000,
@@ -43,7 +45,7 @@ const ForgotPasswordTemplate = () => {
 				});
 			}
 		} else {
-			setLoading(false);
+			setState({ ...state, loading: false });
 			setState({ ...state, error: "Please enter a valid email" });
 			toast.error("Please enter a valid email", {
 				autoClose: 5000,
