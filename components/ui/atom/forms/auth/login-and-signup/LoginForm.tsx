@@ -7,7 +7,7 @@ import ActivityIndicator from "../../../loader/ActivityIndicator";
 const LoginForm = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	return (
-		<div className="animate__animated animate__bounceIn grid gap-4">
+		<div className="animate__animated animate__fadeIn grid gap-4">
 			<CustomTextInput
 				inputProps={{
 					placeholder: "Email",

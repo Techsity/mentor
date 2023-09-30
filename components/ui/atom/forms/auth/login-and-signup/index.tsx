@@ -13,7 +13,7 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 	}, [pageKey]);
 
 	return (
-		<div className="md:p-10 lg:p-8 w-full max-w-lg pb-20">
+		<div className="sm:p-0 p-5 w-full max-w-lg pb-20">
 			<LoginAndSignupFormHeader
 				currentForm={currentForm}
 				setCurrentForm={setCurrentForm}

@@ -17,7 +17,7 @@ const SignUpForm = () => {
 	};
 
 	return (
-		<div className="animate__animated animate__bounceIn grid gap-3">
+		<div className="animate__animated animate__fadeIn grid gap-3">
 			<CustomTextInput
 				inputProps={{
 					...defaultInputProps,

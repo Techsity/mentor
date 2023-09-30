@@ -23,7 +23,7 @@ const LoginAndSignupFormHeader = ({
 					</p>
 				</div>
 			) : (
-				<div className="animate__animated animate__bounceIn">
+				<div className="animate__animated animate__bounceIn flex items-center gap-2">
 					<h1
 						style={{ fontFamily: "Days One" }}
 						className="text-2xl md:text-3xl text-[#00D569]"
