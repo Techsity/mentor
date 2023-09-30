@@ -9,12 +9,12 @@ const LoginAndSignupPageTemplate = () => {
 
 	return (
 		<>
-			<div className="relative w-full hidden lg:block">
+			<div className="relative w-full hidden xl:block">
 				<Particles />
 			</div>
 			<div className="h-screen h-full grid overflow-hidden md:grid-cols-12 bg-[#F6F9F8]">
 				<div
-					className="xl:pl-20 lg:pt-24 md:pt-16 pt-10 px-5 md:col-span-6 overflow-y-auto pb-40"
+					className="xl:pl-20 md:pt-16 pt-10 px-5 md:col-span-6 overflow-y-auto pb-40"
 					style={{
 						scrollbarWidth: "none",
 					}}
@@ -47,7 +47,7 @@ const LoginAndSignupPageTemplate = () => {
 									>
 										Big companies where our students work
 									</h1>
-									<div className="flex justify-center">
+									<div className="flex justify-center mt-5">
 										<img
 											src="/assets/images/supporters.png"
 											alt=""

@@ -9,13 +9,14 @@ interface IPrimaryButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 	icon?: JSX.Element | null;
 }
 export const PrimaryButton = (props: IPrimaryButton) => {
-	const { title, className, icon, link, onClick, disabled } = props;
+	const { title, className, icon, link, onClick, disabled, ...rest } = props;
 	return props.link ? (
 		<Link href={link ? link : "#"}>
 			<button
 				disabled={disabled}
 				onClick={onClick}
 				className={`flex bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
+				{...rest}
 			>
 				{title}
 				{icon ? icon : null}
@@ -26,6 +27,7 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 			disabled={disabled}
 			onClick={onClick}
 			className={`bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
+			{...rest}
 		>
 			{title}
 			{icon ? icon : null}

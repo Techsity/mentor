@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ChangeEvent } from "react";
 
 export interface SelectedCountry {
 	countryCode: string;
@@ -6,7 +6,7 @@ export interface SelectedCountry {
 }
 
 export interface ICountrySelectorProps {
-	onSelect: (country: SelectedCountry|null) => void;
+	onSelect: (country: SelectedCountry | null) => void;
 	selected: SelectedCountry | null;
 	searchable?: boolean;
 	classes?: {

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { isEmail } from "../../../../utils";
 import { IForgotPasswordState } from "../../../../interfaces/auth.interface";
+import { ToastDefaultOptions } from "../../../../constants";
 
 const ForgotPasswordTemplate = () => {
 	const router = useRouter();
@@ -34,28 +35,18 @@ const ForgotPasswordTemplate = () => {
 			} else {
 				setState({ ...state, loading: false });
 				setState({ ...state, error: "Please enter a valid email" });
-				toast.error("Please enter a valid email", {
-					autoClose: 5000,
-					closeOnClick: true,
-					draggable: true,
-					position: "top-right",
-					hideProgressBar: true,
-					theme: "colored",
-					toastId: "forgot_password_pop",
-				});
+				toast.error(
+					"Please enter a valid email",
+					ToastDefaultOptions({ id: "forgot_password_pop" }),
+				);
 			}
 		} else {
 			setState({ ...state, loading: false });
 			setState({ ...state, error: "Please enter a valid email" });
-			toast.error("Please enter a valid email", {
-				autoClose: 5000,
-				closeOnClick: true,
-				draggable: true,
-				position: "top-right",
-				hideProgressBar: true,
-				theme: "colored",
-				toastId: "forgot_password_pop",
-			});
+			toast.error(
+				"Please enter a valid email",
+				ToastDefaultOptions({ id: "forgot_password_pop" }),
+			);
 		}
 	};
 	return (

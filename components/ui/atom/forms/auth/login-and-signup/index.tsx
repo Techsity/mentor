@@ -18,12 +18,16 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 				currentForm={currentForm}
 				setCurrentForm={setCurrentForm}
 			/>
-			<div className="mt-10 w-full">
+			<div className="mt-6 w-full">
 				<div className={currentForm === "login" ? "" : "hidden"}>
 					<LoginForm />
 				</div>
 				<div className={currentForm === "signup" ? "" : "hidden"}>
-					<SignUpForm />
+					<SignUpForm
+						onSubmit={(state) => {
+							console.log(state);
+						}}
+					/>
 				</div>
 			</div>
 		</div>

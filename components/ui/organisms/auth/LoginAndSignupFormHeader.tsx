@@ -11,7 +11,7 @@ const LoginAndSignupFormHeader = ({
 	return (
 		<>
 			{currentForm === "login" ? (
-				<div className="animate__animated animate__bounceIn">
+				<div className="animate__animated animate__bounceIn z-30 relative">
 					<h1
 						style={{ fontFamily: "Days One" }}
 						className="text-2xl md:text-3xl text-[#00D569]"
@@ -35,7 +35,7 @@ const LoginAndSignupFormHeader = ({
 					</p>
 				</div>
 			)}
-			<div className="flex select-none items-center md:gap-[1px] mt-5 animate__animated animate__slideIn">
+			<div className="flex select-none items-center md:gap-[1px] mt-5 animate__animated animate__slideIn z-30 relative">
 				<div
 					onClick={() => setCurrentForm("signup")}
 					className={`border-[#A3A6A7] border md:border-r-transparent duration-300 px-10 p-3 cursor-pointer ${

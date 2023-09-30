@@ -23,9 +23,9 @@ const ResetNewPasswordTemplate = () => {
 					<CustomTextInput
 						inputProps={{
 							required: true,
-							placeholder: "Full name",
-							type: "text",
-							className: 
+							placeholder: "New Password",
+							type: "password",
+							className:
 								"bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
 						}}
 						containerProps={{
@@ -36,8 +36,8 @@ const ResetNewPasswordTemplate = () => {
 					<CustomTextInput
 						inputProps={{
 							required: true,
-							placeholder: "Full name",
-							type: "text",
+							placeholder: "Confirm New Password",
+							type: "password",
 							className:
 								"bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
 						}}
