@@ -4,7 +4,7 @@ import { isValidPhoneNumber } from "../../utils";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";
 
-interface IFieldError {
+export interface IFieldError {
 	field: keyof ISignUpState | "";
 	error?: string;
 }
@@ -16,20 +16,22 @@ const useSignUpForm = ({
 	initialValues: ISignUpState;
 	onSubmit?: (state: ISignUpState) => void;
 }) => {
-	const [error, setError] = useState<IFieldError | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [values, setValues] = React.useState<ISignUpState>(initialValues);
+	const [errors, setErrors] = useState<IFieldError[]>([]);
 
 	const throwError =
 		(fieldName: keyof ISignUpState) => (e: FormEvent<HTMLInputElement>) => {
-            console.log();
-            
+			if (!errors.find((error) => error.field === fieldName)) {
+				setErrors([...errors, { field: fieldName, error: "Error" }]);
+			}
+			console.log(errors);
 			if (fieldName === "fullName") {
 				toast.error(
 					"Please fill all fields",
 					ToastDefaultOptions({ id: "signup_form_pop" }),
 				);
-				setError({ field: "fullName", error: "Please fill all fields" });
+				// setError({ ...error, field: "fullName", error: "Please fill all fields" });
 			}
 			if (fieldName === "email") {
 				if (!values.email) {
@@ -37,14 +39,14 @@ const useSignUpForm = ({
 						"Please fill all fields",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
-					setError({ field: "email", error: "Please fill all fields" });
+					// setError({ ...error, field: "email", error: "Please fill all fields" });
 					return;
 				}
 				toast.error(
 					"Invalid Email",
 					ToastDefaultOptions({ id: "signup_form_pop" }),
 				);
-				setError({ field: "email", error: "Invalid Email" });
+				// setError({ ...error, field: "email", error: "Invalid Email" });
 			}
 			if (fieldName === "phone") {
 				if (!values.phone) {
@@ -52,14 +54,14 @@ const useSignUpForm = ({
 						"Please fill all fields",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
-					setError({ field: "phone", error: "Please fill all fields" });
+					// setError({ ...error, field: "phone", error: "Please fill all fields" });
 					return;
 				}
 				toast.error(
 					"Invalid Phone Number",
 					ToastDefaultOptions({ id: "signup_form_pop" }),
 				);
-				setError({ field: "phone", error: "Invalid Phone Number" });
+				// setError({ ...error, field: "phone", error: "Invalid Phone Number" });
 			}
 			if (fieldName === "password") {
 				if (!values.password) {
@@ -67,7 +69,15 @@ const useSignUpForm = ({
 						"Please fill all fields",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
-					setError({ field: "password", error: "Please fill all fields" });
+					return;
+				}
+			}
+			if (fieldName === "country") {
+				if (!values.country) {
+					toast.error(
+						"Please fill all fields",
+						ToastDefaultOptions({ id: "signup_form_pop" }),
+					);
 					return;
 				}
 			}
@@ -76,7 +86,7 @@ const useSignUpForm = ({
 	const handleChange =
 		(name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
 			setValues({ ...values, [name]: e?.target.value });
-			setError(null);
+			setErrors([]);
 			toast.dismiss("signup_form_pop");
 		};
 
@@ -86,7 +96,7 @@ const useSignUpForm = ({
 		// 	throwError("phone");
 		// 	return;
 		// }
-		setError(null);
+		setErrors([]);
 		if (values) {
 			setLoading(true);
 			setTimeout(function () {
@@ -96,7 +106,7 @@ const useSignUpForm = ({
 		}
 	};
 	return {
-		error,
+		errors,
 		loading,
 		values,
 		throwError,

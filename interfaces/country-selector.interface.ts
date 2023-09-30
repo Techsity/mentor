@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent } from "react";
+import { CSSProperties, ChangeEvent, FormEvent } from "react";
 
 export interface SelectedCountry {
 	countryCode: string;
@@ -9,11 +9,13 @@ export interface ICountrySelectorProps {
 	onSelect: (country: SelectedCountry | null) => void;
 	selected: SelectedCountry | null;
 	searchable?: boolean;
+	inputClassName?: string;
+	required?: boolean;
+	onInvalidInput?: (e: FormEvent<HTMLInputElement>) => void;
 	classes?: {
 		container?: string;
-		selectWrapper?: string;
 		optionsWrapper?: string;
-		option?: string;
+		input?: string;
 	};
 	styles?: {
 		container?: CSSProperties;

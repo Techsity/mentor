@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LoginForm from "./LoginForm";
-import SignUpForm from "./SignUpForm";
+import SignUpForm from "./signup";
 import { MentorLogoDark } from "../../../icons/svgs";
 import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupFormHeader";
 

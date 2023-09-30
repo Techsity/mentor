@@ -38,6 +38,9 @@ const CountrySelector = ({
 	optionsListMaxHeight = 300,
 	disabled = false,
 	id,
+	inputClassName,
+	required,
+	onInvalidInput,
 }: ICountrySelectorProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [searchTerm, setSearchTerm] = useState<string>("");
@@ -115,13 +118,16 @@ const CountrySelector = ({
 			<CustomTextInput
 				ref={inputRef}
 				inputProps={{
-					required: true,
-					className:
+					required: required,
+					className: classNames(
 						"bg-[#F6F9F8] placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
+						classes?.input,
+					),
 					placeholder: "Country",
 					type: "text",
 					value: searchTerm,
 					onChange: handleChange,
+					onInvalid: onInvalidInput,
 				}}
 				rightIcon={
 					<svg
