@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, Dispatch, SetStateAction } from "react";
 
 export interface OTPInputProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -14,5 +14,8 @@ export interface OTPInputProps
 export interface OTPFormProps {
 	length?: number;
 	isNumberOTP?: boolean;
+	disableInputs?: boolean;
 	inputClassName?: string;
+	otp: string;
+	setOtp: Dispatch<SetStateAction<string>>;
 }

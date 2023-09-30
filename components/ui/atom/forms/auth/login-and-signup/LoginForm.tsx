@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CustomTextInput from "../../inputs";
-import { PrimaryButton } from "../../buttons";
-import ActivityIndicator from "../../loader/ActivityIndicator";
 import Link from "next/link";
+import { PrimaryButton } from "../../../buttons";
+import CustomTextInput from "../../../inputs";
+import ActivityIndicator from "../../../loader/ActivityIndicator";
 
 const LoginForm = () => {
 	const [loading, setLoading] = useState<boolean>(false);

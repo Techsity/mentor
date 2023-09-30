@@ -1,39 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from "react";
-import AuthForm from "../../ui/atom/forms/auth";
 import { useRouter } from "next/router";
+import LoginAndSignupForm from "../../../ui/atom/forms/auth/login-and-signup";
 
-const AuthPageTemplate = () => {
+const LoginAndSignupPageTemplate = () => {
 	const router = useRouter();
 	const pageKey = Object.keys(router.query)[0];
 
 	return (
-		<div className="min-h-screen h-full pt-20 px-5 xl:px-20 bg-[#F6F9F8] relative overflow-hidden">
-			<Particles />
-			<div className="grid h-full md:grid-cols-12 w-full">
-				<div className="md:col-span-6 w-full h-full">
-					<div className="flex justify-start w-full">
-						<AuthForm
-							pageKey={
-								pageKey === "login"
-									? "login"
-									: pageKey === "signup"
-									? "signup"
-									: "signup"
-							}
-						/>
-					</div>
+		<div className="h-screen h-full px-5 pt-20 xl:px-20 bg-[#F6F9F8] overflow-hidden pb-40">
+			<div className="grid grid-cols-12">
+				<div className="col-span-6">
+					<LoginAndSignupForm
+						pageKey={
+							pageKey === "login"
+								? "login"
+								: pageKey === "signup"
+								? "signup"
+								: "signup"
+						}
+					/>
 				</div>
+				<div className="col-span-5 bg-[#B5FFDF5A] h-[400px] sticky top-20"></div>
 			</div>
-			<div
-				className="absolute right-0 top-0 bg-[#B5FFDF3A] md:w-[50%] xl:w-[40%] h-full lg:block hidden pt-10"
-				style={{
-					background: "url('/assets/images/big_companies_login.png')",
-					backgroundColor: "",
-					backgroundSize: "100% 100%",
-					backgroundRepeat: "no-repeat",
-				}}
-			></div>
 		</div>
 	);
 };
@@ -93,4 +82,4 @@ export const Particles = () => {
 	);
 };
 
-export default AuthPageTemplate;
+export default LoginAndSignupPageTemplate;

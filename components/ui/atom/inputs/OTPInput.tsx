@@ -21,7 +21,8 @@ const OTPInput = (props: OTPInputProps) => {
 		<input
 			{...rest}
 			maxLength={1}
-			type="tel"
+			type="text"
+			disabled={disabled}
 			inputMode="numeric"
 			autoComplete="one-time-code"
 			className={combinedClassName}

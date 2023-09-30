@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { MentorLogoDark } from "../../atom/icons/svgs";
 
-const AuthFormHeader = ({
+const LoginAndSignupFormHeader = ({
 	currentForm,
 	setCurrentForm,
 }: {
@@ -63,4 +63,4 @@ const AuthFormHeader = ({
 	);
 };
 
-export default AuthFormHeader;
+export default LoginAndSignupFormHeader;

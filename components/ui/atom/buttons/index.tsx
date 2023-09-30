@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { MouseEventHandler } from "react";
+import { ButtonHTMLAttributes, MouseEventHandler } from "react";
 
-interface IPrimaryButton {
+interface IPrimaryButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 	title: string;
 	link?: string;
 	disabled?: boolean;
 	className?: string;
 	icon?: JSX.Element | null;
-	onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export const PrimaryButton = (props: IPrimaryButton) => {
 	const { title, className, icon, link, onClick, disabled } = props;

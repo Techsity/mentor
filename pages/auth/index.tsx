@@ -1,8 +1,8 @@
 import React from "react";
-import AuthPageTemplate from "../../components/templates/auth";
+import LoginAndAuthPageTemplate from "../../components/templates/auth/login-and-signup";
 
 const AuthPage = () => {
-	return <AuthPageTemplate />;
+	return <LoginAndAuthPageTemplate />;
 };
 
 export default AuthPage;

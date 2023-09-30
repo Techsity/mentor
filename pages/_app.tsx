@@ -68,14 +68,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 					content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 				/>
 			</Head>
-			{initialLoad ? (
-				<PagePreLoader />
-			) : (
-				<LayoutContainer>
-					<ToastContainer />
-					<Component {...pageProps} />
-				</LayoutContainer>
-			)}
+			<LayoutContainer>
+				{initialLoad ? (
+					<PagePreLoader />
+				) : (
+					<>
+						<ToastContainer />
+						<Component {...pageProps} />
+					</>
+				)}
+			</LayoutContainer>
 		</>
 	);
 };

@@ -1,21 +1,26 @@
 import React from "react";
-import OtpTemplate from "../../../../../components/templates/auth/verification";
 import { GetServerSidePropsContext } from "next";
-import { Particles } from "../../../../../components/templates/auth";
+import { Particles } from "../../../../../components/templates/auth/login-and-signup";
+import { useRouter } from "next/router";
+import OtpTemplate from "../../../../../components/templates/auth/verification";
 
 const PasswordResetOtpVerificationPage = () => {
+	const router = useRouter();
+	const token = "toendjsdhjkjckenwd";
 	return (
 		<OtpTemplate
-			handleSubmit={(e) => {
-				e.preventDefault();
+			next={(otp) => {
+				console.log(otp);
+				router.push(`/auth/reset-password/${token}`);
 			}}
+			timeLimit={60}
 		/>
 	);
 };
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
 	const { jwt } = ctx.query;
-	// check if jwt exists in the token
+	// check if jwt exists in the url query
 	if (!jwt)
 		return { props: {}, redirect: { destination: "/", permanent: true } };
 	// then check if it matches the one stored in the cookies

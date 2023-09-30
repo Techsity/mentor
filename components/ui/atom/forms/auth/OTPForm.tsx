@@ -1,71 +1,67 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { KeyboardEvent, memo, useEffect, useRef, useState } from "react";
 import {
 	OTPInputProps,
 	OTPFormProps,
 } from "../../../../../interfaces/otp-form-interface";
 import OTPInput from "../../inputs/OTPInput";
 import classNames from "classnames";
-import { toast } from "react-toastify";
+import { isValidNumber } from "../../../../../utils";
 
 const OTPForm = (formProps: OTPFormProps) => {
-	const { length = 6, isNumberOTP = true, inputClassName } = formProps;
-	const [otp, setOtp] = useState<string>("");
+	const {
+		length = 6,
+		isNumberOTP = true,
+		inputClassName,
+		otp,
+		setOtp,
+		disableInputs,
+	} = formProps;
+	const [error, setError] = useState<string>("");
 	const inputProps: OTPInputProps = {
 		className: inputClassName,
 		value: otp,
 	};
 
-	useEffect(() => {
-		console.log("otp", otp);
-	}, [otp]);
-
 	const handleChange =
 		(idx: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
 			const targetValue: string = e.target.value;
-			const nextElementSibling = e.target
-				.nextElementSibling as HTMLInputElement | null;
+			const nextElementSibling = document.getElementById(`input_${idx + 1}`);
 			if (targetValue) {
-				// if (typeof targetValue !== "number") {
-				// 	toast.error("Invalid Otp", {
-				// 		autoClose: 5000,
-				// 		closeOnClick: true,
-				// 		draggable: true,
-				// 		position: "top-right",
-				// 		hideProgressBar: true,
-				// 		theme: "colored",
-				// 		toastId: "otp_pop",
-				// 	});
-				// 	return;
-				// }
+				if (!isValidNumber(targetValue)) {
+					e.preventDefault();
+					return;
+				}
 				if (nextElementSibling) {
-					if (idx < length) nextElementSibling.focus();
+					nextElementSibling.focus();
 				}
 				if (otp.length !== 6) {
-					setOtp((prev) => prev.trim().concat(e.target.value));
+					setError("");
+					setOtp((prev) => prev.trim().concat(targetValue.trim()));
 				} else {
+					setError("");
 					setOtp(otp.replace(otp.charAt(idx), targetValue));
-					console.log();
 				}
 			}
 		};
+
 	return (
 		<div className="flex flex-col justify-start px-5">
 			<div className="flex flex-row gap-1 items-center justify-between w-full max-w-lg">
 				{Array.from({ length }).map((_, index) => (
 					<div className="sm:w-16 sm:h-16 w-14 h-14" key={index}>
 						<OTPInput
+							id={"input_" + index}
 							{...inputProps}
-							inputMode={isNumberOTP ? "numeric" : "text"}
-							type="tel"
-							pattern="\d{1}"
+							disabled={disableInputs}
 							className={classNames(
-								" text-center",
+								"text-center",
 								inputProps.className,
-								"w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none border border-[#094B10] text-lg bg-white focus:bg-[#094B101A] focus:ring-0",
+								"w-full h-full flex flex-col placeholder:font-[400] items-center justify-center text-center px-5 outline-none border border-[#094B10] bg-transparent duration-300 text-lg focus:bg-[#094B101A] focus:ring-0",
+								// "bg-[#d311191A] focus:bg-[#d311191A]"
 							)}
 							placeholder="-"
 							onChange={handleChange(index)}
-							maxLength={5}
+							value={otp.charAt(index)}
 						/>
 					</div>
 				))}
