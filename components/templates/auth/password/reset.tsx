@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import { ReusableParticles } from "../forgot-password";
+import { ReusableParticles } from "./forgot";
 import CustomTextInput from "../../../ui/atom/inputs";
 
 const ResetNewPasswordTemplate = () => {
