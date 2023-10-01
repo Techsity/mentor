@@ -3,7 +3,6 @@ import { PrimaryButton } from "../../buttons";
 import CustomTextInput from "../../inputs";
 import { IForgotPasswordState } from "../../../../../interfaces/auth.interface";
 import ActivityIndicator from "../../loader/ActivityIndicator";
-import { isEmail } from "../../../../../utils";
 
 const ForgotPasswordForm = ({
 	state,

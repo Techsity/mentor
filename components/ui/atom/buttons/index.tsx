@@ -16,8 +16,9 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 				disabled={disabled}
 				onClick={onClick}
 				className={classNames(
-					`bg-[#094B10] text-white cursor-pointer select-none text-center`,
+					`bg-[#094B10] text-white select-none text-center`,
 					className,
+					disabled ? "cursor-not-allowed" : "cursor-pointer",
 				)}
 				{...rest}
 			>
@@ -30,8 +31,9 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 			disabled={disabled}
 			onClick={onClick}
 			className={classNames(
-				`bg-[#094B10] text-white cursor-pointer select-none text-center`,
+				`bg-[#094B10] text-white select-none text-center`,
 				className,
+				disabled ? "cursor-not-allowed" : "cursor-pointer",
 			)}
 			{...rest}
 		>

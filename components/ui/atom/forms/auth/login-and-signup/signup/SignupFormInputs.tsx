@@ -9,7 +9,7 @@ import { SelectedCountry } from "../../../../../../../interfaces/country-selecto
 const SignupFormInputs = ({
 	errors,
 	handleChange,
-	throwError,
+	handleError,
 	values,
 	handleCountrySelect,
 }: {
@@ -18,7 +18,7 @@ const SignupFormInputs = ({
 	handleChange: (
 		field: keyof ISignUpState,
 	) => (e: ChangeEvent<HTMLInputElement>) => void;
-	throwError: (
+	handleError: (
 		field: keyof ISignUpState,
 	) => (e: FormEvent<HTMLInputElement>) => void;
 	errors: IFieldError[];
@@ -42,14 +42,13 @@ const SignupFormInputs = ({
 					value: values.fullName,
 					onChange: handleChange("fullName"),
 					required: true,
-					onInvalid: throwError("fullName"),
+					onInvalid: handleError("fullName"),
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					className:
-						errors.filter((error) => error?.field === "fullName").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					className: errors.find((error) => error?.field === "fullName")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 			<CustomTextInput
@@ -60,15 +59,14 @@ const SignupFormInputs = ({
 					value: values.email,
 					onChange: handleChange("email"),
 					required: true,
-					onInvalid: throwError("email"),
+					onInvalid: handleError("email"),
 					title: "Please enter valid email",
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					className:
-						errors.filter((error) => error?.field === "email").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					className: errors.find((error) => error?.field === "email")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 			<CountrySelector
@@ -77,12 +75,11 @@ const SignupFormInputs = ({
 				}
 				onSelect={handleCountrySelect}
 				required
-				onInvalidInput={throwError("country")}
+				onInvalidInput={handleError("country")}
 				classes={{
-					container:
-						errors.filter((error) => error?.field === "country").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					container: errors.find((error) => error?.field === "country")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 			<CustomTextInput
@@ -90,20 +87,19 @@ const SignupFormInputs = ({
 					...defaultInputProps,
 					placeholder: "Phone Number",
 					type: "tel",
-					pattern: "^([0|+[0-9]{1,5})?([7-9][0-9]{9})$",
+					pattern: "/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/",
 					value: values.phone.trim(),
 					onChange: handleChange("phone"),
 					inputMode: "numeric",
 					required: true,
-					onInvalid: throwError("phone"),
+					onInvalid: handleError("phone"),
 					title: "Please enter a valid phone number",
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					className:
-						errors.filter((error) => error?.field === "phone").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					className: errors.find((error) => error?.field === "phone")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 			<CustomTextInput
@@ -113,16 +109,15 @@ const SignupFormInputs = ({
 					type: "password",
 					value: values.password.trim(),
 					required: true,
-					onInvalid: throwError("password"),
+					onInvalid: handleError("password"),
 					onChange: handleChange("password"),
 					min: "8",
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					className:
-						errors.filter((error) => error?.field === "password").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					className: errors.find((error) => error?.field === "password")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 			<CustomTextInput
@@ -131,15 +126,14 @@ const SignupFormInputs = ({
 					placeholder: "Confirm Password",
 					type: "password",
 					required: true,
-					onInvalid: throwError("confirmPassword"),
+					onInvalid: handleError("confirmPassword"),
 					onChange: handleChange("confirmPassword"),
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					className:
-						errors.filter((error) => error?.field === "confirmPassword").length > 0
-							? "border border-[red]"
-							: "border-[#094B10] border",
+					className: errors.find((error) => error?.field === "confirmPassword")
+						? "border border-[red]"
+						: "border-[#094B10] border",
 				}}
 			/>
 		</>

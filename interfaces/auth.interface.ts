@@ -3,6 +3,10 @@ export interface IForgotPasswordState {
 	error: string;
 	loading: boolean;
 }
+export interface IResetPasswordState {
+	newPassword: string;
+	confirmNewPassword: string;
+}
 export interface ISignUpState {
 	fullName: string;
 	email: string;

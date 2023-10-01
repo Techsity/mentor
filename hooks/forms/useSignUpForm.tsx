@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { ISignUpState } from "../../interfaces/auth.interface";
-import { isValidPhoneNumber } from "../../utils";
+import { isValidPhoneNumber, validatePassword } from "../../utils";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";
 import { SelectedCountry } from "../../interfaces/country-selector.interface";
@@ -21,8 +21,9 @@ const useSignUpForm = ({
 	const [values, setValues] = React.useState<ISignUpState>(initialValues);
 	const [errors, setErrors] = useState<IFieldError[]>([]);
 
-	const throwError =
-		(fieldName: keyof ISignUpState) => (e: FormEvent<HTMLInputElement>) => {
+	const handleError =
+		(fieldName: keyof ISignUpState) => (e?: FormEvent<HTMLInputElement>) => {
+			window.scrollTo({ top: 0, behavior: "smooth" });
 			if (!errors.find((error) => error.field === fieldName)) {
 				setErrors([...errors, { field: fieldName, error: "Error" }]);
 			}
@@ -60,7 +61,8 @@ const useSignUpForm = ({
 					);
 			}
 			if (fieldName === "password") {
-				if (!values.password) {
+				if (values.password) {
+				} else {
 					toast.error(
 						"Password is required",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
@@ -85,13 +87,6 @@ const useSignUpForm = ({
 					);
 					return;
 				}
-				if (values.password !== values.confirmPassword) {
-					toast.error(
-						"Passwords do not match",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
-					);
-					return;
-				}
 			}
 		};
 
@@ -108,10 +103,34 @@ const useSignUpForm = ({
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		// if (!isValidPhoneNumber(values.phone.trim())) {
-		// 	throwError("phone");
-		// 	return;
-		// }
+		if (!validatePassword(values.password.trim(), "8")) {
+			toast.error(
+				"Password must not be less than 8-digits",
+				ToastDefaultOptions({ id: "signup_form_pop" }),
+			);
+			return;
+		}
+		if (!validatePassword(values.password.trim(), "capital")) {
+			toast.error(
+				"Password must include a capital letter",
+				ToastDefaultOptions({ id: "signup_form_pop" }),
+			);
+			return;
+		}
+		if (!validatePassword(values.password.trim(), "number")) {
+			toast.error(
+				"Password must include a number",
+				ToastDefaultOptions({ id: "signup_form_pop" }),
+			);
+			return;
+		}
+		if (values.password.trim() !== values.confirmPassword.trim()) {
+			toast.error(
+				"Passwords do not match",
+				ToastDefaultOptions({ id: "signup_form_pop" }),
+			);
+			return;
+		}
 		setErrors([]);
 		if (values) {
 			setLoading(true);
@@ -121,11 +140,12 @@ const useSignUpForm = ({
 			}, 3000);
 		}
 	};
+
 	return {
 		errors,
 		loading,
 		values,
-		throwError,
+		handleError,
 		handleChange,
 		handleSubmit,
 		handleCountrySelect,

@@ -20,7 +20,7 @@ export const ToastDefaultOptions = ({
 		draggable: true,
 		position: "top-right",
 		hideProgressBar: true,
-		theme: "colored",
+		theme: "light",
 		toastId: id,
 		...rest,
 	};

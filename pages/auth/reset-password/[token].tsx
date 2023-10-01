@@ -1,9 +1,8 @@
 import { GetServerSidePropsContext } from "next";
 import React, { useState } from "react";
-import { ReusableParticles } from "../../../components/templates/auth/password/forgot";
 import { PrimaryButton } from "../../../components/ui/atom/buttons";
 import ActivityIndicator from "../../../components/ui/atom/loader/ActivityIndicator";
-import ResetNewPasswordTemplate from "../../../components/templates/auth/reset-password/reset";
+import ResetNewPasswordTemplate from "../../../components/templates/auth/password/reset";
 
 const SetNewPassword = () => {
 	return <ResetNewPasswordTemplate />;

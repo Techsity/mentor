@@ -1,18 +1,7 @@
-import React, {
-	ChangeEvent,
-	FormEvent,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-import CustomTextInput from "../../../../inputs";
-import CountrySelector from "../../../../inputs/CountrySelector";
-import Link from "next/link";
+import React from "react";
 import { PrimaryButton } from "../../../../buttons";
 import ActivityIndicator from "../../../../loader/ActivityIndicator";
-import { SelectedCountry } from "../../../../../../../interfaces/country-selector.interface";
 import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
-import countries from "../../../../../../../data/countries";
 import useSignUpForm from "../../../../../../../hooks/forms/useSignUpForm";
 import SignupFormInputs from "./SignupFormInputs";
 import PasswordValidationComponent from "./PasswordValidationComponent";
@@ -35,7 +24,7 @@ const SignUpForm = ({
 		handleChange,
 		handleSubmit,
 		loading,
-		throwError,
+		handleError,
 		values,
 		handleCountrySelect,
 	} = useSignUpForm({ initialValues, onSubmit });
@@ -48,7 +37,7 @@ const SignUpForm = ({
 			<SignupFormInputs
 				errors={errors}
 				handleChange={handleChange}
-				throwError={throwError}
+				handleError={handleError}
 				values={values}
 				handleCountrySelect={handleCountrySelect}
 			/>
@@ -68,7 +57,7 @@ const SignUpForm = ({
 					className="p-3 text-center px-12 w-full lg:w-auto"
 				/>
 				<div className="flex-grow">
-					<PasswordValidationComponent />
+					<PasswordValidationComponent password={values.password} />
 				</div>
 			</div>
 		</form>
