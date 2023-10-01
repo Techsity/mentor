@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ButtonHTMLAttributes, MouseEventHandler } from "react";
-
+import classNames from "classnames";
 interface IPrimaryButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 	title: string;
 	link?: string;
@@ -15,7 +15,10 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 			<button
 				disabled={disabled}
 				onClick={onClick}
-				className={`flex bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
+				className={classNames(
+					`bg-[#094B10] text-white cursor-pointer select-none text-center`,
+					className,
+				)}
 				{...rest}
 			>
 				{title}
@@ -26,7 +29,10 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 		<button
 			disabled={disabled}
 			onClick={onClick}
-			className={`bg-[#094B10] text-white cursor-pointer select-none text-center items-center ${className}`}
+			className={classNames(
+				`bg-[#094B10] text-white cursor-pointer select-none text-center`,
+				className,
+			)}
 			{...rest}
 		>
 			{title}

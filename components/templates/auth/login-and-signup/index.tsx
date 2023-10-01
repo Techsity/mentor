@@ -12,9 +12,9 @@ const LoginAndSignupPageTemplate = () => {
 			<div className="relative w-full hidden xl:block">
 				<Particles />
 			</div>
-			<div className="h-screen h-full grid overflow-hidden md:grid-cols-12 bg-[#F6F9F8]">
+			<div className="min-h-screen h-full grid overflow-hidden md:grid-cols-12 bg-[#F6F9F8]">
 				<div
-					className="xl:pl-20 md:pt-16 pt-10 px-5 md:col-span-6 overflow-y-auto pb-40"
+					className="xl:pl-20 md:pt-16 pt-10 px-5 md:col-span-6 mb-20"
 					style={{
 						scrollbarWidth: "none",
 					}}

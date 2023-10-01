@@ -3,6 +3,7 @@ import { ISignUpState } from "../../interfaces/auth.interface";
 import { isValidPhoneNumber } from "../../utils";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";
+import { SelectedCountry } from "../../interfaces/country-selector.interface";
 
 export interface IFieldError {
 	field: keyof ISignUpState | "";
@@ -25,48 +26,43 @@ const useSignUpForm = ({
 			if (!errors.find((error) => error.field === fieldName)) {
 				setErrors([...errors, { field: fieldName, error: "Error" }]);
 			}
-			console.log(errors);
 			if (fieldName === "fullName") {
 				toast.error(
-					"Please fill all fields",
+					"Full name is required",
 					ToastDefaultOptions({ id: "signup_form_pop" }),
 				);
-				// setError({ ...error, field: "fullName", error: "Please fill all fields" });
 			}
 			if (fieldName === "email") {
 				if (!values.email) {
 					toast.error(
-						"Please fill all fields",
+						"Email is required",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
-					// setError({ ...error, field: "email", error: "Please fill all fields" });
 					return;
 				}
 				toast.error(
 					"Invalid Email",
 					ToastDefaultOptions({ id: "signup_form_pop" }),
 				);
-				// setError({ ...error, field: "email", error: "Invalid Email" });
 			}
 			if (fieldName === "phone") {
 				if (!values.phone) {
 					toast.error(
-						"Please fill all fields",
+						"Phone number is required",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
-					// setError({ ...error, field: "phone", error: "Please fill all fields" });
 					return;
 				}
-				toast.error(
-					"Invalid Phone Number",
-					ToastDefaultOptions({ id: "signup_form_pop" }),
-				);
-				// setError({ ...error, field: "phone", error: "Invalid Phone Number" });
+				if (!isValidPhoneNumber(values.phone))
+					toast.error(
+						"Invalid Phone Number",
+						ToastDefaultOptions({ id: "signup_form_pop" }),
+					);
 			}
 			if (fieldName === "password") {
 				if (!values.password) {
 					toast.error(
-						"Please fill all fields",
+						"Password is required",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
 					return;
@@ -75,7 +71,23 @@ const useSignUpForm = ({
 			if (fieldName === "country") {
 				if (!values.country) {
 					toast.error(
-						"Please fill all fields",
+						"Please select your country",
+						ToastDefaultOptions({ id: "signup_form_pop" }),
+					);
+					return;
+				}
+			}
+			if (fieldName === "confirmPassword") {
+				if (!values.confirmPassword) {
+					toast.error(
+						"Please confirm password",
+						ToastDefaultOptions({ id: "signup_form_pop" }),
+					);
+					return;
+				}
+				if (values.password !== values.confirmPassword) {
+					toast.error(
+						"Passwords do not match",
 						ToastDefaultOptions({ id: "signup_form_pop" }),
 					);
 					return;
@@ -83,6 +95,10 @@ const useSignUpForm = ({
 			}
 		};
 
+	const handleCountrySelect = (country: SelectedCountry | null) => {
+		if (country) setValues({ ...values, country: country.label });
+		setErrors([]);
+	};
 	const handleChange =
 		(name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
 			setValues({ ...values, [name]: e?.target.value });
@@ -112,7 +128,7 @@ const useSignUpForm = ({
 		throwError,
 		handleChange,
 		handleSubmit,
-		setValues,
+		handleCountrySelect,
 	};
 };
 

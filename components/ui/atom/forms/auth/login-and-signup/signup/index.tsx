@@ -15,6 +15,7 @@ import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
 import countries from "../../../../../../../data/countries";
 import useSignUpForm from "../../../../../../../hooks/forms/useSignUpForm";
 import SignupFormInputs from "./SignupFormInputs";
+import PasswordValidationComponent from "./PasswordValidationComponent";
 
 const SignUpForm = ({
 	onSubmit,
@@ -25,6 +26,7 @@ const SignUpForm = ({
 		fullName: "",
 		email: "",
 		password: "",
+		confirmPassword: "",
 		phone: "",
 		country: "",
 	};
@@ -35,7 +37,7 @@ const SignUpForm = ({
 		loading,
 		throwError,
 		values,
-		setValues,
+		handleCountrySelect,
 	} = useSignUpForm({ initialValues, onSubmit });
 
 	return (
@@ -48,9 +50,9 @@ const SignUpForm = ({
 				handleChange={handleChange}
 				throwError={throwError}
 				values={values}
-				setValues={setValues}
+				handleCountrySelect={handleCountrySelect}
 			/>
-			<div className="sm:flex grid gap-5 justify-between mt-5 items-center">
+			<div className="flex lg:flex-row flex-col gap-8 justify-between mt-5 items-center w-full">
 				<PrimaryButton
 					type="submit"
 					disabled={loading}
@@ -63,13 +65,11 @@ const SignUpForm = ({
 							</div>
 						) : null
 					}
-					className="px-10 p-3 rounded text-center"
+					className="p-3 text-center px-12 w-full lg:w-auto"
 				/>
-				<Link href="/auth/forgot-password">
-					<div className="cursor-pointer">
-						Forgot Password? <span className="font-semibold">Reset it!</span>
-					</div>
-				</Link>
+				<div className="flex-grow">
+					<PasswordValidationComponent />
+				</div>
 			</div>
 		</form>
 	);

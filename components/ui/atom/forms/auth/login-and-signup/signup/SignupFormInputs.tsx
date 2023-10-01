@@ -4,16 +4,17 @@ import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
 import { IFieldError } from "../../../../../../../hooks/forms/useSignUpForm";
 import countries from "../../../../../../../data/countries";
 import CountrySelector from "../../../../inputs/CountrySelector";
+import { SelectedCountry } from "../../../../../../../interfaces/country-selector.interface";
 
 const SignupFormInputs = ({
 	errors,
 	handleChange,
 	throwError,
 	values,
-	setValues,
+	handleCountrySelect,
 }: {
 	values: ISignUpState;
-	setValues: Dispatch<SetStateAction<ISignUpState>>;
+	handleCountrySelect: (country: SelectedCountry | null) => void;
 	handleChange: (
 		field: keyof ISignUpState,
 	) => (e: ChangeEvent<HTMLInputElement>) => void;
@@ -74,9 +75,7 @@ const SignupFormInputs = ({
 				selected={
 					countries.find((country) => country.label === values.country) || null
 				}
-				onSelect={(country) => {
-					if (country) setValues({ ...values, country: country.label });
-				}}
+				onSelect={handleCountrySelect}
 				required
 				onInvalidInput={throwError("country")}
 				classes={{
@@ -91,11 +90,11 @@ const SignupFormInputs = ({
 					...defaultInputProps,
 					placeholder: "Phone Number",
 					type: "tel",
-					required: true,
-					pattern: "/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/",
+					pattern: "^([0|+[0-9]{1,5})?([7-9][0-9]{9})$",
 					value: values.phone.trim(),
 					onChange: handleChange("phone"),
 					inputMode: "numeric",
+					required: true,
 					onInvalid: throwError("phone"),
 					title: "Please enter a valid phone number",
 				}}
@@ -113,7 +112,10 @@ const SignupFormInputs = ({
 					placeholder: "Create Password",
 					type: "password",
 					value: values.password.trim(),
+					required: true,
+					onInvalid: throwError("password"),
 					onChange: handleChange("password"),
+					min: "8",
 				}}
 				containerProps={{
 					...defaultContainerProps,
@@ -128,13 +130,16 @@ const SignupFormInputs = ({
 					...defaultInputProps,
 					placeholder: "Confirm Password",
 					type: "password",
+					required: true,
+					onInvalid: throwError("confirmPassword"),
+					onChange: handleChange("confirmPassword"),
 				}}
 				containerProps={{
 					...defaultContainerProps,
-					// className:
-					// 	error?.field === "email"
-					// 		? "border border-[red]"
-					// 		: "border-[#094B10] border",
+					className:
+						errors.filter((error) => error?.field === "confirmPassword").length > 0
+							? "border border-[red]"
+							: "border-[#094B10] border",
 				}}
 			/>
 		</>

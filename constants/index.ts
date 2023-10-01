@@ -5,12 +5,15 @@ interface ToastId {
 	forgot_password_pop: string;
 	signup_form_pop: string;
 }
+// interface ICustomToastProps extends ToastOptions<Omit<key = "">> {
+interface ICustomToastProps extends ToastOptions {
+	id: keyof ToastId;
+}
 
 export const ToastDefaultOptions = ({
 	id,
-}: {
-	id: keyof ToastId;
-}): ToastOptions => {
+	...rest
+}: ICustomToastProps): ToastOptions => {
 	return {
 		autoClose: 5000,
 		closeOnClick: true,
@@ -19,5 +22,6 @@ export const ToastDefaultOptions = ({
 		hideProgressBar: true,
 		theme: "colored",
 		toastId: id,
+		...rest,
 	};
 };

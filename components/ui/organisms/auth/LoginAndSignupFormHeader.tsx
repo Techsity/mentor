@@ -10,31 +10,42 @@ const LoginAndSignupFormHeader = ({
 }) => {
 	return (
 		<>
-			{currentForm === "login" ? (
-				<div className="animate__animated animate__bounceIn z-30 relative">
-					<h1
-						style={{ fontFamily: "Days One" }}
-						className="text-2xl md:text-3xl text-[#00D569]"
-					>
-						Welcome Back
-					</h1>
-					<p className="font-[300] my-3">
-						Continue your journey to endless illumination
-					</p>
-				</div>
-			) : (
-				<div className="animate__animated animate__bounceIn flex items-center gap-2">
-					<h1
-						style={{ fontFamily: "Days One" }}
-						className="text-2xl md:text-3xl text-[#00D569]"
-					>
-						Join
-					</h1>
-					<p className="font-[300] my-3">
-						<MentorLogoDark height="50px" width="130px" />
-					</p>
-				</div>
-			)}
+			<div
+				className={
+					currentForm === "login"
+						? "animate__animated animate__fadeIn z-30 relative"
+						: "hidden"
+				}
+			>
+				<h1
+					style={{ fontFamily: "Days One" }}
+					className="text-2xl md:text-3xl text-[#00D569]"
+				>
+					Welcome Back
+				</h1>
+				<p className="font-[300] my-3">
+					Continue your journey to endless illumination
+				</p>
+			</div>
+
+			<div
+				className={
+					currentForm === "signup"
+						? "animate__animated animate__fadeIn flex items-center gap-2"
+						: "hidden"
+				}
+			>
+				<h1
+					style={{ fontFamily: "Days One" }}
+					className="text-2xl md:text-3xl text-[#00D569]"
+				>
+					Join
+				</h1>
+				<p className="font-[300] my-3">
+					<MentorLogoDark height="50px" width="130px" />
+				</p>
+			</div>
+
 			<div className="flex select-none items-center md:gap-[1px] mt-5 animate__animated animate__slideIn z-30 relative">
 				<div
 					onClick={() => setCurrentForm("signup")}
