@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import CustomTextInput from "../../../ui/atom/inputs";
+import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import PasswordValidationComponent from "../../../ui/atom/forms/auth/login-and-signup/signup/PasswordValidationComponent";
 import { IResetPasswordState } from "../../../../interfaces/auth.interface";
 

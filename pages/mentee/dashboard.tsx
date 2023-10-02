@@ -1,12 +1,8 @@
 import React from "react";
+import MenteeDashboardTemplate from "../../components/templates/mentee/dashboard";
 
 const MenteeDashboard = () => {
-	return (
-		<div className="pt-20 min-h-screen">
-			MenteeDashboard
-			<div className="">MenteeDashboard</div>
-		</div>
-	);
+	return <MenteeDashboardTemplate />;
 };
 
 export default MenteeDashboard;

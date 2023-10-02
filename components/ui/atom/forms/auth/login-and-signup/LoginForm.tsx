@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { PrimaryButton } from "../../../buttons";
-import CustomTextInput from "../../../inputs";
+import CustomTextInput from "../../../inputs/CustomTextInput";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
 
 const LoginForm = () => {

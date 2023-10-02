@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import CustomTextInput from "../../components/ui/atom/inputs";
+import CustomTextInput from "../../components/ui/atom/inputs/CustomTextInput";
 import { PrimaryButton } from "../../components/ui/atom/buttons";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";

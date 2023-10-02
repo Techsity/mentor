@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
-import CustomTextInput from "../../../../inputs";
+import CustomTextInput from "../../../../inputs/CustomTextInput";
 import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
 import { IFieldError } from "../../../../../../../hooks/forms/useSignUpForm";
 import countries from "../../../../../../../data/countries";

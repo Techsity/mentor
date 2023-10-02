@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import CustomTextInput from "../../../ui/atom/inputs";
+import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import ForgotPasswordForm from "../../../ui/atom/forms/auth/ForgotPasswordForm";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ const ForgotPasswordTemplate = () => {
 	const handleSubmit = async (e?: FormEvent) => {
 		e?.preventDefault();
 		setState({ ...state, error: "", loading: true });
-		// toast.dismiss("forgot_password_pop");  
+		// toast.dismiss("forgot_password_pop");
 		if (email) {
 			if (isEmail(email)) {
 				const hashedToken = "toendjsdhjkjckenwd"; // auth token gotten from the server

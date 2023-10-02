@@ -1,6 +1,6 @@
 import React, { Dispatch, FormEvent, SetStateAction } from "react";
 import { PrimaryButton } from "../../buttons";
-import CustomTextInput from "../../inputs";
+import CustomTextInput from "../../inputs/CustomTextInput";
 import { IForgotPasswordState } from "../../../../../interfaces/auth.interface";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 

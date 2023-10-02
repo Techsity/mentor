@@ -15,7 +15,7 @@ import {
 	SelectedCountry,
 } from "../../../../interfaces/country-selector.interface";
 import classNames from "classnames";
-import CustomTextInput from "./index";
+import CustomTextInput from "./CustomTextInput";
 
 const CountrySelector = ({
 	onSelect,
