@@ -136,7 +136,7 @@ const useSignUpForm = ({
 			setLoading(true);
 			setTimeout(function () {
 				onSubmit && onSubmit(values);
-				setLoading(false);
+				// setLoading(false);
 			}, 3000);
 		}
 	};

@@ -51,7 +51,7 @@ const ForgotPasswordTemplate = () => {
 	};
 	return (
 		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative px-5 md:px-24">
-			<ReusableParticles />
+			<Particles />
 			<ForgotPasswordForm
 				state={state}
 				handleSubmit={handleSubmit}
@@ -60,7 +60,7 @@ const ForgotPasswordTemplate = () => {
 		</div>
 	);
 };
-const ReusableParticles = () => {
+const Particles = () => {
 	return (
 		<div className="sm:block hidden">
 			<svg

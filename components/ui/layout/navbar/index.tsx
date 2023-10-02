@@ -11,7 +11,7 @@ const Navbar = () => {
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	const excludedPaths: string[] = ["auth", "dashboard"];
+	const excludedPaths: string[] = ["auth", "dashboard", "onboarding"];
 	const hideNavSections: boolean = excludedPaths.some((path) =>
 		router.asPath.includes(path),
 	);

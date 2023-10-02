@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import CustomTextInput from "../../../ui/atom/inputs";
@@ -12,7 +12,9 @@ const ResetNewPasswordTemplate = () => {
 		confirmNewPassword: "",
 	});
 
-	const handleSubmit = () => {
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		console.log(state);
 		//
 	};
 
@@ -34,6 +36,7 @@ const ResetNewPasswordTemplate = () => {
 							type: "password",
 							className:
 								"bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
+							onChange: (e) => setState({ ...state, newPassword: e.target.value }),
 						}}
 						containerProps={{
 							className:
@@ -47,6 +50,8 @@ const ResetNewPasswordTemplate = () => {
 							type: "password",
 							className:
 								"bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
+							onChange: (e) =>
+								setState({ ...state, confirmNewPassword: e.target.value }),
 						}}
 						containerProps={{
 							className:

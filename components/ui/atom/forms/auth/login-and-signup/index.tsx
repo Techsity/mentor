@@ -5,8 +5,10 @@ import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupF
 import Link from "next/link";
 import { GoogleIconSvg } from "../../../icons/svgs";
 import { ISignUpState } from "../../../../../../interfaces/auth.interface";
+import { useRouter } from "next/router";
 
 const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
+	const router = useRouter();
 	const [currentForm, setCurrentForm] = useState<"login" | "signup">(pageKey);
 
 	useEffect(() => {
@@ -16,6 +18,9 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 
 	const handleSignUpFormSubmit = (state: ISignUpState) => {
 		console.log(state);
+		setTimeout(function () {
+			router.push(`/auth/verification/${"jwt_token"}/signup`);
+		}, 2000);
 	};
 
 	return (

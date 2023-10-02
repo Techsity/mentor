@@ -1,17 +1,16 @@
 import React from "react";
 import { GetServerSidePropsContext } from "next";
-import { Particles } from "../../../../../components/templates/auth/login-and-signup";
-import { useRouter } from "next/router";
 import OtpTemplate from "../../../../../components/templates/auth/verification/OtpTemplate";
+import { useRouter } from "next/router";
 
-const PasswordResetOtpVerificationPage = () => {
+const SignupOtpVerificationPage = () => {
 	const router = useRouter();
 	const token = "toendjsdhjkjckenwd";
 	return (
 		<OtpTemplate
 			next={(otp) => {
 				console.log(otp);
-				router.push(`/auth/reset-password/${token}`);
+				router.push(`/onboarding/interests`);
 			}}
 			timeLimit={60}
 		/>
@@ -27,4 +26,5 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
 	// validate or redirect
 	return { props: {} };
 };
-export default PasswordResetOtpVerificationPage;
+
+export default SignupOtpVerificationPage;
