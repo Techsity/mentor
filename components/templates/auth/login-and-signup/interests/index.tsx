@@ -8,27 +8,12 @@ import React, {
 import InterestCard from "../../../../ui/atom/cards/onboading/InterestCard";
 import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
+import interests from "../../../../../data/onboarding/interests";
 
 const OnboardingInterestsTemplate = () => {
-	const interests: { imageUrl: string; title: string }[] = [
-		{
-			imageUrl: "/assets/images/interests/campaign.png",
-			title: "Digital Marketing",
-		},
-		{ imageUrl: "/assets/images/interests/film.png", title: "Video Editing" },
-		{ imageUrl: "/assets/images/interests/bot.png", title: "Robotics" },
-		{ imageUrl: "/assets/images/interests/layout.png", title: "UI/UX design" },
-		{ imageUrl: "/assets/images/interests/coding.png", title: "HTML/CSS" },
-		{ imageUrl: "/assets/images/interests/cyber.png", title: "Cyber Security" },
-		{
-			imageUrl: "/assets/images/interests/monitoring.png",
-			title: "Data Analysis",
-		},
-		{ imageUrl: "/assets/images/interests/responsive.png", title: "Web Design" },
-		{ imageUrl: "/assets/images/interests/graphic.png", title: "Graphic Design" },
-	];
-	const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
 	const toggleInterest = (title: string) => {
 		if (selectedInterests.includes(title)) {
 			setSelectedInterests((prevSelected) =>
