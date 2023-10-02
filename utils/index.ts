@@ -7,8 +7,7 @@ export const scrollToTop = () => {
 export const isEmail = (email: string): boolean =>
 	/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
 
-export const isValidNumber = (value: number): boolean =>
-	/^[0-9]$/.test(value.toString());
+export const isValidNumber = (value: string): boolean => /^[0-9]$/.test(value);
 
 export const isValidPhoneNumber = (phone: string): boolean =>
 	/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone);

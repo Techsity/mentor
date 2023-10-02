@@ -56,7 +56,7 @@ const CountrySelector = ({
 
 	// Close Options Modal when A Use Clicks Outside The Input Area
 	useEffect(() => {
-		const handleClickOutside = (event: globalThis.MouseEvent) => {
+		const handleClickOutside = (event: any) => {
 			if (selectRef.current && !selectRef.current.contains(event.target)) {
 				setIsOpen(false);
 			}

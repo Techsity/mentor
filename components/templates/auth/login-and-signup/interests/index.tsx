@@ -10,6 +10,8 @@ import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
 import interests from "../../../../../data/onboarding/interests";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../constants";
 
 const OnboardingInterestsTemplate = () => {
 	const router = useRouter();
@@ -26,10 +28,21 @@ const OnboardingInterestsTemplate = () => {
 	};
 	const handleSubmit = () => {
 		setLoading(true);
-		setTimeout(function () {
-			// setLoading(false);
-			router.push("/mentee/dashboard");
-		}, 2000);
+		if (selectedInterests.length > 0) {
+			toast.dismiss("onboarding_interest_pop");
+			setTimeout(function () {
+				// setLoading(false);
+				router.push("/onboarding/congratulations", "/onboarding/finish");
+			}, 2000);
+		} else {
+			setTimeout(function () {
+				setLoading(false);
+				toast.error(
+					"Please select at least one interest",
+					ToastDefaultOptions({ id: "onboarding_interest_pop" }),
+				);
+			}, 500);
+		}
 	};
 
 	return (
