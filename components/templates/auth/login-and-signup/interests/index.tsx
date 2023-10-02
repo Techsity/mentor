@@ -9,11 +9,12 @@ import InterestCard from "../../../../ui/atom/cards/onboading/InterestCard";
 import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
 import interests from "../../../../../data/onboarding/interests";
+import { useRouter } from "next/router";
 
 const OnboardingInterestsTemplate = () => {
+	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-
 	const toggleInterest = (title: string) => {
 		if (selectedInterests.includes(title)) {
 			setSelectedInterests((prevSelected) =>
@@ -26,7 +27,8 @@ const OnboardingInterestsTemplate = () => {
 	const handleSubmit = () => {
 		setLoading(true);
 		setTimeout(function () {
-			setLoading(false);
+			// setLoading(false);
+			router.push("/mentee/dashboard");
 		}, 2000);
 	};
 
