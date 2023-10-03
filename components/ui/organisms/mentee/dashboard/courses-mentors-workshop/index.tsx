@@ -8,7 +8,7 @@ import CoursesSection from "./CoursesSection";
 import WorkshopSection from "./WorkshopSection";
 
 const CoursesMentorsWorkshop = () => {
-	const links = ["Courses", "Workshop", "Mentors"];
+	const links = ["Courses", "Workshops", "Mentors"];
 	const [activeLink, setActiveLink] = useState<string>(links[0]);
 
 	return (
@@ -23,7 +23,7 @@ const CoursesMentorsWorkshop = () => {
 			<div className="my-5 min-h-[50vh]">
 				{activeLink === "Courses" ? (
 					<CoursesSection />
-				) : activeLink === "Workshop" ? (
+				) : activeLink === "Workshops" ? (
 					<WorkshopSection />
 				) : null}
 			</div>
