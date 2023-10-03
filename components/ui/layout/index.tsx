@@ -5,7 +5,6 @@ import AuthNavbar from "./navbar/AuthNavbar";
 import { checkAuth } from "../../../utils/auth";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
-
 	return (
 		<>
 			{checkAuth() ? <AuthNavbar /> : <Navbar />}

@@ -32,3 +32,26 @@ export const validatePassword = (
 	const regex = getRuleRegex(rule);
 	return regex.test(password);
 };
+
+export const formatDateDifference = (
+	startDate: Date,
+	endDate: Date,
+): string => {
+	const MS_PER_DAY = 24 * 60 * 60 * 1000;
+	const daysDifference = Math.round(
+		(endDate.getTime() - startDate.getTime()) / MS_PER_DAY,
+	);
+
+	if (daysDifference < 7) {
+		return `${daysDifference} days`;
+	} else if (daysDifference < 30) {
+		const weeks = Math.floor(daysDifference / 7);
+		return `${weeks} ${weeks === 1 ? "week" : "weeks"}`;
+	} else if (daysDifference < 365) {
+		const months = Math.floor(daysDifference / 30);
+		return `${months} ${months === 1 ? "month" : "months"}`;
+	} else {
+		const years = Math.floor(daysDifference / 365);
+		return `${years} ${years === 1 ? "year" : "years"}`;
+	}
+};

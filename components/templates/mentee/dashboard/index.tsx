@@ -6,7 +6,7 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 
 const MenteeDashboardTemplate = () => {
 	return (
-		<div>
+		<div className="relative">
 			<MenteeDashboardHero />
 			<CoursesMentorsWorkshop />
 			<BecomeMentor />

@@ -8,7 +8,7 @@ export interface ICourse {
 	price: number | "free";
 	mentor: { name: string; avatar: string };
 	available: boolean;
-	imgUrl: string;
+	imgUrl?: string;
 }
 
 export interface ICourseCategory {
@@ -42,4 +42,18 @@ export interface IBlogPost {
 	caption: string;
 	thumbnail?: string;
 	content: string;
+}
+
+export interface IWorkshop {
+	title: string;
+	category: "Live" | "Upcoming" | "Recordings";
+	description: string;
+	startDate: Date;
+	endDate: Date;
+	hoursPerDay: number;
+	enrolledStudents: number;
+	price: number | "free";
+	mentor: { name: string; avatar: string };
+	available: boolean;
+	imgUrl?: string;
 }
