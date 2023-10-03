@@ -29,24 +29,24 @@ const CoursesMentorsWorkshopNav = ({
 					</select>
 					<select className="border border-[#70C5A1] p-1 appearance-none relative hover:bg-[#DAFFEF] duration-300 px-4 focus:ring-0 outline-none cursor-pointer bg-transparent">
 						<option className="" value="prices_all">
-							All Prices
+							All Topic
 						</option>
 						<option className="" value="prices_all">
-							All Prices
+							All Topic
 						</option>
 						<option className="" value="prices_all">
-							All Prices
+							All Topic
 						</option>
 					</select>
 					<select className="border border-[#70C5A1] p-1 appearance-none relative hover:bg-[#DAFFEF] duration-300 px-4 focus:ring-0 outline-none cursor-pointer bg-transparent">
 						<option className="" value="prices_all">
-							All Prices
+							Country
 						</option>
 						<option className="" value="prices_all">
-							All Prices
+							Country
 						</option>
 						<option className="" value="prices_all">
-							All Prices
+							Country
 						</option>
 					</select>
 				</div>
