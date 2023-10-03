@@ -7,7 +7,8 @@ import { checkAuth } from "../../../utils/auth";
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<>
-			{checkAuth() ? <AuthNavbar /> : <Navbar />}
+			{/* {checkAuth() ? <AuthNavbar /> : <Navbar />} */}
+			<Navbar />
 			<div className="pt-10 overflow-x-hidden">{children}</div>
 			<Footer />
 		</>

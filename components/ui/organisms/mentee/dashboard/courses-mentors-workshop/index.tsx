@@ -6,6 +6,7 @@ import courses from "../../../../../../data/courses";
 import useWindowSize from "../../../../../../hooks/useWindowSize";
 import CoursesSection from "./CoursesSection";
 import WorkshopSection from "./WorkshopSection";
+import MentorsSection from "./MentorsSection";
 
 const CoursesMentorsWorkshop = () => {
 	const links = ["Courses", "Workshops", "Mentors"];
@@ -25,6 +26,8 @@ const CoursesMentorsWorkshop = () => {
 					<CoursesSection />
 				) : activeLink === "Workshops" ? (
 					<WorkshopSection />
+				) : activeLink === "Mentors" ? (
+					<MentorsSection />
 				) : null}
 			</div>
 		</div>

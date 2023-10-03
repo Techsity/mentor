@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
 import workshops from "../../../../../../data/workshops";
 import useWindowSize from "../../../../../../hooks/useWindowSize";
-import WorkshopDisplayCard from "../../../../atom/cards/home/WorkshopDisplayCard";
+import WorkshopDisplayCard from "../../../../atom/cards/mentee/WorkshopDisplayCard";
 import { IWorkshop } from "../../../../../../interfaces";
 
 const WorkshopSection = () => {
@@ -39,7 +39,7 @@ const WorkshopSection = () => {
 					))}
 				</div>
 			</div>
-			<div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden md:mx-10 mx-5 md:border border-[#D0D0D0] md:p-10 h-auto">
+			<div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 tracking-tight gap-6 overflow-hidden md:mx-10 mx-5 bg-[#FDFDFD] md:border border-[#D0D0D0] md:p-10 h-auto">
 				{workshops
 					.filter((workshop) => workshop.category === activeCategory)
 					.map((workshop: IWorkshop, indx: number) => {
