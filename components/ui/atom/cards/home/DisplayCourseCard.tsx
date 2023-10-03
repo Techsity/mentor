@@ -1,15 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useRef } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
-		<div className="animate__animated relative animate__fadeInUp group bg-white overflow-hidden shadow h-full hover:shadow-lg cursor-pointer duration-300 pb-6">
-			<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full p-6 hidden group-hover:flex">
-				<div>
-					<HeartOutline color="#fff" height="30px" width="30px" />
-					{/* <HeartSharp color="#FFB100" height="30px" width="30px" /> */}
+		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow h-full hover:shadow-lg cursor-pointer duration-300 pb-6">
+			<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
+				<div className="group">
+					<HeartOutline
+						color="#fff"
+						height="30px"
+						width="30px"
+						cssClasses="group-hover:hidden duration-300"
+					/>
+					<HeartSharp
+						color="#FFB100"
+						height="30px"
+						width="30px"
+						cssClasses="hidden group-hover:block duration-300"
+					/>
 				</div>
 				<div>
 					<ArrowForwardSharp color="#fff" height="30px" width="30px" />
@@ -17,7 +27,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 			</div>
 			<div className="grid gap-4">
 				<div className="relative">
-					<div className="bg-black w-full h-full bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute"></div>
+					<div className="bg-black w-full h-full bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 					<img
 						src={course.imgUrl || "/assets/images/mockups/course_one.png"}
 						className="w-full h-full"
@@ -28,7 +38,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 				<div className="flex items-center justify-between px-5 text-sm mt-2">
 					<span className="">{course.level}</span>
 					<span className="">{course.duration}hours</span>
-					<span className="">{course.limit} students</span>
+					<span className="">{course.limit.toLocaleString()} students</span>
 					<div className="flex items-center gap-2 text-[#094B10] ml-8 text-[16px]">
 						{course.rating}
 						<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
@@ -51,9 +61,15 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 						<h1>{course.mentor.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
-					<div className="text-white bg-[#094B10] select-none rounded px-8 p-2 cursor-pointer">
-						Free
-					</div>
+					{course.price === "free" ? (
+						<div className="text-white bg-[#094B10] select-none rounded px-8 p-2 cursor-pointer">
+							Free
+						</div>
+					) : (
+						<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2 cursor-pointer">
+							₦{course.price.toLocaleString()}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

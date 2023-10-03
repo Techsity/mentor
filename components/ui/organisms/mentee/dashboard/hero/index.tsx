@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { LiveWorkshopGlobeSvg } from "../../../atom/icons/svgs";
-import DashboardSearchbar from "../../../atom/inputs/DashboardSearchbar";
+import { LiveWorkshopGlobeSvg } from "../../../../atom/icons/svgs";
+import DashboardSearchbar from "../../../../atom/inputs/DashboardSearchbar";
 
 const MenteeDashboardHero = () => {
 	const popularSearches: string[] = [
@@ -16,7 +16,7 @@ const MenteeDashboardHero = () => {
 		"Chemistry",
 	];
 	return (
-		<div className="min-h-screen md:px-20 px-10 pt-20 bg-[#0C202B] relative overflow-hidden">
+		<div className="min-h-[80vh] md:px-20 px-10 pt-20 bg-[#0C202B] relative overflow-hidden">
 			<div className="opacity-20 top-0 left-0 absolute w-full">
 				<img
 					src="/assets/images/map3.png"

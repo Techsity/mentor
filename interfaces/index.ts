@@ -5,7 +5,7 @@ export interface ICourse {
 	duration: number;
 	limit: number;
 	rating: number;
-	free: boolean;
+	price: number | "free";
 	mentor: { name: string; avatar: string };
 	available: boolean;
 	imgUrl: string;
