@@ -1,16 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import router from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { MenuSharp } from "react-ionicons";
 import navLinks from "../../../../data/navlinks";
 import LandingSearchBar from "../../atom/forms/LandingSearchBar";
 import { MentorLogoDark } from "../../atom/icons/svgs";
 import Link from "next/link";
 import { currentUserRole } from "../../../../utils/auth";
-import { IUser } from "../../../../interfaces/user.interface";
 import { testUser } from "../../../../data/user";
+import NotificationCard from "../../atom/cards/notification";
 
 const AuthNavbar = () => {
+	const [showNotificationPanel, setShowNotificationPanel] =
+		useState<boolean>(true);
+
 	const CurrentUser = () => {
 		const user = testUser("mentee");
 		return (
@@ -23,7 +26,7 @@ const AuthNavbar = () => {
 							className="w-full h-full"
 						/>
 					</div>
-					<div className="leading-none">
+					<div className="leading-none sm:inline-block hidden">
 						<h1 className="text-lg font-medium">
 							{user?.fullName.split(" ")[0] + " " + user?.fullName.split(" ")[1]}
 						</h1>
@@ -46,11 +49,14 @@ const AuthNavbar = () => {
 					<LandingSearchBar />
 				</div>
 			) : null} */}
-			<div className="flex items-center gap-6 select-none">
-				<div className="hidden sm:flex items-center gap-10 pl-10 2xl:pl-40">
+			<div className="flex items-center gap-3 sm:gap-6 select-none">
+				<div className="flex items-center gap-4 sm:gap-10 pl-10 2xl:pl-40">
 					<CurrentUser />
-
-					<div className="border cursor-pointer flex justify-center border-[#70C5A1] p-2 group duration-300 bg-white hover:bg-[#70C5A1]">
+					<div
+						onClick={() => setShowNotificationPanel(!showNotificationPanel)}
+						className="border cursor-pointer flex justify-center border-[#70C5A1] p-2 group duration-300 bg-white hover:bg-[#70C5A1]"
+					>
+						{showNotificationPanel ? <NotificationCard /> : null}
 						<div className="group-hover:hidden">
 							<svg width="26" height="28" viewBox="0 0 17 19" fill="none">
 								<path
