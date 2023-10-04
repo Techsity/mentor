@@ -12,7 +12,7 @@ import NotificationCard from "../../atom/cards/notification";
 
 const AuthNavbar = () => {
 	const [showNotificationPanel, setShowNotificationPanel] =
-		useState<boolean>(true);
+		useState<boolean>(false);
 
 	const CurrentUser = () => {
 		const user = testUser("mentee");

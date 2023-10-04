@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import mentors from "../../../../../../data/mentors";
 import { IMentor } from "../../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../../utils";
@@ -7,6 +7,7 @@ import { GlobeIconSvg } from "../../../../atom/icons/svgs";
 import { PrimaryButton } from "../../../../atom/buttons";
 
 const MentorsSection = () => {
+	const [tab, setTab] = useState<"all" | "online">("all");
 	const MentorDisplayCard = (mentor: IMentor) => {
 		return (
 			<div className="border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
@@ -132,10 +133,24 @@ const MentorsSection = () => {
 	};
 	return (
 		<>
+			<div className="flex justify-center items-center">
+				<div className="flex items-center gap-5">
+					<button onClick={() => setTab("all")}>All</button>
+					<button onClick={() => setTab("online")}>Online</button>
+				</div>
+			</div>
 			<div className="grid xs:gap-3 gap-5 animate__animated animate__fadeIn lg:px-20 sm:px-10 px-auto md:p-10 bg-[#FDFDFD] md:border border-[#D0D0D0] overflow-hidden md:mx-10 mx-5 my-5">
-				{mentors.map((mentor, index) => (
-					<MentorDisplayCard {...mentor} key={index} />
-				))}
+				{tab === "all"
+					? mentors.map((mentor, index) => (
+							<MentorDisplayCard {...mentor} key={index} />
+					  ))
+					: tab === "online"
+					? mentors
+							.filter((mentor) => mentor.online)
+							.map((mentor, index) => <MentorDisplayCard {...mentor} key={index} />)
+					: mentors.map((mentor, index) => (
+							<MentorDisplayCard {...mentor} key={index} />
+					  ))}
 			</div>
 		</>
 	);
