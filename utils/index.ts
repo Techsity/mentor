@@ -55,3 +55,15 @@ export const formatDateDifference = (
 		return `${years} ${years === 1 ? "year" : "years"}`;
 	}
 };
+
+export function formatFollowersCount(number: number) {
+	if (number < 1000) {
+		return number.toString();
+	} else if (number < 1000000) {
+		const thousands = Math.floor(number / 1000);
+		return `${thousands}k`;
+	} else {
+		const millions = (number / 1000000).toFixed(1);
+		return `${millions}m`;
+	}
+}

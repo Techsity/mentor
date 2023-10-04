@@ -14,7 +14,7 @@ const CoursesMentorsWorkshopNav = ({
 	const FilterComponent = () => {
 		return (
 			<>
-				<div className="hidden md:flex items-center gap-4 text-[#094B10]">
+				<div className="hidden lg:flex items-center gap-4 text-[#094B10]">
 					<h1 className="text-sm whitespace-nowrap">Filter By: </h1>
 					<select className="border border-[#70C5A1] p-1 appearance-none relative hover:bg-[#DAFFEF] duration-300 px-4 focus:ring-0 outline-none cursor-pointer bg-transparent">
 						<option className="" value="prices_all">
@@ -50,7 +50,7 @@ const CoursesMentorsWorkshopNav = ({
 						</option>
 					</select>
 				</div>
-				<div className="md:hidden">
+				<div className="md:hidden sm:flex hidden">
 					<FilterCircleSharp
 						title="Filter by:"
 						color="#094B10"
@@ -63,7 +63,7 @@ const CoursesMentorsWorkshopNav = ({
 		);
 	};
 	return (
-		<div className="animate__animated animate__fadeInUp overflow-hidden flex md:justify-end justify-center w-full sm:mr-10 lg:mr-20 gap-5 items-center">
+		<div className="animate__animated animate__fadeInUp overflow-hidden flex lg:justify-end justify-center w-full sm:mr-10 lg:mr-20 gap-5 items-center">
 			<div className="flex tracking-tight justify-center items-center select-none">
 				{links?.map((link, i) => {
 					return (
