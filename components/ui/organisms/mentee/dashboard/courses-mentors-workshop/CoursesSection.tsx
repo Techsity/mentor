@@ -18,7 +18,7 @@ const CoursesSection = () => {
 							key={index}
 							onClick={() => {
 								setActiveSection(course.section);
-								// window.scrollBy({
+								// window.scrollTo({
 								// 	top: 150,
 								// 	behavior: "smooth",
 								// });

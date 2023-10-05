@@ -99,7 +99,7 @@ const MentorProfileCard = ({
 							.slice(0, 3)}
 					</div>
 					<div className="mt-2 text-xs flex gap-3 items-center text-[#b1b1b1] whitespace-nowrap">
-						<p className="">{mentor.experience.length} Year of Experience</p>
+						<p className="">{mentor?.experience?.length} Year of Experience</p>
 						<p className="">
 							{mentor.sessions === 1
 								? mentor.sessions + " session"

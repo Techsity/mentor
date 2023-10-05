@@ -8,8 +8,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -19,8 +19,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -43,6 +43,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "big-john",
@@ -51,8 +56,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -62,8 +67,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -86,6 +91,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "johnny-doe",
@@ -94,8 +104,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -105,8 +115,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -129,6 +139,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Wed", "Fri", "Sat"],
 		skills: ["Figma", "Photoshop", "JavaScript", "Figma", "Figma", "Figma"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "develop-go",
@@ -137,8 +152,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -148,8 +163,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -172,6 +187,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "backend-king",
@@ -180,8 +200,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -191,8 +211,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -215,6 +235,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "i-am-a-mentor",
@@ -223,8 +248,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -234,8 +259,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -258,6 +283,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 	{
 		username: "big-moves",
@@ -266,8 +296,8 @@ const mentors: IMentor[] = [
 		experience: [
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -277,8 +307,8 @@ const mentors: IMentor[] = [
 			},
 			{
 				company: { name: "Google" },
-				startDate: new Date("January 20, 2020"),
-				endDate: new Date(),
+				startDate: new Date("January 20, 2020").toLocaleDateString(),
+				endDate: new Date().toLocaleDateString(),
 				position: "Software Developer Technical Lead",
 				roles: [
 					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
@@ -301,6 +331,11 @@ const mentors: IMentor[] = [
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
+		projects: [
+			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
+			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+		],
+		// &&
 	},
 ];
 

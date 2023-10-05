@@ -75,7 +75,13 @@ const CoursesMentorsWorkshopNav = ({
 									: "hover:text-[#fff] hover:bg-[#094B10]"
 							}`}
 							style={{ fontFamily: "Days One" }}
-							onClick={() => setActiveLink(link)}
+							onClick={() => {
+								setActiveLink(link);
+								window.scrollTo({
+									top: 550,
+									behavior: "smooth",
+								});
+							}}
 						>
 							{link}
 						</div>

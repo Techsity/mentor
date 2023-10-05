@@ -1,9 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import CoursesMentorsWorkshopNav from "./CoursesMentorsWorkshopNav";
-import CoursesList from "../../../home/courses/CoursesList";
-import DisplayCourseCard from "../../../../atom/cards/home/DisplayCourseCard";
-import courses from "../../../../../../data/courses";
-import useWindowSize from "../../../../../../hooks/useWindowSize";
 import CoursesSection from "./CoursesSection";
 import WorkshopSection from "./WorkshopSection";
 import MentorsSection from "./MentorsSection";
@@ -14,7 +10,7 @@ const CoursesMentorsWorkshop = () => {
 
 	return (
 		<div className="relative h-full">
-			<div className="flex justify-end bg-[#EEFFF8] py-6 sticky top-24">
+			<div className="flex justify-end bg-[#EEFFF8] py-6 sticky top-24 z-30">
 				<CoursesMentorsWorkshopNav
 					links={links}
 					activeLink={activeLink}

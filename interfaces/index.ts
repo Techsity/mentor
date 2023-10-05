@@ -250,15 +250,20 @@ interface IExperience {
 	company: { name: string; logo?: string };
 	topSkils: string[];
 	roles: string[];
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 	country?: CountryCode;
 }
 export interface IMentor {
 	name: string;
 	username: string;
 	jobTitle: string;
-	experience: IExperience[];
+	experience?: IExperience[];
+	projects?: {
+		title: string;
+		link: string;
+		type: "Freelance" | "Contract" | "Official";
+	}[];
 	sessions: number;
 	rating: number;
 	avatar: string;
