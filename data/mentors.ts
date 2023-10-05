@@ -2,12 +2,36 @@ import { IMentor } from "../interfaces";
 
 const mentors: IMentor[] = [
 	{
+		username: "krispy-savage",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.6,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_5.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
@@ -18,14 +42,82 @@ const mentors: IMentor[] = [
 		verified: true,
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
 	},
 	{
+		username: "big-john",
+		name: "John Doe",
+		jobTitle: "Backend Developer",
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
+		rating: 4.6,
+		sessions: 2,
+		avatar: "/assets/images/mentors/mentor_1.png",
+		about:
+			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		country: "NG",
+		followers: 300000,
+		languages: ["English", "French"],
+		online: false,
+		ratePerHour: 5000,
+		verified: true,
+		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
+	},
+	{
+		username: "johnny-doe",
 		name: "John Doe",
 		jobTitle: "Senior product designer / Brand Identity Designer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.0,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_2.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "TH",
@@ -36,14 +128,39 @@ const mentors: IMentor[] = [
 		verified: false,
 		daysOpen: ["Mon", "Wed", "Fri", "Sat"],
 		skills: ["Figma", "Photoshop", "JavaScript", "Figma", "Figma", "Figma"],
+		courses: [],
 	},
 	{
+		username: "develop-go",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.0,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_3.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "US",
@@ -54,14 +171,39 @@ const mentors: IMentor[] = [
 		verified: true,
 		daysOpen: ["Mon", "Tue", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
 	},
 	{
+		username: "backend-king",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.0,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_1.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
@@ -72,14 +214,39 @@ const mentors: IMentor[] = [
 		verified: true,
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
 	},
 	{
+		username: "i-am-a-mentor",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.0,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_2.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
@@ -90,14 +257,39 @@ const mentors: IMentor[] = [
 		verified: false,
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
 	},
 	{
+		username: "big-moves",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: 6,
+		experience: [
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+			{
+				company: { name: "Google" },
+				startDate: new Date("January 20, 2020"),
+				endDate: new Date(),
+				position: "Software Developer Technical Lead",
+				roles: [
+					"Lorem Ipsumso dolrlrod ddskjd disdnind sdininw ddi",
+					"dkjsdkjkdjvdj ivw vjvj viow vj dvwjkv wv",
+				],
+				topSkils: ["JavaScript", "Leadership", "AWS"],
+			},
+		],
 		rating: 4.0,
 		sessions: 2,
-		avatar: "/assets/images/avatar.png",
+		avatar: "/assets/images/mentors/mentor_4.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
@@ -108,6 +300,7 @@ const mentors: IMentor[] = [
 		verified: true,
 		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
+		courses: [],
 	},
 ];
 

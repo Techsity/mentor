@@ -8,9 +8,10 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<>
 			{checkAuth() ? <AuthNavbar /> : <Navbar />}
-			{/* <Navbar /> */}
-			<div className="pt-10 overflow-x-hidden">{children}</div>
+			{/* <Navbar />  */}
+			<div className="pt-10">{children}</div>
 			<Footer />
+			{/* {children} */}
 		</>
 	);
 };

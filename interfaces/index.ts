@@ -244,10 +244,21 @@ type CountryCode =
 	| "YE"
 	| "ZM"
 	| "ZW";
+
+interface IExperience {
+	position: string;
+	company: { name: string; logo?: string };
+	topSkils: string[];
+	roles: string[];
+	startDate: Date;
+	endDate: Date;
+	country?: CountryCode;
+}
 export interface IMentor {
 	name: string;
+	username: string;
 	jobTitle: string;
-	experience: number;
+	experience: IExperience[];
 	sessions: number;
 	rating: number;
 	avatar: string;
@@ -260,6 +271,7 @@ export interface IMentor {
 	country: CountryCode;
 	languages: string[];
 	followers: number;
+	courses: ICourse[];
 }
 
 export interface IAboutHeroCarouselData {
