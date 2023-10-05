@@ -28,7 +28,7 @@ const mentors: IMentor[] = [
 		avatar: "/assets/images/avatar.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
-		country: "NG",
+		country: "TH",
 		followers: 300000,
 		languages: ["English", "French"],
 		online: true,
@@ -46,7 +46,7 @@ const mentors: IMentor[] = [
 		avatar: "/assets/images/avatar.png",
 		about:
 			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
-		country: "NG",
+		country: "US",
 		followers: 300000,
 		languages: ["English", "French"],
 		online: false,

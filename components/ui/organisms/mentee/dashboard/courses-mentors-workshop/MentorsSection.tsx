@@ -1,16 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import mentors from "../../../../../../data/mentors";
 import { IMentor } from "../../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../../utils";
 import { GlobeIconSvg } from "../../../../atom/icons/svgs";
 import { PrimaryButton } from "../../../../atom/buttons";
+import * as FlagIcons from "react-country-flags-select";
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
 	const MentorDisplayCard = (mentor: IMentor) => {
+		const country: string =
+			mentor.country.charAt(0) + mentor.country.charAt(1).toLowerCase();
+		interface IconType {
+			[key: string]: React.ElementType;
+		}
+		const IconComponent: IconType = FlagIcons;
+		const IconComp: any = mentor.country ? IconComponent[country] : null;
 		return (
-			<div className="border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
+			<div className="animate__animated animate__fadeIn border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
 				<div className="w-full pr-4 flex items-start gap-3">
 					<div className="flex justify-center items-center">
 						<div className="relative">
@@ -114,18 +122,19 @@ const MentorsSection = () => {
 							>
 								{mentor.ratePerHour} / hour
 							</div>
-							<svg width="24" height="19" viewBox="0 0 24 19" fill="none">
+							{/* <svg width="24" height="19" viewBox="0 0 24 19" fill="none">
 								<rect width="8" height="19" fill="#078661" />
 								<rect x="8" width="8" height="19" fill="white" />
 								<rect x="16" width="8" height="19" fill="#078661" />
-							</svg>
+							</svg> */}
+							<IconComp width="25px" height="25px" />
 						</div>
 					</div>
 				</div>
 				<div className="w-full lg:border-l-[.2em] border-[#D9D9D9] pl-4 mt-3">
 					<p className="text-[#9A9898] text-sm">{mentor.about}</p>
 					<div className="flex gap-5 items-center mt-10">
-						<PrimaryButton title="Let me help you" className="px-5 p-2" />
+						<PrimaryButton title="Consult" className="px-5 p-2" />
 					</div>
 				</div>
 			</div>
@@ -134,12 +143,36 @@ const MentorsSection = () => {
 	return (
 		<>
 			<div className="flex justify-center items-center">
-				<div className="flex items-center gap-5">
-					<button onClick={() => setTab("all")}>All</button>
-					<button onClick={() => setTab("online")}>Online</button>
+				<div className="flex items-center gap-10 animate__animated animate__fadeInUp">
+					<button
+						onClick={() => setTab("all")}
+						className={`overflow-hidden relative text-[#094B10] ${
+							tab === "all" ? "font-semibold" : ""
+						}`}
+					>
+						All
+						<span
+							className={`absolute bg-[#094B10] duration-300 left-0 bottom-0 h-[2px] ${
+								tab === "all" ? "w-full" : "w-0"
+							}`}
+						/>
+					</button>
+					<button
+						onClick={() => setTab("online")}
+						className={`overflow-hidden relative text-[#094B10] ${
+							tab === "online" ? "font-semibold" : ""
+						}`}
+					>
+						Online
+						<span
+							className={`absolute bg-[#094B10] duration-300 left-0 bottom-0 h-[2px] ${
+								tab === "online" ? "w-full" : "w-0"
+							}`}
+						/>
+					</button>
 				</div>
 			</div>
-			<div className="grid xs:gap-3 gap-5 animate__animated animate__fadeIn lg:px-20 sm:px-10 px-auto md:p-10 bg-[#FDFDFD] md:border border-[#D0D0D0] overflow-hidden md:mx-10 mx-5 my-5">
+			<div className="grid xs:gap-3 gap-5 lg:px-20 sm:px-10 px-auto md:p-10 bg-[#FDFDFD] md:border border-[#D0D0D0] overflow-hidden md:mx-10 mx-5 my-5">
 				{tab === "all"
 					? mentors.map((mentor, index) => (
 							<MentorDisplayCard {...mentor} key={index} />
