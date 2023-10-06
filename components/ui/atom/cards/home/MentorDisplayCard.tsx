@@ -22,7 +22,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						{mentor.jobTitle.split("/")[0]}
 					</p>
 					<p className="sm:text-sm text-[#B1B1B1]">
-						{mentor.experience} years of experience
+						{mentor.experience?.length} years of experience
 					</p>
 					<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">
 						{mentor.sessions} sessions

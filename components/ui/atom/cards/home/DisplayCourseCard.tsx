@@ -5,7 +5,7 @@ import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
-		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow h-full hover:shadow-lg cursor-pointer duration-300 pb-6">
+		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow-lg h-full hover:shadow-lg cursor-pointer duration-300 pb-6 w-full">
 			<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
 				<div className="group">
 					<HeartOutline
@@ -35,11 +35,11 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 					/>
 				</div>
 				<h1 className="px-5 font-medium tracking-tight">{course.title}</h1>
-				<div className="flex items-center justify-between px-5 text-sm mt-2">
+				<div className="flex items-center gap-1 justify-between px-5 text-[13px] mt-2">
 					<span className="">{course.level}</span>
 					<span className="">{course.duration}hours</span>
 					<span className="">{course.limit.toLocaleString()} students</span>
-					<div className="flex items-center gap-2 text-[#094B10] ml-8 text-[16px]">
+					<div className="flex items-center gap-2 text-[#094B10] ml-3 text-[13px]">
 						{course.rating}
 						<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
 							<path

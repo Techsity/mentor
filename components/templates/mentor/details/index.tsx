@@ -1,307 +1,129 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useRef, useState } from "react";
 import { IMentor } from "../../../../interfaces";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
-import MentorExperienceCard from "../../../ui/atom/cards/mentor/MentorExperienceCard";
-import Link from "next/link";
-import { PrimaryButton } from "../../../ui/atom/buttons";
+import {
+	AvailabiltySchedule,
+	Experience,
+	FeaturedReviews,
+	Projects,
+	Skills,
+	Socials,
+} from "../../../ui/organisms/mentor/details/";
+import Carousel from "react-multi-carousel";
+import DisplayCourseCard from "../../../ui/atom/cards/home/DisplayCourseCard";
+import courses from "../../../../data/courses";
+import { getMentorCourses } from "../../../../services/api";
 
 const MentorDetailsTemplate = (mentor: IMentor) => {
-	const {
-		about,
-		avatar,
-		country,
-		courses,
-		daysOpen,
-		experience,
-		followers,
-		jobTitle,
-		languages,
-		skills,
-		projects,
-	} = mentor;
+	const carouselRef = useRef<HTMLDivElement>(null);
+	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 
-	const Skills = () => (
-		<div className="grid gap-3">
-			<h1 className="text-xl font-semibold">Top Skills</h1>
-			<span className="flex items-center flex-wrap gap-3 text-sm">
-				{skills.map((skill) => (
-					<span key={skill} className="font-[400] text-[#70C5A1]">
-						{skill}
-					</span>
-				))}
-			</span>
-		</div>
-	);
-	const Experience = () => (
-		<div className="grid gap-3 mt-9">
-			<h1 className="text-xl font-semibold">Experience</h1>
-			<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
-				{experience &&
-					experience?.length >= 1 &&
-					experience
-						?.map((experience, index) => (
-							<div className="w-full" key={index}>
-								<MentorExperienceCard {...experience} />
-							</div>
-						))
-						.slice(0, 2)}
-			</span>
-			<div className="mt-3">
-				<PrimaryButton title="View all Experience" link="#" className="p-4 px-8" />
-			</div>
-		</div>
-	);
-	const Projects = () => (
-		<div className="grid gap-3 mt-9">
-			<h1 className="text-xl font-semibold">Projects</h1>
-			<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
-				{projects &&
-					projects
-						.map((project, index) => (
-							<Link key={index} href={project.link || "#"}>
-								<div className="border border-[#70C5A1] text-sm p-4 w-full flex justify-between gap-5 cursor-pointer">
-									<div className="w-2/3">
-										<h1 className="font-[500]">{project.title}</h1>
-										<p className="font-[300] my-2">{project.type}</p>
-									</div>
-									<div className="w-1/2">
-										<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
-										<p className="font-[300] my-2">{project.link}</p>
-									</div>
-								</div>
-							</Link>
-						))
-						.slice(0, 2)}
-			</span>
-			<div className="mt-3">
-				<PrimaryButton title="View all Projects" link="#" className="p-4 px-8" />
-			</div>
-		</div>
-	);
-	const FeaturedReviews = () => (
-		<div className="grid gap-3 mt-9">
-			<h1 className="text-xl font-semibold">Featured Reviews</h1>
-			<span className="grid sm:grid-cols-2 items-center gap-3 lg:max-w-xl w-full">
-				<Link href={"#"}>
-					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-						<p className="">
-							I once thought digital marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple
-						</p>
-						<div className="flex items-center mt-5 justify-between">
-							<p className="">Adewole Sulaiman</p>
-							<img
-								src="/assets/images/avatar.png"
-								alt=""
-								className="w-10 rounded-full"
-							/>
-						</div>
-					</div>
-				</Link>
-				<Link href={"#"}>
-					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-						<p className="">
-							I once thought digital marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple
-						</p>
-						<div className="flex items-center mt-5 justify-between">
-							<p className="">Adewole Sulaiman</p>
-							<img
-								src="/assets/images/avatar.png"
-								alt=""
-								className="w-10 rounded-full"
-							/>
-						</div>
-					</div>
-				</Link>
-				<Link href={"#"}>
-					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-						<p className="">
-							I once thought digital marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple
-						</p>
-						<div className="flex items-center mt-5 justify-between">
-							<p className="">Adewole Sulaiman</p>
-							<img
-								src="/assets/images/avatar.png"
-								alt=""
-								className="w-10 rounded-full"
-							/>
-						</div>
-					</div>
-				</Link>
-				<Link href={"#"}>
-					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-						<p className="">
-							I once thought digital marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple
-						</p>
-						<div className="flex items-center mt-5 justify-between">
-							<p className="">Adewole Sulaiman</p>
-							<img
-								src="/assets/images/avatar.png"
-								alt=""
-								className="w-10 rounded-full"
-							/>
-						</div>
-					</div>
-				</Link>
-			</span>
-			<div className="mt-3">
-				<PrimaryButton title="View all Reviews" link="#" className="p-4 px-8" />
-			</div>
-		</div>
-	);
-	const Socials = () => (
-		<span className="flex items-center gap-4">
-			<p className="">Share Course</p>
-			<Link href={"#"}>
-				<svg
-					width="20"
-					height="20"
-					viewBox="0 0 20 20"
-					fill="none"
-					className="cursor-pointer"
-				>
-					<path
-						d="M10 1.25C5.1625 1.25 1.25 5.1875 1.25 10.05C1.25 14.4375 4.45 18.0875 8.6375 18.75V12.6H6.4125V10.05H8.6375V8.1125C8.6375 5.9 9.95 4.6875 11.9375 4.6875C12.9 4.6875 13.9 4.8625 13.9 4.8625V7.025H12.8C11.7125 7.025 11.375 7.7 11.375 8.4V10.05H13.8L13.4125 12.6H11.375V18.75C15.5625 18.0875 18.7625 14.45 18.7625 10.05C18.7625 5.1875 14.85 1.25 10.0125 1.25H10Z"
-						fill="#70C5A1"
-					/>
-				</svg>
-			</Link>
-			<Link href={"#"}>
-				<svg
-					width="18"
-					height="18"
-					viewBox="0 0 18 18"
-					fill="none"
-					className="cursor-pointer"
-				>
-					<g clipPath="url(#clip0_275_3624)">
-						<path
-							d="M9 0C13.9757 0 18 4.02429 18 9C18 13.9757 13.9757 18 9 18C4.02429 18 0 13.9757 0 9C0 4.02429 4.02429 0 9 0ZM7.35429 13.7443C11.34 13.7443 13.5257 10.44 13.5257 7.57286V7.29C13.95 6.98143 14.3229 6.59571 14.6057 6.15857C14.22 6.32571 13.7957 6.44143 13.3586 6.50571C13.8086 6.23571 14.1557 5.81143 14.31 5.31C13.8857 5.55429 13.4229 5.73429 12.9343 5.83714C12.5357 5.41286 11.97 5.15571 11.3529 5.15571C10.1571 5.15571 9.18 6.13286 9.18 7.32857C9.18 7.49571 9.19286 7.66286 9.24429 7.81714C7.44429 7.72714 5.83714 6.86571 4.77 5.55429C4.59 5.87571 4.47429 6.24857 4.47429 6.64714C4.47429 7.39286 4.86 8.06143 5.43857 8.44714C5.07857 8.44714 4.74429 8.34429 4.46143 8.17714V8.20286C4.46143 9.25714 5.20714 10.1314 6.19714 10.3371C6.01714 10.3886 5.82429 10.4143 5.63143 10.4143C5.49 10.4143 5.36143 10.4014 5.22 10.3757C5.49 11.2371 6.3 11.8671 7.23857 11.88C6.49286 12.4586 5.55429 12.8057 4.53857 12.8057C4.35857 12.8057 4.19143 12.8057 4.02429 12.78C4.97571 13.3971 6.12 13.7571 7.34143 13.7571"
-							fill="#70C5A1"
-						/>
-					</g>
-					<defs>
-						<clipPath id="clip0_275_3624">
-							<rect width="18" height="18" fill="white" />
-						</clipPath>
-					</defs>
-				</svg>
-			</Link>
-			<Link href={"#"}>
-				<svg
-					width="20"
-					height="20"
-					viewBox="0 0 20 20"
-					fill="none"
-					className="cursor-pointer"
-				>
-					<g clipPath="url(#clip0_275_3626)">
-						<path
-							fillRule="evenodd"
-							clipRule="evenodd"
-							d="M9.99984 1.66699C5.39734 1.66699 1.6665 5.39783 1.6665 10.0003C1.6665 11.5753 2.104 13.0503 2.86484 14.307L2.1215 16.8337C2.07882 16.9787 2.07602 17.1326 2.11337 17.2791C2.15073 17.4257 2.22688 17.5594 2.3338 17.6664C2.44073 17.7733 2.57449 17.8494 2.72102 17.8868C2.86755 17.9241 3.02144 17.9213 3.1665 17.8787L5.69317 17.1353C6.99207 17.9212 8.48169 18.3357 9.99984 18.3337C14.6023 18.3337 18.3332 14.6028 18.3332 10.0003C18.3332 5.39783 14.6023 1.66699 9.99984 1.66699ZM8.11484 11.8862C9.80067 13.5712 11.4098 13.7937 11.9782 13.8145C12.8423 13.8462 13.684 13.1862 14.0115 12.4203C14.0528 12.3251 14.0679 12.2204 14.055 12.1174C14.0421 12.0143 14.0017 11.9166 13.9382 11.8345C13.4815 11.2512 12.864 10.832 12.2607 10.4153C12.1347 10.3282 11.9799 10.2933 11.8287 10.3178C11.6776 10.3424 11.5418 10.4245 11.4498 10.547L10.9498 11.3095C10.9236 11.3505 10.8826 11.3799 10.8353 11.3917C10.7881 11.4034 10.7381 11.3967 10.6957 11.3728C10.3565 11.1787 9.86234 10.8487 9.50734 10.4937C9.15234 10.1387 8.84234 9.66699 8.66817 9.34949C8.64658 9.30915 8.64033 9.26236 8.6506 9.21777C8.66087 9.17318 8.68694 9.13383 8.724 9.10699L9.494 8.53533C9.60389 8.43978 9.67481 8.30716 9.69325 8.16271C9.71169 8.01827 9.67636 7.87208 9.594 7.75199C9.22067 7.20533 8.78567 6.51033 8.15484 6.04949C8.07343 5.9905 7.97806 5.95371 7.87811 5.94275C7.77817 5.93179 7.6771 5.94704 7.58484 5.98699C6.81817 6.31533 6.15484 7.15699 6.1865 8.02283C6.20734 8.59116 6.42984 10.2003 8.11484 11.8862Z"
-							fill="#70C5A1"
-						/>
-					</g>
-					<defs>
-						<clipPath id="clip0_275_3626">
-							<rect width="20" height="20" fill="white" />
-						</clipPath>
-					</defs>
-				</svg>
-			</Link>
+	const coursesByMentor = getMentorCourses(mentor.username);
 
-			<Link href={"#"}>
-				<svg
-					width="20"
-					height="20"
-					viewBox="0 0 20 20"
-					fill="none"
-					className="cursor-pointer"
-				>
-					<g clipPath="url(#clip0_275_3630)">
-						<path
-							d="M11.2812 10C11.2812 13.1063 8.75625 15.625 5.64 15.625C4.90033 15.626 4.16771 15.4813 3.48396 15.1991C2.80022 14.917 2.17875 14.5029 1.65502 13.9806C1.1313 13.4583 0.715587 12.8379 0.431617 12.1549C0.147648 11.4719 0.000984258 10.7397 0 10C0 6.89251 2.525 4.37501 5.64 4.37501C6.37978 4.37386 7.11253 4.51845 7.79642 4.80052C8.48031 5.0826 9.10193 5.49663 9.62579 6.01898C10.1496 6.54133 10.5655 7.16175 10.8495 7.84482C11.1336 8.52789 11.2803 9.26023 11.2812 10ZM17.4688 10C17.4688 12.925 16.2062 15.295 14.6488 15.295C13.0912 15.295 11.8288 12.9238 11.8288 10C11.8288 7.07501 13.0912 4.70501 14.6488 4.70501C16.2062 4.70501 17.4688 7.07626 17.4688 10ZM20 10C20 12.62 19.5562 14.7438 19.0075 14.7438C18.46 14.7438 18.0163 12.6188 18.0163 10C18.0163 7.38001 18.46 5.25626 19.0087 5.25626C19.5562 5.25626 20 7.38001 20 10Z"
-							fill="#70C5A1"
-						/>
-					</g>
-					<defs>
-						<clipPath id="clip0_275_3630">
-							<rect width="20" height="20" fill="white" />
-						</clipPath>
-					</defs>
-				</svg>
-			</Link>
-		</span>
-	);
+	const moveLeft = () => {
+		if (currentSlideIndex > 0) {
+			setCurrentSlideIndex((prev) => prev - 1);
+			carouselRef.current?.scrollBy({
+				left: -250,
+				behavior: "smooth",
+			});
+		}
+	};
+
+	const moveRight = () => {
+		if (currentSlideIndex < coursesByMentor.length - 1) {
+			setCurrentSlideIndex((prev) => prev + 1);
+			carouselRef.current?.scrollBy({
+				left: 250,
+				behavior: "smooth",
+			});
+		}
+	};
+
 	return (
-		<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6 pb-40">
-			<div className="">
-				<MentorProfileCard mentor={mentor} detailsPage />
-			</div>
-			<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
-				<div className="flex-grow min-h-screen">
-					<Skills />
-					<Experience />
-					<Projects />
-					<FeaturedReviews />
-					<div className="flex max-w-xl justify-between items-center mt-5">
-						<p className="text-[#F15E63] cursor-pointer">! Report Mentor</p>
-						<Socials />
-					</div>
+		<>
+			<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6">
+				<div className="">
+					<MentorProfileCard mentor={mentor} detailsPage />
 				</div>
-				<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 min-h-[85vh] text-white sticky top-28 overflow-y-auto">
-					<div className="w-full">
-						<h1 className="font-medium">My Availability</h1>
-						<p className="text-[#CEFFEA] font-[300] mt-2">Lagos (GMT +1)</p>
-						<div className="grid gap-6 mt-10">
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Mondays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Wednesdays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Thursdays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Fridays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Saturdays</h1>
-								<p className="font-[300]">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between w-full items-center">
-								<h1 className="font-medium">Sundays</h1>
-								<p className="font-[300]">10am - 5pm</p>
+				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
+					<div className="flex-grow min-h-screen">
+						<Skills skills={mentor.skills} />
+						<Experience experience={mentor.experience} />
+						<Projects projects={mentor.projects} />
+						<FeaturedReviews />
+						<div className="flex max-w-xl justify-between items-center mt-5">
+							<p className="text-[#F15E63] cursor-pointer">! Report Mentor</p>
+							<Socials />
+						</div>
+					</div>
+					<AvailabiltySchedule />
+				</div>
+				<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pb-40 pt-10">
+					<h1 className="text-xl font-semibold">Courses by Mentor</h1>
+					<div className="w-full relative my-5 ">
+						{/* Control Buttons */}
+						{coursesByMentor?.length >= 1 && (
+							<>
+								<svg
+									onClick={moveLeft}
+									width="45"
+									height="45"
+									viewBox="0 0 45 45"
+									fill="none"
+									className={`hidden sm:flex absolute top-[43%] -left-10 xl:-left-16 cursor-pointer z-20 ${
+										currentSlideIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+									}`}
+								>
+									<path
+										d="M22.5 2.8125C18.6062 2.8125 14.7998 3.96715 11.5622 6.13044C8.32463 8.29373 5.80123 11.3685 4.31113 14.9659C2.82103 18.5633 2.43115 22.5218 3.1908 26.3408C3.95045 30.1598 5.8255 33.6678 8.57884 36.4212C11.3322 39.1745 14.8402 41.0496 18.6592 41.8092C22.4782 42.5689 26.4367 42.179 30.0341 40.6889C33.6315 39.1988 36.7063 36.6754 38.8696 33.4378C41.0329 30.2002 42.1875 26.3938 42.1875 22.5C42.1875 17.2786 40.1133 12.271 36.4212 8.57884C32.729 4.88671 27.7215 2.8125 22.5 2.8125ZM33.75 23.9062H16.6641L24.5109 31.7433L22.5 33.75L11.25 22.5L22.5 11.25L24.5109 13.2089L16.6641 21.0938H33.75V23.9062Z"
+										fill={currentSlideIndex >= 1 ? "#70C5A1" : "#70C5A15a"}
+									/>
+								</svg>
+								<svg
+									onClick={moveRight}
+									width="45"
+									height="45"
+									viewBox="0 0 45 45"
+									fill="none"
+									className={`hidden sm:flex absolute top-[43%] right-0 xl:-right-16 rotate-[180deg] cursor-pointer z-20 ${
+										currentSlideIndex === coursesByMentor.length - 1
+											? "opacity-50 cursor-not-allowed"
+											: ""
+									}`}
+								>
+									<path
+										d="M22.5 2.8125C18.6062 2.8125 14.7998 3.96715 11.5622 6.13044C8.32463 8.29373 5.80123 11.3685 4.31113 14.9659C2.82103 18.5633 2.43115 22.5218 3.1908 26.3408C3.95045 30.1598 5.8255 33.6678 8.57884 36.4212C11.3322 39.1745 14.8402 41.0496 18.6592 41.8092C22.4782 42.5689 26.4367 42.179 30.0341 40.6889C33.6315 39.1988 36.7063 36.6754 38.8696 33.4378C41.0329 30.2002 42.1875 26.3938 42.1875 22.5C42.1875 17.2786 40.1133 12.271 36.4212 8.57884C32.729 4.88671 27.7215 2.8125 22.5 2.8125ZM33.75 23.9062H16.6641L24.5109 31.7433L22.5 33.75L11.25 22.5L22.5 11.25L24.5109 13.2089L16.6641 21.0938H33.75V23.9062Z"
+										fill={
+											currentSlideIndex >= coursesByMentor?.length - 2
+												? "#70C5A15a"
+												: "#70C5A1"
+										}
+									/>
+								</svg>
+							</>
+						)}
+						{/*  */}
+						<div className="flex justify-center overflow-hidden">
+							<div
+								ref={carouselRef}
+								className="flex items-center gap-5 snap-x snap-mandatory overflow-x-auto min-w-[60rem] w-full py-5 px-2"
+								style={{ scrollbarWidth: "none" }}
+							>
+								{coursesByMentor.map((item, index) => {
+									return (
+										<div className="snap-start lg:min-w-[35%] min-w-[40%]" key={index}>
+											<DisplayCourseCard course={item} />
+										</div>
+									);
+								})}
 							</div>
 						</div>
 					</div>
-					<div className="flex justify-center relative h-full top-32">
-						<Link href="#">
-							<div
-								className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
-								style={{ fontFamily: "Days One" }}
-							>
-								Book me now
-							</div>
-						</Link>
-					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

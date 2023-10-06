@@ -5,8 +5,8 @@ export interface ICourse {
 	duration: number;
 	limit: number;
 	rating: number;
-	price: number | "fre";
-	mentor: { name: string; avatar: string };
+	price: number | "free";
+	mentor: { name: string; username: string; avatar: string };
 	available: boolean;
 	imgUrl?: string;
 }
