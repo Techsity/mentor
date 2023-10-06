@@ -298,7 +298,7 @@ export interface IBlogPost {
 
 export interface IWorkshop {
 	title: string;
-	category: "Live" | "Upoming" | "Reordings";
+	category: "Live" | "Upcoming" | "Recordings";
 	description: string;
 	startDate: Date;
 	endDate: Date;
