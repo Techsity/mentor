@@ -12,7 +12,7 @@ interface ScheduleItem {
 
 const ScheduleConsultationTemplate = (mentor: IMentor) => {
 	const emptyState: ScheduleItem = {
-		id: new Date().getMilliseconds().toString(),
+		id: (new Date().getMilliseconds() * Math.random() * 2).toString(),
 		date: "",
 		time: "",
 	};
@@ -70,10 +70,10 @@ const ScheduleConsultationTemplate = (mentor: IMentor) => {
 				</div>
 				<div className="grid gap-3 flex-grow animate__animated animate__slideInRight">
 					{scheduleList.map((schedule, index) => (
-						<div className="relative" key={index}>
+						<div className="relative mb-8" key={index}>
 							<SchedulerDiv />{" "}
 							<span
-								className="absolute right-0"
+								className="absolute right-0 -top-6"
 								onClick={() => {
 									if (scheduleList.length > 1)
 										setScheduleList((prevScheduleList) =>
