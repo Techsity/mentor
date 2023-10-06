@@ -15,8 +15,6 @@ const MentorProfileCard = ({
 	detailsPage?: boolean;
 }) => {
 	const router = useRouter();
-	console.log(mentor);
-
 	const country: string =
 		mentor.country.charAt(0) + mentor.country.charAt(1).toLowerCase();
 	interface IconType {

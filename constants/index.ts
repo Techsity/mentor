@@ -5,6 +5,7 @@ interface ToastId {
 	forgot_password_pop: string;
 	signup_form_pop: string;
 	onboarding_interest_pop: string;
+	consultation_time_error: string;
 }
 // interface ICustomToastProps extends ToastOptions<Omit<key = "">> {
 interface ICustomToastProps extends ToastOptions {

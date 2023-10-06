@@ -51,18 +51,20 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 				</div>
 				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
 					<div className="flex-grow min-h-screen overflow-hidden">
-						<AnimationOnScroll animateIn="animate__slideInUp">
+						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 							<Skills skills={mentor.skills} />
 						</AnimationOnScroll>
 						<Experience experience={mentor.experience} />
 						<Projects projects={mentor.projects} />
 						<FeaturedReviews />
 						<div className="flex max-w-xl justify-between items-center mt-5">
-							<p className="text-[#F15E63] cursor-pointer">! Report Mentor</p>
+							<p className="text-[#F15E63] cursor-pointer hover:underline">
+								! Report Mentor
+							</p>
 							<Socials />
 						</div>
 					</div>
-					<AvailabiltySchedule />
+					<AvailabiltySchedule {...mentor} />
 				</div>
 				<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pb-20 pt-10">
 					<h1 className="text-xl font-semibold">Courses by Mentor</h1>
@@ -110,19 +112,28 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 						)}
 						{/*  */}
 						<div className="flex justify-center overflow-hidden">
-							<div
-								ref={carouselRef}
-								className="flex items-center gap-5 snap-x snap-mandatory overflow-x-auto min-w-[60rem] w-full py-5 px-2"
-								style={{ scrollbarWidth: "none" }}
-							>
-								{coursesByMentor.map((item, index) => {
-									return (
-										<div className="snap-start lg:min-w-[35%] min-w-[40%]" key={index}>
-											<DisplayCourseCard course={item} />
-										</div>
-									);
-								})}
-							</div>
+							<AnimationOnScroll animateIn="animate__slideInRight" animateOnce>
+								<div
+									ref={carouselRef}
+									className="flex items-center gap-5 snap-x overflow-x-auto min-w-[60rem] w-full py-5 relative left-40"
+									style={{
+										scrollbarWidth: "none",
+										scrollbarColor: "transparent",
+										scrollbarGutter: "auto",
+									}}
+								>
+									{coursesByMentor.map((item, index) => {
+										return (
+											<div
+												className="snap-start md:min-w-[25%] 2xl:min-w-[30%] min-w-[40%]"
+												key={index}
+											>
+												<DisplayCourseCard course={item} />
+											</div>
+										);
+									})}
+								</div>
+							</AnimationOnScroll>
 						</div>
 					</div>
 				</div>

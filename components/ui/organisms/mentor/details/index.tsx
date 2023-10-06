@@ -19,7 +19,7 @@ const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 );
 const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 	<div className="grid gap-3 mt-9">
-		<AnimationOnScroll animateIn="animate__slideInUp">
+		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<h1 className="text-xl font-semibold">Experience</h1>
 		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
@@ -28,14 +28,14 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 				experience
 					?.map((experience, index) => (
 						<div className="w-full overflow-hidden" key={index}>
-							<AnimationOnScroll animateIn="animate__slideInUp">
+							<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 								<MentorExperienceCard {...experience} />
 							</AnimationOnScroll>
 						</div>
 					))
 					.slice(0, 2)}
 		</span>
-		<AnimationOnScroll animateIn="animate__slideInUp">
+		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<div className="mt-3">
 				<PrimaryButton title="View all Experience" link="#" className="p-4 px-8" />
 			</div>
@@ -44,14 +44,14 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 );
 const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 	<div className="grid gap-3 mt-9">
-		<AnimationOnScroll animateIn="animate__slideInUp">
+		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<h1 className="text-xl font-semibold">Projects</h1>
 		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
 			{projects &&
 				projects
 					.map((project, index) => (
-						<AnimationOnScroll key={index} animateIn="animate__slideInUp">
+						<AnimationOnScroll key={index} animateIn="animate__slideInUp" animateOnce>
 							<Link href={project.link || "#"}>
 								<div className="border border-[#70C5A1] text-sm p-4 w-full flex justify-between gap-5 cursor-pointer">
 									<div className="w-2/3">
@@ -75,11 +75,11 @@ const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 );
 const FeaturedReviews = () => (
 	<div className="grid gap-3 mt-9">
-		<AnimationOnScroll animateIn="animate__slideInUp">
+		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<h1 className="text-xl font-semibold">Featured Reviews</h1>
 		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 items-center gap-3 lg:max-w-xl w-full">
-			<AnimationOnScroll animateIn="animate__slideInUp">
+			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<Link href={"#"}>
 					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
 						<p className="">
@@ -97,7 +97,7 @@ const FeaturedReviews = () => (
 					</div>
 				</Link>
 			</AnimationOnScroll>
-			<AnimationOnScroll animateIn="animate__slideInUp">
+			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<Link href={"#"}>
 					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
 						<p className="">
@@ -115,7 +115,7 @@ const FeaturedReviews = () => (
 					</div>
 				</Link>
 			</AnimationOnScroll>
-			<AnimationOnScroll animateIn="animate__slideInUp">
+			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<Link href={"#"}>
 					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
 						<p className="">
@@ -133,7 +133,7 @@ const FeaturedReviews = () => (
 					</div>
 				</Link>
 			</AnimationOnScroll>
-			<AnimationOnScroll animateIn="animate__slideInUp">
+			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<Link href={"#"}>
 					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
 						<p className="">
@@ -247,49 +247,49 @@ const Socials = () => (
 	</span>
 );
 
-const AvailabiltySchedule = () => (
+const AvailabiltySchedule = (mentor: IMentor) => (
 	<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[85vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
 		<div className="w-full mb-24 lg:mb-0">
 			<h1 className="font-medium">My Availability</h1>
 			<p className="text-[#CEFFEA] font-[300] mt-2">Lagos (GMT +1)</p>
 			<div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-10">
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Mondays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Tuesdays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Wednesdays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Thursdays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Fridays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Saturdays</h1>
 						<p className="font-[300]">10am - 5pm</p>
 					</div>
 				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp">
+				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 					<div className="flex justify-between w-full items-center">
 						<h1 className="font-medium">Sundays</h1>
 						<p className="font-[300]">10am - 5pm</p>
@@ -297,9 +297,9 @@ const AvailabiltySchedule = () => (
 				</AnimationOnScroll>
 			</div>
 		</div>
-		<AnimationOnScroll animateIn="animate__slideInUp">
+		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<div className="flex justify-center relative h-full lg:top-32">
-				<Link href="#">
+				<Link href={`/mentor/${mentor.username}?consult`}>
 					<div
 						className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
 						style={{ fontFamily: "Days One" }}

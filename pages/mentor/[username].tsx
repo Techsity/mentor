@@ -3,8 +3,14 @@ import React from "react";
 import MentorDetailsTemplate from "../../components/templates/mentor/details";
 import mentors from "../../data/mentors";
 import { IMentor } from "../../interfaces";
+import { useRouter } from "next/router";
+import ScheduleConsultationTemplate from "../../components/templates/mentor/schedule-consultation";
 
 const MentorDetails = ({ mentor }: { mentor: IMentor }) => {
+	const router = useRouter();
+	const isConsultationPage = router.asPath.split("?")[1] === "consult";
+
+	if (isConsultationPage) return <ScheduleConsultationTemplate {...mentor} />;
 	return <MentorDetailsTemplate {...mentor} />;
 };
 
