@@ -14,6 +14,8 @@ import Carousel from "react-multi-carousel";
 import DisplayCourseCard from "../../../ui/atom/cards/home/DisplayCourseCard";
 import courses from "../../../../data/courses";
 import { getMentorCourses } from "../../../../services/api";
+import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const MentorDetailsTemplate = (mentor: IMentor) => {
 	const carouselRef = useRef<HTMLDivElement>(null);
@@ -44,12 +46,14 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 	return (
 		<>
 			<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6">
-				<div className="">
+				<div className=" animate__animated animate__slideInDown">
 					<MentorProfileCard mentor={mentor} detailsPage />
 				</div>
 				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
-					<div className="flex-grow min-h-screen">
-						<Skills skills={mentor.skills} />
+					<div className="flex-grow min-h-screen overflow-hidden">
+						<AnimationOnScroll animateIn="animate__slideInUp">
+							<Skills skills={mentor.skills} />
+						</AnimationOnScroll>
 						<Experience experience={mentor.experience} />
 						<Projects projects={mentor.projects} />
 						<FeaturedReviews />
@@ -60,7 +64,7 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 					</div>
 					<AvailabiltySchedule />
 				</div>
-				<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pb-40 pt-10">
+				<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pb-20 pt-10">
 					<h1 className="text-xl font-semibold">Courses by Mentor</h1>
 					<div className="w-full relative my-5 ">
 						{/* Control Buttons */}
@@ -123,6 +127,14 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 					</div>
 				</div>
 			</div>
+			<>
+				<h1 className="text-center mt-10" style={{ fontFamily: "Days One" }}>
+					Subscribe to our Newsletter
+				</h1>
+				<div className="flex justify-center my-5 mb-10">
+					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
+				</div>
+			</>
 		</>
 	);
 };

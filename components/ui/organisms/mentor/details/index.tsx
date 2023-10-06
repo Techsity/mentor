@@ -3,6 +3,7 @@ import Link from "next/link";
 import { IMentor } from "../../../../../interfaces";
 import { PrimaryButton } from "../../../atom/buttons";
 import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCard";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">
@@ -18,42 +19,52 @@ const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 );
 const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 	<div className="grid gap-3 mt-9">
-		<h1 className="text-xl font-semibold">Experience</h1>
+		<AnimationOnScroll animateIn="animate__slideInUp">
+			<h1 className="text-xl font-semibold">Experience</h1>
+		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
 			{experience &&
 				experience?.length >= 1 &&
 				experience
 					?.map((experience, index) => (
-						<div className="w-full" key={index}>
-							<MentorExperienceCard {...experience} />
+						<div className="w-full overflow-hidden" key={index}>
+							<AnimationOnScroll animateIn="animate__slideInUp">
+								<MentorExperienceCard {...experience} />
+							</AnimationOnScroll>
 						</div>
 					))
 					.slice(0, 2)}
 		</span>
-		<div className="mt-3">
-			<PrimaryButton title="View all Experience" link="#" className="p-4 px-8" />
-		</div>
+		<AnimationOnScroll animateIn="animate__slideInUp">
+			<div className="mt-3">
+				<PrimaryButton title="View all Experience" link="#" className="p-4 px-8" />
+			</div>
+		</AnimationOnScroll>
 	</div>
 );
 const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 	<div className="grid gap-3 mt-9">
-		<h1 className="text-xl font-semibold">Projects</h1>
+		<AnimationOnScroll animateIn="animate__slideInUp">
+			<h1 className="text-xl font-semibold">Projects</h1>
+		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
 			{projects &&
 				projects
 					.map((project, index) => (
-						<Link key={index} href={project.link || "#"}>
-							<div className="border border-[#70C5A1] text-sm p-4 w-full flex justify-between gap-5 cursor-pointer">
-								<div className="w-2/3">
-									<h1 className="font-[500]">{project.title}</h1>
-									<p className="font-[300] my-2">{project.type}</p>
+						<AnimationOnScroll key={index} animateIn="animate__slideInUp">
+							<Link href={project.link || "#"}>
+								<div className="border border-[#70C5A1] text-sm p-4 w-full flex justify-between gap-5 cursor-pointer">
+									<div className="w-2/3">
+										<h1 className="font-[500]">{project.title}</h1>
+										<p className="font-[300] my-2">{project.type}</p>
+									</div>
+									<div className="w-1/2">
+										<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
+										<p className="font-[300] my-2">{project.link}</p>
+									</div>
 								</div>
-								<div className="w-1/2">
-									<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
-									<p className="font-[300] my-2">{project.link}</p>
-								</div>
-							</div>
-						</Link>
+							</Link>
+						</AnimationOnScroll>
 					))
 					.slice(0, 2)}
 		</span>
@@ -64,72 +75,82 @@ const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 );
 const FeaturedReviews = () => (
 	<div className="grid gap-3 mt-9">
-		<h1 className="text-xl font-semibold">Featured Reviews</h1>
+		<AnimationOnScroll animateIn="animate__slideInUp">
+			<h1 className="text-xl font-semibold">Featured Reviews</h1>
+		</AnimationOnScroll>
 		<span className="grid sm:grid-cols-2 items-center gap-3 lg:max-w-xl w-full">
-			<Link href={"#"}>
-				<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-					<p className="">
-						I once thought digital marketing was for the big guys until i took this
-						course, thank you for making it so easy and simple
-					</p>
-					<div className="flex items-center mt-5 justify-between">
-						<p className="">Adewole Sulaiman</p>
-						<img
-							src="/assets/images/avatar.png"
-							alt=""
-							className="w-10 rounded-full"
-						/>
+			<AnimationOnScroll animateIn="animate__slideInUp">
+				<Link href={"#"}>
+					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
+						<p className="">
+							I once thought digital marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple
+						</p>
+						<div className="flex items-center mt-5 justify-between">
+							<p className="">Adewole Sulaiman</p>
+							<img
+								src="/assets/images/avatar.png"
+								alt=""
+								className="w-10 rounded-full"
+							/>
+						</div>
 					</div>
-				</div>
-			</Link>
-			<Link href={"#"}>
-				<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-					<p className="">
-						I once thought digital marketing was for the big guys until i took this
-						course, thank you for making it so easy and simple
-					</p>
-					<div className="flex items-center mt-5 justify-between">
-						<p className="">Adewole Sulaiman</p>
-						<img
-							src="/assets/images/avatar.png"
-							alt=""
-							className="w-10 rounded-full"
-						/>
+				</Link>
+			</AnimationOnScroll>
+			<AnimationOnScroll animateIn="animate__slideInUp">
+				<Link href={"#"}>
+					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
+						<p className="">
+							I once thought digital marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple
+						</p>
+						<div className="flex items-center mt-5 justify-between">
+							<p className="">Adewole Sulaiman</p>
+							<img
+								src="/assets/images/avatar.png"
+								alt=""
+								className="w-10 rounded-full"
+							/>
+						</div>
 					</div>
-				</div>
-			</Link>
-			<Link href={"#"}>
-				<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-					<p className="">
-						I once thought digital marketing was for the big guys until i took this
-						course, thank you for making it so easy and simple
-					</p>
-					<div className="flex items-center mt-5 justify-between">
-						<p className="">Adewole Sulaiman</p>
-						<img
-							src="/assets/images/avatar.png"
-							alt=""
-							className="w-10 rounded-full"
-						/>
+				</Link>
+			</AnimationOnScroll>
+			<AnimationOnScroll animateIn="animate__slideInUp">
+				<Link href={"#"}>
+					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
+						<p className="">
+							I once thought digital marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple
+						</p>
+						<div className="flex items-center mt-5 justify-between">
+							<p className="">Adewole Sulaiman</p>
+							<img
+								src="/assets/images/avatar.png"
+								alt=""
+								className="w-10 rounded-full"
+							/>
+						</div>
 					</div>
-				</div>
-			</Link>
-			<Link href={"#"}>
-				<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
-					<p className="">
-						I once thought digital marketing was for the big guys until i took this
-						course, thank you for making it so easy and simple
-					</p>
-					<div className="flex items-center mt-5 justify-between">
-						<p className="">Adewole Sulaiman</p>
-						<img
-							src="/assets/images/avatar.png"
-							alt=""
-							className="w-10 rounded-full"
-						/>
+				</Link>
+			</AnimationOnScroll>
+			<AnimationOnScroll animateIn="animate__slideInUp">
+				<Link href={"#"}>
+					<div className="border border-[#70C5A1] text-sm p-5 gap-5 cursor-pointer">
+						<p className="">
+							I once thought digital marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple
+						</p>
+						<div className="flex items-center mt-5 justify-between">
+							<p className="">Adewole Sulaiman</p>
+							<img
+								src="/assets/images/avatar.png"
+								alt=""
+								className="w-10 rounded-full"
+							/>
+						</div>
 					</div>
-				</div>
-			</Link>
+				</Link>
+			</AnimationOnScroll>
 		</span>
 		<div className="mt-3">
 			<PrimaryButton title="View all Reviews" link="#" className="p-4 px-8" />
@@ -140,6 +161,7 @@ const FeaturedReviews = () => (
 const Socials = () => (
 	<span className="flex items-center gap-4">
 		<p className="">Share Course</p>
+
 		<Link href={"#"}>
 			<svg
 				width="20"
@@ -154,6 +176,7 @@ const Socials = () => (
 				/>
 			</svg>
 		</Link>
+
 		<Link href={"#"}>
 			<svg
 				width="18"
@@ -175,6 +198,7 @@ const Socials = () => (
 				</defs>
 			</svg>
 		</Link>
+
 		<Link href={"#"}>
 			<svg
 				width="20"
@@ -224,51 +248,67 @@ const Socials = () => (
 );
 
 const AvailabiltySchedule = () => (
-	<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[85vh] text-white sticky top-28 overflow-y-auto">
+	<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[85vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
 		<div className="w-full mb-24 lg:mb-0">
 			<h1 className="font-medium">My Availability</h1>
 			<p className="text-[#CEFFEA] font-[300] mt-2">Lagos (GMT +1)</p>
 			<div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-10">
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Mondays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Tuesdays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Wednesdays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Thursdays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Fridays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Saturdays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
-				<div className="flex justify-between w-full items-center">
-					<h1 className="font-medium">Sundays</h1>
-					<p className="font-[300]">10am - 5pm</p>
-				</div>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Mondays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Tuesdays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Wednesdays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Thursdays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Fridays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Saturdays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
+				<AnimationOnScroll animateIn="animate__slideInUp">
+					<div className="flex justify-between w-full items-center">
+						<h1 className="font-medium">Sundays</h1>
+						<p className="font-[300]">10am - 5pm</p>
+					</div>
+				</AnimationOnScroll>
 			</div>
 		</div>
-		<div className="flex justify-center relative h-full lg:top-32">
-			<Link href="#">
-				<div
-					className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
-					style={{ fontFamily: "Days One" }}
-				>
-					Book me now
-				</div>
-			</Link>
-		</div>
+		<AnimationOnScroll animateIn="animate__slideInUp">
+			<div className="flex justify-center relative h-full lg:top-32">
+				<Link href="#">
+					<div
+						className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
+						style={{ fontFamily: "Days One" }}
+					>
+						Book me now
+					</div>
+				</Link>
+			</div>
+		</AnimationOnScroll>
 	</div>
 );
 
