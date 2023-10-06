@@ -245,7 +245,7 @@ type CountryCode =
 	| "ZM"
 	| "ZW";
 
-interface IExperience {
+export interface IExperience {
 	position: string;
 	company: { name: string; logo?: string };
 	topSkils: string[];

@@ -1,8 +1,8 @@
 import React from "react";
-import { IMentor } from "../../../../../interfaces";
+import { IExperience, IMentor } from "../../../../../interfaces";
 import { formatDateDifference } from "../../../../../utils";
 
-const MentorExperienceCard = (experience: IMentor["experience"][0]) => {
+const MentorExperienceCard = (experience: IExperience) => {
 	return (
 		<div className="border border-[#70C5A1] text-sm p-4 w-full">
 			<div className="flex justify-between gap-6">
