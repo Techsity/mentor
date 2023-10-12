@@ -1,4 +1,5 @@
 export interface ICourse {
+	// id: string;
 	title: string;
 	description: string;
 	level: "All Level" | "Inermediate" | "Beinner" | "Adanced";
