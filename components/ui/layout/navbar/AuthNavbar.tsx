@@ -11,7 +11,7 @@ import { testUser } from "../../../../data/user";
 import NotificationCard from "../../atom/cards/notification";
 
 const AuthNavbar = () => {
-		const router = useRouter()
+	const router = useRouter();
 	const [showNotificationPanel, setShowNotificationPanel] =
 		useState<boolean>(false);
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);

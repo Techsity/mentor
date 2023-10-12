@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from "react";
-import { PrimaryButton } from "../../../ui/atom/buttons";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
-import PasswordValidationComponent from "../../../ui/atom/forms/auth/login-and-signup/signup/PasswordValidationComponent";
-import { IResetPasswordState } from "../../../../interfaces/auth.interface";
+import { PrimaryButton } from "../../../../ui/atom/buttons";
+import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
+import CustomTextInput from "../../../../ui/atom/inputs/CustomTextInput";
+import PasswordValidationComponent from "../../../../ui/atom/forms/auth/login-and-signup/signup/PasswordValidationComponent";
+import { IResetPasswordState } from "../../../../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 
 const ResetNewPasswordTemplate = () => {
@@ -18,9 +18,10 @@ const ResetNewPasswordTemplate = () => {
 		setLoading(true);
 		e.preventDefault();
 		// console.log(state);
+		const token = "df239euds30e9uvewv";
 		//mock loading before proceeding
 		setTimeout(function () {
-			router.replace("/auth?login");
+			router.replace(`/auth/reset-password/${token}?finish`);
 		}, 2000);
 	};
 

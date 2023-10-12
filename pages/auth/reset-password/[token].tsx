@@ -1,18 +1,24 @@
 import { GetServerSidePropsContext } from "next";
-import React, { useState } from "react";
-import { PrimaryButton } from "../../../components/ui/atom/buttons";
-import ActivityIndicator from "../../../components/ui/atom/loader/ActivityIndicator";
+import React from "react";
 import ResetNewPasswordTemplate from "../../../components/templates/auth/password/reset";
+import { useRouter } from "next/router";
+import ResetPasswordWeldone from "../../../components/templates/auth/password/reset/ResetPasswordWeldone";
 
 const SetNewPassword = () => {
-	return <ResetNewPasswordTemplate />;
+	const router = useRouter();
+	const resetFinished = router.asPath.split("?")[1] === "finish";
+	return !resetFinished ? (
+		<ResetNewPasswordTemplate />
+	) : (
+		<ResetPasswordWeldone />
+	);
 };
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
 	const { token } = ctx.query;
 	// check if token exists in the url query
 	if (!token)
-		return { props: {}, redirect: { destination: "/", permanent: true } };
+		return { props: {}, redirect: { destination: "/auth", permanent: true } };
 	// then check if it matches the one stored in the cookies
 	// validate or redirect
 	return { props: {} };

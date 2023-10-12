@@ -10,7 +10,8 @@ const SignupOtpVerificationPage = () => {
 		<OtpTemplate
 			next={(otp) => {
 				console.log(otp);
-				router.push(`/onboarding/interests`);
+				// Before redirecting, user should have authenticated
+				router.replace(`/onboarding/interests`, `/onboarding?${token}`);
 			}}
 			timeLimit={60}
 		/>
@@ -21,7 +22,7 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
 	const { jwt } = ctx.query;
 	// check if jwt exists in the url query
 	if (!jwt)
-		return { props: {}, redirect: { destination: "/", permanent: true } };
+		return { props: {}, redirect: { destination: "/auth", permanent: true } };
 	// then check if it matches the one stored in the cookies
 	// validate or redirect
 	return { props: {} };
