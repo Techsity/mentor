@@ -10,7 +10,8 @@ const SignupOtpVerificationPage = () => {
 		<OtpTemplate
 			next={(otp) => {
 				console.log(otp);
-				router.push(`/onboarding/interests`);
+				// Before redirecting, user should have authenticated
+				router.replace(`/onboarding/interests`, `/onboarding?${token}`);
 			}}
 			timeLimit={60}
 		/>

@@ -26,13 +26,14 @@ const OnboardingInterestsTemplate = () => {
 			setSelectedInterests((prevSelected) => [...prevSelected, title]);
 		}
 	};
+	const token = "toendjsdhjkjckenwd";
 	const handleSubmit = () => {
 		setLoading(true);
 		if (selectedInterests.length > 0) {
 			toast.dismiss("onboarding_interest_pop");
 			setTimeout(function () {
 				// setLoading(false);
-				router.push("/onboarding/congratulations", "/onboarding/finish");
+				router.replace("/onboarding/congratulations", `/onboarding?${token}`);
 			}, 2000);
 		} else {
 			setTimeout(function () {

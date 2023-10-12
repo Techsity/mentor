@@ -27,7 +27,7 @@ const OnboardingCongratulations = () => {
 							onClick={() => {
 								setLoading(true);
 								setTimeout(function () {
-									router.push("/mentee/dashboard");
+									router.replace("/mentee/dashboard");
 								}, 2000);
 							}}
 							disabled={loading}
