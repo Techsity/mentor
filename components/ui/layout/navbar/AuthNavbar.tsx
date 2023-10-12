@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { useState } from "react";
 import { MenuSharp } from "react-ionicons";
 import navLinks from "../../../../data/navlinks";
@@ -11,8 +11,11 @@ import { testUser } from "../../../../data/user";
 import NotificationCard from "../../atom/cards/notification";
 
 const AuthNavbar = () => {
+		const router = useRouter()
 	const [showNotificationPanel, setShowNotificationPanel] =
 		useState<boolean>(false);
+	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
 	const CurrentUser = () => {
 		const user = testUser("mentee");
@@ -39,7 +42,7 @@ const AuthNavbar = () => {
 
 	return (
 		<nav className="fixed w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-6 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
-			<Link href={`/${currentUserRole()}/dashboard`}>
+			<Link href={`/`}>
 				<div>
 					<MentorLogoDark className="cursor-pointer" />
 				</div>
@@ -49,6 +52,99 @@ const AuthNavbar = () => {
 					<LandingSearchBar />
 				</div>
 			) : null} */}
+
+			<ul className="hidden lg:flex items-center gap-10 whitespace-nowrap ml-4 text-[#094B10]">
+				{navLinks.map(({ link, name, sublinks }, index) => {
+					return sublinks ? (
+						<li
+							key={index}
+							className="relative px-2 font-[300] select-none"
+							onMouseEnter={() => setActiveSublink(index)}
+							onMouseLeave={() => {
+								setActiveSublink(null);
+								setActiveDropdown(null);
+							}}
+						>
+							<span className={`duration-500 relative z-10 cursor-pointer`}>
+								{name}
+							</span>
+							<span
+								className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
+									router.asPath.includes(link) ? "w-full" : "hover:w-full"
+								}`}
+							/>
+							{activeSublink === index && sublinks && sublinks?.length > 0 ? (
+								<div>
+									<div className="h-[100px] group duration-300 absolute top-6 left-0 bg-white w-auto items-center gap-3 flex justify-between divide-x  animate__animate animate__fadeIn">
+										{sublinks?.map((sublink, i) => (
+											<div key={i}>
+												<div
+													className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
+													onMouseEnter={() => setActiveDropdown(i)}
+													// onMouseLeave={() => setActiveDropdown(null)}
+												>
+													{sublink.icon}
+													{sublink.name}
+												</div>
+												{activeDropdown === i &&
+													sublink.dropdown &&
+													sublink.dropdown.length > 0 && (
+														<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
+															{sublink.dropdown.map(
+																(
+																	{ link: dropdownLink, name: dropdownLinkName },
+																	dropdownIndex,
+																) => (
+																	<Link key={dropdownIndex} href={dropdownLink}>
+																		<div
+																			key={i}
+																			onClick={() => {
+																				setActiveSublink(null);
+																				setActiveDropdown(null);
+																			}}
+																			className="px-6 relative text-sm cursor-pointer text-decoration hover:underline"
+																		>
+																			{dropdownLinkName}
+																			<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
+																		</div>
+																	</Link>
+																),
+															)}
+														</div>
+													)}
+											</div>
+										))}
+									</div>
+								</div>
+							) : null}
+						</li>
+					) : (
+						<Link href={link} key={index}>
+							<li className="relative px-2 font-[300] select-none">
+								{/* <span
+								className={`duration-500 ${
+									router.asPath==link ? "text-white" : "group-hover:text-white"
+								} relative z-10`}
+							> */}
+								<span className={`duration-500 relative z-10 cursor-pointer`}>
+									{name}
+								</span>
+								<span
+									className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
+										router.asPath.includes(link) ? "w-full" : "hover:w-full"
+									}`}
+								/>
+								{/* <span
+								className={`absolute h-full w-0 right-0 bottom-0 bg-[#094B10] duration-300 ${
+									router.asPath==link ? "w-full" : "group-hover:w-full"
+								}`}
+							/> */}
+							</li>
+						</Link>
+					);
+				})}
+			</ul>
+
 			<div className="flex items-center gap-3 sm:gap-6 select-none">
 				<div className="flex items-center gap-4 sm:gap-10 pl-10 2xl:pl-40">
 					<CurrentUser />

@@ -4,8 +4,10 @@ import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import PasswordValidationComponent from "../../../ui/atom/forms/auth/login-and-signup/signup/PasswordValidationComponent";
 import { IResetPasswordState } from "../../../../interfaces/auth.interface";
+import { useRouter } from "next/router";
 
 const ResetNewPasswordTemplate = () => {
+	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [state, setState] = useState<IResetPasswordState>({
 		newPassword: "",
@@ -13,9 +15,13 @@ const ResetNewPasswordTemplate = () => {
 	});
 
 	const handleSubmit = (e: FormEvent) => {
+		setLoading(true);
 		e.preventDefault();
-		console.log(state);
-		//
+		// console.log(state);
+		//mock loading before proceeding
+		setTimeout(function () {
+			router.replace("/auth?login");
+		}, 2000);
 	};
 
 	return (
