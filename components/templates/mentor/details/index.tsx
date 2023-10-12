@@ -66,11 +66,12 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 					</div>
 					<AvailabiltySchedule {...mentor} />
 				</div>
-				<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pb-20 pt-10">
-					<h1 className="text-xl font-semibold">Courses by Mentor</h1>
-					<div className="w-full relative my-5 ">
-						{/* Control Buttons */}
-						{coursesByMentor?.length >= 1 && (
+				{coursesByMentor?.length >= 1 && (
+					<div className="mx-5 border-t border-[#A3A6A7] min-h-[50vh] mt-20 pt-10">
+						<h1 className="text-xl font-semibold">Courses by Mentor</h1>
+						<div className="w-full relative my-5 ">
+							{/* Control Buttons */}
+
 							<>
 								<svg
 									onClick={moveLeft}
@@ -109,43 +110,44 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 									/>
 								</svg>
 							</>
-						)}
-						{/*  */}
-						<div className="flex justify-center overflow-hidden">
-							<AnimationOnScroll animateIn="animate__slideInRight" animateOnce>
-								<div
-									ref={carouselRef}
-									className="flex items-center gap-5 snap-x overflow-x-auto min-w-[60rem] w-full py-5 relative left-40"
-									style={{
-										scrollbarWidth: "none",
-										scrollbarColor: "transparent",
-										scrollbarGutter: "auto",
-									}}
-								>
-									{coursesByMentor.map((item, index) => {
-										return (
-											<div
-												className="snap-start md:min-w-[25%] 2xl:min-w-[30%] min-w-[40%]"
-												key={index}
-											>
-												<DisplayCourseCard course={item} />
-											</div>
-										);
-									})}
-								</div>
-							</AnimationOnScroll>
+
+							{/*  */}
+							<div className="flex justify-center overflow-hidden">
+								<AnimationOnScroll animateIn="animate__slideInRight" animateOnce>
+									<div
+										ref={carouselRef}
+										className="flex items-center gap-5 snap-x overflow-x-auto min-w-[60rem] w-full py-5 relative left-40"
+										style={{
+											scrollbarWidth: "none",
+											scrollbarColor: "transparent",
+											scrollbarGutter: "auto",
+										}}
+									>
+										{coursesByMentor.map((item, index) => {
+											return (
+												<div
+													className="snap-start md:min-w-[25%] 2xl:min-w-[30%] min-w-[40%]"
+													key={index}
+												>
+													<DisplayCourseCard course={item} />
+												</div>
+											);
+										})}
+									</div>
+								</AnimationOnScroll>
+							</div>
 						</div>
 					</div>
-				</div>
+				)}
 			</div>
-			<>
-				<h1 className="text-center mt-10" style={{ fontFamily: "Days One" }}>
+			<div className="mt-24">
+				<h1 className="text-center" style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter
 				</h1>
 				<div className="flex justify-center my-5 mb-10">
 					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
 				</div>
-			</>
+			</div>
 		</>
 	);
 };

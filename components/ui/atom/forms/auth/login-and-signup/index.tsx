@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import LoginForm from "./LoginForm";
+import LoginForm from "./login/LoginForm";
 import SignUpForm from "./signup";
 import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupFormHeader";
 import Link from "next/link";

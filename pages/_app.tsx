@@ -33,6 +33,7 @@ import "@fontsource/poppins/700-italic.css";
 import "@fontsource/poppins/800-italic.css";
 import "@fontsource/poppins/900-italic.css";
 import "@fontsource/days-one";
+import { ThemeProvider } from "../context/theme.context";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const [initialLoad, setInitialLoad] = useState<boolean>(true);
@@ -59,7 +60,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	}, [router]);
 
 	return (
-		<>
+		<ThemeProvider>
 			<Head>
 				<title>Mentör</title>
 				<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
@@ -78,7 +79,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 					</>
 				)}
 			</LayoutContainer>
-		</>
+		</ThemeProvider>
 	);
 };
 

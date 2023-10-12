@@ -27,12 +27,12 @@ const MentorExperienceCard = (experience: IExperience) => {
 						<path
 							d="M0 0H15V30L6 29L0 25.5V0Z"
 							fill="#D9D9D9"
-							className="animate__animated animate__fadeInUp animate__infinite animate__slower"
+							className="animate__fadeInUp animate__infinite animate__slower"
 						/>
 						<path
 							d="M15 8H24V26.7L18 29.5L15 30V8Z"
 							fill="#D2D2D2"
-							className="animate__animated animate__fadeInUp animate__infinite animate__slow"
+							className="animate__fadeInUp animate__infinite animate__slow"
 						/>
 					</svg>
 				</div>
