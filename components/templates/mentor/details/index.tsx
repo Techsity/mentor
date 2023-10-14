@@ -5,10 +5,8 @@ import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import {
 	AvailabiltySchedule,
 	Experience,
-	FeaturedReviews,
 	Projects,
 	Skills,
-	Socials,
 } from "../../../ui/organisms/mentor/details/";
 import Carousel from "react-multi-carousel";
 import DisplayCourseCard from "../../../ui/atom/cards/home/DisplayCourseCard";
@@ -16,6 +14,8 @@ import courses from "../../../../data/courses";
 import { getMentorCourses } from "../../../../services/api";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import { AnimationOnScroll } from "react-animation-on-scroll";
+import ListReviews from "../../../ui/atom/common/course/ListReviews";
+import Socials from "../../../ui/atom/common/course/Socials";
 
 const MentorDetailsTemplate = (mentor: IMentor) => {
 	const carouselRef = useRef<HTMLDivElement>(null);
@@ -58,7 +58,7 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 						</AnimationOnScroll>
 						<Experience experience={mentor.experience} />
 						<Projects projects={mentor.projects} />
-						<FeaturedReviews />
+						<ListReviews />
 						<div className="flex max-w-xl justify-between items-center mt-5">
 							<p className="text-[#F15E63] cursor-pointer hover:underline">
 								! Report Mentor
@@ -75,7 +75,6 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 						</h1>
 						<div className="w-full relative my-5 ">
 							{/* Control Buttons */}
-
 							<>
 								<svg
 									onClick={moveLeft}

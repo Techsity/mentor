@@ -18,25 +18,25 @@ const PagePreLoader = () => {
 				className="flex gap-6 font-bold items-center lg:text-9xl text-7xl"
 				style={{ fontFamily: "Days One" }}>
 				<h1
-					className={`${
+					className={`select-none ${
 						theme === "dark" ? "text-white" : "text-[#094B10]"
 					} animate__animated animate__slideInDown`}>
 					m
 				</h1>
 				<h1
-					className={`${
+					className={`select-none ${
 						theme === "dark" ? "text-white" : "text-[#094B10]"
 					} animate__animated animate__slideInDown animate__slowest`}>
 					e
 				</h1>
 				<h1
-					className={`${
+					className={`select-none ${
 						theme === "dark" ? "text-white" : "text-[#094B10]"
 					} animate__animated animate__slideInDown animate__slower`}>
 					n
 				</h1>
 				<h1
-					className={`${
+					className={`select-none ${
 						theme === "dark" ? "text-white" : "text-[#094B10]"
 					} animate__animated animate__slideInDown animate__animate_slow`}>
 					t

@@ -50,7 +50,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		router.events.on("routeChangeComplete", handleStop);
 		router.events.on("routeChangeError", handleStop);
 		setTimeout(() => {
-			// setInitialLoad(false);
+			setInitialLoad(false);
 		}, 4000);
 		return () => {
 			router.events.off("routeChangeStart", handleStart);
@@ -63,7 +63,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		<ThemeProvider>
 			<Head>
 				<title>Mentör</title>
-				<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+				<link
+					rel="icon"
+					href="/assets/images/favicon.ico"
+					type="image/x-icon"
+				/>
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1.0, maximum-scale=1.0"

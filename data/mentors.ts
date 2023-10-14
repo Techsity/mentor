@@ -5,7 +5,12 @@ const mentors: IMentor[] = [
 		username: "krispy-savage",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
-		experience: [
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
+		experience: [ 
 			{
 				company: { name: "Google" },
 				startDate: new Date("January 20, 2020").toLocaleDateString(),
@@ -32,8 +37,7 @@ const mentors: IMentor[] = [
 		rating: 4.6,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_5.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -44,8 +48,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -53,6 +65,11 @@ const mentors: IMentor[] = [
 		username: "big-john",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -80,8 +97,7 @@ const mentors: IMentor[] = [
 		rating: 4.6,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_1.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -92,8 +108,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -101,6 +125,11 @@ const mentors: IMentor[] = [
 		username: "johnny-doe",
 		name: "John Doe",
 		jobTitle: "Senior product designer / Brand Identity Designer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -128,8 +157,7 @@ const mentors: IMentor[] = [
 		rating: 4.0,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_2.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "TH",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -140,8 +168,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript", "Figma", "Figma", "Figma"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -149,6 +185,11 @@ const mentors: IMentor[] = [
 		username: "develop-go",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -176,8 +217,7 @@ const mentors: IMentor[] = [
 		rating: 4.0,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_3.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "US",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -188,8 +228,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -197,6 +245,11 @@ const mentors: IMentor[] = [
 		username: "backend-king",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -224,8 +277,7 @@ const mentors: IMentor[] = [
 		rating: 4.0,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_1.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -236,8 +288,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -245,6 +305,11 @@ const mentors: IMentor[] = [
 		username: "i-am-a-mentor",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -272,8 +337,7 @@ const mentors: IMentor[] = [
 		rating: 4.0,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_2.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -284,8 +348,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},
@@ -293,6 +365,11 @@ const mentors: IMentor[] = [
 		username: "big-moves",
 		name: "John Doe",
 		jobTitle: "Backend Developer",
+		mentees: [
+			{ name: "Lorem", username: "lorem" },
+			{ name: "Lorem", username: "lorem" },
+		],
+		subscribers: 5000,
 		experience: [
 			{
 				company: { name: "Google" },
@@ -320,8 +397,7 @@ const mentors: IMentor[] = [
 		rating: 4.0,
 		sessions: 2,
 		avatar: "/assets/images/mentors/mentor_4.png",
-		about:
-			"I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
+		about: "I am an Accomplished product designer with over 8 years of experience, i love taking and interacting with younger designers to know how i can help them grow. i have come a long way in the design industry so i would like to help you grow also.",
 		country: "NG",
 		followers: 300000,
 		languages: ["English", "French"],
@@ -332,8 +408,16 @@ const mentors: IMentor[] = [
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
-			{ link: "#", title: "Mentör User Experience and Design", type: "Contract" },
-			{ link: "#", title: "Mentör User Experience and Design", type: "Freelance" },
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Contract",
+			},
+			{
+				link: "#",
+				title: "Mentör User Experience and Design",
+				type: "Freelance",
+			},
 		],
 		// &&
 	},

@@ -1,12 +1,11 @@
 import React, { MouseEventHandler, useState } from "react";
-import { ICourse, ICourseContent } from "../../../../../interfaces";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import { calculateTotalDuration, parseDuration } from "../../../../../utils";
-import { PrimaryButton } from "../../../atom/buttons";
+import { ICourse, ICourseContent } from "../../../../../../interfaces";
+import { calculateTotalDuration, parseDuration } from "../../../../../../utils";
+import { PrimaryButton } from "../../../../atom/buttons";
 
-const CourseDetailsBody = (course: ICourse) => {
+const CourseContents = (course: ICourse) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent | null>(
-		course.content[0],
+		null,
 	);
 	const CourseContentDropdown = ({
 		content,
@@ -88,91 +87,34 @@ const CourseDetailsBody = (course: ICourse) => {
 		);
 	};
 	return (
-		<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
-			<div className="flex flex-col xl:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
-				<div className="flex-grow xl:min-h-screen overflow-hidden">
-					<AnimationOnScroll
-						animateIn="animate__slideInUp"
-						animateOnce>
-						<div className="">
-							<h1 className="font-semibold text-xl">
-								About this Course
-							</h1>
-							<p className="text-zinc-400 font-[300] max-w-2xl py-4 text-[14px] sm:text-[15px]">
-								{course.description}
-							</p>
-						</div>
-					</AnimationOnScroll>
-					<div className="my-6">
-						<AnimationOnScroll
-							animateIn="animate__slideInUp"
-							animateOnce>
-							<div className="">
-								<h1 className="font-semibold text-xl">
-									What you’d Learn in this course
-								</h1>
-								<p className="text-zinc-400 font-[300] max-w-2xl text-sm sm:text-[15px]">
-									At the end of this course you would be able
-									to understand
-								</p>
-								<div className="grid lg:grid-cols-2 md:grid-cols-3 gap-5 my-6 max-w-2xl">
-									{course.toLearn.map((learn, i) => (
-										<span
-											className="flex items-center gap-2 break-words sm:text-[15px] text-sm"
-											key={i}>
-											<svg
-												width="11"
-												height="10"
-												viewBox="0 0 11 10"
-												fill="none"
-												className="">
-												<path
-													d="M3.61047 10L0 6.00386L1.64535 4.18275L3.61047 6.36422L9.35465 0L11 1.82111L3.61047 10Z"
-													fill="#70C5A1"
-												/>
-											</svg>
-											{learn}
-										</span>
-									))}
-								</div>
-							</div>
-						</AnimationOnScroll>
-					</div>
-					<div className=""></div>
-					<div className=""></div>
+		<div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last">
+			<div className="flex items-center justify-between">
+				<h1 className="font-semibold text-xl">Course Content</h1>
+				<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
+					₦{course.price.toLocaleString()}
 				</div>
-				<div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last">
-					<div className="flex items-center justify-between">
-						<h1 className="font-semibold text-xl">
-							Course Content
-						</h1>
-						<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
-							₦{course.price.toLocaleString()}
-						</div>
-					</div>
-					<div className="my-6 grid gap-4 overflow-hidden">
-						{course.content.map((content, index) => (
-							<CourseContentDropdown
-								content={content}
-								key={index}
-								onClick={() => {
-									if (activeContent === content) {
-										setActiveContent(null);
-										return;
-									}
-									setActiveContent(content);
-								}}
-							/>
-						))}
-						<PrimaryButton
-							title="Start Course"
-							className="p-4 text-lg flex justify-center items-center"
-						/>
-					</div>
-				</div>
+			</div>
+			<div className="my-6 grid gap-4 overflow-hidden">
+				{course.content.map((content, index) => (
+					<CourseContentDropdown
+						content={content}
+						key={index}
+						onClick={() => {
+							if (activeContent === content) {
+								setActiveContent(null);
+								return;
+							}
+							setActiveContent(content);
+						}}
+					/>
+				))}
+				<PrimaryButton
+					title="Start Course"
+					className="p-4 text-lg flex justify-center items-center"
+				/>
 			</div>
 		</div>
 	);
 };
 
-export default CourseDetailsBody;
+export default CourseContents;
