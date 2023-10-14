@@ -1,3 +1,5 @@
+import { ICourseContent } from "../interfaces";
+
 export const scrollToTop = () => {
 	window.scrollTo({
 		top: 0,
@@ -75,3 +77,34 @@ export function slugify(title: string): string {
 		.replace(/[^a-z0-9-]/g, "")
 		.replace(/-{2,}/g, "-");
 }
+
+export function parseDuration(minutes: string) {
+	if (typeof minutes !== "string") {
+		minutes = String(minutes);
+	}
+	if (minutes.length === 4) {
+		return `${minutes.slice(0, 2)}:${minutes.slice(2)}`;
+	} else {
+		return "Invalid input";
+	}
+}
+
+export const calculateTotalDuration = (content: ICourseContent): string => {
+	let totalHours = 0;
+	let totalMinutes = 0;
+	content.list.forEach((item) => {
+		const [hours, minutes] = item.duration.split(":").map(Number);
+		if (!isNaN(hours) && !isNaN(minutes)) {
+			totalHours += hours;
+			totalMinutes += minutes;
+		}
+	});
+	const extraHours = Math.floor(totalMinutes / 60);
+	totalMinutes %= 60;
+	totalHours += extraHours;
+	const totalDuration = `${String(totalHours).padStart(2, "0")}:${String(
+		totalMinutes,
+	).padStart(2, "0")}`;
+
+	return totalDuration;
+};

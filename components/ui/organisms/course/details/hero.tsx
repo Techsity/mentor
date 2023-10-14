@@ -5,7 +5,7 @@ import { formatFollowersCount } from "../../../../../utils";
 
 const CourseDetailsPageHero = (course: ICourse) => {
 	return (
-		<div className="bg-[#0C202B] w-full pb-10 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
+		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
 			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 sm:gap-10">
 				<span className="flex gap-1 cursor-default text-sm items-center whitespace-nowrap flex-wrap">
 					Courses / Technical / Marketing /

@@ -30,7 +30,7 @@ const NotificationCard = () => {
 		);
 	};
 	return (
-		<div className="animate__animated animate__bounceInRight absolute bg-white border border-[#70C5A1] p-5 py-8 right-0 md:w-[50vw] md:right-12 top-20 w-full lg:w-[40vw] xl:w-[30vw] overflow-y-scroll overflow-hidden h-[60vh]">
+		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border border-[#70C5A1] p-5 py-8 right-0 md:w-[50vw] md:right-12 top-20 w-full lg:w-[40vw] xl:w-[30vw] overflow-y-scroll overflow-hidden h-[60vh]">
 			<NotificationItem />
 			<NotificationItem />
 			<NotificationItem />

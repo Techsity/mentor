@@ -31,12 +31,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -46,12 +46,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -61,12 +61,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -76,12 +76,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -91,12 +91,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -104,8 +104,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 3900,
@@ -156,12 +167,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -171,12 +182,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -186,12 +197,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -201,12 +212,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -216,12 +227,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -229,8 +240,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 5500,
@@ -281,12 +303,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -296,12 +318,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -311,12 +333,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -326,12 +348,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -341,12 +363,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -354,8 +376,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 5500,
@@ -406,12 +439,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -421,12 +454,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -436,12 +469,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -451,12 +484,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -466,12 +499,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -479,8 +512,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 3500,
@@ -531,12 +575,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -546,12 +590,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -561,12 +605,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -576,12 +620,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -591,12 +635,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -604,8 +648,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -656,12 +711,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -671,12 +726,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -686,12 +741,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -701,12 +756,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -716,12 +771,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -729,8 +784,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -781,12 +847,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -796,12 +862,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -811,12 +877,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -826,12 +892,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -841,12 +907,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -854,8 +920,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -911,12 +988,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -926,12 +1003,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -941,12 +1018,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -956,12 +1033,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -971,12 +1048,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -984,8 +1061,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1036,12 +1124,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1051,12 +1139,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1066,12 +1154,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1081,12 +1169,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1096,12 +1184,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1109,8 +1197,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1161,12 +1260,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1176,12 +1275,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1191,12 +1290,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1206,12 +1305,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1221,12 +1320,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1234,8 +1333,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1292,12 +1402,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1307,12 +1417,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1322,12 +1432,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1337,12 +1447,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1352,12 +1462,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1365,8 +1475,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1417,12 +1538,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1432,12 +1553,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1447,12 +1568,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1462,12 +1583,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1477,12 +1598,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1490,8 +1611,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1542,12 +1674,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1557,12 +1689,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1572,12 +1704,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1587,12 +1719,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1602,12 +1734,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1615,8 +1747,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1680,12 +1823,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1695,12 +1838,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1710,12 +1853,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1725,12 +1868,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1740,12 +1883,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1753,8 +1896,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 3900,
@@ -1805,12 +1959,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1820,12 +1974,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1835,12 +1989,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1850,12 +2004,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1865,12 +2019,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1878,8 +2032,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1930,12 +2095,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1945,12 +2110,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1960,12 +2125,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1975,12 +2140,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1990,12 +2155,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2003,8 +2168,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2067,12 +2243,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2082,12 +2258,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2097,12 +2273,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2112,12 +2288,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2127,12 +2303,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2140,8 +2316,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2192,12 +2379,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2207,12 +2394,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2222,12 +2409,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2237,12 +2424,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2252,12 +2439,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2265,8 +2452,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2317,12 +2515,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2332,12 +2530,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2347,12 +2545,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2362,12 +2560,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2377,12 +2575,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2390,8 +2588,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2447,12 +2656,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2462,12 +2671,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2477,12 +2686,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2492,12 +2701,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2507,12 +2716,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2520,8 +2729,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2572,12 +2792,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2587,12 +2807,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2602,12 +2822,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2617,12 +2837,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2632,12 +2852,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2645,8 +2865,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2697,12 +2928,12 @@ const courses: {
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2712,12 +2943,12 @@ const courses: {
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2727,12 +2958,12 @@ const courses: {
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2742,12 +2973,12 @@ const courses: {
 								title: "Blogging",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2757,12 +2988,12 @@ const courses: {
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "05:28",
+										duration: "0528",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "10:52",
+										duration: "1052",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2770,8 +3001,19 @@ const courses: {
 							},
 						],
 						available: true,
-						description:
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
+						description: `This Python For Beginners Course Teaches You The
+								Python Language Fast. Includes Python Online
+								Training With Python 3 This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python 3This Python For Beginners
+								Course Teaches You The Python Language Fast.
+								Includes Python Online Training With Python
+								3This Python For Beginners Course Teaches You
+								The Python Language Fast. Includes Python Online
+								Training With Python`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
