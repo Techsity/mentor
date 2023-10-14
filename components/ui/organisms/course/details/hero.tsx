@@ -17,17 +17,17 @@ const CourseDetailsPageHero = (course: ICourse) => {
 				</span>
 				<div className="my-2 sm:my-4 grid gap-2">
 					<h1
-						className="md:text-2xl font-bold"
+						className="md:text-2xl 2xl:text-4xl font-bold"
 						style={{ fontFamily: "Days One" }}>
 						{course.title}
 					</h1>
-					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm">
+					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
 						<p className="">{course.level}</p>
 						<p className="">{course.duration} hours</p>
 						<p className="">
 							{course.limit.toLocaleString()} students
 						</p>
-						<div className="flex items-center gap-2 text-[13px]">
+						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{course.rating}
 							<svg
 								width="13"
@@ -92,7 +92,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					</div>
 				</div>
 			</div>
-			<div className="w-auto h-auto lg:max-w-lg sm:max-w-md overflow-hidden">
+			<div className="w-auto h-auto lg:max-w-lg 2xl:max-w-2xl sm:max-w-md overflow-hidden">
 				<img
 					src={course.imgUrl || "/assets/images/thumbnails/tmb_2.png"}
 					alt={course.title}

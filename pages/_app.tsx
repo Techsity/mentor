@@ -50,7 +50,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		router.events.on("routeChangeComplete", handleStop);
 		router.events.on("routeChangeError", handleStop);
 		setTimeout(() => {
-			setInitialLoad(false);
+			// setInitialLoad(false);
 		}, 4000);
 		return () => {
 			router.events.off("routeChangeStart", handleStart);
