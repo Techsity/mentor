@@ -16,7 +16,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	const { courseId } = ctx.query;
 	const course = await getCourseById(courseId as string);
 	if (!course)
-		return { props: {}, redirect: { destination: "/404", permanent: false } };
+		return {
+			props: {},
+			redirect: { destination: "/not-found", permanent: false },
+		};
 	return { props: { course } };
 };
 
