@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import MenteeHelpFAQS from "./mentee";
-import MentorHelpFAQS from "./mentor";
+import MenteeHelpFAQS from "./mentee-help-faqs";
+import MentorHelpFAQS from "./mentor-help-faqs";
 
 const HelpFAQS = () => {
 	const [currentFaq, setCurrentFaq] = useState<"mentee" | "mentor">("mentee");

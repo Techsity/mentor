@@ -1,22 +1,3 @@
-export interface ICourse {
-	// id: string;
-	title: string;
-	description: string;
-	level: "All Level" | "Inermediate" | "Beinner" | "Adanced";
-	duration: number;
-	limit: number;
-	rating: number;
-	price: number | "free";
-	mentor: { name: string; username: string; avatar: string };
-	available: boolean;
-	imgUrl?: string;
-}
-
-export interface ICourseCategory {
-	title: string;
-	availableCourses: ICourse[];
-}
-
 type CountryCode =
 	| "AF"
 	| "AL"
@@ -246,6 +227,38 @@ type CountryCode =
 	| "ZM"
 	| "ZW";
 
+//
+//
+//
+
+type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
+type RefrencedMenteeType = Omit<IMentee, "mentors">;
+export interface ICourseContent {
+	title: string;
+	list: { name: string; duration: string; type: "video" | "document" }[];
+}
+export interface ICourse {
+	// id: string;
+	title: string;
+	description: string;
+	level: "All Level" | "Inermediate" | "Beinner" | "Adanced";
+	duration: number;
+	limit: number;
+	rating: number;
+	price: number | "free";
+	mentor: RefrencedMentorType;
+	available: boolean;
+	imgUrl?: string;
+	toLearn: string[];
+	requirements: string[];
+	content: ICourseContent[];
+}
+
+export interface ICourseCategory {
+	title: string;
+	availableCourses: ICourse[];
+}
+
 export interface IExperience {
 	position: string;
 	company: { name: string; logo?: string };
@@ -254,6 +267,11 @@ export interface IExperience {
 	startDate: string;
 	endDate: string;
 	country?: CountryCode;
+}
+export interface IMentee {
+	name: string;
+	username: string;
+	mentors: RefrencedMentorType[];
 }
 export interface IMentor {
 	name: string;
@@ -265,6 +283,8 @@ export interface IMentor {
 		link: string;
 		type: "Freelance" | "Contract" | "Official";
 	}[];
+	mentees: RefrencedMenteeType[];
+	subscribers: number;
 	sessions: number;
 	rating: number;
 	avatar: string;
@@ -306,7 +326,7 @@ export interface IWorkshop {
 	hoursPerDay: number;
 	enrolledStudents: number;
 	price: number | "free";
-	mentor: { name: string; avatar: string };
+	mentor: RefrencedMentorType;
 	available: boolean;
 	imgUrl?: string;
 }

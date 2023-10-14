@@ -20,7 +20,7 @@ const CoursesList = ({
 					.availableCourses.map((course, indx) => {
 						return <DisplayCourseCard course={course} key={indx} />;
 					})
-					.slice(0, isExtraLargeScreen ? 4 : isLargeScreen ? 3 : 4)}
+					.slice(0, isExtraLargeScreen ? 8 : isLargeScreen ? 6 : 8)}
 			</div>
 		</div>
 	);

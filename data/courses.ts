@@ -10,6 +10,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -19,6 +112,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -27,6 +135,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -36,6 +237,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: false,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -44,6 +260,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -53,6 +362,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: false,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -61,6 +385,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -70,6 +487,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -78,6 +510,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -87,6 +612,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: false,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -95,6 +635,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -104,6 +737,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: false,
 							username: "big-moves",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -112,6 +760,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -121,6 +862,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -134,6 +890,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -143,6 +992,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -151,6 +1015,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -160,6 +1117,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -168,6 +1140,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -177,6 +1242,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -191,6 +1271,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -200,6 +1373,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -208,6 +1396,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -217,6 +1498,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -225,6 +1521,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -234,6 +1623,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -255,6 +1659,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -264,6 +1761,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -272,6 +1784,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -281,6 +1886,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -289,6 +1909,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -298,6 +2011,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -318,6 +2046,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -327,6 +2148,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -335,6 +2171,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -344,6 +2273,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -352,6 +2296,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -361,6 +2398,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -374,6 +2426,99 @@ const courses: {
 			{
 				availableCourses: [
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -383,6 +2528,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -391,6 +2551,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -400,6 +2653,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
@@ -408,6 +2676,99 @@ const courses: {
 						title: "The Basics of Digital Marketing",
 					},
 					{
+						requirements: [
+							"Mobile Phone",
+							"Data and good network area",
+							"Book and Jotter",
+							"A laptop",
+							"Social media tools",
+							"Your attention",
+						],
+						toLearn: [
+							"What is Digital Marketing",
+							"Who is a Digital Marketer",
+							"How digital marketing works",
+							"Digital marketing tools",
+							"Social Media Algorithms",
+							"Positioning ads to precise target audience",
+						],
+						content: [
+							{
+								title: "Basic Introduction",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Who is a Digital Marketer",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Digital Marketing Tools",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Blogging",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+							{
+								title: "Social Media Algorithm",
+								list: [
+									{
+										duration: "05:28",
+										name: "Introduction",
+										type: "video",
+									},
+									{
+										duration: "10:52",
+										name: "Basic Requirements",
+										type: "video",
+									},
+								],
+							},
+						],
 						available: true,
 						description:
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3",
@@ -417,6 +2778,21 @@ const courses: {
 						level: "All Level",
 						limit: 20000,
 						mentor: {
+							courses: [],
+							subscribers: 5000,
+							skills: ["Javascript", "Python"],
+							rating: 4.5,
+							ratePerHour: 200,
+							online: true,
+							mentees: [{ name: "Lorem", username: "lorem" }],
+							languages: [],
+							jobTitle: "TypeScript Engineer",
+							followers: 20400,
+							daysOpen: ["Mon", "Tue", "Wed"],
+							country: "NG",
+							about: "Lorem ipsum sdushk disdonwdijk cdisnidn",
+							sessions: 5,
+							verified: true,
 							username: "",
 							name: "John Doe",
 							avatar: "/assets/images/avatar.png",
