@@ -103,11 +103,32 @@ const CourseDetailsBody = (course: ICourse) => {
 							</p>
 						</div>
 					</AnimationOnScroll>
-					<div className=""></div>
+					<div className="my-6">
+						<AnimationOnScroll
+							animateIn="animate__slideInUp"
+							animateOnce>
+							<div className="">
+								<h1 className="font-semibold text-xl">
+									What you’d Learn in this course
+								</h1>
+								<p className="text-zinc-400 font-[300] max-w-2xl">
+									At the end of this course you would be able
+									to understand
+								</p>
+								<div className="grid md:grid-cols-2 gap-5 my-5">
+									{course.toLearn.map((learn, i) => (
+										<span className="" key={i}>
+											{learn}
+										</span>
+									))}
+								</div>
+							</div>
+						</AnimationOnScroll>
+					</div>
 					<div className=""></div>
 					<div className=""></div>
 				</div>
-				<div className="xl:max-w-[35%] w-full bg-[#fff] p-8 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] sticky top-20 overflow-y-auto  animate__animated animate__slideInRight">
+				<div className="xl:max-w-[35%] w-full bg-[#fff] p-8 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] sticky top-24 overflow-y-auto  animate__animated animate__slideInRight">
 					<div className="flex items-center justify-between">
 						<h1 className="font-semibold text-xl">
 							Course Content

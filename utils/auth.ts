@@ -1,5 +1,5 @@
 export const checkAuth = () => {
-	return true;
+	return !true;
 };
 export const currentUserRole = (): "mentee" | "mentor" => {
 	return "mentee";
