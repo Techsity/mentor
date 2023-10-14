@@ -2,6 +2,7 @@ import React, { MouseEventHandler, useState } from "react";
 import { ICourse, ICourseContent } from "../../../../../interfaces";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { calculateTotalDuration, parseDuration } from "../../../../../utils";
+import { PrimaryButton } from "../../../atom/buttons";
 
 const CourseDetailsBody = (course: ICourse) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent>(
@@ -19,7 +20,7 @@ const CourseDetailsBody = (course: ICourse) => {
 			<>
 				<div
 					onClick={onClick}
-					className={`p-4 border border-[#70C5A1] ${
+					className={`p-2 px-4 border border-[#70C5A1] ${
 						activeContent === content
 							? "bg-white"
 							: "bg-[#70C5A1] text-white"
@@ -28,7 +29,12 @@ const CourseDetailsBody = (course: ICourse) => {
 						<div className="flex justify-between items-center duration-300">
 							<h1 className="grid items-center gap-2">
 								{content.title}{" "}
-								<span className="text-sm text-[#A3A6A7]">
+								<span
+									className={`${
+										activeContent === content
+											? "text-[#A3A6A7]"
+											: "text-white"
+									}`}>
 									{mainDuration}
 								</span>
 							</h1>
@@ -101,7 +107,7 @@ const CourseDetailsBody = (course: ICourse) => {
 					<div className=""></div>
 					<div className=""></div>
 				</div>
-				<div className="xl:max-w-[35%] w-full bg-[#fff] p-8 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] sticky top-24 overflow-y-auto  animate__animated animate__slideInRight">
+				<div className="xl:max-w-[35%] w-full bg-[#fff] p-8 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] sticky top-20 overflow-y-auto  animate__animated animate__slideInRight">
 					<div className="flex items-center justify-between">
 						<h1 className="font-semibold text-xl">
 							Course Content
@@ -118,6 +124,10 @@ const CourseDetailsBody = (course: ICourse) => {
 								onClick={() => setActiveContent(content)}
 							/>
 						))}
+						<PrimaryButton
+							title="Start Course"
+							className="p-4 text-lg flex justify-center items-center"
+						/>
 					</div>
 				</div>
 			</div>
