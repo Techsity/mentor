@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { MenuSharp } from "react-ionicons";
 import navLinks from "../../../../data/navlinks";
-import LandingSearchBar from "../../atom/forms/LandingSearchBar";
 import { MentorLogoDark } from "../../atom/icons/svgs";
 import Link from "next/link";
 import { currentUserRole } from "../../../../utils/auth";
-import { testUser } from "../../../../data/user";
 import NotificationCard from "../../atom/cards/notification";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const AuthNavbar = () => {
 	const router = useRouter();
@@ -18,7 +18,7 @@ const AuthNavbar = () => {
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
 	const CurrentUser = () => {
-		const user = testUser("mentee");
+		const user = useSelector(currentUser);
 		return (
 			<Link href={`/${currentUserRole()}/dashboard`}>
 				<div className="flex items-center gap-3 cursor-pointer">

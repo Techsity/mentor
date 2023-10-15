@@ -2,12 +2,16 @@ import React, { ReactNode } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import AuthNavbar from "./navbar/AuthNavbar";
-import { checkAuth } from "../../../utils/auth";
+import { useSelector } from "react-redux";
+import { currentUser, isLoggedIn } from "../../../redux/reducers/authSlice";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
+	const auth = useSelector(isLoggedIn);
+	const user = useSelector(currentUser);
+
 	return (
 		<>
-			{checkAuth() ? <AuthNavbar /> : <Navbar />}
+			{auth && user ? <AuthNavbar /> : <Navbar />}
 			{/* <Navbar />  */}
 			<div className="pt-10">{children}</div>
 			<Footer />

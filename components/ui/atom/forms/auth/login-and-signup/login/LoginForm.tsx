@@ -11,7 +11,7 @@ const LoginForm = () => {
 		email: "",
 		password: "",
 	};
-	const { loading, handleSubmit } = useLoginForm();
+	const { loading, handleSubmit } = useLoginForm({initialValues});
 	return (
 		<form
 			onSubmit={handleSubmit}
