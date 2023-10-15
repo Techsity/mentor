@@ -14,9 +14,9 @@ const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
-		setLoading(false);
 		// Perform api calls here
 		setTimeout(function () {
+		// setLoading(false);
 			dispatch(setUser(dummyUser));
 			dispatch(setLoggedIn(true));
 			router.replace(`/${dummyUser?.role}/dashboard`);
