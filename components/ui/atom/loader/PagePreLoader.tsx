@@ -15,7 +15,7 @@ const PagePreLoader = () => {
 					theme === "dark" ? "bg-[#021905]" : "bg-white"
 				} w-full top-0 right-0 animate__animated animate__slideInRight animate__slow`}></div>
 			<div
-				className="flex gap-6 font-bold items-center lg:text-9xl text-7xl"
+				className="flex md:gap-6 gap-2 font-bold items-center lg:text-9xl text-7xl"
 				style={{ fontFamily: "Days One" }}>
 				<h1
 					className={`select-none ${
