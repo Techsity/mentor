@@ -22,3 +22,8 @@ export interface ISignUpState {
 	phone: string;
 	country: string;
 }
+
+export interface ILoginState {
+	email: string;
+	password: string;
+}

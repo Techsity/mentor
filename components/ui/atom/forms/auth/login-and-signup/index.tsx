@@ -16,13 +16,6 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 		return () => setCurrentForm("signup");
 	}, [pageKey]);
 
-	const handleSignUpFormSubmit = (state: ISignUpState) => {
-		console.log(state);
-		setTimeout(function () {
-			router.push(`/auth/verification/${"jwt_token"}/signup`);
-		}, 2000);
-	};
-
 	return (
 		<div className="w-full max-w-lg pt-3">
 			<LoginAndSignupFormHeader
@@ -34,7 +27,7 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 					<LoginForm />
 				</div>
 				<div className={currentForm === "signup" ? "" : "hidden"}>
-					<SignUpForm onSubmit={handleSignUpFormSubmit} />
+					<SignUpForm />
 				</div>
 				<div className="mt-6 items-center animate__animated animate__fadeInUp flex md:flex-row flex-col gap-5">
 					<h1 className="">
@@ -42,9 +35,10 @@ const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
 					</h1>
 					<Link
 						href={
-							currentForm === "login" ? "#google_auth_login" : "#google_auth_signup"
-						}
-					>
+							currentForm === "login"
+								? "#google_auth_login"
+								: "#google_auth_signup"
+						}>
 						<div className="cursor-pointer">
 							<GoogleIconSvg />
 						</div>

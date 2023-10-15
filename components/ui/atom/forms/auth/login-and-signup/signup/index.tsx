@@ -5,12 +5,10 @@ import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
 import useSignUpForm from "../../../../../../../hooks/forms/useSignUpForm";
 import SignupFormInputs from "./SignupFormInputs";
 import PasswordValidationComponent from "./PasswordValidationComponent";
+import { useRouter } from "next/router";
 
-const SignUpForm = ({
-	onSubmit,
-}: {
-	onSubmit: (state: ISignUpState) => void;
-}) => {
+const SignUpForm = () => {
+	const router = useRouter();
 	const initialValues: ISignUpState = {
 		fullName: "",
 		email: "",
@@ -19,6 +17,13 @@ const SignUpForm = ({
 		phone: "",
 		country: "",
 	};
+	const handleSignUpFormSubmit = (state: ISignUpState) => {
+		console.log(state);
+		setTimeout(function () {
+			router.push(`/auth/verification/${"jwt_token"}/signup`);
+		}, 2000);
+	};
+
 	const {
 		errors,
 		handleChange,
@@ -27,13 +32,12 @@ const SignUpForm = ({
 		handleError,
 		values,
 		handleCountrySelect,
-	} = useSignUpForm({ initialValues, onSubmit });
+	} = useSignUpForm({ initialValues, onSubmit: handleSignUpFormSubmit });
 
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="animate__animated animate__fadeIn grid gap-3"
-		>
+			className="animate__animated animate__fadeIn grid gap-3">
 			<SignupFormInputs
 				errors={errors}
 				handleChange={handleChange}
