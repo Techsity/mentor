@@ -58,7 +58,7 @@ const SignUpForm = () => {
 							</div>
 						) : null
 					}
-					className="p-3 text-center px-12 w-full lg:w-auto"
+					className="p-3 text-center px-12 w-full lg:w-auto flex justify-center"
 				/>
 				<div className="flex-grow">
 					<PasswordValidationComponent password={values.password} />

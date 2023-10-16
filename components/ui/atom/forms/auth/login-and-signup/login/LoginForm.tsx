@@ -5,20 +5,26 @@ import CustomTextInput from "../../../../inputs/CustomTextInput";
 import ActivityIndicator from "../../../../loader/ActivityIndicator";
 import useLoginForm from "../../../../../../../hooks/forms/useLoginForm";
 import { ILoginState } from "../../../../../../../interfaces/auth.interface";
+import { EyeOffSharp, EyeSharp } from "react-ionicons";
 
 const LoginForm = () => {
 	const initialValues: ILoginState = {
 		email: "",
 		password: "",
 	};
-	const { loading, handleSubmit } = useLoginForm({initialValues});
+	const { loading, handleSubmit, currentState, error, handleChange } =
+		useLoginForm({ initialValues });
+	const [showPassword, setShowPassword] = useState<boolean>(false);
 	return (
 		<form
 			onSubmit={handleSubmit}
 			className="animate__animated animate__fadeIn grid gap-4">
 			<CustomTextInput
+				disabled={loading}
+				value={currentState.email}
 				placeholder="Email"
 				type="email"
+				onChange={handleChange("email")}
 				className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 				containerProps={{
 					className:
@@ -26,15 +32,29 @@ const LoginForm = () => {
 				}}
 			/>
 			<CustomTextInput
+				disabled={loading}
+				value={currentState.password}
 				placeholder="Password"
-				type="password"
+				type={!showPassword ? "password" : "text"}
+				onChange={handleChange("password")}
 				className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 				containerProps={{
 					className:
-						"border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
+						"border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 				}}
+				rightIcon={
+					<div
+						className="cursor-pointer"
+						onClick={() => setShowPassword(!showPassword)}>
+						{!showPassword ? (
+							<EyeSharp color="#094B10" />
+						) : (
+							<EyeOffSharp color="#094B10" />
+						)}
+					</div>
+				}
 			/>
-			<div className="sm:flex grid gap-5 justify-between mt-5 items-center">
+			<div className="sm:flex-row flex flex-col gap-5 justify-between mt-5 items-center">
 				<PrimaryButton
 					type="submit"
 					disabled={loading}
@@ -46,7 +66,7 @@ const LoginForm = () => {
 							</div>
 						) : null
 					}
-					className="px-10 p-3 rounded text-center"
+					className="px-10 p-3 rounded text-center flex justify-center sm:w-auto w-full"
 				/>
 				<Link href="/auth/forgot-password">
 					<div className="cursor-pointer">

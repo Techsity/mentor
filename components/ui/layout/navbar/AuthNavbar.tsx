@@ -20,7 +20,7 @@ const AuthNavbar = () => {
 	const CurrentUser = () => {
 		const user = useSelector(currentUser);
 		return (
-			<Link href={`/${currentUserRole()}/dashboard`}>
+			<Link href={`/dashboard`}>
 				<div className="flex items-center gap-3 cursor-pointer">
 					<div className="rounded-full w-9 h-9 relative">
 						<img

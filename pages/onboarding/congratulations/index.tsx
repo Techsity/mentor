@@ -12,14 +12,12 @@ const OnboardingCongratulations = () => {
 				<div className="mt-20">
 					<h1
 						className="md:text-8xl text-4xl text-[#00D569]"
-						style={{ fontFamily: "Days One" }}
-					>
+						style={{ fontFamily: "Days One" }}>
 						Congra <br /> tulations!
 					</h1>
 					<div
 						className="my-5 text-[#094B10] text-xl"
-						style={{ fontFamily: "Days One" }}
-					>
+						style={{ fontFamily: "Days One" }}>
 						Begin your Journey to endless knowledge
 					</div>
 					<div className="sm:flex grid gap-5 mt-5 items-center my-5">
@@ -27,7 +25,7 @@ const OnboardingCongratulations = () => {
 							onClick={() => {
 								setLoading(true);
 								setTimeout(function () {
-									router.replace("/mentee/dashboard");
+									router.replace("/dashboard");
 								}, 2000);
 							}}
 							disabled={loading}

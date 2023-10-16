@@ -28,8 +28,9 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				type={inputProps?.type}
 				required={inputProps?.required}
 				className={classNames(
-					"w-full p-4 h-full focus:ring-0 outline-none",
+					"p-4 h-full focus:ring-0 outline-none",
 					inputProps?.className,
+					rightIcon ? "w-[93%]" : "w-full",
 				)}
 			/>
 			{rightIcon ? (

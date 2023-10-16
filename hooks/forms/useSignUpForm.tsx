@@ -30,34 +30,34 @@ const useSignUpForm = ({
 			if (fieldName === "fullName") {
 				toast.error(
 					"Full name is required",
-					ToastDefaultOptions({ id: "signup_form_pop" }),
+					ToastDefaultOptions({ id: "auth_form_pop" }),
 				);
 			}
 			if (fieldName === "email") {
 				if (!values.email) {
 					toast.error(
 						"Email is required",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 					return;
 				}
 				toast.error(
 					"Invalid Email",
-					ToastDefaultOptions({ id: "signup_form_pop" }),
+					ToastDefaultOptions({ id: "auth_form_pop" }),
 				);
 			}
 			if (fieldName === "phone") {
 				if (!values.phone) {
 					toast.error(
 						"Phone number is required",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 					return;
 				}
 				if (!isValidPhoneNumber(values.phone))
 					toast.error(
 						"Invalid Phone Number",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 			}
 			if (fieldName === "password") {
@@ -65,7 +65,7 @@ const useSignUpForm = ({
 				} else {
 					toast.error(
 						"Password is required",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 					return;
 				}
@@ -74,7 +74,7 @@ const useSignUpForm = ({
 				if (!values.country) {
 					toast.error(
 						"Please select your country",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 					return;
 				}
@@ -83,7 +83,7 @@ const useSignUpForm = ({
 				if (!values.confirmPassword) {
 					toast.error(
 						"Please confirm password",
-						ToastDefaultOptions({ id: "signup_form_pop" }),
+						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 					return;
 				}
@@ -98,7 +98,7 @@ const useSignUpForm = ({
 		(name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
 			setValues({ ...values, [name]: e?.target.value });
 			setErrors([]);
-			toast.dismiss("signup_form_pop");
+			toast.dismiss("auth_form_pop");
 		};
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -106,28 +106,28 @@ const useSignUpForm = ({
 		if (!validatePassword(values.password.trim(), "8")) {
 			toast.error(
 				"Password must not be less than 8-digits",
-				ToastDefaultOptions({ id: "signup_form_pop" }),
+				ToastDefaultOptions({ id: "auth_form_pop" }),
 			);
 			return;
 		}
 		if (!validatePassword(values.password.trim(), "capital")) {
 			toast.error(
 				"Password must include a capital letter",
-				ToastDefaultOptions({ id: "signup_form_pop" }),
+				ToastDefaultOptions({ id: "auth_form_pop" }),
 			);
 			return;
 		}
 		if (!validatePassword(values.password.trim(), "number")) {
 			toast.error(
 				"Password must include a number",
-				ToastDefaultOptions({ id: "signup_form_pop" }),
+				ToastDefaultOptions({ id: "auth_form_pop" }),
 			);
 			return;
 		}
 		if (values.password.trim() !== values.confirmPassword.trim()) {
 			toast.error(
 				"Passwords do not match",
-				ToastDefaultOptions({ id: "signup_form_pop" }),
+				ToastDefaultOptions({ id: "auth_form_pop" }),
 			);
 			return;
 		}
