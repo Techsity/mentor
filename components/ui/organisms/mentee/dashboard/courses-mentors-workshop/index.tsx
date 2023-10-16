@@ -10,7 +10,7 @@ const CoursesMentorsWorkshop = () => {
 
 	return (
 		<div className="relative h-full">
-			<div className="flex justify-end bg-[#EEFFF8] py-6 sticky top-24 z-30">
+			<div className="flex justify-end bg-[#EEFFF8] py-6 sticky top-[9.9dvh] 2xl:top-[8dvh] z-30">
 				<CoursesMentorsWorkshopNav
 					links={links}
 					activeLink={activeLink}

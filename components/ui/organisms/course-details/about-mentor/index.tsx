@@ -7,7 +7,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 	return (
 		<div className="px-5 sm:px-10 lg:px-20 mt-10 py-3">
 			<h1 className="text-xl font-semibold">About Mentor</h1>
-			<div className="">
+			<div className="mt-8">
 				{" "}
 				<div className="my-2 sm:my-4 flex items-center gap-2">
 					<div className="flex gap-1.5 items-center">
@@ -19,7 +19,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 					</div>
 					<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
 						<div className="flex item-center gap-2">
-							<h1 className="font-semibold text-lg">
+							<h1 className="font-semibold text-lg text-[#094B10]">
 								{mentor.name}
 							</h1>
 							{mentor.verified ? (
@@ -43,7 +43,13 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 									/>
 								</svg>
 							) : null}
-                            <p className="">{formatFollowersCount(mentor.followers)} followers</p>
+							<p className="flex items-center">
+								{formatFollowersCount(mentor.followers)}{" "}
+								followers
+							</p>
+							<p className="flex gap-2 items-center text-[#70C5A1]">
+								+follow
+							</p>
 						</div>
 						<p className="">{mentor.jobTitle} </p>
 						<p className="flex gap-1 items-center">
@@ -57,7 +63,9 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 					</div>
 				</div>
 			</div>
-			<div className=""></div>
+			<div className="text-[#9A9898] text-[15px] max-w-2xl">
+				{mentor.about}
+			</div>
 		</div>
 	);
 };

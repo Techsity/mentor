@@ -27,3 +27,25 @@ export const ToastDefaultOptions = ({
 		...rest,
 	};
 };
+
+// toast(
+// 	<div className="grid gap-6 select-none items-center">
+// 		Invalid email
+// 		<div className="flex gap-5">
+// 			<span
+// 				style={{ cursor: "pointer" }}
+// 				onClick={() => toast.dismiss("message_pop")}>
+// 				Close
+// 			</span>
+// 			<span style={{ cursor: "pointer" }}>Done</span>
+// 		</div>
+// 	</div>,
+// 	{
+// 		autoClose: false,
+// 		closeOnClick: false,
+// 		hideProgressBar: true,
+// 		draggable: false,
+// 		// closeButton: false,
+// 		toastId: "message_pop",
+// 	},
+// );

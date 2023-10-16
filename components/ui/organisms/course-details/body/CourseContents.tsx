@@ -1,7 +1,7 @@
 import React, { MouseEventHandler, useState } from "react";
-import { ICourse, ICourseContent } from "../../../../../../interfaces";
-import { calculateTotalDuration, parseDuration } from "../../../../../../utils";
-import { PrimaryButton } from "../../../../atom/buttons";
+import { ICourse, ICourseContent } from "../../../../../interfaces";
+import { calculateTotalDuration, parseDuration } from "../../../../../utils";
+import { PrimaryButton } from "../../../atom/buttons";
 
 const CourseContents = (course: ICourse) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent | null>(

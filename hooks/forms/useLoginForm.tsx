@@ -1,9 +1,12 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ILoginState } from "../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { setLoggedIn, setUser } from "../../redux/reducers/authSlice";
+import { setLoggedIn, setUser } from "../../redux/reducers/features/authSlice";
 import { testUser } from "../../data/user";
+import { isEmail } from "../../utils";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../constants";
 
 const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -20,17 +23,45 @@ const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 			setState({ ...state, [field]: e.target.value });
 		};
 	const handleSubmit = async (e: FormEvent) => {
-		setError([]);
 		e.preventDefault();
 		setLoading(true);
-		// Perform api calls here
-		setTimeout(function () {
-			// setLoading(false);
-			// dispatch(setUser(dummyUser));
-			// dispatch(setLoggedIn(true));
-			// router.replace(`/dashboard`);
-		}, 2000);
+		setError([]);
+		try {
+			if (!isEmail(state.email)) {
+				setLoading(false);
+				setError(["email"]);
+				toast.error(
+					"Please enter a valid email",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
+				return;
+			}
+			if (!state.password) {
+				setLoading(false);
+				setError(["password"]);
+				toast.error(
+					"Please enter your password",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
+				return;
+			}
+			// Perform login api call here
+			//
+			setTimeout(function () {
+				setLoading(false);
+				dispatch(setUser(dummyUser));
+				dispatch(setLoggedIn(true));
+				router.replace(`/dashboard`);
+			}, 2000);
+		} catch (error: any) {
+			console.log(error);
+
+			setLoading(false);
+		}
 	};
+	// useEffect(()=>{
+	// 	if
+	// },[router])
 	return { loading, handleSubmit, currentState: state, error, handleChange };
 };
 

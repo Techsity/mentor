@@ -8,7 +8,7 @@ import Link from "next/link";
 import { currentUserRole } from "../../../../utils/auth";
 import NotificationCard from "../../atom/cards/notification";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const AuthNavbar = () => {
 	const router = useRouter();

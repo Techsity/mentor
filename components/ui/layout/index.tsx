@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import AuthNavbar from "./navbar/AuthNavbar";
 import { useSelector } from "react-redux";
-import { currentUser, isLoggedIn } from "../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../redux/reducers/features/authSlice";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	const auth = useSelector(isLoggedIn);
