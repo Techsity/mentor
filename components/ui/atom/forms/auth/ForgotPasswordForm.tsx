@@ -17,21 +17,28 @@ const ForgotPasswordForm = ({
 
 	return (
 		<form className="" onSubmit={handleSubmit}>
-			<h1 className="text-3xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
+			<h1
+				className="text-3xl text-[#00D569]"
+				style={{ fontFamily: "Days One" }}>
 				Oops! Sorry about that!
 			</h1>
-			<p className="my-5 sm:my-10">Please enter the email linked to the account</p>
+			<p className="my-5 sm:my-10">
+				Please enter the email linked to the account
+			</p>
 			<CustomTextInput
-				inputProps={{
-					placeholder: "Email",
-					type: "email",
-					required: true,
-					className: "bg-transparent",
-					value: state.email,
-					onChange: (e) =>
-						setState({ error: "", email: e.target.value, loading: false }),
-					disabled: state.loading,
-				}}
+				placeholder="Email"
+				type="email"
+				required={true}
+				className="bg-transparent"
+				value={state.email}
+				onChange={(e) =>
+					setState({
+						error: "",
+						email: e.target.value,
+						loading: false,
+					})
+				}
+				disabled={state.loading}
 				containerProps={{
 					className: `border ${
 						error ? "border-[#d31119]" : "border-[#094B10]"
@@ -59,8 +66,7 @@ const ForgotPasswordForm = ({
 						height="31"
 						viewBox="0 0 93 31"
 						fill="none"
-						className="cursor-pointer"
-					>
+						className="cursor-pointer">
 						<path
 							d="M90.1036 18.9454L92.6836 20.6927C91.8462 21.9456 89.8435 24.0953 86.3808 24.0953C82.081 24.0953 78.8789 20.7157 78.8789 16.4165C78.8789 11.8416 82.115 8.73792 86.0188 8.73792C89.9452 8.73792 91.8688 11.9104 92.4912 13.6232L92.8307 14.4969L82.7148 18.75C83.4842 20.2904 84.6838 21.072 86.3808 21.072C88.0783 21.072 89.2549 20.2214 90.1036 18.9454ZM82.1717 16.1753L88.9269 13.3244C88.5534 12.3705 87.4447 11.6923 86.1206 11.6923C84.4347 11.6923 82.0925 13.2097 82.1717 16.1753Z"
 							fill="#C0415A"
