@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { AddSharp } from "react-ionicons";
 import { mentorFaqData } from "../../../../../../data/help/faqs";
@@ -10,6 +10,7 @@ const MentorHelpFAQS = () => {
 		question: string;
 	} | null>(null);
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
+	const answerRef = useRef<HTMLDivElement>(null);
 
 	const toggleFaq = (index: number) => {
 		setActiveIndex(activeIndex === index ? null : index);
@@ -22,9 +23,14 @@ const MentorHelpFAQS = () => {
 					{mentorFaqData.map(({ answer, question }, index) => (
 						<Link key={index} href="#mentor_faq_answer">
 							<h1
-								onClick={() =>
-									setSelectedAnswer({ answer, question })
-								}
+								onClick={() => {
+									setSelectedAnswer({ answer, question });
+
+									if (answerRef.current)
+										answerRef.current.scrollIntoView({
+											behavior: "smooth",
+										});
+								}}
 								className="p-5 lg:col-span-4 xl:col-span-3 border border-[#70C5A1] hover:text-white hover:bg-[#70C5A1] duration-300 cursor-pointer">
 								{question}
 							</h1>

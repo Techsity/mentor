@@ -1,8 +1,8 @@
 import React from "react";
-import CourseDetailsPageTemplate from "../../components/templates/course/details";
+import CourseDetailsPageTemplate from "../../../components/templates/course/details";
 import { GetServerSidePropsContext } from "next";
-import { getCourseById } from "../../services/api";
-import { ICourse } from "../../interfaces";
+import { getCourseById } from "../../../services/api";
+import { ICourse } from "../../../interfaces";
 
 const CourseDetailsPage = ({ course }: { course: ICourse }) => {
 	return (
