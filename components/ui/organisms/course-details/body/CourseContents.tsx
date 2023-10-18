@@ -119,7 +119,11 @@ const CourseContents = (course: ICourse) => {
 					/>
 				))}
 				<PrimaryButton
-					title="Start Course"
+					title={
+						course.price !== "free"
+							? "Purchase Course"
+							: "Start Course"
+					}
 					link={
 						course.price !== "free"
 							? `/courses/${slugify(course.title)}/purchase`

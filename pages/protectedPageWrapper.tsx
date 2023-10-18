@@ -6,16 +6,17 @@ import store, { RootState } from "../redux/store";
 
 const protectedPageWrapper = (PageComponent: NextPage) => {
 	const Page = (props: any) => {
+		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
 		const user = useSelector(currentUser);
-		const router = useRouter();
+		const next = router.asPath as string;
 		if (!auth || !user) {
-			router.replace("/auth?login");
+			// localStorage.setItem("previousUrl", router.asPath);
+			router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 			return <div className="min-h-screen"></div>;
 		}
 		return <PageComponent {...props} />;
 	};
-
 	return Page;
 };
 

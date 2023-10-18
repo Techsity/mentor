@@ -50,18 +50,18 @@ const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 			setTimeout(function () {
 				setLoading(false);
 				dispatch(setCredentials({ isLoggedIn: true, user: dummyUser }));
-				router.replace(`/dashboard`);
+				const next = router.query.next as string;
+				if (next) {
+					router.replace(decodeURIComponent(next));
+				} else {
+					router.replace(`/dashboard`);
+				}
 			}, 2000);
 		} catch (error: any) {
 			console.log(error);
-
 			setLoading(false);
 		}
 	};
-	// useEffect(()=>{
-	// 	if
-	// },[router])
 	return { loading, handleSubmit, currentState: state, error, handleChange };
 };
-
 export default useLoginForm;

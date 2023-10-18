@@ -6,7 +6,7 @@ import { formatFollowersCount } from "../../../../../utils";
 const CourseSummary = (course: ICourse) => {
 	return (
 		<>
-			<div className="sticky h-auto py-3 gap-4 w-full bottom-0 text-white bg-[#70C5A1] grid sm:grid-cols-2 items-center lg:px-20 sm:px-12 px-6">
+			<div className="sticky h-auto py-3 xl:py-8 2xl:py-12 gap-4 w-full bottom-0 text-white bg-[#70C5A1] grid sm:grid-cols-2 items-center lg:px-20 sm:px-12 px-6">
 				<div className="grid gap-2">
 					<span className="">Course Summary</span>
 					<h1

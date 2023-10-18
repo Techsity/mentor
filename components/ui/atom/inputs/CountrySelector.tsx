@@ -38,7 +38,6 @@ const CountrySelector = ({
 	optionsListMaxHeight = 300,
 	disabled = false,
 	id,
-	inputClassName,
 	required,
 	onInvalidInput,
 }: ICountrySelectorProps) => {
@@ -129,7 +128,7 @@ const CountrySelector = ({
 					"bg-[#F6F9F8] placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
 					classes?.input,
 				)}
-				placeholder="Country"
+				placeholder={selectButtonPlaceholder}
 				type="text"
 				value={searchTerm}
 				onChange={handleChange}
@@ -211,5 +210,4 @@ const CountryListItem = ({
 };
 
 const CountrySelectorComp = memo(CountrySelector);
-
 export default CountrySelectorComp;
