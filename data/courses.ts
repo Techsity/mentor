@@ -269,7 +269,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing 23",
 								},
 								{
 									requirements: [
@@ -414,7 +414,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing 23",
 								},
 								{
 									requirements: [
@@ -559,7 +559,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing 23",
 								},
 								{
 									requirements: [
@@ -704,7 +704,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing wqsad",
 								},
 								{
 									requirements: [
@@ -849,7 +849,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing 2sasqw",
 								},
 								{
 									requirements: [
@@ -994,7 +994,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing dqwd",
 								},
 								{
 									requirements: [
@@ -1139,7 +1139,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing ssqd",
 								},
 								{
 									requirements: [
@@ -1284,7 +1284,7 @@ const courses: MainCourseType[] = [
 										avatar: "/assets/images/avatar.png",
 									},
 									rating: 4.5,
-									title: "The Basics of Digital Marketing",
+									title: "The Basics of Digital Marketing 23",
 								},
 							],
 							subscribers: 5000,
@@ -1309,7 +1309,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -1448,7 +1448,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -1587,7 +1587,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -1726,7 +1726,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -1865,7 +1865,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2004,7 +2004,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2143,7 +2143,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Digital Marketing",
@@ -2287,7 +2287,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2426,7 +2426,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2565,7 +2565,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Web Development",
@@ -2710,7 +2710,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2849,7 +2849,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -2988,7 +2988,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Data Science",
@@ -3140,7 +3140,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -3279,7 +3279,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -3418,7 +3418,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Digital",
@@ -3569,7 +3569,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -3708,7 +3708,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -3847,7 +3847,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Digital",
@@ -3991,7 +3991,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -4130,7 +4130,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 					{
 						requirements: [
@@ -4269,7 +4269,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing",
+						title: "The Basics of Digital Marketing 23",
 					},
 				],
 				title: "Robotics",

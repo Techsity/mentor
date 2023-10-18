@@ -80,7 +80,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 					</ul>
 				</div>
 				<div className="absolute bottom-4 w-full left-4 flex items-center gap-2 select-none animate__animated animate__fadeInUp">
-					<Link href="#">
+					<Link href={`/mentors/${mentor.username}`}>
 						<div className="bg-[#094B10] px-4 p-1 rounded cursor-pointer">
 							Book me
 						</div>

@@ -8,8 +8,8 @@ import { slugify } from "../../../../../utils";
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
 		<Link href={`/courses/${slugify(course.title)}`}>
-			<div className="inline-block md:pr-6 snap-start">
-				<div className="xl:w-[420px] xl:h-[500px] w-full md:w-[350px] h-auto md:h-[480px] md:max-w-sm xl:max-w-lg relative overflow-hidden shadow md:py-0 py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer">
+			<div className="inline-block snap-start">
+				<div className="xl:w-[420px] xl:h-[500px] w-[340px] xs:w-[360px] md:w-[350px] h-auto md:h-[480px] md:max-w-sm xl:max-w-lg relative overflow-hidden shadow md:py-0 py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer">
 					{/* <div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow-lg h-full hover:shadow-lg cursor-pointer duration-300 pb-6 w-full"> */}
 					<>
 						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">

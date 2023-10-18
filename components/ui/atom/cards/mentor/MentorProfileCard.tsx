@@ -142,7 +142,7 @@ const MentorProfileCard = ({
 					<div className="flex gap-5 items-center mt-10">
 						<PrimaryButton
 							title="Consult"
-							link={`/mentor/${mentor.username}`}
+							link={`/mentors/${mentor.username}`}
 							className="px-5 p-2"
 						/>
 					</div>
