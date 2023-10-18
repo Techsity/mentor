@@ -2,11 +2,11 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ILoginState } from "../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { setLoggedIn, setUser } from "../../redux/reducers/features/authSlice";
 import { testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";
+import { setCredentials } from "../../redux/reducers/features/authSlice";
 
 const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -49,8 +49,7 @@ const useLoginForm = ({ initialValues }: { initialValues: ILoginState }) => {
 			//
 			setTimeout(function () {
 				setLoading(false);
-				dispatch(setUser(dummyUser));
-				dispatch(setLoggedIn(true));
+				dispatch(setCredentials({ isLoggedIn: true, user: dummyUser }));
 				router.replace(`/dashboard`);
 			}, 2000);
 		} catch (error: any) {

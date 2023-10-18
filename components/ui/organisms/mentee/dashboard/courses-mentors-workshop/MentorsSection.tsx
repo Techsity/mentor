@@ -2,7 +2,7 @@
 import React, { ReactElement, useState } from "react";
 import mentors from "../../../../../../data/mentors";
 import { IMentor } from "../../../../../../interfaces";
-import { formatFollowersCount } from "../../../../../../utils";
+import { formatFollowersCount, scrollUp } from "../../../../../../utils";
 import { GlobeIconSvg } from "../../../../atom/icons/svgs";
 import { PrimaryButton } from "../../../../atom/buttons";
 import * as FlagIcons from "react-country-flags-select";
@@ -15,14 +15,16 @@ const MentorsSection = () => {
 
 	return (
 		<>
-			<div className="flex justify-center items-center">
+			<div className="sticky h-20 top-40 z-10 bg-[#FDFDFD] flex justify-center items-center">
 				<div className="flex items-center gap-10 animate__animated animate__fadeInUp">
 					<button
-						onClick={() => setTab("all")}
+						onClick={() => {
+							setTab("all");
+							scrollUp();
+						}}
 						className={`overflow-hidden relative text-[#094B10] ${
 							tab === "all" ? "font-semibold" : ""
-						}`}
-					>
+						}`}>
 						All
 						<span
 							className={`absolute bg-[#094B10] duration-300 left-0 bottom-0 h-[2px] ${
@@ -31,11 +33,13 @@ const MentorsSection = () => {
 						/>
 					</button>
 					<button
-						onClick={() => setTab("online")}
+						onClick={() => {
+							setTab("online");
+							scrollUp();
+						}}
 						className={`overflow-hidden relative text-[#094B10] ${
 							tab === "online" ? "font-semibold" : ""
-						}`}
-					>
+						}`}>
 						Online
 						<span
 							className={`absolute bg-[#094B10] duration-300 left-0 bottom-0 h-[2px] ${
@@ -54,7 +58,10 @@ const MentorsSection = () => {
 					? mentors
 							.filter((mentor) => mentor.online)
 							.map((mentor, index) => (
-								<MentorProfileCard mentor={mentor} key={index} />
+								<MentorProfileCard
+									mentor={mentor}
+									key={index}
+								/>
 							))
 					: mentors.map((mentor, index) => (
 							<MentorProfileCard mentor={mentor} key={index} />

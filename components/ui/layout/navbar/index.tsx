@@ -17,7 +17,7 @@ const Navbar = () => {
 	);
 
 	return (
-		<nav className="fixed w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
+		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
 			<Link href="/">
 				<div>
 					<MentorLogoDark className="cursor-pointer" />
@@ -34,30 +34,38 @@ const Navbar = () => {
 						{navLinks.map(({ link, name, sublinks }, index) => {
 							return sublinks ? (
 								<li
-									key={index}
+									key={index + "_" + name}
 									className="relative px-2 font-[300] select-none"
 									onMouseEnter={() => setActiveSublink(index)}
 									onMouseLeave={() => {
 										setActiveSublink(null);
 										setActiveDropdown(null);
-									}}
-								>
-									<span className={`duration-500 relative z-10 cursor-pointer`}>
+									}}>
+									<span
+										className={`duration-500 relative z-10 cursor-pointer`}>
 										{name}
 									</span>
 									<span
 										className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-											router.asPath.includes(link) ? "w-full" : "hover:w-full"
+											router.asPath.includes(link)
+												? "w-full"
+												: "hover:w-full"
 										}`}
 									/>
-									{activeSublink === index && sublinks && sublinks?.length > 0 ? (
+									{activeSublink === index &&
+									sublinks &&
+									sublinks?.length > 0 ? (
 										<div>
 											<div className="h-[100px] group duration-300 absolute top-6 left-0 bg-white w-auto items-center gap-3 flex justify-between divide-x  animate__animate animate__fadeIn">
 												{sublinks?.map((sublink, i) => (
 													<div key={i}>
 														<div
 															className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
-															onMouseEnter={() => setActiveDropdown(i)}
+															onMouseEnter={() =>
+																setActiveDropdown(
+																	i,
+																)
+															}
 															// onMouseLeave={() => setActiveDropdown(null)}
 														>
 															{sublink.icon}
@@ -65,23 +73,40 @@ const Navbar = () => {
 														</div>
 														{activeDropdown === i &&
 															sublink.dropdown &&
-															sublink.dropdown.length > 0 && (
+															sublink.dropdown
+																.length > 0 && (
 																<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
 																	{sublink.dropdown.map(
 																		(
-																			{ link: dropdownLink, name: dropdownLinkName },
+																			{
+																				link: dropdownLink,
+																				name: dropdownLinkName,
+																			},
 																			dropdownIndex,
 																		) => (
-																			<Link key={dropdownIndex} href={dropdownLink}>
+																			<Link
+																				key={
+																					dropdownIndex
+																				}
+																				href={
+																					dropdownLink
+																				}>
 																				<div
-																					key={i}
+																					key={
+																						i
+																					}
 																					onClick={() => {
-																						setActiveSublink(null);
-																						setActiveDropdown(null);
+																						setActiveSublink(
+																							null,
+																						);
+																						setActiveDropdown(
+																							null,
+																						);
 																					}}
-																					className="px-6 relative text-sm cursor-pointer text-decoration hover:underline"
-																				>
-																					{dropdownLinkName}
+																					className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
+																					{
+																						dropdownLinkName
+																					}
 																					<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
 																				</div>
 																			</Link>
@@ -103,12 +128,15 @@ const Navbar = () => {
 									router.asPath==link ? "text-white" : "group-hover:text-white"
 								} relative z-10`}
 							> */}
-										<span className={`duration-500 relative z-10 cursor-pointer`}>
+										<span
+											className={`duration-500 relative z-10 cursor-pointer`}>
 											{name}
 										</span>
 										<span
 											className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-												router.asPath.includes(link) ? "w-full" : "hover:w-full"
+												router.asPath.includes(link)
+													? "w-full"
+													: "hover:w-full"
 											}`}
 										/>
 										{/* <span
@@ -142,7 +170,11 @@ const Navbar = () => {
 					</Link>
 				</div>
 				<div className="md:hidden">
-					<MenuSharp width="30px" height="30px" cssClasses="cursor-pointer" />
+					<MenuSharp
+						width="30px"
+						height="30px"
+						cssClasses="cursor-pointer"
+					/>
 				</div>
 			</div>
 		</nav>

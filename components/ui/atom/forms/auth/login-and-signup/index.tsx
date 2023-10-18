@@ -8,7 +8,6 @@ import { ISignUpState } from "../../../../../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 
 const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
-	const router = useRouter();
 	const [currentForm, setCurrentForm] = useState<"login" | "signup">(pageKey);
 
 	useEffect(() => {

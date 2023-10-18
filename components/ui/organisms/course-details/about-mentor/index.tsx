@@ -47,7 +47,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 								{formatFollowersCount(mentor.followers)}{" "}
 								followers
 							</p>
-							<p className="flex gap-2 items-center text-[#70C5A1]">
+							<p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">
 								+follow
 							</p>
 						</div>

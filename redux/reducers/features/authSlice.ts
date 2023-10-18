@@ -5,19 +5,24 @@ import { IUser } from "../../../interfaces/user.interface";
 
 const initialState: IAuthState = {
 	isLoggedIn: false,
-	user: null,
+	user:
+		typeof window !== "undefined" && window.localStorage.getItem("userData")
+			? JSON.parse(window.localStorage.getItem("userData") as string)
+			: null,
 };
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState: initialState,
 	reducers: {
-		setLoggedIn: (state, action: { payload: boolean }) => {
-			state.isLoggedIn = action.payload;
+		setCredentials: (
+			state,
+			action: { payload: { isLoggedIn: boolean; user: IUser | null } },
+		) => {
+			state.isLoggedIn = action.payload.isLoggedIn;
+			state.user = action.payload.user;
 		},
-		setUser: (state, action: { payload: IUser | null }) => {
-			state.user = action.payload;
-		},
+
 		logOut: (state, action) => {
 			state.isLoggedIn = false;
 			state.user = null;
@@ -25,7 +30,7 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setLoggedIn, setUser, logOut } = authSlice.actions;
+export const { setCredentials, logOut } = authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user;

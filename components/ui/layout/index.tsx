@@ -13,7 +13,7 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 		<>
 			{auth && user ? <AuthNavbar /> : <Navbar />}
 			{/* <Navbar />  */}
-			<div className="pt-10">{children}</div>
+			<div className="relative">{children}</div>
 			<Footer />
 			{/* {children} */}
 		</>

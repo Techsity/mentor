@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { FilterCircleSharp, FilterSharp } from "react-ionicons";
+import { scrollUp } from "../../../../../../utils";
 
 const CoursesMentorsWorkshopNav = ({
 	activeLink,
@@ -77,12 +78,8 @@ const CoursesMentorsWorkshopNav = ({
 							style={{ fontFamily: "Days One" }}
 							onClick={() => {
 								setActiveLink(link);
-								window.scrollTo({
-									top: 550,
-									behavior: "smooth",
-								});
-							}}
-						>
+								scrollUp(650);
+							}}>
 							{link}
 						</div>
 					);

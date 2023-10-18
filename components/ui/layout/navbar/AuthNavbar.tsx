@@ -45,7 +45,7 @@ const AuthNavbar = () => {
 	};
 
 	return (
-		<nav className="fixed w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
+		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
 			<Link href={`/`}>
 				<div>
 					<MentorLogoDark className="cursor-pointer" />
