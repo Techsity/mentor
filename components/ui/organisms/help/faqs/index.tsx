@@ -4,35 +4,16 @@ import MentorHelpFAQS from "./mentor-help-faqs";
 
 const HelpFAQS = () => {
 	const [currentFaq, setCurrentFaq] = useState<"mentee" | "mentor">("mentee");
-	const faqNavRef = useRef<HTMLDivElement>(null);
-	const [isFixed, setIsFixed] = useState<boolean>(false);
-
-	const stickNav = () => {
-		if (faqNavRef.current) {
-			const element = faqNavRef.current;
-			const rect = element.getBoundingClientRect();
-			if (rect.top <= 0 && !isFixed) {
-				setIsFixed(true);
-			} else if (rect.top > 0 && isFixed) {
-				setIsFixed(false);
-			}
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener("scroll", stickNav);
-		return () => window.removeEventListener("scroll", stickNav);
-	}, []);
 
 	return (
-		<div className="overflow-hidden h-full">
+		<div className="h-full">
 			{/* <div
 				className={`flex justify-center w-full top-[9vh] sm:top-24 z-20 ${
 					isFixed ? "fixed" : ""
 				}`}
 				ref={faqNavRef}
 			> */}
-			<div className="flex justify-center w-full" ref={faqNavRef}>
+			<div className="flex justify-center w-full h-auto sticky top-20 z-20 backdrop-blur-md bg-white/50">
 				<div className="flex items-center md:gap-[1px] bg-white">
 					<div
 						onClick={() => setCurrentFaq("mentee")}
@@ -41,8 +22,7 @@ const HelpFAQS = () => {
 								? "bg-[#094B10] text-white"
 								: "hover:bg-[#094B10] hover:text-white bg-white"
 						}`}
-						style={{ fontFamily: "Days One" }}
-					>
+						style={{ fontFamily: "Days One" }}>
 						Mentee
 					</div>
 					<div
@@ -52,14 +32,17 @@ const HelpFAQS = () => {
 								? "bg-[#094B10] text-white"
 								: "hover:bg-[#094B10] hover:text-white bg-white"
 						}`}
-						style={{ fontFamily: "Days One" }}
-					>
+						style={{ fontFamily: "Days One" }}>
 						Mentor
 					</div>
 				</div>
 			</div>
 			<div className="px-6 sm:px-10 lg:px-20 mt-16">
-				{currentFaq === "mentee" ? <MenteeHelpFAQS /> : <MentorHelpFAQS />}
+				{currentFaq === "mentee" ? (
+					<MenteeHelpFAQS />
+				) : (
+					<MentorHelpFAQS />
+				)}
 			</div>
 		</div>
 	);
