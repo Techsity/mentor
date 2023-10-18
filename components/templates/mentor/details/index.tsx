@@ -72,11 +72,7 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 				{coursesByMentor?.length >= 1 && (
 					<>
 						<div className="border-t border-[#A3A6A7] mt-10 mx-20" />
-						<OtherCoursesByMentor
-							mentorProfile
-							course={coursesByMentor[0]}
-							mentor={mentor}
-						/>
+						<OtherCoursesByMentor mentorProfile mentor={mentor} />
 					</>
 				)}
 			</div>

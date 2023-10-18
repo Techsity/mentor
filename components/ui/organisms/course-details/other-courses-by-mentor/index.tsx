@@ -28,11 +28,11 @@ const OtherCoursesByMentor = ({
 				<div className="flex flex-row items-center overflow-x-scroll gap-3 hide-scroll-bar py-10 relative">
 					<div className="flex flex-nowrap flex-row gap-4 snap-x snap-mandatory">
 						{mentorState.courses
-							.filter(
-								(item) =>
-									slugify(item.title) !==
-									slugify(course.title),
-							)
+							// .filter(
+							// 	(item) =>
+							// 		{slugify(item.title) !==
+							// 		slugify(course.title)}
+							// )
 							.map((course, index) => (
 								<DisplayCourseCard
 									course={course}
