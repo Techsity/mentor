@@ -33,12 +33,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "08:20",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -48,12 +48,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "09:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "20:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -63,12 +63,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "0:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -78,12 +78,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -93,12 +93,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -148,12 +148,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -163,12 +163,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -178,12 +178,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -193,12 +193,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -208,12 +208,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -293,12 +293,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -308,12 +308,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -323,12 +323,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -338,12 +338,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -353,12 +353,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -438,12 +438,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -453,12 +453,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -468,12 +468,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -483,12 +483,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -498,12 +498,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -583,12 +583,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -598,12 +598,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -613,12 +613,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -628,12 +628,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -643,12 +643,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -728,12 +728,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -743,12 +743,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -758,12 +758,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -773,12 +773,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -788,12 +788,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -873,12 +873,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -888,12 +888,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -903,12 +903,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -918,12 +918,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -933,12 +933,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1018,12 +1018,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1033,12 +1033,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1048,12 +1048,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1063,12 +1063,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1078,12 +1078,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1163,12 +1163,12 @@ const courses: MainCourseType[] = [
 											title: "Basic Introduction",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1178,12 +1178,12 @@ const courses: MainCourseType[] = [
 											title: "Who is a Digital Marketer",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1193,12 +1193,12 @@ const courses: MainCourseType[] = [
 											title: "Digital Marketing Tools",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1208,12 +1208,12 @@ const courses: MainCourseType[] = [
 											title: "Blogging",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1223,12 +1223,12 @@ const courses: MainCourseType[] = [
 											title: "Social Media Algorithm",
 											list: [
 												{
-													duration: "0528",
+													duration: "05:28",
 													name: "Introduction",
 													type: "video",
 												},
 												{
-													duration: "1052",
+													duration: "10:52",
 													name: "Basic Requirements",
 													type: "video",
 												},
@@ -1333,12 +1333,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1348,12 +1348,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1363,12 +1363,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1378,12 +1378,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1393,12 +1393,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1472,12 +1472,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1487,12 +1487,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1502,12 +1502,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1517,12 +1517,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1532,12 +1532,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1611,12 +1611,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1626,12 +1626,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1641,12 +1641,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1656,12 +1656,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1671,12 +1671,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1750,12 +1750,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1765,12 +1765,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1780,12 +1780,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1795,12 +1795,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1810,12 +1810,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1889,12 +1889,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1904,12 +1904,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1919,12 +1919,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1934,12 +1934,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -1949,12 +1949,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2028,12 +2028,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2043,12 +2043,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2058,12 +2058,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2073,12 +2073,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2088,12 +2088,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2172,12 +2172,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2187,12 +2187,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2202,12 +2202,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2217,12 +2217,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2232,12 +2232,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2311,12 +2311,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2326,12 +2326,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2341,12 +2341,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2356,12 +2356,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2371,12 +2371,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2450,12 +2450,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2465,12 +2465,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2480,12 +2480,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2495,12 +2495,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2510,12 +2510,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2595,12 +2595,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2610,12 +2610,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2625,12 +2625,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2640,12 +2640,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2655,12 +2655,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2734,12 +2734,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2749,12 +2749,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2764,12 +2764,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2779,12 +2779,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2794,12 +2794,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2873,12 +2873,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2888,12 +2888,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2903,12 +2903,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2918,12 +2918,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -2933,12 +2933,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3025,12 +3025,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3040,12 +3040,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3055,12 +3055,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3070,12 +3070,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3085,12 +3085,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3164,12 +3164,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3179,12 +3179,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3194,12 +3194,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3209,12 +3209,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3224,12 +3224,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3303,12 +3303,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3318,12 +3318,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3333,12 +3333,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3348,12 +3348,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3363,12 +3363,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3454,12 +3454,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3469,12 +3469,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3484,12 +3484,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3499,12 +3499,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3514,12 +3514,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3593,12 +3593,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3608,12 +3608,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3623,12 +3623,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3638,12 +3638,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3653,12 +3653,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3732,12 +3732,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3747,12 +3747,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3762,12 +3762,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3777,12 +3777,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3792,12 +3792,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3876,12 +3876,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3891,12 +3891,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3906,12 +3906,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3921,12 +3921,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -3936,12 +3936,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4015,12 +4015,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4030,12 +4030,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4045,12 +4045,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4060,12 +4060,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4075,12 +4075,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4154,12 +4154,12 @@ const courses: MainCourseType[] = [
 								title: "Basic Introduction",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4169,12 +4169,12 @@ const courses: MainCourseType[] = [
 								title: "Who is a Digital Marketer",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4184,12 +4184,12 @@ const courses: MainCourseType[] = [
 								title: "Digital Marketing Tools",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4199,12 +4199,12 @@ const courses: MainCourseType[] = [
 								title: "Blogging",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},
@@ -4214,12 +4214,12 @@ const courses: MainCourseType[] = [
 								title: "Social Media Algorithm",
 								list: [
 									{
-										duration: "0528",
+										duration: "05:28",
 										name: "Introduction",
 										type: "video",
 									},
 									{
-										duration: "1052",
+										duration: "10:52",
 										name: "Basic Requirements",
 										type: "video",
 									},

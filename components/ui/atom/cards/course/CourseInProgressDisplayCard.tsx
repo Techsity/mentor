@@ -19,9 +19,9 @@ const CourseInProgressDisplayCard = (course: ICourse) => {
 							<div className="bg-black w-full h-full items-center bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute">
 								<div className="flex justify-center items-center my-16">
 									<Link
-										href={`/dashboard/my-courses/learning/${slugify(
+										href={`/courses/${slugify(
 											course.title,
-										)}`}>
+										)}/learn/`}>
 										<div className="bg-white p-4 rounded-full cursor-pointer">
 											<Play color="#333333" />
 										</div>

@@ -11,16 +11,16 @@ import classNames from "classnames";
 const CourseContents = ({
 	course,
 	className,
-	purchased = false,
+	inProgress = false,
 }: {
 	course: ICourse;
 	className?: string;
-	purchased?: boolean;
+	inProgress?: boolean;
 }) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent | null>(
 		null,
 	);
-	const CourseContentItems = ({
+	const CourseContentItem = ({
 		content,
 		onClick,
 	}: {
@@ -28,6 +28,10 @@ const CourseContents = ({
 		onClick?: MouseEventHandler<HTMLDivElement>;
 	}) => {
 		const mainDuration = calculateTotalDuration(content);
+		// const mainDuration = 200;
+		const totalDuration = 2600;
+		const watchedTime = 1300;
+		const percentage = (watchedTime / totalDuration) * 100;
 		return (
 			<>
 				<div
@@ -73,36 +77,88 @@ const CourseContents = ({
 					</div>
 				</div>
 				{activeContent === content ? (
-					<div className="p-2 pb-3 grid gap-3 animate__animated animate__slideInDown animate__faster">
-						{content.list.map((item, index) => (
-							<div
-								key={index}
-								className="flex items-center justify-between">
-								{item.name}
-								<span className="flex items-center gap-3 text-sm text-[#A3A6A7]">
-									{parseDuration(item.duration)}
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 16 16"
-										fill="none">
-										<path
-											d="M8 0.5C6.51664 0.5 5.0666 0.939867 3.83323 1.76398C2.59986 2.58809 1.63856 3.75943 1.07091 5.12988C0.50325 6.50032 0.354725 8.00832 0.644114 9.46318C0.933503 10.918 1.64781 12.2544 2.6967 13.3033C3.7456 14.3522 5.08197 15.0665 6.53683 15.3559C7.99168 15.6453 9.49968 15.4968 10.8701 14.9291C12.2406 14.3614 13.4119 13.4001 14.236 12.1668C15.0601 10.9334 15.5 9.48336 15.5 8C15.5 7.01509 15.306 6.03982 14.9291 5.12988C14.5522 4.21993 13.9997 3.39314 13.3033 2.6967C12.6069 2.00026 11.7801 1.44781 10.8701 1.0709C9.96019 0.693993 8.98492 0.5 8 0.5ZM6.5 11.375V4.625L11 8L6.5 11.375Z"
-											fill="#A3A6A7"
-										/>
-									</svg>
-								</span>
-							</div>
-						))}
-					</div>
+					<>
+						<div className="flex items-end flex-col gap-1 w-full animate__animated animate__slideInDown animate__faster">
+							<span className="text-xs">
+								{parseInt(percentage.toFixed(0))}%
+							</span>
+							<span className="relative overflow-hidden flex items-center bg-zinc-300 h-[.3em] w-full">
+								<span
+									className={`absolute left-0 h-full bg-[#A3A6A7]`}
+									style={{
+										width: `${parseInt(
+											percentage.toFixed(0),
+										)}%`,
+									}}
+								/>
+							</span>
+						</div>
+						<div className="p-2 pb-3 grid gap-2 animate__animated animate__slideInDown animate__faster">
+							{content.list.map((item, index) => (
+								<div
+									key={index}
+									className="flex items-center justify-between">
+									{item.name}
+									<span className="flex items-center gap-3 text-sm text-[#A3A6A7]">
+										{item.duration}
+										<svg
+											width="16"
+											height="16"
+											viewBox="0 0 16 16"
+											fill="none">
+											<path
+												d="M8 0.5C6.51664 0.5 5.0666 0.939867 3.83323 1.76398C2.59986 2.58809 1.63856 3.75943 1.07091 5.12988C0.50325 6.50032 0.354725 8.00832 0.644114 9.46318C0.933503 10.918 1.64781 12.2544 2.6967 13.3033C3.7456 14.3522 5.08197 15.0665 6.53683 15.3559C7.99168 15.6453 9.49968 15.4968 10.8701 14.9291C12.2406 14.3614 13.4119 13.4001 14.236 12.1668C15.0601 10.9334 15.5 9.48336 15.5 8C15.5 7.01509 15.306 6.03982 14.9291 5.12988C14.5522 4.21993 13.9997 3.39314 13.3033 2.6967C12.6069 2.00026 11.7801 1.44781 10.8701 1.0709C9.96019 0.693993 8.98492 0.5 8 0.5ZM6.5 11.375V4.625L11 8L6.5 11.375Z"
+												fill="#A3A6A7"
+											/>
+										</svg>
+									</span>
+								</div>
+							))}
+						</div>
+					</>
 				) : null}
 			</>
 		);
 	};
-	return (
+	return inProgress ? (
 		<div
 			className={classNames(
 				"lg:max-w-[38%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__fadeIn",
+				className,
+			)}>
+			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
+			<div className="flex items-center justify-between">
+				<h1 className="font-semibold text-xl mb-3">Course Content</h1>
+				{/* {course.price !== "free" ? (
+					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
+						₦{course.price.toLocaleString()}
+					</div>
+				) : (
+					<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
+						Free
+					</div>
+				)} */}
+			</div>
+			<div className="my-6 grid gap-4 overflow-hidden">
+				{course.content.map((content, index) => (
+					<CourseContentItem
+						content={content}
+						key={index}
+						onClick={() => {
+							if (activeContent === content) {
+								setActiveContent(null);
+								return;
+							}
+							setActiveContent(content);
+						}}
+					/>
+				))}
+			</div>
+		</div>
+	) : (
+		<div
+			className={classNames(
+				"lg:max-w-[38%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
 				className,
 			)}>
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
@@ -120,7 +176,7 @@ const CourseContents = ({
 			</div>
 			<div className="my-6 grid gap-4 overflow-hidden">
 				{course.content.map((content, index) => (
-					<CourseContentItems
+					<CourseContentItem
 						content={content}
 						key={index}
 						onClick={() => {
@@ -132,21 +188,20 @@ const CourseContents = ({
 						}}
 					/>
 				))}
-				{!purchased ? (
-					<PrimaryButton
-						title={
-							course.price !== "free"
-								? "Purchase Course"
-								: "Start Course"
-						}
-						link={
-							course.price !== "free"
-								? `/courses/${slugify(course.title)}/purchase`
-								: undefined
-						}
-						className="p-4 text-lg flex justify-center items-center"
-					/>
-				) : null}
+
+				<PrimaryButton
+					title={
+						course.price !== "free"
+							? "Purchase Course"
+							: "Start Course"
+					}
+					link={
+						course.price !== "free"
+							? `/courses/${slugify(course.title)}/purchase`
+							: undefined
+					}
+					className="p-4 text-lg flex justify-center items-center"
+				/>
 			</div>
 		</div>
 	);

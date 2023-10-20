@@ -108,6 +108,7 @@ export const calculateTotalDuration = (content: ICourseContent): string => {
 
 	return totalDuration;
 };
+
 export const scrollUp = (height?: number) => {
 	return height
 		? window.scrollTo({

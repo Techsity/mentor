@@ -1,7 +1,7 @@
 import React from "react";
-import CourseInProgressTemplate from "../../../../components/templates/mentee/my-courses/in-progress";
-import courses from "../../../../data/courses";
-import protectedPageWrapper from "../../../protectedPageWrapper";
+import courses from "../../../data/courses";
+import CourseInProgressTemplate from "../../../components/templates/course/in-progress";
+import protectedPageWrapper from "../../protectedPageWrapper";
 
 const CourseInProgress = () => {
 	const course = courses[0].categories[0].availableCourses[0];

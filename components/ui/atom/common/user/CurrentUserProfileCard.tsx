@@ -11,6 +11,7 @@ const CurrentUserProfileCard = () => {
 		{ name: "My Cart", path: "/cart" },
 		{ name: "Wishlist", path: "/dashboard/wishlist" },
 		{ name: "Archive", path: "/dashboard/archive" },
+		{ name: "Profile", path: "/dashboard" },
 	];
 	return (
 		<div className="relative group cursor-pointer h-full">
@@ -36,11 +37,11 @@ const CurrentUserProfileCard = () => {
 					</div>
 				</div>
 			</Link>
-			<div className="group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20vw] right-0 hidden absolute w-full sm:max-w-[20dvw] max-w-screen bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
+			<div className="group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20dvw] right-0 hidden absolute w-full sm:max-w-[25dvw] max-w-[100dvw] bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
 				<div className="flex flex-col items-center w-full">
 					{links.map((link, i) => (
 						<Link href={link.path || "#"} key={i}>
-							<span className="p-4 px-10 flex w-full whitespace-nowrap text-sm hover:bg-zinc-100 duration-300 cursor-pointer">
+							<span className="p-4 px-10 flex w-full whitespace-nowrap text-sm hover:bg-zinc-200 duration-300 cursor-pointer">
 								{link.name}
 							</span>
 						</Link>

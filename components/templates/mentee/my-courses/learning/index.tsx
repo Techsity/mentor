@@ -8,7 +8,6 @@ const UserOngoingCoursesTemplate = ({
 }: {
 	ongoingCourses: ICourse[];
 }) => {
-	// /dashboard/my-courses/learning
 	return (
 		<div className="min-h-[50dvh] lg:px-20 sm:px-12 px-6 pb-10">
 			<div className="my-10">

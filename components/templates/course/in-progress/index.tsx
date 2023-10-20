@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { ICourse } from "../../../../../interfaces";
-import { formatFollowersCount } from "../../../../../utils";
-import CourseInProgressTopHeader from "../../../../ui/organisms/course-in-progress/CourseInProgressTopHeader";
-import CourseContents from "../../../../ui/organisms/course-details/body/CourseContents";
+import { ICourse } from "../../../../interfaces";
+import { formatFollowersCount } from "../../../../utils";
+import CourseInProgressTopHeader from "../../../ui/organisms/course-in-progress/CourseInProgressTopHeader";
+import CourseContents from "../../../ui/organisms/course-details/body/CourseContents";
 
 const CourseInProgressTemplate = (course: ICourse) => {
 	return (
@@ -22,7 +22,7 @@ const CourseInProgressTemplate = (course: ICourse) => {
 							{course.title} {course.title}
 						</div>
 					</div>
-					<CourseContents purchased course={course} className="" />
+					<CourseContents inProgress course={course} className="" />
 				</div>
 			</div>
 		</>
