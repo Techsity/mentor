@@ -79,14 +79,37 @@ export function slugify(title: string): string {
 }
 
 export function parseDuration(minutes: string) {
-	if (typeof minutes !== "string") {
+	if (typeof minutes === "number") {
 		minutes = String(minutes);
 	}
-	if (minutes.length === 4) {
-		return `${minutes.slice(0, 2)}:${minutes.slice(2)}`;
+	if (minutes.length === 3) {
+		const hours = minutes[0];
+		const minutesPart = minutes.slice(1);
+		return `0${hours}:${minutesPart}`;
+	} else if (minutes.length === 4) {
+		const hours = minutes.slice(0, 2);
+		const minutesPart = minutes.slice(2);
+		return `${hours}:${minutesPart}`;
 	} else {
-		return "Invalid input";
+		return `${minutes.slice(0, 2)}:${minutes.slice(2)}`;
 	}
+}
+export function parseVideoDuration(duration: number): string {
+	let seconds;
+	if (duration < 1) {
+		seconds = duration / 1000;
+	} else {
+		seconds = duration;
+	}
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const accurateSeconds = Math.floor(seconds % 60);
+
+	const formattedHours = hours.toString().padStart(2, "0");
+	const formattedMinutes = minutes.toString().padStart(2, "0");
+	const formattedSeconds = accurateSeconds.toString().padStart(2, "0");
+
+	return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
 export const calculateTotalDuration = (content: ICourseContent): string => {

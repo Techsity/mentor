@@ -3,6 +3,7 @@ import { ICourse, ICourseContent } from "../../../../../interfaces";
 import {
 	calculateTotalDuration,
 	parseDuration,
+	scrollUp,
 	slugify,
 } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
@@ -123,7 +124,7 @@ const CourseContents = ({
 	return inProgress ? (
 		<div
 			className={classNames(
-				"lg:max-w-[38%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__fadeIn",
+				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
 				className,
 			)}>
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
