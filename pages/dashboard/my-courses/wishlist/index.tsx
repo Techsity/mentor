@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import protectedPageWrapper from "../../../protectedPageWrapper";
 
 const UserWishlist = () => {
-  return (
-    <div>UserWishlist</div>
-  )
-}
+	return <div>UserWishlist</div>;
+};
 
-export default UserWishlist
+export default protectedPageWrapper(UserWishlist);
