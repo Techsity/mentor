@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import useWindowSize from "../../../../../../hooks/useWindowSize";
 import courses from "../../../../../../data/courses";
-import DisplayCourseCard from "../../../../atom/cards/home/DisplayCourseCard";
 import { scrollUp } from "../../../../../../utils";
+import DisplayCourseCard from "../../../../atom/cards/course/DisplayCourseCard";
 
 const CoursesSection = () => {
 	const { isExtraLargeScreen, isLargeScreen } = useWindowSize();

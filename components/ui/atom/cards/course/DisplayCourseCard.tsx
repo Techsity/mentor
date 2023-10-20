@@ -44,7 +44,8 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 										"/assets/images/mockups/course_one.png"
 									}
 									className="w-full h-full"
-									alt=""
+									alt={course.title}
+									loading="lazy"
 								/>
 							</div>
 							<h1 className="px-5 font-medium tracking-tight">
@@ -83,6 +84,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 										}
 										alt={course.mentor.name}
 										className="w-10 rounded-full"
+										loading="lazy"
 									/>
 									<h1>{course.mentor.name}</h1>
 									{/* <div className="absolute w-ful left-0"></div> */}

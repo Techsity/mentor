@@ -20,22 +20,9 @@ import CustomTextInput from "./CustomTextInput";
 const CountrySelector = ({
 	onSelect,
 	selected = null,
-	searchable = false,
 	classes,
 	styles,
-	customLabelOptions,
-	labelWithCountryCode = false,
-	labelOnlyCountryCode = false,
-	searchPlaceholder,
 	selectPlaceholder,
-	CustomOpenIcon,
-	CustomCloseIcon,
-	clearIcon = true,
-	selectWidth = 250,
-	optionSize = 16,
-	selectedSize = 16,
-	fullWidth = false,
-	optionsListMaxHeight = 300,
 	disabled = false,
 	id,
 	required,
@@ -194,12 +181,7 @@ interface ICountryListItemProps {
 	handleSelect: (country: SelectedCountry) => void;
 }
 
-const CountryListItem = ({
-	classes,
-	selected,
-	country,
-	handleSelect,
-}: ICountryListItemProps) => {
+const CountryListItem = ({ country, handleSelect }: ICountryListItemProps) => {
 	return (
 		<li
 			onClick={() => handleSelect(country)}

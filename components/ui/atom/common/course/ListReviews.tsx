@@ -23,6 +23,7 @@ const ListReviews = () => (
 								src="/assets/images/avatar.png"
 								alt=""
 								className="w-10 rounded-full"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -42,6 +43,7 @@ const ListReviews = () => (
 								src="/assets/images/avatar.png"
 								alt=""
 								className="w-10 rounded-full"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -61,6 +63,7 @@ const ListReviews = () => (
 								src="/assets/images/avatar.png"
 								alt=""
 								className="w-10 rounded-full"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -80,6 +83,7 @@ const ListReviews = () => (
 								src="/assets/images/avatar.png"
 								alt=""
 								className="w-10 rounded-full"
+								loading="lazy"
 							/>
 						</div>
 					</div>

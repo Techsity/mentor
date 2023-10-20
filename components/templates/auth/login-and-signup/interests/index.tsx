@@ -33,7 +33,10 @@ const OnboardingInterestsTemplate = () => {
 			toast.dismiss("onboarding_interest_pop");
 			setTimeout(function () {
 				// setLoading(false);
-				router.replace("/onboarding/congratulations", `/onboarding?${token}`);
+				router.replace(
+					"/onboarding/congratulations",
+					`/onboarding?${token}`,
+				);
 			}, 2000);
 		} else {
 			setTimeout(function () {
@@ -52,19 +55,33 @@ const OnboardingInterestsTemplate = () => {
 			<HeaderSection loading={loading} handleSubmit={handleSubmit} />
 			<div className="grid grid-cols-2 sm:grid-cols-12 items-center gap-5 mt-10 pb-20">
 				{interests.map((interest, index) => (
-					<div className="sm:col-span-4 lg:col-span-3 xl:col-span-2" key={index}>
+					<div
+						className="sm:col-span-4 lg:col-span-3 xl:col-span-2"
+						key={index}>
 						<div className="grid gap-4 bg-white items-center shadow p-1.5 px-3 rounded">
 							<div className="flex justify-between item-center">
 								<div className="relative w-[50px] h-[50px] rounded-full object-center overflow-hidden">
-									<img src={interest.imageUrl} alt="" className="w-full h-full" />
+									<img
+										src={interest.imageUrl}
+										alt=""
+										className="w-full h-full"
+										loading="lazy"
+									/>
 								</div>
 								<div
 									className="flex justify-center items-center border w-[30px] h-[30px] border-[#70C5A1]"
-									onClick={() => toggleInterest(interest.title)}
-									style={{ cursor: "pointer" }}
-								>
-									<svg width="21" height="20" viewBox="0 0 11 10" fill="none">
-										{selectedInterests.includes(interest.title) ? (
+									onClick={() =>
+										toggleInterest(interest.title)
+									}
+									style={{ cursor: "pointer" }}>
+									<svg
+										width="21"
+										height="20"
+										viewBox="0 0 11 10"
+										fill="none">
+										{selectedInterests.includes(
+											interest.title,
+										) ? (
 											<path
 												className="animate__animated animate__bounceIn animate__faster"
 												d="M3.87498 9.06081L0.51123 5.69706L2.04415 4.16414L3.87498 6.00039L9.22665 0.643311L10.7596 2.17623L3.87498 9.06081Z"
@@ -74,7 +91,9 @@ const OnboardingInterestsTemplate = () => {
 									</svg>
 								</div>
 							</div>
-							<div className="text-sm text-[#094B10]">{interest.title}</div>
+							<div className="text-sm text-[#094B10]">
+								{interest.title}
+							</div>
 						</div>
 					</div>
 				))}
@@ -113,16 +132,15 @@ const HeaderSection = ({
 			<div className="">
 				<h1
 					className="sm:text-3xl text-2xl text-[#00D569]"
-					style={{ fontFamily: "Days One" }}
-				>
+					style={{ fontFamily: "Days One" }}>
 					Nice and Easy
 				</h1>
 				<p
 					className="mt-3 text-[#094B10] tracking-tight max-w-sm md:max-w-lg lg:max-w-xl"
-					style={{ fontFamily: "Days One" }}
-				>
-					Finally, What area of knowledge interests you more, this would help us know
-					what kinda knowledge we&apos;d bring your way
+					style={{ fontFamily: "Days One" }}>
+					Finally, What area of knowledge interests you more, this
+					would help us know what kinda knowledge we&apos;d bring your
+					way
 				</p>
 			</div>
 

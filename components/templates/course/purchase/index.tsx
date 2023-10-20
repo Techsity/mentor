@@ -9,12 +9,12 @@ import CoursePurchaseForm from "../../../ui/atom/forms/CoursePurchaseForm";
 const PurchaseCourseTemplate = (course: ICourse) => {
 	return (
 		<>
-			<div className="flex justify-between item-start w-full h-full min-h-screen">
-				<div className="min-w-[50%]">
+			<div className="md:flex justify-between item-start w-full h-full">
+				<div className="min-w-[50%] pb-10">
 					<CoursePurchaseForm />
 				</div>
 				<div className="flex-grow sticky h-[69dvh] top-20 bg-[#F6F9F8]">
-					<CartSummary />
+					<CartSummary price={course.price} />
 				</div>
 			</div>
 			<CourseSummary {...course} />

@@ -9,41 +9,61 @@ const SocialIcons = () => {
 				href="about:blank"
 				className="cursor-pointer"
 				target="_blank"
-				rel="noreferrer"
-			>
-				<img src="/assets/images/icons/Twitter.png" className="h-6 w-6" alt="" />
+				rel="noreferrer">
+				<img
+					loading="lazy"
+					src="/assets/images/icons/Twitter.png"
+					className="h-6 w-6"
+					alt=""
+				/>
 			</a>
 			<a
 				href="about:blank"
 				className="cursor-pointer"
 				target="_blank"
-				rel="noreferrer"
-			>
-				<img src="/assets/images/icons/Facebook.png" className="h-6 w-6" alt="" />
+				rel="noreferrer">
+				<img
+					loading="lazy"
+					src="/assets/images/icons/Facebook.png"
+					className="h-6 w-6"
+					alt=""
+				/>
 			</a>
 			<a
 				href="about:blank"
 				className="cursor-pointer"
 				target="_blank"
-				rel="noreferrer"
-			>
-				<img src="/assets/images/icons/LinkedIn.png" className="h-6 w-6" alt="" />
+				rel="noreferrer">
+				<img
+					loading="lazy"
+					src="/assets/images/icons/LinkedIn.png"
+					className="h-6 w-6"
+					alt=""
+				/>
 			</a>
 			<a
 				href="about:blank"
 				className="cursor-pointer"
 				target="_blank"
-				rel="noreferrer"
-			>
-				<img src="/assets/images/icons/Telegram.png" className="h-6 w-6" alt="" />
+				rel="noreferrer">
+				<img
+					loading="lazy"
+					src="/assets/images/icons/Telegram.png"
+					className="h-6 w-6"
+					alt=""
+				/>
 			</a>
 			<a
 				href="about:blank"
 				className="cursor-pointer"
 				target="_blank"
-				rel="noreferrer"
-			>
-				<img src="/assets/images/icons/Instagram.png" className="h-6 w-6" alt="" />
+				rel="noreferrer">
+				<img
+					loading="lazy"
+					src="/assets/images/icons/Instagram.png"
+					className="h-6 w-6"
+					alt=""
+				/>
 			</a>
 		</div>
 	);

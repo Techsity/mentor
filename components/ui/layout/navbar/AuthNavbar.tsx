@@ -5,10 +5,9 @@ import { MenuSharp } from "react-ionicons";
 import navLinks from "../../../../data/navlinks";
 import { MentorLogoDark } from "../../atom/icons/svgs";
 import Link from "next/link";
-import { currentUserRole } from "../../../../utils/auth";
 import NotificationCard from "../../atom/cards/notification";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import LandingSearchBar from "../../atom/forms/LandingSearchBar";
+import CurrentUserProfileCard from "../../atom/common/user/CurrentUserProfileCard";
 
 const AuthNavbar = () => {
 	const router = useRouter();
@@ -17,46 +16,14 @@ const AuthNavbar = () => {
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	const CurrentUser = () => {
-		const user = useSelector(currentUser);
-		return (
-			<Link href={`/dashboard`}>
-				<div className="flex items-center gap-3 cursor-pointer">
-					<div className="rounded-full w-9 h-9 relative">
-						<img
-							src={user?.avatar || "/assets/images/avatar.png"}
-							alt={user?.fullName}
-							className="w-full h-full"
-						/>
-					</div>
-					<div className="leading-none sm:inline-block hidden">
-						<h1 className="text-lg font-medium">
-							{user?.fullName.split(" ")[0] +
-								" " +
-								user?.fullName.split(" ")[1]}
-						</h1>
-						<p className="text-[#70C5A1] capitalize font-[300]">
-							{user?.role}
-						</p>
-					</div>
-				</div>
-			</Link>
-		);
-	};
-
 	return (
 		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
 			<Link href={`/`}>
-				<div>
-					<MentorLogoDark className="cursor-pointer" />
-				</div>
+				<MentorLogoDark className="cursor-pointer" />
 			</Link>
-			{/* {!hideNavSections ? (
-				<div className="ml-6 xl:grid hidden flex-grow relative">
-					<LandingSearchBar />
-				</div>
-			) : null} */}
-
+			<div className="ml-6 xl:grid hidden flex-grow relative">
+				<LandingSearchBar />
+			</div>
 			<ul className="hidden lg:flex items-center gap-10 whitespace-nowrap ml-4 text-[#094B10]">
 				{navLinks.map(({ link, name, sublinks }, index) => {
 					return sublinks ? (
@@ -177,7 +144,7 @@ const AuthNavbar = () => {
 
 			<div className="flex items-center gap-3 sm:gap-6 select-none">
 				<div className="flex items-center gap-4 sm:gap-10 pl-10 2xl:pl-40">
-					<CurrentUser />
+					<CurrentUserProfileCard />
 					<div
 						onClick={() =>
 							setShowNotificationPanel(!showNotificationPanel)

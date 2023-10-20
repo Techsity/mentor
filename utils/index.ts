@@ -119,3 +119,11 @@ export const scrollUp = (height?: number) => {
 				behavior: "smooth",
 		  });
 };
+
+export const calculateTax = (price: number, taxRate: number) => {
+	if (!price || !taxRate) {
+		return null;
+	}
+	const taxAmount = ((price * taxRate) / 100.0).toFixed(2);
+	return taxAmount;
+};

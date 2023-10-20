@@ -30,7 +30,7 @@ const CourseDetailsBody = (course: ICourse) => {
 						</div>
 					</div>
 				</div>
-				<CourseContents {...course} />
+				<CourseContents course={course} />
 			</div>
 		</div>
 	);

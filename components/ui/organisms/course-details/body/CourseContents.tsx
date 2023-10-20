@@ -6,8 +6,17 @@ import {
 	slugify,
 } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
+import classNames from "classnames";
 
-const CourseContents = (course: ICourse) => {
+const CourseContents = ({
+	course,
+	className,
+	purchased = false,
+}: {
+	course: ICourse;
+	className?: string;
+	purchased?: boolean;
+}) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent | null>(
 		null,
 	);
@@ -91,7 +100,12 @@ const CourseContents = (course: ICourse) => {
 		);
 	};
 	return (
-		<div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last">
+		<div
+			className={classNames(
+				"lg:max-w-[38%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__fadeIn",
+				className,
+			)}>
+			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
 				<h1 className="font-semibold text-xl">Course Content</h1>
 				{course.price !== "free" ? (
@@ -118,19 +132,21 @@ const CourseContents = (course: ICourse) => {
 						}}
 					/>
 				))}
-				<PrimaryButton
-					title={
-						course.price !== "free"
-							? "Purchase Course"
-							: "Start Course"
-					}
-					link={
-						course.price !== "free"
-							? `/courses/${slugify(course.title)}/purchase`
-							: undefined
-					}
-					className="p-4 text-lg flex justify-center items-center"
-				/>
+				{!purchased ? (
+					<PrimaryButton
+						title={
+							course.price !== "free"
+								? "Purchase Course"
+								: "Start Course"
+						}
+						link={
+							course.price !== "free"
+								? `/courses/${slugify(course.title)}/purchase`
+								: undefined
+						}
+						className="p-4 text-lg flex justify-center items-center"
+					/>
+				) : null}
 			</div>
 		</div>
 	);

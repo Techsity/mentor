@@ -31,6 +31,7 @@ const MentorProfileCard = ({
 							src={mentor.avatar || "/assets/images/avatar.png"}
 							alt=""
 							className="w-28 rounded-full"
+							loading="lazy"
 						/>
 						<span
 							className={`absolute ${

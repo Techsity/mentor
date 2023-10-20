@@ -17,6 +17,7 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 						<div className="flex flex-wrap md:flex-no-wrap space-x-0 md:space-x-6 mb-16">
 							<div className="mb-4 lg:mb-0  p-4 lg:p-0 w-full md:w-4/7 relative rounded block">
 								<img
+									loading="lazy"
 									src={post.thumbnail}
 									className="rounded-md object-cover w-full h-72"
 									alt=""
@@ -28,7 +29,9 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 								<h1 className="text-gray-800 text-4xl font-bold mt-2 mb-2 leading-tight">
 									{post.title}
 								</h1>
-								<p className="text-gray-600 mb-4">{post.content}</p>
+								<p className="text-gray-600 mb-4">
+									{post.content}
+								</p>
 								{/* <a
 									href="#"
 									className="inline-block px-6 py-3 mt-2 rounded-md bg-green-700 text-gray-100"
@@ -40,6 +43,7 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 						{/* <div className="w-full md:w-4/7">
 								<div className="rounded w-full flex flex-col md:flex-row mb-10">
 									<img
+									loading="lazy"
 										src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 										className="block md:hidden lg:block rounded-md h-64 md:h-32 m-4 md:m-0"
 										alt=""
@@ -63,6 +67,7 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 
 								<div className="rounded w-full flex flex-col md:flex-row mb-10">
 									<img
+									loading="lazy"
 										src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 										className="block md:hidden lg:block rounded-md h-64 md:h-32 m-4 md:m-0"
 										alt=""
@@ -84,6 +89,7 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 
 								<div className="rounded w-full flex flex-col md:flex-row mb-10">
 									<img
+									loading="lazy"
 										src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 										className="block md:hidden lg:block rounded-md h-64 md:h-32 m-4 md:m-0"
 										alt=""
@@ -105,6 +111,7 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 
 								<div className="rounded w-full flex flex-col md:flex-row mb-10">
 									<img
+									loading="lazy"
 										src="https://images.unsplash.com/photo-1489844097929-c8d5b91c456e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 										className="block md:hidden lg:block rounded-md h-64 md:h-32 m-4 md:m-0"
 										alt=""
@@ -139,25 +146,28 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 						<div className="block space-x-0 lg:flex lg:space-x-6">
 							<div className="rounded w-full lg:w-1/2 lg:w-1/3 p-4 lg:p-0">
 								<img
+									loading="lazy"
 									src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 									className="rounded"
 									alt="technology"
 								/>
 								<div className="p-4 pl-0">
 									<h2 className="font-bold text-2xl text-gray-800">
-										Put all speaking her delicate recurred possible.
+										Put all speaking her delicate recurred
+										possible.
 									</h2>
 									<p className="text-gray-700 mt-2">
-										Set indulgence inquietude discretion insensible bed why announcing.
-										Middleton fat two satisfied additions. So continued he or commanded
-										household smallness delivered. Door poor on do walk in half. Roof his
-										head the what.
+										Set indulgence inquietude discretion
+										insensible bed why announcing. Middleton
+										fat two satisfied additions. So
+										continued he or commanded household
+										smallness delivered. Door poor on do
+										walk in half. Roof his head the what.
 									</p>
 
 									<a
 										href="#"
-										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto"
-									>
+										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto">
 										{" "}
 										Read more{" "}
 									</a>
@@ -165,25 +175,28 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 							</div>
 							<div className="rounded w-full lg:w-1/2 lg:w-1/3 p-4 lg:p-0">
 								<img
+									loading="lazy"
 									src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 									className="rounded"
 									alt="technology"
 								/>
 								<div className="p-4 pl-0">
 									<h2 className="font-bold text-2xl text-gray-800">
-										Put all speaking her delicate recurred possible.
+										Put all speaking her delicate recurred
+										possible.
 									</h2>
 									<p className="text-gray-700 mt-2">
-										Set indulgence inquietude discretion insensible bed why announcing.
-										Middleton fat two satisfied additions. So continued he or commanded
-										household smallness delivered. Door poor on do walk in half. Roof his
-										head the what.
+										Set indulgence inquietude discretion
+										insensible bed why announcing. Middleton
+										fat two satisfied additions. So
+										continued he or commanded household
+										smallness delivered. Door poor on do
+										walk in half. Roof his head the what.
 									</p>
 
 									<a
 										href="#"
-										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto"
-									>
+										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto">
 										{" "}
 										Read more{" "}
 									</a>
@@ -191,25 +204,28 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 							</div>
 							<div className="rounded w-full lg:w-1/2 lg:w-1/3 p-4 lg:p-0">
 								<img
+									loading="lazy"
 									src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 									className="rounded"
 									alt="technology"
 								/>
 								<div className="p-4 pl-0">
 									<h2 className="font-bold text-2xl text-gray-800">
-										Put all speaking her delicate recurred possible.
+										Put all speaking her delicate recurred
+										possible.
 									</h2>
 									<p className="text-gray-700 mt-2">
-										Set indulgence inquietude discretion insensible bed why announcing.
-										Middleton fat two satisfied additions. So continued he or commanded
-										household smallness delivered. Door poor on do walk in half. Roof his
-										head the what.
+										Set indulgence inquietude discretion
+										insensible bed why announcing. Middleton
+										fat two satisfied additions. So
+										continued he or commanded household
+										smallness delivered. Door poor on do
+										walk in half. Roof his head the what.
 									</p>
 
 									<a
 										href="#"
-										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto"
-									>
+										className="inline-block py-2 rounded text-green-900 mt-2 ml-auto">
 										{" "}
 										Read more{" "}
 									</a>
@@ -220,18 +236,21 @@ const SingleBlogPost = ({ post }: { post: IBlogPost }) => {
 				</div>
 			</div>
 			<div className="mt-28">
-				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
+				<h1
+					className="text-center mt-20"
+					style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter
 				</h1>
 				<div className="flex justify-center my-5 mb-10">
-					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
+					<NewsLetterForm
+						handleSubmit={(email) => console.log(email)}
+					/>
 				</div>
 			</div>
 			{/* <div className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-50 md:flex hidden"> */}
 			<div
 				className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-50"
-				onClick={scrollToTop}
-			>
+				onClick={scrollToTop}>
 				<ChevronUpOutline color="green" height="30px" width="30px" />
 			</div>
 		</>
@@ -243,10 +262,16 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
 	const postSlug = slug?.toString();
 	const post = blogs.filter((post) => post.slug === postSlug)[0];
 	if (!postSlug) {
-		return { props: {}, redirect: { destination: "/blog", permanent: false } };
+		return {
+			props: {},
+			redirect: { destination: "/blog", permanent: false },
+		};
 	}
 	if (!post) {
-		return { props: {}, redirect: { destination: "/blog", permanent: false } };
+		return {
+			props: {},
+			redirect: { destination: "/blog", permanent: false },
+		};
 	}
 	return { props: { post } };
 };

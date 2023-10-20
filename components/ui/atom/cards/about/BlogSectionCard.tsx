@@ -18,9 +18,14 @@ const BlogSectionCard = ({
 			<div className="flex items-end pb-10 justify-start h-full relative">
 				<div className="absolute top-0 w-full h-[50%] bg-[red]">
 					<img
-						src={thumbnail ? thumbnail : "/assets/images/thumbnails/tmb_2.png"}
+						src={
+							thumbnail
+								? thumbnail
+								: "/assets/images/thumbnails/tmb_2.png"
+						}
 						alt=""
 						className="h-full w-full"
+						loading="lazy"
 					/>
 				</div>
 				<div className="bg-black absolute top-0 justify-center items-center w-full h-[50%] bg-opacity-40 hidden group-hover:flex animate__faster animate__animated animate__fadeIn text-white">
@@ -37,14 +42,20 @@ const BlogSectionCard = ({
 						<span>{createdAt}</span>
 						<div className="flex gap-1.5 items-center">
 							<img
-								src={postedBy.avatar || "/assets/images/avatar.png"}
+								src={
+									postedBy.avatar ||
+									"/assets/images/avatar.png"
+								}
 								className="rounded-full w-6"
 								alt={postedBy.name}
+								loading="lazy"
 							/>
 							<h1>{postedBy.name.split(" ")[0]}</h1>
 						</div>
 					</div>
-					<p className="font-[500] max-w-sm">{caption.slice(0, 90)}...</p>
+					<p className="font-[500] max-w-sm">
+						{caption.slice(0, 90)}...
+					</p>
 				</div>
 			</div>
 		</div>

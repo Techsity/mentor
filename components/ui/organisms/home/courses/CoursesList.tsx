@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import DisplayCourseCard from "../../../atom/cards/home/DisplayCourseCard";
 import courses from "../../../../../data/courses";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 
 const CoursesList = ({
 	activeLink,

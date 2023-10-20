@@ -15,24 +15,38 @@ const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 					</button>
 				</Link>
 				<h1 className="mt-4">
-					{workshop.startDate.toLocaleDateString().split("/").join("-")}
+					{workshop.startDate
+						.toLocaleDateString()
+						.split("/")
+						.join("-")}
 				</h1>
 			</div>
 			<div className="grid gap-2">
 				<div className="relative">
 					<div className="bg-black w-full h-full bg-opacity-50 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 					<img
-						src={workshop.imgUrl || "/assets/images/mockups/course_one.png"}
+						src={
+							workshop.imgUrl ||
+							"/assets/images/mockups/course_one.png"
+						}
 						className="w-full h-full"
 						alt=""
+						loading="lazy"
 					/>
 				</div>
-				<h1 className="px-5 font-medium tracking-tight">{workshop.title}</h1>
+				<h1 className="px-5 font-medium tracking-tight">
+					{workshop.title}
+				</h1>
 				<div className="flex items-center gap-6 px-5 text-sm mt-2">
 					<span className="">
-						{formatDateDifference(workshop.startDate, workshop.endDate)}
+						{formatDateDifference(
+							workshop.startDate,
+							workshop.endDate,
+						)}
 					</span>
-					<span className="">{workshop.hoursPerDay.toFixed(1)} hours</span>
+					<span className="">
+						{workshop.hoursPerDay.toFixed(1)} hours
+					</span>
 					<span className="">
 						{workshop.enrolledStudents.toLocaleString()} students
 					</span>
@@ -47,13 +61,19 @@ const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 						</svg>
 					</div> */}
 				</div>
-				<p className="text-sm px-5">{workshop.description.slice(0, 160)}...</p>
+				<p className="text-sm px-5">
+					{workshop.description.slice(0, 160)}...
+				</p>
 				<div className="flex items-center justify-between mt-5 px-5">
 					<div className="flex gap-2 items-center text-sm relative">
 						<img
-							src={workshop.mentor.avatar || "/assets/images/avatar.png"}
+							src={
+								workshop.mentor.avatar ||
+								"/assets/images/avatar.png"
+							}
 							alt={workshop.mentor.name}
 							className="w-10 rounded-full"
+							loading="lazy"
 						/>
 						<h1>{workshop.mentor.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}

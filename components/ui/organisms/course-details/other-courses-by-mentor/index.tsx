@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ICourse, IMentor } from "../../../../../interfaces";
-import DisplayCourseCard from "../../../atom/cards/home/DisplayCourseCard";
 import Link from "next/link";
 import { slugify } from "../../../../../utils";
+import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 
 const OtherCoursesByMentor = ({
 	mentorProfile = false,
