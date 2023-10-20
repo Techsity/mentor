@@ -8,9 +8,6 @@ import {
 	Projects,
 	Skills,
 } from "../../../ui/organisms/mentor/details/";
-import Carousel from "react-multi-carousel";
-import DisplayCourseCard from "../../../ui/atom/common/course/DisplayCourseCard";
-import courses from "../../../../data/courses";
 import { getMentorCourses } from "../../../../services/api";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import { AnimationOnScroll } from "react-animation-on-scroll";
