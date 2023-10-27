@@ -20,16 +20,16 @@ const CurrentUserProfileCard = () => {
 					<div className="rounded-full w-9 h-9 relative">
 						<img
 							src={user?.avatar || "/assets/images/avatar.png"}
-							alt={user?.fullName}
+							alt={user?.name}
 							className="w-full h-full"
 							loading="lazy"
 						/>
 					</div>
 					<div className="leading-none sm:inline-block hidden">
 						<h1 className="text-lg font-medium">
-							{user?.fullName.split(" ")[0] +
+							{user?.name.split(" ")[0] +
 								" " +
-								user?.fullName.split(" ")[1]}
+								user?.name.split(" ")[1]}
 						</h1>
 						<p className="text-[#70C5A1] capitalize font-[300]">
 							{user?.role}

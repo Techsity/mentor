@@ -17,6 +17,8 @@ import "../constants/fonts";
 import { ThemeProvider } from "../context/theme.context";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import { ApolloProvider } from "@apollo/client";
+import apolloClient from "../utils/apolloClient";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const [initialLoad, setInitialLoad] = useState<boolean>(true);
@@ -43,33 +45,35 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	}, [router]);
 
 	return (
-		<Provider store={store}>
-			<ThemeProvider>
-				<Head>
-					<title>Mentör</title>
-					<link
-						rel="icon"
-						href="/assets/images/favicon.ico"
-						type="image/x-icon"
-					/>
-					<meta
-						name="viewport"
-						content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-					/>
-				</Head>
-				<LayoutContainer>
-					{initialLoad ? (
-						<PagePreLoader />
-					) : (
-						<>
-							<ToastContainer />
-							<Component {...pageProps} />
-						</>
-					)}
-				</LayoutContainer>
-			</ThemeProvider>
-		</Provider>
-	);
+    <ApolloProvider client={apolloClient}>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Head>
+            <title>Mentör</title>
+            <link
+              rel="icon"
+              href="/assets/images/favicon.ico"
+              type="image/x-icon"
+            />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+            />
+          </Head>
+          <LayoutContainer>
+            {initialLoad ? (
+              <PagePreLoader />
+            ) : (
+              <>
+                <ToastContainer />
+                <Component {...pageProps} />
+              </>
+            )}
+          </LayoutContainer>
+        </ThemeProvider>
+      </Provider>
+    </ApolloProvider>
+  );
 };
 
 export default MyApp;
