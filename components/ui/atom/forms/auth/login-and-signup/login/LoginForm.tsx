@@ -10,12 +10,8 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../../../../../../services/graphql/mutations/auth";
 
 const LoginForm = () => {
-	const initialValues: ILoginState = {
-		email: "",
-		password: "",
-	};
-	const { loading, handleSubmit, currentState, error, handleChange } =
-		useLoginForm({ initialValues });
+	const { loading, handleSubmit, currentState, handleChange } =
+		useLoginForm();
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	return (
 		<form
