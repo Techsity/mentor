@@ -31,7 +31,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "08:20",
 										name: "Introduction",
@@ -46,7 +46,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "09:28",
 										name: "Introduction",
@@ -61,7 +61,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -76,7 +76,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -91,7 +91,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -146,7 +146,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -161,7 +161,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -176,7 +176,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -191,7 +191,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -206,7 +206,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -291,7 +291,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -306,7 +306,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -321,7 +321,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -336,7 +336,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -351,7 +351,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -436,7 +436,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -451,7 +451,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -466,7 +466,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -481,7 +481,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -496,7 +496,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -581,7 +581,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -596,7 +596,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -611,7 +611,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -626,7 +626,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -641,7 +641,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -726,7 +726,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -741,7 +741,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -756,7 +756,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -771,7 +771,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -786,7 +786,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -871,7 +871,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -886,7 +886,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -901,7 +901,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -916,7 +916,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -931,7 +931,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1016,7 +1016,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1031,7 +1031,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1046,7 +1046,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1061,7 +1061,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1076,7 +1076,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1161,7 +1161,7 @@ const courses: MainCourseType[] = [
 									content: [
 										{
 											title: "Basic Introduction",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1176,7 +1176,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Who is a Digital Marketer",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1191,7 +1191,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Digital Marketing Tools",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1206,7 +1206,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Blogging",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1221,7 +1221,7 @@ const courses: MainCourseType[] = [
 										},
 										{
 											title: "Social Media Algorithm",
-											list: [
+											lectures: [
 												{
 													duration: "05:28",
 													name: "Introduction",
@@ -1331,7 +1331,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1346,7 +1346,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1361,7 +1361,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1376,7 +1376,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1391,7 +1391,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1470,7 +1470,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1485,7 +1485,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1500,7 +1500,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1515,7 +1515,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1530,7 +1530,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1609,7 +1609,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1624,7 +1624,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1639,7 +1639,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1654,7 +1654,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1669,7 +1669,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1748,7 +1748,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1763,7 +1763,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1778,7 +1778,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1793,7 +1793,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1808,7 +1808,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1887,7 +1887,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1902,7 +1902,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1917,7 +1917,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1932,7 +1932,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -1947,7 +1947,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2026,7 +2026,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2041,7 +2041,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2056,7 +2056,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2071,7 +2071,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2086,7 +2086,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2170,7 +2170,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2185,7 +2185,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2200,7 +2200,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2215,7 +2215,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2230,7 +2230,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2309,7 +2309,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2324,7 +2324,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2339,7 +2339,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2354,7 +2354,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2369,7 +2369,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2448,7 +2448,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2463,7 +2463,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2478,7 +2478,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2493,7 +2493,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2508,7 +2508,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2593,7 +2593,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2608,7 +2608,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2623,7 +2623,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2638,7 +2638,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2653,7 +2653,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2732,7 +2732,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2747,7 +2747,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2762,7 +2762,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2777,7 +2777,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2792,7 +2792,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2871,7 +2871,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2886,7 +2886,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2901,7 +2901,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2916,7 +2916,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -2931,7 +2931,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3023,7 +3023,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3038,7 +3038,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3053,7 +3053,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3068,7 +3068,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3083,7 +3083,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3162,7 +3162,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3177,7 +3177,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3192,7 +3192,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3207,7 +3207,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3222,7 +3222,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3301,7 +3301,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3316,7 +3316,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3331,7 +3331,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3346,7 +3346,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3361,7 +3361,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3452,7 +3452,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3467,7 +3467,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3482,7 +3482,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3497,7 +3497,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3512,7 +3512,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3591,7 +3591,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3606,7 +3606,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3621,7 +3621,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3636,7 +3636,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3651,7 +3651,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3730,7 +3730,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3745,7 +3745,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3760,7 +3760,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3775,7 +3775,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3790,7 +3790,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3874,7 +3874,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3889,7 +3889,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3904,7 +3904,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3919,7 +3919,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -3934,7 +3934,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4013,7 +4013,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4028,7 +4028,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4043,7 +4043,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4058,7 +4058,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4073,7 +4073,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4152,7 +4152,7 @@ const courses: MainCourseType[] = [
 						content: [
 							{
 								title: "Basic Introduction",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4167,7 +4167,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Who is a Digital Marketer",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4182,7 +4182,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Digital Marketing Tools",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4197,7 +4197,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Blogging",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",
@@ -4212,7 +4212,7 @@ const courses: MainCourseType[] = [
 							},
 							{
 								title: "Social Media Algorithm",
-								list: [
+								lectures: [
 									{
 										duration: "05:28",
 										name: "Introduction",

@@ -9,7 +9,7 @@ const protectedPageWrapper = (PageComponent: NextPage) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
 		const user = useSelector(currentUser);
-		const next = router.asPath as string;
+		const next = location.href;
 		if (!auth || !user) {
 			// localStorage.setItem("previousUrl", router.asPath);
 			router.replace(`/auth?login&next=${encodeURIComponent(next)}`);

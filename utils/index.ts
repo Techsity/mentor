@@ -115,7 +115,7 @@ export function parseVideoDuration(duration: number): string {
 export const calculateTotalDuration = (content: ICourseContent): string => {
 	let totalHours = 0;
 	let totalMinutes = 0;
-	content.list.forEach((item) => {
+	content.lectures.forEach((item) => {
 		const [hours, minutes] = item.duration.split(":").map(Number);
 		if (!isNaN(hours) && !isNaN(minutes)) {
 			totalHours += hours;

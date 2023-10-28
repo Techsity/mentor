@@ -11,8 +11,10 @@ const SignupFormInputs = ({
 	handleChange,
 	handleError,
 	values,
+	disabled = false,
 	handleCountrySelect,
 }: {
+	disabled?: boolean;
 	values: ISignUpState;
 	handleCountrySelect: (country: SelectedCountry | null) => void;
 	handleChange: (
@@ -36,6 +38,7 @@ const SignupFormInputs = ({
 	return (
 		<>
 			<CustomTextInput
+				disabled={disabled}
 				{...defaultInputProps}
 				placeholder="Full name"
 				type="text"
@@ -53,6 +56,7 @@ const SignupFormInputs = ({
 				}}
 			/>
 			<CustomTextInput
+				disabled={disabled}
 				{...defaultInputProps}
 				placeholder="Email"
 				type="email"
@@ -86,6 +90,7 @@ const SignupFormInputs = ({
 				}}
 			/>
 			<CustomTextInput
+				disabled={disabled}
 				{...defaultInputProps}
 				placeholder="Phone Number"
 				type="tel"
@@ -104,6 +109,7 @@ const SignupFormInputs = ({
 				}}
 			/>
 			<CustomTextInput
+				disabled={disabled}
 				{...defaultInputProps}
 				placeholder="Create Password"
 				type="password"
@@ -122,6 +128,7 @@ const SignupFormInputs = ({
 				}}
 			/>
 			<CustomTextInput
+				disabled={disabled}
 				{...defaultInputProps}
 				placeholder="Confirm Password"
 				type="password"

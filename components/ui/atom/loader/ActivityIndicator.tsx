@@ -1,11 +1,27 @@
-import React from "react";
+import React, { HtmlHTMLAttributes } from "react";
+import classNames from "classnames";
 
-const ActivityIndicator = () => {
+interface IActivityIndicator extends HtmlHTMLAttributes<HTMLDivElement> {
+	color?: string;
+	size?: string | number;
+}
+
+const ActivityIndicator = (props: IActivityIndicator) => {
+	const { color, size, className, ...rest } = props;
 	return (
 		<div
-			className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+			{...rest}
+			className={classNames(
+				"inline-block animate-spin rounded-full border-4 border-solid align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]",
+				className,
+				color
+					? `border-[${color}] border-r-transparent`
+					: `border-current border-r-transparent`,
+				!size ? `h-6 w-6` : ``,
+			)}
+			style={{ height: size, width: size }}
 			role="status"
-		></div>
+		/>
 	);
 };
 

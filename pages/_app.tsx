@@ -45,7 +45,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	}, [router]);
 
 	return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient()}>
       <Provider store={store}>
         <ThemeProvider>
           <Head>

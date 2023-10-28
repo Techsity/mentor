@@ -95,7 +95,7 @@ const CourseContents = ({
 							</span>
 						</div>
 						<div className="p-2 pb-3 grid gap-2 animate__animated animate__slideInDown animate__faster">
-							{content.list.map((item, index) => (
+							{content.lectures.map((item, index) => (
 								<div
 									key={index}
 									className="flex items-center justify-between">

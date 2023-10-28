@@ -235,7 +235,7 @@ type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
 type RefrencedMenteeType = Omit<IMentee, "mentors">;
 export interface ICourseContent {
 	title: string;
-	list: { name: string; duration: string; type: "video" | "document" }[];
+	lectures: { name: string; duration: string; type: "video" | "document" }[];
 }
 export interface ICourse {
 	// id: string;

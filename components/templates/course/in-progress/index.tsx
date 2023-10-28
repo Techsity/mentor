@@ -5,6 +5,7 @@ import { formatFollowersCount } from "../../../../utils";
 import CourseInProgressTopHeader from "../../../ui/organisms/course-in-progress/CourseInProgressTopHeader";
 import CourseContents from "../../../ui/organisms/course-details/body/CourseContents";
 import VideoComponent from "../../../ui/organisms/course-in-progress/video/VideoComponent";
+import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 
 const CourseInProgressTemplate = (course: ICourse) => {
 	return (
@@ -14,8 +15,8 @@ const CourseInProgressTemplate = (course: ICourse) => {
 					<CourseInProgressTopHeader {...course} />
 				</div>
 				<div className="flex flex-col lg:flex-row justify-between gap-5 w-full lg:items-start pb-20">
-					<VideoComponent {...course} />
-					<CourseContents inProgress course={course} className="" />
+					<VideoComponent course={course} />
+					<CourseContents inProgress course={course} />
 				</div>
 			</div>
 		</>

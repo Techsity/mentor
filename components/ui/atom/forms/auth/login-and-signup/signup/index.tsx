@@ -8,22 +8,6 @@ import PasswordValidationComponent from "./PasswordValidationComponent";
 import { useRouter } from "next/router";
 
 const SignUpForm = () => {
-	const router = useRouter();
-	const initialValues: ISignUpState = {
-		fullName: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
-		phone: "",
-		country: "",
-	};
-	const handleSignUpFormSubmit = (state: ISignUpState) => {
-		console.log(state);
-		setTimeout(function () {
-			router.push(`/auth/verification/${"jwt_token"}/signup`);
-		}, 2000);
-	};
-
 	const {
 		errors,
 		handleChange,
@@ -32,7 +16,7 @@ const SignUpForm = () => {
 		handleError,
 		values,
 		handleCountrySelect,
-	} = useSignUpForm({ initialValues, onSubmit: handleSignUpFormSubmit });
+	} = useSignUpForm();
 
 	return (
 		<form
@@ -44,6 +28,7 @@ const SignUpForm = () => {
 				handleError={handleError}
 				values={values}
 				handleCountrySelect={handleCountrySelect}
+				disabled={loading}
 			/>
 			<div className="flex lg:flex-row flex-col gap-8 justify-between mt-5 items-center w-full">
 				<PrimaryButton
