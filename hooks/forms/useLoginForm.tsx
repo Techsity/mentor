@@ -62,15 +62,17 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			},
 		})
 			.then((response: any) => {
-				// const response = data.loginUser;
-				if (response.user) {
-					toast.success("Login successful");
-					localStorage.setItem("authToken", response.access_token);
+				if (response.data.loginUser.user) {
+					// toast.success("Login successful");
+					localStorage.setItem(
+						"authToken",
+						response.data.loginUser.access_token,
+					);
 					// setLoading(false);
 					dispatch(
 						setCredentials({
 							isLoggedIn: true,
-							user: response.user,
+							user: response.data.loginUser.user,
 						}),
 					);
 					const next = router.query.next as string;

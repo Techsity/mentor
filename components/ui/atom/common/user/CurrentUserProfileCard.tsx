@@ -27,13 +27,11 @@ const CurrentUserProfileCard = () => {
 					</div>
 					<div className="leading-none sm:inline-block hidden">
 						<h1 className="text-lg font-medium">
-							{user?.name.split(" ")[0] +
+							{/* {user?.name.split(" ")[0] +
 								" " +
-								user?.name.split(" ")[1]}
+								user?.name.split(" ")[1]} */}
+							{user?.name.split(" ")[0]}
 						</h1>
-						<p className="text-[#70C5A1] capitalize font-[300]">
-							{user?.role}
-						</p>
 					</div>
 				</div>
 			</Link>
