@@ -1,5 +1,5 @@
 import React from "react";
-import { IExperience, IMentor } from "../../../../../interfaces";
+import { IExperience } from "../../../../../interfaces";
 import { formatDateDifference } from "../../../../../utils";
 
 const MentorExperienceCard = (experience: IExperience) => {

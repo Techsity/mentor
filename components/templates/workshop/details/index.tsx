@@ -14,7 +14,7 @@ const WorkShopDetailsPageTemplate = () => {
 		<>
 			<div className="">
 				<WorkshopDetailsPageHero {...workshop} />
-				<WorkShopDetailsBody {...workshop} />
+				{/* <WorkShopDetailsBody {...workshop} /> */}
 			</div>
 			<CoursePageAboutMentor {...workshop.mentor} />
 			<OtherCoursesByMentor mentor={workshop.mentor} />

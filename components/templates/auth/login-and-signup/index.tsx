@@ -1,12 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import LoginAndSignupForm from "../../../ui/atom/forms/auth/login-and-signup";
 
 const LoginAndSignupPageTemplate = () => {
-	const router = useRouter();
-	const pageKey = Object.keys(router.query)[0];
-
 	return (
 		<>
 			<div className="relative w-full hidden xl:block">
@@ -18,15 +14,7 @@ const LoginAndSignupPageTemplate = () => {
 					style={{
 						scrollbarWidth: "none",
 					}}>
-					<LoginAndSignupForm
-						pageKey={
-							pageKey === "login"
-								? "login"
-								: pageKey === "signup"
-								? "signup"
-								: "signup"
-						}
-					/>
+					<LoginAndSignupForm />
 				</div>
 				<div className="md:inline-block hidden col-span-6 animate__animated animate__slideInRight overflow-hidden">
 					<div className="w-full h-full bg-[#B5FFDF5A] h-full">

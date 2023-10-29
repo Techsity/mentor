@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import CoursesMentorsWorkshopNav from "./CoursesMentorsWorkshopNav";
 import CoursesSection from "./CoursesSection";
 import WorkshopSection from "./WorkshopSection";

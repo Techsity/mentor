@@ -1,6 +1,6 @@
 import React from "react";
 import protectedPageWrapper from "../../../protectedPageWrapper";
-import UserOngoingCoursesTemplate from "../../../../components/templates/mentee/my-courses/learning";
+import UserOngoingCoursesTemplate from "../../../../components/templates/user/my-courses/learning";
 import courses from "../../../../data/courses";
 
 const UserOngoingCourses = () => {
