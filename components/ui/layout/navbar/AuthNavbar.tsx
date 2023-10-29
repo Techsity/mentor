@@ -19,7 +19,9 @@ const AuthNavbar = () => {
 	return (
 		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
 			<Link href="/">
-				<MentorLogoDark className="cursor-pointer" />
+				<div>
+					<MentorLogoDark className="cursor-pointer" />
+				</div>
 			</Link>
 			<div className="ml-6 xl:grid hidden flex-grow relative">
 				<LandingSearchBar />

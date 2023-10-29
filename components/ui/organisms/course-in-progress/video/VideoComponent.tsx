@@ -21,9 +21,9 @@ const VideoComponent = (props: {
 	// const videoPlayerRef = useRef<ReactPlayer>(null);
 	// &&
 	return (
-		<div className="flex-grow xl:min-h-screen relative xl:-top-24 mt-10 lg:mt-0">
+		<div className="flex-grow relative xl:-top-24 mt-10 lg:mt-0">
 			<div className="lg:max-w-[65dvw] w-full group overflow-hidden">
-				<div className="relative bg-zinc-10 w-full min-h-[250px] sm:min-h-[420px]">
+				<div className="relative bg-zinc-10 w-full min-h-[250px] :min-h-[400px] 2xl:min-h-[420px]">
 					{loading ? (
 						<div className="mx-auto">
 							<ActivityIndicator
