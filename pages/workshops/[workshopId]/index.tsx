@@ -16,4 +16,4 @@ const WorkShopDetailsPage = () => {
 	);
 };
 
-export default protectedPageWrapper(WorkShopDetailsPage);
+export default WorkShopDetailsPage;

@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
-import { GetServerSidePropsContext, NextPage, NextPageContext } from "next";
-import store, { RootState } from "../redux/store";
+import { NextPage } from "next";
 
-const protectedPageWrapper = (PageComponent: NextPage) => {
+const protectedPageWrapper = (PageComponent: NextPage | React.FC) => {
 	const Page = (props: any) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);

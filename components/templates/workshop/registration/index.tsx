@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import protectedPageWrapper from "../../../../pages/protectedPageWrapper";
 
 const WorkshopRegistrationPageTemplate = () => {
-  return (
-    <div>WorkshopRegistrationPageTemplate</div>
-  )
-}
+	return <div>WorkshopRegistrationPageTemplate</div>;
+};
 
-export default WorkshopRegistrationPageTemplate
+export default protectedPageWrapper(WorkshopRegistrationPageTemplate);
