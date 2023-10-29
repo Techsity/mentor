@@ -4,7 +4,7 @@ import React from "react";
 const Socials = () => {
 	return (
 		<span className="flex items-center gap-4">
-			<p className="">Share Course</p>
+			<p className="">Share</p>
 
 			<Link href={"#"}>
 				<svg

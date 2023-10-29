@@ -3,13 +3,17 @@ import React from "react";
 import { HeartOutline, HeartSharp, ArrowForwardSharp } from "react-ionicons";
 import { IWorkshop } from "../../../../../interfaces";
 import Link from "next/link";
-import { formatDateDifference } from "../../../../../utils";
+import {
+	formatDateDifference,
+	formatFollowersCount,
+	slugify,
+} from "../../../../../utils";
 
 const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
 			<div className="absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
-				<Link href="#">
+				<Link href={`/workshops/${slugify(workshop.title)}`}>
 					<button className="px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300">
 						Register for Workshop
 					</button>
@@ -34,8 +38,14 @@ const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 						loading="lazy"
 					/>
 				</div>
-				<h1 className="px-5 font-medium tracking-tight">
+				<h1 className="px-5 font-medium tracking-tight flex items-center justify-between">
 					{workshop.title}
+					{workshop.category === "Live" && (
+						<span className="flex gap-2 items-center">
+							<span className="bg-[#d31119] p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
+							Live
+						</span>
+					)}
 				</h1>
 				<div className="flex items-center gap-6 px-5 text-sm mt-2">
 					<span className="">
@@ -45,10 +55,10 @@ const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 						)}
 					</span>
 					<span className="">
-						{workshop.hoursPerDay.toFixed(1)} hours
+						{workshop.duration.toFixed(1)} hours
 					</span>
 					<span className="">
-						{workshop.enrolledStudents.toLocaleString()} students
+						{formatFollowersCount(workshop.participants)} students
 					</span>
 					{/* <div className="flex items-center gap-2 text-[#094B10] ml-8 text-[16px]">
                     {workshop.rating} 

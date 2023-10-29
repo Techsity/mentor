@@ -1,23 +1,20 @@
 import React from "react";
 import HomepageTemplate from "../components/templates/home";
 import { GetServerSidePropsContext } from "next";
-import store, { RootState } from "../redux/store";
-import { isLoggedIn } from "../redux/reducers/features/authSlice";
+import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const Homepage = () => {
-	return (
-		<div>
-			<HomepageTemplate />
-		</div>
-	);
+	const router = useRouter();
+	const auth = useSelector(isLoggedIn);
+	const user = useSelector(currentUser);
+	// redirect to dashboard if user is authenticated
+	if (auth || user) {
+		router.replace(`/dashboard`);
+		return <div className="min-h-screen"></div>;
+	}
+	return <HomepageTemplate />;
 };
 
-// redirect to dashboard if user is authenticated
-export const getServerSideProps = () => {
-	const state = store.getState();
-	// const { isLoggedIn } = store.getState().auth;
-	console.log("isLoggedIn", state.auth.isLoggedIn);
-	return { props: {} };
-	// return { props: {} };
-};
 export default Homepage;

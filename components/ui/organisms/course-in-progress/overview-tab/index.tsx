@@ -88,7 +88,49 @@ const CourseOverviewTab = (course: ICourse) => {
 							.reverse()}
 					</section>
 				) : active === "lecture-notes" ? (
-					<></>
+					<>
+						<p className="text-sm">
+							I once thought digital marketing was for the big
+							guys until i took this course, thank you for making
+							it so easy and simple I once thought digital
+							marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple I
+							once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so
+							easy and simple I once thought digital marketing was
+							for the big guys until i took this course, thank you
+							for making it so easy and simple I once thought
+							digital marketing was for the big guys until i took
+							this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the
+							big guys until i took this course, thank you for
+							making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple I
+							once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so
+							easy and simple I once thought digital marketing was
+							for the big guys until i took this course, thank you
+							for making it so easy and simple I once thought
+							digital marketing was for the big guys until i took
+							this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the
+							big guys until i took this course, thank you for
+							making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this
+							course, thank you for making it so easy and simple I
+							once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so
+							easy and simple I once thought digital marketing was
+							for the big guys until i took this course, thank you
+							for making it so easy and simple I once thought
+							digital marketing was for the big guys until i took
+							this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the
+							big guys until i took this course, thank you for
+							making it so easy and simple
+						</p>
+					</>
 				) : null}
 			</div>
 		</>

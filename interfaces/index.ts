@@ -241,7 +241,7 @@ export interface ICourse {
 	// id: string;
 	title: string;
 	description: string;
-	level: "All Level" | "Inermediate" | "Beinner" | "Adanced";
+	level: "All Level" | "Intermediate" | "Beinner" | "Adanced";
 	duration: number;
 	limit: number;
 	rating: number;
@@ -316,17 +316,23 @@ export interface IBlogPost {
 	thumbnail?: string;
 	content: string;
 }
-
+export interface IWorkshopContent {
+	title: string;
+	date: Date;
+}
 export interface IWorkshop {
 	title: string;
 	category: "Live" | "Upcoming" | "Recordings";
 	description: string;
 	startDate: Date;
 	endDate: Date;
-	hoursPerDay: number;
-	enrolledStudents: number;
+	duration: number;
+	participants: number;
 	price: number | "free";
 	mentor: RefrencedMentorType;
 	available: boolean;
 	imgUrl?: string;
+	toLearn: string[];
+	requirements: string[];
+	contents: IWorkshopContent[];
 }
