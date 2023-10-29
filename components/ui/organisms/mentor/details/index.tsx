@@ -146,7 +146,7 @@ const AvailabiltySchedule = (mentor: IMentor) => (
 		</div>
 		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<div className="flex justify-center relative h-full lg:top-32">
-				<Link href={`/mentor/${mentor.username}?consult`}>
+				<Link href={`/mentors/${mentor.username}?consult`}>
 					<div
 						className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
 						style={{ fontFamily: "Days One" }}>
