@@ -72,7 +72,7 @@ const WorkshopRegistrationPageTemplate = () => {
 				</div>
 			</div>
 			<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
-				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
+				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full sm:mt-10 items-start">
 					<div className="flex-grow w-full overflow-hidden">
 						<FreePurchaseForm reason="workshop" />
 					</div>
