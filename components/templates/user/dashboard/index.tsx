@@ -1,6 +1,6 @@
 import React from "react";
-import MenteeDashboardHero from "../../../ui/organisms/mentee/dashboard/hero";
-import CoursesMentorsWorkshop from "../../../ui/organisms/mentee/dashboard/courses-mentors-workshop";
+import MenteeDashboardHero from "../../../ui/organisms/user/dashboard/hero";
+import CoursesMentorsWorkshop from "../../../ui/organisms/user/dashboard/courses-mentors-workshop";
 import BecomeMentor from "../../../ui/organisms/home/become-a-mentor";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 

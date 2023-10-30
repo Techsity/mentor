@@ -7,10 +7,17 @@ import OtherCoursesByMentor from "../../../ui/organisms/course-details/other-cou
 import { ChevronUpOutline } from "react-ionicons";
 import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
+import { useRouter } from "next/router";
 
 const WorkShopDetailsPageTemplate = () => {
+	const router = useRouter();
+	const workshopId = router.query.workshopId as string;
+	// fetch workshop based on the "workshopId"
+	console.log(workshopId);
+
+	// ! Temporary
 	const workshop = workshops[Math.floor(Math.random() * 5)];
-	workshop.price = 5000;
+	// !
 
 	return (
 		<>

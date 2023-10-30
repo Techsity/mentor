@@ -11,7 +11,7 @@ const CurrentUserProfileCard = () => {
 		{ name: "My Cart", path: "/cart" },
 		{ name: "Wishlist", path: "/dashboard/wishlist" },
 		{ name: "Archive", path: "/dashboard/archive" },
-		{ name: "Profile", path: "/dashboard" },
+		{ name: "Profile", path: "/profile" },
 	];
 	return (
 		<div className="relative group cursor-pointer h-full">
