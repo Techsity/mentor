@@ -11,7 +11,7 @@ const ProfileNavCard = ({
 }) => {
 	return (
 		<>
-			<div className="duration-300 border p-4 border-[#70C5A1] overflow-x-auto flex xl:flex-col justify-between w-full items-start gap-4 bg-white/50 backdrop-blur-md">
+			<div className="duration-300 border p-4 border-[#70C5A1] overflow-x-auto flex flex-col justify-between w-full items-start gap-4 xl:bg-white bg-black/50 backdrop-blur-md">
 				{tabLinks.map((link, i) => (
 					<div
 						onClick={() => setActiveTab(link)}
