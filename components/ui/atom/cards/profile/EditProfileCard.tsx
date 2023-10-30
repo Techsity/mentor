@@ -46,12 +46,24 @@ const EditProfileCard = () => {
 						/>
 					</div>
 				</div>
-				<h1 className="text-sm text-zinc-500 mt-6">Overview</h1>
-				<div className="text-sm grid gap-3">
-					<span className="font-medium">6 Completed Courses</span>
-					<span className="font-medium">5 Ongoing Courses</span>
-					<span className="font-medium">10 Attended Workshop</span>
-					<span className="font-medium">15 Registered Workshop</span>
+				<div className="">
+					<h1 className="text-sm text-zinc-500 mt-6">Overview</h1>
+					<div className="text-sm grid gap-3">
+						<span className="font-medium">6 Completed Courses</span>
+						<span className="font-medium">5 Ongoing Courses</span>
+						<span className="font-medium">
+							10 Attended Workshop
+						</span>
+						<span className="font-medium">
+							15 Registered Workshop
+						</span>
+					</div>
+				</div>
+				<div className="flex items-center justify-start">
+					<PrimaryButton
+						title="Get a Mentor Profile"
+						className="p-3 px-6 bg-[#FFB100] text-black"
+					/>
 				</div>
 			</div>
 		</div>
