@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ProfileNavCard from "../../../ui/atom/cards/profile/ProfileNavCard";
 
 const UserProfilePageTemplate = () => {
+	const tabLinks: string[] = [
+		"My Courses",
+		"My Workshop",
+		"Mentorsship",
+		"Wish Lists",
+		"Payment Methods",
+		"Profile Settings",
+	];
+	const [activeTab, setActiveTab] = useState<string>(tabLinks[0]);
 	return (
 		<>
 			<div className="flex flex-col xl:flex-row justify-between item-start w-full h-full">
 				<div className="sticky z-10 top-11 md:top-[9dvh] xl:top-20 xs:p-4 w-auto xl:w-[25%] h-[50%] xs:px-12 lg:px-16 pt-10">
 					<div className="w-full overflow-hidden hide-scroll-bar">
-						<ProfileNavCard />
+						<ProfileNavCard
+							tabLinks={tabLinks}
+							activeTab={activeTab}
+							setActiveTab={setActiveTab}
+						/>
 					</div>
 				</div>
 				<div className="flex-grow pt-10 xl:order-none order-last min-h-screen px-3 xs:px-6 lg:px-12">
