@@ -88,9 +88,9 @@ const CountrySelector = ({
 	};
 
 	const handleToggleSelect = () => {
+		setFilteredOptions(countries);
 		if (disabled) return;
 		setIsOpen(!isOpen);
-		setFilteredOptions(countries);
 	};
 
 	const selectButtonPlaceholder = selectPlaceholder
@@ -101,8 +101,8 @@ const CountrySelector = ({
 		<div
 			ref={selectRef}
 			className={classNames(
-				"border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
 				classes?.container,
+				"border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 			)}
 			style={{
 				...styles?.container,
@@ -112,9 +112,10 @@ const CountrySelector = ({
 				ref={inputRef}
 				required={required}
 				className={classNames(
-					"bg-[#F6F9F8] placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
+					"bg-[#F6F9F8] border-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
 					classes?.input,
 				)}
+				containerProps={{ className: "border-transparent" }}
 				placeholder={selectButtonPlaceholder}
 				type="text"
 				value={searchTerm}

@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-import CountrySelectorComp from "../inputs/CountrySelector";
-import { SelectedCountry } from "../../../../interfaces/country-selector.interface";
-import { PrimaryButton } from "../buttons";
-import ActivityIndicator from "../loader/ActivityIndicator";
+import React, { useState } from "react";
+import CountrySelectorComp from "../../inputs/CountrySelector";
 
 interface PaymentMethod {
 	name?: string;
@@ -18,7 +15,8 @@ const paymentMethods: PaymentMethod[] = [
 	{ img: "/assets/images/flutterwave-icon.png" },
 ];
 
-const CoursePurchaseForm = () => {
+const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
+	const { reason = "course" } = props || {};
 	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(
 		null,
 	);
@@ -29,9 +27,9 @@ const CoursePurchaseForm = () => {
 			<div className="flex items-center lg:px-28 sm:px-12 px-6 md:py-20 py-5">
 				<div className="">
 					<h1
-						className="text-[#00D569] font-thin text-3xl"
+						className="text-[#00D569] font-thin text-3xl capitalize"
 						style={{ fontFamily: "Days One" }}>
-						Buy this Course
+						Buy this {reason}
 					</h1>
 					<div className="grid gap-3">
 						<h1 className="font-medium mt-3">Billing Address</h1>
@@ -122,4 +120,4 @@ const CoursePurchaseForm = () => {
 	);
 };
 
-export default CoursePurchaseForm;
+export default PaidPurchaseForm;

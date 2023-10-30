@@ -1,11 +1,7 @@
 import React from "react";
-import { ICourse, IWorkshop } from "../../../../../interfaces";
+import { IWorkshop } from "../../../../../interfaces";
 import ListReviews from "../../../atom/common/course/ListReviews";
 import Socials from "../../../atom/common/course/Socials";
-import CourseRequirements from "./WorkshopRequirements";
-import WhatToLearn from "./WhatToLearnInWorkshop";
-import AboutCourse from "./AboutWorkshop";
-import CourseContents from "./WorkshopContents";
 import AboutWorkshop from "./AboutWorkshop";
 import WhatToLearnInWorkshop from "./WhatToLearnInWorkshop";
 import WorkshopRequirements from "./WorkshopRequirements";
@@ -31,7 +27,7 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 						</div>
 					</div>
 				</div>
-				<WorkshopContents workshop={workshop} />
+				<WorkshopContents preview workshop={workshop} />
 			</div>
 		</div>
 	);

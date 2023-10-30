@@ -11,14 +11,13 @@ const AuthPage = () => {
 	const router = useRouter();
 	const auth = useSelector(isLoggedIn);
 	const user = useSelector(currentUser);
-	// const next = router.query.next as string;
+	const next = router.query.next as string;
 
 	if (auth || user) {
-		// if (next) router.replace(decodeURIComponent(next));
-		router.replace("/dashboard");
+		if (next) router.replace(decodeURIComponent(next));
+		// router.replace("/dashboard");
 		return <div className="min-h-screen"></div>;
 	}
-
 	return <LoginAndAuthPageTemplate />;
 };
 

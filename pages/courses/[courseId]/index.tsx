@@ -3,12 +3,16 @@ import CourseDetailsPageTemplate from "../../../components/templates/course/deta
 import { GetServerSidePropsContext } from "next";
 import { getCourseById } from "../../../services/api";
 import { ICourse } from "../../../interfaces";
+import PurchaseCourseTemplate from "../../../components/templates/course/purchase";
+import { useRouter } from "next/router";
 
 const CourseDetailsPage = ({ course }: { course: ICourse }) => {
-	return (
-		<div>
-			<CourseDetailsPageTemplate {...course} />
-		</div>
+	const router = useRouter();
+	const pageKey = Object.keys(router.query)[0] as string;
+	return pageKey === "purchase" ? (
+		<PurchaseCourseTemplate {...course} />
+	) : (
+		<CourseDetailsPageTemplate {...course} />
 	);
 };
 

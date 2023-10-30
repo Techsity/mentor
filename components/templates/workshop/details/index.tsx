@@ -10,6 +10,7 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 
 const WorkShopDetailsPageTemplate = () => {
 	const workshop = workshops[0];
+
 	return (
 		<>
 			<div className="">

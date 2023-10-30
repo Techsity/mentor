@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const Footer = () => {
 	const router = useRouter();
-	const excludedPaths: string[] = ["purchase"];
+	const excludedPaths: string[] = ["purchase", "register"];
 	const hideFooter: boolean = excludedPaths.some((path) =>
 		router.asPath.includes(path),
 	);

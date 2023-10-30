@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
 import { NextPage } from "next";
 
-const protectedPageWrapper = (PageComponent: NextPage | React.FC) => {
+const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 	const Page = (props: any) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);

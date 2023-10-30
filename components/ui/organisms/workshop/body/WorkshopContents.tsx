@@ -3,16 +3,23 @@ import { IWorkshop, IWorkshopContent } from "../../../../../interfaces";
 import { calculateTotalDuration, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
 import classNames from "classnames";
+import { useDispatch } from "react-redux";
+import { setWorkshopToRegister } from "../../../../../redux/reducers/features/workshopSlice";
+import { useRouter } from "next/router";
+import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 
 const WorkshopContents = ({
 	workshop,
 	className,
-	live = false,
+	preview = false,
 }: {
 	workshop: IWorkshop;
 	className?: string;
-	live?: boolean;
+	preview?: boolean;
 }) => {
+	const dispatch = useDispatch();
+	const router = useRouter();
+	const [loading, setLoading] = useState<boolean>(false);
 	const CourseContentItem = ({ content }: { content: IWorkshopContent }) => {
 		return (
 			<>
@@ -38,7 +45,7 @@ const WorkshopContents = ({
 	return (
 		<div
 			className={classNames(
-				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] sm:p-8 p-4 min-h-[5dvh] h-auto text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
+				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] sm:p-8 p-4 min-h-[5dvh] h-auto text-black xl:-mt-28 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
 				className,
 			)}>
 			<div className="flex items-center justify-between">
@@ -57,11 +64,24 @@ const WorkshopContents = ({
 				{workshop.contents.map((content, index) => (
 					<CourseContentItem content={content} key={index} />
 				))}
-				<PrimaryButton
-					title="Register for Workshop"
-					link={`/workshops/${slugify(workshop.title)}?register`}
-					className="p-4 text-lg flex justify-center items-center my-6"
-				/>
+				{preview ? (
+					<PrimaryButton
+						title={!loading ? "Register for Workshop" : ""}
+						icon={loading ? <ActivityIndicator /> : null}
+						onClick={() => {
+							dispatch(setWorkshopToRegister(workshop));
+							setLoading(true);
+							setTimeout(function () {
+								router.push(
+									`/workshops/${slugify(
+										workshop.title,
+									)}?register`,
+								);
+							}, 1000);
+						}}
+						className="p-4 text-lg flex justify-center items-center my-6"
+					/>
+				) : null}
 			</div>
 		</div>
 	);
