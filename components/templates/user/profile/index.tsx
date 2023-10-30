@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ProfileNavCard from "../../../ui/atom/cards/profile/ProfileNavCard";
-import UserOngoingCoursesTemplate from "../my-courses/learning";
 import courses from "../../../../data/courses";
 import CourseInProgressDisplayCard from "../../../ui/atom/cards/course/CourseInProgressDisplayCard";
 import EditProfileCard from "../../../ui/atom/cards/profile/EditProfileCard";
@@ -9,7 +8,7 @@ const UserProfilePageTemplate = () => {
 	const tabLinks: string[] = [
 		// "My Courses",
 		"My Workshop",
-		"Mentorsship",
+		"Mentorship",
 		"Wish Lists",
 		"Payment Methods",
 		"Profile Settings",

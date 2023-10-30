@@ -59,10 +59,10 @@ const EditProfileCard = () => {
 						</span>
 					</div>
 				</div>
-				<div className="flex items-center justify-start">
+				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
 						title="Get a Mentor Profile"
-						className="p-3 px-6 bg-[#FFB100] text-black"
+						className="p-3 px-6 bg-[#FFB100] text-[#000]"
 					/>
 				</div>
 			</div>

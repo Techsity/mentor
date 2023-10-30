@@ -15,7 +15,7 @@ const CurrentUserProfileCard = () => {
 	];
 	return (
 		<div className="relative group cursor-pointer h-full">
-			<Link href={`/dashboard`}>
+			<Link href={`/profile`}>
 				<div className="flex items-center gap-3">
 					<div className="rounded-full w-9 h-9 relative">
 						<img
@@ -35,7 +35,7 @@ const CurrentUserProfileCard = () => {
 					</div>
 				</div>
 			</Link>
-			<div className="group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20dvw] right-0 hidden absolute w-full sm:max-w-[25dvw] max-w-[100dvw] bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
+			<div className="hidden group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20dvw] right-0 hidden absolute w-full sm:max-w-[25dvw] max-w-[100dvw] bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
 				<div className="flex flex-col items-center w-full">
 					{links.map((link, i) => (
 						<Link href={link.path || "#"} key={i}>
