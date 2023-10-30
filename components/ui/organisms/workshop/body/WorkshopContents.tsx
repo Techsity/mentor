@@ -20,7 +20,7 @@ const WorkshopContents = ({
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
-	const CourseContentItem = ({ content }: { content: IWorkshopContent }) => {
+	const WorkshopContentItem = ({ content }: { content: IWorkshopContent }) => {
 		return (
 			<>
 				<div
@@ -49,7 +49,7 @@ const WorkshopContents = ({
 				className,
 			)}>
 			<div className="flex items-center justify-between">
-				<h1 className="font-semibold text-xl">Course Content</h1>
+				<h1 className="font-semibold text-xl">Workshop Schedule</h1>
 				{workshop.price !== "free" ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						₦{workshop.price.toLocaleString()}
@@ -62,7 +62,7 @@ const WorkshopContents = ({
 			</div>
 			<div className="mt-6 grid gap-4 overflow-hidden">
 				{workshop.contents.map((content, index) => (
-					<CourseContentItem content={content} key={index} />
+					<WorkshopContentItem content={content} key={index} />
 				))}
 				{preview ? (
 					<PrimaryButton

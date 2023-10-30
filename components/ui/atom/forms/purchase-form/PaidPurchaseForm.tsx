@@ -29,7 +29,9 @@ const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
 					<h1
 						className="text-[#00D569] font-thin text-3xl capitalize"
 						style={{ fontFamily: "Days One" }}>
-						Buy this {reason}
+						{reason === "workshop"
+							? "Pay to Join"
+							: "Buy this Course"}
 					</h1>
 					<div className="grid gap-3">
 						<h1 className="font-medium mt-3">Billing Address</h1>

@@ -9,7 +9,8 @@ import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 
 const WorkShopDetailsPageTemplate = () => {
-	const workshop = workshops[0];
+	const workshop = workshops[Math.floor(Math.random() * 5)];
+	workshop.price = 5000;
 
 	return (
 		<>

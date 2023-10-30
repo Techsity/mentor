@@ -138,7 +138,7 @@ const CountrySelector = ({
 				{isOpen && (
 					<ul
 						className={classNames(
-							"absolute max-h-[300px] animate__animated animate__fadeIn z-40 top-14 grid gap-2 overflow-hidden overflow-y-auto bg-white w-full text-left",
+							"absolute max-h-[300px] animate__animated animate__fadeIn z-40 top-14 grid gap-2 overflow-hidden overflow-y-auto bg-white divide-y divide-[#094B10] border border-[#094B10] w-full text-left",
 							classes?.optionsWrapper,
 						)}
 						style={{
