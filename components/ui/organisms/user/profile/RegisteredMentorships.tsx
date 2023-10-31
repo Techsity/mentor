@@ -94,7 +94,7 @@ const RegisteredMentorships = () => {
 		(session) => session.concluded && !session.pending && !session.upcoming,
 	);
 	return (
-		<div className="flex flex-col gap-12">
+		<div className="flex flex-col gap-12 overflow-hidden pb-10">
 			{pendingSessions.length > 0 ? (
 				<div className="animate__animated animate__slideInUp">
 					<h1 className="text-[#A3A6A7] font-medium mb-5">
