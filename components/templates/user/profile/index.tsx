@@ -29,7 +29,7 @@ const UserProfilePageTemplate = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex-grow pt-10 xl:order-none order-last min-h-screen max-w-3xl">
+				<div className="flex-grow py-10 xl:order-none order-last min-h-screen max-w-3xl">
 					<h1 className="font-medium text-xl mb-5">My Courses</h1>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center">
 						{ongoingCourses.map((course, i) => (
@@ -37,8 +37,17 @@ const UserProfilePageTemplate = () => {
 						))}
 					</div>
 				</div>
-				<div className="xl:sticky top-20 bg-[#F6F9F8] p-4 w-auto xl:w-[35%] min-h-[90dvh] h-full mx-3 xs:mx-12 lg:mx-0">
+				<div className="xl:sticky top-20 bg-[#F6F9F8] p-4 w-auto xl:w-[35%] min-h-screen h-full mx-3 xs:mx-12 lg:mx-0">
 					<EditProfileCard />
+				</div>
+			</div>
+			<div className="bg-[#70C5A1] min-h-20 p-6 min-w-screen flex justify-center">
+				<div className="flex flex-col justify-center items-center text-white">
+					<h1 className="text-xl font-medium">Mentör by Techsity</h1>
+					<p className="">Copyright (c) 2023</p>
+					<p className="font-[300] text-sm tracking-wide">
+						www.techsity.io
+					</p>
 				</div>
 			</div>
 		</>
