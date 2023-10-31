@@ -1,12 +1,136 @@
 import React from "react";
+import { IMentorshipSession } from "../../../../../interfaces";
+import RegisteredMentorshipCard from "../../../atom/cards/profile/RegisteredMentorshipCard";
+import mentors from "../../../../../data/mentors";
+
+const registeredMentorships: IMentorshipSession[] = [
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: false,
+		pending: true,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: false,
+		pending: true,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: false,
+		pending: true,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		upcoming: true,
+		concluded: false,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: true,
+		upcoming: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		concluded: false,
+		upcoming: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		upcoming: false,
+		concluded: true,
+		pending: false,
+	},
+	{
+		date: new Date(),
+		mentor: mentors[0],
+		upcoming: false,
+		concluded: true,
+		pending: false,
+	},
+];
 
 const RegisteredMentorships = () => {
+	const pendingSessions = registeredMentorships.filter(
+		(session) => session.pending && !session.concluded && !session.upcoming,
+	);
+	const upcomingSessions = registeredMentorships.filter(
+		(session) => session.upcoming && !session.pending && !session.concluded,
+	);
+	const concludedSessions = registeredMentorships.filter(
+		(session) => session.concluded && !session.pending && !session.upcoming,
+	);
 	return (
-		<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-			{/* {ongoingCourses.map((course, i) => (
-				<CourseInProgressDisplayCard {...course} key={i} />
-			))} */}
-			RegisteredMentorships
+		<div className="flex flex-col gap-12">
+			{pendingSessions.length > 0 ? (
+				<div>
+					<h1 className="text-[#A3A6A7] font-medium mb-5">
+						To be Accepted
+					</h1>
+					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+						{pendingSessions.map((session, i) => (
+							<RegisteredMentorshipCard {...session} key={i} />
+						))}
+					</div>
+				</div>
+			) : null}
+			{upcomingSessions.length > 0 ? (
+				<div>
+					<h1 className="text-[#A3A6A7] font-medium mb-5">
+						Upcoming
+					</h1>
+					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+						{upcomingSessions.map((session, i) => (
+							<RegisteredMentorshipCard {...session} key={i} />
+						))}
+					</div>
+				</div>
+			) : null}
+			{concludedSessions.length > 0 ? (
+				<div>
+					<h1 className="text-[#A3A6A7] font-medium mb-5">
+						Concluded
+					</h1>
+					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+						{concludedSessions.map((session, i) => (
+							<RegisteredMentorshipCard {...session} key={i} />
+						))}
+					</div>
+				</div>
+			) : null}
 		</div>
 	);
 };

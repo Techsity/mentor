@@ -336,3 +336,10 @@ export interface IWorkshop {
 	requirements: string[];
 	contents: IWorkshopContent[];
 }
+export interface IMentorshipSession {
+	date: Date;
+	pending: boolean;
+	concluded: boolean;
+	upcoming: boolean;
+	mentor: IMentor;
+}

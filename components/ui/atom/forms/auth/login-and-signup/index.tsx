@@ -15,8 +15,12 @@ const LoginAndSignupForm = () => {
 	const [currentForm, setCurrentForm] = useState<"login" | "signup">(pageKey);
 
 	useEffect(() => {
-		setCurrentForm(pageKey);
-		return () => setCurrentForm("signup");
+		if (pageKey === "signup") setCurrentForm("signup");
+		else if (pageKey === "login") setCurrentForm("login");
+		else {
+			setCurrentForm("login");
+		}
+		return () => setCurrentForm("login");
 	}, [pageKey]);
 
 	return (

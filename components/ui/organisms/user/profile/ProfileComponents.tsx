@@ -12,7 +12,9 @@ const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 	);
 	return (
 		<>
-			<h1 className="font-medium text-xl mb-5">{activeTab}</h1>
+			<h1 className="font-medium text-xl mb-5 animate__animated animate__fadeInDown">
+				{activeTab}
+			</h1>
 			{activeTab === "My Courses" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
@@ -32,25 +34,19 @@ const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 			) : activeTab === "Payment Methods" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...course} key={i} />
-						))}
+						Coming Soon
 					</div>
 				</>
 			) : activeTab === "Profile Settings" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...course} key={i} />
-						))}
+						Coming Soon
 					</div>
 				</>
 			) : activeTab === "Wish Lists" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...course} key={i} />
-						))}
+						Coming Soon
 					</div>
 				</>
 			) : (
