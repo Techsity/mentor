@@ -8,8 +8,8 @@ const EditProfileCard = () => {
 	const user = useSelector(currentUser);
 	return (
 		<div>
-			<h1 className="text-sm text-zinc-500">My profile</h1>
-			<div className="my-6 grid gap-6">
+			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
+			<div className="my-6 grid xl:grid-cols-1 sm:grid-cols-2 gap-6">
 				<div className="flex items-center gap-1">
 					<img
 						src={user?.avatar || "/assets/images/avatar.png"}

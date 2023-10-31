@@ -96,11 +96,11 @@ const RegisteredMentorships = () => {
 	return (
 		<div className="flex flex-col gap-12">
 			{pendingSessions.length > 0 ? (
-				<div>
+				<div className="animate__animated animate__slideInUp">
 					<h1 className="text-[#A3A6A7] font-medium mb-5">
 						To be Accepted
 					</h1>
-					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+					<div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 items-center">
 						{pendingSessions.map((session, i) => (
 							<RegisteredMentorshipCard {...session} key={i} />
 						))}
@@ -108,11 +108,11 @@ const RegisteredMentorships = () => {
 				</div>
 			) : null}
 			{upcomingSessions.length > 0 ? (
-				<div>
+				<div className="animate__animated animate__slideInUp">
 					<h1 className="text-[#A3A6A7] font-medium mb-5">
 						Upcoming
 					</h1>
-					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+					<div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 items-center">
 						{upcomingSessions.map((session, i) => (
 							<RegisteredMentorshipCard {...session} key={i} />
 						))}
@@ -120,11 +120,11 @@ const RegisteredMentorships = () => {
 				</div>
 			) : null}
 			{concludedSessions.length > 0 ? (
-				<div>
+				<div className="animate__animated animate__slideInUp">
 					<h1 className="text-[#A3A6A7] font-medium mb-5">
 						Concluded
 					</h1>
-					<div className="grid gap-5 sm:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+					<div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 items-center">
 						{concludedSessions.map((session, i) => (
 							<RegisteredMentorshipCard {...session} key={i} />
 						))}
