@@ -8,22 +8,39 @@ import {
 	formatFollowersCount,
 	slugify,
 } from "../../../../../utils";
+import { PrimaryButton } from "../../buttons";
 
-const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
+const WorkshopDisplayCard = ({
+	workshop,
+	profile = false,
+}: {
+	workshop: IWorkshop;
+	profile?: boolean;
+}) => {
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
-			<div className="absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
-				<Link href={`/workshops/${slugify(workshop.title)}`}>
-					<button className="px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300">
-						Register for Workshop
-					</button>
-				</Link>
-				<h1 className="mt-4">
-					{workshop.startDate
-						.toLocaleDateString()
-						.split("/")
-						.join("-")}
-				</h1>
+			<div className="select-none absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
+				{!profile && (
+					<Link href={`/workshops/${slugify(workshop.title)}`}>
+						<button className="px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300">
+							Register for Workshop
+						</button>
+					</Link>
+				)}
+
+				<div
+					className={
+						profile
+							? "px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300"
+							: ""
+					}>
+					<h1 className={!profile ? "mt-4" : ""}>
+						{workshop.startDate
+							.toLocaleDateString()
+							.split("/")
+							.join("-")}
+					</h1>
+				</div>
 			</div>
 			<div className="grid gap-2">
 				<div className="relative">
@@ -88,13 +105,23 @@ const WorkshopDisplayCard = ({ workshop }: { workshop: IWorkshop }) => {
 						<h1>{workshop.mentor.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
-					{workshop.price === "free" ? (
-						<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">
-							Free
-						</div>
+					{!profile ? (
+						workshop.price === "free" ? (
+							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">
+								Free
+							</div>
+						) : (
+							<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">
+								₦{workshop.price.toLocaleString()}
+							</div>
+						)
 					) : (
-						<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">
-							₦{workshop.price.toLocaleString()}
+						<div className="flex justify-end items-center">
+							<PrimaryButton
+								link={`/workshops/${slugify(workshop.title)}`}
+								title="View"
+								className="p-2 px-6"
+							/>
 						</div>
 					)}
 				</div>
