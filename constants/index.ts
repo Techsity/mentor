@@ -12,7 +12,7 @@ interface ToastId {
 }
 // interface ICustomToastProps extends ToastOptions<Omit<key = "">> {
 interface ICustomToastProps extends ToastOptions {
-	id: keyof ToastId;
+	id: keyof ToastId | "";
 }
 export const ToastDefaultOptions = (
 	props?: ICustomToastProps,

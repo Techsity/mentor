@@ -1,27 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 import Link from "next/link";
 import { slugify } from "../../../../../utils";
 import useWishlist from "../../../../../hooks/course/useWishlist";
+import { setWishlist } from "../../../../../redux/reducers/features/coursesSlice";
+import { useDispatch } from "react-redux";
 
 const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
-
+	const hasBeenAdded = wishlist.find(
+		(wishlistedCourse) =>
+			slugify(wishlistedCourse.title) === slugify(course.title),
+	);
 	return (
 		<>
 			<div className="inline-block snap-start">
-				<div className="xl:w-[420px] xl:h-[500px] w-[340px] xs:w-[360px] md:w-[350px] h-auto md:h-[480px] md:max-w-sm xl:max-w-lg relative overflow-hidden shadow md:py-0 py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+				<div className="w-auto h-auto md:max-w-sm xl:max-w-lg relative overflow-hidden shadow py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					{/* <div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow-lg h-full hover:shadow-lg cursor-pointer duration-300 pb-6 w-full"> */}
 					<>
 						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
-							{wishlist.length > 0 &&
-							wishlist.find(
-								(wishlistedCourse) =>
-									slugify(wishlistedCourse.title) ===
-									slugify(course.title),
-							) ? (
+							{wishlist.length > 0 && hasBeenAdded ? (
 								<HeartSharp
 									onClick={() => removeFromWishlist(course)}
 									color="#FFB100"
@@ -35,7 +35,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 									color="#fff"
 									height="30px"
 									width="30px"
-									cssClasses="duration-300"
+									cssClasses="duration-300 cursor-pointer"
 								/>
 								// <div className="group cursor-pointer">
 								// 	<HeartOutline
@@ -105,7 +105,10 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 									</div>
 								</div>
 								<p className="text-sm px-5">
-									{course.description.slice(0, 110)}...
+									{course.description.length > 110
+										? course.description.slice(0, 110) +
+										  "..."
+										: course.description}
 								</p>
 								<div className="flex items-center justify-between mt-10 px-5">
 									<div className="flex gap-2 items-center text-sm relative">

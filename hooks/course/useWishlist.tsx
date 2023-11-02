@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
 	setWishlist,
@@ -15,47 +15,19 @@ const useWishlist = () => {
 	const dispatch = useDispatch();
 
 	const addToWishlist = (course: ICourse) => {
-		const hasBeenAdded = wishlist.find(
-			(wishlistedCourse) =>
-				slugify(wishlistedCourse.title) === slugify(course.title),
-		);
-		if (hasBeenAdded) {
-			toast.warning(
-				"Course has already been added to wishlist!",
-				ToastDefaultOptions({ id: "success", theme: "dark" }),
-			);
-		} else {
-			dispatch(setWishlist([...wishlist, course]));
-			toast.success(
-				"Course added to wishlist!",
-				ToastDefaultOptions({ id: "warning", theme: "dark" }),
-			);
-		}
+		dispatch(setWishlist([...wishlist, course]));
+		toast.success(`Course added to wishlist!`, ToastDefaultOptions());
 	};
 	const removeFromWishlist = (course: ICourse) => {
-		const hasBeenAdded = wishlist.find(
+		const updatedWishlist = wishlist.filter(
 			(wishlistedCourse) =>
-				slugify(wishlistedCourse.title) === slugify(course.title),
+				slugify(wishlistedCourse.title) !== slugify(course.title),
 		);
-		if (hasBeenAdded) {
-			const updatedWishlist = wishlist.filter(
-				(wishlistedCourse) =>
-					slugify(wishlistedCourse.title) !== slugify(course.title),
-			);
-			dispatch(setWishlist(updatedWishlist));
-			toast.success(
-				"Course has been removed from wishlist!",
-				ToastDefaultOptions({
-					id: "success",
-					theme: "dark",
-				}),
-			);
-		} else {
-			// toast.success(
-			// 	"Course added to wishlist!",
-			// 	ToastDefaultOptions({ id: "warning", theme: "dark" }),
-			// );
-		}
+		dispatch(setWishlist(updatedWishlist));
+		toast.success(
+			"Course has been removed from wishlist!",
+			ToastDefaultOptions(),
+		);
 	};
 
 	return { wishlist, addToWishlist, removeFromWishlist };

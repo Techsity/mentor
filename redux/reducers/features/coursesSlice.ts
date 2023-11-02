@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ICourse } from "../../../interfaces";
 import { slugify } from "../../../utils";
 import { RootState } from "../../store";
+import courses from "../../../data/courses";
 
 const initialState: { userWishlistedCourses: ICourse[] } = {
 	userWishlistedCourses: [],
@@ -12,20 +13,19 @@ const coursesSlice = createSlice({
 	initialState,
 	reducers: {
 		setWishlist: (state, action: { payload: ICourse[] }) => {
-			if (action.payload) {
-				action.payload.forEach((course) => {
-					if (
-						!state.userWishlistedCourses.some(
-							(existing) =>
-								slugify(existing.title) ===
-								slugify(course.title),
-						)
-					) {
-						state.userWishlistedCourses.push(course);
-					}
-				});
-			}
-			return state;
+			// action.payload.forEach((course) => {
+			// 	if (
+			// 		!state.userWishlistedCourses.some(
+			// 			(existing) =>
+			// 				slugify(existing.title) === slugify(course.title),
+			// 		)
+			// 	) {
+			// 		state.userWishlistedCourses
+			// 	}
+
+			// });
+			state.userWishlistedCourses = action.payload;
+			// return state;
 		},
 	},
 });

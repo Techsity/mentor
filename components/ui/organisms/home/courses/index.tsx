@@ -79,7 +79,7 @@ const HomepageCourseSection = () => {
 								})
 								.slice(0, 6)}
 							<Link href="#">
-								<div className="absolute top-6 right-32 tracking-tight text-[#33AC15] group cursor-pointer md:block hidden">
+								<div className="absolute top-6 right-32 tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
 									<div className="relative flex items-center gap-2">
 										View All{" "}
 										<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
