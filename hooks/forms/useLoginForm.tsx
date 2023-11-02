@@ -72,7 +72,16 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					dispatch(
 						setCredentials({
 							isLoggedIn: true,
-							user: response.data.loginUser.user,
+							user: {
+								...response.data.loginUser.user,
+								payment_cards: [
+									{
+										bank: { name: "GTbank via Paystack" },
+										card_name: "John Doe Ipsum",
+										card_number: "5399 8878 9887 99099",
+									},
+								],
+							},
 						}),
 					);
 					const next = router.query.next as string;

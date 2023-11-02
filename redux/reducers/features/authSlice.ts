@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IAuthState } from "../../../interfaces/auth.interface";
-import { IUser } from "../../../interfaces/user.interface";
+import { IUser, IUserUpdate } from "../../../interfaces/user.interface";
 
 const initialState: IAuthState = {
 	isLoggedIn: false,
@@ -26,10 +26,13 @@ const authSlice = createSlice({
 			state.isLoggedIn = false;
 			state.user = null;
 		},
+		updateUser: (state, action: { payload: IUser | null }) => {
+			state.user = action.payload;
+		},
 	},
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, updateUser } = authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user;

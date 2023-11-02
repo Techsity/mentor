@@ -17,7 +17,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
 		<>
 			<div className="inline-block snap-start">
-				<div className="w-auto h-auto md:h-[500px] lg:h-[550px] md:max-w-md xl:max-w-lg relative overflow-hidden shadow py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+				<div className="w-auto h-auto md:h-[500px] lg:h-[550px] 2xl:h-[500px] md:max-w-md xl:max-w-lg relative overflow-hidden shadow py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					{/* <div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow-lg h-full hover:shadow-lg cursor-pointer duration-300 pb-6 w-full"> */}
 					<>
 						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">

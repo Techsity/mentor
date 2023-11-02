@@ -5,6 +5,7 @@ import courses from "../../../../../data/courses";
 import RegisteredMentorships from "./RegisteredMentorships";
 import RegitsteredWorkshops from "./RegitsteredWorkshops";
 import WishLists from "./WishLists";
+import PaymentMethods from "./PaymentMethods";
 
 const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 	const myCourses = useMemo(
@@ -33,14 +34,12 @@ const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 					<RegisteredMentorships />
 				</>
 			) : activeTab === "Wish Lists" ? (
-				<>
+				<div className="md:px-2 px-5">
 					<WishLists />
-				</>
+				</div>
 			) : activeTab === "Payment Methods" ? (
 				<>
-					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						Coming Soon
-					</div>
+					<PaymentMethods />
 				</>
 			) : activeTab === "Profile Settings" ? (
 				<>

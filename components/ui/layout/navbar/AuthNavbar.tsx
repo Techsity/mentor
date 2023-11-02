@@ -16,6 +16,10 @@ const AuthNavbar = () => {
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
+	const excludedPaths: string[] = ["profile"];
+	const hideNavSections: boolean = excludedPaths.some((path) =>
+		router.asPath.includes(path),
+	);
 	return (
 		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__slideInDown">
 			<Link href="/">

@@ -7,7 +7,7 @@ const WishLists = () => {
 	const wishlistedCourses = useSelector(wishlist);
 	return (
 		<div>
-			<div className="grid gap-6 md:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+			<div className="grid gap-6 md:grid-cols-2 2xl:grid-cols-3 items-center animate__animated animate__fadeIn">
 				{wishlistedCourses.length > 0 ? (
 					wishlistedCourses.map((course, indx) => {
 						return <DisplayCourseCard course={course} key={indx} />;
