@@ -6,7 +6,7 @@ import { currentUser } from "../../redux/reducers/features/authSlice";
 
 const DashboardPage = () => {
 	const user = useSelector(currentUser);
-	return user && !user.is_admin ? (
+	return user ? (
 		<MenteeDashboardTemplate />
 	) : (
 		<div className="min-h-screen"></div>
