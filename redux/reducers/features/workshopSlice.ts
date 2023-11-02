@@ -50,9 +50,9 @@ export const { setWorkshopToRegister, addBookmarkWorkshop } =
 	workshopSlice.actions;
 
 export const workshopToRegister = (state: RootState) =>
-	state.worshop.workshopToRegister;
+	state.workshop.workshopToRegister;
 
 export const bookmarkedWorkshops = (state: RootState) =>
-	state.worshop.bookmarkedWorkshops;
+	state.workshop.bookmarkedWorkshops;
 
 export default workshopSlice.reducer;

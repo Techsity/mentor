@@ -1,29 +1,38 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { ICourse } from "../../../interfaces";
-// import { RootState } from "../../store";
-// import { slugify } from "../../../utils";
-// import { stat } from "fs";
-// import courses from "../../../data/courses";
+import { createSlice } from "@reduxjs/toolkit";
+import { ICourse } from "../../../interfaces";
+import { slugify } from "../../../utils";
+import { RootState } from "../../store";
 
-// const initialState: ICourse[] = courses;
+const initialState: { userWishlistedCourses: ICourse[] } = {
+	userWishlistedCourses: [],
+};
 
-// export const coursesSlice = createSlice({
-// 	name: "courses",
-// 	initialState,
-// 	reducers: {
-// 		setCourses: (state, action: { payload: ICourse[] }) => {
-// 			action.payload.forEach((newCourse: ICourse) => {
-// 				if (
-// 					!state.some(
-// 						(existingCourse) =>
-// 							slugify(existingCourse.title) ===
-// 							slugify(newCourse.title),
-// 					)
-// 				) {
-// 					state.push(newCourse);
-// 				}
-// 			});
-// 			return state;
-// 		},
-// 	},
-// });
+const coursesSlice = createSlice({
+	name: "courses",
+	initialState,
+	reducers: {
+		setWishlist: (state, action: { payload: ICourse[] }) => {
+			if (action.payload) {
+				action.payload.forEach((course) => {
+					if (
+						!state.userWishlistedCourses.some(
+							(existing) =>
+								slugify(existing.title) ===
+								slugify(course.title),
+						)
+					) {
+						state.userWishlistedCourses.push(course);
+					}
+				});
+			}
+			return state;
+		},
+	},
+});
+
+export const { setWishlist } = coursesSlice.actions;
+
+export const wishlistedCourses = (state: RootState) =>
+	state.courses.userWishlistedCourses;
+
+export default coursesSlice.reducer;
