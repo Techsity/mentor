@@ -107,7 +107,7 @@ const ProfileSettings = () => {
 						htmlFor="oldPassword">
 						Change Password
 					</label>
-					<div className="space-y-1">
+					<div className="space-y-2">
 						<CustomTextInput
 							// value={}
 							// onChange={handleChange("email")}

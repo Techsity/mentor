@@ -56,7 +56,10 @@ const CountrySelector = ({
 				setIsOpen(false);
 			}
 			if (isOpen && selected) {
-				setSearchTerm(selected.label);
+				if (typeof selected === "string") setSearchTerm(selected);
+				else {
+					setSearchTerm(selected.label);
+				}
 			}
 		};
 		document.addEventListener("mousedown", handleClickOutside);
@@ -154,7 +157,6 @@ const CountrySelector = ({
 									<CountryListItem
 										key={index}
 										classes={""}
-										selected={selected}
 										country={country}
 										handleSelect={handleOptionClick}
 										// handleSelectWithKeyboard={handleSelectWithKeyboard}
@@ -181,7 +183,6 @@ const CountrySelector = ({
 
 interface ICountryListItemProps {
 	classes?: string;
-	selected: SelectedCountry | null;
 	country: SelectedCountry;
 	handleSelect: (country: SelectedCountry) => void;
 }
