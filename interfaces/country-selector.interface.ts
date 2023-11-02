@@ -7,7 +7,7 @@ export interface SelectedCountry {
 
 export interface ICountrySelectorProps {
 	onSelect: (country: SelectedCountry | null) => void;
-	selected: SelectedCountry | null;
+	selected: SelectedCountry | string | null;
 	searchable?: boolean;
 	required?: boolean;
 	onInvalidInput?: (e: FormEvent<HTMLInputElement>) => void;

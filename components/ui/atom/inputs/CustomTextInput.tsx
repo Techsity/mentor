@@ -34,7 +34,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				type={inputProps?.type}
 				required={inputProps?.required}
 				className={classNames(
-					"p-4 h-full focus:ring-0 outline-none",
+					"p-3 h-full focus:ring-0 outline-none",
 					rightIcon ? "w-[93%]" : "w-full flex-grow",
 					inputProps?.className,
 				)}

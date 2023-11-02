@@ -38,7 +38,11 @@ const CountrySelector = ({
 
 	useLayoutEffect(() => {
 		if (selected) {
-			setSearchTerm(selected.label);
+			if (typeof selected === "string") {
+				setSearchTerm(selected);
+			} else {
+				setSearchTerm(selected.label);
+			}
 		}
 	}, [selected]);
 

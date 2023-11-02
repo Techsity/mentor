@@ -9,6 +9,7 @@ import { ToastDefaultOptions } from "../../constants";
 import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
+import { IUser } from "../../interfaces/user.interface";
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -62,18 +63,22 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			},
 		})
 			.then((response: any) => {
+				const userData: IUser = response.data.loginUser.user;
+				const authToken = response.data.loginUser.access_token;
 				if (response.data.loginUser.user) {
+					console.log(userData);
 					// toast.success("Login successful");
-					localStorage.setItem(
-						"authToken",
-						response.data.loginUser.access_token,
-					);
+					// sessionStorage.setItem(
+					// 	"authToken",
+					// authToken
+					// );
+					localStorage.setItem("authToken", authToken);
 					// setLoading(false);
 					dispatch(
 						setCredentials({
 							isLoggedIn: true,
 							user: {
-								...response.data.loginUser.user,
+								...userData,
 								payment_cards: [
 									{
 										bank: { name: "GTbank via Paystack" },

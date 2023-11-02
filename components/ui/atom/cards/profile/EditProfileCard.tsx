@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
+import { scrollToTop } from "../../../../../utils";
 
 const EditProfileCard = () => {
 	const user = useSelector(currentUser);
@@ -43,6 +44,7 @@ const EditProfileCard = () => {
 						<PrimaryButton
 							title="Edit Profile"
 							className="p-3 px-6"
+							link="#profile-settings"
 						/>
 					</div>
 				</div>
