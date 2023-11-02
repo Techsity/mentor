@@ -12,7 +12,7 @@ const CoursesSection = () => {
 
 	return (
 		<>
-			<div className="sticky h-20 top-40 z-10 bg-[#FDFDFD] flex justify-center">
+			<div className="sticky h-20 top-40 z-20 bg-[#FDFDFD] flex justify-center">
 				<div className="flex my-5 gap-6">
 					{courses.map((course, index) => (
 						<div
