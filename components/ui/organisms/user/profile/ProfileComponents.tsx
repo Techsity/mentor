@@ -4,6 +4,7 @@ import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProg
 import courses from "../../../../../data/courses";
 import RegisteredMentorships from "./RegisteredMentorships";
 import RegitsteredWorkshops from "./RegitsteredWorkshops";
+import WishLists from "./WishLists";
 
 const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 	const myCourses = useMemo(
@@ -31,6 +32,10 @@ const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 				<>
 					<RegisteredMentorships />
 				</>
+			) : activeTab === "Wish Lists" ? (
+				<>
+					<WishLists />
+				</>
 			) : activeTab === "Payment Methods" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
@@ -38,12 +43,6 @@ const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 					</div>
 				</>
 			) : activeTab === "Profile Settings" ? (
-				<>
-					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						Coming Soon
-					</div>
-				</>
-			) : activeTab === "Wish Lists" ? (
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 						Coming Soon
