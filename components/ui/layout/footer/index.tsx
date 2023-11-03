@@ -89,7 +89,7 @@ const Footer = () => {
 									Find Mentors
 								</li>
 							</Link>
-							<Link href="#">
+							<Link href={"/mentor/onboarding"}>
 								<li className="mb-4 cursor-pointer text-[14px]">
 									Become a Mentor
 								</li>

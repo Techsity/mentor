@@ -22,7 +22,7 @@ const BecomeMentor = () => {
 						while teaching what you love.
 					</p>
 					<div className="flex justify-start">
-						<Link href="#">
+						<Link href="/mentor/onboarding">
 							<div
 								className="px-10 hover:bg-[#083C0E] duration-300 bg-[#094B10] p-3 text-white rounded cursor-pointer"
 								style={{ fontFamily: "Days One" }}

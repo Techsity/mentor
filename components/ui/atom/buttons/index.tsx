@@ -16,12 +16,13 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 				disabled={disabled}
 				onClick={onClick}
 				className={classNames(
-					`bg-[#094B10] text-white select-none text-center flex gap-2 cursor-pointer select-none`,
+					`bg-[#094B10] text-white hover:opacity-90 duration-300 select-none text-center flex gap-2 cursor-pointer select-none`,
 					className,
-					disabled ? "cursor-not-allowed" : "cursor-pointer",
+					disabled
+						? "cursor-not-allowed bg-zinc-500 opacity-80"
+						: "cursor-pointer",
 				)}
-				{...rest}
-			>
+				{...rest}>
 				{title}
 				{icon ? icon : null}
 			</button>
@@ -31,12 +32,11 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 			disabled={disabled}
 			onClick={onClick}
 			className={classNames(
-				`bg-[#094B10] text-white select-none text-center flex gap-2 cursor-pointer select-none`,
+				`bg-[#094B10] text-white hover:opacity-90 duration-300 select-none text-center flex gap-2 cursor-pointer select-none`,
 				className,
-				disabled ? "cursor-not-allowed" : "cursor-pointer",
+				disabled ? "cursor-not-allowed bg-zinc-500 opacity-80" : "cursor-pointer",
 			)}
-			{...rest}
-		>
+			{...rest}>
 			{title}
 			{icon ? icon : null}
 		</button>
