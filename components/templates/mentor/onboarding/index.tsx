@@ -5,11 +5,13 @@ import { Checkmark } from "react-ionicons";
 import { useRouter } from "next/router";
 import MentorOnboardingSteps from "./steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
+import Confetti from "react-dom-confetti";
+import confettiConfig from "../../../../utils/confetti.config";
 
 const MentorOnboardingPageTemplate = () => {
 	const router = useRouter();
 	const pageKey: any = Object.keys(router.query)[0];
-	const [current, setCurrent] = useState<"signup">(pageKey);
+	const [current, setCurrent] = useState<"signup" | "">(pageKey);
 	const [agree, setAgree] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,6 +21,17 @@ const MentorOnboardingPageTemplate = () => {
 			setCurrent("signup");
 		}, 3000);
 	};
+
+	useEffect(() => {
+		// if (pageKey === "signup") setCurrent("signup");
+		// else {
+		// 	setCurrent("");
+		// }
+		return () => {
+			// setCurrent("");
+			setAgree(false);
+		};
+	}, [pageKey]);
 
 	return (
 		<div className="bg-[#F6F9F8] min-h-[50dvh]">
@@ -61,20 +74,15 @@ const MentorOnboardingPageTemplate = () => {
 										// onClick={handleNavigate}
 									/>
 								</div>
-								<div
-									onClick={() => setAgree(!agree)}
-									className="flex items-center gap-2 flex-nowrap cursor-pointer select-none animate__animated animate__fadeInLeft animate__slower">
-									<div className="flex justify-center items-center p-3 border border-[#70C5A1]">
-										{agree ? (
-											<div className="animate__animated animate__bounceIn">
-												<Checkmark
-													color="#70C5A1"
-													width={30}
-													height={30}
-												/>
-											</div>
-										) : null}
-									</div>
+								<div className="flex items-center gap-2 flex-nowrap select-none animate__animated animate__fadeInLeft animate__slow">
+									<input
+										id="terms"
+										name="terms"
+										type="checkbox"
+										className="h-5 w-5 shrink-0 accent-[#70C5A1] duration-300 text-white cursor-pointer"
+										checked={agree}
+										onChange={() => setAgree(!agree)}
+									/>
 									<p className="text-[15px]">
 										Agree to our{" "}
 										<span className="text-[#70C5A1]">

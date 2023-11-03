@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PrimaryButton } from "../../../components/ui/atom/buttons";
 import ActivityIndicator from "../../../components/ui/atom/loader/ActivityIndicator";
 import { useRouter } from "next/router";
+import Confetti from "react-dom-confetti";
+import confettiConfig from "../../../utils/confetti.config";
 
 const OnboardingCongratulations = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
+	const [celebrate, setCelebrate] = useState<boolean>(false);
+
+	useEffect(() => {
+		setCelebrate(true);
+	}, []);
 	return (
 		<>
+			<Confetti active={celebrate} config={{ ...confettiConfig }} />
 			<div className="pt-20 flex justify-center min-h-[80vh] px-10 md:px-20">
 				<div className="mt-20">
 					<h1
