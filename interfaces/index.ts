@@ -1,3 +1,5 @@
+import { RefrencedMentorType } from "./mentor.interface";
+
 type CountryCode =
 	| "AF"
 	| "AL"
@@ -231,8 +233,6 @@ type CountryCode =
 //
 //
 
-type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
-type RefrencedMenteeType = Omit<IMentee, "mentors">;
 export interface ICourseContent {
 	title: string;
 	lectures: { name: string; duration: string; type: "video" | "document" }[];
@@ -257,47 +257,6 @@ export interface ICourse {
 export interface ICourseCategory {
 	title: string;
 	availableCourses: ICourse[];
-}
-
-export interface IExperience {
-	position: string;
-	company: { name: string; logo?: string };
-	topSkils: string[];
-	roles: string[];
-	startDate: string;
-	endDate: string;
-	country?: CountryCode;
-}
-export interface IMentee {
-	name: string;
-	username: string;
-	mentors: RefrencedMentorType[];
-}
-export interface IMentor {
-	name: string;
-	username: string;
-	jobTitle: string;
-	experience?: IExperience[];
-	projects?: {
-		title: string;
-		link: string;
-		type: "Freelance" | "Contract" | "Official";
-	}[];
-	mentees: RefrencedMenteeType[];
-	subscribers: number;
-	sessions: number;
-	rating: number;
-	avatar: string;
-	skills: string[];
-	daysOpen: string[];
-	online: boolean;
-	verified: boolean;
-	ratePerHour: number;
-	about: string;
-	country: CountryCode;
-	languages: string[];
-	followers: number;
-	courses: ICourse[];
 }
 
 export interface IAboutHeroCarouselData {
@@ -335,11 +294,4 @@ export interface IWorkshop {
 	toLearn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];
-}
-export interface IMentorshipSession {
-	date: Date;
-	pending: boolean;
-	concluded: boolean;
-	upcoming: boolean;
-	mentor: IMentor;
 }

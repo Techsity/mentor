@@ -3,7 +3,7 @@ import { BecomeMentorSvg } from "../../../ui/atom/icons/svgs";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { Checkmark } from "react-ionicons";
 import { useRouter } from "next/router";
-import MentorOnboardingSteps from "./steps";
+import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import Confetti from "react-dom-confetti";
 import confettiConfig from "../../../../utils/confetti.config";

@@ -3,19 +3,22 @@ import React, {
 	HTMLAttributes,
 	InputHTMLAttributes,
 	ReactNode,
+	TextareaHTMLAttributes,
 	forwardRef,
 } from "react";
 import classNames from "classnames";
-interface ICustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+
+interface ICustomTextAreaProps
+	extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 	containerProps?: HTMLAttributes<HTMLDivElement>;
 	rightIcon?: JSX.Element | null;
 	rightButton?: JSX.Element | null;
 	children?: ReactNode;
 }
 
-const CustomTextInput = forwardRef(function CustomTextInput(
-	props: ICustomTextInputProps,
-	ref?: ForwardedRef<HTMLInputElement>,
+const CustomTextArea = forwardRef(function CustomTextArea(
+	props: ICustomTextAreaProps,
+	ref?: ForwardedRef<HTMLTextAreaElement>,
 ) {
 	const { containerProps, rightIcon, rightButton, children, ...inputProps } =
 		props;
@@ -27,18 +30,16 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				containerProps?.className,
 			)}
 			{...containerProps}>
-			<input
+			<textarea
 				ref={ref}
 				{...inputProps}
 				disabled={inputProps.disabled}
-				type={inputProps?.type}
 				required={inputProps?.required}
 				className={classNames(
-					"p-4 h-full focus:ring-0 outline-none",
+					"p-3 h-full focus:ring-0 outline-none resize-none min-h-[80px]",
 					rightIcon ? "w-[93%]" : "w-full flex-grow",
 					inputProps?.className,
-				)}
-			/>
+				)}></textarea>
 			{rightButton ? rightButton : null}
 			{rightIcon ? (
 				<div className="absolute top-[30%] right-5">{rightIcon}</div>
@@ -48,4 +49,4 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 	);
 });
 
-export default CustomTextInput;
+export default CustomTextArea;

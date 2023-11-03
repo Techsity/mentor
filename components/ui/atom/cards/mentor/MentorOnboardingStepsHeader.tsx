@@ -29,7 +29,7 @@ const MentorOnboardingStepsHeader = (props: {
 							currentStep >= step
 								? "text-white bg-[#70C5A1]"
 								: "text-black bg-zinc-200"
-						}`}> 
+						}`}>
 						{step}
 					</div>
 				</li>
