@@ -7,7 +7,6 @@ import RegitsteredWorkshops from "./RegitsteredWorkshops";
 import WishLists from "./WishLists";
 import PaymentMethods from "./PaymentMethods";
 import ProfileSettings from "./ProfileSettings";
-import { useRouter } from "next/router";
 
 const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
 	const myCourses = useMemo(

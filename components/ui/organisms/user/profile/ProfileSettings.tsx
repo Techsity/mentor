@@ -6,6 +6,8 @@ import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { IUser } from "../../../../../interfaces/user.interface";
 import CountrySelectorComp from "../../../atom/inputs/CountrySelector";
 import { PrimaryButton } from "../../../atom/buttons";
+import * as FlagIcons from "react-country-flags-select";
+import countries from "../../../../../data/countries";
 
 const ProfileSettings = () => {
 	const user = useSelector(currentUser);
@@ -24,9 +26,25 @@ const ProfileSettings = () => {
 		e.preventDefault();
 	};
 
+	const country: string = countries.find((c) => c.label === state.country)
+		?.countryCode as string;
+
+	interface IconType {
+		[key: string]: React.ElementType;
+	}
+	const IconComponent: IconType = FlagIcons;
+	const IconComp: any = country ? (
+		IconComponent[
+			country.charAt(0).toUpperCase() + country.charAt(1).toLowerCase()
+		]
+	) : (
+		<></>
+	);
+
+	console.log(country);
+
 	return (
 		<div className="min-h-screen">
-			<div className=""></div>
 			<form onSubmit={handleSubmit} className="grid gap-3 max-w-md">
 				<div className="flex flex-col gap-1">
 					<label
@@ -78,6 +96,11 @@ const ProfileSettings = () => {
 							input: "bg-transparent border border-[#094B10]",
 							container: "my-3 border border-[#094B10]",
 						}}
+						customIcon={
+							IconComp ? (
+								<IconComp width="25px" height="25px" />
+							) : null
+						}
 					/>
 				</div>
 				<div className="flex flex-col gap-1">

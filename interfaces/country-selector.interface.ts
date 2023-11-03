@@ -27,8 +27,7 @@ export interface ICountrySelectorProps {
 	labelOnlyCountryCode?: false;
 	searchPlaceholder?: string;
 	selectPlaceholder?: string;
-	CustomOpenIcon?: Object;
-	CustomCloseIcon?: Object;
+	customIcon?: JSX.Element | null;
 	clearIcon?: boolean;
 	selectWidth?: number;
 	selectHeight?: number;

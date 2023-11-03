@@ -5,9 +5,8 @@ import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupF
 import Link from "next/link";
 import { GoogleIconSvg } from "../../../icons/svgs";
 import { useRouter } from "next/router";
-
-const SignUpForm = lazy(() => import("./signup/SignUpForm"));
-const LoginForm = lazy(() => import("./login/LoginForm"));
+import SignUpForm from "./signup/SignUpForm";
+import LoginForm from "./login/LoginForm";
 
 const LoginAndSignupForm = () => {
 	const router = useRouter();
