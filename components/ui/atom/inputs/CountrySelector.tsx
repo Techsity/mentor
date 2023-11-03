@@ -130,12 +130,13 @@ const CountrySelector = ({
 				onChange={handleChange}
 				onInvalid={onInvalidInput}
 				rightIcon={
-					<div onClick={handleToggleSelect}>
+					<div
+						onClick={handleToggleSelect}
+						className="cursor-pointer">
 						{customIcon !== null ? (
 							customIcon
 						) : (
 							<svg
-								className="cursor-pointer"
 								width="18"
 								height="18"
 								viewBox="0 0 18 18"
