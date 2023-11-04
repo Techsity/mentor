@@ -92,11 +92,11 @@ const StepTwoMentorOnboarding = () => {
 					/>
 				</div>
 
-				<div className="grid gap-3 grid-cols-4">
-					<h1 className="text-sm text-[#B1B1B1]">
-						How many years of experience?
-					</h1>
+				<div className="grid gap-3 grid-cols-4 border p-3">
 					<div className="col-span-2">
+						<h1 className="text-sm text-[#B1B1B1]">
+							Where have you worked?
+						</h1>
 						<CustomTextInput
 							type="number"
 							max={"40"}

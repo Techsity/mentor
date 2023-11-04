@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from "react";
-import { IMentor } from "../../../../interfaces";
+import { IMentor } from "../../../../interfaces/mentor.interface";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import {
 	AvailabiltySchedule,
