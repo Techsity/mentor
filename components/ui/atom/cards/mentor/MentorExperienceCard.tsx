@@ -1,5 +1,5 @@
 import React from "react";
-import { IExperience, IMentor } from "../../../../../interfaces";
+import { IExperience } from "../../../../../interfaces";
 import { formatDateDifference } from "../../../../../utils";
 
 const MentorExperienceCard = (experience: IExperience) => {
@@ -22,8 +22,7 @@ const MentorExperienceCard = (experience: IExperience) => {
 						height="30"
 						viewBox="0 0 24 30"
 						fill="none"
-						className="absolute bottom-0 w-full"
-					>
+						className="absolute bottom-0 w-full">
 						<path
 							d="M0 0H15V30L6 29L0 25.5V0Z"
 							fill="#D9D9D9"
@@ -40,14 +39,12 @@ const MentorExperienceCard = (experience: IExperience) => {
 			<div className="my-4">
 				<span className="text-[#BEBEBE] text-xs">My Roles</span>
 				<div className="my-2 grid">
-					{experience.roles.map((role, index) => (
-						<div key={index}>{role}</div>
-					))}
+					{experience.roles.slice(0, 5).join(" | ")}
 				</div>
 			</div>
 			<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
 				<span className="text-[#BEBEBE] text-xs">Top Skills</span>
-				{experience.topSkils.slice(0, 4).join(` `)}
+				{experience.topSkils.slice(0, 4).join(` | `)}
 			</div>
 		</div>
 	);

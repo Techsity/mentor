@@ -1,29 +1,43 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { ICourse } from "../../../interfaces";
-// import { RootState } from "../../store";
-// import { slugify } from "../../../utils";
-// import { stat } from "fs";
-// import courses from "../../../data/courses";
+import { createSlice } from "@reduxjs/toolkit";
+import { ICourse } from "../../../interfaces";
+import { RootState } from "../../store";
 
-// const initialState: ICourse[] = courses;
+const isClient = typeof window !== "undefined" && window.localStorage;
 
-// export const coursesSlice = createSlice({
-// 	name: "courses",
-// 	initialState,
-// 	reducers: {
-// 		setCourses: (state, action: { payload: ICourse[] }) => {
-// 			action.payload.forEach((newCourse: ICourse) => {
-// 				if (
-// 					!state.some(
-// 						(existingCourse) =>
-// 							slugify(existingCourse.title) ===
-// 							slugify(newCourse.title),
-// 					)
-// 				) {
-// 					state.push(newCourse);
-// 				}
-// 			});
-// 			return state;
-// 		},
-// 	},
-// });
+const userWishlistedCoursesLocal = isClient
+	? window.localStorage.getItem("userWishlistedCourses") || ""
+	: "";
+
+const data: ICourse[] = userWishlistedCoursesLocal
+	? JSON.parse(userWishlistedCoursesLocal)
+	: [];
+
+const initialState: { userWishlistedCourses: ICourse[] } = {
+	userWishlistedCourses: data,
+};
+
+const coursesSlice = createSlice({
+	name: "courses",
+	initialState,
+	reducers: {
+		setWishlist: (state, action: { payload: ICourse[] }) => {
+			if (action.payload) {
+				state.userWishlistedCourses = action.payload;
+				// Save to local storage too, to persist state
+				if (isClient) {
+					window.localStorage.setItem(
+						"userWishlistedCourses",
+						JSON.stringify(action.payload),
+					);
+				}
+			}
+		},
+	},
+});
+
+export const { setWishlist } = coursesSlice.actions;
+
+export const wishlistedCourses = (state: RootState) =>
+	state.courses.userWishlistedCourses;
+
+export default coursesSlice.reducer;

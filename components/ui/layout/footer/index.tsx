@@ -1,22 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React from "react";
-import { LogoFacebook } from "react-ionicons";
 import SocialIcons from "./SocialIcons";
 import { MentorLogoLight } from "../../atom/icons/svgs";
 import { useRouter } from "next/router";
 
 const Footer = () => {
 	const router = useRouter();
-	const excludedPaths: string[] = ["purchase"];
+	const excludedPaths: string[] = ["purchase", "register", "profile"];
 	const hideFooter: boolean = excludedPaths.some((path) =>
 		router.asPath.includes(path),
 	);
 
-	return hideFooter ? (
-		<></>
-	) : (
-		<footer className="bg-[#021A05] pt-5 relative z-20">
+	return hideFooter ? null : (
+		<footer className="bg-[#021A05] pt-5 z-20">
 			<div className="mx-auto w-full max-w-screen-2xl">
 				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-20 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">
 					<div>

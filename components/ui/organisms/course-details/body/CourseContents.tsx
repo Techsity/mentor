@@ -191,14 +191,15 @@ const CourseContents = ({
 				))}
 
 				<PrimaryButton
-					title={
-						course.price !== "free"
-							? "Purchase Course"
-							: "Start Course"
-					}
+					// title={
+					// purchased?
+					// 		? "Start Course"
+					// 		: "Purchase Course"
+					// }
+					title={"Purchase Course"}
 					link={
 						course.price !== "free"
-							? `/courses/${slugify(course.title)}/purchase`
+							? `/courses/${slugify(course.title)}?purchase`
 							: undefined
 					}
 					className="p-4 text-lg flex justify-center items-center"

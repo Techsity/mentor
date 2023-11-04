@@ -87,8 +87,8 @@ const navLinks: {
 		],
 	},
 	{
-		link: "/#live-workshop",
-		name: "Live Workshop",
+		link: "/workshops/live",
+		name: "Live Workshops",
 	},
 	{
 		link: "/mentors",

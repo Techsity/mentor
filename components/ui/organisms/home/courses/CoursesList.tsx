@@ -13,16 +13,20 @@ const CoursesList = ({
 	const { isExtraLargeScreen, isLargeScreen } = useWindowSize();
 	return (
 		<div>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden md:mx-10 md:border md:p-5 h-auto">
-				{courses
-					.filter((course) => course.section === activeLink)[0]
-					.categories.filter(
-						(category) => category.title === activeCategory,
-					)[0]
-					.availableCourses.map((course, indx) => {
-						return <DisplayCourseCard course={course} key={indx} />;
-					})
-					.slice(0, isExtraLargeScreen ? 8 : isLargeScreen ? 6 : 8)}
+			<div className="grid xl:grid-cols-3 md:grid-cols-2 items-center 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden md:mx-10 md:border md:p-5 h-auto">
+				{
+					courses
+						.find((course) => course.section === activeLink)
+						?.categories.find(
+							(category) => category.title === activeCategory,
+						)
+						?.availableCourses.map((course, indx) => {
+							return (
+								<DisplayCourseCard course={course} key={indx} />
+							);
+						})
+					// .slice(0, isExtraLargeScreen ? 8 : isLargeScreen ? 6 : 8)
+				}
 			</div>
 		</div>
 	);

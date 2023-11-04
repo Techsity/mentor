@@ -151,3 +151,19 @@ export const calculateTax = (price: number, taxRate: number) => {
 	const taxAmount = ((price * taxRate) / 100.0).toFixed(2);
 	return taxAmount;
 };
+
+export function capitalizeSentence(sentence: string) {
+	if (sentence.length === 0) {
+		return sentence;
+	} else {
+		const words = sentence.split(" ");
+		const capitalizedWords = words.map((word) => {
+			if (word.length === 0) {
+				return word;
+			} else {
+				return word[0].toUpperCase() + word.slice(1);
+			}
+		});
+		return capitalizedWords.join(" ");
+	}
+}

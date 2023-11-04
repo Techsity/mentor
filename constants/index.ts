@@ -6,16 +6,18 @@ interface ToastId {
 	auth_form_pop: string;
 	onboarding_interest_pop: string;
 	consultation_time_error: string;
+	success: string;
+	error: string;
+	warning: string;
 }
 // interface ICustomToastProps extends ToastOptions<Omit<key = "">> {
 interface ICustomToastProps extends ToastOptions {
-	id: keyof ToastId;
+	id: keyof ToastId | "";
 }
-
-export const ToastDefaultOptions = ({
-	id,
-	...rest
-}: ICustomToastProps): ToastOptions => {
+export const ToastDefaultOptions = (
+	props?: ICustomToastProps,
+): ToastOptions => {
+	const { id, ...rest } = props || {};
 	return {
 		autoClose: 5000,
 		closeOnClick: true,

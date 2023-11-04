@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/features/authSlice";
-// import coursesReducer from "./reducers/features/coursesSlice";
+// import userReducer from "./reducers/features/userSlice";
+import workshopReducer from "./reducers/features/workshopSlice";
+import coursesReducer from "./reducers/features/coursesSlice";
 
 const store = configureStore({
 	reducer: {
 		auth: authReducer,
-		// courses: coursesReducer,
+		// user: userReducer,
+		workshop: workshopReducer,
+		courses: coursesReducer,
 	},
 	middleware(getDefaultMiddleware) {
 		return getDefaultMiddleware();

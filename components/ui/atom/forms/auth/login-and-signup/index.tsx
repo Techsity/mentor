@@ -1,18 +1,25 @@
-import React, { FormEvent, useEffect, useState } from "react";
-import LoginForm from "./login/LoginForm";
-import SignUpForm from "./signup";
+import React, { lazy, useEffect, useState } from "react";
+// import LoginForm from "./login/LoginForm";
+// import SignUpForm from "./signup/SignUpForm";
 import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupFormHeader";
 import Link from "next/link";
 import { GoogleIconSvg } from "../../../icons/svgs";
-import { ISignUpState } from "../../../../../../interfaces/auth.interface";
 import { useRouter } from "next/router";
+import SignUpForm from "./signup/SignUpForm";
+import LoginForm from "./login/LoginForm";
 
-const LoginAndSignupForm = ({ pageKey }: { pageKey: "login" | "signup" }) => {
+const LoginAndSignupForm = () => {
+	const router = useRouter();
+	const pageKey = Object.keys(router.query)[0] as "login" | "signup";
 	const [currentForm, setCurrentForm] = useState<"login" | "signup">(pageKey);
 
 	useEffect(() => {
-		setCurrentForm(pageKey);
-		return () => setCurrentForm("signup");
+		if (pageKey === "signup") setCurrentForm("signup");
+		else if (pageKey === "login") setCurrentForm("login");
+		else {
+			setCurrentForm("login");
+		}
+		return () => setCurrentForm("login");
 	}, [pageKey]);
 
 	return (

@@ -7,7 +7,7 @@ export interface SelectedCountry {
 
 export interface ICountrySelectorProps {
 	onSelect: (country: SelectedCountry | null) => void;
-	selected: SelectedCountry | null;
+	selected: SelectedCountry | string | null;
 	searchable?: boolean;
 	required?: boolean;
 	onInvalidInput?: (e: FormEvent<HTMLInputElement>) => void;
@@ -27,8 +27,7 @@ export interface ICountrySelectorProps {
 	labelOnlyCountryCode?: false;
 	searchPlaceholder?: string;
 	selectPlaceholder?: string;
-	CustomOpenIcon?: Object;
-	CustomCloseIcon?: Object;
+	customIcon?: JSX.Element | null;
 	clearIcon?: boolean;
 	selectWidth?: number;
 	selectHeight?: number;

@@ -45,35 +45,36 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	}, [router]);
 
 	return (
-    <ApolloProvider client={apolloClient()}>
-      <Provider store={store}>
-        <ThemeProvider>
-          <Head>
-            <title>Mentör</title>
-            <link
-              rel="icon"
-              href="/assets/images/favicon.ico"
-              type="image/x-icon"
-            />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-            />
-          </Head>
-          <LayoutContainer>
-            {initialLoad ? (
-              <PagePreLoader />
-            ) : (
-              <>
-                <ToastContainer />
-                <Component {...pageProps} />
-              </>
-            )}
-          </LayoutContainer>
-        </ThemeProvider>
-      </Provider>
-    </ApolloProvider>
-  );
+		<ApolloProvider client={apolloClient()}>
+			<Provider store={store}>
+				<ThemeProvider>
+					<Head>
+						<title>Mentör</title>
+						<link
+							rel="icon"
+							href="/assets/images/favicon.ico"
+							type="image/x-icon"
+						/>
+						<meta
+							name="viewport"
+							content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+						/>
+					</Head>
+					<LayoutContainer>
+						{/* {initialLoad && <PagePreLoader />} */}
+						{initialLoad ? (
+							<PagePreLoader />
+						) : (
+							<>
+								<ToastContainer />
+								<Component {...pageProps} />
+							</>
+						)}
+					</LayoutContainer>
+				</ThemeProvider>
+			</Provider>
+		</ApolloProvider>
+	);
 };
 
 export default MyApp;

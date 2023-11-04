@@ -4,7 +4,13 @@ import ActivityIndicator from "../../loader/ActivityIndicator";
 import { calculateTax } from "../../../../../utils";
 import { ICourse } from "../../../../../interfaces";
 
-const CartSummary = ({ price }: { price: ICourse["price"] }) => {
+const CartSummary = ({
+	price,
+	reason = "course",
+}: {
+	price: ICourse["price"];
+	reason?: "workshop" | "course";
+}) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const tax = price !== "free" ? calculateTax(price, 7.5) : price;
 	return (
@@ -16,8 +22,8 @@ const CartSummary = ({ price }: { price: ICourse["price"] }) => {
 					Cart Summary
 				</h1>
 				<div className="grid gap-5 w-full mt-3 max-w-sm capitalize">
-					<span className="flex items-center justify-between">
-						Course Price
+					<span className="capitalize flex items-center justify-between">
+						{reason === "course" ? "course Price" : "workshop"}
 						{price !== "free" ? (
 							<span className="">₦{price.toLocaleString()}</span>
 						) : (

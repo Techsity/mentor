@@ -1309,7 +1309,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing 23",
+						title: "The Basics of Digital Marketing",
 					},
 					{
 						requirements: [
@@ -1448,7 +1448,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing 23",
+						title: "The Basics of Digital Marketing 2",
 					},
 					{
 						requirements: [
@@ -1587,7 +1587,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing 23",
+						title: "The Basics of Digital Marketing 3",
 					},
 					{
 						requirements: [
@@ -1726,7 +1726,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing 23",
+						title: "The Basics of Digital Marketing 4",
 					},
 					{
 						requirements: [
@@ -1865,7 +1865,7 @@ const courses: MainCourseType[] = [
 							avatar: "/assets/images/avatar.png",
 						},
 						rating: 4.5,
-						title: "The Basics of Digital Marketing 23",
+						title: "The Basics of Digital Marketing 5",
 					},
 					{
 						requirements: [
