@@ -25,10 +25,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		const handleStart = (url: string) => {
+		const handleStart = () => {
 			NProgress.start();
 		};
 		const handleStop = () => {
+			scrollTo({ top: 0, behavior: "smooth" });
 			NProgress.done();
 		};
 		router.events.on("routeChangeStart", handleStart);

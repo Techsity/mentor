@@ -7,13 +7,23 @@ import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import Confetti from "react-dom-confetti";
 import confettiConfig from "../../../../utils/confetti.config";
+import { useDispatch } from "react-redux";
+import {
+	setOnboardingMentor,
+	onboardingMentor as onboardingMentorState,
+} from "../../../../redux/reducers/features/onboardingSlice";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const MentorOnboardingPageTemplate = () => {
 	const router = useRouter();
 	const pageKey: any = Object.keys(router.query)[0];
 	const [current, setCurrent] = useState<"signup" | "">(pageKey);
-	const [agree, setAgree] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
+	const onboardingMentor = useSelector(onboardingMentorState);
+
+	const user = useSelector(currentUser);
+	const dispatch = useDispatch();
 
 	const handleNavigate = () => {
 		setLoading(true);
@@ -23,13 +33,16 @@ const MentorOnboardingPageTemplate = () => {
 	};
 
 	useEffect(() => {
+		if (user) dispatch(setOnboardingMentor({ ...onboardingMentor, user }));
+		if (onboardingMentor.agreedToTerms) {
+			setCurrent("signup");
+		}
 		// if (pageKey === "signup") setCurrent("signup");
 		// else {
 		// 	setCurrent("");
 		// }
 		return () => {
 			// setCurrent("");
-			setAgree(false);
 		};
 	}, [pageKey]);
 
@@ -56,32 +69,25 @@ const MentorOnboardingPageTemplate = () => {
 									made the decision to pass your knowledge to
 									the public.
 								</p>
-								<div className="animate__animated animate__fadeInLeft animate__slow">
-									<PrimaryButton
-										title={
-											loading
-												? ""
-												: "Let's take you through the process"
-										}
-										className="p-4 px-8 text-sm flex justify-center"
-										disabled={!agree}
-										icon={
-											loading ? (
-												<ActivityIndicator />
-											) : null
-										}
-										link="/mentor/onboarding?signup"
-										// onClick={handleNavigate}
-									/>
-								</div>
 								<div className="flex items-center gap-2 flex-nowrap select-none animate__animated animate__fadeInLeft animate__slow">
 									<input
 										id="terms"
 										name="terms"
 										type="checkbox"
 										className="h-5 w-5 shrink-0 accent-[#70C5A1] duration-300 text-white cursor-pointer"
-										checked={agree}
-										onChange={() => setAgree(!agree)}
+										checked={
+											onboardingMentor.agreedToTerms ||
+											false
+										}
+										onChange={() =>
+											dispatch(
+												setOnboardingMentor({
+													...onboardingMentor,
+													agreedToTerms:
+														!onboardingMentor.agreedToTerms,
+												}),
+											)
+										}
 									/>
 									<p className="text-[15px]">
 										Agree to our{" "}
@@ -90,6 +96,27 @@ const MentorOnboardingPageTemplate = () => {
 										</span>{" "}
 										to Continue
 									</p>
+								</div>
+								<div className="animate__animated animate__fadeInLeft animate__slow">
+									<PrimaryButton
+										type="button"
+										title={
+											loading
+												? ""
+												: "Let's take you through the process"
+										}
+										className="p-4 px-8 text-sm flex justify-center"
+										disabled={
+											!onboardingMentor.agreedToTerms
+										}
+										icon={
+											loading ? (
+												<ActivityIndicator />
+											) : null
+										}
+										// link="/mentor/onboarding?signup"
+										onClick={handleNavigate}
+									/>
 								</div>
 							</div>
 						</div>

@@ -1,16 +1,15 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
+import React from "react";
 import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
 import CustomTextArea from "../../../../atom/inputs/CustomTextArea";
-import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	onboardingMentor as onboardingMentorState,
+	setOnboardingMentor,
+} from "../../../../../../redux/reducers/features/onboardingSlice";
 
-// const StepOneMentorOnboarding = (formState) => {
-const StepOneMentorOnboarding = ({
-	setState,
-	formState,
-}: {
-	formState: IMentorOnboardingState;
-	setState: Dispatch<SetStateAction<IMentorOnboardingState>>;
-}) => {
+const StepOneMentorOnboarding = () => {
+	const dispatch = useDispatch();
+	const onboardingMentor = useSelector(onboardingMentorState);
 	return (
 		<div className="animate__animated animate__fadeInLeft">
 			<h1
@@ -27,9 +26,14 @@ const StepOneMentorOnboarding = ({
 					<h1 className="text-sm text-[#B1B1B1]">What do you do?</h1>
 					<CustomTextInput
 						onChange={(e) =>
-							setState({ ...formState, jobTitle: e.target.value })
+							dispatch(
+								setOnboardingMentor({
+									...onboardingMentor,
+									jobTitle: e.target.value,
+								}),
+							)
 						}
-						value={formState.jobTitle}
+						value={onboardingMentor.jobTitle}
 						type="text"
 						className="bg-white"
 						containerProps={{
@@ -43,9 +47,14 @@ const StepOneMentorOnboarding = ({
 					</h1>
 					<CustomTextArea
 						onChange={(e) =>
-							setState({ ...formState, bio: e.target.value })
+							dispatch(
+								setOnboardingMentor({
+									...onboardingMentor,
+									bio: e.target.value,
+								}),
+							)
 						}
-						value={formState.bio}
+						value={onboardingMentor.bio}
 						className="bg-white"
 						containerProps={{
 							className: "border border-[#00D569]",

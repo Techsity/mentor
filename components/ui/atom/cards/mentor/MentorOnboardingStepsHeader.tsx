@@ -10,7 +10,7 @@ const MentorOnboardingStepsHeader = (props: {
 		(_, index) => index + 1,
 	);
 	return (
-		<ul className="relative flex w-full justify-between mb-6 py-6 items-start gap-8 sticky md:static z-10 top-20 h-full bg-[#F6F9F8] backdrop-blur-md">
+		<ul className="relative flex w-full justify-between mb-6 py-6 items-start gap-8 sticky z-10 top-20 h-full bg-[#F6F9F8] backdrop-blur-md">
 			{stepNumbers.map((step, id) => (
 				<li
 					className="relative w-full flex justify-start items-center animate__animated animate__bounceIn animate-slower"

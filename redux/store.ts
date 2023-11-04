@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/features/authSlice";
+import onboardingReducer from "./reducers/features/onboardingSlice";
 // import userReducer from "./reducers/features/userSlice";
 import workshopReducer from "./reducers/features/workshopSlice";
 import coursesReducer from "./reducers/features/coursesSlice";
 
 const store = configureStore({
 	reducer: {
-		auth: authReducer,
 		// user: userReducer,
+		auth: authReducer,
+		onboarding: onboardingReducer,
 		workshop: workshopReducer,
 		courses: coursesReducer,
 	},

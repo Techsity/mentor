@@ -1,47 +1,57 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import StepOneMentorOnboarding from "./StepOneMentorOnboarding";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
 import { PrimaryButton } from "../../../../atom/buttons";
-import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import StepTwoMentorOnboarding from "./StepTwoMentorOnboarding";
-
-// type StepType = 1 | 2 | 3 | 4;
+import { scrollToTop } from "../../../../../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	onboardingMentor as onboardingMentorState,
+	setOnboardingMentor,
+} from "../../../../../../redux/reducers/features/onboardingSlice";
+import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
+import { currentUser } from "../../../../../../redux/reducers/features/authSlice";
 
 const MentorOnboardingSteps = () => {
+	const user = useSelector(currentUser);
+	const dispatch = useDispatch();
+	const onboardingMentor = useSelector(onboardingMentorState);
+
 	const totalSteps = 4;
+	const [currentStep, setCurrentStep] = useState<number>(
+		onboardingMentor.currentStep || 1,
+	);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [currentStep, setCurrentStep] = useState<number>(2);
-	const initialState: IMentorOnboardingState = {
-		bio: "",
-		jobTitle: "",
-		skills: [],
-		yearsOfExp: 0,
-		workHistory: [],
-	};
-	const [state, setState] = useState<IMentorOnboardingState>(initialState);
 
 	const moveToNextStep = () => {
 		setTimeout(function () {
 			if (currentStep < totalSteps) {
+				dispatch(
+					setOnboardingMentor({
+						...onboardingMentor,
+						currentStep: onboardingMentor.currentStep + 1,
+					}),
+				);
 				setCurrentStep((prev) => prev + 1);
 				setLoading(false);
+				scrollToTop();
 			}
 		}, 1500);
 	};
 	const handleNext = () => {
 		setLoading(true);
-		if (state) {
+		if (onboardingMentor) {
 			if (currentStep === 1) {
-				if (state.bio && state.jobTitle) {
+				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
 					moveToNextStep();
 				} else {
 					setLoading(false);
 				}
 			}
 			if (currentStep === 2) {
-				if (state.bio && state.jobTitle) {
+				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
 					moveToNextStep();
 				} else {
 					setLoading(false);
@@ -60,20 +70,11 @@ const MentorOnboardingSteps = () => {
 					stepsLength={totalSteps}
 				/>
 				{currentStep === 1 ? (
-					<StepOneMentorOnboarding
-						formState={state}
-						setState={setState}
-					/>
+					<StepOneMentorOnboarding />
 				) : currentStep === 2 ? (
-					<StepTwoMentorOnboarding
-						formState={state}
-						setState={setState}
-					/>
+					<StepTwoMentorOnboarding />
 				) : (
-					<StepOneMentorOnboarding
-						formState={state}
-						setState={setState}
-					/>
+					<StepOneMentorOnboarding />
 				)}
 				<div className="my-6">
 					<div className="flex justify-start items-center">

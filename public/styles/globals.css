@@ -15,6 +15,10 @@
     --background-end-rgb: 0, 0, 0;
   }
 } */
+.animate__fastest {
+	--animate-duration: 0.5s;
+}
+
 * {
 	scroll-behavior: smooth !important;
 }

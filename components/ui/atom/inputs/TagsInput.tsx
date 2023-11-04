@@ -16,7 +16,7 @@ const TagsInput = ({
 	return (
 		<>
 			<div className="">
-				<div className="flex flex-col items-center text-sm sm:flex-row sm:space-y-0 sm:space-x-4">
+				<div className="flex items-center text-sm flex-row gap-2">
 					<div className="w-full">
 						<label>
 							<CustomTextInput
@@ -37,7 +37,7 @@ const TagsInput = ({
 					<div className="flex justify-start">
 						<PrimaryButton
 							onClick={(e) => {
-								addTag(currentTag);
+								addTag(currentTag.trim());
 								setCurrentTag("");
 							}}
 							title="Add"
@@ -47,7 +47,7 @@ const TagsInput = ({
 				</div>
 			</div>
 			{tagsState.length > 0 && (
-				<div className="px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated overflow-hidden">
+				<div className="px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
 					{tagsState.map((tag, id) => (
 						<span
 							key={id}

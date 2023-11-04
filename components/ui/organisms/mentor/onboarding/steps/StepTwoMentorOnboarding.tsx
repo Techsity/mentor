@@ -1,46 +1,47 @@
-import React, {
-	ChangeEvent,
-	Dispatch,
-	MouseEvent,
-	SetStateAction,
-	useState,
-} from "react";
+import React, { Dispatch, MouseEvent, SetStateAction } from "react";
 import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
-import CustomTextArea from "../../../../atom/inputs/CustomTextArea";
 import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
-import { PrimaryButton } from "../../../../atom/buttons";
 import TagsInput from "../../../../atom/inputs/TagsInput";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+	setOnboardingMentor,
+	onboardingMentor as onboardingMentorState,
+} from "../../../../../../redux/reducers/features/onboardingSlice";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../../constants";
 
-// const StepTwoMentorOnboarding = (formState) => {
-const StepTwoMentorOnboarding = ({
-	setState,
-	formState,
-}: {
-	formState: IMentorOnboardingState;
-	setState: Dispatch<SetStateAction<IMentorOnboardingState>>;
-}) => {
+const StepTwoMentorOnboarding = () => {
+	const dispatch = useDispatch();
+	const onboardingMentor = useSelector(onboardingMentorState);
+
 	const addSkill = (skill: string) => {
-		if (skill && formState.skills.length < 5) {
-			setState((prevState) => {
-				if (prevState.skills.includes(skill)) {
-					return prevState;
-				} else {
-					return {
-						...prevState,
-						skills: [...prevState.skills, skill],
-					};
-				}
-			});
+		if (skill && onboardingMentor.skills.length < 5) {
+			if (onboardingMentor.skills.includes(skill)) {
+				toast.error(
+					"Skills limit reached!",
+					ToastDefaultOptions({ id: "error", theme: "dark" }),
+				);
+			} else {
+				dispatch(
+					setOnboardingMentor({
+						...onboardingMentor,
+						skills: [...onboardingMentor.skills, skill],
+					}),
+				);
+			}
 		}
 	};
 	const removeSkill = (skillToRemove: string) => (e: MouseEvent) => {
 		if (skillToRemove) {
-			setState((prevState) => ({
-				...prevState,
-				skills: prevState.skills.filter(
-					(skill) => skill !== skillToRemove,
-				),
-			}));
+			dispatch(
+				setOnboardingMentor({
+					...onboardingMentor,
+					skills: onboardingMentor.skills.filter(
+						(skill) => skill !== skillToRemove,
+					),
+				}),
+			);
 		}
 	};
 	return (
@@ -63,7 +64,7 @@ const StepTwoMentorOnboarding = ({
 					<TagsInput
 						addTag={addSkill}
 						onRemove={removeSkill}
-						tagsState={formState.skills}
+						tagsState={onboardingMentor.skills}
 					/>
 				</div>
 				<div className="grid gap-2">
@@ -72,15 +73,17 @@ const StepTwoMentorOnboarding = ({
 					</h1>
 					<CustomTextInput
 						type="number"
-						// maxLength={40}
-						// max={40}
+						max={"40"}
+						min="1"
 						onChange={(e) =>
-							setState({
-								...formState,
-								jobTitle: e.target.value,
-							})
+							dispatch(
+								setOnboardingMentor({
+									...onboardingMentor,
+									jobTitle: e.target.value,
+								}),
+							)
 						}
-						value={formState.jobTitle}
+						value={onboardingMentor.jobTitle}
 						className="bg-white"
 						containerProps={{
 							className:
@@ -88,20 +91,32 @@ const StepTwoMentorOnboarding = ({
 						}}
 					/>
 				</div>
-				<div className="grid gap-2">
+
+				<div className="grid gap-3 grid-cols-4">
 					<h1 className="text-sm text-[#B1B1B1]">
-						How would you describe Yourself?
+						How many years of experience?
 					</h1>
-					<CustomTextArea
-						onChange={(e) =>
-							setState({ ...formState, bio: e.target.value })
-						}
-						value={formState.bio}
-						className="bg-white"
-						containerProps={{
-							className: "border border-[#00D569]",
-						}}
-					/>
+					<div className="col-span-2">
+						<CustomTextInput
+							type="number"
+							max={"40"}
+							min="1"
+							onChange={(e) =>
+								dispatch(
+									setOnboardingMentor({
+										...onboardingMentor,
+										jobTitle: e.target.value,
+									}),
+								)
+							}
+							value={onboardingMentor.jobTitle}
+							className="bg-white"
+							containerProps={{
+								className:
+									"border border-[#00D569] appearance-none",
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

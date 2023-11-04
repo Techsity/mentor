@@ -1,7 +1,11 @@
 import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse } from "./index";
+import { IUser } from "./user.interface";
 
 export interface IMentorOnboardingState {
+	currentStep: number;
+	agreedToTerms: boolean;
+	user?: IUser | null;
 	jobTitle: string;
 	bio: string;
 	skills: string[];
