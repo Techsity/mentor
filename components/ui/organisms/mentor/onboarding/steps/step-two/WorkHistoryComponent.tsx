@@ -8,6 +8,7 @@ import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { IExperience } from "../../../../../../../interfaces/mentor.interface";
 import { Add, CalendarClearOutline } from "react-ionicons";
+import { slugify } from "../../../../../../../utils";
 
 type ExtractedExperienceType = Pick<
 	IExperience,
@@ -64,16 +65,11 @@ const WorkHistoryComponent = () => {
 		}
 	};
 
-	const handleRemoveWorkHistory = (id: number) => {
+	const handleRemoveWorkHistory = (slug: string) => {
 		if (onboardingMentor.workHistory) {
 			const updatedWorkHistory = onboardingMentor.workHistory.filter(
-				(work) =>
-					(onboardingMentor.workHistory?.indexOf(work) as number) +
-						1 !==
-					id,
+				(work) => slugify(work.company.name) !== slug,
 			);
-			console.log(id);
-			console.log(updatedWorkHistory);
 			dispatch(
 				setOnboardingMentor({
 					...onboardingMentor,
@@ -98,23 +94,21 @@ const WorkHistoryComponent = () => {
 	return (
 		<div className="gap-2 grid">
 			<h1 className="text-sm text-[#B1B1B1]">Where have you worked?</h1>
-			<div className="flex flex-col gap-4 items-center">
+			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.workHistory &&
 					onboardingMentor.workHistory?.length >= 1 &&
-					onboardingMentor.workHistory.map((work) => {
-						const id: number = (onboardingMentor?.workHistory &&
-							onboardingMentor.workHistory?.indexOf(work) +
-								1) as number;
+					onboardingMentor.workHistory.map((work, index) => {
+						const id = slugify(work.company.name);
 						return (
 							<div
 								key={id}
-								className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative">
-								<span className="absolute top-5 right-0">
+								className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
+								<span className="absolute top-2 right-3 cursor-pointer z-10">
 									<svg
 										onClick={() => {
-											if (id) handleRemoveWorkHistory(id);
+											handleRemoveWorkHistory(id);
 										}}
-										className="h-5 w-5 ml-3"
+										className="h-5 w-5 ml-3 cursor-pointer"
 										viewBox="0 0 20 20"
 										fill="#d31119">
 										<path
