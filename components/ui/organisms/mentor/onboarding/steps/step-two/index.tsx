@@ -1,36 +1,44 @@
-import React, { Dispatch, MouseEvent, SetStateAction } from "react";
-import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
-import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
-import TagsInput from "../../../../atom/inputs/TagsInput";
+import React, { MouseEvent, useRef, useState } from "react";
+import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
+import TagsInput from "../../../../../atom/inputs/TagsInput";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
 	setOnboardingMentor,
 	onboardingMentor as onboardingMentorState,
-} from "../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../../../constants";
+import { ToastDefaultOptions } from "../../../../../../../constants";
+import Calendar from "react-calendar";
+import WorkHistoryComponent from "./WorkHistoryComponent";
 
 const StepTwoMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
+
 	const addSkill = (skill: string) => {
-		if (skill && onboardingMentor.skills.length < 5) {
-			if (onboardingMentor.skills.includes(skill)) {
+		if (skill)
+			if (onboardingMentor.skills.length < 5) {
+				if (onboardingMentor.skills.includes(skill)) {
+					toast.info(
+						"Tag has aleady been added!",
+						ToastDefaultOptions({ id: "info", theme: "dark" }),
+					);
+				} else {
+					dispatch(
+						setOnboardingMentor({
+							...onboardingMentor,
+							skills: [...onboardingMentor.skills, skill],
+						}),
+					);
+				}
+			} else {
 				toast.error(
 					"Skills limit reached!",
 					ToastDefaultOptions({ id: "error", theme: "dark" }),
 				);
-			} else {
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						skills: [...onboardingMentor.skills, skill],
-					}),
-				);
 			}
-		}
 	};
 	const removeSkill = (skillToRemove: string) => (e: MouseEvent) => {
 		if (skillToRemove) {
@@ -44,6 +52,7 @@ const StepTwoMentorOnboarding = () => {
 			);
 		}
 	};
+
 	return (
 		<div className="animate__animated animate__fadeInLeft">
 			<h1
@@ -62,6 +71,7 @@ const StepTwoMentorOnboarding = () => {
 						What are your top Skills? (Up to 5)
 					</h1>
 					<TagsInput
+						textLength={30}
 						addTag={addSkill}
 						onRemove={removeSkill}
 						tagsState={onboardingMentor.skills}
@@ -79,45 +89,18 @@ const StepTwoMentorOnboarding = () => {
 							dispatch(
 								setOnboardingMentor({
 									...onboardingMentor,
-									jobTitle: e.target.value,
+									yearsOfExp: parseInt(e.target.value),
 								}),
 							)
 						}
-						value={onboardingMentor.jobTitle}
+						value={onboardingMentor.yearsOfExp}
 						className="bg-white"
 						containerProps={{
-							className:
-								"border border-[#00D569] appearance-none",
+							className: "border border-[#00D569]",
 						}}
 					/>
 				</div>
-
-				<div className="grid gap-3 grid-cols-4 border p-3">
-					<div className="col-span-2">
-						<h1 className="text-sm text-[#B1B1B1]">
-							Where have you worked?
-						</h1>
-						<CustomTextInput
-							type="number"
-							max={"40"}
-							min="1"
-							onChange={(e) =>
-								dispatch(
-									setOnboardingMentor({
-										...onboardingMentor,
-										jobTitle: e.target.value,
-									}),
-								)
-							}
-							value={onboardingMentor.jobTitle}
-							className="bg-white"
-							containerProps={{
-								className:
-									"border border-[#00D569] appearance-none",
-							}}
-						/>
-					</div>
-				</div>
+				<WorkHistoryComponent />
 			</div>
 		</div>
 	);

@@ -6,7 +6,9 @@ const TagsInput = ({
 	addTag,
 	onRemove,
 	tagsState,
+	textLength = 15,
 }: {
+	textLength?: number;
 	tagsState: string[];
 	addTag: (tag: string) => void;
 	onRemove: (tag: string) => (e: MouseEvent) => void;
@@ -20,6 +22,7 @@ const TagsInput = ({
 					<div className="w-full">
 						<label>
 							<CustomTextInput
+								maxLength={textLength}
 								onChange={(e) => setCurrentTag(e.target.value)}
 								value={currentTag}
 								type="text"

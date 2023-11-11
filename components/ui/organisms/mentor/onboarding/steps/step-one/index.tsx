@@ -1,15 +1,23 @@
-import React from "react";
-import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
-import CustomTextArea from "../../../../atom/inputs/CustomTextArea";
+import React, { useRef, useState } from "react";
+import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
+import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	onboardingMentor as onboardingMentorState,
 	setOnboardingMentor,
-} from "../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/features/onboardingSlice";
+import jobTitleSuggestions from "../../../../../../../data/onboarding/jobTitleSuggestions";
+// import useSuggestions from "../../../../../../hooks/input/useSuggestions";
 
 const StepOneMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
+	// const [jobInputRef, setJobInputRef] = useState<string>("");
+	// const { SuggestionsComponent, selectedSuggestions } = useSuggestions({
+	// 	inputValue: jobInputRef,
+	// 	suggestions: jobTitleSuggestions,
+	// });
+
 	return (
 		<div className="animate__animated animate__fadeInLeft">
 			<h1
@@ -25,21 +33,37 @@ const StepOneMentorOnboarding = () => {
 				<div className="grid gap-2">
 					<h1 className="text-sm text-[#B1B1B1]">What do you do?</h1>
 					<CustomTextInput
-						onChange={(e) =>
+						onChange={(e) => {
+							// setJobInputRef(e.target.value);
+							// if (selectedSuggestions.length < 1) {
 							dispatch(
 								setOnboardingMentor({
 									...onboardingMentor,
 									jobTitle: e.target.value,
 								}),
-							)
-						}
+							);
+							// }
+						}}
 						value={onboardingMentor.jobTitle}
+						// value={onboardingMentor.jobTitle || jobInputRef}
+						// value={jobInputRef}
 						type="text"
 						className="bg-white"
 						containerProps={{
 							className: "border border-[#00D569]",
 						}}
 					/>
+					{/* <SuggestionsComponent
+						onSuggestionClick={(suggestion) => {
+							setJobInputRef(suggestion);
+							dispatch(
+								setOnboardingMentor({
+									...onboardingMentor,
+									jobTitle: suggestion,
+								}),
+							);
+						}}
+					/> */}
 				</div>
 				<div className="grid gap-2">
 					<h1 className="text-sm text-[#B1B1B1]">

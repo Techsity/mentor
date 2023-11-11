@@ -8,6 +8,7 @@ interface ToastId {
 	consultation_time_error: string;
 	success: string;
 	error: string;
+	info: string;
 	warning: string;
 }
 // interface ICustomToastProps extends ToastOptions<Omit<key = "">> {

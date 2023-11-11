@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import { IMentorOnboardingState } from "../../../interfaces/mentor.interface";
+import { isApolloPayloadResult } from "@apollo/client/utilities";
 
 const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
@@ -10,7 +11,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	bio: "",
 	jobTitle: "",
 	skills: [],
-	yearsOfExp: 0,
+	yearsOfExp: 1,
 	workHistory: [],
 };
 
@@ -29,8 +30,21 @@ const onboardingSlice = createSlice({
 			state,
 			action: { payload: IMentorOnboardingState },
 		) => {
+			const { payload } = action;
+			// if (payload.agreedToTerms) {
+			// fetch("https://ipinfo.io/json")
+			// 	.then((response) => response.json())
+			// 	.then((data) => {
+			// 		console.log("IP Address:", data.ip);
+			// 	})
+			// 	.catch((error) =>
+			// 		console.error("Error fetching IP address:", error),
+			// 	);
+			// localStorage.setItem("agreedToTerms", JSON.stringify({mentorOnboardingIP:,agreedToTerms:true}));
+			// }
 			state.mentor = action.payload;
 		},
+		setOnboardingUser: (state, action: {}) => {},
 	},
 });
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import StepOneMentorOnboarding from "./StepOneMentorOnboarding";
+import StepOneMentorOnboarding from "./step-one";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
 import { PrimaryButton } from "../../../../atom/buttons";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
-import StepTwoMentorOnboarding from "./StepTwoMentorOnboarding";
+import StepTwoMentorOnboarding from "./step-two";
 import { scrollToTop } from "../../../../../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {

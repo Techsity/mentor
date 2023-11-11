@@ -17,9 +17,15 @@ const HomepageHero = () => {
 				backgroundColor: isSmallScreen ? "#0C202B" : "",
 			}}>
 			<div
-				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[400px] h-[400px]`}
+				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[350px] h-[350px]`}
 				style={{
 					filter: "blur(100px)",
+				}}
+			/>
+			<div
+				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[400px] h-[400px] animate-[ping_linear_1s_infinite]`}
+				style={{
+					filter: "blur(80px)",
 				}}
 			/>
 			<div className="absolute -left-20 p-20 h-auto md:w-[65%]  animate__animated animate__slideInDown animate__slow">

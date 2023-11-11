@@ -1,6 +1,6 @@
 import React from "react";
-import { IExperience } from "../../../../../interfaces";
 import { formatDateDifference } from "../../../../../utils";
+import { IExperience } from "../../../../../interfaces/mentor.interface";
 
 const MentorExperienceCard = (experience: IExperience) => {
 	return (

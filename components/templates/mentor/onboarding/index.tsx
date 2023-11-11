@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BecomeMentorSvg } from "../../../ui/atom/icons/svgs";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { Checkmark } from "react-ionicons";
 import { useRouter } from "next/router";
 import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import Confetti from "react-dom-confetti";
-import confettiConfig from "../../../../utils/confetti.config";
 import { useDispatch } from "react-redux";
 import {
 	setOnboardingMentor,
@@ -17,19 +14,32 @@ import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const MentorOnboardingPageTemplate = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const user = useSelector(currentUser);
+	const onboardingMentor = useSelector(onboardingMentorState);
 	const pageKey: any = Object.keys(router.query)[0];
 	const [current, setCurrent] = useState<"signup" | "">(pageKey);
 	const [loading, setLoading] = useState<boolean>(false);
-	const onboardingMentor = useSelector(onboardingMentorState);
-
-	const user = useSelector(currentUser);
-	const dispatch = useDispatch();
+	const [agree, setAgree] = useState<boolean>(
+		onboardingMentor.agreedToTerms || false,
+	);
 
 	const handleNavigate = () => {
 		setLoading(true);
-		setTimeout(function () {
-			setCurrent("signup");
-		}, 3000);
+		if (agree) {
+			setTimeout(function () {
+				dispatch(
+					setOnboardingMentor({
+						...onboardingMentor,
+						agreedToTerms: !onboardingMentor.agreedToTerms,
+					}),
+				);
+				setCurrent("signup");
+				setLoading(false);
+			}, 3000);
+		} else {
+			setLoading(false);
+		}
 	};
 
 	useEffect(() => {
@@ -42,15 +52,16 @@ const MentorOnboardingPageTemplate = () => {
 		// 	setCurrent("");
 		// }
 		return () => {
+			setLoading(false);
 			// setCurrent("");
 		};
 	}, [pageKey]);
 
 	return (
 		<div className="bg-[#F6F9F8] min-h-[50dvh]">
-			{pageKey === "signup" ? (
+			{pageKey === "signup" && onboardingMentor.agreedToTerms ? (
 				<MentorOnboardingSteps />
-			) : current === "signup" ? (
+			) : current === "signup" && onboardingMentor.agreedToTerms ? (
 				<MentorOnboardingSteps />
 			) : (
 				<>
@@ -75,19 +86,8 @@ const MentorOnboardingPageTemplate = () => {
 										name="terms"
 										type="checkbox"
 										className="h-5 w-5 shrink-0 accent-[#70C5A1] duration-300 text-white cursor-pointer"
-										checked={
-											onboardingMentor.agreedToTerms ||
-											false
-										}
-										onChange={() =>
-											dispatch(
-												setOnboardingMentor({
-													...onboardingMentor,
-													agreedToTerms:
-														!onboardingMentor.agreedToTerms,
-												}),
-											)
-										}
+										checked={agree}
+										onChange={() => setAgree(!agree)}
 									/>
 									<p className="text-[15px]">
 										Agree to our{" "}
@@ -106,9 +106,7 @@ const MentorOnboardingPageTemplate = () => {
 												: "Let's take you through the process"
 										}
 										className="p-4 px-8 text-sm flex justify-center"
-										disabled={
-											!onboardingMentor.agreedToTerms
-										}
+										disabled={!agree || loading}
 										icon={
 											loading ? (
 												<ActivityIndicator />
