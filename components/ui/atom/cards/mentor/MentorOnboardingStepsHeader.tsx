@@ -28,7 +28,7 @@ const MentorOnboardingStepsHeader = (props: {
 						<div
 							className={`absolute h-1 ${
 								currentStep === step
-									? "bg-[#70C5A1] w-[80%]"
+									? "bg-[#70C5A1] w-[75%]"
 									: currentStep > step
 									? "bg-[#70C5A1] w-full"
 									: ""

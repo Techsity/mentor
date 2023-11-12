@@ -15,6 +15,15 @@ export interface IMentorOnboardingState {
 		IExperience,
 		"company" | "endDate" | "startDate" | "position" | "topSkils"
 	> & { aboutRole?: string; role: string })[];
+	education: {
+		school: {
+			name: string;
+		};
+		endDate: string;
+		startDate: string;
+		course?: string;
+		degree?: string;
+	}[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;

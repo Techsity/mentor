@@ -11,10 +11,10 @@ import {
 	onboardingMentor as onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../redux/reducers/features/onboardingSlice";
-import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
 import { currentUser } from "../../../../../../redux/reducers/features/authSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../constants";
+import StepThreeMentorOnboarding from "./step-three";
 
 const MentorOnboardingSteps = () => {
 	const user = useSelector(currentUser);
@@ -26,8 +26,10 @@ const MentorOnboardingSteps = () => {
 		onboardingMentor.currentStep || 1,
 	);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [showSkip, setShowSkip] = useState<boolean>(true);
 
 	const moveToNextStep = () => {
+		setLoading(true);
 		setTimeout(function () {
 			if (currentStep < totalSteps) {
 				dispatch(
@@ -42,8 +44,8 @@ const MentorOnboardingSteps = () => {
 			setLoading(false);
 		}, 1500);
 	};
+
 	const handleNext = () => {
-		setLoading(true);
 		if (onboardingMentor && currentStep < totalSteps) {
 			if (currentStep === 1) {
 				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
@@ -84,12 +86,15 @@ const MentorOnboardingSteps = () => {
 			setLoading(false);
 		}
 	};
+
 	const handlePrev = () => {
 		setLoading(false);
 		scrollToTop();
 		if (onboardingMentor)
 			if (currentStep > 1) setCurrentStep((prev) => (prev -= 1));
 	};
+
+	useEffect(() => {}, [currentStep]);
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
@@ -102,30 +107,49 @@ const MentorOnboardingSteps = () => {
 					<StepOneMentorOnboarding />
 				) : currentStep === 2 ? (
 					<StepTwoMentorOnboarding />
+				) : currentStep === 3 ? (
+					<StepThreeMentorOnboarding />
 				) : (
 					<StepOneMentorOnboarding />
 				)}
 				<div className="my-6 flex justify-between items-center w-full">
-					{currentStep > 1 && (
-						<div className="flex justify-start items-center">
-							<PrimaryButton
-								title={"Prev"}
-								// icon={loading ? <ActivityIndicator /> : null}
-								onClick={() => handlePrev()}
-								className="px-8 p-2 flex justify-center"
-								// disabled={loading}
-							/>
+					{loading ? (
+						<ActivityIndicator
+							color="#094B10"
+							className="mt-6"
+							size={30}
+						/>
+					) : (
+						<div className="my-6 flex gap-5 items-center">
+							{currentStep > 1 && (
+								<div className="flex justify-start items-center">
+									<PrimaryButton
+										title={"Prev"}
+										// icon={loading ? <ActivityIndicator /> : null}
+										onClick={() => handlePrev()}
+										className="px-8 p-2 flex justify-center"
+										// disabled={loading}
+									/>
+								</div>
+							)}
+							<div className="flex justify-start items-center">
+								<PrimaryButton
+									title={loading ? "" : "Next"}
+									// icon={loading ? <ActivityIndicator /> : null}
+									onClick={() => handleNext()}
+									className="px-8 p-2 flex justify-center"
+									disabled={loading}
+								/>
+							</div>
 						</div>
 					)}
-					<div className="flex justify-start items-center">
-						<PrimaryButton
-							title={loading ? "" : "Next"}
-							icon={loading ? <ActivityIndicator /> : null}
-							onClick={() => handleNext()}
-							className="px-8 p-2 flex justify-center"
-							disabled={loading}
-						/>
-					</div>
+					{currentStep > 1 && showSkip && (
+						<span
+							onClick={() => moveToNextStep()}
+							className="text-[#B1B1B1] cursor-pointer select-none">
+							Skip{">>>"}
+						</span>
+					)}
 				</div>
 			</div>
 			<div className="pb-10 md:pb-0 md:flex hidden sticky top-24 h-full">
