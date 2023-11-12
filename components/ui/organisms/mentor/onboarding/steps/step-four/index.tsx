@@ -9,10 +9,9 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import Education from "./Education";
-import Certificates from "./Certificates";
+import Projects from "./Projects";
 
-const StepThreeMentorOnboarding = () => {
+const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
@@ -55,21 +54,56 @@ const StepThreeMentorOnboarding = () => {
 	return (
 		<div className="animate__animated animate__fadeInLeft">
 			<h1
-				className="-mt-5 text-[#00D569] text-xl sm:text-2xl animate__animated animate__fadeInLeft"
+				className="text-[#00D569] text-xl sm:text-3xl animate__animated animate__fadeInLeft -mt-5"
 				style={{ fontFamily: "Days One" }}>
-				Your Education and Certifications
+				Finally, Whats your availability like?
 			</h1>
 			<p className="text-sm text-black">
-				First, what are your top skills, how many years of experience do
-				you have, then where have you worked, what project have you
-				completed.
+				Create the dates and time you would be available for mentorship
+				sessions. As a bonus tip about you, Tell us The language
+				you&apos;re fluent at (We added this so that mentee that
+				preferred to be taught in a preferred language can reach you
+				easily).
 			</p>
 			<div className="grid gap-5 mt-8">
-				<Education />
-				<Certificates />
+				<div className="grid gap-2">
+					<h1 className="text-sm text-[#B1B1B1]">
+						What are your top Skills? (Up to 5)
+					</h1>
+					<TagsInput
+						textLength={30}
+						addTag={addSkill}
+						onRemove={removeSkill}
+						tagsState={onboardingMentor.skills}
+					/>
+				</div>
+				<div className="grid gap-2">
+					<h1 className="text-sm text-[#B1B1B1]">
+						How many years of experience?
+					</h1>
+					<CustomTextInput
+						type="number"
+						max={"40"}
+						min="1"
+						onChange={(e) =>
+							dispatch(
+								setOnboardingMentor({
+									...onboardingMentor,
+									yearsOfExp: parseInt(e.target.value),
+								}),
+							)
+						}
+						value={onboardingMentor.yearsOfExp}
+						className="bg-white"
+						containerProps={{
+							className: "border border-[#00D569]",
+						}}
+					/>
+				</div>
+				<Projects />
 			</div>
 		</div>
 	);
 };
 
-export default StepThreeMentorOnboarding;
+export default StepFourMentorOnboarding;

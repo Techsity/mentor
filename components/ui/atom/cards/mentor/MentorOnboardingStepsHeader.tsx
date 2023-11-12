@@ -23,7 +23,9 @@ const MentorOnboardingStepsHeader = (props: {
 						}`}>
 						{step}
 					</div>
-					<div className="absolute h-1 w-full bg-zinc-200" />
+					{step < stepsLength && (
+						<div className="absolute h-1 w-full bg-zinc-200" />
+					)}
 					{step < stepsLength ? (
 						<div
 							className={`absolute h-1 ${

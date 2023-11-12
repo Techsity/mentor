@@ -44,8 +44,7 @@ const Education = () => {
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
-						education:
-							onboardingMentor.education?.concat(education),
+						education: onboardingMentor.education.concat(education),
 					}),
 				);
 			setEducation(initalState);
@@ -69,106 +68,112 @@ const Education = () => {
 	return (
 		<div className="">
 			<h1 className="text-sm text-[#B1B1B1]">Education</h1>
-			<div className="flex flex-col gap-4 items-center mb-5 -mt-2">
-				{onboardingMentor?.education &&
-					onboardingMentor.education?.length >= 1 &&
-					onboardingMentor.education.map((educaton, index) => {
-						const id = slugify(educaton.school.name);
-						return (
-							<div
-								key={id}
-								className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
-								<span className="absolute top-2 right-3 cursor-pointer z-10">
-									<svg
-										onClick={() => {
-											handleRemoveEducation(id);
-										}}
-										className="h-5 w-5 ml-3 cursor-pointer"
-										viewBox="0 0 20 20"
-										fill="#d31119">
-										<path
-											fillRule="evenodd"
-											d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-											clipRule="evenodd"
+			{onboardingMentor?.education && (
+				<div className="flex flex-col gap-4 items-center mb-5 mt-3">
+					{onboardingMentor.education.length >= 1 &&
+						onboardingMentor.education.map((edu) => {
+							const id = slugify(edu.school.name);
+							return (
+								<div
+									key={id}
+									className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
+									<span className="absolute top-2 right-3 cursor-pointer z-10">
+										<svg
+											onClick={() => {
+												handleRemoveEducation(id);
+											}}
+											className="h-5 w-5 ml-3 cursor-pointer"
+											viewBox="0 0 20 20"
+											fill="#d31119">
+											<path
+												fillRule="evenodd"
+												d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+												clipRule="evenodd"
+											/>
+										</svg>
+									</span>
+									<div className="col-span-4 grid gap-1">
+										<label htmlFor="" className="text-xs">
+											Name of School
+										</label>
+										<CustomTextInput
+											name="name_of_school"
+											id="name_of_school"
+											type="text"
+											className="text-black"
+											readOnly
+											value={edu.school.name}
+											containerProps={{
+												className:
+													"border border-zinc-200",
+											}}
 										/>
-									</svg>
-								</span>
-								<div className="col-span-4 grid gap-1">
-									<label htmlFor="" className="text-xs">
-										Name of School
-									</label>
-									<CustomTextInput
-										name="name_of_school"
-										id="name_of_school"
-										type="text"
-										className="text-black"
-										readOnly
-										value={education.school.name}
-										containerProps={{
-											className: "border border-zinc-200",
-										}}
-									/>
+									</div>
+									<div className="col-span-2 grid gap-1 relative">
+										<label htmlFor="" className="text-xs">
+											Start Date
+										</label>
+										<CustomTextInput
+											type="text"
+											className="text-black select-none"
+											value={edu.startDate}
+											containerProps={{
+												className:
+													"border border-zinc-200",
+											}}
+											readOnly
+										/>
+									</div>
+									<div className="col-span-2 grid gap-1 relative">
+										<label htmlFor="" className="text-xs">
+											End Date
+										</label>
+										<CustomTextInput
+											type="text"
+											className="text-black select-none"
+											value={edu.endDate}
+											containerProps={{
+												className:
+													"border border-zinc-200",
+											}}
+											readOnly
+										/>
+									</div>
+									<div className="col-span-4 grid gap-1">
+										<CustomTextInput
+											name="degree"
+											id="degree"
+											type="text"
+											placeholder="Degree"
+											readOnly
+											value={edu.degree}
+											className="text-black"
+											containerProps={{
+												className:
+													"border border-zinc-200",
+											}}
+										/>
+									</div>
+									<div className="col-span-4 grid gap-1">
+										<CustomTextInput
+											name="course"
+											id="course"
+											placeholder="Course"
+											readOnly
+											value={edu.course}
+											type="text"
+											className="text-black"
+											containerProps={{
+												className:
+													"border border-zinc-200",
+											}}
+										/>
+									</div>
 								</div>
-								<div className="col-span-2 grid gap-1 relative">
-									<label htmlFor="" className="text-xs">
-										Start Date
-									</label>
-									<CustomTextInput
-										type="text"
-										className="text-black select-none"
-										value={education.startDate}
-										containerProps={{
-											className: "border border-zinc-200",
-										}}
-										readOnly
-									/>
-								</div>
-								<div className="col-span-2 grid gap-1 relative">
-									<label htmlFor="" className="text-xs">
-										End Date
-									</label>
-									<CustomTextInput
-										type="text"
-										className="text-black select-none"
-										value={education.endDate}
-										containerProps={{
-											className: "border border-zinc-200",
-										}}
-										readOnly
-									/>
-								</div>
-								<div className="col-span-4 grid gap-1">
-									<CustomTextInput
-										name="degree"
-										id="degree"
-										type="text"
-										placeholder="Degree"
-										readOnly
-										value={education.degree}
-										className="text-black"
-										containerProps={{
-											className: "border border-zinc-200",
-										}}
-									/>
-								</div>
-								<div className="col-span-4 grid gap-1">
-									<CustomTextInput
-										name="course"
-										id="course"
-										placeholder="Course"
-										readOnly
-										value={education.course}
-										type="text"
-										className="text-black"
-										containerProps={{
-											className: "border border-zinc-200",
-										}}
-									/>
-								</div>
-							</div>
-						);
-					})}
-			</div>
+							);
+						})}
+				</div>
+			)}
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3">
 				<div className="col-span-4 grid gap-1">
 					<CustomTextInput

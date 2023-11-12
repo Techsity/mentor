@@ -9,8 +9,9 @@ export interface IMentorOnboardingState {
 	jobTitle: string;
 	bio: string;
 	skills: string[];
-	projects: { name: string; link: string; nature: string }[];
 	yearsOfExp: number;
+	projects: { name: string; link: string; nature: string }[];
+	certificates: { institution: string; type: string; year: string }[];
 	workHistory?: (Pick<
 		IExperience,
 		"company" | "endDate" | "startDate" | "position" | "topSkils"

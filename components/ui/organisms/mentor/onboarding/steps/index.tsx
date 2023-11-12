@@ -15,6 +15,7 @@ import { currentUser } from "../../../../../../redux/reducers/features/authSlice
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../constants";
 import StepThreeMentorOnboarding from "./step-three";
+import StepFourMentorOnboarding from "./step-four";
 
 const MentorOnboardingSteps = () => {
 	const user = useSelector(currentUser);
@@ -58,8 +59,7 @@ const MentorOnboardingSteps = () => {
 				if (
 					onboardingMentor.skills &&
 					onboardingMentor.yearsOfExp &&
-					onboardingMentor.workHistory &&
-					onboardingMentor.projects
+					onboardingMentor.workHistory
 				) {
 					if (onboardingMentor.workHistory?.length < 1) {
 						toast.error(
@@ -69,7 +69,6 @@ const MentorOnboardingSteps = () => {
 						setLoading(false);
 						return;
 					}
-					// if (check typeof project link)
 					moveToNextStep();
 				} else {
 					setLoading(false);
@@ -94,8 +93,6 @@ const MentorOnboardingSteps = () => {
 			if (currentStep > 1) setCurrentStep((prev) => (prev -= 1));
 	};
 
-	useEffect(() => {}, [currentStep]);
-
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
 			<div className="w-full md:max-w-lg">
@@ -109,40 +106,42 @@ const MentorOnboardingSteps = () => {
 					<StepTwoMentorOnboarding />
 				) : currentStep === 3 ? (
 					<StepThreeMentorOnboarding />
+				) : currentStep === 4 ? (
+					<StepFourMentorOnboarding />
 				) : (
 					<StepOneMentorOnboarding />
 				)}
 				<div className="my-6 flex justify-between items-center w-full">
-					{loading ? (
+					{/* {loading ? (
 						<ActivityIndicator
 							color="#094B10"
 							className="mt-6"
 							size={30}
 						/>
-					) : (
-						<div className="my-6 flex gap-5 items-center">
-							{currentStep > 1 && (
-								<div className="flex justify-start items-center">
-									<PrimaryButton
-										title={"Prev"}
-										// icon={loading ? <ActivityIndicator /> : null}
-										onClick={() => handlePrev()}
-										className="px-8 p-2 flex justify-center"
-										// disabled={loading}
-									/>
-								</div>
-							)}
+					) : ( */}
+					<div className="my-6 flex gap-5 items-center">
+						{currentStep > 1 && (
 							<div className="flex justify-start items-center">
 								<PrimaryButton
-									title={loading ? "" : "Next"}
+									title={"Prev"}
 									// icon={loading ? <ActivityIndicator /> : null}
-									onClick={() => handleNext()}
+									onClick={() => handlePrev()}
 									className="px-8 p-2 flex justify-center"
-									disabled={loading}
+									// disabled={loading}
 								/>
 							</div>
+						)}
+						<div className="flex justify-start items-center">
+							<PrimaryButton
+								title={loading ? "" : "Next"}
+								icon={loading ? <ActivityIndicator /> : null}
+								onClick={() => handleNext()}
+								className="px-8 p-2 flex justify-center"
+								disabled={loading}
+							/>
 						</div>
-					)}
+					</div>
+					{/* )} */}
 					{currentStep > 1 && showSkip && (
 						<span
 							onClick={() => moveToNextStep()}

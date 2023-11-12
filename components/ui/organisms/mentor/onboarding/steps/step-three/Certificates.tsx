@@ -7,51 +7,56 @@ import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { IMentorOnboardingState } from "../../../../../../../interfaces/mentor.interface";
 import { slugify } from "../../../../../../../utils";
+import Calendar from "react-calendar";
 
-type ExtractedProjectType = IMentorOnboardingState["projects"][0];
+type CertificateType = IMentorOnboardingState["certificates"][0];
 
 const Certificates = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const initalState: ExtractedProjectType = {
-		link: "",
-		name: "",
-		nature: "",
+	const initalState: CertificateType = {
+		institution: "",
+		type: "",
+		year: "",
 	};
 
-	const [project, setProject] = useState<ExtractedProjectType>(initalState);
+	const [certificate, setCertificate] =
+		useState<CertificateType>(initalState);
 
-	const handleAddProject = () => {
-		if (project.name && project.link && project.nature) {
+	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
+
+	const handleAddCert = () => {
+		if (certificate.institution && certificate.type && certificate.year) {
 			const isDuplicate =
-				onboardingMentor.projects &&
-				onboardingMentor.projects.some(
-					(project) =>
-						project.name.toLowerCase() ===
-							project.name.toLowerCase() &&
-						project.link === project.link &&
-						project.nature === project.nature,
+				onboardingMentor.certificates &&
+				onboardingMentor.certificates.some(
+					(cert) =>
+						cert.institution.toLowerCase() ===
+							certificate.institution.toLowerCase() &&
+						cert.type === certificate.type &&
+						cert.year === certificate.year,
 				);
 			if (!isDuplicate)
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
-						projects: onboardingMentor.projects?.concat(project),
+						certificates:
+							onboardingMentor.certificates.concat(certificate),
 					}),
 				);
-			setProject(initalState);
+			setCertificate(initalState);
 		}
 	};
 
-	const handleRemoveProject = (slug: string) => {
-		if (onboardingMentor.projects) {
-			const updatedProjects = onboardingMentor.projects.filter(
-				(project) => slugify(project.name) !== slug,
+	const handleRemoveCert = (slug: string) => {
+		if (onboardingMentor.certificates) {
+			const updatedCerts = onboardingMentor.certificates.filter(
+				(cert) => slugify(cert.institution) !== slug,
 			);
 			dispatch(
 				setOnboardingMentor({
 					...onboardingMentor,
-					projects: updatedProjects,
+					certificates: updatedCerts,
 				}),
 			);
 		}
@@ -60,61 +65,59 @@ const Certificates = () => {
 	return (
 		<div className="">
 			<h1 className="text-sm text-[#B1B1B1] mb-3">
-				Any Project(s) you worked on?
+				Professional Certificates
 			</h1>
 			<div className="flex flex-col gap-4 items-center mb-5">
-				{onboardingMentor?.projects &&
-					onboardingMentor.projects?.length >= 1 &&
-					onboardingMentor.projects.map((project, index) => {
-						const id = slugify(project.name);
+				{onboardingMentor?.certificates &&
+					onboardingMentor.certificates.length >= 1 &&
+					onboardingMentor.certificates.map((cert) => {
+						const id = slugify(certificate.institution);
 						return (
 							<div
 								key={id}
 								className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
-								<div className="col-span-4 grid gap-1">
+								<div className="col-span-8 grid gap-1">
 									<label htmlFor="" className="text-xs">
-										Name of Project
+										Name of Institution
 									</label>
 									<CustomTextInput
-										name="title_of_project"
-										id="title_of_project"
+										name="institution"
+										id="institution"
 										type="text"
 										className="text-black"
 										readOnly
-										value={project.name}
+										value={cert.institution}
 										containerProps={{
 											className: "border border-zinc-200",
 										}}
 									/>
 								</div>
-								<div className="col-span-2 grid gap-1 relative">
+								<div className="col-span-4 grid gap-1 relative">
 									<label htmlFor="" className="text-xs">
-										Project Link
+										Type of Certificate
 									</label>
 									<CustomTextInput
-										name="link_to_project"
-										id="link_to_project"
+										name="type_of_certificate"
+										id="type_of_certificate"
 										type="url"
 										className="text-black select-none"
-										placeholder="Link To Project"
-										value={project.link}
+										value={cert.type}
 										containerProps={{
 											className: "border border-zinc-200",
 										}}
 										readOnly
 									/>
 								</div>
-								<div className="col-span-2 grid gap-1 relative">
+								<div className="col-span-4 grid gap-1 relative">
 									<label htmlFor="" className="text-xs">
-										Nature of Project
+										Year
 									</label>
 									<CustomTextInput
-										name="project_nature"
-										id="project_nature"
+										name="year"
+										id="year"
 										type="text"
 										className="text-black select-none"
-										placeholder="Nature of Project"
-										value={project.nature}
+										value={cert.year}
 										containerProps={{
 											className: "border border-zinc-200",
 										}}
@@ -123,7 +126,7 @@ const Certificates = () => {
 								</div>
 								<span
 									onClick={() => {
-										handleRemoveProject(id);
+										handleRemoveCert(id);
 									}}
 									className="col-span-8 text-center bottom-2 w-full hover:bg-rose-800 duration-500 rounded text-white p-1 bg-rose-600 px-4 right-3 cursor-pointer z-10">
 									Remove
@@ -133,59 +136,84 @@ const Certificates = () => {
 					})}
 			</div>
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3">
-				<div className="col-span-4 grid gap-1">
+				<div className="col-span-8 grid gap-1">
 					<CustomTextInput
-						name="title_of_project"
-						id="title_of_project"
+						name="institution"
+						id="institution"
 						type="text"
-						value={project.name}
+						value={certificate.institution}
+						placeholder="Name of Institution"
 						className="text-black"
 						onChange={(e) =>
-							setProject({ ...project, name: e.target.value })
+							setCertificate({
+								...certificate,
+								institution: e.target.value,
+							})
 						}
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-4 grid gap-1 relative">
 					<CustomTextInput
-						name="link_to_project"
-						id="link_to_project"
-						type="url"
-						className="text-black select-none"
-						value={project.link}
-						placeholder="Link To Project"
-						containerProps={{
-							className: "border border-zinc-200",
-						}}
-						onChange={(e) =>
-							setProject({ ...project, link: e.target.value })
-						}
-					/>
-				</div>
-				<div className="col-span-2 grid gap-1 relative">
-					<CustomTextInput
-						name="project_nature"
-						id="project_nature"
+						name="type"
+						id="type"
 						type="text"
-						value={project.nature}
 						className="text-black select-none"
-						placeholder="Nature of Project"
+						value={certificate.type}
+						placeholder="Type of Certificate"
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
 						onChange={(e) =>
-							setProject({ ...project, nature: e.target.value })
+							setCertificate({
+								...certificate,
+								type: e.target.value,
+							})
 						}
 					/>
+				</div>
+				<div className="col-span-4 grid gap-1 relative">
+					<CustomTextInput
+						name="year"
+						id="year"
+						type="text"
+						className="text-black cursor-pointer select-none"
+						placeholder="Year"
+						value={certificate.year}
+						containerProps={{
+							className: "border cursor-pointer border-zinc-200",
+						}}
+						readOnly
+						onClick={() => {
+							setCalendarIsOpen(!calendarIsOpen);
+						}}
+					/>
+					{calendarIsOpen && (
+						<div className="absolute right-0 top-16">
+							<Calendar
+								onChange={(props) => {
+									const date = new Date(
+										props as Date,
+									).toLocaleDateString();
+									setCertificate({
+										...certificate,
+										year: date,
+									});
+									setCalendarIsOpen(false);
+								}}
+								maxDate={new Date()}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 			<div
 				className="font-medium flex justify-end gap-1 items-center text-[#B1B1B1] select-none cursor-pointer"
-				onClick={() => handleAddProject()}>
+				onClick={() => handleAddCert()}>
 				<span className="text-2xl">+</span>
-				<p className="">Add New Project</p>
+				<p className="">Add New Certificate</p>
 			</div>
 		</div>
 	);

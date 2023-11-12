@@ -14,6 +14,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	workHistory: [],
 	projects: [],
 	education: [],
+	certificates: [],
 };
 
 const initialUserOnboardingState: { user: IUser | null } = { user: null };
