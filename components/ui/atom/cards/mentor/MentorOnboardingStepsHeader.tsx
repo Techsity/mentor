@@ -10,31 +10,34 @@ const MentorOnboardingStepsHeader = (props: {
 		(_, index) => index + 1,
 	);
 	return (
-		<ul className="relative flex w-full justify-between mb-6 py-6 items-start gap-8 sticky z-10 top-20 h-full bg-[#F6F9F8] backdrop-blur-md">
+		<div className="relative grid grid-cols-4 w-full justify-between mb-6 py-6 items-center sticky z-10 top-20 h-full bg-[#F6F9F85A] backdrop-blur-sm">
 			{stepNumbers.map((step, id) => (
-				<li
-					className="relative w-full flex justify-start items-center animate__animated animate__bounceIn animate-slower"
-					key={id}>
-					{step < stepsLength ? (
-						<div
-							className={`absolute top-[45%] -z-10 h-1 w-[180%] bg-[#70C5A1] ${
-								currentStep >= step
-									? "bg-[#70C5A1]"
-									: "bg-zinc-200"
-							}`}
-						/>
-					) : null}
+				<div
+					key={id}
+					className="relative w-full flex justify-start items-center">
 					<div
-						className={`h-10 h-9 sm:h-16 sm:w-16 p-3.5 sm:p-5 items-center flex justify-center rounded-full ${
+						className={`h-10 z-10 h-9 sm:h-16 sm:w-16 p-3.5 sm:p-5 items-center flex justify-center rounded-full ${
 							currentStep >= step
-								? "text-white bg-[#70C5A1]"
+								? "text-white bg-[#70C5A1] animate__animated animate__bounceIn animate__slow"
 								: "text-black bg-zinc-200"
 						}`}>
 						{step}
 					</div>
-				</li>
+					<div className="absolute h-1 w-full bg-zinc-200" />
+					{step < stepsLength ? (
+						<div
+							className={`absolute h-1 ${
+								currentStep === step
+									? "bg-[#70C5A1] w-[80%]"
+									: currentStep > step
+									? "bg-[#70C5A1] w-full"
+									: ""
+							}`}
+						/>
+					) : null}
+				</div>
 			))}
-		</ul>
+		</div>
 	);
 };
 

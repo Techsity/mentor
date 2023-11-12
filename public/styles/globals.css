@@ -22,6 +22,9 @@
 * {
 	scroll-behavior: smooth !important;
 }
+.cursor-not-allowed {
+	cursor: not-allowed;
+}
 
 .hide-scroll-bar::-webkit-scrollbar {
 	display: none;

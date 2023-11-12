@@ -9,11 +9,12 @@ export interface IMentorOnboardingState {
 	jobTitle: string;
 	bio: string;
 	skills: string[];
+	projects: { name: string; link: string; nature: string }[];
 	yearsOfExp: number;
 	workHistory?: (Pick<
 		IExperience,
-		"company" | "endDate" | "startDate" | "position" | "topSkils" | "roles"
-	> & { aboutRole?: string })[];
+		"company" | "endDate" | "startDate" | "position" | "topSkils"
+	> & { aboutRole?: string; role: string })[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;

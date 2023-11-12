@@ -1,4 +1,4 @@
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent } from "react";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import TagsInput from "../../../../../atom/inputs/TagsInput";
 import { useDispatch } from "react-redux";
@@ -9,13 +9,12 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import Calendar from "react-calendar";
-import WorkHistoryComponent from "./WorkHistoryComponent";
+import WorkHistory from "./WorkHistory";
+import Projects from "./Projects";
 
 const StepTwoMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-
 
 	const addSkill = (skill: string) => {
 		if (skill)
@@ -100,7 +99,8 @@ const StepTwoMentorOnboarding = () => {
 						}}
 					/>
 				</div>
-				<WorkHistoryComponent />
+				<WorkHistory />
+				<Projects />
 			</div>
 		</div>
 	);

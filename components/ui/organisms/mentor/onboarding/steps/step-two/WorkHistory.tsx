@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Calendar } from "react-calendar";
 import {
 	setOnboardingMentor,
@@ -7,23 +7,22 @@ import {
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { IExperience } from "../../../../../../../interfaces/mentor.interface";
-import { Add, CalendarClearOutline } from "react-ionicons";
 import { slugify } from "../../../../../../../utils";
 
 type ExtractedExperienceType = Pick<
 	IExperience,
-	"company" | "endDate" | "startDate" | "position" | "topSkils" | "roles"
-> & { aboutRole?: string };
+	"company" | "endDate" | "startDate" | "position" | "topSkils"
+> & { aboutRole?: string; role: string };
 
-const WorkHistoryComponent = () => {
+const WorkHistory = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const initalState: ExtractedExperienceType = {
 		company: { name: "" },
-		endDate: new Date().toLocaleDateString(),
-		startDate: new Date().toLocaleDateString(),
+		endDate: "",
+		startDate: "",
 		position: "",
-		roles: [],
+		role: "",
 		topSkils: [],
 		aboutRole: "",
 	};
@@ -37,9 +36,10 @@ const WorkHistoryComponent = () => {
 
 	const handleAddWorkHistory = () => {
 		if (
-			workExperience.company &&
+			workExperience.company.name &&
 			workExperience.startDate &&
-			workExperience.endDate
+			workExperience.endDate &&
+			workExperience.role
 			//  &&
 			// workExperience.position
 		) {
@@ -56,9 +56,10 @@ const WorkHistoryComponent = () => {
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
-						workHistory: onboardingMentor.workHistory?.concat([
-							workExperience,
-						]),
+						workHistory:
+							onboardingMentor.workHistory?.concat(
+								workExperience,
+							),
 					}),
 				);
 			setWorkExperience(initalState);
@@ -92,8 +93,8 @@ const WorkHistoryComponent = () => {
 	// }, [workExperience]);
 
 	return (
-		<div className="gap-2 grid">
-			<h1 className="text-sm text-[#B1B1B1]">Where have you worked?</h1>
+		<div className="">
+			<h1 className="text-sm text-[#B1B1B1] mb-3">Where have you worked?</h1>
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.workHistory &&
 					onboardingMentor.workHistory?.length >= 1 &&
@@ -140,12 +141,11 @@ const WorkHistoryComponent = () => {
 									</label>
 									<CustomTextInput
 										type="text"
-										className="text-black cursor-pointer select-none"
+										className="text-black select-none"
 										placeholder="Start Date"
 										value={work.startDate}
 										containerProps={{
-											className:
-												"border cursor-pointer border-zinc-200",
+											className: "border border-zinc-200",
 										}}
 										readOnly
 									/>
@@ -156,14 +156,41 @@ const WorkHistoryComponent = () => {
 									</label>
 									<CustomTextInput
 										type="text"
-										className="text-black cursor-pointer select-none"
+										className="text-black select-none"
 										placeholder="End Date"
 										value={work.endDate}
 										containerProps={{
-											className:
-												"border cursor-pointer border-zinc-200",
+											className: "border border-zinc-200",
 										}}
 										readOnly
+									/>
+								</div>
+								<div className="col-span-4 grid gap-1">
+									<CustomTextInput
+										name="roles"
+										id="roles"
+										type="text"
+										placeholder="Your Role"
+										readOnly
+										value={work.role}
+										className="text-black"
+										containerProps={{
+											className: "border border-zinc-200",
+										}}
+									/>
+								</div>
+								<div className="col-span-4 grid gap-1">
+									<CustomTextInput
+										name="about_roles"
+										id="about_roles"
+										placeholder="About This Role"
+										readOnly
+										value={work.aboutRole}
+										type="text"
+										className="text-black"
+										containerProps={{
+											className: "border border-zinc-200",
+										}}
 									/>
 								</div>
 							</div>
@@ -176,6 +203,7 @@ const WorkHistoryComponent = () => {
 						name="name_of_company"
 						id="name_of_company"
 						type="text"
+						placeholder="Company"
 						className="text-black"
 						onChange={(e) => {
 							setWorkExperience({
@@ -270,9 +298,48 @@ const WorkHistoryComponent = () => {
 									setEndDateCalendarIsOpen(false);
 								}}
 								maxDate={new Date()}
+								minDate={new Date(workExperience.startDate)}
 							/>
 						</div>
 					)}
+				</div>
+				<div className="col-span-4 grid gap-1">
+					<CustomTextInput
+						name="roles"
+						id="roles"
+						type="text"
+						placeholder="Your Role"
+						className="text-black"
+						containerProps={{
+							className: "border border-zinc-200",
+						}}
+						value={workExperience.role}
+						onChange={(e) =>
+							setWorkExperience({
+								...workExperience,
+								role: e.target.value,
+							})
+						}
+					/>
+				</div>
+				<div className="col-span-4 grid gap-1">
+					<CustomTextInput
+						name="about_roles"
+						id="about_roles"
+						placeholder="About This Role"
+						type="text"
+						className="text-black"
+						value={workExperience.aboutRole}
+						onChange={(e) =>
+							setWorkExperience({
+								...workExperience,
+								aboutRole: e.target.value,
+							})
+						}
+						containerProps={{
+							className: "border border-zinc-200",
+						}}
+					/>
 				</div>
 			</div>
 			<div
@@ -285,4 +352,4 @@ const WorkHistoryComponent = () => {
 	);
 };
 
-export default WorkHistoryComponent;
+export default WorkHistory;

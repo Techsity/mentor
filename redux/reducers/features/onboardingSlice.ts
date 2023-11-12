@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import { IMentorOnboardingState } from "../../../interfaces/mentor.interface";
-import { isApolloPayloadResult } from "@apollo/client/utilities";
 
 const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
@@ -13,6 +12,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	skills: [],
 	yearsOfExp: 1,
 	workHistory: [],
+	projects: [],
 };
 
 const initialUserOnboardingState: { user: IUser | null } = { user: null };
