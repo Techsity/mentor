@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import {
 	setOnboardingMentor,
@@ -11,7 +11,9 @@ import {
 	IMentorOnboardingState,
 } from "../../../../../../../interfaces/mentor.interface";
 import { Add, CalendarClearOutline } from "react-ionicons";
-import { slugify } from "../../../../../../../utils";
+import { isValidUrl, slugify } from "../../../../../../../utils";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../../../constants";
 
 type ExtractedProjectType = IMentorOnboardingState["projects"][0];
 
@@ -37,14 +39,26 @@ const Projects = () => {
 						project.link === project.link &&
 						project.nature === project.nature,
 				);
-			if (!isDuplicate)
+			if (!isDuplicate) {
+				// !check if project link is a valid url
+				if (!isValidUrl(project.link)) {
+					toast.error(
+						"Invalid project URL",
+						ToastDefaultOptions({
+							id: "error",
+							theme: "dark",
+						}),
+					);
+					return;
+				}
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
 						projects: onboardingMentor.projects?.concat(project),
 					}),
 				);
-			setProject(initalState);
+				setProject(initalState);
+			}
 		}
 	};
 
@@ -61,7 +75,17 @@ const Projects = () => {
 			);
 		}
 	};
-
+	const handleChange =
+		(field: keyof ExtractedProjectType) =>
+		(e: ChangeEvent<HTMLInputElement>) => {
+			const {
+				target: { value },
+			} = e;
+			setProject({
+				...project,
+				[field]: value,
+			});
+		};
 	return (
 		<div className="">
 			<h1 className="text-sm text-[#B1B1B1] mb-3">
@@ -145,9 +169,7 @@ const Projects = () => {
 						type="text"
 						value={project.name}
 						className="text-black"
-						onChange={(e) =>
-							setProject({ ...project, name: e.target.value })
-						}
+						onChange={handleChange("name")}
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
@@ -164,17 +186,7 @@ const Projects = () => {
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						onChange={(e) => {
-							const { value } = e.target;
-							// !check if value is url
-							// if (value !== url) {
-							// 	return;
-							// }
-							setProject({
-								...project,
-								link: e.target.value,
-							});
-						}}
+						onChange={handleChange("link")}
 					/>
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
@@ -188,9 +200,7 @@ const Projects = () => {
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						onChange={(e) =>
-							setProject({ ...project, nature: e.target.value })
-						}
+						onChange={handleChange("nature")}
 					/>
 				</div>
 			</div>

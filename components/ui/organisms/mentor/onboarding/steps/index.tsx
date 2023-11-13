@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import StepOneMentorOnboarding from "./step-one";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
@@ -24,17 +24,16 @@ const MentorOnboardingSteps = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 
 	const totalSteps = 5;
-	const [currentStep, setCurrentStep] = useState<number>(
-		onboardingMentor.currentStep || 1,
+	const currentStep = useMemo(
+		() => onboardingMentor.currentStep,
+		[onboardingMentor],
 	);
+
 	const [loading, setLoading] = useState<boolean>(false);
-	const [showSkip, setShowSkip] = useState<boolean>(true);
 
 	const moveToNextStep = () => {
-		setLoading(true);
 		setTimeout(function () {
 			if (currentStep < totalSteps) {
-				setCurrentStep((prev) => prev + 1);
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
@@ -48,6 +47,7 @@ const MentorOnboardingSteps = () => {
 	};
 
 	const handleNext = () => {
+		setLoading(true);
 		if (onboardingMentor && currentStep < totalSteps) {
 			if (currentStep === 1) {
 				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
@@ -75,12 +75,8 @@ const MentorOnboardingSteps = () => {
 					setLoading(false);
 				}
 			}
-			if (currentStep === 3) {
-				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
-					moveToNextStep();
-				} else {
-					setLoading(false);
-				}
+			if (currentStep === 3 || currentStep === 4) {
+				moveToNextStep();
 			}
 		} else {
 			setLoading(false);
@@ -92,7 +88,6 @@ const MentorOnboardingSteps = () => {
 		scrollToTop();
 		if (onboardingMentor)
 			if (currentStep > 1) {
-				setCurrentStep((prev) => prev - 1);
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
@@ -155,7 +150,7 @@ const MentorOnboardingSteps = () => {
 						</div>
 					</div>
 					{/* )} */}
-					{currentStep > 1 && showSkip && (
+					{currentStep > 1 && currentStep <= totalSteps - 1 && (
 						<span
 							onClick={() => moveToNextStep()}
 							className="text-[#B1B1B1] cursor-pointer select-none">
