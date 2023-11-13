@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import router, { useRouter } from "next/router";
 import React from "react";
-import { IMentor } from "../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
 
 const MentorProfileCard = ({
 	detailsPage = false,

@@ -1,7 +1,7 @@
 import React from "react";
-import { IMentorshipSession } from "../../../../../interfaces";
 import RegisteredMentorshipCard from "../../../atom/cards/profile/RegisteredMentorshipCard";
 import mentors from "../../../../../data/mentors";
+import { IMentorshipSession } from "../../../../../interfaces/mentor.interface";
 
 const registeredMentorships: IMentorshipSession[] = [
 	{

@@ -2,9 +2,9 @@ import { GetServerSidePropsContext } from "next";
 import React from "react";
 import MentorDetailsTemplate from "../../components/templates/mentor/details";
 import mentors from "../../data/mentors";
-import { IMentor } from "../../interfaces";
 import { useRouter } from "next/router";
 import ScheduleConsultationTemplate from "../../components/templates/mentor/schedule-consultation";
+import { IMentor } from "../../interfaces/mentor.interface";
 
 const MentorDetails = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();

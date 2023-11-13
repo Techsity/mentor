@@ -130,7 +130,7 @@ const Projects = () => {
 									onClick={() => {
 										handleRemoveProject(id);
 									}}
-									className="col-span-8 text-center bottom-2 w-full hover:bg-rose-800 duration-500 rounded text-white p-1 bg-rose-600 px-4 right-3 cursor-pointer z-10">
+									className="col-span-8 text-center bottom-2 w-full hover:bg-rose-800 duration-500 rounded text-white p-1 bg-rose-600 px-4 right-3 cursor-pointer">
 									Remove
 								</span>
 							</div>
@@ -164,9 +164,17 @@ const Projects = () => {
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						onChange={(e) =>
-							setProject({ ...project, link: e.target.value })
-						}
+						onChange={(e) => {
+							const { value } = e.target;
+							// !check if value is url
+							// if (value !== url) {
+							// 	return;
+							// }
+							setProject({
+								...project,
+								link: e.target.value,
+							});
+						}}
 					/>
 				</div>
 				<div className="col-span-2 grid gap-1 relative">

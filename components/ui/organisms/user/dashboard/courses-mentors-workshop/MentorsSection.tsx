@@ -1,11 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import mentors from "../../../../../../data/mentors";
-import { IMentor } from "../../../../../../interfaces";
-import { formatFollowersCount, scrollUp } from "../../../../../../utils";
-import { GlobeIconSvg } from "../../../../atom/icons/svgs";
-import { PrimaryButton } from "../../../../atom/buttons";
-import * as FlagIcons from "react-country-flags-select";
+import { scrollUp } from "../../../../../../utils";
 import { useRouter } from "next/router";
 import MentorProfileCard from "../../../../atom/cards/mentor/MentorProfileCard";
 

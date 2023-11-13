@@ -4,8 +4,9 @@ import classnames from "classnames";
 const useSuggestions = (props: {
 	suggestions: string[];
 	inputValue?: string;
+	animated?: boolean;
 }) => {
-	const { suggestions, inputValue } = props;
+	const { suggestions, inputValue, animated = false } = props;
 	const [selectedSuggestions, setSelectedSuggestions] = useState<string[]>(
 		[],
 	);
@@ -33,8 +34,11 @@ const useSuggestions = (props: {
 			suggestions.length > 0 && (
 				<ul
 					className={classnames(
-						"animate__animated animate__fadeInUp animate__fastest absolute z-10 mt-2 bg-white border border-gray-300 rounded-md w-auto",
+						"absolute z-10 mt-2 bg-white border border-gray-300 rounded-md w-auto",
 						classes?.container,
+						animated
+							? "animate__animated animate__fadeInUp animate__fastest"
+							: "",
 					)}>
 					{selectedSuggestions.map((suggestion, index) => (
 						<li
@@ -54,6 +58,10 @@ const useSuggestions = (props: {
 			)
 		);
 	};
-	return { selectedSuggestions, SuggestionsComponent };
+	return {
+		selectedSuggestions,
+		SuggestionsComponent,
+		setSelectedSuggestions,
+	};
 };
 export default useSuggestions;

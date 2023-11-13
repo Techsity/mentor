@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { IMentor } from "../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../utils";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
 
 const CoursePageAboutMentor = (mentor: IMentor) => {
 	return (

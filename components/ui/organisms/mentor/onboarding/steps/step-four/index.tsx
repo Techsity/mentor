@@ -9,47 +9,13 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import Projects from "./Projects";
+import Availability from "./Availability";
+import Languages from "./Languages";
+
 
 const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-
-	const addSkill = (skill: string) => {
-		if (skill)
-			if (onboardingMentor.skills.length < 5) {
-				if (onboardingMentor.skills.includes(skill)) {
-					toast.info(
-						"Tag has aleady been added!",
-						ToastDefaultOptions({ id: "info", theme: "dark" }),
-					);
-				} else {
-					dispatch(
-						setOnboardingMentor({
-							...onboardingMentor,
-							skills: [...onboardingMentor.skills, skill],
-						}),
-					);
-				}
-			} else {
-				toast.error(
-					"Skills limit reached!",
-					ToastDefaultOptions({ id: "error", theme: "dark" }),
-				);
-			}
-	};
-	const removeSkill = (skillToRemove: string) => (e: MouseEvent) => {
-		if (skillToRemove) {
-			dispatch(
-				setOnboardingMentor({
-					...onboardingMentor,
-					skills: onboardingMentor.skills.filter(
-						(skill) => skill !== skillToRemove,
-					),
-				}),
-			);
-		}
-	};
 
 	return (
 		<div className="animate__animated animate__fadeInLeft">
@@ -66,41 +32,8 @@ const StepFourMentorOnboarding = () => {
 				easily).
 			</p>
 			<div className="grid gap-5 mt-8">
-				<div className="grid gap-2">
-					<h1 className="text-sm text-[#B1B1B1]">
-						What are your top Skills? (Up to 5)
-					</h1>
-					<TagsInput
-						textLength={30}
-						addTag={addSkill}
-						onRemove={removeSkill}
-						tagsState={onboardingMentor.skills}
-					/>
-				</div>
-				<div className="grid gap-2">
-					<h1 className="text-sm text-[#B1B1B1]">
-						How many years of experience?
-					</h1>
-					<CustomTextInput
-						type="number"
-						max={"40"}
-						min="1"
-						onChange={(e) =>
-							dispatch(
-								setOnboardingMentor({
-									...onboardingMentor,
-									yearsOfExp: parseInt(e.target.value),
-								}),
-							)
-						}
-						value={onboardingMentor.yearsOfExp}
-						className="bg-white"
-						containerProps={{
-							className: "border border-[#00D569]",
-						}}
-					/>
-				</div>
-				<Projects />
+				<Availability />
+				<Languages />
 			</div>
 		</div>
 	);

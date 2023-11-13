@@ -25,6 +25,7 @@ export interface IMentorOnboardingState {
 		course?: string;
 		degree?: string;
 	}[];
+	languages?: string[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;

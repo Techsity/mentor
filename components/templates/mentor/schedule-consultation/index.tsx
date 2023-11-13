@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
-import { IMentor } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { CloseSharp } from "react-ionicons";
+import { IMentor } from "../../../../interfaces/mentor.interface";
 
 interface ScheduleItem {
 	id: string;

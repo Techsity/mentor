@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { IMentorshipSession } from "../../../../../interfaces";
+import { IMentorshipSession } from "../../../../../interfaces/mentor.interface";
 
 const RegisteredMentorshipCard = (session: IMentorshipSession) => {
 	const SessionIndicator = () => {

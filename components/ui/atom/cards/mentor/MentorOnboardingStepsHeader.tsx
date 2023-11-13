@@ -6,7 +6,7 @@ const MentorOnboardingStepsHeader = (props: {
 }) => {
 	const { stepsLength = 4, currentStep } = props;
 	const stepNumbers = Array.from(
-		{ length: stepsLength },
+		{ length: stepsLength - 1 },
 		(_, index) => index + 1,
 	);
 	return (
@@ -23,10 +23,10 @@ const MentorOnboardingStepsHeader = (props: {
 						}`}>
 						{step}
 					</div>
-					{step < stepsLength && (
+					{step < stepsLength - 1 && (
 						<div className="absolute h-1 w-full bg-zinc-200" />
 					)}
-					{step < stepsLength ? (
+					{step < stepsLength - 1 ? (
 						<div
 							className={`absolute h-1 ${
 								currentStep === step

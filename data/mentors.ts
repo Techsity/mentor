@@ -1,4 +1,4 @@
-import { IMentor } from "../interfaces";
+import { IMentor } from "../interfaces/mentor.interface";
 
 const mentors: IMentor[] = [
 	{
@@ -10,7 +10,7 @@ const mentors: IMentor[] = [
 			{ name: "Lorem", username: "lorem" },
 		],
 		subscribers: 5000,
-		experience: [ 
+		experience: [
 			{
 				company: { name: "Google" },
 				startDate: new Date("January 20, 2020").toLocaleDateString(),

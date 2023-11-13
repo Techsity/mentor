@@ -16,13 +16,14 @@ import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../constants";
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
+import FinalMentorOnboardingStep from "./final-step";
 
 const MentorOnboardingSteps = () => {
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
-	const totalSteps = 4;
+	const totalSteps = 5;
 	const [currentStep, setCurrentStep] = useState<number>(
 		onboardingMentor.currentStep || 1,
 	);
@@ -33,13 +34,13 @@ const MentorOnboardingSteps = () => {
 		setLoading(true);
 		setTimeout(function () {
 			if (currentStep < totalSteps) {
+				setCurrentStep((prev) => prev + 1);
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
-						currentStep,
+						currentStep: onboardingMentor.currentStep + 1,
 					}),
 				);
-				setCurrentStep((prev) => prev + 1);
 				scrollToTop();
 			}
 			setLoading(false);
@@ -90,16 +91,26 @@ const MentorOnboardingSteps = () => {
 		setLoading(false);
 		scrollToTop();
 		if (onboardingMentor)
-			if (currentStep > 1) setCurrentStep((prev) => (prev -= 1));
+			if (currentStep > 1) {
+				setCurrentStep((prev) => prev - 1);
+				dispatch(
+					setOnboardingMentor({
+						...onboardingMentor,
+						currentStep: onboardingMentor.currentStep - 1,
+					}),
+				);
+			}
 	};
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
 			<div className="w-full md:max-w-lg">
-				<MentorOnboardingStepsHeader
-					currentStep={currentStep}
-					stepsLength={totalSteps}
-				/>
+				{currentStep <= totalSteps - 1 && (
+					<MentorOnboardingStepsHeader
+						currentStep={currentStep}
+						stepsLength={totalSteps}
+					/>
+				)}
 				{currentStep === 1 ? (
 					<StepOneMentorOnboarding />
 				) : currentStep === 2 ? (
@@ -108,6 +119,8 @@ const MentorOnboardingSteps = () => {
 					<StepThreeMentorOnboarding />
 				) : currentStep === 4 ? (
 					<StepFourMentorOnboarding />
+				) : currentStep === 5 ? (
+					<FinalMentorOnboardingStep />
 				) : (
 					<StepOneMentorOnboarding />
 				)}

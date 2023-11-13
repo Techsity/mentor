@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
-import { IMentor } from "../../../../../interfaces";
 import Link from "next/link";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	return (

@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { IMentor } from "../../../../../interfaces";
 import { PrimaryButton } from "../../../atom/buttons";
 import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCard";
 import { AnimationOnScroll } from "react-animation-on-scroll";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">

@@ -79,22 +79,12 @@ const WorkHistory = () => {
 			);
 		}
 	};
-	// useEffect(() => {
-	// 	dispatch(
-	// 		setOnboardingMentor({
-	// 			...onboardingMentor,
-	// 			workHistory: onboardingMentor.workHistory?.concat([
-	// 				workExperience,
-	// 			]),
-	// 		}),
-	// 	);
-
-	// 	return () => {}
-	// }, [workExperience]);
 
 	return (
 		<div className="">
-			<h1 className="text-sm text-[#B1B1B1] mb-3">Where have you worked?</h1>
+			<h1 className="text-sm text-[#B1B1B1] mb-3">
+				Where have you worked?
+			</h1>
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.workHistory &&
 					onboardingMentor.workHistory?.length >= 1 &&
@@ -166,6 +156,9 @@ const WorkHistory = () => {
 									/>
 								</div>
 								<div className="col-span-4 grid gap-1">
+									<label htmlFor="" className="text-xs">
+										Role
+									</label>
 									<CustomTextInput
 										name="roles"
 										id="roles"
@@ -180,9 +173,12 @@ const WorkHistory = () => {
 									/>
 								</div>
 								<div className="col-span-4 grid gap-1">
+									<label htmlFor="" className="text-xs">
+										About Role
+									</label>
 									<CustomTextInput
-										name="about_roles"
-										id="about_roles"
+										name="about_role"
+										id="about_role"
 										placeholder="About This Role"
 										readOnly
 										value={work.aboutRole}
@@ -225,12 +221,6 @@ const WorkHistory = () => {
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
 						value={workExperience.startDate}
-						// rightIcon={
-						// 	<CalendarClearOutline
-						// 		height={"20px"}
-						// 		width={"20px"}
-						// 	/>
-						// }
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
@@ -262,19 +252,12 @@ const WorkHistory = () => {
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
 					<CustomTextInput
-						// ref={endDateRef}
 						name="end_date"
 						id="end_date"
 						type="text"
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
 						value={workExperience.endDate}
-						// rightIcon={
-						// 	<CalendarClearOutline
-						// 		height={"20px"}
-						// 		width={"20px"}
-						// 	/>
-						// }
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
@@ -324,8 +307,8 @@ const WorkHistory = () => {
 				</div>
 				<div className="col-span-4 grid gap-1">
 					<CustomTextInput
-						name="about_roles"
-						id="about_roles"
+						name="about_role"
+						id="about_role"
 						placeholder="About This Role"
 						type="text"
 						className="text-black"

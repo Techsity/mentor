@@ -13,7 +13,7 @@ import LayoutContainer from "../components/ui/layout";
 import "../public/styles/globals.css";
 import "../public/styles/nprogress.css";
 import "react-multi-carousel/lib/styles.css";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
 import "../constants/fonts";
 import { ThemeProvider } from "../context/theme.context";
 import { Provider } from "react-redux";
