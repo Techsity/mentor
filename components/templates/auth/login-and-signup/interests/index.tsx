@@ -5,7 +5,7 @@ import React, {
 	SetStateAction,
 	useState,
 } from "react";
-import InterestCard from "../../../../ui/atom/cards/onboading/InterestCard";
+import InterestCard from "../../../../ui/atom/cards/onboarding/InterestCard";
 import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
 import interests from "../../../../../data/onboarding/interests";

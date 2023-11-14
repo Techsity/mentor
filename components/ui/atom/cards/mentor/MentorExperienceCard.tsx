@@ -1,18 +1,31 @@
 import React from "react";
 import { formatDateDifference } from "../../../../../utils";
 import { IExperience } from "../../../../../interfaces/mentor.interface";
+import classNames from "classnames";
 
-const MentorExperienceCard = (experience: IExperience) => {
+const MentorExperienceCard = ({
+	experience,
+	className
+}: {
+	experience: IExperience;
+	className?: string;
+}) => {
 	return (
-		<div className="border border-[#70C5A1] text-sm p-4 w-full">
-			<div className="flex justify-between gap-6">
+		<div
+			className={classNames(
+				"border border-[#70C5A1] text-sm p-4 w-full",
+				className,
+			)}>
+			<div className="flex justify-between gap-6 items-center mb-4">
 				<div className="">
-					<h1 className="font-[500]">{experience.position}</h1>
+					<h1 className="font-[500]">
+						{experience.position || experience.role}
+					</h1>
 					<p className="font-[300]">
 						{experience.company.name} |{" "}
 						{formatDateDifference(
-							new Date(experience.startDate),
-							new Date(experience.endDate),
+							experience.startDate,
+							experience.endDate,
 						)}
 					</p>
 				</div>
@@ -36,16 +49,30 @@ const MentorExperienceCard = (experience: IExperience) => {
 					</svg>
 				</div>
 			</div>
-			<div className="my-4">
-				<span className="text-[#BEBEBE] text-xs">My Roles</span>
-				<div className="my-2 grid">
-					{experience.roles.slice(0, 5).join(" | ")}
+			{experience.roles && experience.roles.length >= 1 && (
+				<div className="mb-4">
+					<span className="text-[#BEBEBE] text-xs">My Roles</span>
+					<div className="my-2 grid">
+						{experience.roles?.slice(0, 5).join(" | ")}
+						{experience.role && experience.role}
+					</div>
 				</div>
-			</div>
-			<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
-				<span className="text-[#BEBEBE] text-xs">Top Skills</span>
-				{experience.topSkils.slice(0, 4).join(` | `)}
-			</div>
+			)}
+			{experience.aboutRole && (
+				<div className="my-4">
+					<span className="text-[#BEBEBE] text-xs">
+						About the role
+					</span>
+					<div className="my-2 grid">{experience.aboutRole}</div>
+				</div>
+			)}
+
+			{experience.topSkills.length >= 1 && (
+				<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
+					<span className="text-[#BEBEBE] text-xs">Top Skills</span>
+					{experience.topSkills.slice(0, 4).join(` | `)}
+				</div>
+			)}
 		</div>
 	);
 };

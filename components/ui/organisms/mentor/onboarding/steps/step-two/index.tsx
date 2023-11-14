@@ -9,8 +9,8 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import WorkHistory from "./WorkHistory";
 import Projects from "./Projects";
+import WorkHistory from "./WorkHistory";
 
 const StepTwoMentorOnboarding = () => {
 	const dispatch = useDispatch();
@@ -19,19 +19,12 @@ const StepTwoMentorOnboarding = () => {
 	const addSkill = (skill: string) => {
 		if (skill)
 			if (onboardingMentor.skills.length < 5) {
-				if (onboardingMentor.skills.includes(skill)) {
-					toast.info(
-						"Tag has aleady been added!",
-						ToastDefaultOptions({ id: "info", theme: "dark" }),
-					);
-				} else {
-					dispatch(
-						setOnboardingMentor({
-							...onboardingMentor,
-							skills: [...onboardingMentor.skills, skill],
-						}),
-					);
-				}
+				dispatch(
+					setOnboardingMentor({
+						...onboardingMentor,
+						skills: [...onboardingMentor.skills, skill],
+					}),
+				);
 			} else {
 				toast.error(
 					"Skills limit reached!",

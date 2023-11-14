@@ -1,17 +1,21 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { PrimaryButton } from "../buttons";
 import CustomTextInput from "./CustomTextInput";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../constants";
 
 const TagsInput = ({
 	addTag,
 	onRemove,
 	tagsState,
 	textLength = 15,
+	showSelectedTags = true,
 }: {
 	textLength?: number;
 	tagsState: string[];
-	addTag: (tag: string) => void;
-	onRemove: (tag: string) => (e: MouseEvent) => void;
+	showSelectedTags?: boolean;
+	addTag?: (tag: string) => void;
+	onRemove?: (tag: string) => void;
 }) => {
 	const [currentTag, setCurrentTag] = useState<string>("");
 
@@ -39,9 +43,22 @@ const TagsInput = ({
 					</div>
 					<div className="flex justify-start">
 						<PrimaryButton
-							onClick={(e) => {
-								addTag(currentTag.trim());
-								setCurrentTag("");
+							onClick={() => {
+								if (tagsState.includes(currentTag)) {
+									toast.info(
+										"Tag has aleady been added!",
+										ToastDefaultOptions({
+											id: "info",
+											theme: "dark",
+										}),
+									);
+									return;
+								}
+								if (addTag) {
+									addTag(currentTag.trim());
+									setCurrentTag("");
+								}
+								// addTag && addTag(currentTag.trim());
 							}}
 							title="Add"
 							className="flex justify-center w-full px-5 p-4 h-full"
@@ -49,7 +66,7 @@ const TagsInput = ({
 					</div>
 				</div>
 			</div>
-			{tagsState.length > 0 && (
+			{showSelectedTags && tagsState.length > 0 && (
 				<div className="px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
 					{tagsState.map((tag, id) => (
 						<span
@@ -57,7 +74,9 @@ const TagsInput = ({
 							className="animate__fadeInDown animate__animated flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-[#fff]">
 							{tag}
 							<svg
-								onClick={onRemove(tag)}
+								onClick={() => {
+									onRemove && onRemove(tag);
+								}}
 								className="h-5 w-5 ml-3"
 								viewBox="0 0 20 20"
 								fill="#d31119">
