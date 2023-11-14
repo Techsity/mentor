@@ -31,7 +31,7 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 							<AnimationOnScroll
 								animateIn="animate__slideInUp"
 								animateOnce>
-								<MentorExperienceCard {...experience} />
+								<MentorExperienceCard experience={experience} />
 							</AnimationOnScroll>
 						</div>
 					))

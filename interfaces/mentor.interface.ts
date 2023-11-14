@@ -12,10 +12,7 @@ export interface IMentorOnboardingState {
 	yearsOfExp: number;
 	projects: { name: string; link: string; nature: string }[];
 	certificates: { institution: string; type: string; year: string }[];
-	workHistory?: (Pick<
-		IExperience,
-		"company" | "endDate" | "startDate" | "position" | "topSkils"
-	> & { aboutRole?: string; role: string })[];
+	workHistory?: IExperience[];
 	education: {
 		school: {
 			name: string;
@@ -72,10 +69,13 @@ export interface IMentorshipSession {
 }
 
 export interface IExperience {
+	id?: string;
 	position: string;
 	company: { name: string; logo?: string };
-	topSkils: string[];
-	roles: string[];
+	topSkills: string[];
+	roles?: string[];
+	role?: string;
+	aboutRole?: string;
 	startDate: string;
 	endDate: string;
 	country?: CountryCode;

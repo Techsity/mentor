@@ -48,6 +48,8 @@ const StepOneMentorOnboarding = () => {
 						// value={onboardingMentor.jobTitle || jobInputRef}
 						// value={jobInputRef}
 						type="text"
+						name="job_title"
+						id="job_title"
 						className="bg-white"
 						containerProps={{
 							className: "border border-[#00D569]",
