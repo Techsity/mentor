@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import { onboardingMentor as onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import MentorExperienceCard from "../../../../../atom/cards/mentor/MentorExperienceCard";
@@ -20,7 +20,7 @@ const FinalStepExperienceEdit = () => {
 			{showExperienceEdit ? (
 				<WorkHistory reEdit />
 			) : (
-				<div className="grid gap-3 animate__animated animate__fadeIn">
+				<div className="grid gap-3 animate__animated animate__fadeIn max-w-lg">
 					{onboardingMentor.workHistory?.map((experience) => {
 						return (
 							<MentorExperienceCard

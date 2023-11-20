@@ -13,7 +13,7 @@ const MentorExperienceCard = ({
 	return (
 		<div
 			className={classNames(
-				"border border-[#70C5A1] text-sm p-4 w-full",
+				"border border-[#70C5A1] text-sm p-4 w-full max-w-lg",
 				className,
 			)}>
 			<div className="flex justify-between gap-6 items-center mb-4">
@@ -63,7 +63,7 @@ const MentorExperienceCard = ({
 					<span className="text-[#BEBEBE] text-xs">
 						About the role
 					</span>
-					<div className="my-2 grid">{experience.aboutRole}</div>
+					<div className="my-2 break-words">{experience.aboutRole}</div>
 				</div>
 			)}
 			{experience.topSkills.length >= 1 && (

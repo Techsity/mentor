@@ -30,7 +30,7 @@ const FinalStepAboutYouEdit = () => {
 						ref={jobTitleInputRef}
 						value={onboardingMentor.jobTitle}
 						// readOnly={true}
-						className="bg-transparent"
+						className="bg-transparent px-0"
 						containerProps={{
 							className:
 								"bg-transparent border-transparent w-full",
@@ -46,6 +46,7 @@ const FinalStepAboutYouEdit = () => {
 					/>
 				</div>
 			</div>
+
 			<div className="grid gap-2">
 				<FinalStepEditButton
 					title="About you"
@@ -58,7 +59,7 @@ const FinalStepAboutYouEdit = () => {
 						inputMode="text"
 						ref={bioInputRef}
 						value={onboardingMentor.bio}
-						className="resize-none h-[160px] bg-transparent"
+						className="resize-none h-[160px] bg-transparent px-0"
 						containerProps={{
 							className:
 								"bg-transparent border-transparent w-full",

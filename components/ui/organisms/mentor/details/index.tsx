@@ -4,6 +4,7 @@ import { PrimaryButton } from "../../../atom/buttons";
 import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCard";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
+import classnames from "classnames";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">
@@ -48,14 +49,14 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 		</AnimationOnScroll>
 	</div>
 );
-const Projects = ({
+const MentorProjects = ({
 	projects,
 	reEdit = false,
 }: {
 	projects: IMentor["projects"];
 	reEdit?: boolean;
 }) => (
-	<div className="grid gap-3 mt-9">
+	<div className={"grid gap-3 mt-9"}>
 		{!reEdit && (
 			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<h1 className="text-xl font-semibold">Projects</h1>
@@ -171,4 +172,4 @@ const AvailabiltySchedule = (mentor: IMentor) => (
 	</div>
 );
 
-export { Skills, Experience, Projects, AvailabiltySchedule };
+export { Skills, Experience, MentorProjects, AvailabiltySchedule };

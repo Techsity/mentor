@@ -7,10 +7,10 @@ import {
 import { useDispatch } from "react-redux";
 import MentorExperienceCard from "../../../../../atom/cards/mentor/MentorExperienceCard";
 import WorkHistory from "../step-two/WorkHistory";
-import { Projects } from "../../../details";
 import FinalStepAboutYouEdit from "./FinalStepAboutYouEdit";
 import FinalStepSkillEdit from "./FinalStepSkillEdit";
 import FinalStepExperienceEdit from "./FinalStepExperienceEdit";
+import FinalStepProjectsEdit from "./FinalStepProjectsEdit";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
@@ -30,15 +30,7 @@ const FinalMentorOnboardingStep = () => {
 				<FinalStepAboutYouEdit />
 				<FinalStepSkillEdit />
 				<FinalStepExperienceEdit />
-				<div className="grid gap-2 my-2">
-					<FinalStepEditButton
-						title="Your Projects"
-						editAction={() => {}}
-					/>
-					<div className="">
-						<Projects projects={onboardingMentor.projects} reEdit />
-					</div>
-				</div>
+				<FinalStepProjectsEdit />
 			</div>
 		</div>
 	);
