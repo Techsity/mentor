@@ -57,17 +57,10 @@ const Availability = () => {
 		day: string;
 	}) => {
 		const { day, field, time } = args;
-
 		const { meridan, min, secs } = time;
-		setSchedule((prev) =>
-			prev.concat({
-				day,
-				time: {
-					start: `${min}:${secs} ${meridan}`,
-					end: `${min}:${secs} ${meridan}`,
-				},
-			}),
-		);
+		// Check if there's an entry already for the specified day, then update
+		// else enter new entry
+
 		setEndTimeIsOpen(false);
 		setStartTimeIsOpen(false);
 		console.log(time);
@@ -105,7 +98,7 @@ const Availability = () => {
 									})
 								}
 							/>
-							{!endTimeIsOpen && startTimeIsOpen === id && (
+							{startTimeIsOpen === id && !endTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
 										onChange={(time) =>
@@ -138,7 +131,7 @@ const Availability = () => {
 									})
 								}
 							/>
-							{!startTimeIsOpen && endTimeIsOpen === id && (
+							{endTimeIsOpen === id && !startTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
 										onChange={(time) =>

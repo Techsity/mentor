@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, useToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PagePreLoader from "../components/ui/atom/loader/PagePreLoader";
 import LayoutContainer from "../components/ui/layout";
@@ -23,28 +23,16 @@ import apolloClient from "../utils/apolloClient";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const [initialLoad, setInitialLoad] = useState<boolean>(true);
-	const router = useRouter();
-
 	useEffect(() => {
-		const handleStart = () => {
-			NProgress.start();
-		};
-		const handleStop = () => {
-			scrollTo({ top: 0, behavior: "smooth" });
-			NProgress.done();
-		};
-		router.events.on("routeChangeStart", handleStart);
-		router.events.on("routeChangeComplete", handleStop);
-		router.events.on("routeChangeError", handleStop);
-		setTimeout(() => {
+		document.body.classList.add("overflow-hidden");
+		const timeout = setTimeout(() => {
+			document.body.classList.remove("overflow-hidden");
 			setInitialLoad(false);
 		}, 4000);
 		return () => {
-			router.events.off("routeChangeStart", handleStart);
-			router.events.off("routeChangeComplete", handleStop);
-			router.events.off("routeChangeError", handleStop);
+			clearTimeout(timeout);
 		};
-	}, [router]);
+	}, []);
 
 	return (
 		<ApolloProvider client={apolloClient()}>
@@ -63,15 +51,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 						/>
 					</Head>
 					<LayoutContainer>
-						{/* {initialLoad && <PagePreLoader />} */}
-						{initialLoad ? (
-							<PagePreLoader />
-						) : (
-							<>
-								<ToastContainer />
-								<Component {...pageProps} />
-							</>
-						)}
+						<ToastContainer
+							limit={1}
+							newestOnTop
+							autoClose={5000}
+							theme="dark"
+							hideProgressBar
+							closeOnClick
+							draggable
+						/>
+						{initialLoad && <PagePreLoader />}
+						<Component {...pageProps} />
 					</LayoutContainer>
 				</ThemeProvider>
 			</Provider>

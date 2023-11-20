@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 const MentorExperienceCard = ({
 	experience,
-	className
+	className,
 }: {
 	experience: IExperience;
 	className?: string;
@@ -59,14 +59,13 @@ const MentorExperienceCard = ({
 				</div>
 			)}
 			{experience.aboutRole && (
-				<div className="my-4">
+				<div className="my-2">
 					<span className="text-[#BEBEBE] text-xs">
 						About the role
 					</span>
 					<div className="my-2 grid">{experience.aboutRole}</div>
 				</div>
 			)}
-
 			{experience.topSkills.length >= 1 && (
 				<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
 					<span className="text-[#BEBEBE] text-xs">Top Skills</span>

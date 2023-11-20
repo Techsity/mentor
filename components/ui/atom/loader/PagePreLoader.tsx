@@ -3,6 +3,7 @@ import { useTheme } from "../../../../context/theme.context";
 
 const PagePreLoader = () => {
 	const { theme } = useTheme();
+
 	return (
 		<div
 			className={`select-none z-50 fixed h-full w-full bg-[whitesmoke] top-0 left-0 overflow-hidden min-h-screen min-w-screen flex justify-center items-center text-white`}>

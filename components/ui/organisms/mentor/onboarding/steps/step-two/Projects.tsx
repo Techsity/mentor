@@ -8,64 +8,24 @@ import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	IExperience,
+	IMentor,
 	IMentorOnboardingState,
+	IMentorProjectType,
 } from "../../../../../../../interfaces/mentor.interface";
 import { Add, CalendarClearOutline } from "react-ionicons";
 import { isValidUrl, slugify } from "../../../../../../../utils";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
+import EditProjectCard from "../../../../../atom/cards/mentor/onboarding/EditProjectCard";
 
-type ExtractedProjectType = IMentorOnboardingState["projects"][0];
-
-const Projects = () => {
+const Projects = ({ reEdit = false }: { reEdit?: boolean }) => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const initalState: ExtractedProjectType = {
-		link: "",
-		name: "",
-		nature: "",
-	};
-
-	const [project, setProject] = useState<ExtractedProjectType>(initalState);
-
-	const handleAddProject = () => {
-		if (project.name && project.link && project.nature) {
-			const isDuplicate =
-				onboardingMentor.projects &&
-				onboardingMentor.projects.some(
-					(project) =>
-						project.name.toLowerCase() ===
-							project.name.toLowerCase() &&
-						project.link === project.link &&
-						project.nature === project.nature,
-				);
-			if (!isDuplicate) {
-				// !check if project link is a valid url
-				if (!isValidUrl(project.link)) {
-					toast.error(
-						"Invalid project URL",
-						ToastDefaultOptions({
-							id: "error",
-							theme: "dark",
-						}),
-					);
-					return;
-				}
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						projects: onboardingMentor.projects?.concat(project),
-					}),
-				);
-				setProject(initalState);
-			}
-		}
-	};
 
 	const handleRemoveProject = (slug: string) => {
 		if (onboardingMentor.projects) {
 			const updatedProjects = onboardingMentor.projects.filter(
-				(project) => slugify(project.name) !== slug,
+				(project) => slugify(project.title) !== slug,
 			);
 			dispatch(
 				setOnboardingMentor({
@@ -75,17 +35,7 @@ const Projects = () => {
 			);
 		}
 	};
-	const handleChange =
-		(field: keyof ExtractedProjectType) =>
-		(e: ChangeEvent<HTMLInputElement>) => {
-			const {
-				target: { value },
-			} = e;
-			setProject({
-				...project,
-				[field]: value,
-			});
-		};
+
 	return (
 		<div className="">
 			<h1 className="text-sm text-[#B1B1B1] mb-3">
@@ -95,7 +45,7 @@ const Projects = () => {
 				{onboardingMentor?.projects &&
 					onboardingMentor.projects?.length >= 1 &&
 					onboardingMentor.projects.map((project, index) => {
-						const id = slugify(project.name);
+						const id = slugify(project.title);
 						return (
 							<div
 								key={id}
@@ -110,7 +60,7 @@ const Projects = () => {
 										type="text"
 										className="text-black"
 										readOnly
-										value={project.name}
+										value={project.title}
 										containerProps={{
 											className: "border border-zinc-200",
 										}}
@@ -143,7 +93,7 @@ const Projects = () => {
 										type="text"
 										className="text-black select-none"
 										placeholder="Nature of Project"
-										value={project.nature}
+										value={project.type}
 										containerProps={{
 											className: "border border-zinc-200",
 										}}
@@ -161,55 +111,17 @@ const Projects = () => {
 						);
 					})}
 			</div>
-			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3">
-				<div className="col-span-4 grid gap-1">
-					<CustomTextInput
-						name="title_of_project"
-						id="title_of_project"
-						type="text"
-						value={project.name}
-						className="text-black"
-						onChange={handleChange("name")}
-						containerProps={{
-							className: "border border-zinc-200",
-						}}
-					/>
-				</div>
-				<div className="col-span-2 grid gap-1 relative">
-					<CustomTextInput
-						name="link_to_project"
-						id="link_to_project"
-						type="url"
-						className="text-black select-none"
-						value={project.link}
-						placeholder="Link To Project"
-						containerProps={{
-							className: "border border-zinc-200",
-						}}
-						onChange={handleChange("link")}
-					/>
-				</div>
-				<div className="col-span-2 grid gap-1 relative">
-					<CustomTextInput
-						name="project_nature"
-						id="project_nature"
-						type="text"
-						value={project.nature}
-						className="text-black select-none"
-						placeholder="Nature of Project"
-						containerProps={{
-							className: "border border-zinc-200",
-						}}
-						onChange={handleChange("nature")}
-					/>
-				</div>
-			</div>
-			<div
-				className="font-medium flex justify-end gap-1 items-center text-[#B1B1B1] select-none cursor-pointer"
-				onClick={() => handleAddProject()}>
-				<span className="text-2xl">+</span>
-				<p className="">Add New Project</p>
-			</div>
+			<EditProjectCard
+				projectsArr={onboardingMentor.projects}
+				onAdd={(updated) => {
+					dispatch(
+						setOnboardingMentor({
+							...onboardingMentor,
+							projects: updated,
+						}),
+					);
+				}}
+			/>
 		</div>
 	);
 };

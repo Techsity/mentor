@@ -32,6 +32,7 @@ const MentorOnboardingSteps = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const moveToNextStep = () => {
+		setLoading(true);
 		setTimeout(function () {
 			if (currentStep < totalSteps) {
 				dispatch(
@@ -56,26 +57,7 @@ const MentorOnboardingSteps = () => {
 					setLoading(false);
 				}
 			}
-			if (currentStep === 2) {
-				if (
-					onboardingMentor.skills &&
-					onboardingMentor.yearsOfExp &&
-					onboardingMentor.workHistory
-				) {
-					if (onboardingMentor.workHistory?.length < 1) {
-						toast.error(
-							"Add at least one work experience",
-							ToastDefaultOptions({ id: "error", theme: "dark" }),
-						);
-						setLoading(false);
-						return;
-					}
-					moveToNextStep();
-				} else {
-					setLoading(false);
-				}
-			}
-			if (currentStep === 3 || currentStep === 4) {
+			if (currentStep === 2 || currentStep === 3 || currentStep === 4) {
 				moveToNextStep();
 			}
 		} else {

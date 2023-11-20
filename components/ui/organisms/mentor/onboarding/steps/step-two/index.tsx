@@ -77,6 +77,7 @@ const StepTwoMentorOnboarding = () => {
 						type="number"
 						max={"40"}
 						min="1"
+						inputMode="numeric"
 						onChange={(e) =>
 							dispatch(
 								setOnboardingMentor({

@@ -16,30 +16,7 @@ import Socials from "../../../ui/atom/common/course/Socials";
 import OtherCoursesByMentor from "../../../ui/organisms/course-details/other-courses-by-mentor";
 
 const MentorDetailsTemplate = (mentor: IMentor) => {
-	const carouselRef = useRef<HTMLDivElement>(null);
-	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
-
 	const coursesByMentor = getMentorCourses(mentor.username);
-
-	const moveLeft = () => {
-		if (currentSlideIndex > 0) {
-			setCurrentSlideIndex((prev) => prev - 1);
-			carouselRef.current?.scrollBy({
-				left: -250,
-				behavior: "smooth",
-			});
-		}
-	};
-
-	const moveRight = () => {
-		if (currentSlideIndex < coursesByMentor.length - 1) {
-			setCurrentSlideIndex((prev) => prev + 1);
-			carouselRef.current?.scrollBy({
-				left: 250,
-				behavior: "smooth",
-			});
-		}
-	};
 
 	return (
 		<>

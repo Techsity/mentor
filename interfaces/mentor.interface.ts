@@ -10,7 +10,7 @@ export interface IMentorOnboardingState {
 	bio: string;
 	skills: string[];
 	yearsOfExp: number;
-	projects: { name: string; link: string; nature: string }[];
+	projects: IMentorProjectType[];
 	certificates: { institution: string; type: string; year: string }[];
 	workHistory?: IExperience[];
 	education: {
@@ -33,16 +33,18 @@ export interface IMentee {
 	username: string;
 	mentors: RefrencedMentorType[];
 }
+
+export type IMentorProjectType = {
+	title: string;
+	link: string;
+	type: "Freelance" | "Contract" | "Official" | "";
+};
 export interface IMentor {
 	name: string;
 	username: string;
 	jobTitle: string;
 	experience?: IExperience[];
-	projects?: {
-		title: string;
-		link: string;
-		type: "Freelance" | "Contract" | "Official";
-	}[];
+	projects?: IMentorProjectType[];
 	mentees: RefrencedMenteeType[];
 	subscribers: number;
 	sessions: number;

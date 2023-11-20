@@ -48,11 +48,19 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 		</AnimationOnScroll>
 	</div>
 );
-const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
+const Projects = ({
+	projects,
+	reEdit = false,
+}: {
+	projects: IMentor["projects"];
+	reEdit?: boolean;
+}) => (
 	<div className="grid gap-3 mt-9">
-		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-			<h1 className="text-xl font-semibold">Projects</h1>
-		</AnimationOnScroll>
+		{!reEdit && (
+			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
+				<h1 className="text-xl font-semibold">Projects</h1>
+			</AnimationOnScroll>
+		)}
 		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
 			{projects &&
 				projects
@@ -62,8 +70,11 @@ const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 							animateIn="animate__slideInUp"
 							animateOnce>
 							<Link href={project.link || "#"}>
-								<div className="border border-[#70C5A1] text-sm p-4 w-full flex justify-between gap-5 cursor-pointer">
-									<div className="w-2/3">
+								<div
+									className={`border border-[#70C5A1] text-sm p-4 w-full flex items-center justify-between gap-5 cursor-pointer ${
+										reEdit ? "bg-white" : "bg-transparent"
+									}`}>
+									<div className="basis-2/3">
 										<h1 className="font-[500]">
 											{project.title}
 										</h1>
@@ -71,11 +82,11 @@ const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 											{project.type}
 										</p>
 									</div>
-									<div className="w-1/2">
+									<div className="basis-2/3">
 										<h1 className="font-[500] text-[#BEBEBE]">
 											Link
 										</h1>
-										<p className="font-[300] my-2">
+										<p className="font-[400] my-2">
 											{project.link}
 										</p>
 									</div>
@@ -85,13 +96,15 @@ const Projects = ({ projects }: { projects: IMentor["projects"] }) => (
 					))
 					.slice(0, 2)}
 		</span>
-		<div className="mt-3">
-			<PrimaryButton
-				title="View all Projects"
-				link="#"
-				className="p-4 px-8"
-			/>
-		</div>
+		{!reEdit && (
+			<div className="mt-3">
+				<PrimaryButton
+					title="View all Projects"
+					link="#"
+					className="p-4 px-8"
+				/>
+			</div>
+		)}
 	</div>
 );
 const AvailabiltySchedule = (mentor: IMentor) => (

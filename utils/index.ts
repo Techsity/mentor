@@ -155,6 +155,7 @@ export function capitalizeSentence(sentence: string) {
 	}
 }
 
+
 export const isValidUrl = (url: string) => {
 	try {
 		new URL(url);

@@ -18,7 +18,7 @@ const MentorOnboardingStepsHeader = (props: {
 					<div
 						className={`h-10 z-10 h-9 sm:h-16 sm:w-16 p-3.5 sm:p-5 items-center flex justify-center rounded-full ${
 							currentStep >= step
-								? "text-white bg-[#70C5A1] animate__animated animate__bounceIn animate__slow"
+								? "text-white bg-[#70C5A1] md:animate__animated animate__bounceIn animate__slow"
 								: "text-black bg-zinc-200"
 						}`}>
 						{step}

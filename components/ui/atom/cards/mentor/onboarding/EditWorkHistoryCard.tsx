@@ -93,13 +93,14 @@ const EditWorkHistoryCard = ({
 					setLoading(false);
 					updateWorkExperiences(updatedExperiences);
 					toast.success(
-						"Updated successfully",
+						"Field updated successfully",
 						ToastDefaultOptions({ id: "success", theme: "dark" }),
 					);
 				}, 1000);
 			}
 		}
 	};
+
 	return (
 		<>
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3">
