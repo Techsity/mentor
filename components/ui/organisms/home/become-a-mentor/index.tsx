@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const BecomeMentor = () => {
 	return (
-		<div className="bg-[#FFFAEF] relative mb-10 tracking-tight overflow-hidden py-2 sm:py-20 w-screen tracking-tight md:flex justify-center items-center lg:px-44 sm:px-16 px-6">
+		<div className="bg-[#FFFAEF] relative mb-10 tracking-tight overflow-hidden py-2 sm:py-20 w-screen tracking-tight md:flex justify-center items-center xl:px-44 sm:px-16 px-6">
 			<AnimationOnScroll animateIn="animate__slideInLeft" animateOnce={true}>
 				<div className="max-w-lg lg:max-w-xl xl:max-w-2xl grid gap-5 md:py-0 py-10">
 					<h1

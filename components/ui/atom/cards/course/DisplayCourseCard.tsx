@@ -29,20 +29,13 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 									cssClasses="duration-300 cursor-pointer"
 								/>
 							) : (
-								<Link
-									href={`/courses/${slugify(course.title)}`}>
-									<div>
-										<HeartOutline
-											onClick={() =>
-												addToWishlist(course)
-											}
-											color="#fff"
-											height="30px"
-											width="30px"
-											cssClasses="duration-300 cursor-pointer"
-										/>
-									</div>
-								</Link>
+								<HeartOutline
+									onClick={() => addToWishlist(course)}
+									color="#fff"
+									height="30px"
+									width="30px"
+									cssClasses="duration-300 cursor-pointer"
+								/>
 							)}
 
 							<Link href={`/courses/${slugify(course.title)}`}>
