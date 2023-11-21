@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,8 @@ import FinalStepSkillEdit from "./FinalStepSkillEdit";
 import FinalStepExperienceEdit from "./FinalStepExperienceEdit";
 import FinalStepProjectsEdit from "./FinalStepProjectsEdit";
 import FinalStepEducationEdit from "./FinalStepEducationEdit";
+import FinalStepCertificateEdit from "./FinalStepCertificateEdit";
+import FinalStepAvailabilityEdit from "./FinalStepAvailabilityEdit";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
@@ -33,6 +35,8 @@ const FinalMentorOnboardingStep = () => {
 				<FinalStepExperienceEdit />
 				<FinalStepProjectsEdit />
 				<FinalStepEducationEdit />
+				<FinalStepCertificateEdit />
+				<FinalStepAvailabilityEdit />
 			</div>
 		</div>
 	);

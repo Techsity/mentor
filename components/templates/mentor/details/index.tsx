@@ -5,7 +5,7 @@ import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import {
 	AvailabiltySchedule,
 	Experience,
-	Projects,
+	MentorProjects,
 	Skills,
 } from "../../../ui/organisms/mentor/details/";
 import { getMentorCourses } from "../../../../services/api";
@@ -24,7 +24,7 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 				<div className=" animate__animated animate__slideInDown lg:px-20 sm:px-12 px-6">
 					<MentorProfileCard mentor={mentor} detailsPage />
 				</div>
-				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start lg:px-20 sm:px-12 px-6">
+				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start lg:px-20 sm:px-12 px-6">
 					<div className="flex-grow min-h-screen overflow-hidden">
 						<AnimationOnScroll
 							animateIn="animate__slideInUp"
@@ -32,7 +32,9 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 							<Skills skills={mentor.skills} />
 						</AnimationOnScroll>
 						<Experience experience={mentor.experience} />
-						<Projects projects={mentor.projects} />
+						<div className="my-5 lg:max-w-xl">
+							<MentorProjects projects={mentor.projects} />
+						</div>
 						<ListReviews />
 						<div className="flex max-w-xl justify-between items-center mt-5">
 							<p className="text-[#F15E63] cursor-pointer hover:underline">

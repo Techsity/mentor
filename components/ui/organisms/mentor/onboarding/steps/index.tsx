@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import StepOneMentorOnboarding from "./step-one";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
@@ -8,12 +8,10 @@ import StepTwoMentorOnboarding from "./step-two";
 import { scrollToTop } from "../../../../../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../redux/reducers/features/onboardingSlice";
 import { currentUser } from "../../../../../../redux/reducers/features/authSlice";
-import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../../../constants";
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
@@ -102,14 +100,13 @@ const MentorOnboardingSteps = () => {
 					<StepOneMentorOnboarding />
 				)}
 				<div className="my-6 flex justify-between items-center w-full">
-					{/* {loading ? (
+					{loading ? (
 						<ActivityIndicator
 							color="#094B10"
-							className="mt-6"
+							className="mt-3"
 							size={30}
 						/>
-					) : ( */}
-					{currentStep > 1 && currentStep >= totalSteps ? (
+					) : currentStep > 1 && currentStep >= totalSteps ? (
 						<div className="flex justify-start items-center">
 							<PrimaryButton
 								title={loading ? "" : "Looking good, let's go!"}
@@ -145,7 +142,7 @@ const MentorOnboardingSteps = () => {
 							</div>
 						</div>
 					)}
-					{/* )} */}
+
 					{currentStep > 1 && currentStep <= totalSteps - 1 && (
 						<span
 							onClick={() => moveToNextStep()}

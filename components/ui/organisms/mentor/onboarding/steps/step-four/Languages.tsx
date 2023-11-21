@@ -3,13 +3,14 @@ import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	setOnboardingMentor,
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 
 const Languages = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
+	const languageInputRef = useRef<HTMLInputElement>(null);
 
 	const languageSuggestions = [
 		"English",
@@ -33,6 +34,7 @@ const Languages = () => {
 	});
 
 	const updateLanguages = (lang: string) => {
+		languageInputRef.current && languageInputRef.current?.focus();
 		if (
 			lang &&
 			onboardingMentor.languages &&
@@ -77,6 +79,7 @@ const Languages = () => {
 				onChange={handleChange}
 				value={languageInput}
 				className="bg-white"
+				ref={languageInputRef}
 				containerProps={{
 					className: "border border-[#00D569]",
 				}}

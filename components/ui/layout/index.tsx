@@ -9,7 +9,7 @@ import {
 } from "../../../redux/reducers/features/authSlice";
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
-import Progressbar from "../atom/loader/Progressbar";
+import Progressbar from "../atom/loader/ProgressBar";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	const auth = useSelector(isLoggedIn);

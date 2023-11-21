@@ -5,13 +5,12 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
 	setOnboardingMentor,
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
 import Availability from "./Availability";
 import Languages from "./Languages";
-
 
 const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();

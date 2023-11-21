@@ -2,6 +2,7 @@
 import React from "react";
 import { ICourse } from "../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../utils";
+import Link from "next/link";
 
 const CourseDetailsPageHero = (course: ICourse) => {
 	return (
@@ -43,16 +44,18 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					</div>
 				</div>
 				<div className="my-2 sm:my-4 flex items-center gap-2">
-					<div className="flex gap-1.5 items-center">
-						<img
-							src={
-								course.mentor.avatar ||
-								"/assets/images/avatar.png"
-							}
-							className="rounded-full w-20"
-							alt={course.mentor.name}
-						/>
-					</div>
+					<Link href={`/mentors/${course.mentor.username}`}>
+						<div className="flex gap-1.5 items-center cursor-pointer">
+							<img
+								src={
+									course.mentor.avatar ||
+									"/assets/images/avatar.png"
+								}
+								className="rounded-full w-20"
+								alt={course.mentor.name}
+							/>
+						</div>
+					</Link>
 					<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
 						<h1 className="font-semibold text-lg flex item-center gap-2">
 							{course.mentor.name}

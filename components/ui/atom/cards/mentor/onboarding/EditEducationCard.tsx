@@ -78,7 +78,11 @@ const EditEducationCard = ({
 				ed.startDate === exisitingEducation?.startDate &&
 				ed.endDate === exisitingEducation?.endDate,
 		);
-		updatedEducation[updateEducationIndex] = education;
+		if (updateEducationIndex !== -1)
+			updatedEducation[updateEducationIndex] = {
+				...updatedEducation[updateEducationIndex],
+				...education,
+			};
 		setTimeout(function () {
 			onUpdate && onUpdate(updatedEducation);
 			exisitingEducation && toast.success("Field updated successfully");

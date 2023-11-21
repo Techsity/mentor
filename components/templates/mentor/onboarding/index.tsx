@@ -7,7 +7,7 @@ import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
 import {
 	setOnboardingMentor,
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 } from "../../../../redux/reducers/features/onboardingSlice";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";

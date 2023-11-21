@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
-import { onboardingMentor as onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import MentorExperienceCard from "../../../../../atom/cards/mentor/MentorExperienceCard";
 import WorkHistory from "../step-two/WorkHistory";
 import { useDispatch, useSelector } from "react-redux";

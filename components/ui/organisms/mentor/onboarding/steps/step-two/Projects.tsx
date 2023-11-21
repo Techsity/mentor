@@ -1,7 +1,7 @@
 import React from "react";
 import {
 	setOnboardingMentor,
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import {
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -2,6 +2,15 @@ import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse } from "./index";
 import { IUser } from "./user.interface";
 
+export interface IMentorEducation {
+	school: {
+		name: string;
+	};
+	endDate: string;
+	startDate: string;
+	course?: string;
+	degree?: string;
+}
 export interface IMentorOnboardingState {
 	currentStep: number;
 	agreedToTerms: boolean;
@@ -13,15 +22,7 @@ export interface IMentorOnboardingState {
 	projects: IMentorProjectType[];
 	certificates: { institution: string; type: string; year: string }[];
 	workHistory?: IExperience[];
-	education: {
-		school: {
-			name: string;
-		};
-		endDate: string;
-		startDate: string;
-		course?: string;
-		degree?: string;
-	}[];
+	education: IMentorEducation[];
 	languages?: string[];
 }
 
@@ -56,6 +57,7 @@ export interface IMentor {
 	verified: boolean;
 	ratePerHour: number;
 	about: string;
+	education?: IMentorEducation[];
 	country: CountryCode;
 	languages: string[];
 	followers: number;

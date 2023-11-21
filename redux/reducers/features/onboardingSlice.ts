@@ -56,6 +56,6 @@ export const { setOnboardingMentor } = onboardingSlice.actions;
 export const mentorOnboardingTermsAgreed = (state: RootState) =>
 	state.onboarding.mentor.agreedToTerms;
 
-export const onboardingMentor = (state: RootState) => state.onboarding.mentor;
+export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
 
 export default onboardingSlice.reducer;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../redux/reducers/features/onboardingSlice";
 import { scrollToTop } from "../../../../../utils";

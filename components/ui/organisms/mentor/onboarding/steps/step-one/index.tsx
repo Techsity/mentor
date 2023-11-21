@@ -1,22 +1,15 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	onboardingMentor as onboardingMentorState,
+	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
-import jobTitleSuggestions from "../../../../../../../data/onboarding/jobTitleSuggestions";
-// import useSuggestions from "../../../../../../hooks/input/useSuggestions";
 
 const StepOneMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	// const [jobInputRef, setJobInputRef] = useState<string>("");
-	// const { SuggestionsComponent, selectedSuggestions } = useSuggestions({
-	// 	inputValue: jobInputRef,
-	// 	suggestions: jobTitleSuggestions,
-	// });
 
 	return (
 		<div className="animate__animated animate__fadeInLeft">

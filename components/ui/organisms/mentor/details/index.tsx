@@ -4,8 +4,6 @@ import { PrimaryButton } from "../../../atom/buttons";
 import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCard";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import classnames from "classnames";
-import EditProjectCard from "../../../atom/cards/mentor/onboarding/EditProjectCard";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">
@@ -24,7 +22,7 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<h1 className="text-xl font-semibold">Experience</h1>
 		</AnimationOnScroll>
-		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
+		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-xl w-full">
 			{experience &&
 				experience?.length >= 1 &&
 				experience
@@ -50,6 +48,7 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 		</AnimationOnScroll>
 	</div>
 );
+
 const MentorProjects = ({
 	projects,
 	reEdit = false,
