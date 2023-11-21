@@ -3,6 +3,7 @@ import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { LiveWorkshopGlobeSvg } from "../../../atom/icons/svgs";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const LiveWorkshops = () => {
 	return (

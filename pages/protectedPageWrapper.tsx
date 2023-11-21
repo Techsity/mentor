@@ -8,7 +8,7 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
 		const user = useSelector(currentUser);
-		const next = location.href;
+		const next = window && window.location.href;
 		if (!auth || !user) {
 			// localStorage.setItem("previousUrl", router.asPath);
 			router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
