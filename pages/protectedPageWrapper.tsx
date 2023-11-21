@@ -8,14 +8,18 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
 		const user = useSelector(currentUser);
-		const next = window && window.location.href;
-		if (!auth || !user) {
-			// localStorage.setItem("previousUrl", router.asPath);
-			router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-			return <div className="min-h-screen"></div>;
+		if (typeof window !== "undefined") {
+			const next = router.basePath.concat(router.asPath);
+			if (!auth || !user) {
+				// localStorage.setItem("previousUrl", router.asPath);
+				router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+				return <div className="min-h-screen"></div>;
+			}
 		}
+
 		return <PageComponent {...props} />;
 	};
+
 	return Page;
 };
 
