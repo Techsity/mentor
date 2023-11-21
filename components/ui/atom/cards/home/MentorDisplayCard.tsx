@@ -7,11 +7,11 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
-			<div className="bg-white relative w-[350px] md:w-[345px] lg:w-[330px] h-[395px] sm:h-[380px] rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
+			<div className="bg-white relative w-[310px] md:w-[345px] lg:w-[330px] h-[395px] sm:h-[380px] rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
 				<div className="absolute w-full h-full bg-[rgba(0,0,0,0.35)] animate__animated animate__fadeIn hidden group-hover:md:block" />
-				<div className="flex sm:justify-center sm:p-0 pl-5">
-					<div className="grid py-6 sm:py-10 px-5 gap-2">
-						<div className="flex justify-center">
+				<div className="flex justify-center sm:p-0 sm:pl-5 w-full mx-auto">
+					<div className="grid py-6 sm:py-10 sm:px-5 gap-2">
+						<div className="flex sm:justify-center w-full">
 							<img
 								src={
 									mentor.avatar || "/assets/images/avatar.png"
@@ -48,7 +48,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 							{mentor.rating.toFixed(1).toLocaleString()} ratings
 						</span>
 						<div className="md:hidden py-5">
-							<Link href="#">
+							<Link href={`/mentors/${mentor.username}`}>
 								<div className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
 									Book me
 								</div>
