@@ -31,7 +31,6 @@ const EditCertificateCard = ({
 		existingCert || initalState,
 	);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
 
 	const isDuplicate = useMemo(() => {
 		return (
@@ -47,7 +46,6 @@ const EditCertificateCard = ({
 	}, [certs, certificate]);
 
 	const handleCertUpdate = () => {
-		setLoading(true);
 		const updatedCertificates = [...certs];
 		const updatedCertIndex = updatedCertificates.findIndex(
 			(cert) =>
@@ -68,11 +66,8 @@ const EditCertificateCard = ({
 		if (updateCerts) {
 			updateCerts(updatedCertificates);
 			!existingCert && setCertificate(initalState);
-			!existingCert && toast.success("Field updated successfully");
+			existingCert && toast.success("Field updated successfully");
 		}
-		setTimeout(function () {
-			setLoading(false);
-		}, 1000);
 	};
 	const handleRemoveCert = () => {
 		if (certs && existingCert) {
@@ -185,12 +180,11 @@ const EditCertificateCard = ({
 					<p className="">Add New Certificate</p>
 				</div>
 			) : (
-				reEdit && (
+				reEdit &&
+				!isDuplicate && (
 					<div className="flex justify-end gap-4 items-center w-full">
 						<PrimaryButton
-							disabled={loading}
 							title={"Update"}
-							icon={loading ? <ActivityIndicator /> : null}
 							className="px-8 p-2 rounded"
 							onClick={handleCertUpdate}
 						/>

@@ -16,6 +16,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	education: [],
 	certificates: [],
 	languages: [],
+	availability: [],
 };
 
 const initialUserOnboardingState: { user: IUser | null } = { user: null };
@@ -33,18 +34,6 @@ const onboardingSlice = createSlice({
 			state,
 			action: { payload: IMentorOnboardingState },
 		) => {
-			const { payload } = action;
-			// if (payload.agreedToTerms) {
-			// fetch("https://ipinfo.io/json")
-			// 	.then((response) => response.json())
-			// 	.then((data) => {
-			// 		console.log("IP Address:", data.ip);
-			// 	})
-			// 	.catch((error) =>
-			// 		console.error("Error fetching IP address:", error),
-			// 	);
-			// localStorage.setItem("agreedToTerms", JSON.stringify({mentorOnboardingIP:,agreedToTerms:true}));
-			// }
 			state.mentor = action.payload;
 		},
 		setOnboardingUser: (state, action: {}) => {},
@@ -56,6 +45,7 @@ export const { setOnboardingMentor } = onboardingSlice.actions;
 export const mentorOnboardingTermsAgreed = (state: RootState) =>
 	state.onboarding.mentor.agreedToTerms;
 
-export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
+export const onboardingMentorState = (state: RootState) =>
+	state.onboarding.mentor;
 
 export default onboardingSlice.reducer;

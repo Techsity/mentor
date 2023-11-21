@@ -13,20 +13,22 @@ const FinalStepCertificateEdit = () => {
 	return (
 		<div className="my-2">
 			<FinalStepEditButton
-				title="Your Certifications"
+				title="Professional Certificates"
 				editAction={() => setEditCertificates(!editCertificates)}
 			/>
-			{editCertificates ? (
-				<Certificates reEdit />
-			) : (
-				onboardingMentor.certificates.map((cert, i) => (
-					<MentorCertificateCard
-						certificate={cert}
-						className="bg-white"
-						key={i}
-					/>
-				))
-			)}
+			<div className="flex flex-col gap-3">
+				{editCertificates ? (
+					<Certificates reEdit />
+				) : (
+					onboardingMentor.certificates.map((cert, i) => (
+						<MentorCertificateCard
+							certificate={cert}
+							className="bg-white"
+							key={i}
+						/>
+					))
+				)}
+			</div>
 		</div>
 	);
 };

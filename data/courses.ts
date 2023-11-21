@@ -119,7 +119,7 @@ const courses: MainCourseType[] = [
 								3This Python For Beginners Course Teaches You
 								The Python Language Fast. Includes Python Online
 								Training With Python`,
-						imgUrl: "/assets/images/mockups/course_one.png",
+						imgUrl: "/assets/images/thumbnails/tmb_3.png",
 						duration: 40,
 						price: 3900,
 						level: "All Level",
@@ -234,7 +234,7 @@ const courses: MainCourseType[] = [
 										3This Python For Beginners Course Teaches You
 										The Python Language Fast. Includes Python Online
 										Training With Python`,
-									imgUrl: "/assets/images/mockups/course_one.png",
+										imgUrl: "/assets/images/thumbnails/tmb_3.png",
 									duration: 40,
 									price: 5500,
 									level: "All Level",

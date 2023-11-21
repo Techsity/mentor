@@ -56,15 +56,33 @@ const Availability = () => {
 		time: ICurrentTime;
 		day: string;
 	}) => {
+		const availabilityArr = [...onboardingMentor.availability];
 		const { day, field, time } = args;
-		const { meridan, min, secs } = time;
-		// Check if there's an entry already for the specified day, then update
-		// else enter new entry
+		const formattedTime = `${String(time.min).padStart(2, "0")}:${String(
+			time.secs,
+		).padStart(2, "0")}`;
 
+		// Check if there's an entry already for the specified day and time, then update
+		const scheduleToBeUpdatedIndex = availabilityArr.findIndex(
+			(aval) => aval.day === day,
+		);
+		availabilityArr[scheduleToBeUpdatedIndex] = {
+			...availabilityArr[scheduleToBeUpdatedIndex],
+			[field]: formattedTime,
+		};
+		// else enter new entry
+		//
+		//
+		// Reflect Updates
+		dispatch(
+			setOnboardingMentor({
+				...onboardingMentor,
+				availability: availabilityArr,
+			}),
+		);
 		setEndTimeIsOpen(false);
 		setStartTimeIsOpen(false);
-		console.log(time);
-		console.log(schedule);
+		console.log(availabilityArr);
 	};
 	return (
 		<div className="">
@@ -153,7 +171,7 @@ const Availability = () => {
 	);
 };
 
-interface ISchedule {
+export interface ISchedule {
 	day: string;
 	time: { start: string; end: string };
 }

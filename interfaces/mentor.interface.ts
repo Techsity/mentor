@@ -1,6 +1,7 @@
 import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse } from "./index";
 import { IUser } from "./user.interface";
+import { ISchedule } from "../components/ui/organisms/mentor/onboarding/steps/step-four/Availability";
 
 export interface IMentorEducation {
 	school: {
@@ -23,7 +24,8 @@ export interface IMentorOnboardingState {
 	certificates: { institution: string; type: string; year: string }[];
 	workHistory?: IExperience[];
 	education: IMentorEducation[];
-	languages?: string[];
+	languages: string[];
+	availability: ISchedule[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;

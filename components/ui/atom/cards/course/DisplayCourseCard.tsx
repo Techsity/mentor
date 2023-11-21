@@ -17,8 +17,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
 		<>
 			<div className="inline-block snap-start">
-				<div className="w-auto h-auto md:h-[500px] lg:h-[550px] 2xl:h-[500px] md:max-w-md xl:max-w-lg relative overflow-hidden shadow py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
-					{/* <div className="animate__animated relative animate__fadeIn bg-white overflow-hidden shadow-lg h-full hover:shadow-lg cursor-pointer duration-300 pb-6 w-full"> */}
+				<div className="w-auto h-auto md:h-[465px] lg:h-[515px] md:max-w-md xl:max-w-lg relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
 						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
 							{wishlist.length > 0 && hasBeenAdded ? (
@@ -30,28 +29,16 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 									cssClasses="duration-300 cursor-pointer"
 								/>
 							) : (
-								<HeartOutline
-									onClick={() => addToWishlist(course)}
-									color="#fff"
-									height="30px"
-									width="30px"
-									cssClasses="duration-300 cursor-pointer"
-								/>
-								// <div className="group cursor-pointer">
-								// 	<HeartOutline
-								// 		color="#fff"
-								// 		height="30px"
-								// 		width="30px"
-								// 		cssClasses="group-hover:hidden duration-300"
-								// 	/>
-								// 	<HeartSharp
-								// 		onClick={() => addToWishlist(course)}
-								// 		color="#FFB100"
-								// 		height="30px"
-								// 		width="30px"
-								// 		cssClasses="hidden group-hover:block duration-300"
-								// 	/>
-								// </div>
+								<Link
+									href={`/courses/${slugify(course.title)}`}>
+									<HeartOutline
+										onClick={() => addToWishlist(course)}
+										color="#fff"
+										height="30px"
+										width="30px"
+										cssClasses="duration-300 cursor-pointer"
+									/>
+								</Link>
 							)}
 
 							<Link href={`/courses/${slugify(course.title)}`}>
@@ -65,15 +52,15 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 							</Link>
 						</div>
 						<Link href={`/courses/${slugify(course.title)}`}>
-							<div className="grid gap-4 cursor-pointer">
-								<div className="relative">
+							<div className="flex flex-col items-start gap-4 cursor-pointer h-full w-full">
+								<div className="relative h-[50%] w-full bg-zinc-200">
 									<div className="bg-black w-full h-full bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 									<img
 										src={
 											course.imgUrl ||
 											"/assets/images/mockups/course_one.png"
 										}
-										className="w-full h-full"
+										className="w-full h-full object-cover"
 										alt={course.title}
 										loading="lazy"
 									/>
@@ -81,7 +68,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 								<h1 className="px-5 font-medium tracking-tight">
 									{course.title}
 								</h1>
-								<div className="flex items-center gap-1 justify-between px-5 text-[13px] mt-2">
+								<div className="flex items-center gap-1 justify-between px-5 text-[13px] mt-2 w-full">
 									<span className="">{course.level}</span>
 									<span className="">
 										{course.duration}hours
@@ -104,13 +91,13 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 										</svg>
 									</div>
 								</div>
-								<p className="text-sm px-5">
+								<p className="text-sm px-5 w-full">
 									{course.description.length > 110
 										? course.description.slice(0, 110) +
 										  "..."
 										: course.description}
 								</p>
-								<div className="flex items-center justify-between mt-10 px-5">
+								<div className="flex items-center justify-between mt-10 px-5 w-full">
 									<div className="flex gap-2 items-center text-sm relative">
 										<img
 											src={
