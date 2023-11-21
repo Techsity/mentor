@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	IExperience,
-	IMentorOnboardingState,
-} from "../../../../../../../interfaces/mentor.interface";
-import { Add, CalendarClearOutline } from "react-ionicons";
-import { slugify } from "../../../../../../../utils";
 import TimePicker, {
 	ICurrentTime,
 } from "../../../../../atom/common/TimePicker";
@@ -18,8 +12,11 @@ import TimePicker, {
 const Availability = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-
-	const [schedule, setSchedule] = useState<ISchedule[]>([]);
+	const initialSchedule = {
+		day: "",
+		time: { end: "", start: "" },
+	};
+	const [schedule, setSchedule] = useState<ISchedule>(initialSchedule);
 	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(
 		false,
 	);
@@ -51,39 +48,54 @@ const Availability = () => {
 			setEndTimeIsOpen(false);
 		}
 	};
+	const isDuplicate = useMemo(() => {
+		return (
+			onboardingMentor.availability.length >= 1 &&
+			onboardingMentor.availability.some(
+				(sch) => sch.day === schedule.day,
+			)
+		);
+	}, [onboardingMentor, schedule]);
+
 	const updateSchedule = (args: {
-		field: "start" | "end";
+		field: keyof ISchedule["time"];
 		time: ICurrentTime;
 		day: string;
 	}) => {
-		const availabilityArr = [...onboardingMentor.availability];
-		const { day, field, time } = args;
-		const formattedTime = `${String(time.min).padStart(2, "0")}:${String(
-			time.secs,
-		).padStart(2, "0")}`;
+		const { day, time, field } = args;
+		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(
+			time.min,
+		).padStart(2, "0")}${time.meridan}`;
 
-		// Check if there's an entry already for the specified day and time, then update
-		const scheduleToBeUpdatedIndex = availabilityArr.findIndex(
-			(aval) => aval.day === day,
-		);
-		availabilityArr[scheduleToBeUpdatedIndex] = {
-			...availabilityArr[scheduleToBeUpdatedIndex],
-			[field]: formattedTime,
-		};
-		// else enter new entry
-		//
-		//
+		setSchedule({
+			day,
+			time: { ...schedule.time, [field]: formattedTime },
+		});
+
+		setEndTimeIsOpen(false);
+		setStartTimeIsOpen(false);
+	};
+
+	useEffect(() => {
+		console.log(schedule);
 		// Reflect Updates
+		const newArr = [...onboardingMentor.availability];
+		if (!isDuplicate && schedule !== initialSchedule) {
+			newArr.push(schedule);
+			// setSchedule(initialSchedule);
+		}
+		const toBeUpdated = onboardingMentor.availability.findIndex(
+			(sch) => sch.day === schedule.day,
+		);
+		newArr[toBeUpdated] = { ...newArr[toBeUpdated], ...schedule };
 		dispatch(
 			setOnboardingMentor({
 				...onboardingMentor,
-				availability: availabilityArr,
+				availability: newArr,
 			}),
 		);
-		setEndTimeIsOpen(false);
-		setStartTimeIsOpen(false);
-		console.log(availabilityArr);
-	};
+	}, [schedule]);
+
 	return (
 		<div className="">
 			<div className="grid gap-4">
@@ -109,6 +121,11 @@ const Availability = () => {
 									className: "border border-zinc-200",
 								}}
 								readOnly
+								value={
+									onboardingMentor.availability.find(
+										(sch) => sch.day === day,
+									)?.time.start
+								}
 								onClick={() =>
 									openTimePicker({
 										field: "start",
@@ -142,6 +159,11 @@ const Availability = () => {
 									className: "border border-zinc-200",
 								}}
 								readOnly
+								value={
+									onboardingMentor.availability.find(
+										(sch) => sch.day === day,
+									)?.time.end
+								}
 								onClick={() =>
 									openTimePicker({
 										field: "end",

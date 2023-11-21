@@ -4,8 +4,8 @@ import { ChevronDown, ChevronUp } from "react-ionicons";
 import { PrimaryButton } from "../buttons";
 
 export interface ICurrentTime {
+	hr: number | null;
 	min: number | null;
-	secs: number | null;
 	meridan: "am" | "pm";
 }
 interface TimePickerProps {
@@ -19,41 +19,39 @@ const TimePicker = (props: TimePickerProps) => {
 
 	const currentDate = new Date();
 	const initialTime: ICurrentTime = {
-		min: 12,
-		secs: 0,
+		hr: 12,
+		min: 0,
 		meridan: currentDate.getHours() >= 12 ? "pm" : "am",
 	};
 	const [currentTime, setCurrentTime] = useState<ICurrentTime>(initialTime);
 
 	const incrementMinute = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newMin =
-				prev.min !== null && prev.min < 12 ? prev.min + 1 : 1;
-			return { ...prev, min: newMin };
+			const newMin = prev.hr !== null && prev.hr < 12 ? prev.hr + 1 : 1;
+			return { ...prev, hr: newMin };
 		});
 	}, []);
 
 	const decrementMinute = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newMin =
-				prev.min !== null && prev.min > 1 ? prev.min - 1 : 12;
-			return { ...prev, min: newMin };
+			const newMin = prev.hr !== null && prev.hr > 1 ? prev.hr - 1 : 12;
+			return { ...prev, hr: newMin };
 		});
 	}, []);
 
 	const incrementSeconds = useCallback(() => {
 		setCurrentTime((prev) => {
 			const newSecs =
-				prev.secs !== null && prev.secs < 59 ? prev.secs + 1 : 0;
-			return { ...prev, secs: newSecs };
+				prev.min !== null && prev.min < 59 ? prev.min + 1 : 0;
+			return { ...prev, min: newSecs };
 		});
 	}, []);
 
 	const decrementSeconds = useCallback(() => {
 		setCurrentTime((prev) => {
 			const newSecs =
-				prev.secs !== null && prev.secs > 0 ? prev.secs - 1 : 59;
-			return { ...prev, secs: newSecs };
+				prev.min !== null && prev.min > 0 ? prev.min - 1 : 59;
+			return { ...prev, min: newSecs };
 		});
 	}, []);
 
@@ -80,14 +78,14 @@ const TimePicker = (props: TimePickerProps) => {
 				)}>
 				<div className="bg-[#00D569] w-full h-auto py-5 rounded-tl-lg rounded-tr-lg flex justify-center items-center gap-3 font-semibold">
 					<h1 className="">
-						{currentTime.min
-							? String(currentTime.min).padStart(2, "0")
+						{currentTime.hr
+							? String(currentTime.hr).padStart(2, "0")
 							: "00"}
 					</h1>
 					<h1 className="">:</h1>
 					<h1 className="">
-						{currentTime.secs
-							? String(currentTime.secs).padStart(2, "0")
+						{currentTime.min
+							? String(currentTime.min).padStart(2, "0")
 							: "00"}
 					</h1>
 					<h1 className="uppercase">{currentTime.meridan}</h1>
@@ -99,8 +97,8 @@ const TimePicker = (props: TimePickerProps) => {
 							onClick={incrementMinute}
 						/>
 						<p className="">
-							{currentTime.min
-								? String(currentTime.min).padStart(2, "0")
+							{currentTime.hr
+								? String(currentTime.hr).padStart(2, "0")
 								: "00"}
 						</p>
 						<ChevronDown
@@ -115,8 +113,8 @@ const TimePicker = (props: TimePickerProps) => {
 							onClick={incrementSeconds}
 						/>
 						<p className="">
-							{currentTime.secs
-								? String(currentTime.secs).padStart(2, "0")
+							{currentTime.min
+								? String(currentTime.min).padStart(2, "0")
 								: "00"}
 						</p>
 						<ChevronDown

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import { useDispatch, useSelector } from "react-redux";
 import { onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
+import Availability from "../step-four/Availability";
 
 const FinalStepAvailabilityEdit = () => {
-	const dispatch = useDispatch();
-	const onboardingMentor = useSelector(onboardingMentorState);
 	const [editAvailability, setEditAvailability] = useState<boolean>(false);
 
 	return (
@@ -14,7 +13,7 @@ const FinalStepAvailabilityEdit = () => {
 				title="Your Availability"
 				editAction={() => setEditAvailability(!editAvailability)}
 			/>
-			{editAvailability ? <>Edit</> : <>Display</>}
+			{editAvailability ? <Availability /> : <>Display</>}
 		</div>
 	);
 };
