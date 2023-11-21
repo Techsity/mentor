@@ -26,7 +26,7 @@ const FinalStepAboutYouEdit = () => {
 				<div className="flex justify-start text-sm items-center font-[300]">
 					<CustomTextInput
 						inputMode="text"
-						typeof="text"
+						type="text"
 						ref={jobTitleInputRef}
 						value={onboardingMentor.jobTitle}
 						// readOnly={true}

@@ -7,14 +7,14 @@ const OnboardingWorkHistoryDisplayCard = ({
 	onRemove,
 }: {
 	experience: IExperience;
-	onRemove?: (id: string) => void;
+	onRemove?: (exp: IExperience) => void;
 }) => {
 	return (
 		<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
 			<span className="absolute top-2 right-3 cursor-pointer z-10">
 				<svg
 					onClick={() => {
-						onRemove && onRemove(experience.company.name);
+						onRemove && onRemove(experience);
 					}}
 					className="h-5 w-5 ml-3 cursor-pointer"
 					viewBox="0 0 20 20"

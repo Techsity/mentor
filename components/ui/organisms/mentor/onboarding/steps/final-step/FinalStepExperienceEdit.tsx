@@ -6,7 +6,6 @@ import WorkHistory from "../step-two/WorkHistory";
 import { useDispatch, useSelector } from "react-redux";
 
 const FinalStepExperienceEdit = () => {
-	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const [showExperienceEdit, setShowExperienceEdit] =
 		useState<boolean>(false);
@@ -20,7 +19,7 @@ const FinalStepExperienceEdit = () => {
 			{showExperienceEdit ? (
 				<WorkHistory reEdit />
 			) : (
-				<div className="grid gap-3 animate__animated animate__fadeIn max-w-lg">
+				<div className="grid gap-3 animate__animated animate__fadeIn w-full">
 					{onboardingMentor.workHistory?.map((experience) => {
 						return (
 							<MentorExperienceCard

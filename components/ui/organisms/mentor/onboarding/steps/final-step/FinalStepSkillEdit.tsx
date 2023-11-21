@@ -29,6 +29,7 @@ const FinalStepSkillEdit = () => {
 				);
 			}
 	};
+
 	const removeSkill = (skillToRemove: string) => {
 		if (skillToRemove) {
 			dispatch(
@@ -41,6 +42,7 @@ const FinalStepSkillEdit = () => {
 			);
 		}
 	};
+
 	return (
 		<div className="grid gap-2 my-2">
 			<FinalStepEditButton

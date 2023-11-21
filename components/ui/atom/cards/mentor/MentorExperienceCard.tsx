@@ -13,7 +13,7 @@ const MentorExperienceCard = ({
 	return (
 		<div
 			className={classNames(
-				"border border-[#70C5A1] text-sm p-4 w-full max-w-lg",
+				"border border-[#70C5A1] text-sm p-4 w-full",
 				className,
 			)}>
 			<div className="flex justify-between gap-6 items-center mb-4">

@@ -81,7 +81,7 @@ const MentorOnboardingSteps = () => {
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
-			<div className="w-full md:max-w-lg">
+			<div className="w-full md:max-w-[50%]">
 				{currentStep <= totalSteps - 1 && (
 					<MentorOnboardingStepsHeader
 						currentStep={currentStep}
@@ -109,28 +109,42 @@ const MentorOnboardingSteps = () => {
 							size={30}
 						/>
 					) : ( */}
-					<div className="my-6 flex gap-5 items-center">
-						{currentStep > 1 && (
-							<div className="flex justify-start items-center">
-								<PrimaryButton
-									title={"Prev"}
-									// icon={loading ? <ActivityIndicator /> : null}
-									onClick={() => handlePrev()}
-									className="px-8 p-2 flex justify-center"
-									// disabled={loading}
-								/>
-							</div>
-						)}
+					{currentStep > 1 && currentStep >= totalSteps ? (
 						<div className="flex justify-start items-center">
 							<PrimaryButton
-								title={loading ? "" : "Next"}
+								title={loading ? "" : "Looking good, let's go!"}
 								icon={loading ? <ActivityIndicator /> : null}
 								onClick={() => handleNext()}
 								className="px-8 p-2 flex justify-center"
 								disabled={loading}
 							/>
 						</div>
-					</div>
+					) : (
+						<div className="my-6 flex gap-5 items-center">
+							{currentStep > 1 && (
+								<div className="flex justify-start items-center">
+									<PrimaryButton
+										title={"Prev"}
+										// icon={loading ? <ActivityIndicator /> : null}
+										onClick={() => handlePrev()}
+										className="px-8 p-2 flex justify-center"
+										// disabled={loading}
+									/>
+								</div>
+							)}
+							<div className="flex justify-start items-center">
+								<PrimaryButton
+									title={loading ? "" : "Next"}
+									icon={
+										loading ? <ActivityIndicator /> : null
+									}
+									onClick={() => handleNext()}
+									className="px-8 p-2 flex justify-center"
+									disabled={loading}
+								/>
+							</div>
+						</div>
+					)}
 					{/* )} */}
 					{currentStep > 1 && currentStep <= totalSteps - 1 && (
 						<span

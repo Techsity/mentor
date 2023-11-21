@@ -11,6 +11,7 @@ import FinalStepAboutYouEdit from "./FinalStepAboutYouEdit";
 import FinalStepSkillEdit from "./FinalStepSkillEdit";
 import FinalStepExperienceEdit from "./FinalStepExperienceEdit";
 import FinalStepProjectsEdit from "./FinalStepProjectsEdit";
+import FinalStepEducationEdit from "./FinalStepEducationEdit";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
@@ -18,7 +19,7 @@ const FinalMentorOnboardingStep = () => {
 	return (
 		<div className="animate__animated animate__fadeInLeft">
 			<h1
-				className="text-[#00D569] text-xl sm:text-3xl animate__animated animate__fadeInLeft -mt-5"
+				className="text-[#00D569] text-xl sm:text-3xl -mt-5"
 				style={{ fontFamily: "Days One" }}>
 				Weldone, You are all set!
 			</h1>
@@ -31,6 +32,7 @@ const FinalMentorOnboardingStep = () => {
 				<FinalStepSkillEdit />
 				<FinalStepExperienceEdit />
 				<FinalStepProjectsEdit />
+				<FinalStepEducationEdit />
 			</div>
 		</div>
 	);

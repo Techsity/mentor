@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import CustomTextInput from "../../../inputs/CustomTextInput";
 import { IExperience } from "../../../../../../interfaces/mentor.interface";
@@ -13,12 +13,10 @@ const EditWorkHistoryCard = ({
 	experience,
 	allExperiences,
 	updateWorkExperiences,
-	onRemove,
 }: {
 	experience?: IExperience;
 	allExperiences: IExperience[];
 	updateWorkExperiences?: (updated: IExperience[]) => void;
-	onRemove?: (id: string) => void;
 }) => {
 	const initialState: IExperience = {
 		id: "",
@@ -38,6 +36,20 @@ const EditWorkHistoryCard = ({
 		experience || initialState,
 	);
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const isDuplicate = useMemo(() => {
+		return allExperiences.some(
+			(work) =>
+				work.company.name === workExperience.company.name &&
+				work.country === workExperience.country &&
+				work.position === workExperience.position &&
+				work.aboutRole === workExperience.aboutRole &&
+				work.role === workExperience.role &&
+				work.startDate === workExperience.startDate &&
+				work.endDate === workExperience.endDate,
+		);
+	}, [allExperiences, workExperience]);
+
 	const handleAddWorkHistory = () => {
 		if (
 			workExperience.company.name &&
@@ -47,15 +59,6 @@ const EditWorkHistoryCard = ({
 			//  &&
 			// workExperience.position
 		) {
-			const isDuplicate =
-				allExperiences &&
-				allExperiences.some(
-					(work) =>
-						work.company.name.toLowerCase() ===
-							workExperience.company.name.toLowerCase() &&
-						work.startDate === workExperience.startDate &&
-						work.endDate === workExperience.endDate,
-				);
 			if (!isDuplicate)
 				updateWorkExperiences &&
 					updateWorkExperiences(
@@ -74,6 +77,7 @@ const EditWorkHistoryCard = ({
 		}
 	};
 	const handleExperienceUpdate = (updatedExp: IExperience) => {
+		setLoading(true);
 		const updatedExperiences = [...allExperiences];
 		const indexOfExperienceToUpdate = updatedExperiences.findIndex(
 			(experience) =>
@@ -86,25 +90,52 @@ const EditWorkHistoryCard = ({
 				...updatedExperiences[indexOfExperienceToUpdate],
 				...updatedExp,
 			};
-			if (updateWorkExperiences) {
-				setLoading(true);
-				toast.dismiss("success");
-				setTimeout(function () {
-					setLoading(false);
-					updateWorkExperiences(updatedExperiences);
-					toast.success(
-						"Field updated successfully",
-						ToastDefaultOptions({ id: "success", theme: "dark" }),
-					);
-				}, 1000);
-			}
+			if (updateWorkExperiences)
+				updateWorkExperiences(updatedExperiences);
+
+			setTimeout(function () {
+				setLoading(false);
+				toast.success("Field updated successfully");
+			}, 1000);
 		}
 	};
-
+	const handleRemoveExperience = () => {
+		if (experience) {
+			const updatedWorkHistory = allExperiences.filter(
+				(work) =>
+					slugify(work.company.name) !==
+						slugify(experience?.company.name) &&
+					work.position === experience?.position,
+			);
+			if (updateWorkExperiences)
+				updateWorkExperiences(updatedWorkHistory);
+		}
+	};
 	return (
 		<>
-			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3">
+			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative pt-8">
+				{experience && (
+					<span className="absolute top-2 right-3 cursor-pointer z-10">
+						<svg
+							onClick={handleRemoveExperience}
+							className="h-5 w-5 ml-3 cursor-pointer"
+							viewBox="0 0 20 20"
+							fill="#d31119">
+							<path
+								fillRule="evenodd"
+								d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+								clipRule="evenodd"
+							/>
+						</svg>
+					</span>
+				)}
 				<div className="col-span-4 grid gap-1">
+					{experience && (
+						<label htmlFor="" className="text-xs">
+							Name of School
+						</label>
+					)}
+
 					<CustomTextInput
 						name="name_of_company"
 						id="name_of_company"
@@ -124,6 +155,12 @@ const EditWorkHistoryCard = ({
 					/>
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
+					{experience && (
+						<label htmlFor="" className="text-xs">
+							Name of School
+						</label>
+					)}
+
 					<CustomTextInput
 						name="start_date"
 						id="start_date"
@@ -161,6 +198,12 @@ const EditWorkHistoryCard = ({
 					)}
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
+					{experience && (
+						<label htmlFor="" className="text-xs">
+							Name of School
+						</label>
+					)}
+
 					<CustomTextInput
 						name="end_date"
 						id="end_date"
@@ -197,6 +240,12 @@ const EditWorkHistoryCard = ({
 					)}
 				</div>
 				<div className="col-span-4 grid gap-1">
+					{experience && (
+						<label htmlFor="" className="text-xs">
+							Name of School
+						</label>
+					)}
+
 					<CustomTextInput
 						name="roles"
 						id="roles"
@@ -216,6 +265,12 @@ const EditWorkHistoryCard = ({
 					/>
 				</div>
 				<div className="col-span-4 grid gap-1">
+					{experience && (
+						<label htmlFor="" className="text-xs">
+							Name of School
+						</label>
+					)}
+
 					<CustomTextInput
 						name="about_role"
 						id="about_role"
@@ -243,24 +298,19 @@ const EditWorkHistoryCard = ({
 					<p className="">Add New Experience</p>
 				</div>
 			) : (
-				<div className="flex justify-end gap-4 items-center w-full">
-					<PrimaryButton
-						title=""
-						icon={<TrashBinOutline color="#fff" />}
-						className="px-2 rounded p-1 bg-rose-500"
-						onClick={() => {
-							onRemove && onRemove(experience.company.name);
-						}}
-					/>
-					<PrimaryButton
-						title={loading ? "" : "Update"}
-						icon={loading ? <ActivityIndicator /> : null}
-						className="px-8 p-1 rounded"
-						onClick={() => {
-							handleExperienceUpdate(workExperience);
-						}}
-					/>
-				</div>
+				!isDuplicate && (
+					<div className="flex justify-end gap-4 items-center w-full">
+						<PrimaryButton
+							title={loading ? "" : "Update"}
+							icon={loading ? <ActivityIndicator /> : null}
+							disabled={loading}
+							className="px-8 p-1 rounded"
+							onClick={() => {
+								handleExperienceUpdate(workExperience);
+							}}
+						/>
+					</div>
+				)
 			)}
 		</>
 	);

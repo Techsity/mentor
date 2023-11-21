@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useState } from "react";
-import { ToastContainer, useToastContainer } from "react-toastify";
+import { ToastContainer, toast, useToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PagePreLoader from "../components/ui/atom/loader/PagePreLoader";
 import LayoutContainer from "../components/ui/layout";
@@ -53,7 +53,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 					<LayoutContainer>
 						<ToastContainer
 							limit={1}
-							newestOnTop
+							// newestOnTop
 							autoClose={5000}
 							theme="dark"
 							hideProgressBar

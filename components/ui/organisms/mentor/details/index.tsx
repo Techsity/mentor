@@ -5,6 +5,7 @@ import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCar
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import classnames from "classnames";
+import EditProjectCard from "../../../atom/cards/mentor/onboarding/EditProjectCard";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">
@@ -56,21 +57,24 @@ const MentorProjects = ({
 	projects: IMentor["projects"];
 	reEdit?: boolean;
 }) => (
-	<div className={"grid gap-3 mt-9"}>
+	<div className={"grid gap-3"}>
 		{!reEdit && (
 			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<h1 className="text-xl font-semibold">Projects</h1>
 			</AnimationOnScroll>
 		)}
-		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-lg w-full">
+		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 w-full">
 			{projects &&
 				projects
 					.map((project, index) => (
 						<AnimationOnScroll
 							key={index}
-							animateIn="animate__slideInUp"
+							animateIn="animate__fadeIn"
 							animateOnce>
-							<Link href={project.link || "#"}>
+							<Link
+								href={
+									project.link && !reEdit ? project.link : "#"
+								}>
 								<div
 									className={`border border-[#70C5A1] text-sm p-4 w-full flex items-center justify-between gap-5 cursor-pointer ${
 										reEdit ? "bg-white" : "bg-transparent"
