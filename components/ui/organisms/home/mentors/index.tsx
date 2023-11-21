@@ -9,7 +9,7 @@ const MeetOurMentors = () => {
 	const { isLargeScreen, isMediumScreen, isExtraLargeScreen } = useWindowSize();
 	return (
 		<div className="bg-[#F6FFFB] min-h-[50dvh] p-20 overflow-hidden">
-			<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+			<AnimationOnScroll animateIn="animate__fadeIn" animateOnce={true}>
 				<h1
 					style={{ fontFamily: "Days One" }}
 					className="text-xl md:text-3xl text-center text-[#0C202B]"

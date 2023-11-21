@@ -16,7 +16,7 @@ const HomepageHero = () => {
 				backgroundRepeat: "no-repeat",
 				backgroundColor: isSmallScreen ? "#0C202B" : "",
 			}}>
-			<div
+			{/* <div
 				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[350px] h-[350px]`}
 				style={{
 					filter: "blur(100px)",
@@ -27,8 +27,8 @@ const HomepageHero = () => {
 				style={{
 					filter: "blur(80px)",
 				}}
-			/>
-			<div className="absolute -left-20 p-20 h-auto md:w-[65%]  animate__animated animate__slideInDown animate__slow">
+			/> */}
+			<div className="absolute -left-20 p-20 h-auto md:w-[65%]  animate__slideInDown animate__slow">
 				<img
 					src="/assets/images/map.png"
 					className="h-full w-full"
@@ -49,7 +49,7 @@ const HomepageHero = () => {
 					</h1>
 					<p>anywhere around the globe!</p>
 					<div className="grid mt-6 text-xs sm:text-sm gap-4 mt-2 text-[#ddd]">
-						<div className="flex gap-1 items-center animate__animated animate__slideInLeft">
+						<div className="flex gap-1 items-center">
 							<CheckmarkSharp
 								color="#0CF27E"
 								width="15px"
@@ -60,7 +60,7 @@ const HomepageHero = () => {
 								courses and events we provide
 							</p>
 						</div>
-						<div className="flex gap-1 items-center animate__animated animate__slideInLeft animate__slow">
+						<div className="flex gap-1 items-center animate__slideInLeft animate__slow">
 							<CheckmarkSharp
 								color="#0CF27E"
 								width="15px"
@@ -71,7 +71,7 @@ const HomepageHero = () => {
 								enjoy
 							</p>
 						</div>
-						<div className="flex gap-1 items-center animate__animated animate__slideInLeft animate__slower">
+						<div className="flex gap-1 items-center animate__slideInLeft animate__slower">
 							<CheckmarkSharp
 								color="#0CF27E"
 								width="15px"
@@ -83,7 +83,7 @@ const HomepageHero = () => {
 								students
 							</p>
 						</div>
-						<div className="flex gap-1 items-center animate__animated animate__slideInLeft animate__slowest">
+						<div className="flex gap-1 items-center animate__slideInLeft animate__slowest">
 							<CheckmarkSharp
 								color="#0CF27E"
 								width="15px"
@@ -96,7 +96,7 @@ const HomepageHero = () => {
 						</div>
 					</div>
 				</div>
-				<div className="animate__animated animate__slideInRight">
+				<div className="">
 					<div className="lg:grid hidden">
 						<HomepageHeroSvg />
 					</div>
