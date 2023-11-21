@@ -7,7 +7,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { MentorProjects } from "../../../details";
 import EditProjectCard from "../../../../../atom/cards/mentor/onboarding/EditProjectCard";
-import { IMentorProjectType } from "../../../../../../../interfaces/mentor.interface";
 
 const FinalStepProjectsEdit = () => {
 	const dispatch = useDispatch();

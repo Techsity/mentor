@@ -11,13 +11,13 @@ import {
 	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../redux/reducers/features/onboardingSlice";
-import { currentUser } from "../../../../../../redux/reducers/features/authSlice";
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
+import { useRouter } from "next/router";
 
 const MentorOnboardingSteps = () => {
-	const user = useSelector(currentUser);
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
@@ -111,7 +111,9 @@ const MentorOnboardingSteps = () => {
 							<PrimaryButton
 								title={loading ? "" : "Looking good, let's go!"}
 								icon={loading ? <ActivityIndicator /> : null}
-								onClick={() => handleNext()}
+								onClick={() => {
+									router.push("/profile");
+								}}
 								className="px-8 p-2 flex justify-center"
 								disabled={loading}
 							/>

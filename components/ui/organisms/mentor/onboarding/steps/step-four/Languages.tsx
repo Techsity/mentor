@@ -7,7 +7,7 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 
-const Languages = () => {
+const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const languageInputRef = useRef<HTMLInputElement>(null);
@@ -71,9 +71,11 @@ const Languages = () => {
 
 	return (
 		<div className="grid gap-2 relative">
-			<h1 className="text-sm text-[#B1B1B1]">
-				Languages Spoken Fluently
-			</h1>
+			{!reEdit && (
+				<h1 className="text-sm text-[#B1B1B1]">
+					Languages Spoken Fluently
+				</h1>
+			)}
 			<CustomTextInput
 				type="text"
 				onChange={handleChange}

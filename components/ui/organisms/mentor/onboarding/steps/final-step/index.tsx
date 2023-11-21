@@ -14,6 +14,7 @@ import FinalStepProjectsEdit from "./FinalStepProjectsEdit";
 import FinalStepEducationEdit from "./FinalStepEducationEdit";
 import FinalStepCertificateEdit from "./FinalStepCertificateEdit";
 import FinalStepAvailabilityEdit from "./FinalStepAvailabilityEdit";
+import FinalStepLanguageEdit from "./FinalStepLanguageEdit";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
@@ -37,6 +38,7 @@ const FinalMentorOnboardingStep = () => {
 				<FinalStepEducationEdit />
 				<FinalStepCertificateEdit />
 				<FinalStepAvailabilityEdit />
+				<FinalStepLanguageEdit />
 			</div>
 		</div>
 	);

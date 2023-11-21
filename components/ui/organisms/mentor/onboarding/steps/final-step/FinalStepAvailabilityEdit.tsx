@@ -17,7 +17,7 @@ const FinalStepAvailabilityEdit = () => {
 				<Availability />
 			) : (
 				<>
-					<div className="bg-white flex flex-col w-full gap-5 p-4 mt-3 max-w-xl">
+					<div className="bg-white border border-[#70C5A1] flex flex-col w-full gap-5 p-4 mt-3 max-w-xl">
 						{onboardingMentor.availability.map(
 							(schedule, index) => {
 								return (
