@@ -1,18 +1,18 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { TabLinkType } from "../../../../templates/user/profile";
 import { capitalizeSentence, scrollToTop, slugify } from "../../../../../utils";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { link } from "fs";
+import { ProfileTabLinkType } from "../../../../../interfaces";
 
 const ProfileNavCard = ({
 	activeTab,
 	setActiveTab,
 	tabLinks,
 }: {
-	tabLinks: TabLinkType[];
-	activeTab: TabLinkType;
-	setActiveTab: Dispatch<SetStateAction<TabLinkType>>;
+	tabLinks: ProfileTabLinkType[];
+	activeTab: ProfileTabLinkType;
+	setActiveTab: Dispatch<SetStateAction<ProfileTabLinkType>>;
 }) => {
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const ProfileNavCard = ({
 		router.asPath
 			? router.asPath.split("#")[1]?.split("-").join(" ") || ""
 			: "",
-	) as TabLinkType;
+	) as ProfileTabLinkType;
 
 	useEffect(() => {
 		if (activeLink)

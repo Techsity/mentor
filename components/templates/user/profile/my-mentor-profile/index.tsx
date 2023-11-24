@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import ProfileNavCard from "../../../ui/atom/cards/profile/ProfileNavCard";
-import EditProfileCard from "../../../ui/atom/cards/profile/EditProfileCard";
-import ProfileComponents from "../../../ui/organisms/user/profile/ProfileComponents";
-import { ProfileTabLinkType } from "../../../../interfaces";
+import EditProfileCard from "../../../../ui/atom/cards/profile/EditProfileCard";
+import ProfileNavCard from "../../../../ui/atom/cards/profile/ProfileNavCard";
+import ProfileComponents from "../../../../ui/organisms/user/profile/ProfileComponents";
+import { ProfileTabLinkType } from "../../../../../interfaces";
 
-const UserProfilePageTemplate = () => {
+const MyMentorProfilePageTemplate = () => {
 	const tabLinks: ProfileTabLinkType[] = [
-		"My Courses",
-		"My Workshop",
+		"Overview",
+		"Courses",
+		"Workshop",
 		"Mentorship",
 		"Wish Lists",
-		"Payment Methods",
+		"Payments",
 		"Profile Settings",
 	];
 	const [activeTab, setActiveTab] = useState<ProfileTabLinkType>(tabLinks[0]);
@@ -49,4 +50,4 @@ const UserProfilePageTemplate = () => {
 	);
 };
 
-export default UserProfilePageTemplate;
+export default MyMentorProfilePageTemplate;

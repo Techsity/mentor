@@ -79,6 +79,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 							isLoggedIn: true,
 							user: {
 								...userData,
+								// Temporary
 								payment_cards: [
 									{
 										bank: { name: "GTbank via Paystack" },
@@ -86,6 +87,8 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 										card_number: "5399 8878 9887 99099",
 									},
 								],
+								mentor: true,
+								//
 							},
 						}),
 					);

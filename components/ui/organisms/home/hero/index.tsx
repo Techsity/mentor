@@ -14,7 +14,7 @@ const HomepageHero = () => {
 				background: `url("/assets/images/landing_hero.png")`,
 				backgroundSize: "100% 100%",
 				backgroundRepeat: "no-repeat",
-				backgroundColor: isSmallScreen ? "#0C202B" : "#0C202B",
+				backgroundColor: isSmallScreen ? "#0C202B" : "",
 			}}>
 			{/* <div
 				className={`-top-10 -left-40 bg-[#00FF7E] opacity-10 rounded-full absolute w-[350px] h-[350px]`}

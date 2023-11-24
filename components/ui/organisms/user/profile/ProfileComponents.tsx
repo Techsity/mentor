@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { TabLinkType } from "../../../../templates/user/profile";
 import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProgressDisplayCard";
 import courses from "../../../../../data/courses";
 import RegisteredMentorships from "./RegisteredMentorships";
@@ -7,8 +6,13 @@ import RegitsteredWorkshops from "./RegitsteredWorkshops";
 import WishLists from "./WishLists";
 import PaymentMethods from "./PaymentMethods";
 import ProfileSettings from "./ProfileSettings";
+import { ProfileTabLinkType } from "../../../../../interfaces";
 
-const ProfileComponents = ({ activeTab }: { activeTab: TabLinkType }) => {
+const ProfileComponents = ({
+	activeTab,
+}: {
+	activeTab: ProfileTabLinkType;
+}) => {
 	const myCourses = useMemo(
 		() => courses[0].categories[0].availableCourses,
 		[activeTab],

@@ -295,3 +295,15 @@ export interface IWorkshop {
 	requirements: string[];
 	contents: IWorkshopContent[];
 }
+
+export type ProfileTabLinkType =
+	| "Overview"
+	| "Courses"
+	| "My Courses"
+	| "Workshop"
+	| "My Workshop"
+	| "Mentorship"
+	| "Wish Lists"
+	| "Payment Methods"
+	| "Payments"
+	| "Profile Settings";
