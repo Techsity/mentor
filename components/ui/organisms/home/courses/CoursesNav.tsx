@@ -19,7 +19,7 @@ const CourseNav = ({
 						return (
 							<div
 								key={i}
-								className={`sm:mx-12 mx-1 text-sm sm:text-[16px] duration-300 border border-[#094B10] text-[#094B10] px-4 sm:px-8 p-3 cursor-pointer ${
+								className={`sm:mx-12 mx-1 text-sm sm:text-sm duration-300 border border-[#094B10] text-[#094B10] px-4 sm:px-8 p-3 cursor-pointer ${
 									activeLink === link
 										? "bg-[#094B10] text-white"
 										: "hover:text-[#fff] hover:bg-[#094B10]"

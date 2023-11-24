@@ -44,7 +44,7 @@ const mentors: IMentor[] = [
 		online: false,
 		ratePerHour: 5000,
 		verified: true,
-		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
@@ -104,7 +104,7 @@ const mentors: IMentor[] = [
 		online: false,
 		ratePerHour: 5000,
 		verified: true,
-		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
@@ -164,7 +164,7 @@ const mentors: IMentor[] = [
 		online: true,
 		ratePerHour: 5000,
 		verified: false,
-		daysOpen: ["Mon", "Wed", "Fri", "Sat"],
+		daysOpen: ["Mondays", "Wednesdays", "Fridays", "Saturdays"],
 		skills: ["Figma", "Photoshop", "JavaScript", "Figma", "Figma", "Figma"],
 		courses: [],
 		projects: [
@@ -224,7 +224,7 @@ const mentors: IMentor[] = [
 		online: false,
 		ratePerHour: 5000,
 		verified: true,
-		daysOpen: ["Mon", "Tue", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
@@ -284,7 +284,7 @@ const mentors: IMentor[] = [
 		online: true,
 		ratePerHour: 5000,
 		verified: true,
-		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
@@ -344,7 +344,7 @@ const mentors: IMentor[] = [
 		online: true,
 		ratePerHour: 5000,
 		verified: false,
-		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
@@ -404,7 +404,7 @@ const mentors: IMentor[] = [
 		online: true,
 		ratePerHour: 5000,
 		verified: true,
-		daysOpen: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+		daysOpen: ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"],
 		skills: ["Figma", "Photoshop", "JavaScript"],
 		courses: [],
 		projects: [
