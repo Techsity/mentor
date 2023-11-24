@@ -67,19 +67,19 @@ const HomepageCourseSection = () => {
 													category.title,
 												)
 											}
-											className={`cursor-pointer duration-300 p-1 animate__animated animate__fadeInUp ${
+											className={`cursor-pointer duration-300 p-1 animate__animated animate__fadeInUp font-sm ${
 												activeCategory ===
 												category.title
 													? "font-semibold"
-													: ""
+													: "font-normal"
 											}`}>
 											{category.title}
 										</div>
 									);
 								})
-								.slice(0, 6)}
+								.slice(0, 5)}
 							<Link href="#">
-								<div className="absolute top-6 right-32 tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
+								<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
 									<div className="relative flex items-center gap-2">
 										View All{" "}
 										<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
