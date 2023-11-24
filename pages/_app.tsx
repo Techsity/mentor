@@ -39,7 +39,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 			<Provider store={store}>
 				<ThemeProvider>
 					<Head>
-						<title>Mentör</title>
+						<title>Mentör: Connect with experienced Mentors</title>
 						<link
 							rel="icon"
 							href="/assets/images/favicon.ico"
@@ -60,7 +60,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							closeOnClick
 							draggable
 						/>
-						{initialLoad && <PagePreLoader />}
+						{/* {initialLoad && <PagePreLoader />} */}
 						<Component {...pageProps} />
 					</LayoutContainer>
 				</ThemeProvider>

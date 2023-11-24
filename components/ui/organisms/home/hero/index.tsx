@@ -40,14 +40,14 @@ const HomepageHero = () => {
 					<h1
 						className="text-3xl text-[#00D569]"
 						style={{ fontFamily: "Days One" }}>
-						Get
+						Connect with
 					</h1>
 					<h1
 						className="lg:text-[65px] text-6xl"
 						style={{ fontFamily: "Days One" }}>
-						ment<span className="text-[#FFB100]">öd</span>
+						ment<span className="text-[#FFB100]">örs</span>
 					</h1>
-					<p>anywhere around the globe!</p>
+					<p>from anywhere around the globe!</p>
 					<div className="grid mt-6 text-xs sm:text-sm gap-4 mt-2 text-[#ddd]">
 						<div className="flex gap-1 items-center">
 							<CheckmarkSharp
@@ -56,8 +56,8 @@ const HomepageHero = () => {
 								height="15px"
 							/>
 							<p>
-								Join millions of students who enjoys the free
-								courses and events we provide
+								Join millions of students benefiting from our
+								free courses and events.
 							</p>
 						</div>
 						<div className="flex gap-1 items-center animate__slideInLeft animate__slow">
@@ -67,8 +67,8 @@ const HomepageHero = () => {
 								height="15px"
 							/>
 							<p>
-								There are over +5,000,000 course for you to
-								enjoy
+								Explore our extensive collection of over 5
+								million courses.
 							</p>
 						</div>
 						<div className="flex gap-1 items-center animate__slideInLeft animate__slower">
@@ -79,8 +79,7 @@ const HomepageHero = () => {
 							/>
 							<p>
 								Enjoy free live workshop tailored to your
-								interest. Interact with mentor and other
-								students
+								interest. Interact with mentors and mentees.
 							</p>
 						</div>
 						<div className="flex gap-1 items-center animate__slideInLeft animate__slowest">
@@ -90,8 +89,8 @@ const HomepageHero = () => {
 								height="15px"
 							/>
 							<p>
-								Over +100,000 Mentors who are ready to jump on a
-								call with you
+								Access over 100,000 mentors eager to connect
+								with you through a call.
 							</p>
 						</div>
 					</div>
@@ -103,7 +102,7 @@ const HomepageHero = () => {
 					<div className="flex lg:justify-center items-center whitespace-nowrap">
 						<div className="grid gap-1 sm:mt-10">
 							<p className="text-sm">
-								Start monetizing your events/course
+								Monetize your events and courses today.
 							</p>
 							<Link href="/premium">
 								<div className="text-center bg-[#FFB100] select-none p-2 px-4 cursor-pointer">
