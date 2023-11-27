@@ -3,16 +3,31 @@ import ProfileNavCard from "../../../ui/atom/cards/profile/ProfileNavCard";
 import EditProfileCard from "../../../ui/atom/cards/profile/EditProfileCard";
 import ProfileComponents from "../../../ui/organisms/user/profile/ProfileComponents";
 import { ProfileTabLinkType } from "../../../../interfaces";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const UserProfilePageTemplate = () => {
-	const tabLinks: ProfileTabLinkType[] = [
-		"My Courses",
-		"My Workshop",
-		"Mentorship",
-		"Wish Lists",
-		"Payment Methods",
-		"Profile Settings",
-	];
+	const user = useSelector(currentUser);
+	const isMentor = user?.mentor;
+	const tabLinks: ProfileTabLinkType[] = isMentor
+		? [
+				"Overview",
+				"Courses",
+				"Workshop",
+				"Mentorship",
+				"Wish Lists",
+				"Payments",
+				"Profile Settings",
+		  ]
+		: [
+				"My Courses",
+				"My Workshop",
+				"Mentorship",
+				"Wish Lists",
+				"Payment Methods",
+				"Profile Settings",
+		  ];
+
 	const [activeTab, setActiveTab] = useState<ProfileTabLinkType>(tabLinks[0]);
 
 	return (

@@ -37,7 +37,7 @@ const CountrySelector = ({
 	const selectRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (selected) {
 			if (typeof selected === "string") {
 				setSearchTerm(selected);

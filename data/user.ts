@@ -17,3 +17,5 @@ export const testUser = (role: "mentee" | "mentor"): IUser | null => {
 	// 	: null;
 	return null;
 };
+
+export default testUser;

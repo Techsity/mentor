@@ -7,6 +7,7 @@ import { SelectedCountry } from "../../interfaces/country-selector.interface";
 import { REGISTER_USER } from "../../services/graphql/mutations/auth";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import ResponseMessages from "../../constants/response-codes";
 
 export interface IFieldError {
 	field: keyof ISignUpState | "";
@@ -166,18 +167,23 @@ const useSignUpForm = (props?: {
 						router.push(`/auth/verification/${"jwt_token"}/signup`);
 					}, 2000);
 				})
-				.catch((error) => {
-					console.log(error);
+				.catch((error: any) => {
+					console.error(error);
 					setLoading(false);
-					if (typeof error === "string")
+					const resCode: keyof typeof ResponseMessages =
+						error.message.split(" -")[0];
+					const errorMessage = ResponseMessages[resCode];
+					if (errorMessage)
 						toast.error(
-							error,
+							errorMessage,
 							ToastDefaultOptions({ id: "auth_form_pop" }),
 						);
-					toast.error(
-						" An error occured. Please try again later.",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
+					else {
+						toast.error(
+							" An error occured. Please try again later.",
+							ToastDefaultOptions({ id: "auth_form_pop" }),
+						);
+					}
 				});
 
 			// setTimeout(function () {

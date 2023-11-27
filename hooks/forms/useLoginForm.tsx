@@ -10,6 +10,7 @@ import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
+import ResponseMessages from "../../constants/response-codes";
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -100,18 +101,23 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					}
 				}
 			})
-			.catch((error) => {
-				setLoading(false);
+			.catch((error: any) => {
 				console.error(error);
-				if (typeof error === "string")
+				setLoading(false);
+				const resCode: keyof typeof ResponseMessages =
+					error.message.split(" -")[0];
+				const errorMessage = ResponseMessages[resCode];
+				if (errorMessage)
 					toast.error(
-						error,
+						errorMessage,
 						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
-				toast.error(
-					" An error occured. Please try again later.",
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+				else {
+					toast.error(
+						" An error occured. Please try again later.",
+						ToastDefaultOptions({ id: "auth_form_pop" }),
+					);
+				}
 			});
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };
