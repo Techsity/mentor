@@ -10,6 +10,7 @@ import { ProfileTabLinkType } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
+import MentorProfileCourses from "../mentor/MentorProfileCourses";
 
 const ProfileComponents = ({
 	activeTab,
@@ -18,7 +19,7 @@ const ProfileComponents = ({
 }) => {
 	const myCourses = useMemo(
 		() => courses[0].categories[0].availableCourses,
-		[activeTab],
+		[],
 	);
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
@@ -31,6 +32,8 @@ const ProfileComponents = ({
 				<div className="animate__animated animate__fadeIn">
 					<MentorProfileOverview />
 				</div>
+			) : activeTab === "Courses" && isMentor ? (
+				<MentorProfileCourses />
 			) : activeTab === "My Courses" ? (
 				<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 					{myCourses.map((course, i) => (

@@ -66,8 +66,12 @@ const EditProfileCard = () => {
 				</div>
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
-						title="Get a Mentor Profile"
-						className="p-3 px-6 bg-[#FFB100]"
+						title={
+							user?.mentor
+								? "Switch to Mentee Dashboard"
+								: "Get a Mentor Profile"
+						}
+						className="p-3 bg-[#FFB100] font-medium"
 						style={{ color: "black" }}
 					/>
 				</div>
