@@ -8,9 +8,12 @@ import Link from "next/link";
 import NotificationCard from "../../atom/cards/notification";
 import LandingSearchBar from "../../atom/forms/LandingSearchBar";
 import CurrentUserProfileCard from "../../atom/common/user/CurrentUserProfileCard";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const AuthNavbar = () => {
 	const router = useRouter();
+	const user = useSelector(currentUser);
 	const [showNotificationPanel, setShowNotificationPanel] =
 		useState<boolean>(false);
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
@@ -146,11 +149,13 @@ const AuthNavbar = () => {
 						</Link>
 					);
 				})}
-				<Link href={"/mentor/onboarding"}>
-					<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
-						Become a Mentor
-					</div>
-				</Link>
+				{user && !user.mentor && (
+					<Link href={"/mentor/onboarding"}>
+						<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
+							Become a Mentor
+						</div>
+					</Link>
+				)}
 			</ul>
 
 			<div className="flex items-center gap-3 sm:gap-6 select-none">

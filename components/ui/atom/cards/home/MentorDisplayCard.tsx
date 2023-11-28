@@ -7,7 +7,7 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	return (
     <div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
-      <div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-[395px] sm:h-[350px] rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
+      <div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-auto rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
         <div className="absolute w-full h-full bg-[rgba(0,0,0,0.35)] animate__animated animate__fadeIn hidden group-hover:md:block" />
         <div className="flex justify-center sm:p-0 sm:pl-5 w-full mx-auto">
           <div className="grid py-6 sm:py-10 sm:px-5 gap-2">

@@ -39,9 +39,7 @@ const ProfileNavCard = ({
 			<div className="border p-4 border-[#70C5A1] bg-white backdrop-blur-md flex flex-col relative">
 				<div
 					onClick={() => setOpenDropdown(!openDropdown)}
-					className={`lg:hidden duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
-						!true ? "text-[#70C5A1]" : "bg-[#70C5A1] text-white"
-					}`}>
+					className={`lg:hidden duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full`}>
 					{activeTab}
 				</div>
 				<div

@@ -26,8 +26,8 @@ const ProfileComponents = ({
 	const isMentor = user?.mentor;
 	return (
 		<>
-			<div className="flex justify-between items-center">
-				<h1 className="font-medium text-xl mb-5 animate__animated animate__fadeInDown">
+			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown">
+				<h1 className="font-medium text-xl">
 					{activeTab}
 				</h1>
 				{isMentor && activeTab === "Courses" && (

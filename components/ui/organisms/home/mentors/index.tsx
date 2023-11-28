@@ -27,16 +27,7 @@ const MeetOurMentors = () => {
 										key={index}
 									/>
 								))
-								.slice(
-									0,
-									isExtraLargeScreen
-										? 5
-										: isLargeScreen
-										? 4
-										: isMediumScreen
-										? 2
-										: 3,
-								)}
+								.slice(0, 5)}
 						</div>
 					</div>
 				</div>
