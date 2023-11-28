@@ -11,6 +11,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
 import ResponseMessages from "../../constants/response-codes";
+import { formatGqlError } from "../../utils/auth";
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -104,9 +105,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			.catch((error: any) => {
 				console.error(error);
 				setLoading(false);
-				const resCode: keyof typeof ResponseMessages =
-					error.message.split(" -")[0];
-				const errorMessage = ResponseMessages[resCode];
+				const errorMessage = formatGqlError(error);
 				if (errorMessage)
 					toast.error(
 						errorMessage,
@@ -114,7 +113,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					);
 				else {
 					toast.error(
-						" An error occured. Please try again later.",
+						"An error occured. Please try again later.",
 						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 				}
