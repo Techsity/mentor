@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { link } from "fs";
 import { ProfileTabLinkType } from "../../../../../interfaces";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 
 const ProfileNavCard = ({
 	activeTab,
@@ -16,6 +18,7 @@ const ProfileNavCard = ({
 }) => {
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+	const user = useSelector(currentUser);
 
 	const activeLink = capitalizeSentence(
 		router.asPath

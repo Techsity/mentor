@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
 import MentorProfileCourses from "../mentor/MentorProfileCourses";
+import { PrimaryButton } from "../../../atom/buttons";
 
 const ProfileComponents = ({
 	activeTab,
@@ -25,9 +26,17 @@ const ProfileComponents = ({
 	const isMentor = user?.mentor;
 	return (
 		<>
-			<h1 className="font-medium text-xl mb-5 animate__animated animate__fadeInDown">
-				{activeTab}
-			</h1>
+			<div className="flex justify-between items-center">
+				<h1 className="font-medium text-xl mb-5 animate__animated animate__fadeInDown">
+					{activeTab}
+				</h1>
+				{isMentor && activeTab === "Courses" && (
+					<PrimaryButton
+						title="+ New Course"
+						className="bg-[#FFB100] text-[#000] p-2 px-4 rounded"
+					/>
+				)}
+			</div>
 			{activeTab === "Overview" && isMentor ? (
 				<div className="animate__animated animate__fadeIn">
 					<MentorProfileOverview />
