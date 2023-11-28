@@ -8,5 +8,8 @@ export const currentUserRole = (): "mentee" | "mentor" => {
 };
 export const formatGqlError = (error: any): string => {
 	const resCode: keyof typeof ResponseMessages = error.message.split(" -")[0];
-	return ResponseMessages[resCode];
+	const errorMessage = ResponseMessages[resCode];
+	if (errorMessage) return errorMessage;
+	else if (!errorMessage && error.message) return error.message;
+	return "An error occured. Please try again later.";
 };

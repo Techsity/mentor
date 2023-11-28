@@ -13,6 +13,10 @@ import { IUser } from "../../interfaces/user.interface";
 import ResponseMessages from "../../constants/response-codes";
 import { formatGqlError } from "../../utils/auth";
 
+type ICreateLoginInput = {
+	createLoginInput: ILoginState;
+};
+
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
 	const { initialValues } = props || {};
@@ -25,7 +29,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const [state, setState] = useState<ILoginState>(initialValues || initial);
 	const [error, setError] = useState<string[]>([]);
 
-	const [loginUser, { data }] = useMutation(LOGIN_USER);
+	const [loginUser] = useMutation<ILoginState, ICreateLoginInput>(LOGIN_USER);
 
 	const handleChange =
 		(field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,20 +107,14 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				}
 			})
 			.catch((error: any) => {
+				// console.error(JSON.stringify(error));
 				console.error(error);
 				setLoading(false);
 				const errorMessage = formatGqlError(error);
-				if (errorMessage)
-					toast.error(
-						errorMessage,
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-				else {
-					toast.error(
-						"An error occured. Please try again later.",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-				}
+				toast.error(
+					errorMessage,
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
 			});
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };

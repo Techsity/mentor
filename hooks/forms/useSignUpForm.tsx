@@ -14,6 +14,11 @@ export interface IFieldError {
 	field: keyof ISignUpState | "";
 	error?: string;
 }
+type ICreateRegisterInput = {
+	createRegisterInput: Omit<ISignUpState, "fullName" | "confirmPassword"> & {
+		name: string;
+	};
+};
 
 const useSignUpForm = (props?: {
 	initialValues?: ISignUpState;
@@ -34,7 +39,9 @@ const useSignUpForm = (props?: {
 		initialValues || initial,
 	);
 	const [errors, setErrors] = useState<IFieldError[]>([]);
-	const [registerUser, { data }] = useMutation(REGISTER_USER);
+	const [registerUser] = useMutation<ISignUpState, ICreateRegisterInput>(
+		REGISTER_USER,
+	);
 
 	const handleError =
 		(fieldName: keyof ISignUpState) =>
@@ -157,7 +164,7 @@ const useSignUpForm = (props?: {
 					createRegisterInput: {
 						name: fullName,
 						country,
-						phone,
+						phone: phone.slice(0, 10),
 						email,
 						password,
 					},
@@ -172,17 +179,10 @@ const useSignUpForm = (props?: {
 					console.error(error);
 					setLoading(false);
 					const errorMessage = formatGqlError(error);
-					if (errorMessage)
-						toast.error(
-							errorMessage,
-							ToastDefaultOptions({ id: "auth_form_pop" }),
-						);
-					else {
-						toast.error(
-							" An error occured. Please try again later.",
-							ToastDefaultOptions({ id: "auth_form_pop" }),
-						);
-					}
+					toast.error(
+						errorMessage,
+						ToastDefaultOptions({ id: "auth_form_pop" }),
+					);
 				});
 
 			// setTimeout(function () {
