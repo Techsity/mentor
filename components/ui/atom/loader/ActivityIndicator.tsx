@@ -7,7 +7,7 @@ interface IActivityIndicator extends HtmlHTMLAttributes<HTMLDivElement> {
 }
 
 const ActivityIndicator = (props: IActivityIndicator) => {
-	const { color, size, className, ...rest } = props;
+	const { color, size, style, className, ...rest } = props;
 	return (
 		<div
 			{...rest}
@@ -19,7 +19,7 @@ const ActivityIndicator = (props: IActivityIndicator) => {
 					: `border-current border-r-transparent`,
 				!size ? `h-6 w-6` : ``,
 			)}
-			style={{ height: size, width: size }}
+			style={{ height: size, width: size, ...style }}
 			role="status"
 		/>
 	);

@@ -6,6 +6,7 @@ import {
 	currentUser,
 } from "../../redux/reducers/features/authSlice";
 import { useRouter } from "next/router";
+import ActivityIndicator from "../../components/ui/atom/loader/ActivityIndicator";
 
 const AuthPage = () => {
 	const router = useRouter();
@@ -16,7 +17,15 @@ const AuthPage = () => {
 	if (auth || user) {
 		if (next) router.replace(decodeURIComponent(next));
 		// router.replace("/dashboard");
-		return <div className="min-h-screen"></div>;
+		return (
+			<div className="min-h-screen items-center flex justify-center">
+				<ActivityIndicator
+					size={90}
+					color="#70C5A1"
+					style={{ borderWidth: 8 }}
+				/>
+			</div>
+		);
 	}
 	return <LoginAndAuthPageTemplate />;
 };
