@@ -32,7 +32,6 @@ const UserProfilePageTemplate = () => {
 
 	return (
 		<>
-			{/* xs:pl-12 lg:pl-16 pt-10 */}
 			<div className="flex lg:grid grid-cols-6 xl:flex flex-col xl:gap-6 xl:flex-row item-start w-full h-full min-w-screen">
 				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
 					<div className="w-full overflow-hidden hide-scroll-bar">

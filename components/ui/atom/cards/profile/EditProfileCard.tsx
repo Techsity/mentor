@@ -20,7 +20,10 @@ const EditProfileCard = () => {
 					<div className="text-sm">
 						<p className="font-medium">{user?.name}</p>
 						{/* <p>{user?.role}</p> */}
-						<p className="text-[#70C5A1]">Mentee</p>
+
+						<p className="text-[#70C5A1]">
+							{user?.mentor ? "Mentor" : "User"}
+						</p>
 					</div>
 				</div>
 				<div className="my-5 text-sm grid gap-3">

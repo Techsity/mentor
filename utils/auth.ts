@@ -1,4 +1,6 @@
 import ResponseMessages from "../constants/response-codes";
+import { logOut } from "../redux/reducers/features/authSlice";
+import store from "../redux/store";
 
 export const checkAuth = () => {
 	return !true;
@@ -12,4 +14,8 @@ export const formatGqlError = (error: any): string => {
 	if (errorMessage) return errorMessage;
 	else if (!errorMessage && error.message) return error.message;
 	return "An error occured. Please try again later.";
+};
+
+export const logoutUser = () => {
+	store.dispatch(logOut());
 };

@@ -155,7 +155,6 @@ export function capitalizeSentence(sentence: string) {
 	}
 }
 
-
 export const isValidUrl = (url: string) => {
 	try {
 		new URL(url);
@@ -164,3 +163,50 @@ export const isValidUrl = (url: string) => {
 		return false;
 	}
 };
+
+/**
+ * Format amount into a amount-string representation {i.e K for thousands, M for millions}.
+ * @param { number } amount - The number to be formatted.
+ * @param options: withFraction - for formattin to decimal places //Todo
+ * @returns A formatted amount in string.
+ */
+export function formatAmount(
+	amount: number,
+	options?: { withFraction?: boolean },
+): string {
+	const { withFraction = false } = options || {};
+	if (amount)
+		if (amount.toString().length <= 5) {
+			// Format with 2 decimal places for amounts with up to 5 digits
+			return amount.toLocaleString(undefined, {
+				minimumFractionDigits: withFraction ? 2 : 0,
+				maximumFractionDigits: withFraction ? 2 : 0,
+			});
+		} else if (amount < 1000000) {
+			// Format in thousands
+			const thousands = Math.floor(amount / 1000);
+			// return `${thousands}K`;
+			return amount.toLocaleString();
+		} else if (amount < 1000000000) {
+			// Format in millions
+			const millions = (amount / 1000000).toFixed(withFraction ? 1 : 0);
+			return `${millions}M`;
+		} else if (amount < 1000000000000) {
+			// Format in billions
+			const billions = (amount / 1000000000).toFixed(
+				withFraction ? 1 : 0,
+			);
+			return `${billions}B`;
+		} else if (amount < 1000000000000000) {
+			// Format in trillions
+			const trillions = (amount / 1000000000000).toFixed(
+				withFraction ? 1 : 0,
+			);
+			return `${trillions}T`;
+		} else {
+			// For amounts beyond trillions, you can continue the pattern
+			// For example: quadrillions, quintillions, and so on
+			return "Too large to display";
+		}
+	return "";
+}
