@@ -13,11 +13,11 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 			const next = router.basePath.concat(router.asPath);
 			if (!auth || !user) {
 				// localStorage.setItem("previousUrl", router.asPath);
-				// router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+				router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 				return (
 					<div className="min-h-screen items-center flex justify-center">
 						<ActivityIndicator
-							size={90}
+							size={60}
 							color="#70C5A1"
 							style={{ borderWidth: 8 }}
 						/>

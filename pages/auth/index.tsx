@@ -20,7 +20,7 @@ const AuthPage = () => {
 		return (
 			<div className="min-h-screen items-center flex justify-center">
 				<ActivityIndicator
-					size={90}
+					size={60}
 					color="#70C5A1"
 					style={{ borderWidth: 8 }}
 				/>
