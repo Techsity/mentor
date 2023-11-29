@@ -108,17 +108,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/thumbnails/tmb_3.png",
 						duration: 40,
 						price: 3900,
@@ -223,18 +213,8 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
-										imgUrl: "/assets/images/thumbnails/tmb_3.png",
+										Training With Python 3`,
+									imgUrl: "/assets/images/thumbnails/tmb_3.png",
 									duration: 40,
 									price: 5500,
 									level: "All Level",
@@ -368,17 +348,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 5500,
@@ -513,17 +483,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -658,17 +618,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -803,17 +753,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -948,17 +888,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -1093,17 +1023,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -1238,17 +1158,7 @@ const courses: MainCourseType[] = [
 									available: true,
 									description: `This Python For Beginners Course Teaches You The
 										Python Language Fast. Includes Python Online
-										Training With Python 3 This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python 3This Python For Beginners
-										Course Teaches You The Python Language Fast.
-										Includes Python Online Training With Python
-										3This Python For Beginners Course Teaches You
-										The Python Language Fast. Includes Python Online
-										Training With Python`,
+										Training With Python 3`,
 									imgUrl: "/assets/images/mockups/course_one.png",
 									duration: 40,
 									price: 3500,
@@ -1408,17 +1318,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 5500,
@@ -1547,17 +1447,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 5500,
@@ -1686,17 +1576,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 3500,
@@ -1825,17 +1705,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -1964,17 +1834,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2103,17 +1963,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2247,17 +2097,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2386,17 +2226,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2525,17 +2355,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2670,17 +2490,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2809,17 +2619,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -2948,17 +2748,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3100,17 +2890,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: 3900,
@@ -3239,17 +3019,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3378,17 +3148,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3529,17 +3289,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3668,17 +3418,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3807,17 +3547,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -3951,17 +3681,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -4090,17 +3810,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",
@@ -4229,17 +3939,7 @@ const courses: MainCourseType[] = [
 						available: true,
 						description: `This Python For Beginners Course Teaches You The
 								Python Language Fast. Includes Python Online
-								Training With Python 3 This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python 3This Python For Beginners
-								Course Teaches You The Python Language Fast.
-								Includes Python Online Training With Python
-								3This Python For Beginners Course Teaches You
-								The Python Language Fast. Includes Python Online
-								Training With Python`,
+								Training With Python 3`,
 						imgUrl: "/assets/images/mockups/course_one.png",
 						duration: 40,
 						price: "free",

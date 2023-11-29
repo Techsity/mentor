@@ -42,7 +42,7 @@ const UserProfilePageTemplate = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 lg:px-0 col-span-4">
+				<div className="flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 xl:pr-0 lg:px-0 col-span-4">
 					<ProfileComponents activeTab={activeTab} />
 				</div>
 				<div className="xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">

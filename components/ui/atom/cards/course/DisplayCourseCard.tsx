@@ -90,10 +90,7 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 								</div>
 								{/* Note: Change to short summary - should not be more than 15 words. No need to split */}
 								<p className="text-xsm px-5 font-normal w-full">
-									{course.description.length > 110
-										? course.description.slice(0, 110) +
-										  "..."
-										: course.description}
+									{course.description}
 								</p>
 								<div className="flex items-center justify-between mt-3 px-5 w-full">
 									<div className="flex gap-2 items-center text-xsm relative">

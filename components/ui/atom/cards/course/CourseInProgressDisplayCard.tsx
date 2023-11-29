@@ -1,65 +1,87 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { ICourse } from "../../../../../interfaces";
-import { slugify } from "../../../../../utils";
+import { formatFollowersCount, slugify } from "../../../../../utils";
 import Link from "next/link";
-import { Play } from "react-ionicons";
+import { ArrowForwardSharp, Play } from "react-ionicons";
+import { StarRatingIcon } from "../../icons/svgs";
+import { PrimaryButton } from "../../buttons";
 
 const CourseInProgressDisplayCard = (course: ICourse) => {
 	const watchedTime = 1050;
 	const totalTime = 2300;
-	const percentage = (watchedTime / totalTime) * 100;
+	const percentageWatched = parseInt(
+		((watchedTime / totalTime) * 100).toFixed(0),
+	);
 
 	return (
-		<div className="inline-block snap-start group">
-			<div className="w-auto h-auto md:max-w-xs xl:max-w-sm relative overflow-hidden shadow md:py-0 py-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-default">
-				<div className="grid gap-4">
-					<div className="relative items-center">
-						<div className="bg-black w-full h-full items-center bg-opacity-40 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute">
-							<div className="flex justify-center items-center my-16">
-								<Link
-									href={`/courses/${slugify(
-										course.title,
-									)}/learn/`}>
-									<div className="bg-white p-4 rounded-full cursor-pointer">
-										<Play color="#333333" />
-									</div>
-								</Link>
-							</div>
+		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-pointer relative">
+			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
+				<div className="justify-between flex items-center w-full">
+					<span className="text-xs font-medium">
+						{percentageWatched < 100
+							? `${percentageWatched}% complete`
+							: `${percentageWatched}% complete`}
+					</span>
+					<Link href={`/courses/${slugify(course.title)}`}>
+						<div className="cursor-pointer">
+							<ArrowForwardSharp
+								color="#fff"
+								height="20px"
+								width="20px"
+							/>
 						</div>
+					</Link>
+				</div>
+			</div>
+			<div className="h-36 w-full">
+				<img
+					src={
+						course.imgUrl || "/assets/images/mockups/course_one.png"
+					}
+					className="w-full h-full"
+					alt={course.title}
+					loading="lazy"
+				/>
+			</div>
+			<div className="grid gap-1 mt-3 p-2">
+				<h1 className="tracking-tight font-normal">
+					{course.title.slice(0, 31)}
+				</h1>
+				<div className="flex items-center gap-2 justify-between text-xxs w-full">
+					<span className="font-normal">{course.level}</span>
+					<span className="font-normal">{course.duration} hours</span>
+					<span className="font-normal">
+						{formatFollowersCount(course.limit)} students
+					</span>
+					<div className="flex items-center gap-2 text-[#094B10]">
+						{course.rating}
+						<StarRatingIcon />
+					</div>
+				</div>
+
+				<p className="text-xsm font-normal w-full mt-3">
+					{course.description}
+				</p>
+				<div className="flex items-center justify-between mt-3 w-full">
+					<div className="flex gap-2 items-center text-xsm relative">
 						<img
 							src={
-								course.imgUrl ||
-								"/assets/images/mockups/course_one.png"
+								course.mentor.avatar ||
+								"/assets/images/avatar.png"
 							}
-							className="w-full h-full"
-							alt={course.title}
+							alt={course.mentor.name}
+							className="w-8 rounded-full"
 							loading="lazy"
 						/>
+						<h1>{course.mentor.name}</h1>
 					</div>
-					<div className="px-5 grid gap-3">
-						<h1 className="font-medium tracking-tight">
-							{course.title}
-						</h1>
-						<span className="text-sm">{course.mentor.name}</span>
-						<div className="flex items-start flex-col gap-2 pb-6 w-full">
-							<span className="relative overflow-hidden flex items-center bg-zinc-300 h-1 w-full">
-								<span
-									className={`absolute left-0 h-full bg-[#70C5A1]`}
-									style={{
-										width: `${parseInt(
-											percentage.toFixed(0),
-										)}%`,
-									}}
-								/>
-							</span>
-							<span className="text-xs">
-								{parseInt(percentage.toFixed(0)) < 100
-									? `${percentage.toFixed(0)}% complete`
-									: `${percentage.toFixed(0)}% completed`}
-							</span>
-						</div>
-					</div>
+					<PrimaryButton
+						title={
+							percentageWatched >= 100 ? "Start Over" : "Continue"
+						}
+						className="p-2 px-4 text-xs"
+					/>
 				</div>
 			</div>
 		</div>
