@@ -167,7 +167,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, initialState }) => {
 			{/* What to learn and requirements section - end */}
 			{/* Set Price and thumbnail - start */}
 			<div className="col-span-2">
-				<div className="flex justify-between"></div>
+				<div className="flex justify-between">
+					<h1 className="">Set price for course</h1>
+					<div className="bg-[#F3F3F3] p-1 rounded-full px-6 relative">
+						<div className="bg-transparent rounded-full p-3" />
+						<div className="bg-[#70C5A1] rounded-full p-3 absolute right-2 top-4 duration-300" />
+					</div>
+				</div>
 			</div>
 			<div className="col-span-2">
 				<div className=""></div>
