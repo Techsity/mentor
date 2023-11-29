@@ -7,7 +7,7 @@ import { RefrencedMentorType } from "../../../../../interfaces/mentor.interface"
 import user from "../../../../../data/user";
 
 type Props = {
-	handleSave: (updatedValues: ICourse) => void;
+	handleSave: (updatedValues: Omit<ICourse, "mentor">) => void;
 	initialState?: Omit<ICourse, "mentor">;
 };
 const initial: Omit<ICourse, "mentor"> = {
