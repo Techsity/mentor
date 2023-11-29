@@ -1,12 +1,12 @@
 import React, { MouseEventHandler, useState } from "react";
-import { ICourse, ICourseContent } from "../../../../../interfaces";
+import { ICourse, ICourseContent } from "../../../../../../interfaces";
 import {
 	calculateTotalDuration,
 	parseDuration,
 	scrollUp,
 	slugify,
-} from "../../../../../utils";
-import { PrimaryButton } from "../../../atom/buttons";
+} from "../../../../../../utils";
+import { PrimaryButton } from "../../../../atom/buttons";
 import classNames from "classnames";
 
 const CourseContents = ({

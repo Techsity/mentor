@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ICourse } from "../../../../interfaces";
 import { formatFollowersCount } from "../../../../utils";
 import CourseInProgressTopHeader from "../../../ui/organisms/course-in-progress/CourseInProgressTopHeader";
-import CourseContents from "../../../ui/organisms/course-details/body/CourseContents";
+import CourseContents from "../../../ui/organisms/course/course-details/body/CourseContents";
 import VideoComponent from "../../../ui/organisms/course-in-progress/video/VideoComponent";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import Socials from "../../../ui/atom/common/course/Socials";

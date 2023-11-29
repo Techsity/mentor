@@ -1,12 +1,12 @@
 import React from "react";
-import CourseDetailsPageHero from "../../../ui/organisms/course-details/hero";
+import CourseDetailsPageHero from "../../../ui/organisms/course/course-details/hero";
 import { ICourse } from "../../../../interfaces";
-import CourseDetailsBody from "../../../ui/organisms/course-details/body";
+import CourseDetailsBody from "../../../ui/organisms/course/course-details/body";
 import { ChevronUpOutline } from "react-ionicons";
 import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
-import CoursePageAboutMentor from "../../../ui/organisms/course-details/about-mentor";
-import OtherCoursesByMentor from "../../../ui/organisms/course-details/other-courses-by-mentor";
+import CoursePageAboutMentor from "../../../ui/organisms/course/course-details/about-mentor";
+import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
 
 const CourseDetailsPageTemplate = (course: ICourse) => {
 	return (

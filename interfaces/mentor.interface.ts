@@ -42,8 +42,7 @@ export type IMentorProjectType = {
 	link: string;
 	type: "Freelance" | "Contract" | "Official" | "";
 };
-export interface IMentor {
-	name: string;
+export interface IMentor extends IUser {
 	username: string;
 	jobTitle: string;
 	experience?: IExperience[];
@@ -52,15 +51,12 @@ export interface IMentor {
 	subscribers: number;
 	sessions: number;
 	rating: number;
-	avatar: string;
 	skills: string[];
 	daysOpen: string[];
-	online: boolean;
 	verified: boolean;
 	ratePerHour: number;
 	about: string;
 	education?: IMentorEducation[];
-	country: CountryCode;
 	languages: string[];
 	followers: number;
 	courses: ICourse[];

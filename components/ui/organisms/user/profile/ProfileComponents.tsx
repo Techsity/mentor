@@ -28,13 +28,14 @@ const ProfileComponents = ({
 	);
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
-	const isEditCourse =
-		(router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
+	const isEditCourse = useMemo(() => {
+		return (router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
+	}, [router]);
 
 	return (
 		<>
-			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown">
-				<h1 className="font-medium text-xl">
+			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
+				<h1 className="text-lg">
 					{!isEditCourse ? activeTab : "Edit Course"}
 				</h1>
 				{isMentor &&

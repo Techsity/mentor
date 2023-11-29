@@ -13,7 +13,7 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import ListReviews from "../../../ui/atom/common/course/ListReviews";
 import Socials from "../../../ui/atom/common/course/Socials";
-import OtherCoursesByMentor from "../../../ui/organisms/course-details/other-courses-by-mentor";
+import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
 
 const MentorDetailsTemplate = (mentor: IMentor) => {
 	const coursesByMentor = getMentorCourses(mentor.username);

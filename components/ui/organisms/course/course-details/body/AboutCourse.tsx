@@ -1,6 +1,6 @@
 import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { ICourse } from "../../../../../interfaces";
+import { ICourse } from "../../../../../../interfaces";
 
 const AboutCourse = (course: ICourse) => {
 	return (

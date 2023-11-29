@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { ICourse } from "../../../../interfaces";
-import { formatFollowersCount } from "../../../../utils";
+import { ICourse } from "../../../../../interfaces";
+import { formatFollowersCount } from "../../../../../utils";
 
 const CourseInProgressTopHeader = (course: ICourse) => {
 	return (
