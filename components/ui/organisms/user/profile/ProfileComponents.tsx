@@ -34,13 +34,28 @@ const ProfileComponents = ({
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown">
-				<h1 className="font-medium text-xl">{activeTab}</h1>
-				{isMentor && activeTab === "Courses" && (
-					<PrimaryButton
-						title="+ New Course"
-						className="bg-[#FFB100] text-[#000] p-2 px-4 rounded"
-					/>
-				)}
+				<h1 className="font-medium text-xl">
+					{!isEditCourse ? activeTab : "Edit Course"}
+				</h1>
+				{isMentor &&
+					activeTab === "Courses" &&
+					(!isEditCourse ? (
+						<PrimaryButton
+							title="+ New Course"
+							className="bg-[#FFB100] text-[#000] p-2 px-4"
+						/>
+					) : (
+						<div className="flex items-center gap-3">
+							<PrimaryButton
+								title="Save"
+								className="bg-[#FFB100] text-[#000] p-2 px-4"
+							/>
+							<PrimaryButton
+								title="Delete"
+								className="bg-[#E96850] text-[#fff] p-2 px-4"
+							/>
+						</div>
+					))}
 			</div>
 			{activeTab === "Overview" && isMentor ? (
 				<div className="animate__animated animate__fadeIn">
