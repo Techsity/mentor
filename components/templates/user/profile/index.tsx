@@ -18,6 +18,7 @@ const UserProfilePageTemplate = () => {
 				"Wish Lists",
 				"Payments",
 				"Profile Settings",
+				"Edit Course",
 		  ]
 		: [
 				"My Courses",
@@ -36,7 +37,9 @@ const UserProfilePageTemplate = () => {
 				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
 					<div className="w-full overflow-hidden hide-scroll-bar">
 						<ProfileNavCard
-							tabLinks={tabLinks}
+							tabLinks={tabLinks.filter(
+								(nav) => nav !== "Edit Course",
+							)}
 							activeTab={activeTab}
 							setActiveTab={setActiveTab}
 						/>

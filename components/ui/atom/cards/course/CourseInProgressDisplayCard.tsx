@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { FC } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { formatFollowersCount, slugify } from "../../../../../utils";
 import Link from "next/link";
@@ -7,7 +7,10 @@ import { ArrowForwardSharp, Play } from "react-ionicons";
 import { StarRatingIcon } from "../../icons/svgs";
 import { PrimaryButton } from "../../buttons";
 
-const CourseInProgressDisplayCard = (course: ICourse) => {
+const CourseInProgressDisplayCard: FC<{
+	course: ICourse;
+	owner?: boolean;
+}> = ({ course, owner }) => {
 	const watchedTime = 1050;
 	const totalTime = 2300;
 	const percentageWatched = parseInt(
@@ -15,13 +18,15 @@ const CourseInProgressDisplayCard = (course: ICourse) => {
 	);
 
 	return (
-		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-pointer relative">
+		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative">
 			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
 				<div className="justify-between flex items-center w-full">
 					<span className="text-xs font-medium">
-						{percentageWatched < 100
-							? `${percentageWatched}% complete`
-							: `${percentageWatched}% complete`}
+						{!owner
+							? percentageWatched < 100
+								? `${percentageWatched}% complete`
+								: `${percentageWatched}% complete`
+							: formatFollowersCount(course.limit) + " students"}
 					</span>
 					<Link href={`/courses/${slugify(course.title)}`}>
 						<div className="cursor-pointer">
@@ -34,7 +39,7 @@ const CourseInProgressDisplayCard = (course: ICourse) => {
 					</Link>
 				</div>
 			</div>
-			<div className="h-36 w-full">
+			<div className="h-40 w-full">
 				<img
 					src={
 						course.imgUrl || "/assets/images/mockups/course_one.png"
@@ -44,7 +49,7 @@ const CourseInProgressDisplayCard = (course: ICourse) => {
 					loading="lazy"
 				/>
 			</div>
-			<div className="grid gap-1 mt-3 p-2">
+			<div className="grid gap-1 mt-3 p-3">
 				<h1 className="tracking-tight font-normal">
 					{course.title.slice(0, 31)}
 				</h1>
@@ -76,12 +81,22 @@ const CourseInProgressDisplayCard = (course: ICourse) => {
 						/>
 						<h1>{course.mentor.name}</h1>
 					</div>
-					<PrimaryButton
-						title={
-							percentageWatched >= 100 ? "Start Over" : "Continue"
-						}
-						className="p-2 px-4 text-xs"
-					/>
+					{!owner ? (
+						<PrimaryButton
+							title={
+								percentageWatched >= 100
+									? "Start Over"
+									: "Continue"
+							}
+							className="p-2 px-4 text-xs"
+						/>
+					) : (
+						<PrimaryButton
+							title="Edit Course"
+							className="p-2 px-4 text-xs"
+							link={`/profile/#my-courses/${slugify(course.title)}/edit`}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

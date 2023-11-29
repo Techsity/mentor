@@ -12,24 +12,29 @@ import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
 import MentorProfileCourses from "../mentor/MentorProfileCourses";
 import { PrimaryButton } from "../../../atom/buttons";
+import { useRouter } from "next/router";
+import { capitalizeSentence } from "../../../../../utils";
+import EditCourseTemplate from "../../../../templates/course/edit";
 
 const ProfileComponents = ({
 	activeTab,
 }: {
 	activeTab: ProfileTabLinkType;
 }) => {
+	const router = useRouter();
 	const myCourses = useMemo(
 		() => courses[0].categories[0].availableCourses,
 		[],
 	);
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
+	const isEditCourse =
+		(router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
+
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown">
-				<h1 className="font-medium text-xl">
-					{activeTab}
-				</h1>
+				<h1 className="font-medium text-xl">{activeTab}</h1>
 				{isMentor && activeTab === "Courses" && (
 					<PrimaryButton
 						title="+ New Course"
@@ -42,11 +47,15 @@ const ProfileComponents = ({
 					<MentorProfileOverview />
 				</div>
 			) : activeTab === "Courses" && isMentor ? (
-				<MentorProfileCourses />
+				isEditCourse ? (
+					<EditCourseTemplate />
+				) : (
+					<MentorProfileCourses />
+				)
 			) : activeTab === "My Courses" ? (
 				<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 					{myCourses.map((course, i) => (
-						<CourseInProgressDisplayCard {...course} key={i} />
+						<CourseInProgressDisplayCard {...{ course }} key={i} />
 					))}
 				</div>
 			) : activeTab === "My Workshop" ? (
@@ -65,7 +74,10 @@ const ProfileComponents = ({
 				<>
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...course} key={i} />
+							<CourseInProgressDisplayCard
+								{...{ course }}
+								key={i}
+							/>
 						))}
 					</div>
 				</>

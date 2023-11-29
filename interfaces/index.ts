@@ -306,4 +306,5 @@ export type ProfileTabLinkType =
 	| "Wish Lists"
 	| "Payment Methods"
 	| "Payments"
-	| "Profile Settings";
+	| "Profile Settings"
+	| "Edit Course";

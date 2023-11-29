@@ -18,7 +18,6 @@ const ProfileNavCard = ({
 }) => {
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
-	const user = useSelector(currentUser);
 
 	const activeLink = capitalizeSentence(
 		router.asPath
@@ -54,6 +53,7 @@ const ProfileNavCard = ({
 								scrollToTop();
 								setActiveTab(link);
 								setOpenDropdown(false);
+								router.push(`/profile#${slugify(link)}`);
 							}}
 							className={`duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
 								link === activeTab
