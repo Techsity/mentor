@@ -9,6 +9,7 @@ import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
 import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
 import { ICourse } from "../../../../interfaces";
 import courses from "../../../../data/courses";
+import { PrimaryButton } from "../../../ui/atom/buttons";
 
 const EditCourseTemplate = () => {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -40,7 +41,7 @@ const EditCourseTemplate = () => {
 				setLoading(false);
 			}, 1000); // slow loading simulation
 	}, []);
-
+	const reviews = Array.from({ length: 5 });
 	return loading ? (
 		<div className="flex justify-center items-center">
 			<ActivityIndicator color="#094B10" size={40} />
@@ -71,37 +72,47 @@ const EditCourseTemplate = () => {
 						{/* Reviews section - start */}
 						<div className="">
 							<h1 className="text-sm mb-5">Reviews</h1>
-							{Array.from({ length: 5 }).map((_, id) => {
-								return (
-									<div
-										key={id}
-										className="border border-[#70C5A1] p-4 my-4">
-										<p className="my-4 text-xs">
-											I once thought digital marketing was
-											for the big guys until i took this
-											course, thank you for making it so
-											easy and simple
-										</p>
-										<div className="flex justify-between items-center">
-											<div className="flex items-center gap-1">
-												<img
-													src="/assets/images/avatar.png"
-													alt="testimonial"
-													className="h-6 w-6 rounded-full"
+							{reviews
+								.map((_, id) => {
+									return (
+										<div
+											key={id}
+											className="border border-[#70C5A1] p-4 my-4">
+											<p className="my-4 text-xs">
+												I once thought digital marketing
+												was for the big guys until i
+												took this course, thank you for
+												making it so easy and simple
+											</p>
+											<div className="flex justify-between items-center">
+												<div className="flex items-center gap-1">
+													<img
+														src="/assets/images/avatar.png"
+														alt="testimonial"
+														className="h-6 w-6 rounded-full"
+													/>
+													<p className="text-sm">
+														Adewole Sulaiman
+													</p>
+												</div>
+												<StarRatingIcon
+													color="#70C5A1"
+													height={20}
+													width={20}
 												/>
-												<p className="text-sm">
-													Adewole Sulaiman
-												</p>
 											</div>
-											<StarRatingIcon
-												color="#70C5A1"
-												height={20}
-												width={20}
-											/>
 										</div>
-									</div>
-								);
-							})}
+									);
+								})
+								.slice(0, 5)}
+							{reviews.length > 5 ? (
+								<div className="my-4">
+									<PrimaryButton
+										title="More Reviews"
+										className="p-1 px-5"
+									/>
+								</div>
+							) : null}
 						</div>
 					</div>
 					{/* Reviews section - end */}
