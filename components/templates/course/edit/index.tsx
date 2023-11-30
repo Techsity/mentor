@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import protectedPageWrapper from "../../../../pages/protectedPageWrapper";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
@@ -47,7 +48,7 @@ const EditCourseTemplate = () => {
 	) : (
 		<div className="">
 			<div className="items-start flex gap-3 flex-col xl:flex-row justify-between">
-				<div className="xl:max-w-[50%] w-full">
+				<div className="xl:max-w-[60%] w-full">
 					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
 						Course Overview
 					</h1>
@@ -61,37 +62,78 @@ const EditCourseTemplate = () => {
 						<AddCourseContent {...{ state }} />
 					</div>
 				</div>
-				<div className="xl:max-w-[50%] w-full">
+				<div className="xl:max-w-[40%] w-full">
 					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
 						How this Course is doing
 					</h1>
-					<div className="border border-[#70C5A1] p-3 grid items-center gap-3">
-						<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
-							<span className="text-sm">Total Students</span>
-							<span className="">{formatAmount(2000)}</span>
-						</div>
-						<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
-							<span className="text-sm">Total Watch Hour</span>
-							<span className="">{formatAmount(40000)}hrs</span>
-						</div>
-						<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
-							<span className="text-sm">Total Total Ratings</span>
-							<span className="flex items-center gap-1">
-								{4.5}
-								<StarRatingIcon
-									className="-mt-1"
-									opacity={1}
-									color="#fff"
-									height={15}
-									width={15}
-								/>
-							</span>
+					<div className="border border-[#70C5A1] p-3 grid items-center gap-4">
+						<Stats />
+						{/* Reviews section - start */}
+						<div className="">
+							<h1 className="text-sm mb-5">Reviews</h1>
+							{Array.from({ length: 5 }).map((_, id) => {
+								return (
+									<div
+										key={id}
+										className="border border-[#70C5A1] p-4 my-4">
+										<p className="my-4 text-xs">
+											I once thought digital marketing was
+											for the big guys until i took this
+											course, thank you for making it so
+											easy and simple
+										</p>
+										<div className="flex justify-between items-center">
+											<div className="flex items-center gap-1">
+												<img
+													src="/assets/images/avatar.png"
+													alt="testimonial"
+													className="h-6 w-6 rounded-full"
+												/>
+												<p className="text-sm">
+													Adewole Sulaiman
+												</p>
+											</div>
+											<StarRatingIcon
+												color="#70C5A1"
+												height={20}
+												width={20}
+											/>
+										</div>
+									</div>
+								);
+							})}
 						</div>
 					</div>
+					{/* Reviews section - end */}
 				</div>
 			</div>
 		</div>
 	);
 };
+const Stats = () => (
+	<>
+		<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
+			<span className="text-sm">Total Students</span>
+			<span className="">{formatAmount(2000)}</span>
+		</div>
+		<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
+			<span className="text-sm">Total Watch Hour</span>
+			<span className="">{formatAmount(40000)}hrs</span>
+		</div>
+		<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
+			<span className="text-sm">Total Total Ratings</span>
+			<span className="flex items-center gap-1">
+				{4.5}
+				<StarRatingIcon
+					className="-mt-1"
+					opacity={1}
+					color="#fff"
+					height={15}
+					width={15}
+				/>
+			</span>
+		</div>
+	</>
+);
 
 export default EditCourseTemplate;
