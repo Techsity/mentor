@@ -225,7 +225,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -360,7 +359,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -495,7 +493,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -630,7 +627,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -765,7 +761,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -900,7 +895,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -1035,7 +1029,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -1170,7 +1163,6 @@ const courses: MainCourseType[] = [
 										skills: ["Javascript", "Python"],
 										rating: 4.5,
 										ratePerHour: 200,
-										online: true,
 										mentees: [
 											{
 												name: "Lorem",
@@ -1201,7 +1193,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1330,7 +1321,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1459,7 +1449,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1588,7 +1577,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1717,7 +1705,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1846,7 +1833,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -1975,7 +1961,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2109,7 +2094,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2238,7 +2222,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2367,7 +2350,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2502,7 +2484,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2631,7 +2612,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2760,7 +2740,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -2902,7 +2881,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3031,7 +3009,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3160,7 +3137,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3301,7 +3277,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3430,7 +3405,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3559,7 +3533,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3693,7 +3666,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3822,7 +3794,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },
@@ -3951,7 +3922,6 @@ const courses: MainCourseType[] = [
 							skills: ["Javascript", "Python"],
 							rating: 4.5,
 							ratePerHour: 200,
-							online: true,
 							mentees: [
 								{ name: "Lorem", username: "lorem" },
 								{ name: "Lorem", username: "lorem" },

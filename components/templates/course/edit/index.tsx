@@ -7,12 +7,17 @@ import { StarRatingIcon } from "../../../ui/atom/icons/svgs";
 import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
 import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
 import { ICourse } from "../../../../interfaces";
+import courses from "../../../../data/courses";
 
 const EditCourseTemplate = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const initialState: Omit<ICourse, "mentor"> = {
 		available: false,
-		content: [],
+		content: [
+			courses[0].categories[0].availableCourses[0].content[0],
+			courses[0].categories[0].availableCourses[0].content[1],
+			courses[0].categories[0].availableCourses[0].content[2],
+		],
 		description: "",
 		duration: parseInt("00"),
 		level: "All Level",
@@ -53,7 +58,7 @@ const EditCourseTemplate = () => {
 						/>
 					</div>
 					<div className="border border-[#70C5A1] p-5 mt-6">
-						<AddCourseContent />
+						<AddCourseContent {...{ state }} />
 					</div>
 				</div>
 				<div className="xl:max-w-[50%] w-full">
