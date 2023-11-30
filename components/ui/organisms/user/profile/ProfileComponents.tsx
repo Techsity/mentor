@@ -15,6 +15,7 @@ import { PrimaryButton } from "../../../atom/buttons";
 import { useRouter } from "next/router";
 import { capitalizeSentence } from "../../../../../utils";
 import EditCourseTemplate from "../../../../templates/course/edit";
+import EditCourseContent from "../../course/edit-course/EditCourseContent";
 
 const ProfileComponents = ({
 	activeTab,
@@ -40,7 +41,7 @@ const ProfileComponents = ({
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-				<h1 className="text-lg capitalize">
+				<h1 className="text-sm capitalize">
 					{isEditCourse && !isContentPage
 						? "edit course"
 						: isEditCourse && isContentPage
@@ -72,8 +73,10 @@ const ProfileComponents = ({
 					<MentorProfileOverview />
 				</div>
 			) : activeTab === "Courses" && isMentor ? (
-				isEditCourse ? (
+				isEditCourse && !isContentPage ? (
 					<EditCourseTemplate />
+				) : isEditCourse && isContentPage ? (
+					<EditCourseContent />
 				) : (
 					<MentorProfileCourses />
 				)

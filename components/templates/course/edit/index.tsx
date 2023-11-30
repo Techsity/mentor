@@ -35,11 +35,12 @@ const EditCourseTemplate = () => {
 	const [state, setState] = useState<Omit<ICourse, "mentor">>(initialState);
 
 	useEffect(() => {
-		if (loading)
+		if (loading) {
 			setTimeout(function () {
 				scrollTo({ top: 0, behavior: "smooth" });
 				setLoading(false);
 			}, 1000); // slow loading simulation
+		}
 	}, []);
 	const reviews = Array.from({ length: 8 });
 	return loading ? (
