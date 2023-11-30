@@ -5,11 +5,27 @@ import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import { formatAmount, scrollToTop } from "../../../../utils";
 import { StarRatingIcon } from "../../../ui/atom/icons/svgs";
 import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
+import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
+import { ICourse } from "../../../../interfaces";
 
 const EditCourseTemplate = () => {
 	const [loading, setLoading] = useState<boolean>(true);
-
-	const courseId = "";
+	const initialState: Omit<ICourse, "mentor"> = {
+		available: false,
+		content: [],
+		description: "",
+		duration: parseInt("00"),
+		level: "All Level",
+		limit: 20,
+		price: "free",
+		rating: 0,
+		requirements: [],
+		title: "",
+		toLearn: [],
+		imgUrl: "",
+	};
+	const courseId = React.useId();
+	const [state, setState] = useState<Omit<ICourse, "mentor">>(initialState);
 
 	useEffect(() => {
 		if (loading)
@@ -32,8 +48,12 @@ const EditCourseTemplate = () => {
 					</h1>
 					<div className="border border-[#70C5A1] p-3">
 						<EditCourseForm
+							{...{ state }}
 							handleSave={(updated) => console.log(updated)}
 						/>
+					</div>
+					<div className="border border-[#70C5A1] p-5 mt-6">
+						<AddCourseContent />
 					</div>
 				</div>
 				<div className="xl:max-w-[50%] w-full">
