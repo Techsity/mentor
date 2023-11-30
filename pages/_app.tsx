@@ -20,6 +20,7 @@ import { Provider } from "react-redux";
 import store from "../redux/store";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
+import { SidebarProvider } from "../context/sidebar.context";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const [initialLoad, setInitialLoad] = useState<boolean>(true);
@@ -50,19 +51,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 						/>
 					</Head>
-					<LayoutContainer>
-						<ToastContainer
-							limit={1}
-							// newestOnTop
-							autoClose={5000}
-							theme="dark"
-							hideProgressBar
-							closeOnClick
-							draggable
-						/>
-						{/* {initialLoad && <PagePreLoader />} */}
-						<Component {...pageProps} />
-					</LayoutContainer>
+					<SidebarProvider>
+						<LayoutContainer>
+							<ToastContainer
+								limit={1}
+								// newestOnTop
+								autoClose={5000}
+								theme="dark"
+								hideProgressBar
+								closeOnClick
+								draggable
+							/>
+							{/* {initialLoad && <PagePreLoader />} */}
+							<Component {...pageProps} />
+						</LayoutContainer>
+					</SidebarProvider>
 				</ThemeProvider>
 			</Provider>
 		</ApolloProvider>

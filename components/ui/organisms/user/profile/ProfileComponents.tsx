@@ -32,11 +32,20 @@ const ProfileComponents = ({
 		return (router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
 	}, [router]);
 
+	const isContentPage = useMemo(
+		() => router.asPath.split("#")[2] as "content",
+		[router],
+	);
+
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-				<h1 className="text-lg">
-					{!isEditCourse ? activeTab : "Edit Course"}
+				<h1 className="text-lg capitalize">
+					{isEditCourse && !isContentPage
+						? "edit course"
+						: isEditCourse && isContentPage
+						? "edit course content"
+						: activeTab}
 				</h1>
 				{isMentor &&
 					activeTab === "Courses" &&

@@ -1,12 +1,17 @@
 import React, { FC } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { calculateTotalDuration } from "../../../../../utils";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 type Props = {
 	state: Omit<ICourse, "mentor">;
 };
 
 const AddCourseContent: FC<Props> = ({ state }) => {
+	const router = useRouter();
+	const isContentPage = Boolean(router.asPath.split("#")[2] as "content");
+
 	return (
 		<div className="grid gap-4">
 			<div className="flex justify-between items-center text-sm">
@@ -27,7 +32,13 @@ const AddCourseContent: FC<Props> = ({ state }) => {
 								<p className="text-sm">{content.title}</p>
 								<span className="text-xs">{mainDuration}</span>
 							</div>
-							<div className="text-sm select-none cursor-pointer">
+
+							<div
+								onClick={() => {
+									!isContentPage &&
+										router.push(router.asPath + `#content`);
+								}}
+								className="text-sm select-none cursor-pointer">
 								Edit
 							</div>
 						</div>

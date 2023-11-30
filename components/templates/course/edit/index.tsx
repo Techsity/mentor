@@ -41,7 +41,7 @@ const EditCourseTemplate = () => {
 				setLoading(false);
 			}, 1000); // slow loading simulation
 	}, []);
-	const reviews = Array.from({ length: 5 });
+	const reviews = Array.from({ length: 8 });
 	return loading ? (
 		<div className="flex justify-center items-center">
 			<ActivityIndicator color="#094B10" size={40} />
@@ -70,8 +70,8 @@ const EditCourseTemplate = () => {
 					<div className="border border-[#70C5A1] p-3 grid items-center gap-4">
 						<Stats />
 						{/* Reviews section - start */}
-						<div className="">
-							<h1 className="text-sm mb-5">Reviews</h1>
+						<div className="mt-3">
+							<h1 className="text-sm mb-3">Reviews</h1>
 							{reviews
 								.map((_, id) => {
 									return (
@@ -109,7 +109,7 @@ const EditCourseTemplate = () => {
 								<div className="my-4">
 									<PrimaryButton
 										title="More Reviews"
-										className="p-1 px-5"
+										className="p-1 px-5 text-sm"
 									/>
 								</div>
 							) : null}

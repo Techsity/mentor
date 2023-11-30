@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import Progressbar from "../atom/loader/ProgressBar";
+import Sidebar from "./sidebar";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	const auth = useSelector(isLoggedIn);
@@ -18,6 +19,7 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<>
 			<Progressbar />
+			<Sidebar />
 			{auth && user ? <AuthNavbar /> : <Navbar />}
 			<div className="relative">{children}</div>
 			<Footer />

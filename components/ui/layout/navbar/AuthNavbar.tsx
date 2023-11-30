@@ -24,7 +24,7 @@ const AuthNavbar = () => {
 		router.asPath.includes(path),
 	);
 	return (
-		<nav className="sticky h-20 top-0 w-full z-50 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__fadeIn">
+		<nav className="sticky h-20 top-0 w-full z-40 items-center bg-white shadow flex justify-between 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__fadeIn">
 			<Link href="/">
 				<div>
 					<MentorLogoDark className="cursor-pointer" />

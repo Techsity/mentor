@@ -18,4 +18,5 @@ export const formatGqlError = (error: any): string => {
 
 export const logoutUser = () => {
 	store.dispatch(logOut());
+	// if (window) location.href = "/";
 };
