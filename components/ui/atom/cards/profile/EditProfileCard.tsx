@@ -71,7 +71,7 @@ const EditProfileCard = () => {
 								? "Switch to Mentee Dashboard"
 								: "Get a Mentor Profile"
 						}
-						className="p-3 bg-[#FFB100] font-medium"
+						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
 					/>
 				</div>

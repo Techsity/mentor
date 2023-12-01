@@ -15,7 +15,7 @@ const EditCourseContent = (props: { content?: ICourseContent[] }) => {
 	);
 
 	return (
-		<div className="grid gap-4 max-w-3xl">
+		<div className="grid gap-4 max-w-4xl">
 			{state.map((cont, index) => {
 				return <ContentEditComponent {...cont} key={index} />;
 			})}
@@ -27,7 +27,7 @@ const ContentEditComponent: FC<ICourseContent> = ({ lectures, title }) => {
 	const fileUploadInputRef = useRef<HTMLInputElement>(null);
 	return (
 		<div className="">
-			<div className="relative max-w-xl">
+			<div className="relative max-w-2xl">
 				<label htmlFor="title" className="text-sm text-[#bebebe]">
 					Content Title
 				</label>
@@ -41,7 +41,7 @@ const ContentEditComponent: FC<ICourseContent> = ({ lectures, title }) => {
 				/>
 			</div>
 			<div className="">
-				<div className="my-4 flex justify-between items-center max-w-xl">
+				<div className="my-4 flex justify-between items-center max-w-2xl">
 					<h1 className="text-sm text-[#bebebe]">Lectures</h1>
 					<div className="cursor-pointer text-[#70C5A1] select-none">
 						+ Add New Lecture
@@ -49,8 +49,8 @@ const ContentEditComponent: FC<ICourseContent> = ({ lectures, title }) => {
 				</div>
 				{lectures.map((lecture, i) => {
 					return (
-						<div className="flex items-start gap-4 my-6" key={i}>
-							<div className="flex-grow border border-[#70C5A1] p-5 max-w-xl">
+						<div className="flex items-start gap-4 my-8" key={i}>
+							<div className="flex-grow border border-[#70C5A1] p-5 max-w-2xl">
 								<div className="grid gap-4">
 									<CustomTextInput
 										id="lecture_name"
@@ -79,6 +79,9 @@ const ContentEditComponent: FC<ICourseContent> = ({ lectures, title }) => {
 											hidden
 											id=""
 											ref={fileUploadInputRef}
+											accept=".mp4,.3gp"
+											max={1}
+											min={1}
 										/>
 										{lecture.type === "video" ? (
 											<img
@@ -102,7 +105,7 @@ const ContentEditComponent: FC<ICourseContent> = ({ lectures, title }) => {
 									/>
 								</div>
 							</div>
-							<div className="bg-[#70C5A1] h-1/2 w-auto right-2 top-0 grid gap-5 p-2 py-5">
+							<div className="bg-[#70C5A1] h-1/2 w-auto right-2 top-0 grid gap-5 p-1 py-5">
 								<div className="flex flex-col gap-2 items-center cursor-pointer">
 									<svg
 										width="25"
