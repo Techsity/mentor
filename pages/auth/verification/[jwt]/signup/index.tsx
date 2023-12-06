@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import OtpTemplate from "../../../../../components/templates/auth/verification/OtpTemplate";
 import { useRouter } from "next/router";
@@ -7,23 +7,36 @@ import { VERIFY_USER } from "../../../../../services/graphql/mutations/auth";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
 import { formatGqlError } from "../../../../../utils/auth";
+import ResponseMessages from "../../../../../constants/response-codes";
+
+type VerifyUserResponseType = {
+	data: { verifyUser: { message: keyof typeof ResponseMessages } };
+};
 
 const SignupOtpVerificationPage = () => {
 	const router = useRouter();
-	const token = "toendjsdhjkjckenwd";
-	const [verifyUser] = useMutation<{ otp: string }, { otp: string }>(
+	const [loading, setLoading] = useState<boolean>(false);
+
+	const [verifyUser] = useMutation<VerifyUserResponseType, { otp: string }>(
 		VERIFY_USER,
 	);
 
 	const handleVerifyOtp = (otp: string) => {
-		console.log(otp);
-
 		verifyUser({ variables: { otp } })
-			.then((response: any) => {
-				console.log(response);
-				// router.replace(`/onboarding/interests`, `/onboarding?${token}`);
+			.then((response) => {
+				if (
+					response.data?.data.verifyUser.message ===
+					ResponseMessages.USER_VERIFIED
+				) {
+					// toast.success(
+					// 	ResponseMessages.USER_VERIFIED,
+					// 	ToastDefaultOptions({ id: "success" }),
+					// );
+					router.replace(`/onboarding/interests`);
+				}
 			})
 			.catch((error: any) => {
+				setLoading(false);
 				console.error(error);
 				const errorMessage = formatGqlError(error);
 				toast.error(
@@ -33,7 +46,13 @@ const SignupOtpVerificationPage = () => {
 			});
 	};
 
-	return <OtpTemplate next={handleVerifyOtp} timeLimit={60} />;
+	return (
+		<OtpTemplate
+			{...{ loading, setLoading }}
+			next={handleVerifyOtp}
+			timeLimit={60}
+		/>
+	);
 };
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {

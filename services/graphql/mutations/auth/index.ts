@@ -39,3 +39,11 @@ export const VERIFY_USER = gql`
 		}
 	}
 `;
+
+export const FORGOT_PASSWORD = gql`
+	mutation forgetPassword($email: String!) {
+		forgetPassword(email: $email) {
+			message
+		}
+	}
+`;
