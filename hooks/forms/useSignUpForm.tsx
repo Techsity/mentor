@@ -164,7 +164,7 @@ const useSignUpForm = (props?: {
 					createRegisterInput: {
 						name: fullName,
 						country,
-						phone: phone.slice(0, 10),
+						phone: phone.slice(-10),
 						email,
 						password,
 					},

@@ -10,8 +10,8 @@ import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
-import ResponseMessages from "../../constants/response-codes";
 import { formatGqlError } from "../../utils/auth";
+import ResponseMessages from "../../constants/response-codes";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;
@@ -111,6 +111,23 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				console.error(error);
 				setLoading(false);
 				const errorMessage = formatGqlError(error);
+				// If account is not active, redirect to otp screen
+				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
+					toast.error(
+						errorMessage + "Redirecting...",
+						ToastDefaultOptions({ id: "auth_form_pop" }),
+					);
+					setTimeout(function () {
+						toast.dismiss("auth_form_pop");
+						// mutation to request for otp here, before redirecting
+						router.push(
+							"/auth/verification/" +
+								crypto.randomUUID() +
+								"/signup",
+						);
+					}, 2000);
+					return;
+				}
 				toast.error(
 					errorMessage,
 					ToastDefaultOptions({ id: "auth_form_pop" }),

@@ -32,7 +32,7 @@ const MeetOurMentors = () => {
 					</div>
 				</div>
 				<div className="flex justify-center mt-3">
-					<Link href="#">
+					<Link href="/mentors">
 						<div
 							className="px-16 hover:bg-[#083C0E] whitespace-nowrap select-none duration-300 bg-[#094B10] p-3 text-white rounded cursor-pointer"
 							style={{ fontFamily: "Days One" }}>
