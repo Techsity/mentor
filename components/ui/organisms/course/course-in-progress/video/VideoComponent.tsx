@@ -5,12 +5,10 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { ICourse } from "../../../../../interfaces";
 import ReactPlayer from "react-player/lazy";
-import { parseDuration, parseVideoDuration } from "../../../../../utils";
 import VideoControls from "./VideoControls";
-import useWindowSize from "../../../../../hooks/useWindowSize";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { ICourse } from "../../../../../../interfaces";
+import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 
 const VideoComponent = (props: {
 	course: ICourse;

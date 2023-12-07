@@ -3,12 +3,11 @@ import useWindowSize from "../../../../../../hooks/useWindowSize";
 import courses from "../../../../../../data/courses";
 import { scrollUp } from "../../../../../../utils";
 import DisplayCourseCard from "../../../../atom/cards/course/DisplayCourseCard";
+import { CourseType } from "../../../../../../interfaces";
 
 const CoursesSection = () => {
 	const { isExtraLargeScreen, isLargeScreen } = useWindowSize();
-	const [activeSection, setActiveSection] = useState<
-		"Technical" | "Vocational" | "Educational"
-	>("Technical");
+	const [activeSection, setActiveSection] = useState<CourseType>("technical");
 
 	return (
 		<>

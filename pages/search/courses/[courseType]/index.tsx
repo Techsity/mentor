@@ -7,10 +7,7 @@ type CourseTypeSearchPageProps = {
 	courseType: string;
 };
 
-const CourseTypeSearchPage = ({
-	category,
-	courseType,
-}: CourseTypeSearchPageProps) => {
+const CourseTypeSearchPage = ({ category, courseType }: CourseTypeSearchPageProps) => {
 	return (
 		<>
 			CourseTypeSearchPage
@@ -25,6 +22,7 @@ export const getServerSideProps = async (
 ): Promise<GetServerSidePropsResult<CourseTypeSearchPageProps>> => {
 	const courseType = ctx.query?.courseType as string;
 	const category = (ctx.query?.category as string) || null;
+	if (!courseType) return { props: { category, courseType: "" }, notFound: true };
 	return { props: { category, courseType } };
 };
 

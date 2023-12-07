@@ -1,13 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import mentors from "../../../../../../data/mentors";
 import { scrollUp } from "../../../../../../utils";
-import { useRouter } from "next/router";
 import MentorProfileCard from "../../../../atom/cards/mentor/MentorProfileCard";
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
-	const router = useRouter();
+	const filteredMentors = useMemo(() => {
+		return tab === "all"
+			? mentors.map((mentor, index) => (
+					<MentorProfileCard mentor={mentor} key={index} />
+			  ))
+			: tab === "online"
+			? mentors
+					.filter((mentor) => mentor.is_online)
+					.map((mentor, index) => (
+						<MentorProfileCard mentor={mentor} key={index} />
+					))
+			: mentors.map((mentor, index) => (
+					<MentorProfileCard mentor={mentor} key={index} />
+			  ));
+	}, [tab]);
 
 	return (
 		<>
@@ -46,22 +59,7 @@ const MentorsSection = () => {
 				</div>
 			</div>
 			<div className="grid xs:gap-3 gap-5 lg:px-20 sm:px-10 px-auto md:p-10 bg-[#FDFDFD] md:border border-[#D0D0D0] overflow-hidden md:mx-10 mx-5 my-5">
-				{tab === "all"
-					? mentors.map((mentor, index) => (
-							<MentorProfileCard mentor={mentor} key={index} />
-					  ))
-					: tab === "online"
-					? mentors
-							.filter((mentor) => mentor.online)
-							.map((mentor, index) => (
-								<MentorProfileCard
-									mentor={mentor}
-									key={index}
-								/>
-							))
-					: mentors.map((mentor, index) => (
-							<MentorProfileCard mentor={mentor} key={index} />
-					  ))}
+				{filteredMentors}
 			</div>
 		</>
 	);

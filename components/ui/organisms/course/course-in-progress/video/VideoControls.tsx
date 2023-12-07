@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { BackwardIcon, ForwardIcon, PlayIcon } from "../../../atom/icons/video";
+import { BackwardIcon, ForwardIcon, PlayIcon } from "../../../../atom/icons/video";
 
 const VideoControls = ({
 	setVideoDuration,
