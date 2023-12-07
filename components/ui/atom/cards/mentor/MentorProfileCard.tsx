@@ -39,7 +39,7 @@ const MentorProfileCard = ({
 							/>
 							<span
 								className={`absolute ${
-									mentor.online
+									mentor.is_online
 										? "bg-[#00AD74]"
 										: "bg-[#F6937B]"
 								} w-3 h-3 sm:h-5 sm:w-5 border-white border-2 top-0 left-0 xs:left-2 rounded-full`}
