@@ -1,19 +1,20 @@
-const navLinks: {
+type DropDown = { name: string; link: string };
+
+type NavLinkSubLink = {
 	name: string;
 	link: string;
-	sublinks?: {
-		name: string;
-		link: string;
-		icon?: React.JSX.Element;
-		dropdown?: { name: string; link: string }[];
-	}[];
-}[] = [
+	icon?: React.JSX.Element;
+	dropdown: "technical" | "vocational" | "educational";
+};
+type NavLink = { name: string; link: string; sublinks?: NavLinkSubLink[] };
+
+const navLinks: NavLink[] = [
 	{
-		link: "/#courses",
+		link: "/courses",
 		name: "Courses",
 		sublinks: [
 			{
-				link: "#",
+				link: "/courses/search/technical",
 				name: "Technical",
 				icon: (
 					<>
@@ -29,28 +30,10 @@ const navLinks: {
 						</svg>
 					</>
 				),
-				dropdown: [
-					{ link: "/#courses", name: "Digital Marketing" },
-					{ link: "/#courses", name: "C++" },
-					{ link: "/#courses", name: "Motion Design" },
-					{ link: "/#courses", name: "Programming" },
-					{ link: "/#courses", name: "Graphics Design" },
-					{ link: "/#courses", name: "Adobe After Effect" },
-					{ link: "/#courses", name: "Python" },
-					{ link: "/#courses", name: "Figma" },
-					{ link: "/#courses", name: "Premier Pro" },
-					{ link: "/#courses", name: "Flutter" },
-					{ link: "/#courses", name: "UX Research" },
-					{ link: "/#courses", name: "Cinema 4D" },
-					{ link: "/#courses", name: "Data Analysis" },
-					{ link: "/#courses", name: "SQL" },
-					{ link: "/#courses", name: "Auto CAD" },
-					{ link: "/#courses", name: "Excel" },
-					{ link: "/#courses", name: "Cloud Engineering" },
-				],
+				dropdown: "technical",
 			},
 			{
-				link: "#",
+				link: "/courses/search/vocational",
 				name: "Vocational",
 				icon: (
 					<svg width="22" height="24" viewBox="0 0 22 24" fill="none">
@@ -62,14 +45,10 @@ const navLinks: {
 						/>
 					</svg>
 				),
-				dropdown: [
-					{ link: "/#courses", name: "Digital Marketing" },
-					{ link: "/#courses", name: "Programming" },
-					{ link: "/#courses", name: "Flutter" },
-				],
+				dropdown: "vocational",
 			},
 			{
-				link: "#",
+				link: "/courses/search/educational",
 				name: "Educational",
 				icon: (
 					<svg width="34" height="31" viewBox="0 0 34 31" fill="none">
@@ -83,6 +62,7 @@ const navLinks: {
 						/>
 					</svg>
 				),
+				dropdown: "educational",
 			},
 		],
 	},

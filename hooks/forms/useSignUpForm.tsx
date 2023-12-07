@@ -172,7 +172,7 @@ const useSignUpForm = (props?: {
 			})
 				.then(() => {
 					setTimeout(function () {
-						router.push(`/auth/verification/${"jwt_token"}/signup`);
+						router.push(`/auth/verification/signup`);
 					}, 2000);
 				})
 				.catch((error: any) => {

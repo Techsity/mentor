@@ -102,7 +102,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					if (next) {
 						router.replace(decodeURIComponent(next));
 					} else {
-						router.replace(`/dashboard`);
+						router.replace(`/profile`);
 					}
 				}
 			})

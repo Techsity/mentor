@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import OtpTemplate from "../../../../../components/templates/auth/verification/OtpTemplate";
+import OtpTemplate from "../../../../components/templates/auth/verification/OtpTemplate";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import { VERIFY_USER } from "../../../../../services/graphql/mutations/auth";
+import { VERIFY_USER } from "../../../../services/graphql/mutations/auth";
 import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../../constants";
-import { formatGqlError } from "../../../../../utils/auth";
-import ResponseMessages from "../../../../../constants/response-codes";
+import { ToastDefaultOptions } from "../../../../constants";
+import { formatGqlError } from "../../../../utils/auth";
+import ResponseMessages from "../../../../constants/response-codes";
 
 type VerifyUserResponseType = {
 	data: { verifyUser: { message: keyof typeof ResponseMessages } };
@@ -24,6 +24,7 @@ const SignupOtpVerificationPage = () => {
 	const handleVerifyOtp = (otp: string) => {
 		verifyUser({ variables: { otp } })
 			.then((response) => {
+				console.log(response);
 				if (
 					response.data?.data.verifyUser.message ===
 					ResponseMessages.USER_VERIFIED
@@ -39,6 +40,11 @@ const SignupOtpVerificationPage = () => {
 				setLoading(false);
 				console.error(error);
 				const errorMessage = formatGqlError(error);
+				if (errorMessage === ResponseMessages["statusCode: 13404"]) {
+					setTimeout(function () {
+						router.replace("/auth?login");
+					}, 2000);
+				}
 				toast.error(
 					errorMessage,
 					ToastDefaultOptions({ id: "auth_form_pop" }),

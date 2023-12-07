@@ -5,6 +5,9 @@ import CustomTextInput from "../../../../ui/atom/inputs/CustomTextInput";
 import PasswordValidationComponent from "../../../../ui/atom/forms/auth/login-and-signup/signup/PasswordValidationComponent";
 import { IResetPasswordState } from "../../../../../interfaces/auth.interface";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../constants";
+import { randomUUID } from "crypto";
 
 const ResetNewPasswordTemplate = () => {
 	const router = useRouter();
@@ -17,12 +20,26 @@ const ResetNewPasswordTemplate = () => {
 	const handleSubmit = (e: FormEvent) => {
 		setLoading(true);
 		e.preventDefault();
-		// console.log(state);
-		const token = "df239euds30e9uvewv";
-		//mock loading before proceeding
-		setTimeout(function () {
-			router.replace(`/auth/reset-password/${token}?finish`);
-		}, 2000);
+		if (state.newPassword && state.confirmNewPassword)
+			if (state.newPassword === state.confirmNewPassword)
+				//mock loading before proceeding
+				setTimeout(function () {
+					router.replace(
+						`/auth/reset-password/${randomUUID()}?finish`,
+					);
+				}, 2000);
+			else {
+				toast.error(
+					"Passwords do not match",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
+			}
+		else {
+			toast.error(
+				"Please enter your passwords",
+				ToastDefaultOptions({ id: "auth_form_pop" }),
+			);
+		}
 	};
 
 	return (

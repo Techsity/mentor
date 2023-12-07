@@ -106,7 +106,7 @@ const OtpTemplate = ({
 					Enter OTP
 				</h1>
 				<p className="my-5 sm:my-10 px-5 sm:px-auto">
-					Enter the One Time Password sent to the mail you provided
+					Enter the One Time Password sent to the email you provided
 				</p>
 				<OTPForm
 					disableInputs={loading}

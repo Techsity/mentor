@@ -15,10 +15,13 @@ const SetNewPassword = () => {
 };
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
-	const { token } = ctx.query;
-	// check if token exists in the url query
-	if (!token)
-		return { props: {}, redirect: { destination: "/auth", permanent: true } };
+	const { otp } = ctx.query;
+	// check if otp exists in the url query
+	if (!otp || otp.length > 6)
+		return {
+			props: {},
+			redirect: { destination: "/auth", permanent: true },
+		};
 	// then check if it matches the one stored in the cookies
 	// validate or redirect
 	return { props: {} };
