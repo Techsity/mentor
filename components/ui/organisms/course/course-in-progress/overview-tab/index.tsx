@@ -1,14 +1,11 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useState } from "react";
 import CourseOverview from "./CourseOverview";
-import { ICourse } from "../../../../../interfaces";
-import { IUser } from "../../../../../interfaces/user.interface";
-import LectureReviewCard from "../../../atom/cards/course/in-progress/LectureReviewCard";
-import CustomTextInput from "../../../atom/inputs/CustomTextInput";
-import { PrimaryButton } from "../../../atom/buttons";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
-import useLectureReviews from "../../../../../hooks/course/useLectureReviews";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import useLectureReviews from "../../../../../../hooks/course/useLectureReviews";
+import { ICourse } from "../../../../../../interfaces";
+import { PrimaryButton } from "../../../../atom/buttons";
+import LectureReviewCard from "../../../../atom/cards/course/in-progress/LectureReviewCard";
+import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
+import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 
 type videoNavType = "about-course" | "review" | "lecture-notes";
 
