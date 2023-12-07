@@ -2,14 +2,12 @@
 import React, { useState } from "react";
 import { ICourse } from "../../../../interfaces";
 import { formatFollowersCount } from "../../../../utils";
-import CourseInProgressTopHeader from "../../../ui/organisms/course-in-progress/CourseInProgressTopHeader";
-import CourseContents from "../../../ui/organisms/course/course-details/body/CourseContents";
-import VideoComponent from "../../../ui/organisms/course-in-progress/video/VideoComponent";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import Socials from "../../../ui/atom/common/course/Socials";
 import Link from "next/link";
-import CourseOverview from "../../../ui/organisms/course-in-progress/overview-tab/CourseOverview";
-import CourseOverviewTab from "../../../ui/organisms/course-in-progress/overview-tab";
+import Socials from "../../../ui/atom/common/course/Socials";
+import CourseContents from "../../../ui/organisms/course/course-details/body/CourseContents";
+import CourseInProgressTopHeader from "../../../ui/organisms/course/course-in-progress/CourseInProgressTopHeader";
+import VideoComponent from "../../../ui/organisms/course/course-in-progress/video/VideoComponent";
+import CourseOverviewTabComponent from "../../../ui/organisms/course/course-in-progress/overview-tab";
 
 const CourseInProgressTemplate = (course: ICourse) => {
 	return (
@@ -21,7 +19,7 @@ const CourseInProgressTemplate = (course: ICourse) => {
 				<div className="flex flex-col lg:flex-row justify-between gap-5 w-full lg:items-start pb-20">
 					<div className="relative w-full">
 						<VideoComponent course={course} />
-						<CourseOverviewTab {...course} />
+						<CourseOverviewTabComponent {...course} />
 						<div className="flex items-center gap-5 mt-5 flex-wrap">
 							<Link href="#">
 								<p className="text-[red]">! Report Course</p>
