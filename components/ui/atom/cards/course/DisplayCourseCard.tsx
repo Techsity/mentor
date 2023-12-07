@@ -12,8 +12,9 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 	return (
 		<>
 			<div className="animate__animated animate__fadeIn animate__faster inline-block snap-start">
-				<div className="w-auto h-auto lg:h-auto md:max-w-md xl:max-w-lg relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+				<div className="w-auto h-auto lg:h-auto md:max-w-sm relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
+						{/* Wishlist Feature - Start */}
 						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
 							{wishlist.length > 0 && hasBeenAdded ? (
 								<HeartSharp
@@ -39,6 +40,8 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 								</div>
 							</Link>
 						</div>
+						{/* Wishlist Feature - End*/}
+
 						<Link href={`/courses/${slugify(course.title)}`}>
 							<div className="flex flex-col items-start gap-4 cursor-pointer h-full w-full">
 								<div className="relative h-[40%] w-full bg-zinc-200">
@@ -50,9 +53,12 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 										loading="lazy"
 									/>
 								</div>
-								<h1 className="px-5 text-rgS font-medium tracking-tight">{course.title}</h1>
-								<div className="flex items-center gap-1 justify-between px-5 text-xxs w-full">
-									<span className="font-normal">{course.level}</span>
+								<h1 className="px-5 font-medium tracking-tight">{course.title}</h1>
+								<div className="flex items-center gap-1 justify-between px-5 text-xs w-full">
+									<span className="font-normal">
+										{course.course_level.charAt(0).toUpperCase() +
+											course.course_level.slice(1).toLowerCase()}
+									</span>
 									<span className="font-normal">{course.duration} hours</span>
 									<span className="font-normal">{course.limit.toLocaleString()} students</span>
 									<div className="flex items-center gap-2 text-[#094B10] ml-3 text-[13px]">
@@ -67,24 +73,24 @@ const DisplayCourseCard = ({ course }: { course: ICourse }) => {
 									</div>
 								</div>
 								{/* Note: Change to short summary - should not be more than 15 words. No need to split */}
-								<p className="text-xsm px-5 font-normal w-full">{course.description}</p>
+								<p className="text-[13px] px-5 font-normal w-full">{course.description}</p>
 								<div className="flex items-center justify-between mt-3 px-5 w-full">
-									<div className="flex gap-2 items-center text-xsm relative">
+									<div className="flex gap-2 items-center text-sm relative">
 										<img
-											src={course.mentor.avatar || "/assets/images/avatar.png"}
-											alt={course.mentor.name}
+											src={course.mentor.user.avatar || "/assets/images/avatar.png"}
+											alt={course.mentor.user.name}
 											className="w-10 rounded-full"
 											loading="lazy"
 										/>
-										<h1>{course.mentor.name}</h1>
+										<h1>{course.mentor.user.name}</h1>
 										{/* <div className="absolute w-ful left-0"></div> */}
 									</div>
-									{course.price === "free" ? (
-										<div className="text-white text-xsm bg-[#094B10] select-none rounded px-8 p-2 cursor-pointer">
+									{course.price === 0 ? (
+										<div className="text-white text-sm bg-[#094B10] select-none rounded px-8 p-2 cursor-pointer font-medium">
 											Free
 										</div>
 									) : (
-										<div className="text-black text-xsm bg-[#FFB100] select-none rounded px-8 p-2 cursor-pointer">
+										<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-8 p-2 cursor-pointer">
 											₦{course.price.toLocaleString()}
 										</div>
 									)}

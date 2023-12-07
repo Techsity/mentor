@@ -115,11 +115,23 @@ const courseCategories: ICourseCategory[] = [
 		created_at: new Date(),
 		updated_at: new Date(),
 	},
+	{
+		title: "Python",
+		description: "Courses related to programming and software development.",
+		created_at: new Date(),
+		updated_at: new Date(),
+	},
+	{
+		title: "Data Science",
+		description: "Courses related to programming and software development.",
+		created_at: new Date(),
+		updated_at: new Date(),
+	},
 ];
 
 export const courseTypes: { name: CourseType; categories: ICourseCategory[] }[] = [
-	{ name: "technical", categories: [...courseCategories] },
-	{ name: "vocational", categories: [] },
+	{ name: "technical", categories: courseCategories.slice(0, 2) },
+	{ name: "vocational", categories: courseCategories.slice(2) },
 	{ name: "educational", categories: [] },
 ];
 

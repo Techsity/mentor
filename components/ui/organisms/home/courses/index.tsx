@@ -63,7 +63,7 @@ const HomepageCourseSection = () => {
 					</Link>
 				</div>
 
-				<div className="md:border md:mx-10 md:p-5">
+				<div className="md:border md:mx-10 md:p-5 bg-[#FDFDFD]">
 					<CoursesList activeCategory={currentCategory} />
 				</div>
 			</div>

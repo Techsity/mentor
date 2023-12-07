@@ -7,7 +7,7 @@ const CoursesList = ({ activeCategory }: { activeCategory: string }) => {
 	const filteredCourses = courses.filter((course) => course.category.title === activeCategory);
 	return (
 		<div>
-			<div className="grid xl:grid-cols-4 md:grid-cols-2 items-center 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto">
+			<div className="grid xl:grid-cols-4 md:grid-cols-2 items-center 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
 				{
 					filteredCourses.length >= 1 ? (
 						filteredCourses
