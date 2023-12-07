@@ -1,25 +1,43 @@
 import React, { useState } from "react";
-import navLinks from "../../../../data/navlinks";
-import router, { useRouter } from "next/router";
+import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { MainCourseType } from "../../../../data/courses";
+import { CourseType } from "../../../../interfaces";
 
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
-	const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+	// activeDropdown === i &&
+	const [activeDropdown, setActiveDropdown] = useState<
+		NavLinkSubLink["dropdown"] | null
+	>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	const [dropDownLinks, setDropDownLinks] = useState([]);
+	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
+		{
+			categories: [{ title: "ASDfdgofudfdh", availableCourses: [] }],
+			section: "technical",
+		},
+		{
+			categories: [{ title: "QEDfdgofudfdh", availableCourses: [] }],
+			section: "vocational",
+		},
+		{
+			categories: [{ title: "SDFSfdgofudfdh", availableCourses: [] }],
+			section: "educational",
+		},
+	]);
 
 	return (
 		<div className="hidden md:flex justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">
 			<ul className="hidden lg:flex items-center gap-6 whitespace-nowrap ml-4">
-				{navLinks.map(({ link, name, sublinks }, index) => {
+				{navLinks.map(({ link, name, sublinks, id }, index) => {
 					return sublinks ? (
 						<li
-							key={index + "_" + name}
+							key={id}
 							className="relative px-2 font-[300] text-sm select-none"
 							onMouseEnter={() => setActiveSublink(index)}
 							onMouseLeave={() => {
@@ -50,7 +68,9 @@ const NavLinksComponent = () => {
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
 														onMouseEnter={() =>
-															setActiveDropdown(i)
+															setActiveDropdown(
+																sublink.dropdown,
+															)
 														}
 														// onMouseLeave={() => setActiveDropdown(null)}
 													>
@@ -58,49 +78,46 @@ const NavLinksComponent = () => {
 														{sublink.name}
 													</div>
 												</Link>
-												{activeDropdown === i &&
-													sublink.dropdown &&
-													sublink.dropdown.length >
-														0 && (
-														<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
-															{dropDownLinks.map(
-																(
-																	{
-																		link: dropdownLink,
-																		name: dropdownLinkName,
-																	},
-																	dropdownIndex,
-																) => (
-																	<Link
-																		key={
-																			dropdownIndex
-																		}
-																		href={
-																			dropdownLink
-																		}>
-																		<div
-																			key={
-																				i
-																			}
-																			onClick={() => {
-																				setActiveSublink(
-																					null,
-																				);
-																				setActiveDropdown(
-																					null,
-																				);
-																			}}
-																			className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
-																			{
-																				dropdownLinkName
-																			}
-																			<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
-																		</div>
-																	</Link>
-																),
-															)}
-														</div>
-													)}
+												{sublink.dropdown ===
+													activeDropdown && (
+													<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
+														{dropDownLinks[
+															dropDownLinks.findIndex(
+																(type) =>
+																	type.section ===
+																	activeDropdown,
+															)
+														]?.categories.map(
+															(
+																{ title },
+																dropdownIndex,
+															) => (
+																<Link
+																	key={
+																		dropdownIndex
+																	}
+																	href={`/search/courses/${sublink.dropdown}?category=${title}`}>
+																	<div
+																		key={i}
+																		onClick={() => {
+																			setActiveSublink(
+																				null,
+																			);
+																			setActiveDropdown(
+																				null,
+																			);
+																		}}
+																		className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
+																		dropdownLinkTitle
+																		-{" "}
+																		{title}
+																		<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
+																	</div>
+																</Link>
+															),
+														)}
+													</div>
+												)}
 											</div>
 										))}
 									</div>

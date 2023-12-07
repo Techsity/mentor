@@ -308,3 +308,5 @@ export type ProfileTabLinkType =
 	| "Payments"
 	| "Profile Settings"
 	| "Edit Course";
+
+export type CourseType = "technical" | "vocational" | "educational";

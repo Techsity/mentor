@@ -1,20 +1,28 @@
+import { CourseType } from "../interfaces";
+
 type DropDown = { name: string; link: string };
 
-type NavLinkSubLink = {
+export type NavLinkSubLink = {
 	name: string;
 	link: string;
 	icon?: React.JSX.Element;
-	dropdown: "technical" | "vocational" | "educational";
+	dropdown: CourseType | "live-workshops";
 };
-type NavLink = { name: string; link: string; sublinks?: NavLinkSubLink[] };
+type NavLink = {
+	name: string;
+	link: string;
+	sublinks?: NavLinkSubLink[];
+	id: "courses" | "workshops" | "mentors";
+};
 
 const navLinks: NavLink[] = [
 	{
 		link: "/courses",
+		id: "courses",
 		name: "Courses",
 		sublinks: [
 			{
-				link: "/courses/search/technical",
+				link: "/search/courses/technical",
 				name: "Technical",
 				icon: (
 					<>
@@ -33,7 +41,7 @@ const navLinks: NavLink[] = [
 				dropdown: "technical",
 			},
 			{
-				link: "/courses/search/vocational",
+				link: "/search/courses/vocational",
 				name: "Vocational",
 				icon: (
 					<svg width="22" height="24" viewBox="0 0 22 24" fill="none">
@@ -48,7 +56,7 @@ const navLinks: NavLink[] = [
 				dropdown: "vocational",
 			},
 			{
-				link: "/courses/search/educational",
+				link: "/search/courses/educational",
 				name: "Educational",
 				icon: (
 					<svg width="34" height="31" viewBox="0 0 34 31" fill="none">
@@ -67,10 +75,13 @@ const navLinks: NavLink[] = [
 		],
 	},
 	{
-		link: "/workshops/live",
-		name: "Live Workshops",
+		id: "workshops",
+		link: "/workshops",
+		name: "Workshops",
+		// sublinks: [{ dropdown: "live-workshops", link: "#", name: "jsjsma" }],
 	},
 	{
+		id: "mentors",
 		link: "/mentors",
 		name: "Mentors",
 	},

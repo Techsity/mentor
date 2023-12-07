@@ -1,13 +1,13 @@
-import { ICourseCategory } from "../interfaces";
+import { CourseType, ICourseCategory } from "../interfaces";
 
 export interface MainCourseType {
-	section: "Technical" | "Vocational" | "Educational";
+	section: CourseType;
 	categories: ICourseCategory[];
 }
 
 const courses: MainCourseType[] = [
 	{
-		section: "Technical",
+		section: "technical",
 		categories: [
 			{
 				availableCourses: [
@@ -2767,7 +2767,7 @@ const courses: MainCourseType[] = [
 		],
 	},
 	{
-		section: "Vocational",
+		section: "vocational",
 		categories: [
 			{ availableCourses: [], title: "Web Development" },
 			{
@@ -3163,7 +3163,7 @@ const courses: MainCourseType[] = [
 		],
 	},
 	{
-		section: "Educational",
+		section: "educational",
 		categories: [
 			{ availableCourses: [], title: "Web Development" },
 			{
