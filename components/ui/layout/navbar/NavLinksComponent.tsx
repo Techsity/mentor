@@ -43,7 +43,7 @@ const NavLinksComponent = () => {
 							sublinks &&
 							sublinks?.length > 0 ? (
 								<div className="absolute top-6 -left-6 pt-8 mx-auto">
-									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__faster">
+									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
 											<div key={i}>
 												<Link href={sublink.link}>
