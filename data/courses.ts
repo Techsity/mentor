@@ -1,4 +1,4 @@
-import { ICourse, ICourseCategory, ICourseContent } from "../interfaces";
+import { CourseType, ICourse, ICourseCategory, ICourseContent } from "../interfaces";
 import mentors from "./mentors";
 import reviews from "./reviews";
 
@@ -115,6 +115,12 @@ const courseCategories: ICourseCategory[] = [
 		created_at: new Date(),
 		updated_at: new Date(),
 	},
+];
+
+export const courseTypes: { name: CourseType; categories: ICourseCategory[] }[] = [
+	{ name: "technical", categories: [...courseCategories] },
+	{ name: "vocational", categories: [] },
+	{ name: "educational", categories: [] },
 ];
 
 const courses: ICourse[] = [

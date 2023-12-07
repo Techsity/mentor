@@ -7,7 +7,6 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	const ratings: number =
 		mentor.reviews.reduce((sum, review) => sum + review.ratings, 0) / mentor.reviews.length || 0;
-	console.log(mentor.user.name.split(" "));
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
 			<div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-auto rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
