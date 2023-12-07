@@ -1,26 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import courses from "../../../../../data/courses";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
+import { ICourse } from "../../../../../interfaces";
 
 const CoursesList = ({ activeCategory }: { activeCategory: string }) => {
-	const filteredCourses = courses.filter((course) => course.category.title === activeCategory);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [allCourses, setAllCourses] = useState<ICourse[]>([]);
+
+	const fetchCoursesByCategory = () => {
+		console.log("api call 2");
+		if (activeCategory) {
+			// query to fetch courses by category here
+			const timeout=setTimeout(()=>{
+				setLoading(false)
+				clearTimeout(timeout)
+				setAllCourses(courses)
+			},1000)
+		} else {
+			// query to fetch courses normally
+		}
+	};
+
+	const filteredCourses = useMemo(() => {
+		return allCourses.filter((course) => course.category.title === activeCategory);
+	}, [activeCategory, allCourses]);
+
+	useEffect(()=>{
+		fetchCoursesByCategory();
+	},[activeCategory])
+
 	return (
-		<div>
-			<div className="grid xl:grid-cols-4 md:grid-cols-2 items-center 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
-				{
-					filteredCourses.length >= 1 ? (
-						filteredCourses
-							.map((course, indx) => {
-								return <DisplayCourseCard course={course} key={indx} />;
-							})
-							.slice(0, 4)
-					) : (
-						<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
-					)
-					// .slice(0, isExtraLargeScreen ? 8 : isLargeScreen ? 6 : 8)
-				}
-			</div>
+		<div className="grid xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
+			{/* <div className="grid xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-[65dvh] overflow-y-auto sm:p-5"> */}
+			{filteredCourses.length >= 1 ? (
+				filteredCourses.map((course, indx) => {
+					return <DisplayCourseCard loading={loading} course={course} key={indx} />;
+				})
+			) : (
+				// .slice(0, 4)
+				<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
+			)}
 		</div>
 	);
 };

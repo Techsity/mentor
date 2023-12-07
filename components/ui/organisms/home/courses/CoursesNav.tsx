@@ -1,15 +1,19 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { courseTypes } from "../../../../../data/courses";
+import { CourseType, ICourseCategory } from "../../../../../interfaces";
 
-type ActiveCourseType = (typeof courseTypes)[0];
+type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
 const CourseNav = ({
 	activeCourseType,
 	setActiveCourseType,
+	setActiveCategoryIndex,
+	courseTypes,
 }: {
 	activeCourseType: ActiveCourseType;
 	setActiveCourseType: Dispatch<SetStateAction<ActiveCourseType>>;
+	setActiveCategoryIndex: Dispatch<SetStateAction<number>>;
+	courseTypes: ActiveCourseType[];
 }) => {
 	return (
 		<div>
@@ -27,6 +31,7 @@ const CourseNav = ({
 								style={{ fontFamily: "Days One" }}
 								onClick={() => {
 									setActiveCourseType(type);
+									setActiveCategoryIndex(0);
 								}}>
 								{type.name}
 							</div>

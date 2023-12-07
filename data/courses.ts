@@ -102,7 +102,7 @@ const courseContents: [ICourseContent[], ICourseContent[]] = [
 	],
 ];
 
-const courseCategories: ICourseCategory[] = [
+export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Programming",
 		description: "Courses related to programming and software development.",
