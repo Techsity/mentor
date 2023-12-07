@@ -7,6 +7,7 @@ export interface ILectureReview {
 	user: Pick<IUser, "name" | "avatar"> | null;
 	comment: string;
 }
+
 const reviews: ILectureReview[] = [
 	{
 		comment:

@@ -5,29 +5,47 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
 import { MainCourseType } from "../../../../data/courses";
-import { CourseType } from "../../../../interfaces";
 
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
 	// activeDropdown === i &&
-	const [activeDropdown, setActiveDropdown] = useState<
-		NavLinkSubLink["dropdown"] | null
-	>(null);
+	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
 	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
 		{
-			categories: [{ title: "ASDfdgofudfdh", availableCourses: [] }],
-			section: "technical",
+			courseType: "technical",
+			categories: [
+				{
+					title: "ASDfdgofudfdh",
+					description: "ekjfhgejkfgjfdsd",
+					created_at: new Date(),
+					updated_at: new Date(),
+				},
+			],
 		},
 		{
-			categories: [{ title: "QEDfdgofudfdh", availableCourses: [] }],
-			section: "vocational",
+			courseType: "vocational",
+			categories: [
+				{
+					title: "G398u2wfdgofudfdh",
+					description: "ekjfhgejkfgjfdsd",
+					created_at: new Date(),
+					updated_at: new Date(),
+				},
+			],
 		},
 		{
-			categories: [{ title: "SDFSfdgofudfdh", availableCourses: [] }],
-			section: "educational",
+			courseType: "educational",
+			categories: [
+				{
+					title: "EEFDWfdgofudfdh",
+					description: "ekjfhgejkfgjfdsd",
+					created_at: new Date(),
+					updated_at: new Date(),
+				},
+			],
 		},
 	]);
 
@@ -45,21 +63,14 @@ const NavLinksComponent = () => {
 								setActiveDropdown(null);
 							}}>
 							<Link href={link}>
-								<span
-									className={`duration-500 relative z-10 cursor-pointer`}>
-									{name}
-								</span>
+								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
 							</Link>
 							<span
 								className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-									router.asPath.includes(link)
-										? "w-full"
-										: "hover:w-full"
+									router.asPath.includes(link) ? "w-full" : "hover:w-full"
 								}`}
 							/>
-							{activeSublink === index &&
-							sublinks &&
-							sublinks?.length > 0 ? (
+							{activeSublink === index && sublinks && sublinks?.length > 0 ? (
 								<div className="absolute top-6 -left-6 pt-8 mx-auto">
 									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
@@ -67,55 +78,35 @@ const NavLinksComponent = () => {
 												<Link href={sublink.link}>
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
-														onMouseEnter={() =>
-															setActiveDropdown(
-																sublink.dropdown,
-															)
-														}
+														onMouseEnter={() => setActiveDropdown(sublink.dropdown)}
 														// onMouseLeave={() => setActiveDropdown(null)}
 													>
 														{sublink.icon}
 														{sublink.name}
 													</div>
 												</Link>
-												{sublink.dropdown ===
-													activeDropdown && (
+												{sublink.dropdown === activeDropdown && (
 													<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
 														{dropDownLinks[
 															dropDownLinks.findIndex(
-																(type) =>
-																	type.section ===
-																	activeDropdown,
+																(type) => type.courseType === activeDropdown,
 															)
-														]?.categories.map(
-															(
-																{ title },
-																dropdownIndex,
-															) => (
-																<Link
-																	key={
-																		dropdownIndex
-																	}
-																	href={`/search/courses/${sublink.dropdown}?category=${title}`}>
-																	<div
-																		key={i}
-																		onClick={() => {
-																			setActiveSublink(
-																				null,
-																			);
-																			setActiveDropdown(
-																				null,
-																			);
-																		}}
-																		className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
-																		dropdownLinkTitle
-																		-{" "}
-																		{title}
-																		<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
-																	</div>
-																</Link>
-															),
-														)}
+														]?.categories.map(({ title }, dropdownIndex) => (
+															<Link
+																key={dropdownIndex}
+																href={`/search/courses/${sublink.dropdown}?category=${title}`}>
+																<div
+																	key={i}
+																	onClick={() => {
+																		setActiveSublink(null);
+																		setActiveDropdown(null);
+																	}}
+																	className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
+																	dropdownLinkTitle - {title}
+																	<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
+																</div>
+															</Link>
+														))}
 													</div>
 												)}
 											</div>
@@ -127,15 +118,10 @@ const NavLinksComponent = () => {
 					) : (
 						<Link href={link} key={index}>
 							<li className="relative px-2 font-[300] text-sm select-none">
-								<span
-									className={`duration-500 relative z-10 cursor-pointer`}>
-									{name}
-								</span>
+								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
 								<span
 									className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-										router.asPath.includes(link)
-											? "w-full"
-											: "hover:w-full"
+										router.asPath.includes(link) ? "w-full" : "hover:w-full"
 									}`}
 								/>
 							</li>

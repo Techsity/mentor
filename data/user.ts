@@ -1,35 +1,63 @@
+import { randomUUID } from "crypto";
 import { IMentor } from "../interfaces/mentor.interface";
 import { IUser } from "../interfaces/user.interface";
 import countries from "./countries";
+import mentors from "./mentors";
 
-export const testUser = (role: "mentee" | "mentor"): IUser | IMentor => {
-	return {
-		email: "mentee@email.io",
-		username: "John Doe",
-		name: "Test Mentee User",
-		about: "",
+export const dummyUsers = [
+	{
+		email: "user@mail.io",
+		name: "Test User",
 		country: countries[0].label,
-		courses: [],
 		created_at: new Date(),
-		daysOpen: ["Mon", "Wed"],
-		followers: 20000,
-		is_active: role === "mentor",
-		is_admin: role === "mentor",
+		is_active: true,
+		is_admin: false,
 		is_online: true,
-		is_verified: role === "mentor",
-		jobTitle: "",
-		languages: [],
-		mentees: [],
-		avatar: "",
-		mentor: role === "mentor",
-		phone: "12938428910",
-		ratePerHour: 20320,
-		rating: 4.5,
-		sessions: 42,
-		skills: [],
-		subscribers: 2323233,
-		verified: role === "mentor",
-	};
+		is_verified: true,
+		avatar: "/assets/images/avatar.png",
+		mentor: null,
+		phone: "123-456-7890",
+		isPremium: false,
+	},
+	{
+		id: "user-1",
+		email: "user@example.com",
+		name: "Alice",
+		phone: "123-456-7890",
+		avatar: "/assets/images/avatar.png",
+		country: "US",
+		is_online: true,
+		is_active: true,
+		is_verified: true,
+		is_admin: false,
+		payment_cards: [],
+		mentor: null,
+		isPremium: true,
+		created_at: new Date(),
+		updated_at: new Date(),
+	},
+	{
+		id: "user-2",
+		email: "user2@example.com",
+		name: "Jonah",
+		phone: "123-456-7890",
+		avatar: "/assets/images/avatar.png",
+		country: "NG",
+		is_online: true,
+		is_active: true,
+		is_verified: true,
+		is_admin: false,
+		payment_cards: [],
+		mentor: null,
+		isPremium: true,
+		created_at: new Date(),
+		updated_at: new Date(),
+	},
+];
+
+export const testUser = (role?: "mentee" | "mentor"): IUser | IMentor => {
+	const dummyMentor: IMentor = mentors[0];
+	return role === "mentor" ? dummyMentor : dummyUsers[0];
 };
 
 export default testUser;

@@ -1,4 +1,5 @@
-import { RefrencedMentorType } from "./mentor.interface";
+import { IMentor, RefrencedMentorType } from "./mentor.interface";
+import { IUser } from "./user.interface";
 
 type CountryCode =
 	| "AF"
@@ -229,36 +230,49 @@ type CountryCode =
 	| "ZM"
 	| "ZW";
 
-//
-//
-//
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+
+export type CourseSection = { notes: string; section_name: string; video_url: string };
 
 export interface ICourseContent {
 	title: string;
-	lectures: { name: string; duration: string; type: "video" | "document" }[];
-}
-export interface ICourse {
-	// id: string;
-	title: string;
-	description: string;
-	level: "All Level" | "Intermediate" | "Beinner" | "Adanced";
-	duration: number;
-	limit: number;
-	rating: number;
-	price: number | "free";
-	mentor: RefrencedMentorType;
-	available: boolean;
-	imgUrl?: string;
-	toLearn: string[];
-	requirements: string[];
-	content: ICourseContent[];
+	course_sections: CourseSection[];
 }
 
 export interface ICourseCategory {
 	title: string;
-	availableCourses: ICourse[];
+	description: string;
+	created_at: Date;
+	updated_at: Date;
 }
 
+export interface ICourse {
+	title: string;
+	description: string;
+	course_images: string;
+	// course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "ADVANCED";
+	course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
+	duration: number;
+	limit: number;
+	rating: number;
+	price: number;
+	mentor: IMentor;
+	available: boolean;
+	imgUrl?: string;
+	requirements: string[];
+	course_contents: ICourseContent[];
+	category: ICourseCategory;
+	reviews: IReview[];
+	what_to_learn: string[];
+}
 export interface IAboutHeroCarouselData {
 	title: string;
 	paragraph: string;
@@ -310,3 +324,5 @@ export type ProfileTabLinkType =
 	| "Edit Course";
 
 export type CourseType = "technical" | "vocational" | "educational";
+
+export type IReview = { content: string; ratings: number; reviewed_by: IUser; type: string };
