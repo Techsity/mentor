@@ -4,8 +4,6 @@ import CustomTextInput from "../../inputs/CustomTextInput";
 import { ICourse } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
-import { RefrencedMentorType } from "../../../../../interfaces/mentor.interface";
-import user from "../../../../../data/user";
 import { PrimaryButton } from "../../buttons";
 
 type Props = {
@@ -15,9 +13,7 @@ type Props = {
 
 const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 	const user = useSelector(currentUser);
-	const [hasPrice, setHasPrice] = useState<boolean>(
-		state.price && state.price !== "free" ? true : false,
-	);
+	const [hasPrice, setHasPrice] = useState<boolean>(state.price && state.price !== 0 ? true : false);
 	return (
 		<form
 			onSubmit={(e) => {
@@ -28,31 +24,25 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 			{/* Course Details Input - start */}
 			<>
 				<div className="sm:col-span-2 col-span-4 relative">
-					<label
-						htmlFor="title"
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
+					<label htmlFor="title" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Name
 					</label>
 					<CustomTextInput
 						id="title"
 						containerProps={{
-							className:
-								"border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						placeholder={"Basics of Digital marketing"}
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
-					<label
-						htmlFor="level"
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
+					<label htmlFor="level" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Level
 					</label>
 					<CustomTextInput
 						id="level"
 						containerProps={{
-							className:
-								"border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						placeholder={"Basics of Digital marketing"}
 					/>
@@ -66,37 +56,30 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 					<CustomTextInput
 						id="type-of-course"
 						containerProps={{
-							className:
-								"border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						placeholder={"Basics of Digital marketing"}
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
-					<label
-						htmlFor="category"
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
+					<label htmlFor="category" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Category
 					</label>
 					<CustomTextInput
 						containerProps={{
-							className:
-								"border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						placeholder={"Basics of Digital marketing"}
 					/>
 				</div>
 				<div className="col-span-4 relative">
-					<label
-						htmlFor="about-course"
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
+					<label htmlFor="about-course" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						About Course
 					</label>
 					<CustomTextInput
 						id="about-course"
 						containerProps={{
-							className:
-								"border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						placeholder={
 							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3 This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python"
@@ -108,17 +91,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 			{/* What to learn and requirements section - start */}
 			<>
 				<div className="sm:col-span-2 col-span-4">
-					<h1 className="text-sm font-normal my-2">
-						What would be learnt
-					</h1>
+					<h1 className="text-sm font-normal my-2">What would be learnt</h1>
 					{Array.from({ length: 6 }).map((_, index) => {
 						return (
 							<div
 								key={index}
 								className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-								<p className="text-sm text-[#B1B1B1]">
-									{index + 1}.
-								</p>
+								<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
 								<CustomTextInput
 									id="about-course"
 									containerProps={{
@@ -137,9 +116,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 							<div
 								key={index}
 								className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-								<p className="text-sm text-[#B1B1B1]">
-									{index + 1}.
-								</p>
+								<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
 								<CustomTextInput
 									id="about-course"
 									containerProps={{
@@ -177,11 +154,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 							className:
 								"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 						}}
-						placeholder={
-							state.price !== "free"
-								? state.price.toLocaleString()
-								: "Set original price"
-						}
+						placeholder={state.price !== 0 ? state.price.toLocaleString() : "Set original price"}
 					/>
 				) : null}
 			</div>
@@ -189,18 +162,12 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 				<h1 className="text-sm">Course Thumbnail</h1>
 				<div className="mt-3 h-32 sm:h-20 w-full object-cover relative flex justify-center items-center">
 					<img
-						src={
-							state.imgUrl ||
-							"/assets/images/mockups/course_one.png"
-						}
+						src={state.imgUrl || "/assets/images/mockups/course_one.png"}
 						alt={state.title}
 						className="h-full w-full"
 						loading="eager"
 					/>
-					<PrimaryButton
-						title="Edit"
-						className="px-5 bg-zinc-100/40 text-white absolute"
-					/>
+					<PrimaryButton title="Edit" className="px-5 bg-zinc-100/40 text-white absolute" />
 				</div>
 			</div>
 		</form>
