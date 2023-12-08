@@ -15,7 +15,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 				<div className="rounded w-full h-auto md:h-full md:max-h-[455px] md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
 						{/* Wishlist Feature - Start */}
-						<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
+						{!loading &&<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
 							{wishlist.length > 0 && hasBeenAdded ? (
 								<HeartSharp
 									onClick={() => removeFromWishlist(course)}
@@ -39,10 +39,10 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 									<ArrowForwardSharp color="#fff" height="20px" width="20px" />
 								</div>
 							</Link>
-						</div>
+						</div>}
 						{/* Wishlist Feature - End*/}
 
-						<Link href={`/courses/${slugify(course.title)}`}>
+						<Link href={!loading ?`/courses/${slugify(course.title)}`:"#"}>
 							<div className="flex flex-col items-start gap-4 cursor-pointer h-full w-full">
 								<div className="relative h-full max-h-[40%] w-full bg-zinc-200 overflow-hidden">
 									{!loading && (
