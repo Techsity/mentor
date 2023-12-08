@@ -22,7 +22,7 @@ const MentorEducationCard = ({
 				<div className="flex items-start gap-5">
 					<div className="">
 						<h1 className="font-[500]">{education.degree}</h1>
-						<p className="font-[300]">{education.school.name} </p>
+						<p className="font-[300]">{education.school} </p>
 					</div>
 					<div className="flex items-center gap-2">
 						{new Date(education.startDate).getFullYear()} -{" "}

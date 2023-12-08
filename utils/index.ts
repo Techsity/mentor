@@ -1,4 +1,4 @@
-import { ICourseContent } from "../interfaces";
+import { ICourseContent, IReview } from "../interfaces";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -8,13 +8,11 @@ export const scrollToTop = () => {
 		behavior: "smooth",
 	});
 };
-export const isEmail = (email: string): boolean =>
-	/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
+export const isEmail = (email: string): boolean => /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
 
 export const isValidNumber = (value: string): boolean => /^[0-9]$/.test(value);
 
-export const isValidPhoneNumber = (phone: string): boolean =>
-	/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone);
+export const isValidPhoneNumber = (phone: string): boolean => /^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone);
 
 export const getRuleRegex = (rule: "8" | "number" | "capital"): RegExp => {
 	switch (rule) {
@@ -29,18 +27,12 @@ export const getRuleRegex = (rule: "8" | "number" | "capital"): RegExp => {
 	}
 };
 
-export const validatePassword = (
-	password: string,
-	rule: "8" | "number" | "capital",
-): boolean => {
+export const validatePassword = (password: string, rule: "8" | "number" | "capital"): boolean => {
 	const regex = getRuleRegex(rule);
 	return regex.test(password);
 };
 
-export const formatDateDifference = (
-	startDate: Date | string,
-	endDate: Date | string,
-): number | string => {
+export const formatDateDifference = (startDate: Date | string, endDate: Date | string): number | string => {
 	dayjs.extend(relativeTime);
 	return dayjs(startDate).to(endDate, true);
 };
@@ -112,9 +104,7 @@ export const calculateTotalDuration = (content: ICourseContent): string => {
 	const extraHours = Math.floor(totalMinutes / 60);
 	totalMinutes %= 60;
 	totalHours += extraHours;
-	const totalDuration = `${String(totalHours).padStart(2, "0")}:${String(
-		totalMinutes,
-	).padStart(2, "0")}`;
+	const totalDuration = `${String(totalHours).padStart(2, "0")}:${String(totalMinutes).padStart(2, "0")}`;
 
 	return totalDuration;
 };
@@ -170,10 +160,7 @@ export const isValidUrl = (url: string) => {
  * @param options: withFraction - for formattin to decimal places //Todo
  * @returns A formatted amount in string.
  */
-export function formatAmount(
-	amount: number,
-	options?: { withFraction?: boolean },
-): string {
+export function formatAmount(amount: number, options?: { withFraction?: boolean }): string {
 	const { withFraction = false } = options || {};
 	if (amount)
 		if (amount.toString().length <= 5) {
@@ -193,15 +180,11 @@ export function formatAmount(
 			return `${millions}M`;
 		} else if (amount < 1000000000000) {
 			// Format in billions
-			const billions = (amount / 1000000000).toFixed(
-				withFraction ? 1 : 0,
-			);
+			const billions = (amount / 1000000000).toFixed(withFraction ? 1 : 0);
 			return `${billions}B`;
 		} else if (amount < 1000000000000000) {
 			// Format in trillions
-			const trillions = (amount / 1000000000000).toFixed(
-				withFraction ? 1 : 0,
-			);
+			const trillions = (amount / 1000000000000).toFixed(withFraction ? 1 : 0);
 			return `${trillions}T`;
 		} else {
 			// For amounts beyond trillions, you can continue the pattern
@@ -210,3 +193,7 @@ export function formatAmount(
 		}
 	return "";
 }
+
+export const calculateRatingsInReviews = (reviews: IReview[]): string => {
+	return formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0);
+};
