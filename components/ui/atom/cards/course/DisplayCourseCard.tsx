@@ -15,34 +15,36 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 				<div className="rounded w-full h-auto md:h-full md:max-h-[455px] md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
 						{/* Wishlist Feature - Start */}
-						{!loading &&<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
-							{wishlist.length > 0 && hasBeenAdded ? (
-								<HeartSharp
-									onClick={() => removeFromWishlist(course)}
-									color="#fff"
-									height="23px"
-									width="23px"
-									cssClasses="duration-300 cursor-pointer"
-								/>
-							) : (
-								<HeartOutline
-									onClick={() => addToWishlist(course)}
-									color="#fff"
-									height="23px"
-									width="23px"
-									cssClasses="duration-300 cursor-pointer"
-								/>
-							)}
+						{!loading && (
+							<div className="absolute animate__animated animate__fadeIn animate__faster justify-between z-10 text-white w-full flex items-center p-6">
+								{wishlist.length > 0 && hasBeenAdded ? (
+									<HeartSharp
+										onClick={() => removeFromWishlist(course)}
+										color="#fff"
+										height="23px"
+										width="23px"
+										cssClasses="duration-300 cursor-pointer"
+									/>
+								) : (
+									<HeartOutline
+										onClick={() => addToWishlist(course)}
+										color="#fff"
+										height="23px"
+										width="23px"
+										cssClasses="duration-300 cursor-pointer"
+									/>
+								)}
 
-							<Link href={`/courses/${slugify(course.title)}`}>
-								<div className="cursor-pointer">
-									<ArrowForwardSharp color="#fff" height="20px" width="20px" />
-								</div>
-							</Link>
-						</div>}
+								<Link href={`/courses/${slugify(course.title)}`}>
+									<div className="cursor-pointer">
+										<ArrowForwardSharp color="#fff" height="20px" width="20px" />
+									</div>
+								</Link>
+							</div>
+						)}
 						{/* Wishlist Feature - End*/}
 
-						<Link href={!loading ?`/courses/${slugify(course.title)}`:"#"}>
+						<Link href={!loading ? `/courses/${slugify(course.title)}` : "#"}>
 							<div className="flex flex-col items-start gap-4 cursor-pointer h-full w-full">
 								<div className="relative h-full max-h-[40%] w-full bg-zinc-200 overflow-hidden">
 									{!loading && (
@@ -115,8 +117,17 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 									)}
 								</div>
 								{/* Note: Change to short summary - should not be more than 15 words. No need to split */}
-								<p className={!loading ?"text-[13px] px-5 font-normal w-full":"mt-3 mx-5 h-1.5 w-5/6 bg-zinc-200 animate__animated animate__fadeIn animate__slow animate__infinite"}>{!loading &&course.description}</p>
-								{loading &&<span className="mx-5 h-1.5 w-5/6 bg-zinc-200 animate__animated animate__fadeIn animate__slow animate__infinite"/>}
+								<p
+									className={
+										!loading
+											? "text-[13px] px-5 font-normal w-full"
+											: "mt-3 mx-5 h-1.5 w-5/6 bg-zinc-200 animate__animated animate__fadeIn animate__slow animate__infinite"
+									}>
+									{!loading && course.description}
+								</p>
+								{loading && (
+									<span className="mx-5 h-1.5 w-5/6 bg-zinc-200 animate__animated animate__fadeIn animate__slow animate__infinite" />
+								)}
 								<div className="flex items-center justify-between mt-3 px-5 w-full">
 									<div className="flex gap-2 items-center text-sm relative">
 										<div className="h-10 w-10 rounded-full overflow-hidden bg-zinc-200 relative">
@@ -129,8 +140,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 												/>
 											)}
 										</div>
-										<h1
-											className={loading? "px-10 h-2 bg-zinc-200": ""}>
+										<h1 className={loading ? "px-10 h-2 bg-zinc-200" : ""}>
 											{!loading && course.mentor.user.name}
 										</h1>
 									</div>
@@ -145,8 +155,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse; loadi
 											</div>
 										)
 									) : (
-										<span className="text-white text-sm bg-[#033] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-"/>
-
+										<span className="text-white text-sm bg-[#033] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
 									)}
 								</div>
 							</div>
