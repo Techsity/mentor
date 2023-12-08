@@ -1,7 +1,7 @@
 import { IMentor, RefrencedMentorType } from "./mentor.interface";
 import { IUser } from "./user.interface";
 
-type CountryCode =
+export type CountryCode =
 	| "AF"
 	| "AL"
 	| "DZ"
@@ -302,7 +302,7 @@ export interface IWorkshop {
 	duration: number;
 	participants: number;
 	price: number | "free";
-	mentor: RefrencedMentorType;
+	mentor: IMentor;
 	available: boolean;
 	imgUrl?: string;
 	toLearn: string[];
