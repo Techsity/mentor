@@ -9,12 +9,12 @@ import useWishlist from "../../../../../hooks/course/useWishlist";
 const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 	const hasBeenAdded = wishlist.find(
-		(wishlistedCourse) => slugify(wishlistedCourse.title) === slugify(course?.title as string),
+		(wishlistedCourse) => slugify(wishlistedCourse?.title as string) === slugify(course?.title as string),
 	);
 	return (
 		<>
 			<div className="animate__animated animate__fadeIn animate__faster inline-block snap-start">
-				<div className="rounded w-full h-auto md:h-full md:max-h-[455px] md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+				<div className="rounded w-full h-auto md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
 						{/* Wishlist Feature - Start */}
 						{!loading && (
@@ -128,9 +128,6 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									}>
 									{!loading && course?.description}
 								</p>
-								{loading && (
-									<span className="mx-5 h-1.5 w-5/6 bg-zinc-200 animate__animated animate__fadeIn animate__slow animate__infinite" />
-								)}
 								<div className="flex items-center justify-between mt-3 px-5 w-full">
 									<div className="flex gap-2 items-center text-sm relative">
 										<div className="h-10 w-10 rounded-full overflow-hidden bg-zinc-200 relative">

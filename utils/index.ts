@@ -50,11 +50,13 @@ export function formatFollowersCount(number: number) {
 }
 
 export function slugify(title: string): string {
-	return title
-		.toLowerCase()
-		.replace(/\s+/g, "-")
-		.replace(/[^a-z0-9-]/g, "")
-		.replace(/-{2,}/g, "-");
+	return (
+		title
+			?.toLowerCase()
+			.replace(/\s+/g, "-")
+			.replace(/[^a-z0-9-]/g, "")
+			.replace(/-{2,}/g, "-") || ""
+	);
 }
 
 export function parseDuration(minutes: string) {
@@ -94,7 +96,7 @@ export function parseVideoDuration(duration: number): string {
 export const calculateTotalDuration = (content: ICourseContent): string => {
 	let totalHours = 0;
 	let totalMinutes = 0;
-	content.lectures.forEach((item) => {
+	content.course_sections.forEach((item) => {
 		const [hours, minutes] = item.duration.split(":").map(Number);
 		if (!isNaN(hours) && !isNaN(minutes)) {
 			totalHours += hours;

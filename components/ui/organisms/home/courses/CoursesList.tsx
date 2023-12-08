@@ -38,7 +38,7 @@ const CoursesList = ({ activeCategory }: { activeCategory: string }) => {
 		<div className="grid xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
 			{/* <div className="grid xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-[65dvh] overflow-y-auto sm:p-5"> */}
 			{loading
-				? Array.from({ length: 4 }).map((course, indx) => {
+				? Array.from({ length: 3 }).map((course, indx) => {
 						return <DisplayCourseCard loading={loading} course={null} key={indx} />;
 				  })
 				: filteredCourses.map((course, indx) => {

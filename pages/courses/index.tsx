@@ -1,9 +1,22 @@
-import React from 'react'
+import React from "react";
+import AllCoursesPageTemplate from "../../components/templates/course/all-courses";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { CourseType } from "../../interfaces";
 
-const AllCoursesPage = () => {
-  return (
-    <div>AllCoursesPage</div>
-  )
-}
+type CourseTypeSearchPageProps = {
+	category?: string | null;
+	courseType: CourseType;
+};
+const AllCoursesPage = ({ courseType, category }: CourseTypeSearchPageProps) => {
+	return <AllCoursesPageTemplate {...{ category, courseType }} />;
+};
 
-export default AllCoursesPage
+export const getServerSideProps = async (
+	ctx: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<CourseTypeSearchPageProps>> => {
+	const courseType = ctx.query?.type as CourseType;
+	const category = (ctx.query?.category as string) || null;
+	if (!courseType) return { props: { category, courseType: "technical" } };
+	return { props: { category, courseType } };
+};
+export default AllCoursesPage;

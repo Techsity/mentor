@@ -14,22 +14,13 @@ const FinalStepEducationEdit = () => {
 
 	return (
 		<div className="my-2">
-			<FinalStepEditButton
-				title="Your Education"
-				editAction={() => setEditEducation(!editEducation)}
-			/>
+			<FinalStepEditButton title="Your Education" editAction={() => setEditEducation(!editEducation)} />
 			{!editEducation ? (
 				onboardingMentor.education.length >= 1 && (
 					<div className="flex flex-col gap-4 items-center mb-5 mt-2">
 						{onboardingMentor.education.map((edu) => {
-							const id = slugify(edu.school.name);
-							return (
-								<MentorEducationCard
-									{...{ education: edu }}
-									key={id}
-									className="bg-white"
-								/>
-							);
+							const id = slugify(edu.school);
+							return <MentorEducationCard {...{ education: edu }} key={id} className="bg-white" />;
 						})}
 					</div>
 				)

@@ -14,20 +14,14 @@ const WorkHistory = ({ reEdit = false }: { reEdit?: boolean }) => {
 
 	return (
 		<div className="">
-			{!reEdit && (
-				<h1 className="text-sm text-[#B1B1B1] mb-3">
-					Where have you worked?
-				</h1>
-			)}
+			{!reEdit && <h1 className="text-sm text-[#B1B1B1] mb-3">Where have you worked?</h1>}
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.workHistory &&
 					onboardingMentor.workHistory?.length >= 1 &&
 					onboardingMentor.workHistory.map((work, index) => {
 						return reEdit ? (
 							<EditWorkHistoryCard
-								allExperiences={
-									onboardingMentor?.workHistory || []
-								}
+								allExperiences={onboardingMentor?.workHistory || []}
 								updateWorkExperiences={(updated) => {
 									dispatch(
 										setOnboardingMentor({
@@ -37,31 +31,22 @@ const WorkHistory = ({ reEdit = false }: { reEdit?: boolean }) => {
 									);
 								}}
 								experience={work}
-								key={work.company.name}
+								key={work.company}
 							/>
 						) : (
 							<OnboardingWorkHistoryDisplayCard
 								experience={work}
-								key={work.company.name}
+								key={work.company}
 								onRemove={(exp) => {
 									dispatch(
 										setOnboardingMentor({
 											...onboardingMentor,
-											workHistory:
-												onboardingMentor?.workHistory?.filter(
-													(work) =>
-														slugify(
-															work.company.name,
-														) !==
-															slugify(
-																exp?.company
-																	.name,
-															) &&
-														work.position !==
-															exp?.position &&
-														exp.position ===
-															exp?.position,
-												),
+											workHistory: onboardingMentor?.workHistory?.filter(
+												(work) =>
+													slugify(work.company) !== slugify(exp?.company) &&
+													work.job_role !== exp?.job_role &&
+													exp.job_role === exp?.job_role,
+											),
 										}),
 									);
 								}}

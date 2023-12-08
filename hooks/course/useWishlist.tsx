@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-	setWishlist,
-	wishlistedCourses,
-} from "../../redux/reducers/features/coursesSlice";
+import { setWishlist, wishlistedCourses } from "../../redux/reducers/features/coursesSlice";
 import { ICourse } from "../../interfaces";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";
@@ -16,18 +13,14 @@ const useWishlist = () => {
 
 	const addToWishlist = (course: ICourse) => {
 		dispatch(setWishlist([...wishlist, course]));
-		toast.success(`Course added to wishlist!`, ToastDefaultOptions());
+		toast.info(`Course added to wishlist!`, ToastDefaultOptions());
 	};
 	const removeFromWishlist = (course: ICourse) => {
 		const updatedWishlist = wishlist.filter(
-			(wishlistedCourse) =>
-				slugify(wishlistedCourse.title) !== slugify(course.title),
+			(wishlistedCourse) => slugify(wishlistedCourse.title) !== slugify(course.title),
 		);
 		dispatch(setWishlist(updatedWishlist));
-		toast.success(
-			"Course has been removed from wishlist!",
-			ToastDefaultOptions(),
-		);
+		toast.info("Course has been removed from wishlist!", ToastDefaultOptions());
 	};
 
 	return { wishlist, addToWishlist, removeFromWishlist };

@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const FinalStepExperienceEdit = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const [showExperienceEdit, setShowExperienceEdit] =
-		useState<boolean>(false);
+	const [showExperienceEdit, setShowExperienceEdit] = useState<boolean>(false);
 
 	return (
 		<div className="grid gap-2">
@@ -20,11 +19,11 @@ const FinalStepExperienceEdit = () => {
 				<WorkHistory reEdit />
 			) : (
 				<div className="grid gap-3 animate__animated animate__fadeIn w-full">
-					{onboardingMentor.workHistory?.map((experience) => {
+					{onboardingMentor.workHistory?.map((experience, index) => {
 						return (
 							<MentorExperienceCard
 								className="bg-white"
-								key={experience.company.name}
+								key={experience.company + index}
 								experience={experience}
 							/>
 						);

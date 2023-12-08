@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
-import { MainCourseType } from "../../../../data/courses";
+import { CourseType, ICourseCategory } from "../../../../interfaces";
+
+type MainCourseType = {
+	courseType: CourseType;
+	categories: ICourseCategory[];
+};
 
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
@@ -94,7 +99,7 @@ const NavLinksComponent = () => {
 														]?.categories.map(({ title }, dropdownIndex) => (
 															<Link
 																key={dropdownIndex}
-																href={`/search/courses/${sublink.dropdown}?category=${title}`}>
+																href={`/courses?type=${sublink.dropdown}&category=${title}`}>
 																<div
 																	key={i}
 																	onClick={() => {
