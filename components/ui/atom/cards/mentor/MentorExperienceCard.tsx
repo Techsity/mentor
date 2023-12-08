@@ -1,41 +1,20 @@
 import React from "react";
 import { formatDateDifference } from "../../../../../utils";
-import { IExperience } from "../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
+import { IMentorExperience } from "../../../../../interfaces/mentor.interface";
 
-const MentorExperienceCard = ({
-	experience,
-	className,
-}: {
-	experience: IExperience;
-	className?: string;
-}) => {
+const MentorExperienceCard = ({ experience, className }: { experience: IMentorExperience; className?: string }) => {
 	return (
-		<div
-			className={classNames(
-				"border border-[#70C5A1] text-sm p-4 w-full",
-				className,
-			)}>
+		<div className={classNames("border border-[#70C5A1] text-sm p-4 w-full", className)}>
 			<div className="flex justify-between gap-6 items-center mb-4">
 				<div className="">
-					<h1 className="font-[500]">
-						{experience.position || experience.role}
-					</h1>
+					<h1 className="font-[500]">{experience.job_role}</h1>
 					<p className="font-[300]">
-						{experience.company.name} |{" "}
-						{formatDateDifference(
-							experience.startDate,
-							experience.endDate,
-						)}
+						{experience.company} | {formatDateDifference(experience.from_year, experience.to_year)}
 					</p>
 				</div>
 				<div className="flex justify-center items-center h-10 w-10 bg-[#E6E6E6] rounded-full overflow-hidden relative">
-					<svg
-						width="24"
-						height="30"
-						viewBox="0 0 24 30"
-						fill="none"
-						className="absolute bottom-0 w-full">
+					<svg width="24" height="30" viewBox="0 0 24 30" fill="none" className="absolute bottom-0 w-full">
 						<path
 							d="M0 0H15V30L6 29L0 25.5V0Z"
 							fill="#D9D9D9"
@@ -49,7 +28,7 @@ const MentorExperienceCard = ({
 					</svg>
 				</div>
 			</div>
-			{experience.roles && experience.roles.length >= 1 && (
+			{/* {experience.roles && experience.roles.length >= 1 && (
 				<div className="mb-4">
 					<span className="text-[#BEBEBE] text-xs">My Roles</span>
 					<div className="my-2 grid">
@@ -57,21 +36,19 @@ const MentorExperienceCard = ({
 						{experience.role && experience.role}
 					</div>
 				</div>
-			)}
-			{experience.aboutRole && (
+			)}*/}
+			{experience.description && (
 				<div className="my-2">
-					<span className="text-[#BEBEBE] text-xs">
-						About the role
-					</span>
-					<div className="my-2 break-words">{experience.aboutRole}</div>
+					<span className="text-[#BEBEBE] text-xs">About the role</span>
+					<div className="my-2 break-words">{experience.description}</div>
 				</div>
 			)}
-			{experience.topSkills.length >= 1 && (
+			{/* {experience..length >= 1 && (
 				<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
 					<span className="text-[#BEBEBE] text-xs">Top Skills</span>
 					{experience.topSkills.slice(0, 4).join(` | `)}
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 };

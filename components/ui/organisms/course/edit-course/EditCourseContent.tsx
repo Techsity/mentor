@@ -58,8 +58,10 @@ const EditCourseContent = (props: { content?: ICourseContent[] }) => {
 	const handleDeleteLecture = (index: number) => {
 		console.log(index);
 		if (state.length > 2) {
-			const newState = [...state.slice(0, index), ...state.slice(index + 1)];
-			setState(newState);
+			if (confirm("Are you sure you want to delete ths outline?")) {
+				const newState = [...state.slice(0, index), ...state.slice(index + 1)];
+				setState(newState);
+			}
 		} else {
 			toast.error("You can't have less than 2 course outlines", ToastDefaultOptions({ id: "error" }));
 		}

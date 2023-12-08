@@ -3,21 +3,26 @@ import Link from "next/link";
 import { PrimaryButton } from "../../../atom/buttons";
 import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCard";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { IMentor } from "../../../../../interfaces/mentor.interface";
+import { IMentor, IMentorExperience, IMentorProjectType } from "../../../../../interfaces/mentor.interface";
 
 const Skills = ({ skills }: { skills: IMentor["skills"] }) => (
 	<div className="grid gap-3">
 		<h1 className="text-xl font-semibold">Top Skills</h1>
 		<span className="flex items-center flex-wrap gap-3 text-sm">
-			{skills.map((skill) => (
-				<span key={skill} className="font-[400] text-[#70C5A1]">
-					{skill}
+			{skills.map((skill, i) => (
+				<span key={i} className="font-[400] text-[#70C5A1]">
+					{skill.skill_name} |{" "}
+					{skill.years_of_exp === 1
+						? skill.years_of_exp + " yr"
+						: skill.years_of_exp < 1
+						? "<1 yr"
+						: skill.years_of_exp + " yrs"}
 				</span>
 			))}
 		</span>
 	</div>
 );
-const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
+const Experience = ({ experience }: { experience: IMentorExperience[] }) => (
 	<div className="grid gap-3 mt-9">
 		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<h1 className="text-xl font-semibold">Experience</h1>
@@ -28,9 +33,7 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 				experience
 					?.map((experience, index) => (
 						<div className="w-full overflow-hidden" key={index}>
-							<AnimationOnScroll
-								animateIn="animate__slideInUp"
-								animateOnce>
+							<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 								<MentorExperienceCard experience={experience} />
 							</AnimationOnScroll>
 						</div>
@@ -39,23 +42,13 @@ const Experience = ({ experience }: { experience: IMentor["experience"] }) => (
 		</span>
 		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<div className="mt-3">
-				<PrimaryButton
-					title="View all Experience"
-					link="#"
-					className="p-4 px-8"
-				/>
+				<PrimaryButton title="View all Experience" link="#" className="p-4 px-8" />
 			</div>
 		</AnimationOnScroll>
 	</div>
 );
 
-const MentorProjects = ({
-	projects,
-	reEdit = false,
-}: {
-	projects: IMentor["projects"];
-	reEdit?: boolean;
-}) => (
+const MentorProjects = ({ projects, reEdit = false }: { projects: IMentorProjectType[]; reEdit?: boolean }) => (
 	<div className={"grid gap-3"}>
 		{!reEdit && (
 			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
@@ -66,33 +59,21 @@ const MentorProjects = ({
 			{projects &&
 				projects
 					.map((project, index) => (
-						<AnimationOnScroll
-							key={index}
-							animateIn="animate__fadeIn"
-							animateOnce>
-							<Link
-								href={
-									project.link && !reEdit ? project.link : "#"
-								}>
+						<AnimationOnScroll key={index} animateIn="animate__fadeIn" animateOnce>
+							{/* <Link href={project.link && !reEdit ? project.link : "#"}> */}
+							{/* Todo: We need poject link from the query*/}
+							<Link href={"#"}>
 								<div
 									className={`border border-[#70C5A1] text-sm p-4 w-full flex items-center justify-between gap-5 cursor-pointer ${
 										reEdit ? "bg-white" : "bg-transparent"
 									}`}>
 									<div className="basis-2/3">
-										<h1 className="font-[500]">
-											{project.title}
-										</h1>
-										<p className="font-[300] my-2">
-											{project.type}
-										</p>
+										<h1 className="font-[500]">{project.company}</h1>
+										<p className="font-[300] my-2">{project.job_role}</p>
 									</div>
 									<div className="basis-2/3">
-										<h1 className="font-[500] text-[#BEBEBE]">
-											Link
-										</h1>
-										<p className="font-[400] my-2">
-											{project.link}
-										</p>
+										<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
+										<p className="font-[400] my-2">project.link</p>
 									</div>
 								</div>
 							</Link>
@@ -102,11 +83,7 @@ const MentorProjects = ({
 		</span>
 		{!reEdit && (
 			<div className="mt-3">
-				<PrimaryButton
-					title="View all Projects"
-					link="#"
-					className="p-4 px-8"
-				/>
+				<PrimaryButton title="View all Projects" link="#" className="p-4 px-8" />
 			</div>
 		)}
 	</div>
@@ -163,7 +140,7 @@ const AvailabiltySchedule = (mentor: IMentor) => (
 		</div>
 		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 			<div className="flex justify-center relative h-full lg:top-32">
-				<Link href={`/mentors/${mentor.username}?consult`}>
+				<Link href={`/mentors/${mentor.user.name}?consult`}>
 					<div
 						className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
 						style={{ fontFamily: "Days One" }}>
