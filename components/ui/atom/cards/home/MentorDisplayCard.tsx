@@ -46,7 +46,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 									fillOpacity="0.5"
 								/>
 							</svg>
-							{ratings.toFixed(1)} ratings
+							{ratings} ratings
 						</span>
 						<div className="md:hidden py-5">
 							<Link href={`/mentors/${mentor.user.name}`}>
