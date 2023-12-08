@@ -4,14 +4,9 @@ import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProg
 import MentorUploadedCourses from "./MentorUploadedCourses";
 
 const MentorProfileCourses = () => {
-	const mentorCourses = useMemo(
-		() => courses[0].categories[0].availableCourses,
-		[courses],
-	);
+	const mentorCourses = useMemo(() => courses, []);
 
-	const [active, setActive] = useState<"registered" | "uploaded">(
-		"registered",
-	);
+	const [active, setActive] = useState<"registered" | "uploaded">("registered");
 
 	return (
 		<>
@@ -53,9 +48,7 @@ const NavSection: FC<{
 				uploaded
 			</div>
 		</div>
-		<div className="text-[#70C5A1] capitalize select-none cursor-pointer font-medium">
-			My drafts
-		</div>
+		<div className="text-[#70C5A1] capitalize select-none cursor-pointer font-medium">My drafts</div>
 	</div>
 );
 

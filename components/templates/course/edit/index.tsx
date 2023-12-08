@@ -13,25 +13,7 @@ import { PrimaryButton } from "../../../ui/atom/buttons";
 
 const EditCourseTemplate = () => {
 	const [loading, setLoading] = useState<boolean>(true);
-	const initialState: Omit<ICourse, "mentor"> = {
-		available: false,
-		content: [
-			courses[0].categories[0].availableCourses[0].content[0],
-			courses[0].categories[0].availableCourses[0].content[1],
-			courses[0].categories[0].availableCourses[0].content[2],
-		],
-		description: "",
-		duration: parseInt("00"),
-		level: "All Level",
-		limit: 20,
-		price: "free",
-		rating: 0,
-		requirements: [],
-		title: "",
-		toLearn: [],
-		imgUrl: "",
-	};
-	const courseId = React.useId();
+	const initialState: Omit<ICourse, "mentor"> = courses[0];
 	const [state, setState] = useState<Omit<ICourse, "mentor">>(initialState);
 
 	useEffect(() => {
@@ -42,7 +24,6 @@ const EditCourseTemplate = () => {
 			}, 1000); // slow loading simulation
 		}
 	}, []);
-	const reviews = Array.from({ length: 8 });
 	return loading ? (
 		<div className="flex justify-center items-center">
 			<ActivityIndicator color="#094B10" size={40} />
@@ -51,67 +32,47 @@ const EditCourseTemplate = () => {
 		<div className="">
 			<div className="items-start flex gap-3 flex-col xl:flex-row justify-between">
 				<div className="xl:max-w-[60%] w-full">
-					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
-						Course Overview
-					</h1>
+					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">Course Overview</h1>
 					<div className="border border-[#70C5A1] p-3">
-						<EditCourseForm
-							{...{ state }}
-							handleSave={(updated) => console.log(updated)}
-						/>
+						<EditCourseForm {...{ state }} handleSave={(updated) => console.log(updated)} />
 					</div>
 					<div className="border border-[#70C5A1] p-5 mt-6">
 						<AddCourseContent {...{ state }} />
 					</div>
 				</div>
 				<div className="xl:max-w-[40%] w-full">
-					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
-						How this Course is doing
-					</h1>
+					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">How this Course is doing</h1>
 					<div className="border border-[#70C5A1] p-3 grid items-center gap-4">
 						<Stats />
 						{/* Reviews section - start */}
 						<div className="mt-3">
 							<h1 className="text-sm mb-3">Reviews</h1>
-							{reviews
-								.map((_, id) => {
+							{state.reviews
+								.map(({ content, ratings, reviewed_by, type }, id) => {
 									return (
-										<div
-											key={id}
-											className="border border-[#70C5A1] p-4 my-4">
-											<p className="my-4 text-xs">
-												I once thought digital marketing
-												was for the big guys until i
-												took this course, thank you for
-												making it so easy and simple
-											</p>
+										<div key={id} className="border border-[#70C5A1] p-4 my-4">
+											<p className="my-4 text-xs">{content}</p>
 											<div className="flex justify-between items-center">
 												<div className="flex items-center gap-1">
 													<img
-														src="/assets/images/avatar.png"
+														src={reviewed_by.avatar || "/assets/images/avatar.png"}
 														alt="testimonial"
 														className="h-6 w-6 rounded-full"
 													/>
-													<p className="text-sm">
-														Adewole Sulaiman
-													</p>
+													<p className="text-sm">{reviewed_by.name}</p>
 												</div>
-												<StarRatingIcon
-													color="#70C5A1"
-													height={20}
-													width={20}
-												/>
+												<div className="flex items-center gap-2">
+													<StarRatingIcon color="#70C5A1" height={20} width={20} />
+													<p className="text-sm">{ratings.toFixed(1)}</p>
+												</div>
 											</div>
 										</div>
 									);
 								})
 								.slice(0, 5)}
-							{reviews.length > 5 ? (
+							{state.reviews.length > 3 ? (
 								<div className="my-4">
-									<PrimaryButton
-										title="More Reviews"
-										className="p-1 px-5 text-sm"
-									/>
+									<PrimaryButton title="More Reviews" className="p-1 px-5 text-sm" />
 								</div>
 							) : null}
 						</div>
@@ -136,13 +97,7 @@ const Stats = () => (
 			<span className="text-sm">Total Total Ratings</span>
 			<span className="flex items-center gap-1">
 				{4.5}
-				<StarRatingIcon
-					className="-mt-1"
-					opacity={1}
-					color="#fff"
-					height={15}
-					width={15}
-				/>
+				<StarRatingIcon className="-mt-1" opacity={1} color="#fff" height={15} width={15} />
 			</span>
 		</div>
 	</>

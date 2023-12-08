@@ -16,27 +16,22 @@ const AddCourseContent: FC<Props> = ({ state }) => {
 		<div className="grid gap-4">
 			<div className="flex justify-between items-center text-sm">
 				<h1 className="">Course Content</h1>
-				<div className="text-[#70C5A1] select-none cursor-pointer">
-					+ Add New Content
-				</div>
+				<div className="text-[#70C5A1] select-none cursor-pointer">+ Add New Content</div>
 			</div>
 			{/* Content */}
 			<div className="grid gap-4">
-				{state.content.map((content, index) => {
-					const mainDuration = calculateTotalDuration(content);
+				{state.course_contents.map((content, index) => {
+					// const mainDuration = calculateTotalDuration(content);
 					return (
-						<div
-							key={index}
-							className="flex bg-[#70C5A1] p-3 items-center justify-between text-white">
+						<div key={index} className="flex bg-[#70C5A1] p-3 items-center justify-between text-white">
 							<div className="">
 								<p className="text-sm">{content.title}</p>
-								<span className="text-xs">{mainDuration}</span>
+								{/* <span className="text-xs">{55}</span> */}
 							</div>
 
 							<div
 								onClick={() => {
-									!isContentPage &&
-										router.push(router.asPath + `#content`);
+									!isContentPage && router.push(router.asPath + `#content`);
 								}}
 								className="text-sm select-none cursor-pointer">
 								Edit

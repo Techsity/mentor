@@ -12,24 +12,8 @@ const UserProfilePageTemplate = () => {
 	const router = useRouter();
 	const isMentor = user?.mentor;
 	const tabLinks: ProfileTabLinkType[] = isMentor
-		? [
-				"Overview",
-				"Courses",
-				"Workshop",
-				"Mentorship",
-				"Wish Lists",
-				"Payments",
-				"Profile Settings",
-				"Edit Course",
-		  ]
-		: [
-				"My Courses",
-				"My Workshop",
-				"Mentorship",
-				"Wish Lists",
-				"Payment Methods",
-				"Profile Settings",
-		  ];
+		? ["Overview", "Courses", "Workshop", "Mentorship", "Wish Lists", "Payments", "Profile Settings", "Edit Course"]
+		: ["My Courses", "My Workshop", "Mentorship", "Wish Lists", "Payment Methods", "Profile Settings"];
 
 	const [activeTab, setActiveTab] = useState<ProfileTabLinkType>(tabLinks[0]);
 	const isEditCourse = useMemo(() => {
@@ -46,16 +30,14 @@ const UserProfilePageTemplate = () => {
 				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
 					<div className="w-full overflow-hidden hide-scroll-bar">
 						<ProfileNavCard
-							tabLinks={tabLinks.filter(
-								(nav) => nav !== "Edit Course",
-							)}
+							tabLinks={tabLinks.filter((nav) => nav !== "Edit Course")}
 							activeTab={activeTab}
 							setActiveTab={setActiveTab}
 						/>
 					</div>
 				</div>
 				<div
-					className={`flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 lg:px-0 col-span-4 ${
+					className={`flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 lg:px-0 col-span-4 h-full${
 						isEditCourse ? "xl:pr:12" : "xl:pr-0"
 					}`}>
 					<ProfileComponents activeTab={activeTab} />
@@ -71,9 +53,7 @@ const UserProfilePageTemplate = () => {
 				<div className="flex flex-col justify-center items-center text-white">
 					<h1 className="text-xl font-medium">Mentör by Techsity</h1>
 					<p className="">Copyright (c) 2023</p>
-					<p className="font-[300] text-sm tracking-wide">
-						www.techsity.io
-					</p>
+					<p className="font-[300] text-sm tracking-wide">www.techsity.io</p>
 				</div>
 			</div>
 		</>

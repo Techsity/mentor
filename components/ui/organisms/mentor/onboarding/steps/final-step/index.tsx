@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import {
 	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import { useDispatch } from "react-redux";
-import MentorExperienceCard from "../../../../../atom/cards/mentor/MentorExperienceCard";
-import WorkHistory from "../step-two/WorkHistory";
 import FinalStepAboutYouEdit from "./FinalStepAboutYouEdit";
 import FinalStepSkillEdit from "./FinalStepSkillEdit";
 import FinalStepExperienceEdit from "./FinalStepExperienceEdit";
@@ -21,14 +19,11 @@ const FinalMentorOnboardingStep = () => {
 
 	return (
 		<div className="animate__animated animate__fadeInLeft">
-			<h1
-				className="text-[#00D569] text-xl sm:text-3xl -mt-5"
-				style={{ fontFamily: "Days One" }}>
+			<h1 className="text-[#00D569] text-xl sm:text-3xl -mt-5" style={{ fontFamily: "Days One" }}>
 				Weldone, You are all set!
 			</h1>
 			<p className="text-sm text-black mb-5">
-				Just so you know, here are the informations you provided. You
-				can edit them if there are any errors.
+				Just so you know, here are the informations you provided. You can edit them if there are any errors.
 			</p>
 			<div className="grid gap-6">
 				<FinalStepAboutYouEdit />
