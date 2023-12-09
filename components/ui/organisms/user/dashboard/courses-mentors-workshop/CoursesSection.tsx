@@ -4,10 +4,18 @@ import courses, { courseTypes } from "../../../../../../data/courses";
 import { scrollUp } from "../../../../../../utils";
 import DisplayCourseCard from "../../../../atom/cards/course/DisplayCourseCard";
 import { CourseType, ICourse, ICourseCategory } from "../../../../../../interfaces";
+import { useRouter } from "next/router";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
+type CourseTypeSearchPageProps = {
+	category?: string | null;
+	type: string;
+};
 
-const CoursesSection = ({ activeCategory }: { activeCategory: string }) => {
+const CoursesSection = () => {
+	const router = useRouter();
+	const courseQuery = router.query as CourseTypeSearchPageProps;
+
 	const { isExtraLargeScreen, isLargeScreen } = useWindowSize();
 	const [activeSection, setActiveSection] = useState<ActiveCourseType>(courseTypes[0]);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -15,7 +23,8 @@ const CoursesSection = ({ activeCategory }: { activeCategory: string }) => {
 
 	const fetchCourses = () => {
 		setLoading(true);
-		console.log("Fetching courses..");
+		// use the courseQuery.type and active cateory
+		console.log(`Fetching courses with category: ${courseQuery.category} and courseType: ${courseQuery.type}`);
 		setTimeout(function () {
 			setLoading(false);
 			setAllCourses(courses);
@@ -24,7 +33,7 @@ const CoursesSection = ({ activeCategory }: { activeCategory: string }) => {
 
 	useEffect(() => {
 		fetchCourses();
-	}, [activeCategory, activeSection]);
+	}, [router, activeSection]);
 
 	return (
 		<>

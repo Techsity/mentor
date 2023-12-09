@@ -3,20 +3,24 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import BecomeMentor from "../../../ui/organisms/home/become-a-mentor";
 import MenteeDashboardHero from "../../../ui/organisms/user/dashboard/hero";
 import CoursesSection from "../../../ui/organisms/user/dashboard/courses-mentors-workshop/CoursesSection";
+import { useRouter } from "next/router";
 
 type CourseTypeSearchPageProps = {
 	category?: string | null;
-	courseType: string;
+	type: string;
 };
 
-const AllCoursesPageTemplate = ({ courseType, category }: CourseTypeSearchPageProps) => {
-	const [activeCategory, setActiveCategory] = useState<string>(category || "");
+const AllCoursesPageTemplate = () => {
+	const router = useRouter();
+	const urlQuery = router.query as CourseTypeSearchPageProps;
+	// const category = router.query as CourseTypeSearchPageProps;
+
 	return (
 		<div className="relative">
-			<MenteeDashboardHero categories={[]} loading={true} />
+			<MenteeDashboardHero />
 			<h1 className="my-4 text-center">All Courses</h1>
 			<div className="my-10">
-				<CoursesSection {...{ activeCategory }} />
+				<CoursesSection />
 			</div>
 			<BecomeMentor />
 			<>
