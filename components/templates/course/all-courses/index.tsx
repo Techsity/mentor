@@ -5,16 +5,7 @@ import MenteeDashboardHero from "../../../ui/organisms/user/dashboard/hero";
 import CoursesSection from "../../../ui/organisms/user/dashboard/courses-mentors-workshop/CoursesSection";
 import { useRouter } from "next/router";
 
-type CourseTypeSearchPageProps = {
-	category?: string | null;
-	type: string;
-};
-
 const AllCoursesPageTemplate = () => {
-	const router = useRouter();
-	const urlQuery = router.query as CourseTypeSearchPageProps;
-	// const category = router.query as CourseTypeSearchPageProps;
-
 	return (
 		<div className="relative">
 			<MenteeDashboardHero />

@@ -7,6 +7,7 @@ import { CourseType, ICourse, ICourseCategory } from "../../../../../../interfac
 import { useRouter } from "next/router";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
+
 type CourseTypeSearchPageProps = {
 	category?: string | null;
 	type: string;
@@ -23,7 +24,7 @@ const CoursesSection = () => {
 
 	const fetchCourses = () => {
 		setLoading(true);
-		// use the courseQuery.type and active cateory
+		// fetch courses based on the courseQuery.type and active cateory
 		console.log(`Fetching courses with category: ${courseQuery.category} and courseType: ${courseQuery.type}`);
 		setTimeout(function () {
 			setLoading(false);
@@ -44,6 +45,18 @@ const CoursesSection = () => {
 							key={index}
 							onClick={() => {
 								setActiveSection(type);
+								router.push(
+									{
+										pathname: router.pathname,
+										query: {
+											...router.query,
+											type: type.name.toLowerCase().trim(),
+											category: null,
+										},
+									},
+									undefined,
+									{ scroll: false },
+								);
 								scrollUp(630);
 							}}
 							className={`capitalize cursor-pointer duration-300 p-1 animate__animated animate__fadeInUp before:absolute before:h-[2px] before:bottom-0 before:duration-300 before:left-0 before:bg-[#078661] relative text-[#094B10] ${
@@ -59,8 +72,18 @@ const CoursesSection = () => {
 					? Array.from({ length: 3 }).map((_, indx) => {
 							return <DisplayCourseCard loading course={null} key={indx} />;
 					  })
+					: courseQuery.category
+					? allCourses
+							.filter(
+								(course) =>
+									course.category.title.toLowerCase().trim() ===
+									courseQuery.category?.toLowerCase().trim(),
+							)
+							.map((course, indx) => {
+								return <DisplayCourseCard course={course} key={indx} />;
+							})
+							.slice(0, isExtraLargeScreen ? 4 : isLargeScreen ? 3 : 4)
 					: allCourses
-							// .filter((course) => activeSection)
 							.map((course, indx) => {
 								return <DisplayCourseCard course={course} key={indx} />;
 							})

@@ -56,11 +56,19 @@ const MenteeDashboardHero = () => {
 										.map((category, i) => (
 											<div
 												key={i}
-												onClick={() =>
+												onClick={() => {
 													router.push(
-														`/courses?type=${courseType}&category=${category.title.toLowerCase()}`,
-													)
-												}
+														{
+															pathname: router.pathname,
+															query: {
+																...router.query,
+																category: category.title.toLowerCase().trim(),
+															},
+														},
+														undefined,
+														{ scroll: false },
+													);
+												}}
 												className="bg-[#70C5A1] flex gap-5 items-center text-center p-1.5 duration-300 cursor-pointer hover:bg-[#4F8E74] px-4 rounded-full">
 												<span className="">{category.title}</span>
 												<button type="submit" className="">
