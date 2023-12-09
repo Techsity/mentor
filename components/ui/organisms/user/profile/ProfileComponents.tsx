@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import EditCourseTemplate from "../../../../templates/course/edit";
 import EditCourseContent from "../../course/edit-course/EditCourseContent";
 
+
 const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => {
 	const router = useRouter();
 	const myCourses = useMemo(() => courses, []);

@@ -10,6 +10,7 @@ import ListReviews from "../../../ui/atom/common/course/ListReviews";
 import Socials from "../../../ui/atom/common/course/Socials";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
 
+
 const MentorDetailsTemplate = (mentor: IMentor) => {
 	const coursesByMentor = getMentorCourses(mentor.user.name);
 
