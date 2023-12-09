@@ -34,31 +34,45 @@ const CoursesSection = () => {
 
 	useEffect(() => {
 		fetchCourses();
-	}, [router, activeSection]);
+	}, [router]);
+
+	const handleCourseTypeChange = (type: ActiveCourseType) => {
+		if (activeSection !== type) {
+			setLoading(true);
+			router.push(
+				{
+					pathname: router.pathname,
+					query: {
+						...router.query,
+						type: type.name.toLowerCase().trim(),
+						category: null,
+					},
+				},
+				undefined,
+				{ scroll: false },
+			);
+			setActiveSection(type);
+		}
+		scrollUp(630);
+	};
+
+	const coursesFilteredByCategory = allCourses
+		.filter(
+			(course) => course.category.title.toLowerCase().trim() === courseQuery.category?.toLowerCase().trim(),
+			//  && activeSection.name.toLowerCase().trim() === courseQuery.type.toLowerCase().trim(),
+		)
+		.map((course, indx) => {
+			return <DisplayCourseCard course={course} key={indx} />;
+		});
 
 	return (
 		<>
 			<div className="sticky h-20 top-20 z-20 bg-[#FDFDFD] flex justify-center">
-				<div className="flex my-5 gap-6 ">
+				<div className="flex my-5 gap-6 select-none">
 					{courseTypes.map((type, index) => (
 						<div
 							key={index}
-							onClick={() => {
-								setActiveSection(type);
-								router.push(
-									{
-										pathname: router.pathname,
-										query: {
-											...router.query,
-											type: type.name.toLowerCase().trim(),
-											category: null,
-										},
-									},
-									undefined,
-									{ scroll: false },
-								);
-								scrollUp(630);
-							}}
+							onClick={() => handleCourseTypeChange(type)}
 							className={`capitalize cursor-pointer duration-300 p-1 animate__animated animate__fadeInUp before:absolute before:h-[2px] before:bottom-0 before:duration-300 before:left-0 before:bg-[#078661] relative text-[#094B10] ${
 								activeSection.name === type.name ? "before:w-full" : ""
 							}`}>
@@ -73,21 +87,21 @@ const CoursesSection = () => {
 							return <DisplayCourseCard loading course={null} key={indx} />;
 					  })
 					: courseQuery.category
-					? allCourses
-							.filter(
-								(course) =>
-									course.category.title.toLowerCase().trim() ===
-									courseQuery.category?.toLowerCase().trim(),
-							)
-							.map((course, indx) => {
-								return <DisplayCourseCard course={course} key={indx} />;
-							})
-							.slice(0, isExtraLargeScreen ? 4 : isLargeScreen ? 3 : 4)
+					? coursesFilteredByCategory.slice(0, isExtraLargeScreen ? 4 : isLargeScreen ? 3 : 4)
 					: allCourses
 							.map((course, indx) => {
 								return <DisplayCourseCard course={course} key={indx} />;
 							})
 							.slice(0, isExtraLargeScreen ? 4 : isLargeScreen ? 3 : 4)}
+				{!loading && allCourses.length < 1 ? (
+					<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
+				) : (
+					!loading &&
+					courseQuery.category &&
+					coursesFilteredByCategory.length < 1 && (
+						<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
+					)
+				)}
 			</div>
 		</>
 	);

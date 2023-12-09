@@ -19,12 +19,14 @@ const MenteeDashboardHero = () => {
 
 	const fetchCategories = () => {
 		// setState({ ...state, loading: true });
+
 		// Query to fetch course categories
 		console.log("Fetching categories...");
 		setTimeout(function () {
 			setState({
 				...state,
-				categories: courseTypes.find((type) => type.name === courseType)?.categories || [],
+				// categories: courseTypes.find((type) => type.name === courseType)?.categories || courseCategories,
+				categories: courseCategories,
 				loading: false,
 			});
 		}, 1000);
