@@ -9,6 +9,7 @@ import { PrimaryButton } from "../../../atom/buttons";
 import * as FlagIcons from "react-country-flags-select";
 import countries from "../../../../../data/countries";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { logoutUser } from "../../../../../utils/auth";
 
 const ProfileSettings = () => {
 	const user = useSelector(currentUser);
@@ -170,13 +171,21 @@ const ProfileSettings = () => {
 						</div>
 					</div>
 				</div>
-				<div className="flex justify-start items-start">
+				<div className="flex justify-start items-start flex-col gap-3">
 					<PrimaryButton
 						type="submit"
 						title={loading ? "" : "Update"}
 						icon={loading ? <ActivityIndicator /> : null}
 						disabled={loading}
 						className="p-4 flex justify-center px-12 w-full text-lg"
+					/>
+					<PrimaryButton
+						type="submit"
+						title={loading ? "" : "Logout"}
+						icon={loading ? <ActivityIndicator /> : null}
+						disabled={loading}
+						className="p-4 flex justify-center px-12 w-full text-lg bg-[#d31119] hover:bg-red-800 text-white"
+						onClick={logoutUser}
 					/>
 				</div>
 			</form>

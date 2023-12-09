@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
 import { NextPage } from "next";
+import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 
 const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 	const Page = (props: any) => {
@@ -13,7 +14,15 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 			if (!auth || !user) {
 				// localStorage.setItem("previousUrl", router.asPath);
 				router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-				return <div className="min-h-screen"></div>;
+				return (
+					<div className="min-h-screen items-center flex justify-center">
+						<ActivityIndicator
+							size={60}
+							color="#70C5A1"
+							style={{ borderWidth: 8 }}
+						/>
+					</div>
+				);
 			}
 		}
 

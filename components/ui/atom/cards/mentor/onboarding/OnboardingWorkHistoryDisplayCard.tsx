@@ -1,13 +1,13 @@
 import React from "react";
 import CustomTextInput from "../../../inputs/CustomTextInput";
-import { IExperience } from "../../../../../../interfaces/mentor.interface";
+import { IMentorExperience } from "../../../../../../interfaces/mentor.interface";
 
 const OnboardingWorkHistoryDisplayCard = ({
 	experience,
 	onRemove,
 }: {
-	experience: IExperience;
-	onRemove?: (exp: IExperience) => void;
+	experience: IMentorExperience;
+	onRemove?: (exp: IMentorExperience) => void;
 }) => {
 	return (
 		<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
@@ -36,7 +36,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					type="text"
 					className="text-black"
 					readOnly
-					value={experience.company.name}
+					value={experience.company}
 					containerProps={{
 						className: "border border-zinc-200",
 					}}
@@ -50,7 +50,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					type="text"
 					className="text-black select-none"
 					placeholder="Start Date"
-					value={experience.startDate}
+					value={experience.from_year}
 					containerProps={{
 						className: "border border-zinc-200",
 					}}
@@ -65,7 +65,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					type="text"
 					className="text-black select-none"
 					placeholder="End Date"
-					value={experience.endDate}
+					value={experience.to_year}
 					containerProps={{
 						className: "border border-zinc-200",
 					}}
@@ -82,7 +82,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					type="text"
 					placeholder="Your Role"
 					readOnly
-					value={experience.role}
+					value={experience.job_role}
 					className="text-black"
 					containerProps={{
 						className: "border border-zinc-200",
@@ -98,7 +98,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					id="about_role"
 					placeholder="About This Role"
 					readOnly
-					value={experience.aboutRole}
+					value={experience.description}
 					type="text"
 					className="text-black"
 					containerProps={{

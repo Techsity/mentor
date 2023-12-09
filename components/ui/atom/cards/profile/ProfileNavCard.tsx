@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { link } from "fs";
 import { ProfileTabLinkType } from "../../../../../interfaces";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 
 const ProfileNavCard = ({
 	activeTab,
@@ -36,9 +38,7 @@ const ProfileNavCard = ({
 			<div className="border p-4 border-[#70C5A1] bg-white backdrop-blur-md flex flex-col relative">
 				<div
 					onClick={() => setOpenDropdown(!openDropdown)}
-					className={`lg:hidden duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
-						!true ? "text-[#70C5A1]" : "bg-[#70C5A1] text-white"
-					}`}>
+					className={`lg:hidden duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full`}>
 					{activeTab}
 				</div>
 				<div
@@ -53,6 +53,7 @@ const ProfileNavCard = ({
 								scrollToTop();
 								setActiveTab(link);
 								setOpenDropdown(false);
+								router.push(`/profile#${slugify(link)}`);
 							}}
 							className={`duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
 								link === activeTab

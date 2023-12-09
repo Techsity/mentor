@@ -95,14 +95,14 @@ const WorkshopDisplayCard = ({
 					<div className="flex gap-2 items-center text-sm relative">
 						<img
 							src={
-								workshop.mentor.avatar ||
+								workshop.mentor.user.avatar ||
 								"/assets/images/avatar.png"
 							}
-							alt={workshop.mentor.name}
+							alt={workshop.mentor.user.name}
 							className="w-10 rounded-full"
 							loading="lazy"
 						/>
-						<h1>{workshop.mentor.name}</h1>
+						<h1>{workshop.mentor.user.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
 					{!profile ? (

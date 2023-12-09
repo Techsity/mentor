@@ -48,53 +48,35 @@ const WorkshopRegistrationPageTemplate = () => {
 					<div className="my-2 sm:my-4 flex items-center gap-2">
 						<div className="flex gap-1.5 items-center">
 							<img
-								src={
-									workshop.mentor.avatar ||
-									"/assets/images/avatar.png"
-								}
+								src={workshop.mentor.user.avatar || "/assets/images/avatar.png"}
 								className="rounded-full w-20"
-								alt={workshop.mentor.name}
+								alt={workshop.mentor.user.name}
 							/>
 						</div>
 						<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
 							<h1 className="font-semibold text-lg flex item-center gap-2">
-								{workshop.mentor.name}
-								{workshop.mentor.verified ? (
-									<svg
-										width="15"
-										height="15"
-										viewBox="0 0 15 15"
-										fill="none"
-										className="mt-1.5">
+								{workshop.mentor.user.name}
+								{workshop.mentor.mentor_verified ? (
+									<svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="mt-1.5">
 										<path
 											d="M6.29757 11L4 8.60232L5.04704 7.50965L6.29757 8.81853L9.95296 5L11 6.09266L6.29757 11Z"
 											fill="#0CF27E"
 										/>
-										<rect
-											x="0.5"
-											y="0.5"
-											width="14"
-											height="14"
-											rx="7"
-											stroke="#70C5A1"
-										/>
+										<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
 									</svg>
 								) : null}
 							</h1>
-							<p className="">{workshop.mentor.jobTitle} </p>
+							<p className="">{workshop.mentor.role} </p>
 							<p className="flex gap-1 items-center">
 								{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
-								20 Courses |{" "}
-								{formatFollowersCount(workshop.mentor.sessions)}{" "}
-								Sessions |{" "}
-								{formatFollowersCount(
-									workshop.mentor.mentees.length,
-								)}{" "}
-								Mentee |{" "}
-								{formatFollowersCount(
+								20 Courses | {/* {formatFollowersCount(workshop.mentor.sessions)}{" "} */}
+								{/* Sessions | */}
+								{formatFollowersCount(workshop.mentor.followers)} Followers
+								{/* |{" "} */}
+								{/* {formatFollowersCount(
 									workshop.mentor.subscribers,
 								)}{" "}
-								Subscribers
+								Subscribers */}
 							</p>
 						</div>
 					</div>

@@ -1,61 +1,50 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import CustomTextInput from "../../../inputs/CustomTextInput";
-import { IExperience } from "../../../../../../interfaces/mentor.interface";
 import { PrimaryButton } from "../../../buttons";
 import { slugify } from "../../../../../../utils";
-import { TrashBinOutline } from "react-ionicons";
 import { toast } from "react-toastify";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
-import { ToastDefaultOptions } from "../../../../../../constants";
+import { IMentorExperience } from "../../../../../../interfaces/mentor.interface";
 
 const EditWorkHistoryCard = ({
 	experience,
 	allExperiences,
 	updateWorkExperiences,
 }: {
-	experience?: IExperience;
-	allExperiences: IExperience[];
-	updateWorkExperiences?: (updated: IExperience[]) => void;
+	experience?: IMentorExperience;
+	allExperiences: IMentorExperience[];
+	updateWorkExperiences?: (updated: IMentorExperience[]) => void;
 }) => {
-	const initialState: IExperience = {
-		id: "",
-		company: { name: "" },
-		endDate: "",
-		startDate: "",
-		position: "",
-		role: "",
-		topSkills: [],
-		aboutRole: "",
+	const initialState: IMentorExperience = {
+		company: "",
+		to_year: "",
+		from_year: "",
+		job_role: "",
+		description: "",
 	};
-	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] =
-		useState<boolean>(false);
-	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] =
-		useState<boolean>(false);
-	const [workExperience, setWorkExperience] = useState<IExperience>(
-		experience || initialState,
-	);
+	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
+	const [to_yearCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
+	const [workExperience, setWorkExperience] = useState<IMentorExperience>(experience || initialState);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const isDuplicate = useMemo(() => {
 		return allExperiences.some(
 			(work) =>
-				work.company.name === workExperience.company.name &&
-				work.country === workExperience.country &&
-				work.position === workExperience.position &&
-				work.aboutRole === workExperience.aboutRole &&
-				work.role === workExperience.role &&
-				work.startDate === workExperience.startDate &&
-				work.endDate === workExperience.endDate,
+				work.company === workExperience.company &&
+				work.job_role === workExperience.job_role &&
+				work.from_year === workExperience.from_year &&
+				work.description === workExperience.description &&
+				work.to_year === workExperience.to_year,
 		);
 	}, [allExperiences, workExperience]);
 
 	const handleAddWorkHistory = () => {
 		if (
-			workExperience.company.name &&
-			workExperience.startDate &&
-			workExperience.endDate &&
-			workExperience.role
+			workExperience.company &&
+			workExperience.from_year &&
+			workExperience.to_year &&
+			workExperience.job_role
 			//  &&
 			// workExperience.position
 		) {
@@ -63,35 +52,27 @@ const EditWorkHistoryCard = ({
 				updateWorkExperiences &&
 					updateWorkExperiences(
 						allExperiences.concat({
-							id: slugify(
-								`${
-									workExperience.company.name +
-									workExperience.position +
-									workExperience.startDate
-								}`,
-							),
 							...workExperience,
 						}),
 					);
 			setWorkExperience(initialState);
 		}
 	};
-	const handleExperienceUpdate = (updatedExp: IExperience) => {
+	const handleExperienceUpdate = (updatedExp: IMentorExperience) => {
 		setLoading(true);
 		const updatedExperiences = [...allExperiences];
 		const indexOfExperienceToUpdate = updatedExperiences.findIndex(
 			(experience) =>
-				experience.company.name === updatedExp.company.name &&
-				experience.startDate === updatedExp.startDate &&
-				experience.endDate === updatedExp.endDate,
+				experience.company === updatedExp.company &&
+				experience.from_year === updatedExp.from_year &&
+				experience.to_year === updatedExp.to_year,
 		);
 		if (indexOfExperienceToUpdate !== -1) {
 			updatedExperiences[indexOfExperienceToUpdate] = {
 				...updatedExperiences[indexOfExperienceToUpdate],
 				...updatedExp,
 			};
-			if (updateWorkExperiences)
-				updateWorkExperiences(updatedExperiences);
+			if (updateWorkExperiences) updateWorkExperiences(updatedExperiences);
 
 			setTimeout(function () {
 				setLoading(false);
@@ -103,12 +84,9 @@ const EditWorkHistoryCard = ({
 		if (experience) {
 			const updatedWorkHistory = allExperiences.filter(
 				(work) =>
-					slugify(work.company.name) !==
-						slugify(experience?.company.name) &&
-					work.position === experience?.position,
+					slugify(work.company) !== slugify(experience?.company) && work.job_role === experience?.job_role,
 			);
-			if (updateWorkExperiences)
-				updateWorkExperiences(updatedWorkHistory);
+			if (updateWorkExperiences) updateWorkExperiences(updatedWorkHistory);
 		}
 	};
 	return (
@@ -132,7 +110,7 @@ const EditWorkHistoryCard = ({
 				<div className="col-span-4 grid gap-1">
 					{experience && (
 						<label htmlFor="" className="text-xs">
-							Name of School
+							Name of Company
 						</label>
 					)}
 
@@ -145,10 +123,10 @@ const EditWorkHistoryCard = ({
 						onChange={(e) => {
 							setWorkExperience({
 								...workExperience,
-								company: { name: e.target.value },
+								company: e.target.value,
 							});
 						}}
-						value={workExperience.company.name}
+						value={workExperience.company}
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
@@ -157,7 +135,7 @@ const EditWorkHistoryCard = ({
 				<div className="col-span-2 grid gap-1 relative">
 					{experience && (
 						<label htmlFor="" className="text-xs">
-							Name of School
+							Start Date
 						</label>
 					)}
 
@@ -167,28 +145,24 @@ const EditWorkHistoryCard = ({
 						type="text"
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
-						value={workExperience.startDate}
+						value={workExperience.from_year}
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
 						onClick={() => {
 							setEndDateCalendarIsOpen(false);
-							setStartDateCalendarIsOpen(
-								!startDateCalendarIsOpen,
-							);
+							setStartDateCalendarIsOpen(!startDateCalendarIsOpen);
 						}}
 					/>
-					{startDateCalendarIsOpen && !endDateCalendarIsOpen && (
+					{startDateCalendarIsOpen && !to_yearCalendarIsOpen && (
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {
-									const date = new Date(
-										props as Date,
-									).toLocaleDateString();
+									const date = new Date(props as Date).toLocaleDateString();
 									setWorkExperience({
 										...workExperience,
-										startDate: date,
+										from_year: date,
 									});
 									setStartDateCalendarIsOpen(false);
 								}}
@@ -200,7 +174,7 @@ const EditWorkHistoryCard = ({
 				<div className="col-span-2 grid gap-1 relative">
 					{experience && (
 						<label htmlFor="" className="text-xs">
-							Name of School
+							End Date
 						</label>
 					)}
 
@@ -210,31 +184,29 @@ const EditWorkHistoryCard = ({
 						type="text"
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
-						value={workExperience.endDate}
+						value={workExperience.to_year}
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
 						onClick={() => {
 							setStartDateCalendarIsOpen(false);
-							setEndDateCalendarIsOpen(!endDateCalendarIsOpen);
+							setEndDateCalendarIsOpen(!to_yearCalendarIsOpen);
 						}}
 					/>
-					{endDateCalendarIsOpen && !startDateCalendarIsOpen && (
+					{to_yearCalendarIsOpen && !startDateCalendarIsOpen && (
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {
-									const date = new Date(
-										props as Date,
-									).toLocaleDateString();
+									const date = new Date(props as Date).toLocaleDateString();
 									setWorkExperience({
 										...workExperience,
-										endDate: date,
+										to_year: date,
 									});
 									setEndDateCalendarIsOpen(false);
 								}}
 								maxDate={new Date()}
-								minDate={new Date(workExperience.startDate)}
+								minDate={new Date(workExperience.from_year)}
 							/>
 						</div>
 					)}
@@ -242,24 +214,24 @@ const EditWorkHistoryCard = ({
 				<div className="col-span-4 grid gap-1">
 					{experience && (
 						<label htmlFor="" className="text-xs">
-							Name of School
+							Job Role
 						</label>
 					)}
 
 					<CustomTextInput
-						name="roles"
-						id="roles"
+						name="job_role"
+						id="job_role"
 						type="text"
 						placeholder="Your Role"
 						className="text-black"
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						value={workExperience.role}
+						value={workExperience.job_role}
 						onChange={(e) =>
 							setWorkExperience({
 								...workExperience,
-								role: e.target.value,
+								job_role: e.target.value,
 							})
 						}
 					/>
@@ -267,7 +239,7 @@ const EditWorkHistoryCard = ({
 				<div className="col-span-4 grid gap-1">
 					{experience && (
 						<label htmlFor="" className="text-xs">
-							Name of School
+							Role Description
 						</label>
 					)}
 
@@ -277,11 +249,11 @@ const EditWorkHistoryCard = ({
 						placeholder="About This Role"
 						type="text"
 						className="text-black"
-						value={workExperience.aboutRole}
+						value={workExperience.description}
 						onChange={(e) =>
 							setWorkExperience({
 								...workExperience,
-								aboutRole: e.target.value,
+								description: e.target.value,
 							})
 						}
 						containerProps={{

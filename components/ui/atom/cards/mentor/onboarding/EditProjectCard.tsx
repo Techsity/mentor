@@ -19,48 +19,47 @@ const EditProjectCard = ({
 	reEdit?: boolean;
 }) => {
 	const initialState: IMentorProjectType = {
-		link: "",
-		title: "",
-		type: "",
+		// link: "",
+		// title: "",
+		// type: "",
+		company: "",
+		description: "",
+		job_role: "",
 	};
-	const [project, setProject] = useState<IMentorProjectType>(
-		existingProject || initialState,
-	);
+	const [project, setProject] = useState<IMentorProjectType>(existingProject || initialState);
 
 	const isDuplicate = useMemo(() => {
 		return projectsArr.some(
 			(proj) =>
-				proj.title.toLowerCase() === project?.title.toLowerCase() &&
-				proj.link === project?.link &&
-				proj.type === project?.type,
+				proj.company.toLowerCase() === project?.company.toLowerCase() &&
+				proj.description === project?.description &&
+				proj.job_role === project.job_role,
 		);
 	}, [projectsArr, project]);
 
-	const handleChange =
-		(field: keyof IMentorProjectType) =>
-		(e: ChangeEvent<HTMLInputElement>) => {
-			const {
-				target: { value },
-			} = e;
-			setProject({
-				...project,
-				[field]: value,
-			});
-		};
+	const handleChange = (field: keyof IMentorProjectType) => (e: ChangeEvent<HTMLInputElement>) => {
+		const {
+			target: { value },
+		} = e;
+		setProject({
+			...project,
+			[field]: value,
+		});
+	};
 
 	const handleProjectUpdate = () => {
 		const updatedProjects = [...projectsArr];
-		if (!isValidUrl(project.link)) {
-			// check if project link is a valid url
-			toast.error(
-				"Invalid project URL",
-				ToastDefaultOptions({
-					id: "error",
-					theme: "dark",
-				}),
-			);
-			return;
-		}
+		// if (!isValidUrl(project.link)) {
+		// 	// check if project link is a valid url
+		// 	toast.error(
+		// 		"Invalid project URL",
+		// 		ToastDefaultOptions({
+		// 			id: "error",
+		// 			theme: "dark",
+		// 		}),
+		// 	);
+		// 	return;
+		// }
 		// Add new project
 		if (!existingProject && !isDuplicate) {
 			console.log(updatedProjects);
@@ -69,9 +68,9 @@ const EditProjectCard = ({
 		// Update project if it already exists
 		const indexOfProjectToUpdate = updatedProjects.findIndex(
 			(project) =>
-				project.title === existingProject?.title &&
-				project.link === existingProject?.link &&
-				project.type === existingProject?.type,
+				project.company === existingProject?.company &&
+				project.description === existingProject?.description &&
+				project.job_role === existingProject?.job_role,
 		);
 		if (indexOfProjectToUpdate !== -1) {
 			updatedProjects[indexOfProjectToUpdate] = {
@@ -87,7 +86,8 @@ const EditProjectCard = ({
 		if (projectsArr && existingProject) {
 			const updatedProjects = projectsArr.filter(
 				(project) =>
-					slugify(project.title) !== slugify(existingProject.title),
+					slugify(project.company) !== slugify(existingProject.company) &&
+					slugify(project.job_role) !== slugify(existingProject.job_role),
 			);
 			if (onUpdate) onUpdate(updatedProjects);
 		}
@@ -119,9 +119,9 @@ const EditProjectCard = ({
 						name="title_of_project"
 						id="title_of_project"
 						type="text"
-						value={project.title}
+						value={project.company}
 						className="text-black"
-						onChange={handleChange("title")}
+						onChange={handleChange("company")}
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
@@ -129,36 +129,37 @@ const EditProjectCard = ({
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
 					<label htmlFor="" className="text-xs">
-						Project Link
+						Project Description
 					</label>
 					<CustomTextInput
-						name="link_to_project"
-						id="link_to_project"
-						type="url"
-						className="text-black select-none"
-						value={project.link}
-						placeholder="Link To Project"
-						containerProps={{
-							className: "border border-zinc-200",
-						}}
-						onChange={handleChange("link")}
-					/>
-				</div>
-				<div className="col-span-2 grid gap-1 relative">
-					<label htmlFor="" className="text-xs">
-						Nature of Project
-					</label>
-					<CustomTextInput
-						name="project_nature"
-						id="project_nature"
+						name="project_description"
+						id="project_description"
+						// type="url"
 						type="text"
-						value={project.type}
 						className="text-black select-none"
-						placeholder="Nature of Project"
+						value={project.description}
+						placeholder="Project Description"
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						onChange={handleChange("type")}
+						onChange={handleChange("description")}
+					/>
+				</div>
+				<div className="col-span-2 grid gap-1 relative">
+					<label htmlFor="" className="text-xs">
+						Role
+					</label>
+					<CustomTextInput
+						name="role"
+						id="role"
+						type="text"
+						value={project.job_role}
+						className="text-black select-none"
+						placeholder="Role"
+						containerProps={{
+							className: "border border-zinc-200",
+						}}
+						onChange={handleChange("job_role")}
 					/>
 				</div>
 			</div>

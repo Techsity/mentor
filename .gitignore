@@ -31,7 +31,7 @@ package-lock.json
 yarn.lock
 
 # local env files
-.env*
+# .env*
 .env.local
 .env.development
 

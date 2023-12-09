@@ -17,8 +17,9 @@ export interface IUser {
 	is_admin: boolean;
 	payment_cards?: IUserPaymentCard[];
 	mentor: any;
-	created_at: Date;
-	updated_at: Date;
+	isPremium: boolean;
+	created_at?: Date;
+	updated_at?: Date;
 }
 
 export interface IUserUpdate extends IUser {

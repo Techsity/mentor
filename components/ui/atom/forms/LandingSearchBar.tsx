@@ -10,7 +10,7 @@ const LandingSearchBar = () => {
 	return (
     <form
       onSubmit={handleSearch}
-      className="bg-white px-5 w-[455px] border-2 p-2 rounded-full relative"
+      className="bg-white px-5 w-auto border-2 p-2 rounded-full relative"
     >
       <input
         type="search"

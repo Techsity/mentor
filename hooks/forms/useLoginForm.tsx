@@ -10,6 +10,12 @@ import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
+import { formatGqlError } from "../../utils/auth";
+import ResponseMessages from "../../constants/response-codes";
+
+type ICreateLoginInput = {
+	createLoginInput: ILoginState;
+};
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -23,7 +29,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const [state, setState] = useState<ILoginState>(initialValues || initial);
 	const [error, setError] = useState<string[]>([]);
 
-	const [loginUser, { data }] = useMutation(LOGIN_USER);
+	const [loginUser] = useMutation<ILoginState, ICreateLoginInput>(LOGIN_USER);
 
 	const handleChange =
 		(field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,20 +102,34 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					if (next) {
 						router.replace(decodeURIComponent(next));
 					} else {
-						router.replace(`/dashboard`);
+						router.replace(`/profile`);
 					}
 				}
 			})
-			.catch((error) => {
-				setLoading(false);
+			.catch((error: any) => {
+				// console.error(JSON.stringify(error));
 				console.error(error);
-				if (typeof error === "string")
+				setLoading(false);
+				const errorMessage = formatGqlError(error);
+				// If account is not active, redirect to otp screen
+				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
 					toast.error(
-						error,
+						errorMessage + "Redirecting...",
 						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
+					setTimeout(function () {
+						toast.dismiss("auth_form_pop");
+						// mutation to request for otp here, before redirecting
+						router.push(
+							"/auth/verification/" +
+								crypto.randomUUID() +
+								"/signup",
+						);
+					}, 2000);
+					return;
+				}
 				toast.error(
-					" An error occured. Please try again later.",
+					errorMessage,
 					ToastDefaultOptions({ id: "auth_form_pop" }),
 				);
 			});

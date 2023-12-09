@@ -7,11 +7,18 @@ import { SelectedCountry } from "../../interfaces/country-selector.interface";
 import { REGISTER_USER } from "../../services/graphql/mutations/auth";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import ResponseMessages from "../../constants/response-codes";
+import { formatGqlError } from "../../utils/auth";
 
 export interface IFieldError {
 	field: keyof ISignUpState | "";
 	error?: string;
 }
+type ICreateRegisterInput = {
+	createRegisterInput: Omit<ISignUpState, "fullName" | "confirmPassword"> & {
+		name: string;
+	};
+};
 
 const useSignUpForm = (props?: {
 	initialValues?: ISignUpState;
@@ -32,7 +39,9 @@ const useSignUpForm = (props?: {
 		initialValues || initial,
 	);
 	const [errors, setErrors] = useState<IFieldError[]>([]);
-	const [registerUser, { data }] = useMutation(REGISTER_USER);
+	const [registerUser] = useMutation<ISignUpState, ICreateRegisterInput>(
+		REGISTER_USER,
+	);
 
 	const handleError =
 		(fieldName: keyof ISignUpState) =>
@@ -155,7 +164,7 @@ const useSignUpForm = (props?: {
 					createRegisterInput: {
 						name: fullName,
 						country,
-						phone,
+						phone: phone.slice(-10),
 						email,
 						password,
 					},
@@ -163,19 +172,15 @@ const useSignUpForm = (props?: {
 			})
 				.then(() => {
 					setTimeout(function () {
-						router.push(`/auth/verification/${"jwt_token"}/signup`);
+						router.push(`/auth/verification/signup`);
 					}, 2000);
 				})
-				.catch((error) => {
-					console.log(error);
+				.catch((error: any) => {
+					console.error(error);
 					setLoading(false);
-					if (typeof error === "string")
-						toast.error(
-							error,
-							ToastDefaultOptions({ id: "auth_form_pop" }),
-						);
+					const errorMessage = formatGqlError(error);
 					toast.error(
-						" An error occured. Please try again later.",
+						errorMessage,
 						ToastDefaultOptions({ id: "auth_form_pop" }),
 					);
 				});

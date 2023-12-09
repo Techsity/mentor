@@ -1,12 +1,10 @@
 import { CountryCode } from "react-country-flags-select/dist/types";
-import { ICourse } from "./index";
+import { ICourse, IReview } from "./index";
 import { IUser } from "./user.interface";
 import { ISchedule } from "../components/ui/organisms/mentor/onboarding/steps/step-four/Availability";
 
 export interface IMentorEducation {
-	school: {
-		name: string;
-	};
+	school: string;
 	endDate: string;
 	startDate: string;
 	course?: string;
@@ -22,48 +20,60 @@ export interface IMentorOnboardingState {
 	yearsOfExp: number;
 	projects: IMentorProjectType[];
 	certificates: { institution: string; type: string; year: string }[];
-	workHistory?: IExperience[];
+	workHistory?: IMentorExperience[];
 	education: IMentorEducation[];
 	languages: string[];
 	availability: ISchedule[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
-export type RefrencedMenteeType = Omit<IMentee, "mentors">;
 
-export interface IMentee {
-	name: string;
-	username: string;
-	mentors: RefrencedMentorType[];
-}
+type IMentorSkills = {
+	skill_name: string;
+	years_of_exp: number;
+};
+
+type IMentorAvailability = {
+	day: string;
+	timeSlots: {
+		endTime: string;
+		startTime: string;
+	}[];
+};
 
 export type IMentorProjectType = {
-	title: string;
-	link: string;
-	type: "Freelance" | "Contract" | "Official" | "";
+	company: string;
+	description: string;
+	job_role: string;
 };
+
+type IMentorCertificate = {
+	organization: string;
+	title: string;
+	year: string;
+};
+
+type IMentorExpLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3" | "LEVEL_4";
 export interface IMentor {
-	name: string;
-	username: string;
-	jobTitle: string;
-	experience?: IExperience[];
-	projects?: IMentorProjectType[];
-	mentees: RefrencedMenteeType[];
-	subscribers: number;
-	sessions: number;
-	rating: number;
-	avatar: string;
-	skills: string[];
-	daysOpen: string[];
-	online: boolean;
-	verified: boolean;
-	ratePerHour: number;
+	id: string;
+	user: IUser;
 	about: string;
-	education?: IMentorEducation[];
-	country: CountryCode;
-	languages: string[];
-	followers: number;
 	courses: ICourse[];
+	mentor_verified: boolean;
+	role: string;
+	followers: number;
+	skills: IMentorSkills[];
+	availability: IMentorAvailability[];
+	certifications: IMentorCertificate[];
+	education_bg: IMentorEducation[];
+	hourly_rate: number;
+	exp_level: IMentorExpLevel;
+	work_experience: IMentorExperience[];
+	language: string[];
+	projects: IMentorProjectType[];
+	reviews: IReview[];
+	created_at?: Date;
+	updated_at?: Date;
 }
 
 export interface IMentorshipSession {
@@ -74,15 +84,10 @@ export interface IMentorshipSession {
 	mentor: IMentor;
 }
 
-export interface IExperience {
-	id?: string;
-	position: string;
-	company: { name: string; logo?: string };
-	topSkills: string[];
-	roles?: string[];
-	role?: string;
-	aboutRole?: string;
-	startDate: string;
-	endDate: string;
-	country?: CountryCode;
+export interface IMentorExperience {
+	company: string;
+	description: string;
+	job_role: string;
+	from_year: string;
+	to_year: string;
 }

@@ -34,21 +34,14 @@ const RegisteredMentorshipCard = (session: IMentorshipSession) => {
 				<div className="flex items-center gap-3 p-2">
 					<div className="">
 						<img
-							src={
-								session.mentor.avatar ||
-								"/assets/images/avatar.png"
-							}
-							alt={session.mentor.name}
+							src={session.mentor.user.avatar || "/assets/images/avatar.png"}
+							alt={session.mentor.user.name}
 							className="text-sm rounded-full h-14 w-14"
 						/>
 					</div>
 					<div className="">
-						<h1 className="font-semibold text-black">
-							{session.mentor.name}
-						</h1>
-						<p className="text-sm text-[#B1B1B1]">
-							{session.mentor.jobTitle}
-						</p>
+						<h1 className="font-semibold text-black">{session.mentor.user.name}</h1>
+						<p className="text-sm text-[#B1B1B1]">{session.mentor.role}</p>
 					</div>
 				</div>
 			</div>

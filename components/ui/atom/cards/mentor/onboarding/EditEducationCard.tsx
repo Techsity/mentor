@@ -22,25 +22,21 @@ const EditEducationCard = ({
 	exisitingEducation?: ExtractedEducationType;
 }) => {
 	const initalState: ExtractedEducationType = {
-		school: { name: "" },
+		school: "",
 		endDate: "",
 		startDate: "",
 		course: "",
 		degree: "",
 	};
-	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] =
-		useState<boolean>(false);
-	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] =
-		useState<boolean>(false);
+	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
+	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [education, setEducation] = useState<ExtractedEducationType>(
-		exisitingEducation || initalState,
-	);
+	const [education, setEducation] = useState<ExtractedEducationType>(exisitingEducation || initalState);
 
 	const isDuplicate = useMemo(() => {
 		return allEducationData.some(
 			(edu) =>
-				slugify(edu.school.name) === slugify(education.school.name) &&
+				slugify(edu.school) === slugify(education.school) &&
 				edu.startDate === education.startDate &&
 				edu.endDate === education.endDate,
 		);
@@ -56,11 +52,7 @@ const EditEducationCard = ({
 		const updatedEducation = [...allEducationData];
 		// This adds a new education
 		if (!exisitingEducation && !isDuplicate)
-			if (
-				education.school.name &&
-				education.startDate &&
-				education.endDate
-			) {
+			if (education.school && education.startDate && education.endDate) {
 				updatedEducation.push(education);
 				console.log({ updatedEducation, allEducationData });
 				setTimeout(function () {
@@ -94,8 +86,7 @@ const EditEducationCard = ({
 		if (exisitingEducation) {
 			const updated = allEducationData.filter(
 				(edu) =>
-					slugify(edu.school.name) !==
-						slugify(education.school.name) &&
+					slugify(edu.school) !== slugify(education.school) &&
 					edu.startDate !== education.startDate &&
 					edu.endDate !== education.endDate,
 			);
@@ -138,10 +129,10 @@ const EditEducationCard = ({
 						onChange={(e) => {
 							setEducation({
 								...education,
-								school: { name: e.target.value },
+								school: e.target.value,
 							});
 						}}
-						value={education.school.name}
+						value={education.school}
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
@@ -166,18 +157,14 @@ const EditEducationCard = ({
 						readOnly
 						onClick={() => {
 							setEndDateCalendarIsOpen(false);
-							setStartDateCalendarIsOpen(
-								!startDateCalendarIsOpen,
-							);
+							setStartDateCalendarIsOpen(!startDateCalendarIsOpen);
 						}}
 					/>
 					{startDateCalendarIsOpen && !endDateCalendarIsOpen && (
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {
-									const date = new Date(
-										props as Date,
-									).toLocaleDateString();
+									const date = new Date(props as Date).toLocaleDateString();
 									setEducation({
 										...education,
 										startDate: date,
@@ -215,9 +202,7 @@ const EditEducationCard = ({
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {
-									const date = new Date(
-										props as Date,
-									).toLocaleDateString();
+									const date = new Date(props as Date).toLocaleDateString();
 									setEducation({
 										...education,
 										endDate: date,

@@ -14,14 +14,12 @@ const Projects = ({ reEdit = false }: { reEdit?: boolean }) => {
 
 	return (
 		<div className="">
-			<h1 className="text-sm text-[#B1B1B1] mb-3">
-				Any Project(s) you worked on?
-			</h1>
+			<h1 className="text-sm text-[#B1B1B1] mb-3">Any Project(s) you worked on?</h1>
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.projects &&
 					onboardingMentor.projects?.length >= 1 &&
 					onboardingMentor.projects.map((project, index) => {
-						const id = slugify(project.title);
+						const id = slugify(project.company);
 						return (
 							<EditProjectCard
 								key={index}

@@ -20,7 +20,10 @@ const EditProfileCard = () => {
 					<div className="text-sm">
 						<p className="font-medium">{user?.name}</p>
 						{/* <p>{user?.role}</p> */}
-						<p className="text-[#70C5A1]">Mentee</p>
+
+						<p className="text-[#70C5A1]">
+							{user?.mentor ? "Mentor" : "User"}
+						</p>
 					</div>
 				</div>
 				<div className="my-5 text-sm grid gap-3">
@@ -63,8 +66,12 @@ const EditProfileCard = () => {
 				</div>
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
-						title="Get a Mentor Profile"
-						className="p-3 px-6 bg-[#FFB100]"
+						title={
+							user?.mentor
+								? "Switch to Mentee Dashboard"
+								: "Get a Mentor Profile"
+						}
+						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
 					/>
 				</div>

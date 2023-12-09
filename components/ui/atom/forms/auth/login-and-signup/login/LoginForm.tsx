@@ -4,10 +4,7 @@ import { PrimaryButton } from "../../../../buttons";
 import CustomTextInput from "../../../../inputs/CustomTextInput";
 import ActivityIndicator from "../../../../loader/ActivityIndicator";
 import useLoginForm from "../../../../../../../hooks/forms/useLoginForm";
-import { ILoginState } from "../../../../../../../interfaces/auth.interface";
 import { EyeOffSharp, EyeSharp } from "react-ionicons";
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../../../../../../services/graphql/mutations/auth";
 
 const LoginForm = () => {
 	const { loading, handleSubmit, currentState, handleChange } =

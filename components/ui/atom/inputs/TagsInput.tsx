@@ -21,49 +21,47 @@ const TagsInput = ({
 
 	return (
 		<>
-			<div className="">
-				<div className="flex items-center text-sm flex-row gap-2">
-					<div className="w-full">
-						<label>
-							<CustomTextInput
-								maxLength={textLength}
-								onChange={(e) => setCurrentTag(e.target.value)}
-								value={currentTag}
-								type="text"
-								className="bg-white invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
-								placeholder="Type something"
-								containerProps={{
-									className: "border border-[#00D569]",
-								}}
-							/>
-							{/* <p className="ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
+			<div className="flex items-center text-sm flex-row gap-2">
+				<div className="w-full">
+					<label>
+						<CustomTextInput
+							maxLength={textLength}
+							onChange={(e) => setCurrentTag(e.target.value)}
+							value={currentTag}
+							type="text"
+							className="bg-white invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
+							placeholder="Type something"
+							containerProps={{
+								className: "border border-[#00D569]",
+							}}
+						/>
+						{/* <p className="ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
 											less than 5 characters
 										</p> */}
-						</label>
-					</div>
-					<div className="flex justify-start">
-						<PrimaryButton
-							onClick={() => {
-								if (tagsState.includes(currentTag)) {
-									toast.info(
-										"Tag has aleady been added!",
-										ToastDefaultOptions({
-											id: "info",
-											theme: "dark",
-										}),
-									);
-									return;
-								}
-								if (addTag) {
-									addTag(currentTag.trim());
-									setCurrentTag("");
-								}
-								// addTag && addTag(currentTag.trim());
-							}}
-							title="Add"
-							className="flex justify-center w-full px-5 p-4 h-full"
-						/>
-					</div>
+					</label>
+				</div>
+				<div className="flex justify-start">
+					<PrimaryButton
+						onClick={() => {
+							if (tagsState.includes(currentTag)) {
+								toast.info(
+									"Tag has aleady been added!",
+									ToastDefaultOptions({
+										id: "info",
+										theme: "dark",
+									}),
+								);
+								return;
+							}
+							if (addTag) {
+								addTag(currentTag.trim());
+								setCurrentTag("");
+							}
+							// addTag && addTag(currentTag.trim());
+						}}
+						title="Add"
+						className="flex justify-center w-full px-5 p-4 h-full"
+					/>
 				</div>
 			</div>
 			{showSelectedTags && tagsState.length > 0 && (

@@ -16,11 +16,11 @@ const Education = ({ reEdit = false }: { reEdit?: boolean }) => {
 			{!reEdit && <h1 className="text-sm text-[#B1B1B1]">Education</h1>}
 			{onboardingMentor.education.length >= 1 && (
 				<div className="flex flex-col gap-4 items-center mb-5 mt-2">
-					{onboardingMentor.education.map((edu) => {
-						const id = slugify(edu.school.name);
+					{onboardingMentor.education.map((edu, i) => {
+						const id = slugify(edu.school);
 						return (
 							<EditEducationCard
-								key={id}
+								key={id + i}
 								reEdit={reEdit}
 								exisitingEducation={edu}
 								allEducationData={onboardingMentor.education}

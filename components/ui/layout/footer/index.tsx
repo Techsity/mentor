@@ -12,7 +12,9 @@ const Footer = () => {
 		router.asPath.includes(path),
 	);
 
-	return hideFooter ? null : (
+	return hideFooter ? (
+		<></>
+	) : (
 		<footer className="bg-[#021A05] pt-5 z-20">
 			<div className="mx-auto w-full max-w-screen-2xl">
 				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-20 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">

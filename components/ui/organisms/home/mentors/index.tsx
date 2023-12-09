@@ -27,21 +27,12 @@ const MeetOurMentors = () => {
 										key={index}
 									/>
 								))
-								.slice(
-									0,
-									isExtraLargeScreen
-										? 5
-										: isLargeScreen
-										? 4
-										: isMediumScreen
-										? 2
-										: 3,
-								)}
+								.slice(0, 5)}
 						</div>
 					</div>
 				</div>
 				<div className="flex justify-center mt-3">
-					<Link href="#">
+					<Link href="/mentors">
 						<div
 							className="px-16 hover:bg-[#083C0E] whitespace-nowrap select-none duration-300 bg-[#094B10] p-3 text-white rounded cursor-pointer"
 							style={{ fontFamily: "Days One" }}>

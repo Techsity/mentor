@@ -122,7 +122,7 @@ const Companies = () => {
 							</clipPath>
 						</defs>
 					</svg>
-				</div>
+				</div> 
 			</div>
 		</div>
 	);

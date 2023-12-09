@@ -11,7 +11,6 @@ export const REGISTER_USER = gql`
 		}
 	}
 `;
-
 export const LOGIN_USER = gql`
 	mutation loginUser($createLoginInput: CreateLoginInput!) {
 		loginUser(createLoginInput: $createLoginInput) {
@@ -29,6 +28,22 @@ export const LOGIN_USER = gql`
 				is_verified
 				phone
 			}
+		}
+	}
+`;
+
+export const VERIFY_USER = gql`
+	mutation verifyUser($otp: String!) {
+		verifyUser(otp: $otp) {
+			message
+		}
+	}
+`;
+
+export const FORGOT_PASSWORD = gql`
+	mutation forgetPassword($email: String!) {
+		forgetPassword(email: $email) {
+			message
 		}
 	}
 `;
