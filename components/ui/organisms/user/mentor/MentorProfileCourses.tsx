@@ -12,7 +12,7 @@ const MentorProfileCourses = () => {
 		<>
 			<NavSection {...{ active, setActive }} />
 			{active === "registered" ? (
-				<div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+				<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 					{mentorCourses.map((course, i) => (
 						<CourseInProgressDisplayCard {...{ course }} key={i} />
 					))}
@@ -23,6 +23,7 @@ const MentorProfileCourses = () => {
 		</>
 	);
 };
+
 const NavSection: FC<{
 	active: "registered" | "uploaded";
 	setActive: Dispatch<SetStateAction<"registered" | "uploaded">>;

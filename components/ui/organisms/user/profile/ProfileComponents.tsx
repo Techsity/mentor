@@ -49,7 +49,6 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						</div>
 					))}
 			</div>
-
 			{
 				activeTab === "Overview" && isMentor ? (
 					<div className="animate__animated animate__fadeIn">
