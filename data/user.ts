@@ -6,6 +6,20 @@ import mentors from "./mentors";
 
 export const dummyUsers = [
 	{
+		email: "user@mail.offline",
+		name: "Test User Offline",
+		country: countries[0].label,
+		created_at: new Date().toDateString(),
+		is_active: true,
+		is_admin: false,
+		is_online: false,
+		is_verified: true,
+		avatar: "/assets/images/avatar.png",
+		mentor: null,
+		phone: "123-456-3390",
+		isPremium: false,
+	},
+	{
 		email: "user@mail.io",
 		name: "Test User",
 		country: countries[0].label,

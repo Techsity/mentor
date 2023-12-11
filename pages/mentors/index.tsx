@@ -1,7 +1,8 @@
 import React from "react";
+import MentorsSection from "../../components/ui/organisms/user/dashboard/courses-mentors-workshop/MentorsSection";
 
 const AllMentorsPage = () => {
-	return <div>AllMentorsPage</div>;
+	return <MentorsSection />;
 };
 
 export default AllMentorsPage;

@@ -49,7 +49,7 @@ const Experience = ({ experience }: { experience: IMentorExperience[] }) => (
 );
 
 const MentorProjects = ({ projects, reEdit = false }: { projects: IMentorProjectType[]; reEdit?: boolean }) => (
-	<div className={"grid gap-3"}>
+	<div className={"grid gap-3 relative"}>
 		{!reEdit && (
 			<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 				<h1 className="text-xl font-semibold">Projects</h1>
@@ -89,66 +89,36 @@ const MentorProjects = ({ projects, reEdit = false }: { projects: IMentorProject
 	</div>
 );
 const AvailabiltySchedule = (mentor: IMentor) => (
-	<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[85vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
+	<div className="relative lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[85vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
 		<div className="w-full mb-24 lg:mb-0">
 			<h1 className="font-medium">My Availability</h1>
 			<p className="text-[#CEFFEA] font-[300] mt-2">Lagos (GMT +1)</p>
 			<div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-10">
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Mondays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Tuesdays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Wednesdays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Thursdays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Fridays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Saturdays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
-				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-					<div className="flex justify-between w-full items-center">
-						<h1 className="font-medium">Sundays</h1>
-						<p className="font-[300]">10am - 5pm</p>
-					</div>
-				</AnimationOnScroll>
+				{mentor.availability.map((date, index) => {
+					return (
+						<div className="animate__animated animate__fadeIn" key={index}>
+							<div className="flex justify-between w-full items-center">
+								<h1 className="font-medium">{date.day}</h1>
+								{date.timeSlots && (
+									<p className="font-[300]">
+										{date.timeSlots[0].startTime} - {date.timeSlots[0].endTime}
+									</p>
+								)}
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
-		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-			<div className="flex justify-center relative h-full lg:top-32">
-				<Link href={`/mentors/${mentor.user.name}?consult`}>
-					<div
-						className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
-						style={{ fontFamily: "Days One" }}>
-						Book me now
-					</div>
-				</Link>
-			</div>
-		</AnimationOnScroll>
+		<div className="flex justify-center absolute mt-10 bottom-10 w-full mx-auto left-0 px-8 md:px-10">
+			<Link href={`/mentors/${mentor.user.name}?consult`}>
+				<div
+					className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
+					style={{ fontFamily: "Days One" }}>
+					Book me now
+				</div>
+			</Link>
+		</div>
 	</div>
 );
 

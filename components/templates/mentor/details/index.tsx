@@ -19,7 +19,7 @@ const MentorDetailsTemplate = (mentor: IMentor) => {
 				<div className=" animate__animated animate__slideInDown lg:px-20 sm:px-12 px-6">
 					<MentorProfileCard mentor={mentor} detailsPage />
 				</div>
-				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start lg:px-20 sm:px-12 px-6">
+				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start sm:px-12 px-6">
 					<div className="flex-grow min-h-screen overflow-hidden">
 						<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
 							<Skills skills={mentor.skills} />

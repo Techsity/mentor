@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import React from "react";
 import MentorDetailsTemplate from "../../components/templates/mentor/details";
 import mentors from "../../data/mentors";
@@ -14,16 +14,12 @@ const MentorDetails = ({ mentor }: { mentor: IMentor }) => {
 	return <MentorDetailsTemplate {...mentor} />;
 };
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async (
+	ctx: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<{ mentor: IMentor }>> => {
 	const { username } = ctx.query;
-	const mentor: IMentor | undefined = await mentors.find(
-		(mentor) => mentor.username === username,
-	);
-	if (!mentor || mentor == undefined)
-		return {
-			redirect: { destination: "/", permanent: false },
-			props: {},
-		};
+	const mentor = await mentors.find((mentor) => mentor.user.name === username);
+	if (!mentor) return { notFound: true };
 	return { props: { mentor } };
 };
 

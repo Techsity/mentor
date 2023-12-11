@@ -13,7 +13,7 @@ const CourseContents = ({
 	className?: string;
 	inProgress?: boolean;
 }) => {
-	const [activeContent, setActiveContent] = useState<ICourseContent | null>(null);
+	const [activeContent, setActiveContent] = useState<ICourseContent | null>(course.course_contents[0]);
 	const CourseContentItem = ({
 		content,
 		onClick,
@@ -21,8 +21,8 @@ const CourseContents = ({
 		content: ICourseContent;
 		onClick?: MouseEventHandler<HTMLDivElement>;
 	}) => {
-		const mainDuration = calculateTotalDuration(content);
-		// const mainDuration = 200;
+		// const mainDuration = calculateTotalDuration(content);
+		const mainDuration = "40:00";
 		const totalDuration = 2600;
 		const watchedTime = 1300;
 		const percentage = (watchedTime / totalDuration) * 100;
@@ -57,7 +57,7 @@ const CourseContents = ({
 				</div>
 				{activeContent === content ? (
 					<>
-						<div className="flex items-end flex-col gap-1 w-full animate__animated animate__slideInDown animate__faster">
+						<div className="flex items-end flex-col gap-1 w-full animate__animated animate__fadeIn animate__faster">
 							<span className="text-xs">{parseInt(percentage.toFixed(0))}%</span>
 							<span className="relative overflow-hidden flex items-center bg-zinc-300 h-[.3em] w-full">
 								<span
@@ -68,7 +68,7 @@ const CourseContents = ({
 								/>
 							</span>
 						</div>
-						<div className="p-2 pb-3 grid gap-2 animate__animated animate__slideInDown animate__faster">
+						<div className="p-2 pb-3 grid gap-2 animate__animated animate__fadeIn animate__faster">
 							{content.course_sections.map((item, index) => (
 								<div key={index} className="flex items-center justify-between">
 									{item.section_name}
