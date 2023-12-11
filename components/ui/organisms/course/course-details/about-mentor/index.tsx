@@ -8,7 +8,6 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 		<div className="px-5 sm:px-10 lg:px-20 mt-10 py-3">
 			<h1 className="text-xl font-semibold">About Mentor</h1>
 			<div className="mt-8">
-				{" "}
 				<div className="my-2 sm:my-4 flex items-center gap-2">
 					<div className="flex gap-1.5 items-center">
 						<img
@@ -42,8 +41,8 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 						</p>
 					</div>
 				</div>
+				<div className="text-[#9A9898] text-sm max-w-2xl">{mentor.about}</div>
 			</div>
-			<div className="text-[#9A9898] text-[15px] max-w-2xl">{mentor.about}</div>
 		</div>
 	);
 };

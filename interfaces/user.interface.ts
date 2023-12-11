@@ -18,8 +18,8 @@ export interface IUser {
 	payment_cards?: IUserPaymentCard[];
 	mentor: any;
 	isPremium: boolean;
-	created_at?: Date;
-	updated_at?: Date;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export interface IUserUpdate extends IUser {

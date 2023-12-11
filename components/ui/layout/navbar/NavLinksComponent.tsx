@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
+import { courseTypes } from "../../../../data/courses";
 
 type MainCourseType = {
 	courseType: CourseType;
@@ -17,40 +18,18 @@ const NavLinksComponent = () => {
 	// activeDropdown === i &&
 	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
-
 	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
 		{
 			courseType: "technical",
-			categories: [
-				{
-					title: "ASDfdgofudfdh",
-					description: "ekjfhgejkfgjfdsd",
-					created_at: new Date(),
-					updated_at: new Date(),
-				},
-			],
+			categories: courseTypes[courseTypes.findIndex((type) => type.name === "technical")].categories,
 		},
 		{
 			courseType: "vocational",
-			categories: [
-				{
-					title: "G398u2wfdgofudfdh",
-					description: "ekjfhgejkfgjfdsd",
-					created_at: new Date(),
-					updated_at: new Date(),
-				},
-			],
+			categories: courseTypes[courseTypes.findIndex((type) => type.name === "vocational")].categories,
 		},
 		{
 			courseType: "educational",
-			categories: [
-				{
-					title: "EEFDWfdgofudfdh",
-					description: "ekjfhgejkfgjfdsd",
-					created_at: new Date(),
-					updated_at: new Date(),
-				},
-			],
+			categories: courseTypes[courseTypes.findIndex((type) => type.name === "educational")].categories,
 		},
 	]);
 

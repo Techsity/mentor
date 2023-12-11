@@ -9,7 +9,7 @@ export const dummyUsers = [
 		email: "user@mail.io",
 		name: "Test User",
 		country: countries[0].label,
-		created_at: new Date(),
+		created_at: new Date().toDateString(),
 		is_active: true,
 		is_admin: false,
 		is_online: true,
@@ -33,8 +33,8 @@ export const dummyUsers = [
 		payment_cards: [],
 		mentor: null,
 		isPremium: true,
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		id: "user-2",
@@ -50,8 +50,8 @@ export const dummyUsers = [
 		payment_cards: [],
 		mentor: null,
 		isPremium: true,
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 ];
 

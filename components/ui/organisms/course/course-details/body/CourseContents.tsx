@@ -98,7 +98,7 @@ const CourseContents = ({
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
 				<h1 className="font-semibold text-xl mb-3">Course Content</h1>
-				{/* {course.price !== "free" ? (
+				{/* {course.price !==0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						₦{course.price.toLocaleString()}
 					</div>

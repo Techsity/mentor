@@ -2,7 +2,7 @@ import { CourseType, ICourse, ICourseCategory, ICourseContent } from "../interfa
 import mentors from "./mentors";
 import reviews from "./reviews";
 
-const courseContents: [ICourseContent[], ICourseContent[]] = [
+export const courseContents: [ICourseContent[], ICourseContent[]] = [
 	[
 		{
 			title: "Introduction to Programming",

@@ -291,14 +291,14 @@ export interface IBlogPost {
 }
 export interface IWorkshopContent {
 	title: string;
-	date: Date;
+	date: string;
 }
 export interface IWorkshop {
 	title: string;
 	category: "Live" | "Upcoming" | "Recordings";
 	description: string;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 	duration: number;
 	participants: number;
 	price: number | "free";

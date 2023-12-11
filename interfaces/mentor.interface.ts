@@ -59,6 +59,7 @@ export interface IMentor {
 	user: IUser;
 	about: string;
 	courses: ICourse[];
+	// courses: Omit<ICourse,"mentor">[];
 	mentor_verified: boolean;
 	role: string;
 	followers: number;
@@ -72,12 +73,12 @@ export interface IMentor {
 	language: string[];
 	projects: IMentorProjectType[];
 	reviews: IReview[];
-	created_at?: Date;
-	updated_at?: Date;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export interface IMentorshipSession {
-	date: Date;
+	date: string;
 	pending: boolean;
 	concluded: boolean;
 	upcoming: boolean;
