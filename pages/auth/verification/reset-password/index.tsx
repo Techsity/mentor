@@ -13,13 +13,7 @@ const PasswordResetOtpVerificationPage = () => {
 		}
 	};
 
-	return (
-		<OtpTemplate
-			{...{ loading, setLoading }}
-			next={handleVerifyOtp}
-			timeLimit={60}
-		/>
-	);
+	return <OtpTemplate {...{ loading, setLoading }} next={handleVerifyOtp} timeLimit={60} />;
 };
 
 export default PasswordResetOtpVerificationPage;

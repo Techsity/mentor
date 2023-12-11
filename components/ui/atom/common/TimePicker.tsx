@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import classNames from "classnames";
 import { ChevronDown, ChevronUp } from "react-ionicons";
 import { PrimaryButton } from "../buttons";

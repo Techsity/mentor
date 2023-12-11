@@ -1,6 +1,4 @@
-import React, { FormEvent, useState } from "react";
-import { PrimaryButton } from "../../../ui/atom/buttons";
-import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
+import React, { FormEvent, useEffect, useState } from "react";
 import ForgotPasswordForm from "../../../ui/atom/forms/auth/ForgotPasswordForm";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -11,9 +9,13 @@ import { useMutation } from "@apollo/client";
 import { FORGOT_PASSWORD } from "../../../../services/graphql/mutations/auth";
 import ResponseMessages from "../../../../constants/response-codes";
 import { formatGqlError } from "../../../../utils/auth";
+import { useDispatch } from "react-redux";
+import { setResetPasswordState } from "../../../../redux/reducers/features/authSlice";
 
 const ForgotPasswordTemplate = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
+
 	const [forgotPassword] = useMutation<
 		{ forgetPassword: { message: keyof typeof ResponseMessages } },
 		{ email: string }
@@ -35,8 +37,9 @@ const ForgotPasswordTemplate = () => {
 				forgotPassword({ variables: { email: state.email } })
 					.then((response) => {
 						setState({ ...state, loading: false });
+
 						if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
-							console.log(response.data?.forgetPassword.message);
+							dispatch(setResetPasswordState({ email, otp: "" }));
 							toast.info(
 								ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT,
 								ToastDefaultOptions({ id: "info" }),
@@ -48,7 +51,6 @@ const ForgotPasswordTemplate = () => {
 					})
 					.catch((error) => {
 						console.error(error);
-						// setLoading(false);
 						const errorMessage = formatGqlError(error);
 						setState({ ...state, loading: false });
 						toast.error(errorMessage, ToastDefaultOptions({ id: "forgot_password_pop" }));
@@ -64,6 +66,7 @@ const ForgotPasswordTemplate = () => {
 			toast.error("Please enter your email", ToastDefaultOptions({ id: "forgot_password_pop" }));
 		}
 	};
+
 	return (
 		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative px-5 md:px-24">
 			<Particles />

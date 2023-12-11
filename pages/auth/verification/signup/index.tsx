@@ -17,18 +17,13 @@ const SignupOtpVerificationPage = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const [verifyUser] = useMutation<VerifyUserResponseType, { otp: string }>(
-		VERIFY_USER,
-	);
+	const [verifyUser] = useMutation<VerifyUserResponseType, { otp: string }>(VERIFY_USER);
 
 	const handleVerifyOtp = (otp: string) => {
 		verifyUser({ variables: { otp } })
 			.then((response) => {
 				console.log(response);
-				if (
-					response.data?.data.verifyUser.message ===
-					ResponseMessages.USER_VERIFIED
-				) {
+				if (response.data?.data.verifyUser.message === ResponseMessages.USER_VERIFIED) {
 					// toast.success(
 					// 	ResponseMessages.USER_VERIFIED,
 					// 	ToastDefaultOptions({ id: "success" }),
@@ -45,33 +40,11 @@ const SignupOtpVerificationPage = () => {
 						router.replace("/auth?login");
 					}, 2000);
 				}
-				toast.error(
-					errorMessage,
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+				toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 			});
 	};
 
-	return (
-		<OtpTemplate
-			{...{ loading, setLoading }}
-			next={handleVerifyOtp}
-			timeLimit={60}
-		/>
-	);
-};
-
-export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
-	const { jwt } = ctx.query;
-	// check if jwt exists in the url query
-	if (!jwt)
-		return {
-			props: {},
-			redirect: { destination: "/auth", permanent: true },
-		};
-	// then check if it matches the one stored in the cookies
-	// validate or redirect
-	return { props: {} };
+	return <OtpTemplate {...{ loading, setLoading }} next={handleVerifyOtp} timeLimit={60} />;
 };
 
 export default SignupOtpVerificationPage;

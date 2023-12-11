@@ -9,16 +9,14 @@ const initialState: IAuthState = {
 	// typeof window !== "undefined" && window.localStorage.getItem("userData")
 	// 	? JSON.parse(window.localStorage.getItem("userData") as string)
 	// 	: null,
+	resetPasswordState: { email: "", otp: "" },
 };
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState: initialState,
 	reducers: {
-		setCredentials: (
-			state,
-			action: { payload: { isLoggedIn: boolean; user: IUser | null } },
-		) => {
+		setCredentials: (state, action: { payload: { isLoggedIn: boolean; user: IUser | null } }) => {
 			state.isLoggedIn = action.payload.isLoggedIn;
 			state.user = action.payload.user;
 		},
@@ -29,12 +27,17 @@ const authSlice = createSlice({
 		updateUser: (state, action: { payload: IUser | null }) => {
 			state.user = action.payload;
 		},
+		setResetPasswordState: (state, action: { payload: { email: string; otp: string } }) => {
+			state.resetPasswordState = action.payload;
+			return state;
+		},
 	},
 });
 
-export const { setCredentials, logOut, updateUser } = authSlice.actions;
+export const { setCredentials, logOut, updateUser, setResetPasswordState } = authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user;
+export const resetPasswordState = (state: RootState) => state.auth.resetPasswordState;
 
 export default authSlice.reducer;

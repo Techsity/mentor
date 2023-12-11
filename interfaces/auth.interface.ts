@@ -3,6 +3,7 @@ import { IUser } from "./user.interface";
 export interface IAuthState {
 	isLoggedIn: boolean;
 	user: IUser | null;
+	resetPasswordState?: { email: string; otp: string };
 }
 
 export interface IForgotPasswordState {
