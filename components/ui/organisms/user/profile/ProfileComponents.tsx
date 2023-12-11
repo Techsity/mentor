@@ -9,12 +9,13 @@ import ProfileSettings from "./ProfileSettings";
 import { ProfileTabLinkType } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
-import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
-import MentorProfileCourses from "../mentor/MentorProfileCourses";
+import MentorProfileCourses from "../mentor/courses/MentorProfileCourses";
 import { PrimaryButton } from "../../../atom/buttons";
 import { useRouter } from "next/router";
 import EditCourseTemplate from "../../../../templates/course/edit";
 import EditCourseContent from "../../course/edit-course/EditCourseContent";
+import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
+import MentorProfileWorkshop from "../mentor/workshop/MentorProfileWorkshop";
 
 const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => {
 	const router = useRouter();
@@ -56,14 +57,10 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 					</div>
 				) : activeTab === "Courses" && isMentor ? (
 					isEditCourse && !isContentPage ? (
-						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
 						<EditCourseTemplate />
-					) : // </div>
-					isEditCourse && isContentPage ? (
-						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
+					) : isEditCourse && isContentPage ? (
 						<EditCourseContent />
 					) : (
-						// </div>
 						<MentorProfileCourses />
 					)
 				) : activeTab === "My Courses" ? (
@@ -72,6 +69,8 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 							<CourseInProgressDisplayCard {...{ course }} key={i} />
 						))}
 					</div>
+				) : activeTab === "Workshop" && isMentor ? (
+					<MentorProfileWorkshop />
 				) : activeTab === "My Workshop" ? (
 					<RegitsteredWorkshops />
 				) : activeTab === "Mentorship" ? (

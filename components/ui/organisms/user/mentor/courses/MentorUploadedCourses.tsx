@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProgressDisplayCard";
-import courses from "../../../../../data/courses";
+import CourseInProgressDisplayCard from "../../../../atom/cards/course/CourseInProgressDisplayCard";
+import courses from "../../../../../../data/courses";
 
 const MentorUploadedCourses = () => {
 	const mentorCourses = useMemo(() => courses, []);

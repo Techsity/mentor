@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
-import courses from "../../../../../data/courses";
-import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProgressDisplayCard";
+import courses from "../../../../../../data/courses";
+import CourseInProgressDisplayCard from "../../../../atom/cards/course/CourseInProgressDisplayCard";
 import MentorUploadedCourses from "./MentorUploadedCourses";
 
 const MentorProfileCourses = () => {
