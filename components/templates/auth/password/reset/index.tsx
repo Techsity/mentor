@@ -9,27 +9,36 @@ import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
 import { useMutation } from "@apollo/client";
 import ResponseMessages from "../../../../../constants/response-codes";
-import { FORGOT_PASSWORD } from "../../../../../services/graphql/mutations/auth";
+import { FORGOT_PASSWORD, RESET_PASSWORD } from "../../../../../services/graphql/mutations/auth";
 import { formatGqlError } from "../../../../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { resetPasswordState, setResetPasswordState } from "../../../../../redux/reducers/features/authSlice";
 
+type VerifyUserResponseType = {
+	data: { resetPassword: { message: keyof typeof ResponseMessages } };
+};
 const ResetNewPasswordTemplate = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const otp = router.query.otp as string;
+	// const otp = router.query.otp as string;
 	const resetPasswordData = useSelector(resetPasswordState);
+	const otp = resetPasswordData && resetPasswordData.otp;
 
 	const [forgotPassword] = useMutation<
 		{ forgetPassword: { message: keyof typeof ResponseMessages } },
 		{ email: string }
 	>(FORGOT_PASSWORD);
 
+	const [resetPassword] = useMutation<VerifyUserResponseType, { resetData: { otp: string; password: string } }>(
+		RESET_PASSWORD,
+	);
+
 	const [loading, setLoading] = useState<boolean>(false);
 	const [state, setState] = useState<IResetPasswordState>({
 		newPassword: "",
 		confirmNewPassword: "",
 	});
+	const [isInvalidOtp, setIsInvalidOtp] = useState<boolean>(false);
 
 	const handleSubmit = async (e: FormEvent) => {
 		setLoading(true);
@@ -37,35 +46,17 @@ const ResetNewPasswordTemplate = () => {
 		if (state.newPassword && state.confirmNewPassword)
 			if (state.newPassword === state.confirmNewPassword) {
 				//Verify Otp
-				//if valid and !expired, continue
-				//
-				//mock loading before proceeding
-				setTimeout(function () {
-					router.replace(`/auth/reset-password/${new Date().getTime()}?finish`);
-				}, 2000);
-				// if otp has expired, send another and redirect to verification page
-				await forgotPassword({ variables: { email: state.email } })
+				resetPassword({ variables: { resetData: { otp: otp as string, password: state.newPassword } } })
 					.then((response) => {
-						setLoading(false);
-						if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
-							console.log();
-
-							console.log(response.data?.forgetPassword.message);
-							toast.info(
-								ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT,
-								ToastDefaultOptions({ id: "info" }),
-							);
-							setTimeout(function () {
-								router.push(`/auth/verification/reset-password`);
-							}, 2000);
-						}
+						console.log(response);
+						router.replace(`/auth/reset-password/${new Date().getTime()}?finish`);
 					})
-					.catch((error) => {
-						console.error(error);
-						// setLoading(false);
-						const errorMessage = formatGqlError(error);
+					.catch((error: any) => {
 						setLoading(false);
-						toast.error(errorMessage, ToastDefaultOptions({ id: "error" }));
+						console.error(error);
+						const errorMessage = formatGqlError(error);
+						setIsInvalidOtp(true);
+						toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 					});
 			} else {
 				toast.error("Passwords do not match", ToastDefaultOptions({ id: "error" }));
@@ -80,6 +71,28 @@ const ResetNewPasswordTemplate = () => {
 	const handleChange = (field: keyof IResetPasswordState) => (e: ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [field]: e.target.value });
 		setLoading(false);
+	};
+
+	const handleResendOtp = () => {
+		if (resetPasswordData && resetPasswordData?.email !== "")
+			forgotPassword({ variables: { email: resetPasswordData.email } })
+				.then((response) => {
+					if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
+						toast.info(
+							"An OTP has been sent to the email you provided.",
+							ToastDefaultOptions({ id: "info" }),
+						);
+						router.push(`/auth/verification/reset-password`);
+					}
+				})
+				.catch((error) => {
+					console.error(error);
+					const errorMessage = formatGqlError(error);
+					toast.error(errorMessage, ToastDefaultOptions({ id: "error" }));
+				});
+		else {
+			router.push(`/auth/forgot-password`);
+		}
 	};
 
 	return (
@@ -128,20 +141,13 @@ const ResetNewPasswordTemplate = () => {
 							}
 							className="px-12 duration-300 p-3 text-center"
 						/>
-						<div className={`flex flex-col items-center sm:items-start font-[300]`}>
-							{/* <button
-								onClick={() => setCountdown(timeLimit)} // handleResendOtp
-								className={countdown > 0 ? "cursor-not-allowed" : "font-medium"}
-								disabled={countdown > 0}>
-								Resend OTP {countdown > 0 ? "in" : null}
-							</button>
-							{countdown >= 1 ? (
-								<div className="flex items-center text-[#A3A6A7] gap-1">
-									{countdown}
-									<span className="text-black">sec.</span>
-								</div>
-							) : null} */}
-						</div>
+						{isInvalidOtp && (
+							<div className={`flex flex-col items-center sm:items-start font-[300] cursor-pointer`}>
+								<button type="button" onClick={handleResendOtp} className={"font-medium"}>
+									Resend OTP
+								</button>
+							</div>
+						)}
 					</div>
 					<PasswordValidationComponent password={state.newPassword} />
 				</div>

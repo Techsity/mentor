@@ -9,12 +9,13 @@ import { useMutation } from "@apollo/client";
 import { FORGOT_PASSWORD } from "../../../../services/graphql/mutations/auth";
 import ResponseMessages from "../../../../constants/response-codes";
 import { formatGqlError } from "../../../../utils/auth";
-import { useDispatch } from "react-redux";
-import { setResetPasswordState } from "../../../../redux/reducers/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/features/authSlice";
 
 const ForgotPasswordTemplate = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const resetPasswordData = useSelector(resetPasswordState);
 
 	const [forgotPassword] = useMutation<
 		{ forgetPassword: { message: keyof typeof ResponseMessages } },
@@ -22,7 +23,7 @@ const ForgotPasswordTemplate = () => {
 	>(FORGOT_PASSWORD);
 
 	const [state, setState] = useState<IForgotPasswordState>({
-		email: "",
+		email: resetPasswordData?.email || "",
 		error: "",
 		loading: false,
 	});
@@ -44,9 +45,7 @@ const ForgotPasswordTemplate = () => {
 								ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT,
 								ToastDefaultOptions({ id: "info" }),
 							);
-							setTimeout(function () {
-								router.push(`/auth/verification/reset-password`);
-							}, 2000);
+							router.push(`/auth/verification/reset-password`);
 						}
 					})
 					.catch((error) => {
