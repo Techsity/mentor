@@ -1,12 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, useRef, useState, useEffect } from "react";
-import { ICourseContent } from "../../../../../interfaces";
+import { FC, ForwardedRef, useRef, useState, useEffect, ChangeEvent } from "react";
+import { CourseSection, ICourseContent } from "../../../../../interfaces";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
 
 interface ContentEditComponentProps extends ICourseContent {
-	handleChange: (index: number, field: keyof ICourseContent, value: string) => void;
+	handleChange: (
+		index: number,
+		field: keyof Omit<ICourseContent, "course_sections"> | keyof CourseSection,
+		section_index?: number,
+	) => (e: ChangeEvent<HTMLInputElement>) => void;
 	handleAddNewLecture: () => void;
 	handleDuplicateLecture: any;
 	handleDeleteLecture: any;
@@ -17,13 +21,13 @@ interface ContentEditComponentProps extends ICourseContent {
 
 const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	handleChange,
-	course_sections,
-	title,
 	handleAddNewLecture,
 	handleDuplicateLecture,
 	handleDeleteLecture,
 	contentContainerRef,
 	index,
+	title,
+	course_sections,
 }) => {
 	const fileUploadInputRef = useRef<HTMLInputElement>(null);
 	const [currentContentIndex, setCurrentContentIndex] = useState<number>(0);
@@ -73,6 +77,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 					containerProps={{
 						className: "border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm mt-3",
 					}}
+					onChange={handleChange(index, "title")}
 					value={title}
 				/>
 			</div>
@@ -82,9 +87,9 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				</div>
 				<div className="flex items-start gap-4 my-5">
 					<div className="flex-grow max-w-2xl grid gap-6">
-						{course_sections.map((lecture, i) => {
+						{course_sections.map((lecture, section_index) => {
 							return (
-								<div className="" key={i}>
+								<div className="" key={section_index}>
 									<div className="border border-[#70C5A1] p-5">
 										<div className="grid gap-4">
 											<CustomTextInput
@@ -93,7 +98,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 													className:
 														"border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm mt-3",
 												}}
-												onChange={(e) => handleChange(i, "title", e.target.value)}
+												onChange={handleChange(index, "section_name", section_index)}
 												value={lecture.section_name}
 											/>
 											<div className="relative h-32 w-full">
@@ -140,6 +145,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 												}}
 												placeholder="Lecture Note"
 												value={lecture.notes}
+												onChange={handleChange(index, "notes", section_index)}
 											/>
 										</div>
 									</div>
