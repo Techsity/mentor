@@ -33,7 +33,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 	return (
 		<div>
 			<div className="animate__animated animate__fadeIn border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
-				<div className="w-full pr-4 flex items-start gap-3">
+				<div className="w-full pr-4 flex sm:flex-row flex-col items-start gap-3">
 					<div className="flex justify-center items-center">
 						<div className="relative">
 							<div className="w-20 h-20 rounded-full relative bg-zinc-100 overflow-hidden">
@@ -55,13 +55,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 											? "bg-[#00AD74]"
 											: "bg-[#F6937B]"
 										: "bg-zinc-300"
-								} w-3 h-3 sm:h-5 sm:w-5 border-white border-2 top-0 left-0 xs:left-2 rounded-full`}
+								} w-4 h-4 sm:h-5 sm:w-5 border-white border-2 top-0 left-2 rounded-full`}
 							/>
-							{/* <div className="flex justify-center items-center -ml-3 mt-4 flex-wrap">
-								<button className="text-[#70C5A1] text-sm xl:hidden sm:hidden xs:hidden hover:underline">
-									+ Follow
-								</button>
-							</div> */}
 						</div>
 					</div>
 					<div className="">
@@ -132,7 +127,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 									))
 									.slice(0, 3)}
 						</div>
-						<div className="mt-2 text-xs flex gap-3 items-center text-[#b1b1b1] whitespace-nowrap">
+						<div className="mt-2 text-xs flex gap-3 sm:items-center text-[#b1b1b1] whitespace-nowrap">
 							{!loading ? (
 								<p className="">{mentor?.work_experience?.length} Year of Experience</p>
 							) : (
@@ -156,7 +151,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 								<span className="bg-zinc-200 h-1 w-20" />
 							)}
 						</div>
-						<div className="mt-10 flex justify-start items-center gap-5">
+						<div className="mt-5 sm:mt-10 flex justify-start items-center gap-5">
 							{!loading ? (
 								<div
 									className="px-4 p-2 select-none bg-[#A3A6A7] text-sm text-white"
@@ -179,7 +174,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						</div>
 					</div>
 				</div>
-				<div className="w-full lg:border-l-[.2em] border-[#D9D9D9] pl-4 mt-3 pt-8 grid gap-1">
+				<div className="w-full lg:border-l-[.2em] border-[#D9D9D9] sm:pl-4 mt-3 sm:pt-8 grid sm:gap-1 gap-3">
 					{!loading ? (
 						<p className="text-[#9A9898] text-sm">{mentor?.about}</p>
 					) : (

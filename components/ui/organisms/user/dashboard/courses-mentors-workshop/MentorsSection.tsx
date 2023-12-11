@@ -41,8 +41,8 @@ const MentorsSection = () => {
 			} else {
 				setTab("all");
 			}
-			scrollUp(-800);
 		}
+		scrollUp(-800);
 	};
 	return (
 		<>
