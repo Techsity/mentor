@@ -106,26 +106,26 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Programming",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Digital Marketing",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Python",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Data Science",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 ];
 

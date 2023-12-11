@@ -5,6 +5,7 @@ import DisplayCourseCard from "../../../../atom/cards/course/DisplayCourseCard";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
 import { ICourse } from "../../../../../../interfaces";
 import courses from "../../../../../../data/courses";
+import { getMentorCourses } from "../../../../../../services/api";
 
 const OtherCoursesByMentor = ({
 	mentorProfile = false,
@@ -19,19 +20,23 @@ const OtherCoursesByMentor = ({
 		return course ? course.mentor : mentor && mentor;
 	}, [mentor, course]);
 
-	return mentorState && mentorState.courses.length > 0 ? (
+	const mentorCourses = useMemo(() => {
+		return course ? getMentorCourses(course.mentor.user.name) : mentor && getMentorCourses(mentor.user.name);
+	}, [mentor, course]);
+
+	return mentorState && mentorCourses && mentorCourses?.length > 0 ? (
 		<div className="px-5 sm:px-10 lg:pl-20 mt-10 py-3">
 			<h1 className="text-xl font-semibold">{mentorProfile ? "Courses by Mentor" : "Other Courses by Mentor"}</h1>
 			<div className="flex flex-row items-center overflow-x-scroll gap-3 hide-scroll-bar py-10 relative">
 				<div className="flex flex-nowrap flex-row gap-4 snap-x snap-mandatory">
-					{mentorState.courses
+					{mentorCourses
 						// .filter((item) => {
 						// 	course ? slugify(item.title) !== slugify(course?.title as string) : item;
 						// })
 						.map((course, index) => {
 							return <DisplayCourseCard course={course} key={index} />;
 						})
-						.slice(0, mentorProfile ? mentorState.courses.length : 4)}
+						.slice(0, mentorProfile ? mentorCourses.length : 4)}
 				</div>
 				{!mentorProfile && (
 					<div className="sticky right-0 z-20 w-52 p-3 pr-0 h-full xl:h-[500px] h-[60dvh] md:h-[485px] backdrop-blur-sm bg-white/30">
