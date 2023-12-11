@@ -106,7 +106,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "Docker", years_of_exp: 6 },
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
-		mentor_verified: true,
+		mentor_verified: false,
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },

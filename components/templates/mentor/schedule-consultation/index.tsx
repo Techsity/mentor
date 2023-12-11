@@ -34,41 +34,22 @@ const ScheduleConsultationTemplate = (mentor: IMentor) => {
 						<p className="text-[#CEFFEA] font-[300] text-sm mt-2">Lagos (GMT +1)</p>
 						{/* {mentor.daysOpen} */}
 						<div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Mondays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
-
-							<div className="flex justify-between gap-5 w-full items-center">
-								<h1 className="font-medium">Tuesdays</h1>
-								<p className="font-[300] text-sm">10am - 5pm</p>
-							</div>
+							{mentor.availability.map((date, ind) => {
+								return (
+									<div
+										key={ind}
+										className="flex gap-6 sm:justify-start justify-between w-full items-center">
+										<h1 className="font-medium">{date.day}</h1>
+										<p className="font-[300] text-sm">
+											{date.timeSlots[0].startTime} - {date.timeSlots[0].endTime}
+										</p>
+									</div>
+								);
+							})}
 						</div>
 					</div>
 				</div>
-				<div className="grid gap-3 flex-grow animate__animated animate__slideInRight">
+				<div className="grid gap-3 flex-grow mt-5">
 					{scheduleList.map((schedule, index) => (
 						<div className="relative mb-8" key={index}>
 							<SchedulerDiv />{" "}
@@ -79,8 +60,7 @@ const ScheduleConsultationTemplate = (mentor: IMentor) => {
 										setScheduleList((prevScheduleList) =>
 											prevScheduleList.filter(({ id }) => schedule.id !== id),
 										);
-								}}
-							>
+								}}>
 								<CloseSharp color="red" cssClasses="cursor-pointer" />
 							</span>
 						</div>
@@ -100,12 +80,9 @@ const ScheduleConsultationTemplate = (mentor: IMentor) => {
 };
 
 const SchedulerDiv = () => (
-	<div className="text-[#06310B] flex xl:flex-row flex-1 md:flex-col items-start xl:items-center gap-4 animate__animated animate__fadeInUp">
+	<div className="text-[#06310B] flex xl:flex-row sm:flex-col md:flex-nowrap flex-wrap items-start xl:items-center gap-4 animate__animated animate__fadeInUp">
 		<div className="border border-[#70C5A1] overflow-hidden relative w-full">
-			<label
-				htmlFor="date"
-				className="absolute top-0 left-3 text-sm text-[#094B10]"
-			>
+			<label htmlFor="date" className="absolute top-0 left-3 text-sm text-[#094B10]">
 				Date
 			</label>
 			<input
@@ -118,10 +95,7 @@ const SchedulerDiv = () => (
 			/>
 		</div>
 		<div className="border border-[#70C5A1] overflow-hidden relative w-full">
-			<label
-				htmlFor="time"
-				className="absolute top-0 left-3 text-sm text-[#094B10]"
-			>
+			<label htmlFor="time" className="absolute top-0 left-3 text-sm text-[#094B10]">
 				Time
 			</label>
 			<input
@@ -134,10 +108,7 @@ const SchedulerDiv = () => (
 			/>
 		</div>
 		<div className="">
-			<PrimaryButton
-				title="Start an Instant Chat"
-				className="w-full p-2.5 px-5 whitespace-nowrap"
-			/>
+			<PrimaryButton title="Start an Instant Chat" className="w-full p-2.5 px-5 whitespace-nowrap" />
 		</div>
 	</div>
 );

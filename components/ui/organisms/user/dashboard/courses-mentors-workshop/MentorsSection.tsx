@@ -16,7 +16,9 @@ const MentorsSection = () => {
 			: tab === "online" &&
 					mentors
 						.filter((mentor) => mentor.user.is_online)
-						.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />);
+						.map((mentor, index) => {
+							return <MentorProfileCard mentor={mentor} key={index} />;
+						});
 	}, [mentors, tab]);
 
 	const fetchMentors = () => {

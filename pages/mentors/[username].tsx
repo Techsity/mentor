@@ -8,7 +8,7 @@ import { IMentor } from "../../interfaces/mentor.interface";
 
 const MentorDetails = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();
-	const isConsultationPage = router.asPath.split("?")[1] === "consult";
+	const isConsultationPage = Object.keys(router.query)[0] === "consult";
 
 	if (isConsultationPage) return <ScheduleConsultationTemplate {...mentor} />;
 	return <MentorDetailsTemplate {...mentor} />;

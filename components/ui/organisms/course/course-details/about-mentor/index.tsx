@@ -34,7 +34,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 						<p className="">{mentor.role} </p>
 						<p className="flex gap-1 items-center">
 							{/* {formatFollowersCount(mentor.courses.length)}{" "} */}
-							20 Courses | {formatFollowersCount(31)} Sessions
+							{formatFollowersCount(mentor.courses.length)} Courses | {formatFollowersCount(31)} Sessions
 							{/* |{" "} */}
 							{/* {formatFollowersCount(mentor.mentees.length)} Mentee */}|{" "}
 							{formatFollowersCount(mentor.followers)} Followers
