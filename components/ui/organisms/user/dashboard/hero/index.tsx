@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { LiveWorkshopGlobeSvg } from "../../../../atom/icons/svgs";
 import DashboardSearchbar from "../../../../atom/inputs/DashboardSearchbar";
@@ -12,29 +12,35 @@ type PropState = { categories: ICourseCategory[]; loading: boolean };
 
 const MenteeDashboardHero = () => {
 	const router = useRouter();
-	const [state, setState] = React.useState<PropState>({ categories: [], loading: true });
 	const courseType = router.query.type;
-
+	const [state, setState] = React.useState<PropState>({ categories: [], loading: courseType ? true : false });
 	const { categories, loading } = state;
 
-	const fetchCategories = () => {
-		// setState({ ...state, loading: true });
-
-		// Query to fetch course categories
+	// Query to fetch course categories
+	const fetchCategories = async () => {
+		setState({ ...state, loading: true });
 		console.log("Fetching categories...");
-		setTimeout(function () {
-			setState({
-				...state,
-				// categories: courseTypes.find((type) => type.name === courseType)?.categories || courseCategories,
-				categories: courseCategories,
-				loading: false,
-			});
-		}, 1000);
+		return new Promise<ICourseCategory[]>((resolve, reject) => resolve(courseCategories)); // data fetch simulation
 	};
 
 	useEffect(() => {
-		fetchCategories();
-	}, [courseType]);
+		// if (courseType)
+		fetchCategories()
+			.then((courseCategories) => {
+				setTimeout(function () {
+					setState({
+						...state,
+						categories: courseCategories,
+						loading: false,
+					});
+				}, 1000);
+			})
+			.catch((err) => {
+				console.error("Error fetchng course catgories: ", err);
+				setState({ ...state, loading: false });
+			});
+		// }, [courseType]);
+	}, []);
 
 	return (
 		<div className="min-h-[75vh] md:px-20 px-10 pt-20 bg-[#0C202B] relative overflow-hidden">
@@ -63,7 +69,6 @@ const MenteeDashboardHero = () => {
 														{
 															pathname: router.pathname,
 															query: {
-																...router.query,
 																category: category.title.toLowerCase().trim(),
 															},
 														},

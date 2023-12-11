@@ -46,7 +46,7 @@ const NavLinksComponent = () => {
 								setActiveSublink(null);
 								setActiveDropdown(null);
 							}}>
-							<Link href={link}>
+							<Link href={link} prefetch={false}>
 								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
 							</Link>
 							<span
@@ -59,7 +59,7 @@ const NavLinksComponent = () => {
 									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
 											<div key={i}>
-												<Link href={sublink.link}>
+												<div onClick={() => router.push(sublink.link)}>
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
 														onMouseEnter={() => setActiveDropdown(sublink.dropdown)}
@@ -68,31 +68,40 @@ const NavLinksComponent = () => {
 														{sublink.icon}
 														{sublink.name}
 													</div>
-												</Link>
-												{sublink.dropdown === activeDropdown && (
-													<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
-														{dropDownLinks[
-															dropDownLinks.findIndex(
-																(type) => type.courseType === activeDropdown,
-															)
-														]?.categories.map(({ title }, dropdownIndex) => (
-															<Link
-																key={dropdownIndex}
-																href={`/courses?type=${sublink.dropdown}&category=${title}`}>
+												</div>
+												{sublink.dropdown === activeDropdown &&
+													dropDownLinks[
+														dropDownLinks.findIndex(
+															(type) => type.courseType === activeDropdown,
+														)
+													]?.categories.length > 0 && (
+														<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
+															{dropDownLinks[
+																dropDownLinks.findIndex(
+																	(type) => type.courseType === activeDropdown,
+																)
+															]?.categories.map(({ title }, dropdownIndex) => (
 																<div
-																	key={i}
-																	onClick={() => {
-																		setActiveSublink(null);
-																		setActiveDropdown(null);
-																	}}
-																	className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
-																	dropdownLinkTitle - {title}
-																	<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
+																	key={dropdownIndex}
+																	onClick={() =>
+																		router.push(
+																			`/courses?type=${sublink.dropdown}&category=${title}`,
+																		)
+																	}>
+																	<div
+																		key={i}
+																		onClick={() => {
+																			setActiveSublink(null);
+																			setActiveDropdown(null);
+																		}}
+																		className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
+																		{title}
+																		<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
+																	</div>
 																</div>
-															</Link>
-														))}
-													</div>
-												)}
+															))}
+														</div>
+													)}
 											</div>
 										))}
 									</div>
@@ -100,7 +109,7 @@ const NavLinksComponent = () => {
 							) : null}
 						</li>
 					) : (
-						<Link href={link} key={index}>
+						<Link href={link} key={index} prefetch={false}>
 							<li className="relative px-2 font-[300] text-sm select-none">
 								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
 								<span
@@ -114,7 +123,7 @@ const NavLinksComponent = () => {
 				})}
 			</ul>
 			{!user ? (
-				<Link href={"/mentor/onboarding"}>
+				<Link href={"/mentor/onboarding"} prefetch={false}>
 					<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 						Become a Mentor
 					</div>
@@ -122,7 +131,7 @@ const NavLinksComponent = () => {
 			) : (
 				user &&
 				!user.mentor && (
-					<Link href={"/mentor/onboarding"}>
+					<Link href={"/mentor/onboarding"} prefetch={false}>
 						<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 							Become a Mentor
 						</div>

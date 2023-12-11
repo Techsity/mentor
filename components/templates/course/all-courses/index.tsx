@@ -9,8 +9,8 @@ const AllCoursesPageTemplate = () => {
 	return (
 		<div className="relative">
 			<MenteeDashboardHero />
-			<h1 className="my-4 text-center">All Courses</h1>
-			<div className="my-10">
+			{/* <h1 className="my-4 text-center">All Courses</h1> */}
+			<div className="mb-10">
 				<CoursesSection />
 			</div>
 			<BecomeMentor />
