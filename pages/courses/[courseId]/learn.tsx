@@ -4,7 +4,7 @@ import CourseInProgressTemplate from "../../../components/templates/course/in-pr
 import protectedPageWrapper from "../../protectedPageWrapper";
 
 const CourseInProgress = () => {
-	const course = courses[0].categories[0].availableCourses[0];
+	const course = courses[0];
 	return <CourseInProgressTemplate {...course} />;
 };
 
