@@ -13,11 +13,11 @@ const StepOneMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
-	const mentorRolesArray = Object.values(MENTOR_ROLES);
+	const mentorRolesArray = Object.keys(MENTOR_ROLES);
 
-	const [role, setRole] = useState<MENTOR_ROLES | undefined>(onboardingMentor.role || undefined);
+	const [role, setRole] = useState<string>(onboardingMentor?.role?.split("_").join(" ") || "");
 
-	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<MENTOR_ROLES>({
+	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<string>({
 		suggestions: mentorRolesArray,
 		inputValue: role,
 	});
@@ -54,7 +54,7 @@ const StepOneMentorOnboarding = () => {
 								dispatch(
 									setOnboardingMentor({
 										...onboardingMentor,
-										role: r,
+										role: r.split(" ").join("_") as MENTOR_ROLES,
 									}),
 								);
 							}}
