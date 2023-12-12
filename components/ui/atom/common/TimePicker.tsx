@@ -21,7 +21,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 	const initialTime: ICurrentTime = {
 		hr: 12,
 		min: 0,
-		meridan: currentDate.getHours() >= 12 ? "pm" : "am",
+		meridan: "am",
 	};
 	const [currentTime, setCurrentTime] = useState<ICurrentTime>(initialTime);
 

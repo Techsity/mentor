@@ -65,7 +65,7 @@ const TagsInput = ({
 				</div>
 			</div>
 			{showSelectedTags && tagsState.length > 0 && (
-				<div className="px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
+				<div className="mt-2 px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
 					{tagsState.map((tag, id) => (
 						<span
 							key={id}

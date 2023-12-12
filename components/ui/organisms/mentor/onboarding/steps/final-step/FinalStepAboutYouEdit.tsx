@@ -15,11 +15,11 @@ const FinalStepAboutYouEdit = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const bioInputRef = useRef<HTMLTextAreaElement>(null);
 	const jobTitleInputRef = useRef<HTMLInputElement>(null);
-	const mentorRolesArray = Object.values(MENTOR_ROLES);
+	const mentorRolesArray = Object.keys(MENTOR_ROLES);
 
-	const [role, setRole] = useState<MENTOR_ROLES | undefined>(onboardingMentor.role || undefined);
-	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<MENTOR_ROLES>({
-		suggestions: mentorRolesArray,
+	const [role, setRole] = useState<string>(onboardingMentor.role?.split("_").join(" ") || "");
+	const { SuggestionsComponent, setSelectedSuggestions } = useSuggestions<string>({
+		suggestions: mentorRolesArray.map((item) => item.split("_").join(" ")),
 		inputValue: role,
 	});
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,9 +59,10 @@ const FinalStepAboutYouEdit = () => {
 								dispatch(
 									setOnboardingMentor({
 										...onboardingMentor,
-										role: r,
+										role: r.split(" ").join("_") as MENTOR_ROLES,
 									}),
 								);
+								setSelectedSuggestions([]);
 							}}
 						/>
 					</div>

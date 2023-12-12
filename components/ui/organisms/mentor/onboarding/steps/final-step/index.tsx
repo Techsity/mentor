@@ -36,14 +36,33 @@ const FinalMentorOnboardingStep = () => {
 
 	const handleSubmit = () => {
 		setLoading(true);
-		// createMentorProfile({
-		// 	variables: {
-		// 		createMentorInput: {
-		// 			about: onboardingMentor.bio,
-		// 			availability: onboardingMentor.availability,
-		// 		},
-		// 	},
-		// });
+
+		const exampleSkills = onboardingMentor.skills.map((skill_name) => ({ skill_name, years_of_exp: 6 }));
+		createMentorProfile({
+			variables: {
+				createMentorInput: {
+					about: onboardingMentor.bio,
+					availability: onboardingMentor.availability,
+					certifications: onboardingMentor.certificates,
+					education_bg: onboardingMentor.education,
+					exp_level: IMentorExpLevel.LEVEL_2, //Todo: set exp_level properly from the form
+					hourly_rate: 0,
+					language: onboardingMentor.languages,
+					projects: onboardingMentor.projects,
+					role: onboardingMentor.role as MENTOR_ROLES,
+					skills: exampleSkills,
+					work_experience: onboardingMentor.workHistory || [],
+				},
+			},
+		})
+			.then((response) => {
+				setLoading(false);
+				console.log({ response: response });
+			})
+			.catch((err) => {
+				setLoading(false);
+				console.error(err);
+			});
 	};
 	return (
 		<>

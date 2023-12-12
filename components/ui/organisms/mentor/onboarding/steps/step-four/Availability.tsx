@@ -102,7 +102,7 @@ const Availability = () => {
 	useEffect(() => {
 		if (timepickerRef.current)
 			if (startTimeIsOpen || endTimeIsOpen)
-				timepickerRef.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+				timepickerRef.current.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
 	}, [startTimeIsOpen, endTimeIsOpen]);
 
 	return (

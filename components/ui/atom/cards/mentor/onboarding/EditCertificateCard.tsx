@@ -22,14 +22,12 @@ const EditCertificateCard = ({
 	updateCerts?: (certs: CertificateType[]) => void;
 }) => {
 	const initalState: CertificateType = {
-		institution: "",
-		type: "",
+		organization: "",
+		title: "",
 		year: "",
 	};
 
-	const [certificate, setCertificate] = useState<CertificateType>(
-		existingCert || initalState,
-	);
+	const [certificate, setCertificate] = useState<CertificateType>(existingCert || initalState);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 
 	const isDuplicate = useMemo(() => {
@@ -37,9 +35,8 @@ const EditCertificateCard = ({
 			certs &&
 			certs.some(
 				(cert) =>
-					cert.institution.toLowerCase() ===
-						certificate.institution.toLowerCase() &&
-					cert.type === certificate.type &&
+					cert.organization.toLowerCase() === certificate.organization.toLowerCase() &&
+					cert.title === certificate.title &&
 					cert.year === certificate.year,
 			)
 		);
@@ -49,9 +46,8 @@ const EditCertificateCard = ({
 		const updatedCertificates = [...certs];
 		const updatedCertIndex = updatedCertificates.findIndex(
 			(cert) =>
-				cert.institution.toLowerCase() ===
-					existingCert?.institution.toLowerCase() &&
-				cert.type === existingCert?.type &&
+				cert.organization.toLowerCase() === existingCert?.organization.toLowerCase() &&
+				cert.title === existingCert?.title &&
 				cert.year === existingCert?.year,
 		);
 		if (updatedCertIndex !== -1)
@@ -60,7 +56,7 @@ const EditCertificateCard = ({
 				...certificate,
 			};
 		if (!isDuplicate && !existingCert) {
-			if (certificate.institution && certificate.type && certificate.year)
+			if (certificate.organization && certificate.title && certificate.year)
 				updatedCertificates.push(certificate);
 		}
 		if (updateCerts) {
@@ -73,9 +69,8 @@ const EditCertificateCard = ({
 		if (certs && existingCert) {
 			const updatedCertificates = certs.filter(
 				(cert) =>
-					slugify(cert.institution) !==
-						slugify(existingCert.institution) &&
-					cert.type !== existingCert.type &&
+					slugify(cert.organization) !== slugify(existingCert.organization) &&
+					cert.title !== existingCert.title &&
 					existingCert.year !== cert.year,
 			);
 			if (updateCerts) updateCerts(updatedCertificates);
@@ -91,16 +86,16 @@ const EditCertificateCard = ({
 						</label>
 					)}
 					<CustomTextInput
-						name="institution"
-						id="institution"
+						name="organization"
+						id="organization"
 						type="text"
-						value={certificate.institution}
+						value={certificate.organization}
 						placeholder="Name of Institution"
 						className="text-black"
 						onChange={(e) =>
 							setCertificate({
 								...certificate,
-								institution: e.target.value,
+								organization: e.target.value,
 							})
 						}
 						containerProps={{
@@ -115,11 +110,11 @@ const EditCertificateCard = ({
 						</label>
 					)}
 					<CustomTextInput
-						name="type"
-						id="type"
+						name="cert_type"
+						id="cert_type"
 						type="text"
 						className="text-black select-none"
-						value={certificate.type}
+						value={certificate.title}
 						placeholder="Type of Certificate"
 						containerProps={{
 							className: "border border-zinc-200",
@@ -127,7 +122,7 @@ const EditCertificateCard = ({
 						onChange={(e) =>
 							setCertificate({
 								...certificate,
-								type: e.target.value,
+								title: e.target.value,
 							})
 						}
 					/>
@@ -157,9 +152,7 @@ const EditCertificateCard = ({
 						<div className="absolute right-0 top-16 z-30">
 							<Calendar
 								onChange={(props) => {
-									const date = new Date(
-										props as Date,
-									).toLocaleDateString();
+									const date = new Date(props as Date).toLocaleDateString();
 									setCertificate({
 										...certificate,
 										year: date,
@@ -183,11 +176,7 @@ const EditCertificateCard = ({
 				reEdit &&
 				!isDuplicate && (
 					<div className="flex justify-end gap-4 items-center w-full">
-						<PrimaryButton
-							title={"Update"}
-							className="px-8 p-2 rounded"
-							onClick={handleCertUpdate}
-						/>
+						<PrimaryButton title={"Update"} className="px-8 p-2 rounded" onClick={handleCertUpdate} />
 					</div>
 				)
 			)}

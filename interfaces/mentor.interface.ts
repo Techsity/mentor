@@ -1,7 +1,6 @@
 import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse, IReview } from "./index";
 import { IUser } from "./user.interface";
-import { ISchedule } from "../components/ui/organisms/mentor/onboarding/steps/step-four/Availability";
 import { MENTOR_ROLES } from "../constants/mentor";
 
 export interface IMentorEducation {
@@ -20,7 +19,7 @@ export interface IMentorOnboardingState {
 	skills: string[];
 	yearsOfExp: number;
 	projects: IMentorProjectType[];
-	certificates: { institution: string; type: string; year: string }[];
+	certificates: IMentorCertificate[];
 	workHistory?: IMentorExperience[];
 	education: IMentorEducation[];
 	languages: string[];
@@ -52,7 +51,12 @@ export type IMentorCertificate = {
 	year: string;
 };
 
-export type IMentorExpLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3" | "LEVEL_4";
+export enum IMentorExpLevel {
+	LEVEL_1 = "LEVEL_1",
+	LEVEL_2 = "LEVEL_2",
+	LEVEL_3 = "LEVEL_3",
+	LEVEL_4 = "LEVEL_4",
+}
 
 export interface IMentor {
 	id: string;
