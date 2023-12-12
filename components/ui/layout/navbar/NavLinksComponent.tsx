@@ -15,9 +15,11 @@ type MainCourseType = {
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
-	// activeDropdown === i &&
 	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
+
+	//Todo: implement GET_ALL_CATEGORIES query (then, maybe categorize by their course type)
+	//
 	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
 		{
 			courseType: "technical",
@@ -32,8 +34,6 @@ const NavLinksComponent = () => {
 			categories: courseTypes[courseTypes.findIndex((type) => type.name === "educational")].categories,
 		},
 	]);
-
-	useEffect(() => {}, []);
 
 	return (
 		<div className="hidden md:flex justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">

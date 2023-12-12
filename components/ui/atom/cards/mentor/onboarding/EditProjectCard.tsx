@@ -129,7 +129,7 @@ const EditProjectCard = ({
 						}}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-4 grid gap-1 relative">
 					<label htmlFor="" className="text-xs">
 						Project Description
 					</label>
@@ -147,7 +147,7 @@ const EditProjectCard = ({
 						onChange={handleChange("description")}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-8 grid gap-1 relative">
 					<label htmlFor="" className="text-xs">
 						Role
 					</label>

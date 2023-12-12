@@ -16,6 +16,8 @@ const MenteeDashboardHero = () => {
 	const [state, setState] = React.useState<PropState>({ categories: [], loading: courseType ? true : false });
 	const { categories, loading } = state;
 
+	//Todo: implement GET_ALL_CATEGORIES query
+	//
 	// Query to fetch course categories
 	const fetchCategories = async () => {
 		setState({ ...state, loading: true });
