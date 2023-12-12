@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
@@ -18,6 +18,7 @@ const Availability = () => {
 	const [schedule, setSchedule] = useState<IMentorAvailability>(initialSchedule);
 	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(false);
 	const [endTimeIsOpen, setEndTimeIsOpen] = useState<React.Key | false>(false);
+	const timepickerRef = useRef<HTMLDivElement>(null);
 
 	const closeTimePicker = () => {
 		setStartTimeIsOpen(false);
@@ -26,8 +27,9 @@ const Availability = () => {
 	const openTimePicker = (args: { field: "end" | "start"; id: React.Key }) => {
 		const { field, id } = args;
 		if (field === "end") {
-			if (endTimeIsOpen === id) setEndTimeIsOpen(false);
-			else {
+			if (endTimeIsOpen === id) {
+				setEndTimeIsOpen(false);
+			} else {
 				setEndTimeIsOpen(id);
 			}
 			setStartTimeIsOpen(false);
@@ -97,6 +99,12 @@ const Availability = () => {
 		);
 	}, [schedule]);
 
+	useEffect(() => {
+		if (timepickerRef.current)
+			if (startTimeIsOpen || endTimeIsOpen)
+				timepickerRef.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+	}, [startTimeIsOpen, endTimeIsOpen]);
+
 	return (
 		<div className="">
 			<div className="grid gap-4">
@@ -136,6 +144,7 @@ const Availability = () => {
 							{startTimeIsOpen === id && !endTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
+										ref={timepickerRef}
 										onChange={(time) =>
 											updateSchedule({
 												field: "startTime",
@@ -173,6 +182,7 @@ const Availability = () => {
 							{endTimeIsOpen === id && !startTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
+										ref={timepickerRef}
 										onChange={(time) =>
 											updateSchedule({
 												field: "endTime",
