@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -32,6 +32,8 @@ const NavLinksComponent = () => {
 			categories: courseTypes[courseTypes.findIndex((type) => type.name === "educational")].categories,
 		},
 	]);
+
+	useEffect(() => {}, []);
 
 	return (
 		<div className="hidden md:flex justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">

@@ -80,8 +80,8 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 				type="text"
 				onChange={handleChange}
 				value={languageInput}
-				className="bg-white"
 				ref={languageInputRef}
+				className="bg-white"
 				containerProps={{
 					className: "border border-[#00D569]",
 				}}

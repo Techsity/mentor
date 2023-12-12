@@ -26,10 +26,7 @@ const StepTwoMentorOnboarding = () => {
 					}),
 				);
 			} else {
-				toast.error(
-					"Skills limit reached!",
-					ToastDefaultOptions({ id: "error", theme: "dark" }),
-				);
+				toast.error("Skills limit reached!", ToastDefaultOptions({ id: "error", theme: "dark" }));
 			}
 	};
 	const removeSkill = (skillToRemove: string) => (e: MouseEvent) => {
@@ -37,9 +34,7 @@ const StepTwoMentorOnboarding = () => {
 			dispatch(
 				setOnboardingMentor({
 					...onboardingMentor,
-					skills: onboardingMentor.skills.filter(
-						(skill) => skill !== skillToRemove,
-					),
+					skills: onboardingMentor.skills.filter((skill) => skill !== skillToRemove),
 				}),
 			);
 		}
@@ -53,15 +48,12 @@ const StepTwoMentorOnboarding = () => {
 				Now tell us your experience
 			</h1>
 			<p className="text-sm text-black">
-				First, what are your top skills, how many years of experience do
-				you have, then where have you worked, what project have you
-				completed?
+				First, what are your top skills, how many years of experience do you have, then where have you worked,
+				what project have you completed?
 			</p>
 			<div className="grid gap-5 mt-8">
 				<div className="grid gap-2">
-					<h1 className="text-sm text-[#B1B1B1]">
-						What are your top Skills? (Up to 5)
-					</h1>
+					<h1 className="text-sm text-[#B1B1B1]">What are your top Skills? (Up to 5)</h1>
 					<TagsInput
 						textLength={30}
 						addTag={addSkill}
@@ -70,9 +62,7 @@ const StepTwoMentorOnboarding = () => {
 					/>
 				</div>
 				<div className="grid gap-2">
-					<h1 className="text-sm text-[#B1B1B1]">
-						How many years of experience?
-					</h1>
+					<h1 className="text-sm text-[#B1B1B1]">How many years of experience?</h1>
 					<CustomTextInput
 						type="number"
 						max={"40"}

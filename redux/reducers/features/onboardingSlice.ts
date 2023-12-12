@@ -8,7 +8,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	agreedToTerms: false,
 	user: null,
 	bio: "",
-	jobTitle: "",
+	role: null,
 	skills: [],
 	yearsOfExp: 1,
 	workHistory: [],
@@ -30,10 +30,7 @@ const onboardingSlice = createSlice({
 	name: "onboarding",
 	initialState,
 	reducers: {
-		setOnboardingMentor: (
-			state,
-			action: { payload: IMentorOnboardingState },
-		) => {
+		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState }) => {
 			state.mentor = action.payload;
 		},
 		setOnboardingUser: (state, action: {}) => {},
@@ -42,10 +39,8 @@ const onboardingSlice = createSlice({
 
 export const { setOnboardingMentor } = onboardingSlice.actions;
 
-export const mentorOnboardingTermsAgreed = (state: RootState) =>
-	state.onboarding.mentor.agreedToTerms;
+export const mentorOnboardingTermsAgreed = (state: RootState) => state.onboarding.mentor.agreedToTerms;
 
-export const onboardingMentorState = (state: RootState) =>
-	state.onboarding.mentor;
+export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
 
 export default onboardingSlice.reducer;

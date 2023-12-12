@@ -21,18 +21,27 @@ import store from "../redux/store";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
+import { setCourseCategories } from "../redux/reducers/features/coursesSlice";
+import { courseCategories } from "../data/courses";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-	const [initialLoad, setInitialLoad] = useState<boolean>(true);
+	// const [initialLoad, setInitialLoad] = useState<boolean>(true);
+	const fetchCourseCategories = () => {
+		// fetch and set course categories
+		store.dispatch(setCourseCategories(courseCategories));
+	};
+
 	useEffect(() => {
-		document.body.classList.add("overflow-hidden");
-		const timeout = setTimeout(() => {
-			document.body.classList.remove("overflow-hidden");
-			setInitialLoad(false);
-		}, 4000);
-		return () => {
-			clearTimeout(timeout);
-		};
+		fetchCourseCategories();
+
+		// document.body.classList.add("overflow-hidden");
+		// const timeout = setTimeout(() => {
+		// 	document.body.classList.remove("overflow-hidden");
+		// 	setInitialLoad(false);
+		// }, 4000);
+		// return () => {
+		// 	clearTimeout(timeout);
+		// };
 	}, []);
 
 	return (
@@ -41,15 +50,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 				<ThemeProvider>
 					<Head>
 						<title>Mentör: Connect with experienced Mentors</title>
-						<link
-							rel="icon"
-							href="/assets/images/favicon.ico"
-							type="image/x-icon"
-						/>
-						<meta
-							name="viewport"
-							content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-						/>
+						<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+						<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 					</Head>
 					<SidebarProvider>
 						<LayoutContainer>

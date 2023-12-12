@@ -1,3 +1,4 @@
+import { MENTOR_ROLES } from "../constants/mentor";
 import { IMentor } from "../interfaces/mentor.interface";
 import { courseCategories, courseContents } from "./courses";
 import reviews from "./reviews";
@@ -8,7 +9,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -52,7 +53,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -96,7 +97,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -140,7 +141,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },

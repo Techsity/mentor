@@ -7,10 +7,7 @@ import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import StepTwoMentorOnboarding from "./step-two";
 import { scrollToTop } from "../../../../../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../redux/reducers/features/onboardingSlice";
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
@@ -22,10 +19,7 @@ const MentorOnboardingSteps = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 
 	const totalSteps = 5;
-	const currentStep = useMemo(
-		() => onboardingMentor.currentStep,
-		[onboardingMentor],
-	);
+	const currentStep = useMemo(() => onboardingMentor.currentStep, [onboardingMentor]);
 
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -49,7 +43,7 @@ const MentorOnboardingSteps = () => {
 		setLoading(true);
 		if (onboardingMentor && currentStep < totalSteps) {
 			if (currentStep === 1) {
-				if (onboardingMentor.bio && onboardingMentor.jobTitle) {
+				if (onboardingMentor.bio && typeof onboardingMentor.role !== "undefined") {
 					moveToNextStep();
 				} else {
 					setLoading(false);
@@ -81,10 +75,7 @@ const MentorOnboardingSteps = () => {
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
 			<div className="w-full md:max-w-[50%]">
 				{currentStep <= totalSteps - 1 && (
-					<MentorOnboardingStepsHeader
-						currentStep={currentStep}
-						stepsLength={totalSteps}
-					/>
+					<MentorOnboardingStepsHeader currentStep={currentStep} stepsLength={totalSteps} />
 				)}
 				{currentStep === 1 ? (
 					<StepOneMentorOnboarding />
@@ -101,11 +92,7 @@ const MentorOnboardingSteps = () => {
 				)}
 				<div className="my-6 flex justify-between items-center w-full">
 					{loading ? (
-						<ActivityIndicator
-							color="#094B10"
-							className="mt-3"
-							size={30}
-						/>
+						<ActivityIndicator color="#094B10" className="mt-3" size={30} />
 					) : currentStep > 1 && currentStep >= totalSteps ? (
 						<div className="flex justify-start items-center">
 							<PrimaryButton
@@ -134,9 +121,7 @@ const MentorOnboardingSteps = () => {
 							<div className="flex justify-start items-center">
 								<PrimaryButton
 									title={loading ? "" : "Next"}
-									icon={
-										loading ? <ActivityIndicator /> : null
-									}
+									icon={loading ? <ActivityIndicator /> : null}
 									onClick={() => handleNext()}
 									className="px-8 p-2 flex justify-center"
 									disabled={loading}
@@ -146,20 +131,14 @@ const MentorOnboardingSteps = () => {
 					)}
 
 					{currentStep > 1 && currentStep <= totalSteps - 1 && (
-						<span
-							onClick={() => moveToNextStep()}
-							className="text-[#B1B1B1] cursor-pointer select-none">
+						<span onClick={() => moveToNextStep()} className="text-[#B1B1B1] cursor-pointer select-none">
 							Skip{">>>"}
 						</span>
 					)}
 				</div>
 			</div>
 			<div className="pb-10 md:pb-0 md:flex hidden sticky top-24 h-full">
-				<MentorOnboardingSvg
-					width={400}
-					height={350}
-					className="animate__animated animate__fadeInRight"
-				/>
+				<MentorOnboardingSvg width={400} height={350} className="animate__animated animate__fadeInRight" />
 			</div>
 		</div>
 	);

@@ -41,6 +41,8 @@ const HomepageCourseSection = () => {
 			});
 	};
 
+	// courseCategories
+
 	useEffect(() => {
 		fetchCourseTypes();
 	}, []);

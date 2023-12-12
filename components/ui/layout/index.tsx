@@ -3,10 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import AuthNavbar from "./navbar/AuthNavbar";
 import { useSelector } from "react-redux";
-import {
-	currentUser,
-	isLoggedIn,
-} from "../../../redux/reducers/features/authSlice";
+import { currentUser, isLoggedIn } from "../../../redux/reducers/features/authSlice";
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import Progressbar from "../atom/loader/ProgressBar";
