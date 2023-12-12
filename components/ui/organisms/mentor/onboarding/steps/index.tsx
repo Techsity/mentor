@@ -94,17 +94,18 @@ const MentorOnboardingSteps = () => {
 					{loading ? (
 						<ActivityIndicator color="#094B10" className="mt-3" size={30} />
 					) : currentStep > 1 && currentStep >= totalSteps ? (
-						<div className="flex justify-start items-center">
-							<PrimaryButton
-								title={loading ? "" : "Looking good, let's go!"}
-								icon={loading ? <ActivityIndicator /> : null}
-								onClick={() => {
-									router.push("/profile");
-								}}
-								className="px-8 p-2 flex justify-center"
-								disabled={loading}
-							/>
-						</div>
+						// <div className="flex justify-start items-center">
+						// 	<PrimaryButton
+						// 		title={loading ? "" : "Looking good, let's go!"}
+						// 		icon={loading ? <ActivityIndicator /> : null}
+						// 		onClick={() => {
+						// 			router.push("/profile");
+						// 		}}
+						// 		className="px-8 p-2 flex justify-center"
+						// 		disabled={loading}
+						// 	/>
+						// </div>
+						<></>
 					) : (
 						<div className="my-6 flex gap-5 items-center">
 							{currentStep > 1 && (

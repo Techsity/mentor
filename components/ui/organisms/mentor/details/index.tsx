@@ -64,14 +64,14 @@ const MentorProjects = ({ projects, reEdit = false }: { projects: IMentorProject
 							{/* Todo: We need poject link from the query*/}
 							<Link href={"#"}>
 								<div
-									className={`border border-[#70C5A1] text-sm p-4 w-full flex items-center justify-between gap-5 cursor-pointer ${
+									className={`border border-[#70C5A1] text-sm p-4 w-full flex flex-col items-start justify-between gap-5 cursor-pointer ${
 										reEdit ? "bg-white" : "bg-transparent"
 									}`}>
-									<div className="basis-2/3">
+									<div className="">
 										<h1 className="font-[500]">{project.company}</h1>
 										<p className="font-[300] my-2">{project.job_role}</p>
 									</div>
-									<div className="basis-2/3">
+									<div className="">
 										<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
 										<p className="font-[400] my-2">project.link</p>
 									</div>

@@ -15,7 +15,7 @@ const StepOneMentorOnboarding = () => {
 
 	const mentorRolesArray = Object.values(MENTOR_ROLES);
 
-	const [role, setRole] = useState<MENTOR_ROLES | undefined>(undefined);
+	const [role, setRole] = useState<MENTOR_ROLES | undefined>(onboardingMentor.role || undefined);
 
 	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<MENTOR_ROLES>({
 		suggestions: mentorRolesArray,
@@ -24,17 +24,6 @@ const StepOneMentorOnboarding = () => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setRole(e.target.value as MENTOR_ROLES);
 	};
-
-	function getKeyByValue(value: string): MENTOR_ROLES | undefined {
-		const entries = Object.entries(MENTOR_ROLES);
-		for (const [key, val] of entries) {
-			if (val === value) {
-				return key as MENTOR_ROLES;
-			}
-		}
-
-		return undefined;
-	}
 
 	return (
 		<div className="animate__animated animate__fadeInLeft">
@@ -49,7 +38,7 @@ const StepOneMentorOnboarding = () => {
 					<h1 className="text-sm text-[#B1B1B1]">What do you do?</h1>
 					<CustomTextInput
 						onChange={handleChange}
-						value={role}
+						value={role?.split("_").join(" ")}
 						type="text"
 						name="job_title"
 						id="job_title"
@@ -61,16 +50,13 @@ const StepOneMentorOnboarding = () => {
 					<div className="absolute top-20 left-0 w-full">
 						<SuggestionsComponent
 							onSuggestionClick={(r) => {
-								const selectedRole = getKeyByValue(r);
-								if (selectedRole) {
-									setRole(r);
-									dispatch(
-										setOnboardingMentor({
-											...onboardingMentor,
-											role: selectedRole,
-										}),
-									);
-								}
+								setRole(r);
+								dispatch(
+									setOnboardingMentor({
+										...onboardingMentor,
+										role: r,
+									}),
+								);
 							}}
 						/>
 					</div>

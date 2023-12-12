@@ -24,22 +24,20 @@ export interface IMentorOnboardingState {
 	workHistory?: IMentorExperience[];
 	education: IMentorEducation[];
 	languages: string[];
-	availability: ISchedule[];
+	availability: IMentorAvailability[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
 
-type IMentorSkills = {
+export type IMentorSkills = {
 	skill_name: string;
 	years_of_exp: number;
 };
+export type TimeSlot = { endTime: string; startTime: string };
 
-type IMentorAvailability = {
+export type IMentorAvailability = {
 	day: string;
-	timeSlots: {
-		endTime: string;
-		startTime: string;
-	}[];
+	timeSlots: TimeSlot[];
 };
 
 export type IMentorProjectType = {
@@ -48,13 +46,14 @@ export type IMentorProjectType = {
 	job_role: string;
 };
 
-type IMentorCertificate = {
+export type IMentorCertificate = {
 	organization: string;
 	title: string;
 	year: string;
 };
 
-type IMentorExpLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3" | "LEVEL_4";
+export type IMentorExpLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3" | "LEVEL_4";
+
 export interface IMentor {
 	id: string;
 	user: IUser;

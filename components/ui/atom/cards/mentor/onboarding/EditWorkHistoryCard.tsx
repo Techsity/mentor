@@ -24,7 +24,7 @@ const EditWorkHistoryCard = ({
 		description: "",
 	};
 	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
-	const [to_yearCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
+	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
 	const [workExperience, setWorkExperience] = useState<IMentorExperience>(experience || initialState);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -132,7 +132,7 @@ const EditWorkHistoryCard = ({
 						}}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-2 grid gap-1 relative z-10">
 					{experience && (
 						<label htmlFor="" className="text-xs">
 							Start Date
@@ -155,7 +155,7 @@ const EditWorkHistoryCard = ({
 							setStartDateCalendarIsOpen(!startDateCalendarIsOpen);
 						}}
 					/>
-					{startDateCalendarIsOpen && !to_yearCalendarIsOpen && (
+					{startDateCalendarIsOpen && !endDateCalendarIsOpen && (
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {
@@ -171,7 +171,7 @@ const EditWorkHistoryCard = ({
 						</div>
 					)}
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-2 grid gap-1 relative z-10">
 					{experience && (
 						<label htmlFor="" className="text-xs">
 							End Date
@@ -191,10 +191,10 @@ const EditWorkHistoryCard = ({
 						readOnly
 						onClick={() => {
 							setStartDateCalendarIsOpen(false);
-							setEndDateCalendarIsOpen(!to_yearCalendarIsOpen);
+							setEndDateCalendarIsOpen(!endDateCalendarIsOpen);
 						}}
 					/>
-					{to_yearCalendarIsOpen && !startDateCalendarIsOpen && (
+					{endDateCalendarIsOpen && !startDateCalendarIsOpen && (
 						<div className="absolute right-0 top-16">
 							<Calendar
 								onChange={(props) => {

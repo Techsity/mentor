@@ -29,7 +29,7 @@ const StepTwoMentorOnboarding = () => {
 				toast.error("Skills limit reached!", ToastDefaultOptions({ id: "error", theme: "dark" }));
 			}
 	};
-	const removeSkill = (skillToRemove: string) => (e: MouseEvent) => {
+	const removeSkill = (skillToRemove: string) => {
 		if (skillToRemove) {
 			dispatch(
 				setOnboardingMentor({
@@ -72,7 +72,7 @@ const StepTwoMentorOnboarding = () => {
 							dispatch(
 								setOnboardingMentor({
 									...onboardingMentor,
-									yearsOfExp: parseInt(e.target.value),
+									yearsOfExp: Number(e.target.value),
 								}),
 							)
 						}

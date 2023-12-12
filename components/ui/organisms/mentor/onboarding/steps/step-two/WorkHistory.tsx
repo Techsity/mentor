@@ -14,7 +14,7 @@ const WorkHistory = ({ reEdit = false }: { reEdit?: boolean }) => {
 
 	return (
 		<div className="">
-			{!reEdit && <h1 className="text-sm text-[#B1B1B1] mb-3">Where have you worked?</h1>}
+			{!reEdit && <h1 className="text-sm text-[#B1B1B1]">Where have you worked?</h1>}
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.workHistory &&
 					onboardingMentor.workHistory?.length >= 1 &&

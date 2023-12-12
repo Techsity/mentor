@@ -5,33 +5,25 @@ import {
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
-import TimePicker, {
-	ICurrentTime,
-} from "../../../../../atom/common/TimePicker";
+import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
+import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
 
 const Availability = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const initialSchedule = {
+	const initialSchedule: IMentorAvailability = {
 		day: "",
-		time: { end: "", start: "" },
+		timeSlots: [],
 	};
-	const [schedule, setSchedule] = useState<ISchedule>(initialSchedule);
-	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(
-		false,
-	);
-	const [endTimeIsOpen, setEndTimeIsOpen] = useState<React.Key | false>(
-		false,
-	);
+	const [schedule, setSchedule] = useState<IMentorAvailability>(initialSchedule);
+	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(false);
+	const [endTimeIsOpen, setEndTimeIsOpen] = useState<React.Key | false>(false);
 
 	const closeTimePicker = () => {
 		setStartTimeIsOpen(false);
 		setEndTimeIsOpen(false);
 	};
-	const openTimePicker = (args: {
-		field: "end" | "start";
-		id: React.Key;
-	}) => {
+	const openTimePicker = (args: { field: "end" | "start"; id: React.Key }) => {
 		const { field, id } = args;
 		if (field === "end") {
 			if (endTimeIsOpen === id) setEndTimeIsOpen(false);
@@ -51,25 +43,20 @@ const Availability = () => {
 	const isDuplicate = useMemo(() => {
 		return (
 			onboardingMentor.availability.length >= 1 &&
-			onboardingMentor.availability.some(
-				(sch) => sch.day === schedule.day,
-			)
+			onboardingMentor.availability.some((sch) => sch.day === schedule.day)
 		);
 	}, [onboardingMentor, schedule]);
 
-	const updateSchedule = (args: {
-		field: keyof ISchedule["time"];
-		time: ICurrentTime;
-		day: string;
-	}) => {
+	const updateSchedule = (args: { field: keyof TimeSlot; time: ICurrentTime; day: string }) => {
 		const { day, time, field } = args;
-		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(
-			time.min,
-		).padStart(2, "0")}${time.meridan}`;
+		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(time.min).padStart(2, "0")}${time.meridan}`;
 
-		setSchedule({
-			day,
-			time: { ...schedule.time, [field]: formattedTime },
+		setSchedule((prev) => {
+			const updated = { ...prev };
+			if (field === "startTime") updated.timeSlots = [{ startTime: formattedTime, endTime: "" }];
+			if (field === "endTime") updated.timeSlots = [{ endTime: formattedTime, startTime: "" }];
+			updated.day = day;
+			return updated;
 		});
 
 		setEndTimeIsOpen(false);
@@ -84,9 +71,7 @@ const Availability = () => {
 			newArr.push(schedule);
 			// setSchedule(initialSchedule);
 		}
-		const toBeUpdated = onboardingMentor.availability.findIndex(
-			(sch) => sch.day === schedule.day,
-		);
+		const toBeUpdated = onboardingMentor.availability.findIndex((sch) => sch.day === schedule.day);
 		newArr[toBeUpdated] = { ...newArr[toBeUpdated], ...schedule };
 		dispatch(
 			setOnboardingMentor({
@@ -122,9 +107,7 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find(
-										(sch) => sch.day === day,
-									)?.time.start
+									onboardingMentor.availability.find((sch) => sch.day === day)?.timeSlots[0].startTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -138,7 +121,7 @@ const Availability = () => {
 									<TimePicker
 										onChange={(time) =>
 											updateSchedule({
-												field: "start",
+												field: "startTime",
 												time,
 												day,
 											})
@@ -160,9 +143,7 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find(
-										(sch) => sch.day === day,
-									)?.time.end
+									onboardingMentor.availability.find((sch) => sch.day === day)?.timeSlots[0].endTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -176,7 +157,7 @@ const Availability = () => {
 									<TimePicker
 										onChange={(time) =>
 											updateSchedule({
-												field: "end",
+												field: "endTime",
 												time,
 												day,
 											})
@@ -193,19 +174,6 @@ const Availability = () => {
 	);
 };
 
-export interface ISchedule {
-	day: string;
-	time: { start: string; end: string };
-}
-
-const days: string[] = [
-	"Mondays",
-	"Tuesdays",
-	"Wednesdays",
-	"Thursdays",
-	"Fridays",
-	"Saturdays",
-	"Sundays",
-];
+const days: string[] = ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"];
 
 export default Availability;
