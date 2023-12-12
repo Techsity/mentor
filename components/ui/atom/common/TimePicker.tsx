@@ -17,7 +17,6 @@ interface TimePickerProps {
 const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: ForwardedRef<HTMLDivElement>) {
 	const { className, onChange, closeTimePicker } = props;
 
-	const currentDate = new Date();
 	const initialTime: ICurrentTime = {
 		hr: 12,
 		min: 0,

@@ -14,6 +14,7 @@ import FinalStepCertificateEdit from "./FinalStepCertificateEdit";
 import FinalStepAvailabilityEdit from "./FinalStepAvailabilityEdit";
 import FinalStepLanguageEdit from "./FinalStepLanguageEdit";
 import {
+	IMentor,
 	IMentorAvailability,
 	IMentorCertificate,
 	IMentorEducation,
@@ -27,12 +28,18 @@ import { PrimaryButton } from "../../../../../atom/buttons";
 import ActivityIndicator from "../../../../../atom/loader/ActivityIndicator";
 import { useMutation } from "@apollo/client";
 import { ONBOARD_MENTOR } from "../../../../../../../services/graphql/mutations/mentors";
+import { formatGqlError } from "../../../../../../../utils/auth";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../../../constants";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const [loading, setLoading] = useState<boolean>(false);
-
-	const [createMentorProfile] = useMutation<any, OnboardingMentorMutationVariables>(ONBOARD_MENTOR);
+	const router = useRouter();
+	const [createMentorProfile] = useMutation<OnboardingMentorMutationResponse, OnboardingMentorMutationVariables>(
+		ONBOARD_MENTOR,
+	);
 
 	const handleSubmit = () => {
 		setLoading(true);
@@ -46,7 +53,7 @@ const FinalMentorOnboardingStep = () => {
 					certifications: onboardingMentor.certificates,
 					education_bg: onboardingMentor.education,
 					exp_level: IMentorExpLevel.LEVEL_2, //Todo: set exp_level properly from the form
-					hourly_rate: 0,
+					hourly_rate: 10,
 					language: onboardingMentor.languages,
 					projects: onboardingMentor.projects,
 					role: onboardingMentor.role as MENTOR_ROLES,
@@ -56,12 +63,20 @@ const FinalMentorOnboardingStep = () => {
 			},
 		})
 			.then((response) => {
-				setLoading(false);
 				console.log({ response: response });
+				if (response.data?.createMentorProfile) {
+					setLoading(false);
+				}
 			})
 			.catch((err) => {
-				setLoading(false);
 				console.error(err);
+				setLoading(false);
+				const errMessage = formatGqlError(err);
+				if (errMessage === "Unauthorized") {
+					const next = router.basePath.concat(router.asPath);
+					router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+					toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
+				}
 			});
 	};
 	return (
@@ -149,5 +164,7 @@ type OnboardingMentorMutationVariables = {
 		skills: IMentorSkills[];
 	};
 };
-
+type OnboardingMentorMutationResponse = {
+	createMentorProfile: IMentor;
+};
 export default FinalMentorOnboardingStep;

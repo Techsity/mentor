@@ -18,7 +18,7 @@ const StepOneMentorOnboarding = () => {
 	const [role, setRole] = useState<string>(onboardingMentor?.role?.split("_").join(" ") || "");
 
 	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<string>({
-		suggestions: mentorRolesArray,
+		suggestions: mentorRolesArray.map((item) => item.split("_").join(" ")),
 		inputValue: role,
 	});
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

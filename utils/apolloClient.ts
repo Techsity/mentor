@@ -1,17 +1,13 @@
-import {
-	ApolloClient,
-	InMemoryCache,
-	HttpLink,
-	ApolloLink,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { AUTH_TOKEN_KEY } from "../constants";
 
 const httpLink = new HttpLink({
 	uri: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
-	const token = localStorage.getItem("authToken");
+	const token = localStorage.getItem(AUTH_TOKEN_KEY);
 
 	// If there's no token, return the original headers
 	if (!token) {

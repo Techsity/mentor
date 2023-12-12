@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../constants";
+import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
 import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
@@ -31,12 +31,11 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 
 	const [loginUser] = useMutation<ILoginState, ICreateLoginInput>(LOGIN_USER);
 
-	const handleChange =
-		(field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
-			setLoading(false);
-			setError([]);
-			setState({ ...state, [field]: e.target.value });
-		};
+	const handleChange = (field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
+		setLoading(false);
+		setError([]);
+		setState({ ...state, [field]: e.target.value });
+	};
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
@@ -44,19 +43,13 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 		if (!isEmail(state.email)) {
 			setLoading(false);
 			setError(["email"]);
-			toast.error(
-				"Please enter a valid email",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Please enter a valid email", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		if (!state.password) {
 			setLoading(false);
 			setError(["password"]);
-			toast.error(
-				"Please enter your password",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Please enter your password", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		// Perform login api call here
@@ -78,7 +71,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					// 	"authToken",
 					// authToken
 					// );
-					localStorage.setItem("authToken", authToken);
+					localStorage.setItem(AUTH_TOKEN_KEY, authToken);
 					// setLoading(false);
 					dispatch(
 						setCredentials({
@@ -113,25 +106,15 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				const errorMessage = formatGqlError(error);
 				// If account is not active, redirect to otp screen
 				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
-					toast.error(
-						errorMessage + "Redirecting...",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
+					toast.error(errorMessage + "Redirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
 					setTimeout(function () {
 						toast.dismiss("auth_form_pop");
 						// mutation to request for otp here, before redirecting
-						router.push(
-							"/auth/verification/" +
-								crypto.randomUUID() +
-								"/signup",
-						);
+						router.push("/auth/verification/" + crypto.randomUUID() + "/signup");
 					}, 2000);
 					return;
 				}
-				toast.error(
-					errorMessage,
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+				toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 			});
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };
