@@ -1,6 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import courses from "../../../../../data/courses";
-import useWindowSize from "../../../../../hooks/useWindowSize";
+import React from "react";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 import { ICourse } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
@@ -12,23 +10,29 @@ type AllCoursesArgs = {
 	category?: string;
 	courseType?: string;
 };
+type CourseListProps = { activeCategory: string; activeCourseType: string; skip?: number; limit?: number };
 
-const CoursesList = ({ activeCategory, activeCourseType }: { activeCategory: string; activeCourseType: string }) => {
+const CoursesList = ({ activeCategory, activeCourseType, limit = 10, skip = 0 }: CourseListProps) => {
 	const { data, loading, error, refetch } = useQuery<{ allCourses: ICourse[] }, AllCoursesArgs>(ALL_COURSES, {
-		variables: { skip: 0, take: 10, category: activeCategory, courseType: activeCourseType },
+		variables: {
+			skip: skip as number,
+			take: limit as number,
+			category: activeCategory,
+			courseType: activeCourseType,
+		},
 		fetchPolicy: "cache-and-network",
 	});
 
 	const allCourses = data?.allCourses || [];
 
-	useEffect(() => {
-		refetch();
-	}, [activeCategory, activeCourseType]);
+	// useEffect(() => {
+	// 	refetch();
+	// }, [activeCategory, activeCourseType]);
 
 	if (error) console.log(error);
 
 	return (
-		<div className="grid xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
+		<div className="grid lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
 			{loading ? (
 				Array.from({ length: 3 }).map((_, indx) => {
 					return <DisplayCourseCard loading={loading} course={null} key={indx} />;
