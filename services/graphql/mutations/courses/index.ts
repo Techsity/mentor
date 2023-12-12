@@ -52,3 +52,13 @@ export const ALL_COURSES = gql`
 		}
 	}
 `;
+export const GET_ALL_CATEGORIES = gql`
+	query GetAllCategories {
+		getAllCategories {
+			title
+			description
+			created_at
+			updated_at
+		}
+	}
+`;

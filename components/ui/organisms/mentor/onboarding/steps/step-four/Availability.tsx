@@ -53,8 +53,24 @@ const Availability = () => {
 
 		setSchedule((prev) => {
 			const updated = { ...prev };
-			if (field === "startTime") updated.timeSlots = [{ startTime: formattedTime, endTime: "" }];
-			if (field === "endTime") updated.timeSlots = [{ endTime: formattedTime, startTime: "" }];
+			if (field === "startTime") {
+				updated.timeSlots = [
+					{
+						...schedule.timeSlots[0],
+						startTime: formattedTime,
+					},
+					...schedule.timeSlots.slice(1),
+				];
+			}
+			if (field === "endTime") {
+				updated.timeSlots = [
+					{
+						...schedule.timeSlots[0],
+						endTime: formattedTime,
+					},
+					...schedule.timeSlots.slice(1),
+				];
+			}
 			updated.day = day;
 			return updated;
 		});
@@ -64,7 +80,7 @@ const Availability = () => {
 	};
 
 	useEffect(() => {
-		console.log(schedule);
+		// console.log(schedule);
 		// Reflect Updates
 		const newArr = [...onboardingMentor.availability];
 		if (!isDuplicate && schedule !== initialSchedule) {
@@ -107,7 +123,8 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find((sch) => sch.day === day)?.timeSlots[0].startTime
+									onboardingMentor.availability.find((schedule) => schedule.day === day)?.timeSlots[0]
+										.startTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -143,7 +160,8 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find((sch) => sch.day === day)?.timeSlots[0].endTime
+									onboardingMentor.availability.find((schedule) => schedule.day === day)?.timeSlots[0]
+										.endTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -174,6 +192,6 @@ const Availability = () => {
 	);
 };
 
-const days: string[] = ["Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays", "Sundays"];
+const days: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export default Availability;

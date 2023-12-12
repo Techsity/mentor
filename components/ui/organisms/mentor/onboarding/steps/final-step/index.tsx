@@ -36,14 +36,14 @@ const FinalMentorOnboardingStep = () => {
 
 	const handleSubmit = () => {
 		setLoading(true);
-		createMentorProfile({
-			variables: {
-				createMentorInput: {
-					about: onboardingMentor.bio,
-					availability: onboardingMentor.availability,
-				},
-			},
-		});
+		// createMentorProfile({
+		// 	variables: {
+		// 		createMentorInput: {
+		// 			about: onboardingMentor.bio,
+		// 			availability: onboardingMentor.availability,
+		// 		},
+		// 	},
+		// });
 	};
 	return (
 		<>
