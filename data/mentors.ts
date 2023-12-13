@@ -1,5 +1,5 @@
 import { MENTOR_ROLES } from "../constants/mentor";
-import { IMentor } from "../interfaces/mentor.interface";
+import { IMentor, IMentorExpLevel } from "../interfaces/mentor.interface";
 import { courseCategories, courseContents } from "./courses";
 import reviews from "./reviews";
 import { dummyUsers } from "./user";
@@ -33,7 +33,7 @@ const mentors: IMentor[] = [
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],
@@ -77,7 +77,7 @@ const mentors: IMentor[] = [
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],
@@ -121,7 +121,7 @@ const mentors: IMentor[] = [
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],
@@ -165,7 +165,7 @@ const mentors: IMentor[] = [
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],

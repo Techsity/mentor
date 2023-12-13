@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import { IMentorOnboardingState } from "../../../interfaces/mentor.interface";
+import { setLocalStorage } from "../../../utils/auth";
 
 const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
@@ -32,8 +33,12 @@ const onboardingSlice = createSlice({
 	reducers: {
 		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState }) => {
 			state.mentor = action.payload;
+			// action.payload.user = null;
+			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
-		setOnboardingUser: (state, action: {}) => {},
+		setOnboardingUser: (state, action: {}) => {
+			//
+		},
 	},
 });
 

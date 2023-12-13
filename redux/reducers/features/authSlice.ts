@@ -18,9 +18,9 @@ const authSlice = createSlice({
 			state,
 			action: { payload: { isLoggedIn: boolean; user: IUser | null; mentorProfile?: IMentor | null } },
 		) => {
-			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 			state.isLoggedIn = action.payload.isLoggedIn;
 			state.user = action.payload.user;
+			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 		},
 		logOut: (state) => {
 			state.isLoggedIn = false;

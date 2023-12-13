@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import StepOneMentorOnboarding from "./step-one";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
@@ -11,8 +11,6 @@ import { onboardingMentorState, setOnboardingMentor } from "../../../../../../re
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
-import { useRouter } from "next/router";
-import { setLocalStorage } from "../../../../../../utils/auth";
 
 const MentorOnboardingSteps = () => {
 	const dispatch = useDispatch();
@@ -41,9 +39,10 @@ const MentorOnboardingSteps = () => {
 
 	const handleNext = () => {
 		setLoading(true);
-		if (onboardingMentor && currentStep < totalSteps) {
+		console.log(onboardingMentor.currentStep);
+		if (currentStep < totalSteps) {
 			if (currentStep === 1) {
-				if (onboardingMentor.bio && typeof onboardingMentor.role !== "undefined") {
+				if (onboardingMentor.bio && onboardingMentor.role) {
 					moveToNextStep();
 				} else {
 					setLoading(false);
@@ -70,9 +69,6 @@ const MentorOnboardingSteps = () => {
 				);
 			}
 	};
-	useEffect(() => {
-		if (onboardingMentor) setLocalStorage("onboardingMentor", JSON.stringify(onboardingMentor));
-	}, [onboardingMentor]);
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
@@ -97,17 +93,6 @@ const MentorOnboardingSteps = () => {
 					{loading ? (
 						<ActivityIndicator color="#094B10" className="mt-3" size={30} />
 					) : currentStep > 1 && currentStep >= totalSteps ? (
-						// <div className="flex justify-start items-center">
-						// 	<PrimaryButton
-						// 		title={loading ? "" : "Looking good, let's go!"}
-						// 		icon={loading ? <ActivityIndicator /> : null}
-						// 		onClick={() => {
-						// 			router.push("/profile");
-						// 		}}
-						// 		className="px-8 p-2 flex justify-center"
-						// 		disabled={loading}
-						// 	/>
-						// </div>
 						<></>
 					) : (
 						<div className="my-6 flex gap-5 items-center">
@@ -115,10 +100,8 @@ const MentorOnboardingSteps = () => {
 								<div className="flex justify-start items-center">
 									<PrimaryButton
 										title={"Prev"}
-										// icon={loading ? <ActivityIndicator /> : null}
 										onClick={() => handlePrev()}
 										className="px-8 p-2 flex justify-center"
-										// disabled={loading}
 									/>
 								</div>
 							)}
