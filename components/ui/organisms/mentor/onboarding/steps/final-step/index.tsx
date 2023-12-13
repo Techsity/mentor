@@ -63,7 +63,7 @@ const FinalMentorOnboardingStep = () => {
 			},
 		})
 			.then((response) => {
-				console.log({ response: response });
+				console.log(response.data?.createMentorProfile);
 				if (response.data?.createMentorProfile) {
 					setLoading(false);
 				}
@@ -74,7 +74,7 @@ const FinalMentorOnboardingStep = () => {
 				const errMessage = formatGqlError(err);
 				if (errMessage === "Unauthorized") {
 					const next = router.basePath.concat(router.asPath);
-					// router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+					router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 					toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
 				}
 			});

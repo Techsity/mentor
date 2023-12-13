@@ -16,7 +16,6 @@ const client = (authToken?: string) => {
 		if (!token) {
 			return { headers };
 		}
-		console.log(token);
 		return {
 			headers: {
 				...headers,
