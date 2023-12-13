@@ -65,7 +65,10 @@ const FinalMentorOnboardingStep = () => {
 			.then((response) => {
 				console.log(response.data?.createMentorProfile);
 				if (response.data?.createMentorProfile) {
-					setLoading(false);
+					// setLoading(false);
+					//Todo: set mentorProfile state here
+					// /
+					router.replace("/profile");
 				}
 			})
 			.catch((err) => {
@@ -76,6 +79,16 @@ const FinalMentorOnboardingStep = () => {
 					const next = router.basePath.concat(router.asPath);
 					router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 					toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
+				}
+				// console.log(JSON.stringify(err));
+				// console.error(err.graphQLErrors[0].message);
+				if (
+					errMessage.includes(
+						`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`,
+					)
+				) {
+					toast.info("Account already created", ToastDefaultOptions({ id: "error" }));
+					router.replace("/profile");
 				}
 			});
 	};
