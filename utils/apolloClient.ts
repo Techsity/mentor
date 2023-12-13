@@ -10,13 +10,13 @@ const client = (authToken?: string) => {
 
 	const authLink = setContext((_, { headers }) => {
 		// const token = typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
-		const token = authToken ? authToken : typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
+		const token = authToken ? authToken : typeof window !== "undefined" && getCookie(AUTH_TOKEN_KEY);
 
 		// If there's no token, return the original headers
 		if (!token) {
 			return { headers };
 		}
-
+		console.log(token);
 		return {
 			headers: {
 				...headers,
