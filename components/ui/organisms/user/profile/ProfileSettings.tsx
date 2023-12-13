@@ -17,28 +17,24 @@ const ProfileSettings = () => {
 	const [state, setState] = useState<IUser>(user as IUser);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleChange =
-		(field: keyof IUser) => (e: ChangeEvent<HTMLInputElement>) => {
-			const { name, value } = e.target;
-			setLoading(false);
-			setState({ ...state, [field]: value });
-		};
+	const handleChange = (field: keyof IUser) => (e: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setLoading(false);
+		setState({ ...state, [field]: value });
+	};
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 	};
 
-	const country: string = countries.find((c) => c.label === state.country)
-		?.countryCode as string;
+	const country: string = countries.find((c) => c.label === state.country)?.countryCode as string;
 
 	interface IconType {
 		[key: string]: React.ElementType;
 	}
 	const IconComponent: IconType = FlagIcons;
 	const IconComp: any = country ? (
-		IconComponent[
-			country.charAt(0).toUpperCase() + country.charAt(1).toLowerCase()
-		]
+		IconComponent[country.charAt(0).toUpperCase() + country.charAt(1).toLowerCase()]
 	) : (
 		<></>
 	);
@@ -48,9 +44,7 @@ const ProfileSettings = () => {
 			<form onSubmit={handleSubmit} className="grid gap-6 2xl:max-w-md">
 				<div className="grid md:grid-cols-2 gap-6">
 					<div className="flex flex-col gap-1">
-						<label
-							className="w-full text-[#BEBEBE] text-sm"
-							htmlFor="fullName">
+						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="fullName">
 							FullName
 						</label>
 						<CustomTextInput
@@ -65,9 +59,7 @@ const ProfileSettings = () => {
 						/>
 					</div>
 					<div className="flex flex-col gap-1">
-						<label
-							className="w-full text-[#BEBEBE] text-sm"
-							htmlFor="email">
+						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="email">
 							Email
 						</label>
 						<CustomTextInput
@@ -82,9 +74,7 @@ const ProfileSettings = () => {
 						/>
 					</div>
 					<div className="">
-						<label
-							className="w-full text-[#BEBEBE] text-sm"
-							htmlFor="country">
+						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="country">
 							Country
 						</label>
 						<CountrySelectorComp
@@ -100,17 +90,11 @@ const ProfileSettings = () => {
 								input: "bg-transparent border border-[#094B10] p-3",
 								container: "border border-[#094B10] p-[2px]",
 							}}
-							customIcon={
-								IconComp ? (
-									<IconComp width="25px" height="25px" />
-								) : null
-							}
+							customIcon={IconComp ? <IconComp width="25px" height="25px" /> : null}
 						/>
 					</div>
 					<div className="flex flex-col gap-1">
-						<label
-							className="w-full text-[#BEBEBE] text-sm"
-							htmlFor="phone">
+						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="phone">
 							Phone Number
 						</label>
 						<CustomTextInput
@@ -129,9 +113,7 @@ const ProfileSettings = () => {
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
-						<label
-							className="w-full text-[#BEBEBE] text-sm"
-							htmlFor="oldPassword">
+						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="oldPassword">
 							Change Password
 						</label>
 						<div className="space-y-2">
@@ -185,7 +167,7 @@ const ProfileSettings = () => {
 						icon={loading ? <ActivityIndicator /> : null}
 						disabled={loading}
 						className="p-4 flex justify-center px-12 w-full text-lg bg-[#d31119] hover:bg-red-800 text-white"
-						onClick={logoutUser}
+						onClick={() => logoutUser()}
 					/>
 				</div>
 			</form>

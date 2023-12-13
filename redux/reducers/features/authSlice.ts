@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IAuthState } from "../../../interfaces/auth.interface";
-import { IUser, IUserUpdate } from "../../../interfaces/user.interface";
+import { IUser } from "../../../interfaces/user.interface";
+import { IMentor } from "../../../interfaces/mentor.interface";
 
 const initialState: IAuthState = {
 	isLoggedIn: false,
 	user: null,
-	// typeof window !== "undefined" && window.localStorage.getItem("userData")
-	// 	? JSON.parse(window.localStorage.getItem("userData") as string)
-	// 	: null,
 	resetPasswordState: { email: "", otp: "" },
 };
 
@@ -16,7 +14,11 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState: initialState,
 	reducers: {
-		setCredentials: (state, action: { payload: { isLoggedIn: boolean; user: IUser | null } }) => {
+		setCredentials: (
+			state,
+			action: { payload: { isLoggedIn: boolean; user: IUser | null; mentorProfile?: IMentor | null } },
+		) => {
+			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 			state.isLoggedIn = action.payload.isLoggedIn;
 			state.user = action.payload.user;
 		},

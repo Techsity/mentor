@@ -32,6 +32,31 @@ export const LOGIN_USER = gql`
 	}
 `;
 
+export const GET_USER_PROFILE = gql`
+	query UserProfile {
+		userProfile {
+			id
+			email
+			name
+			phone
+			avatar
+			country
+			# subsciptions {
+			# 	created_at
+			# 	id
+			# 	is_completed
+			# 	updated_at
+			# }
+			is_online
+			is_active
+			is_verified
+			is_admin
+			created_at
+			updated_at
+		}
+	}
+`;
+
 export const VERIFY_USER = gql`
 	mutation verifyUser($otp: String!) {
 		verifyUser(otp: $otp) {

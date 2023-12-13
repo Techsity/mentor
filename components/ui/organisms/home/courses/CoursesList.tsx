@@ -13,7 +13,7 @@ type AllCoursesArgs = {
 type CourseListProps = { activeCategory: string; activeCourseType: string; skip?: number; limit?: number };
 
 const CoursesList = ({ activeCategory, activeCourseType, limit = 10, skip = 0 }: CourseListProps) => {
-	const { data, loading, error, refetch } = useQuery<{ allCourses: ICourse[] }, AllCoursesArgs>(ALL_COURSES, {
+	const { data, loading, error } = useQuery<{ allCourses: ICourse[] }, AllCoursesArgs>(ALL_COURSES, {
 		variables: {
 			skip: skip as number,
 			take: limit as number,

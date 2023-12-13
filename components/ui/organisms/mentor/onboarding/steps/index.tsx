@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import StepOneMentorOnboarding from "./step-one";
 import MentorOnboardingStepsHeader from "../../../../atom/cards/mentor/MentorOnboardingStepsHeader";
 import { MentorOnboardingSvg } from "../../../../atom/icons/svgs";
@@ -12,9 +12,9 @@ import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
 import { useRouter } from "next/router";
+import { setLocalStorage } from "../../../../../../utils/auth";
 
 const MentorOnboardingSteps = () => {
-	const router = useRouter();
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
@@ -70,6 +70,9 @@ const MentorOnboardingSteps = () => {
 				);
 			}
 	};
+	useEffect(() => {
+		if (onboardingMentor) setLocalStorage("onboardingMentor", JSON.stringify(onboardingMentor));
+	}, [onboardingMentor]);
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">

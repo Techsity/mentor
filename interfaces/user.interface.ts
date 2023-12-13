@@ -16,7 +16,7 @@ export interface IUser {
 	is_verified: boolean;
 	is_admin: boolean;
 	payment_cards?: IUserPaymentCard[];
-	mentor: any;
+	// mentor: any;
 	isPremium: boolean;
 	created_at?: string;
 	updated_at?: string;

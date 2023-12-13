@@ -61,7 +61,10 @@ const NavLinksComponent = () => {
 									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
 											<div key={i}>
-												<div onClick={() => router.push(sublink.link)}>
+												<div
+													onClick={() =>
+														router.push(sublink.link, undefined, { scroll: true })
+													}>
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
 														onMouseEnter={() => setActiveDropdown(sublink.dropdown)}

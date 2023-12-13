@@ -1,39 +1,29 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { AUTH_TOKEN_KEY } from "../constants";
+import { getCookie } from "./auth";
 
-const httpLink = new HttpLink({
-	uri: process.env.NEXT_PUBLIC_API_BASE_URL,
-});
+const client = (authToken?: string) => {
+	const httpLink = new HttpLink({
+		uri: process.env.NEXT_PUBLIC_API_BASE_URL,
+	});
 
-const authLink = setContext((_, { headers }) => {
-	const token = localStorage.getItem(AUTH_TOKEN_KEY);
+	const authLink = setContext((_, { headers }) => {
+		// const token = typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
+		const token = authToken ? authToken : typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
 
-	// If there's no token, return the original headers
-	if (!token) {
-		return { headers };
-	}
-	return {
-		headers: {
-			...headers,
-			authorization: `Bearer ${token}`,
-		},
-	};
-});
+		// If there's no token, return the original headers
+		if (!token) {
+			return { headers };
+		}
 
-const client = () => {
-	// const errorLink = onError(({ graphQLErrors, networkError }) => {
-	// 	if (graphQLErrors) {
-	// 		graphQLErrors.forEach(({ message, locations, path }) => {
-	// 			console.log(
-	// 				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-	// 			);
-	// 		});
-	// 	}
-	// 	if (networkError) {
-	// 		console.log(`[Network error]: ${networkError}`);
-	// 	}
-	// });
+		return {
+			headers: {
+				...headers,
+				authorization: `Bearer ${token.toString()}`,
+			},
+		};
+	});
 	return new ApolloClient({
 		cache: new InMemoryCache(),
 		// link: errorLink.conat(authLink.concat(httpLink)),

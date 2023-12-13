@@ -10,8 +10,9 @@ import { setCredentials } from "../../redux/reducers/features/authSlice";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
-import { formatGqlError } from "../../utils/auth";
+import { authenticate, formatGqlError } from "../../utils/auth";
 import ResponseMessages from "../../constants/response-codes";
+import mentors from "../../data/mentors";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;
@@ -65,38 +66,32 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				const userData: IUser = response.data.loginUser.user;
 				const authToken = response.data.loginUser.access_token;
 				if (response.data.loginUser.user) {
-					console.log(userData);
-					// toast.success("Login successful");
-					// sessionStorage.setItem(
-					// 	"authToken",
-					// authToken
-					// );
-					localStorage.setItem(AUTH_TOKEN_KEY, authToken);
-					// setLoading(false);
-					dispatch(
-						setCredentials({
-							isLoggedIn: true,
-							user: {
-								...userData,
-								// Temporary
-								payment_cards: [
-									{
-										bank: { name: "GTbank via Paystack" },
-										card_name: "John Doe Ipsum",
-										card_number: "5399 8878 9887 99099",
-									},
-								],
-								mentor: true,
-								//
-							},
-						}),
-					);
-					const next = router.query.next as string;
-					if (next) {
-						router.replace(decodeURIComponent(next));
-					} else {
-						router.replace(`/profile`);
-					}
+					authenticate(authToken, () => {
+						// setLoading(false);
+						dispatch(
+							setCredentials({
+								isLoggedIn: true,
+								user: {
+									...userData,
+									// Temporary
+									payment_cards: [
+										{
+											bank: { name: "GTbank via Paystack" },
+											card_name: "John Doe Ipsum",
+											card_number: "5399 8878 9887 99099",
+										},
+									],
+								},
+								mentorProfile: mentors[0],
+							}),
+						);
+						const next = router.query.next as string;
+						if (next) {
+							router.replace(decodeURIComponent(next));
+						} else {
+							router.replace(`/profile`);
+						}
+					});
 				}
 			})
 			.catch((error: any) => {
