@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { ChangeEvent, FC, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
-import { ICourse, IWorkshop } from "../../../../../interfaces";
+import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
@@ -90,7 +90,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						value={
-							(isCourse
+							(isCourse && typeof formState.category !== "string"
 								? (formState.category?.title as string)
 								: isWorkshop && (formState.category as string)) || "empty"
 						}
