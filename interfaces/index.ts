@@ -308,6 +308,7 @@ export interface IWorkshop {
 	toLearn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];
+	reviews: IReview[];
 }
 
 export type ProfileTabLinkType =

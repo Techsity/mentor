@@ -6,13 +6,7 @@ import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);
-	const links: { name: string; path: string }[] = [
-		{ name: "My Learning", path: "/dashboard/my-courses/learning" },
-		{ name: "My Cart", path: "/cart" },
-		{ name: "Wishlist", path: "/dashboard/wishlist" },
-		{ name: "Archive", path: "/dashboard/archive" },
-		{ name: "Profile", path: "/profile" },
-	];
+
 	return (
 		<div className="relative group cursor-pointer h-full">
 			<Link href={`/profile`}>

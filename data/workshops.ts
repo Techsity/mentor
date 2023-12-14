@@ -7,6 +7,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Upcoming",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -42,6 +43,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Recordings",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -77,6 +79,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Live",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -112,6 +115,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Upcoming",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -147,6 +151,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Upcoming",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -182,6 +187,7 @@ const workshops: IWorkshop[] = [
 		title: "Design Secrets",
 		available: true,
 		category: "Live",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,

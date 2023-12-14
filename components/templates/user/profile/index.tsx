@@ -16,13 +16,29 @@ const UserProfilePageTemplate = () => {
 		: ["My Courses", "My Workshop", "Mentorship", "Wish Lists", "Payment Methods", "Profile Settings"];
 
 	const [activeTab, setActiveTab] = useState<ProfileTabLinkType>(tabLinks[0]);
+
 	const isEditCourse = useMemo(() => {
-		return (router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
+		return (
+			Boolean(
+				(router.asPath.split("#")[1]?.split("/")[0] as "courses") === "courses" &&
+					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
+			) || false
+		);
+	}, [router]);
+
+	const isEditWorkshop = useMemo(() => {
+		return (
+			Boolean(
+				(router.asPath.split("#")[1]?.split("/")[0] as "workshop") === "workshop" &&
+					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
+			) || false
+		);
 	}, [router]);
 
 	useEffect(() => {
 		if (isEditCourse) setActiveTab("Courses");
-	}, [isEditCourse]);
+		if (isEditWorkshop) setActiveTab("Workshop");
+	}, [router]);
 
 	return (
 		<>
@@ -40,7 +56,7 @@ const UserProfilePageTemplate = () => {
 					className={`flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 lg:px-0 col-span-4 h-full${
 						isEditCourse ? "xl:pr:12" : "xl:pr-0"
 					}`}>
-					<ProfileComponents activeTab={activeTab} />
+					<ProfileComponents {...{ isEditCourse, isEditWorkshop, activeTab }} />
 				</div>
 				{!isEditCourse && (
 					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">

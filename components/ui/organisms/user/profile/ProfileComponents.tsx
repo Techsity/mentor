@@ -12,30 +12,50 @@ import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import MentorProfileCourses from "../mentor/courses/MentorProfileCourses";
 import { PrimaryButton } from "../../../atom/buttons";
 import { useRouter } from "next/router";
-import EditCourseTemplate from "../../../../templates/course/edit";
+import WorkshopAndCourseEditTemplate from "../../../../templates/course/edit";
 import EditCourseContent from "../../course/edit-course/EditCourseContent";
 import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
 import MentorProfileWorkshop from "../mentor/workshop/MentorProfileWorkshop";
 
-const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => {
+type ProfileComponentsProps = {
+	isEditCourse: boolean;
+	isEditWorkshop: boolean;
+	activeTab: ProfileTabLinkType;
+};
+
+const ProfileComponents = ({ activeTab, isEditCourse, isEditWorkshop }: ProfileComponentsProps) => {
 	const router = useRouter();
 	const myCourses = useMemo(() => courses, []);
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
 
-	const isEditCourse = useMemo(() => {
-		return (router.asPath.split("#")[1]?.split("/")[2] as "edit") || "";
-	}, [router]);
+	const isCourseContentPage = useMemo(
+		() =>
+			Boolean(
+				(router.asPath.split("#")[1]?.split("/")[0] as "courses") === "courses" &&
+					(router.asPath.split("#")[2] as "content") &&
+					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
+			) || false,
+		[router],
+	);
 
-	const isContentPage = useMemo(() => router.asPath.split("#")[2] as "content", [router]);
+	const isWorkshopContentPage = useMemo(
+		() =>
+			Boolean(
+				(router.asPath.split("#")[1]?.split("/")[0] as "courses") === "courses" &&
+					(router.asPath.split("#")[2] as "content") &&
+					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
+			) || false,
+		[router],
+	);
 
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">
-					{isEditCourse && !isContentPage
+					{isEditCourse && !isCourseContentPage
 						? "edit course"
-						: isEditCourse && isContentPage
+						: isEditCourse && isCourseContentPage
 						? "edit course content"
 						: activeTab}
 				</h1>
@@ -56,9 +76,9 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						<MentorProfileOverview />
 					</div>
 				) : activeTab === "Courses" && isMentor ? (
-					isEditCourse && !isContentPage ? (
-						<EditCourseTemplate />
-					) : isEditCourse && isContentPage ? (
+					isEditCourse && !isCourseContentPage ? (
+						<WorkshopAndCourseEditTemplate isCourse />
+					) : isEditCourse && isCourseContentPage ? (
 						<EditCourseContent />
 					) : (
 						<MentorProfileCourses />
@@ -70,7 +90,11 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						))}
 					</div>
 				) : activeTab === "Workshop" && isMentor ? (
-					<MentorProfileWorkshop />
+					isEditWorkshop ? (
+						<WorkshopAndCourseEditTemplate isWorkshop />
+					) : (
+						<MentorProfileWorkshop />
+					)
 				) : activeTab === "My Workshop" ? (
 					<RegitsteredWorkshops />
 				) : activeTab === "Mentorship" ? (

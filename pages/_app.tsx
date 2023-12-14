@@ -20,7 +20,7 @@ import { SidebarProvider } from "../context/sidebar.context";
 import { GET_USER_PROFILE } from "../services/graphql/mutations/auth";
 import { IUser } from "../interfaces/user.interface";
 import { setCredentials } from "../redux/reducers/features/authSlice";
-import { checkAuthServerSide, formatGqlError } from "../utils/auth";
+import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

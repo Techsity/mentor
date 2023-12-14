@@ -5,7 +5,15 @@ import Link from "next/link";
 import { formatDateDifference, formatFollowersCount, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 
-const WorkshopDisplayCard = ({ workshop, profile = false }: { workshop: IWorkshop; profile?: boolean }) => {
+const WorkshopDisplayCard = ({
+	workshop,
+	profile = false,
+	owner = false,
+}: {
+	workshop: IWorkshop;
+	profile?: boolean;
+	owner?: boolean;
+}) => {
 	// workshop = workshops[0];
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
@@ -21,7 +29,8 @@ const WorkshopDisplayCard = ({ workshop, profile = false }: { workshop: IWorksho
 				<div
 					className={
 						profile
-							? "px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300"
+							? // ? "px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300"
+							  "px-6 p-2 text-center border border-white duration-300"
 							: ""
 					}>
 					<h1 className={!profile ? "mt-4" : ""}>
@@ -83,6 +92,14 @@ const WorkshopDisplayCard = ({ workshop, profile = false }: { workshop: IWorksho
 								₦{workshop.price.toLocaleString()}
 							</div>
 						)
+					) : profile && owner ? (
+						<div className="flex justify-end items-center">
+							<PrimaryButton
+								link={`/profile/#workshop/${slugify(workshop.title)}/edit`}
+								title="Edit"
+								className="p-2 px-6"
+							/>
+						</div>
 					) : (
 						<div className="flex justify-end items-center">
 							<PrimaryButton

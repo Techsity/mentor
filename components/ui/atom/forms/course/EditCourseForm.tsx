@@ -1,19 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { FC, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
-import { ICourse } from "../../../../../interfaces";
+import { ICourse, IWorkshop } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
 
+type StateType = Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">;
+
 type Props = {
-	handleSave: (updatedValues: Omit<ICourse, "mentor">) => void;
-	state: Omit<ICourse, "mentor">;
+	handleSave: (updatedValues: Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">) => void;
+	state: StateType;
+	isCourse?: boolean;
+	isWorkshop?: boolean;
 };
 
-const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
-	const user = useSelector(currentUser);
+const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) => {
 	const [hasPrice, setHasPrice] = useState<boolean>(state.price && state.price !== 0 ? true : false);
+
+	const defaultRequirements = Array.from({ length: 6 - state.requirements.length }).map(
+		(_, index) => `Default Requirement ${index + 1}`,
+	);
+
+	const combinedRequiementsArray = state.requirements.concat(defaultRequirements);
+
 	return (
 		<form
 			onSubmit={(e) => {
@@ -32,7 +42,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						placeholder={"Basics of Digital marketing"}
+						placeholder={state.title}
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
@@ -44,21 +54,22 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						placeholder={"Basics of Digital marketing"}
+						placeholder={"All Level"}
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
 					<label
-						htmlFor="type-of-course"
+						htmlFor={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
 						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
-						Type of Course
+						Type of {isCourse ? "Course" : isWorkshop && "Workshop"}
 					</label>
 					<CustomTextInput
-						id="type-of-course"
+						id={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						placeholder={"Basics of Digital marketing"}
+						placeholder={"Technical"}
+						//Todo: implement a dropdown to select course or workshop type
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
@@ -69,21 +80,22 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						placeholder={"Basics of Digital marketing"}
+						placeholder={
+							(isCourse ? (state.category?.title as string) : isWorkshop && (state.category as string)) ||
+							"Design"
+						}
 					/>
 				</div>
 				<div className="col-span-4 relative">
 					<label htmlFor="about-course" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
-						About Course
+						About {isCourse ? "Course" : isWorkshop && "Workshop"}
 					</label>
 					<CustomTextInput
-						id="about-course"
+						id={isCourse ? "about-course" : isWorkshop ? "about-workshop" : ""}
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						placeholder={
-							"This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3 This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python"
-						}
+						placeholder={state.description || ""}
 					/>
 				</div>
 			</>
@@ -111,18 +123,18 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 				</div>
 				<div className="sm:col-span-2 col-span-4">
 					<h1 className="text-sm font-normal my-2">Requirements</h1>
-					{Array.from({ length: 6 }).map((_, index) => {
+					{combinedRequiementsArray.map((value, index) => {
 						return (
 							<div
 								key={index}
 								className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
 								<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
 								<CustomTextInput
-									id="about-course"
+									id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
 									containerProps={{
 										className: "text-sm",
 									}}
-									placeholder={"requirement"}
+									placeholder={value}
 								/>
 							</div>
 						);
@@ -133,7 +145,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 			{/* Set Price and thumbnail - start */}
 			<div className="sm:col-span-2 col-span-4">
 				<div className="flex justify-between">
-					<h1 className="text-sm">Set price for course</h1>
+					<h1 className="text-sm">Set price for {isCourse ? "course" : isWorkshop && "workshop"}</h1>
 					<div
 						onClick={() => setHasPrice(!hasPrice)}
 						className="bg-[#F3F3F3] p-1 rounded-full px-4 relative cursor-pointer">
@@ -149,7 +161,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 				</div>
 				{hasPrice ? (
 					<CustomTextInput
-						id="about-course"
+						id={isCourse ? "course-price" : isWorkshop ? "workshop-price" : ""}
 						containerProps={{
 							className:
 								"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
@@ -159,7 +171,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state }) => {
 				) : null}
 			</div>
 			<div className="sm:col-span-2 col-span-4">
-				<h1 className="text-sm">Course Thumbnail</h1>
+				<h1 className="text-sm">{isCourse ? "Course" : isWorkshop && "Workshop"} Thumbnail</h1>
 				<div className="mt-3 h-32 sm:h-20 w-full object-cover relative flex justify-center items-center">
 					<img
 						src={state.imgUrl || "/assets/images/mockups/course_one.png"}

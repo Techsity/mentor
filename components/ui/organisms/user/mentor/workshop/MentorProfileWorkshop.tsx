@@ -2,11 +2,13 @@ import React, { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import workshops from "../../../../../../data/workshops";
 import RegitsteredWorkshops from "../../profile/RegitsteredWorkshops";
 import WorkshopDisplayCard from "../../../../atom/cards/mentee/WorkshopDisplayCard";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../../redux/reducers/features/authSlice";
 
 const MentorProfileWorkshop = () => {
 	const mentorWorkshops = useMemo(() => workshops, []);
 	const [active, setActive] = useState<"registered-workshop" | "my-workshop">("registered-workshop");
-
+	const user = useSelector(currentUser);
 	return (
 		<>
 			<NavSection {...{ active, setActive }} />
@@ -16,7 +18,13 @@ const MentorProfileWorkshop = () => {
 				active === "my-workshop" && (
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-3 items-center animate__animated animate__fadeIn">
 						{mentorWorkshops.map((workshop, i) => (
-							<WorkshopDisplayCard profile workshop={workshop} key={i} />
+							<WorkshopDisplayCard
+								// owner={user?.id === workshop.mentor.user.id}
+								owner={user?.mentor ? true : false}
+								profile
+								workshop={workshop}
+								key={i}
+							/>
 						))}
 					</div>
 				)
