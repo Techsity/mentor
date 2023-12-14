@@ -39,16 +39,6 @@ const ProfileComponents = ({ activeTab, isEditCourse, isEditWorkshop }: ProfileC
 		[router],
 	);
 
-	const isWorkshopContentPage = useMemo(
-		() =>
-			Boolean(
-				(router.asPath.split("#")[1]?.split("/")[0] as "courses") === "courses" &&
-					(router.asPath.split("#")[2] as "content") &&
-					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
-			) || false,
-		[router],
-	);
-
 	return (
 		<>
 			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
@@ -57,18 +47,28 @@ const ProfileComponents = ({ activeTab, isEditCourse, isEditWorkshop }: ProfileC
 						? "edit course"
 						: isEditCourse && isCourseContentPage
 						? "edit course content"
+						: isEditWorkshop
+						? "Edit Workshop"
 						: activeTab}
 				</h1>
-				{isMentor &&
-					activeTab === "Courses" &&
-					(!isEditCourse ? (
+				{isMentor && activeTab === "Courses" ? (
+					!isEditCourse ? (
 						<PrimaryButton title="+ New Course" className="bg-[#FFB100] text-[#000] p-2 px-4" />
 					) : (
 						<div className="flex items-center gap-3">
 							<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
 							<PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" />
 						</div>
-					))}
+					)
+				) : (
+					activeTab === "Workshop" &&
+					isEditWorkshop && (
+						<div className="flex items-center gap-3">
+							<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
+							<PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" />
+						</div>
+					)
+				)}
 			</div>
 			{
 				activeTab === "Overview" && isMentor ? (

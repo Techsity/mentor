@@ -11,6 +11,7 @@ import { ICourse, IWorkshop } from "../../../../interfaces";
 import courses from "../../../../data/courses";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import workshops from "../../../../data/workshops";
+import AddWorkShopSchedule from "../../../ui/organisms/workshop/edit-workshop/AddWorkShopSchedule";
 
 type Props = { isCourse?: boolean; isWorkshop?: boolean };
 
@@ -62,9 +63,12 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
 							<AddCourseContent {...{ state: courseState }} />
 						</div>
 					)}
+					{isWorkshop && <AddWorkShopSchedule {...{ state: workshopState }} />}
 				</div>
 				<div className="xl:max-w-[40%] w-full">
-					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">How this Course is doing</h1>
+					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
+						How this {isCourse ? "course" : isWorkshop && "workshop"} is doing
+					</h1>
 					<div className="border border-[#70C5A1] p-3 grid items-center gap-4">
 						<Stats />
 						{/* Reviews section - start */}
@@ -93,7 +97,7 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
 												</div>
 											);
 										})
-										.slice(0, 5)
+										.slice(0, 4)
 								: isWorkshop &&
 								  workshopState.reviews
 										.map(({ content, ratings, reviewed_by, type }, id) => {
@@ -117,14 +121,14 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
 												</div>
 											);
 										})
-										.slice(0, 5)}
+										.slice(0, 4)}
 							{isCourse ? (
-								courseState.reviews.length > 3 ? (
+								courseState.reviews.length > 4 ? (
 									<div className="my-4">
 										<PrimaryButton title="More Reviews" className="p-1 px-5 text-sm" />
 									</div>
 								) : null
-							) : isWorkshop && workshopState.reviews.length > 3 ? (
+							) : isWorkshop && workshopState.reviews.length > 4 ? (
 								<div className="my-4">
 									<PrimaryButton title="More Reviews" className="p-1 px-5 text-sm" />
 								</div>

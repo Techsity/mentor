@@ -53,12 +53,12 @@ const UserProfilePageTemplate = () => {
 					</div>
 				</div>
 				<div
-					className={`flex-grow py-10 min-h-screen w-full px-4 md:px-12 lg:pr-12 lg:px-0 col-span-4 h-full${
-						isEditCourse ? "xl:pr:12" : "xl:pr-0"
+					className={`flex-grow py-10 min-h-screen w-full px-4 col-span-4 h-full ${
+						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : "xl:pr-0"
 					}`}>
 					<ProfileComponents {...{ isEditCourse, isEditWorkshop, activeTab }} />
 				</div>
-				{!isEditCourse && (
+				{isEditCourse ? null : isEditWorkshop ? null : (
 					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">
 						{/* <div className="xl:sticky top-20 bg-[#F6F9F8] p-4 w-auto xl:w-[30%] min-h-screen h-full mx-3 xs:mx-12 lg:mx-0"> */}
 						<EditProfileCard />

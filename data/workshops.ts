@@ -1,13 +1,14 @@
 import { IWorkshop } from "../interfaces";
 import courses from "./courses";
 import mentors from "./mentors";
+import reviews from "./reviews";
 
 const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
 		category: "Upcoming",
-		reviews: [],
+		reviews: reviews,
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
@@ -24,9 +25,9 @@ const workshops: IWorkshop[] = [
 			"Book and Jotter",
 			"A laptop",
 			"Social media tools",
-			"Your attention",
+			// "Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -62,7 +63,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -98,7 +99,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -134,7 +135,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -170,7 +171,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -206,7 +207,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",

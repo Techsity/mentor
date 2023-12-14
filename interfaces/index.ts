@@ -305,7 +305,7 @@ export interface IWorkshop {
 	mentor: IMentor;
 	available: boolean;
 	imgUrl?: string;
-	toLearn: string[];
+	what_to_learn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];
 	reviews: IReview[];
