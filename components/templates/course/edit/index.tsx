@@ -13,7 +13,11 @@ import { PrimaryButton } from "../../../ui/atom/buttons";
 import workshops from "../../../../data/workshops";
 import AddWorkShopSchedule from "../../../ui/organisms/workshop/edit-workshop/AddWorkShopSchedule";
 
-type Props = { isCourse?: boolean; isWorkshop?: boolean };
+type Props = {
+	isCourse?: boolean;
+	isWorkshop?: boolean;
+	handleSave: (updatedValues: Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">) => void;
+};
 
 const courseInitialState: Omit<ICourse, "mentor"> = {
 	title: "",
@@ -53,7 +57,7 @@ const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 	endDate: new Date("December 04, 2023 12:00:00").toDateString(),
 };
 
-const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
+const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave }: Props) => {
 	const [courseState, setCourseState] = useState<Omit<ICourse, "mentor">>(courses[0] || courseInitialState);
 	const [workshopState, setWorkshopState] = useState<Omit<IWorkshop, "mentor">>(workshops[0] || workshopInitialState);
 
@@ -66,18 +70,10 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
 					</h1>
 					<div className="border border-[#70C5A1] p-3">
 						{isCourse ? (
-							<EditCourseForm
-								isCourse
-								state={{ ...courseState }}
-								handleSave={(updated) => console.log(updated)}
-							/>
+							<EditCourseForm isCourse state={{ ...courseState }} handleSave={handleSave} />
 						) : (
 							isWorkshop && (
-								<EditCourseForm
-									isWorkshop
-									state={{ ...workshopState }}
-									handleSave={(updated) => console.log(updated)}
-								/>
+								<EditCourseForm isWorkshop state={{ ...workshopState }} handleSave={handleSave} />
 							)
 						)}
 					</div>

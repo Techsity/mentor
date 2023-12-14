@@ -44,11 +44,7 @@ const ProfileNavgationContainer = () => {
 					</div>
 				</div>
 			) : tab === "workshop" && isMentor ? (
-				isEditWorkshop ? (
-					<WorkshopAndCourseEditTemplate isWorkshop />
-				) : (
-					<MentorProfileWorkshop />
-				)
+				<MentorProfileWorkshop />
 			) : tab === "my-workshop" ? (
 				<RegitsteredWorkshops />
 			) : tab === "mentorship" ? (

@@ -10,11 +10,10 @@ import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 
 const EditPageContainer = () => {
 	const router = useRouter();
-	const id = router.query.id;
-	const tab = router.query.tab as ProfileTabLinkType;
-
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
+	const id = router.query.id;
+	const tab = router.query.tab as ProfileTabLinkType;
 
 	const isEditCourse = useMemo(() => {
 		return Boolean(tab === "courses" && typeof id !== "undefined");
@@ -24,13 +23,12 @@ const EditPageContainer = () => {
 		return Boolean(tab === "workshop" && typeof id !== "undefined");
 	}, [router]);
 
-	const isCourseContentPage = useMemo(() => {
-		return Boolean(
-			tab === "courses" &&
-				typeof id !== "undefined" &&
-				router.asPath.split("/")[router.asPath.split("/").length - 1] === "content",
-		);
-	}, [router]);
+	const handleCourseSave = (updated: any) => {
+		console.log(updated);
+	};
+	const handleWorkshopSave = (updated: any) => {
+		console.log(updated);
+	};
 
 	return (
 		<ProfileLayout>
@@ -54,9 +52,9 @@ const EditPageContainer = () => {
 				)}
 			</div>
 			{isEditCourse ? (
-				<WorkshopAndCourseEditTemplate isCourse />
+				<WorkshopAndCourseEditTemplate handleSave={handleCourseSave} isCourse />
 			) : (
-				isEditWorkshop && <WorkshopAndCourseEditTemplate isWorkshop />
+				isEditWorkshop && <WorkshopAndCourseEditTemplate handleSave={handleWorkshopSave} isWorkshop />
 			)}
 		</ProfileLayout>
 	);
