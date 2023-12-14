@@ -24,13 +24,8 @@ const AddWorkShopSchedule = ({ state }: Props) => {
 	};
 	return (
 		<>
-			<div className="flex item-center justify-between">
+			<div className="flex item-center justify-start">
 				<h1 className="mt-9 text-[#B1B1B1] font-normal text-sm">Workshop schedule</h1>
-				<div
-					onClick={handleAddNew}
-					className="mt-9 text-[#70C5A1] select-none cursor-pointer font-normal text-sm">
-					+ Add New
-				</div>
 			</div>
 			{workshopContentState.length > 0
 				? workshopContentState.map((content, index) => {
@@ -45,6 +40,17 @@ const AddWorkShopSchedule = ({ state }: Props) => {
 				: Array.from({ length: 1 }).map((_, index) => {
 						return <ContentCard state={workshopContentState} content={null} index={index} key={index} />;
 				  })}
+			<div className="flex item-center justify-end">
+				<button
+					type="button"
+					disabled={workshopContentState.length === 5}
+					onClick={handleAddNew}
+					className={`${
+						workshopContentState.length === 5 ? "text-[#bebebe]" : "text-[#70C5A1]"
+					} select-none cursor-pointer font-normal text-sm`}>
+					+ Add New
+				</button>
+			</div>
 		</>
 	);
 };
