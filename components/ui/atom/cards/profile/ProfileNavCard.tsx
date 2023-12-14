@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { capitalizeSentence, scrollToTop, slugify } from "../../../../../utils";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -18,12 +18,9 @@ const ProfileNavCard = ({
 }) => {
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+	const tab = router.query.tab as ProfileTabLinkType;
 
-	const activeLink = capitalizeSentence(
-		router.asPath
-			? router.asPath.split("#")[1]?.split("-").join(" ") || ""
-			: "",
-	) as ProfileTabLinkType;
+	const activeLink = useMemo(() => tab, [router, tab]);
 
 	useEffect(() => {
 		if (activeLink)
@@ -32,6 +29,13 @@ const ProfileNavCard = ({
 			}
 		scrollTo({ top: 0, behavior: "smooth" });
 	}, [activeLink, router]);
+
+	const handleNavigate = (link: ProfileTabLinkType) => {
+		scrollToTop();
+		setActiveTab(link);
+		setOpenDropdown(false);
+		router.push(`/profile/${slugify(link)}`);
+	};
 
 	return (
 		<>
@@ -46,23 +50,14 @@ const ProfileNavCard = ({
 						openDropdown ? "flex" : "hidden"
 					} lg:flex flex-col justify-between w-full items-start gap-4 duration-300`}>
 					{tabLinks.map((link, i) => (
-						// <Link key={i} href={`#${slugify(link)}`}>
 						<div
 							key={i}
-							onClick={() => {
-								scrollToTop();
-								setActiveTab(link);
-								setOpenDropdown(false);
-								router.push(`/profile#${slugify(link)}`);
-							}}
-							className={`duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
-								link === activeTab
-									? "text-[#70C5A1]"
-									: "bg-[#70C5A1] text-white"
+							onClick={() => handleNavigate(link)}
+							className={`capitalize duration-300 select-none cursor-pointer p-4 border border-[#70C5A1] w-full ${
+								link === activeTab ? "text-[#70C5A1]" : "bg-[#70C5A1] text-white"
 							}`}>
-							{link}
+							{link.split("-").join(" ")}
 						</div>
-						// </Link>
 					))}
 				</div>
 			</div>

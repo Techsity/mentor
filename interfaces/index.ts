@@ -312,17 +312,17 @@ export interface IWorkshop {
 }
 
 export type ProfileTabLinkType =
-	| "Overview"
-	| "Courses"
-	| "My Courses"
-	| "Workshop"
-	| "My Workshop"
-	| "Mentorship"
-	| "Wish Lists"
-	| "Payment Methods"
-	| "Payments"
-	| "Profile Settings"
-	| "Edit Course";
+	| "overview"
+	| "courses"
+	| "my-courses"
+	| "workshop"
+	| "my-workshop"
+	| "mentorship"
+	| "wishlists"
+	| "payment-methods"
+	| "payments"
+	| "profile-settings"
+	| "edit-course";
 
 export type CourseType = "technical" | "vocational" | "educational";
 

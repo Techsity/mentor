@@ -95,7 +95,7 @@ const WorkshopDisplayCard = ({
 					) : profile && owner ? (
 						<div className="flex justify-end items-center">
 							<PrimaryButton
-								link={`/profile/#workshop/${slugify(workshop.title)}/edit`}
+								link={`/profile/workshop/edit/${slugify(workshop.title)}`}
 								title="Edit"
 								className="p-2 px-6"
 							/>

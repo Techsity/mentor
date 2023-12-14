@@ -8,33 +8,56 @@ import { StarRatingIcon } from "../../../ui/atom/icons/svgs";
 import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
 import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
 import { ICourse, IWorkshop } from "../../../../interfaces";
-import courses from "../../../../data/courses";
+import courses, { courseCategories, courseContents } from "../../../../data/courses";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import workshops from "../../../../data/workshops";
 import AddWorkShopSchedule from "../../../ui/organisms/workshop/edit-workshop/AddWorkShopSchedule";
 
 type Props = { isCourse?: boolean; isWorkshop?: boolean };
 
-const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
-	const [loading, setLoading] = useState<boolean>(true);
-	const courseInitialState: Omit<ICourse, "mentor"> = courses[0];
-	const workshopInitialState: Omit<IWorkshop, "mentor"> = workshops[0];
-	const [courseState, setCourseState] = useState<Omit<ICourse, "mentor">>(courseInitialState);
-	const [workshopState, setWorkshopState] = useState<Omit<IWorkshop, "mentor">>(workshopInitialState);
+const courseInitialState: Omit<ICourse, "mentor"> = {
+	title: "",
+	description: "",
+	course_images: "",
+	course_level: "ALL_LEVELS",
+	duration: 0,
+	limit: 0,
+	rating: 0,
+	price: 0,
+	available: false,
+	imgUrl: "",
+	requirements: [],
+	course_contents: [],
+	category: {
+		title: "Programming",
+		description: "Courses related to programming and software development.",
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
+	},
+	reviews: [],
+	what_to_learn: [],
+};
+const workshopInitialState: Omit<IWorkshop, "mentor"> = {
+	title: "",
+	available: false,
+	category: "Upcoming",
+	reviews: [],
+	description: "",
+	participants: 0,
+	contents: [],
+	duration: 0,
+	requirements: [],
+	what_to_learn: [],
+	price: 0,
+	startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+	endDate: new Date("December 04, 2023 12:00:00").toDateString(),
+};
 
-	useEffect(() => {
-		if (loading) {
-			setTimeout(function () {
-				scrollTo({ top: 0, behavior: "smooth" });
-				setLoading(false);
-			}, 1000); // slow loading simulation
-		}
-	}, []);
-	return loading ? (
-		<div className="flex justify-center items-center">
-			<ActivityIndicator color="#094B10" size={40} />
-		</div>
-	) : (
+const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop }: Props) => {
+	const [courseState, setCourseState] = useState<Omit<ICourse, "mentor">>(courses[0] || courseInitialState);
+	const [workshopState, setWorkshopState] = useState<Omit<IWorkshop, "mentor">>(workshops[0] || workshopInitialState);
+
+	return (
 		<div className="">
 			<div className="items-start flex gap-3 flex-col xl:flex-row justify-between">
 				<div className="xl:max-w-[60%] w-full">

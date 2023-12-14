@@ -29,84 +29,47 @@ const ProfileComponents = ({ activeTab, isEditCourse, isEditWorkshop }: ProfileC
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
 
-	const isCourseContentPage = useMemo(
-		() =>
-			Boolean(
-				(router.asPath.split("#")[1]?.split("/")[0] as "courses") === "courses" &&
-					(router.asPath.split("#")[2] as "content") &&
-					(router.asPath.split("#")[1]?.split("/")[2] as "edit"),
-			) || false,
-		[router],
-	);
-
 	return (
 		<>
-			<div className="flex justify-between items-center mb-5 animate__animated animate__fadeInDown sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-				<h1 className="capitalize">
-					{isEditCourse && !isCourseContentPage
-						? "edit course"
-						: isEditCourse && isCourseContentPage
-						? "edit course content"
-						: isEditWorkshop
-						? "Edit Workshop"
-						: activeTab}
-				</h1>
-				{isMentor && activeTab === "Courses" ? (
-					!isEditCourse ? (
-						<PrimaryButton title="+ New Course" className="bg-[#FFB100] text-[#000] p-2 px-4" />
-					) : (
-						<div className="flex items-center gap-3">
-							<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
-							<PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" />
-						</div>
-					)
-				) : (
-					activeTab === "Workshop" &&
-					isEditWorkshop && (
-						<div className="flex items-center gap-3">
-							<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
-							<PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" />
-						</div>
-					)
-				)}
-			</div>
 			{
-				activeTab === "Overview" && isMentor ? (
-					<div className="animate__animated animate__fadeIn">
-						<MentorProfileOverview />
-					</div>
-				) : activeTab === "Courses" && isMentor ? (
-					isEditCourse && !isCourseContentPage ? (
-						<WorkshopAndCourseEditTemplate isCourse />
-					) : isEditCourse && isCourseContentPage ? (
-						<EditCourseContent />
-					) : (
-						<MentorProfileCourses />
-					)
-				) : activeTab === "My Courses" ? (
-					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...{ course }} key={i} />
-						))}
-					</div>
-				) : activeTab === "Workshop" && isMentor ? (
+				// activeTab === "overview" && isMentor ? (
+				// 	<div className="animate__animated animate__fadeIn">
+				// 		<MentorProfileOverview />
+				// 	</div>
+				// ) : activeTab === "courses" && isMentor ? (
+				// 	isEditCourse && !isCourseContentPage ? (
+				// 		<WorkshopAndCourseEditTemplate isCourse />
+				// 	) : isEditCourse && isCourseContentPage ? (
+				// 		<EditCourseContent />
+				// 	) : (
+				// 		<MentorProfileCourses />
+				// 	)
+				// ) : activeTab === "my-courses" ? (
+				// 	<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+				// 		{myCourses.map((course, i) => (
+				// 			<CourseInProgressDisplayCard {...{ course }} key={i} />
+				// 		))}
+				// 	</div>
+				// ) :
+
+				activeTab === "workshop" && isMentor ? (
 					isEditWorkshop ? (
 						<WorkshopAndCourseEditTemplate isWorkshop />
 					) : (
 						<MentorProfileWorkshop />
 					)
-				) : activeTab === "My Workshop" ? (
+				) : activeTab === "my-workshop" ? (
 					<RegitsteredWorkshops />
-				) : activeTab === "Mentorship" ? (
+				) : activeTab === "mentorship" ? (
 					<RegisteredMentorships />
-				) : activeTab === "Wish Lists" ? (
+				) : activeTab === "wishlists" ? (
 					<div className="md:px-2 px-5">
 						<WishLists />
 					</div>
-				) : activeTab === "Payment Methods" ? (
+				) : activeTab === "payment-methods" ? (
 					<PaymentMethods />
 				) : (
-					activeTab === "Profile Settings" && <ProfileSettings />
+					activeTab === "profile-settings" && <ProfileSettings />
 				)
 				// : (
 				// 	<>

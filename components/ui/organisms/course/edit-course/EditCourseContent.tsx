@@ -72,14 +72,12 @@ const EditCourseContent = (props: { content?: ICourseContent[] }) => {
 	};
 
 	const handleDuplicateLecture = (index: number) => {
-		console.log(index);
 		const duplicatedLecture = { ...state[index], title: `${state[index].title} - Copy` };
 		const newState = [...state.slice(0, index + 1), duplicatedLecture, ...state.slice(index + 1)];
 		setState(newState);
 	};
 
 	const handleDeleteLecture = (index: number) => {
-		console.log(index);
 		if (state.length > 2) {
 			if (confirm("Are you sure you want to delete ths outline?")) {
 				const newState = [...state.slice(0, index), ...state.slice(index + 1)];
