@@ -24,8 +24,6 @@ const ProfileNavgationContainer = () => {
 	const isMentor = user?.mentor;
 	const tab = router.query.tab as ProfileTabLinkType;
 	const myCourses = useMemo(() => courses, []);
-	const isEditWorkshop = false;
-	const isCourseContentPage = false;
 
 	return (
 		<ProfileLayout>
