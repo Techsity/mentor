@@ -12,8 +12,8 @@ interface ContentEditComponentProps extends ICourseContent {
 		section_index?: number,
 	) => (e: ChangeEvent<HTMLInputElement>) => void;
 	handleAddNewLecture: () => void;
-	handleDuplicateLecture: any;
-	handleDeleteLecture: any;
+	handleDuplicateLecture: (index: number, section_index: number) => void;
+	handleDeleteLecture: (index: number, section_index: number) => void;
 	index: number;
 	contentLength: number;
 	contentContainerRef: ForwardedRef<HTMLDivElement>;
@@ -28,46 +28,12 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	index,
 	title,
 	course_sections,
+	contentLength,
 }) => {
 	const fileUploadInputRef = useRef<HTMLInputElement>(null);
-	const [currentContentIndex, setCurrentContentIndex] = useState<number>(0);
-	const updateCurrentContentContainerIndex = () => {
-		const contentContainers = document.querySelectorAll(".content_container");
-		contentContainers.forEach((container, i) => {
-			const rect = container.getBoundingClientRect();
-			if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-				setCurrentContentIndex(i);
-			}
-		});
-	};
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry: any) => {
-					if (entry.isIntersecting) {
-						const index = parseInt(entry.target.dataset.index || "0", 10);
-						setCurrentContentIndex(index);
-					}
-				});
-			},
-			{
-				threshold: 0.5,
-			},
-		);
-		const contentContainers = document.querySelectorAll(".content_container");
-		contentContainers.forEach((container: any, i) => {
-			observer.observe(container);
-			container.dataset.index = i.toString();
-		});
-		window.addEventListener("scroll", updateCurrentContentContainerIndex);
-		return () => {
-			observer.disconnect();
-			window.removeEventListener("scroll", updateCurrentContentContainerIndex);
-		};
-	}, []);
 
 	return (
-		<div className="animate__animated animate__fadeIn scroll-mt-44 content_container" ref={contentContainerRef}>
+		<div className="animate__animated animate__fadeIn scroll-mt-44">
 			<div className="relative max-w-2xl">
 				<label htmlFor="title" className="text-sm text-[#bebebe]">
 					Content Title
@@ -85,11 +51,14 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				<div className="mt-4 flex justify-start items-center max-w-2xl">
 					<h1 className="text-sm text-[#bebebe]">Course Contents</h1>
 				</div>
-				<div className="flex items-start gap-4 my-5">
-					<div className="flex-grow max-w-2xl grid gap-6">
-						{course_sections.map((lecture, section_index) => {
-							return (
-								<div className="" key={section_index}>
+				<div className="">
+					{course_sections.map((lecture, section_index) => {
+						return (
+							<div
+								ref={contentContainerRef}
+								className="content_container flex items-start gap-4 my-5"
+								key={section_index}>
+								<div className="flex-grow max-w-2xl grid gap-6">
 									<div className="border border-[#70C5A1] p-5">
 										<div className="grid gap-4">
 											<CustomTextInput
@@ -127,15 +96,6 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 													alt={lecture.section_name}
 													className="h-full w-full object-cover"
 												/>
-												{/* {lecture.type === "video" ? (
-											<img
-												src={"/assets/images/mockups/course_one.png"}
-												alt={lecture.name}
-												className="h-full w-full object-cover"
-											/>
-										) : (
-											<></>
-										)} */}
 											</div>
 											<CustomTextInput
 												id="lecture_note"
@@ -150,24 +110,25 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 										</div>
 									</div>
 								</div>
-							);
-						})}
-					</div>
-					<div className="bg-[#70C5A1] h-1/2 w-auto sticky right-2 top-40 grid gap-5 p-1 py-5">
-						<AddNewLectureButton handleAddNewLecture={handleAddNewLecture} />
-						<DuplicateLectureButton
-							currentContentIndex={currentContentIndex}
-							handleDuplicateLecture={handleDuplicateLecture}
-						/>
-						<DeleteLectureButton handleDelete={handleDeleteLecture} />
-					</div>
+								{/* <div className="bg-[#70C5A1] h-1/2 w-auto sticky right-2 top-40 grid gap-5 p-1 py-5"> */}
+								<div className="bg-[#70C5A1] h-1/2 w-auto right-2 top-40 grid gap-5 p-1 py-5">
+									<AddNewLectureButton handleAddNewLecture={handleAddNewLecture} />
+									<DuplicateLectureButton
+										handleDuplicateLecture={() => handleDuplicateLecture(index, section_index)}
+									/>
+									<DeleteLectureButton
+										handleDelete={() => handleDeleteLecture(index, section_index)}
+									/>
+								</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			<div className="my-4 flex justify-end items-center max-w-2xl">
-				<div className="cursor-pointer text-[#70C5A1] select-none">+ Add Course Content</div>
-				{/* {index === contentLength - 1 && (
-					
-				)} */}
+				{index === contentLength - 1 && (
+					<div className="cursor-pointer text-[#70C5A1] select-none">+ Add New Outline</div>
+				)}
 			</div>
 		</div>
 	);

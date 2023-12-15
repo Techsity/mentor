@@ -1,12 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { currentUser, setCredentials, switchProfile } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
 import { scrollToTop } from "../../../../../utils";
+import mentors from "../../../../../data/mentors";
+import { useRouter } from "next/router";
 
 const EditProfileCard = () => {
+	const dispatch = useDispatch();
+	const router = useRouter();
 	const user = useSelector(currentUser);
+	const handleSwitchProfile = () => {
+		if (user?.mentor) {
+			dispatch(switchProfile({ profile: null }));
+		} else {
+			dispatch(switchProfile({ profile: mentors[0] }));
+		}
+		router.replace("/profile");
+	};
 	return (
 		<div>
 			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
@@ -51,6 +63,7 @@ const EditProfileCard = () => {
 						title={user?.mentor ? "Switch to Mentee Dashboard" : "Get a Mentor Profile"}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
+						onClick={handleSwitchProfile}
 					/>
 				</div>
 			</div>

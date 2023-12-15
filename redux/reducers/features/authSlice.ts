@@ -33,10 +33,13 @@ const authSlice = createSlice({
 			state.resetPasswordState = action.payload;
 			return state;
 		},
+		switchProfile: (state, action: { payload: { profile: IMentor | null } }) => {
+			if (state?.user) state.user.mentor = action.payload.profile;
+		},
 	},
 });
 
-export const { setCredentials, logOut, updateUser, setResetPasswordState } = authSlice.actions;
+export const { setCredentials, logOut, updateUser, setResetPasswordState, switchProfile } = authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user;

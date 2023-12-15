@@ -37,8 +37,8 @@ const NavSection: FC<{
 	active: "registered-workshop" | "my-workshop";
 	setActive: Dispatch<SetStateAction<"registered-workshop" | "my-workshop">>;
 }> = ({ active, setActive }) => (
-	<div className="flex items-center gap-3 mb-6 w-full text-sm">
-		<div className="flex item-center flex-grow max-w-md">
+	<div className="flex md:flex-row flex-col md:items-center items-end gap-3 mb-6 w-full text-sm">
+		<div className="flex item-center flex-grow max-w-md w-full">
 			<div
 				onClick={() => setActive("registered-workshop")}
 				className={`w-full cursor-pointer select-none px-4 border p-3 text-center capitalize duration-300 ${

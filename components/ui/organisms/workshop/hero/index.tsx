@@ -19,8 +19,8 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 					</h1>
 					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
 						<p className="flex items-center gap-2">
-							{workshop.category === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />}
-							{workshop.category}
+							{workshop.tag === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />}
+							{workshop.tag}
 						</p>
 						<p className="">{workshop.duration.toFixed(1)} hours</p>
 						<p className="">{formatFollowersCount(workshop.participants)} participants</p>

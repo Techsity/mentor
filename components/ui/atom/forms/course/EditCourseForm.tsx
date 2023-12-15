@@ -5,8 +5,9 @@ import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
+import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 
-type StateType = Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">;
+type StateType = Omit<IWorkshop, "mentor"> | Omit<ICourse, "mentor">;
 
 type Props = {
 	handleSave: (updatedValues: StateType) => void;
@@ -20,13 +21,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 	const [hasPrice, setHasPrice] = useState<boolean>(formState.price && formState.price !== 0 ? true : false);
 
 	const requirementsArray = formState.requirements.concat(
-		Array.from({ length: 6 - formState.requirements.length }).map(() => `empty`),
+		Array.from({ length: 6 - formState.requirements.length }).map(() => ``),
 	);
 	const whatToLearnArray = formState.what_to_learn.concat(
-		Array.from({ length: 6 - formState.what_to_learn.length }).map(() => `empty`),
+		Array.from({ length: 6 - formState.what_to_learn.length }).map(() => ``),
 	);
 
-	const handleChange = (field: keyof Omit<ICourse, "mentor">) => (e: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (field: keyof ExtendedCourseWorkshopType) => (e: ChangeEvent<HTMLInputElement>) => {
 		setFormState((prev) => {
 			return { ...prev, [field]: e.target.value };
 		});
@@ -89,11 +90,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						value={
-							(isCourse && typeof formState.category !== "string"
-								? (formState.category?.title as string)
-								: isWorkshop && (formState.category as string)) || "empty"
-						}
+						value={(isCourse && (formState as ICourse).category.title) || ""}
 					/>
 				</div>
 				<div className="col-span-4 relative">
@@ -209,7 +206,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 							className:
 								"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 						}}
-						value={formState.price !== 0 ? formState.price.toLocaleString() : "Set original price"}
+						value={formState.price !== 0 ? formState.price.toLocaleString() : ""}
 						onChange={handleChange("price")}
 					/>
 				) : null}

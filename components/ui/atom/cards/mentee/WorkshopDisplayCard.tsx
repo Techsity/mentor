@@ -50,7 +50,7 @@ const WorkshopDisplayCard = ({
 				</div>
 				<h1 className="px-5 font-medium tracking-tight flex items-center justify-between">
 					{workshop.title}
-					{workshop.category === "Live" && (
+					{workshop.tag === "Live" && (
 						<span className="flex gap-2 items-center">
 							<span className="bg-[#d31119] p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 							Live
@@ -85,7 +85,7 @@ const WorkshopDisplayCard = ({
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
 					{!profile ? (
-						workshop.price === "free" ? (
+						workshop.price === 0 ? (
 							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">Free</div>
 						) : (
 							<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">

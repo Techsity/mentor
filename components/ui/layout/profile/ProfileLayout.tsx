@@ -14,7 +14,7 @@ const ProfileLayout = ({ children }: Props) => {
 	const router = useRouter();
 	const isMentor = user?.mentor;
 
-	const { tab, id } = router.query;
+	const { tab, id } = router.query as { id: string | undefined; tab: ProfileTabLinkType };
 
 	const tabLinks: ProfileTabLinkType[] = isMentor
 		? ["overview", "courses", "workshop", "mentorship", "wishlists", "payments", "profile-settings", "edit-course"]
@@ -38,12 +38,17 @@ const ProfileLayout = ({ children }: Props) => {
 		);
 	}, [router]);
 
+	const isNewItemPage = useMemo(() => {
+		return (
+			Boolean(tab === "courses" && router.asPath.split("/")[router.asPath.split("/").length - 1] === "new") ||
+			Boolean(tab === "workshop" && router.asPath.split("/")[router.asPath.split("/").length - 1] === "new") ||
+			Boolean(tab === "courses" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new") ||
+			Boolean(tab === "workshop" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new")
+		);
+	}, [router]);
+
 	useEffect(() => {
-		if (!tab)
-			if (isMentor) setActiveTab("overview");
-			else {
-				setActiveTab("my-courses");
-			}
+		if (!tab) setActiveTab(tabLinks[0]);
 	}, [tab, router]);
 
 	return (
@@ -62,18 +67,18 @@ const ProfileLayout = ({ children }: Props) => {
 					className={`flex-grow py-10 min-h-screen w-full px-4 col-span-4 h-full ${
 						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : "xl:pr-0"
 					}`}>
-					{!isEditCourse && !isEditWorkshop && isCourseContentPage ? (
-						<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-							<h1 className="capitalize">{activeTab}</h1>
-							<PrimaryButton title="+ New Course" className="bg-[#FFB100] text-[#000] p-2 px-4" />
+					{!isEditCourse && !isEditWorkshop && !isCourseContentPage && !isNewItemPage && (
+						<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
+							<h1 className="capitalize">{activeTab.split("-").join(" ")}</h1>
+							{tab === "courses" && (
+								<PrimaryButton
+									style={{ color: "#000" }}
+									title="+ New Course"
+									className="bg-[#FFB100] p-2 px-4"
+									link="/profile/courses/new"
+								/>
+							)}
 						</div>
-					) : (
-						!isEditCourse &&
-						!isEditWorkshop && (
-							<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-								<h1 className="capitalize">{activeTab}</h1>
-							</div>
-						)
 					)}
 
 					{React.Children.map(children, (child) => {

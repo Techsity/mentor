@@ -7,7 +7,7 @@ const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Upcoming",
+		tag: "Upcoming",
 		reviews: reviews,
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
@@ -43,7 +43,7 @@ const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Recordings",
+		tag: "Recordings",
 		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
@@ -79,7 +79,7 @@ const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Live",
 		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
@@ -115,7 +115,7 @@ const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Upcoming",
+		tag: "Upcoming",
 		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
@@ -151,7 +151,7 @@ const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Upcoming",
+		tag: "Upcoming",
 		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
@@ -180,14 +180,14 @@ const workshops: IWorkshop[] = [
 			"Positioning ads to precise target audience",
 		],
 		mentor: mentors[1],
-		price: "free",
+		price: 0,
 		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
 		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Live",
 		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",

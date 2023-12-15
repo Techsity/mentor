@@ -11,10 +11,7 @@ export const AddNewLectureButton: FC<{ handleAddNewLecture: any }> = ({ handleAd
 		<p className="text-xs text-white select-none">Add New</p>
 	</div>
 );
-export const DuplicateLectureButton: FC<{ handleDuplicateLecture: any; currentContentIndex: number }> = ({
-	handleDuplicateLecture,
-	currentContentIndex,
-}) => (
+export const DuplicateLectureButton: FC<{ handleDuplicateLecture: any }> = ({ handleDuplicateLecture }) => (
 	<div className="flex flex-col gap-2 items-center cursor-pointer select-none" onClick={handleDuplicateLecture}>
 		<svg width="25" height="28" viewBox="0 0 18 21" fill="none">
 			<path
@@ -30,7 +27,7 @@ export const DuplicateLectureButton: FC<{ handleDuplicateLecture: any; currentCo
 				fill="black"
 				alignmentBaseline="middle"
 				fontSize={10}>
-				{currentContentIndex + 1}
+				{/* {currentContentIndex + 1} */}
 			</text>
 		</svg>
 		<p className="text-xs text-white select-none">Duplicate</p>

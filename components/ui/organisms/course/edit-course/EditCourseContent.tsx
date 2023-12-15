@@ -1,16 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { CourseSection, ICourseContent } from "../../../../../interfaces";
-import courses from "../../../../../data/courses";
 import ContentEditComponent from "./ContentEditComponent";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
 
-const EditCourseContent = (props: { content?: ICourseContent[] }) => {
-	const initialState: ICourseContent = courses[0].course_contents[0];
+type Props = { content?: ICourseContent[] };
+
+const EditCourseContent = (props: Props) => {
 	const emptyState: ICourseContent = { title: "", course_sections: [{ notes: "", section_name: "", video_url: "" }] };
 	const ref = useRef<HTMLDivElement>(null);
-	const [state, setState] = useState<ICourseContent[]>(props.content || [initialState] || [emptyState]);
+	const [state, setState] = useState<ICourseContent[]>(props.content || [emptyState]);
+
 	const refs = Array.from({ length: state.length }, () => ref);
 	const lastContentContainerRef = useRef<HTMLDivElement>(null);
 
@@ -62,29 +63,51 @@ const EditCourseContent = (props: { content?: ICourseContent[] }) => {
 			});
 		};
 
-	const handleAddNewLecture = () => {
+	const handleAddNewLecture = (index: number) => {
 		setState((prev) => {
-			return [...prev, emptyState];
+			const updated = [...prev];
+			updated[index].course_sections = [...updated[index].course_sections, ...emptyState.course_sections];
+			return updated;
 		});
-		// if (lastContentContainerRef.current) {
-		// 	lastContentContainerRef.current.scrollIntoView({ behavior: "smooth" });
-		// }
+		if (lastContentContainerRef.current) {
+			lastContentContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+		}
 	};
 
-	const handleDuplicateLecture = (index: number) => {
-		const duplicatedLecture = { ...state[index], title: `${state[index].title} - Copy` };
-		const newState = [...state.slice(0, index + 1), duplicatedLecture, ...state.slice(index + 1)];
-		setState(newState);
+	const handleDuplicateLecture = (index: number, section_index: number) => {
+		if (state[index]) {
+			setState((prev) => {
+				const lectureToDuplicate: CourseSection = prev[index].course_sections[section_index];
+				const updated = [...prev];
+				const duplicatedLecture: CourseSection = {
+					...lectureToDuplicate,
+					section_name: lectureToDuplicate.section_name + " - Copy",
+				};
+				updated[index].course_sections.splice(section_index + 1, 0, duplicatedLecture);
+				return updated;
+			});
+		}
 	};
 
-	const handleDeleteLecture = (index: number) => {
-		if (state.length > 2) {
-			if (confirm("Are you sure you want to delete ths outline?")) {
-				const newState = [...state.slice(0, index), ...state.slice(index + 1)];
-				setState(newState);
+	const handleDeleteLecture = (index: number, section_index: number) => {
+		if (state[index]) {
+			if (state[index].course_sections.length > 2) {
+				if (confirm("Are you sure you want to delete this lecture?")) {
+					setState((prev) => {
+						const updated = [...prev];
+						updated[index].course_sections = [
+							...updated[index].course_sections.slice(0, section_index),
+							...updated[index].course_sections.slice(section_index + 1),
+						];
+						return updated;
+					});
+				}
+			} else {
+				toast.error(
+					"You must have at least, 2 outlines in each lecture.",
+					ToastDefaultOptions({ id: "error" }),
+				);
 			}
-		} else {
-			toast.error("You can't have less than 2 course outlines", ToastDefaultOptions({ id: "error" }));
 		}
 	};
 
@@ -95,9 +118,9 @@ const EditCourseContent = (props: { content?: ICourseContent[] }) => {
 					<ContentEditComponent
 						{...cont}
 						handleChange={handleChange}
-						handleAddNewLecture={handleAddNewLecture}
-						handleDuplicateLecture={() => handleDuplicateLecture(index)}
-						handleDeleteLecture={() => handleDeleteLecture(index)}
+						handleAddNewLecture={() => handleAddNewLecture(index)}
+						handleDuplicateLecture={handleDuplicateLecture}
+						handleDeleteLecture={handleDeleteLecture}
 						key={index}
 						contentLength={state.length}
 						index={index}

@@ -77,11 +77,11 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 		}
 	};
 	return (
-		<div className="border border-[#70C5A1] p-5 my-5 text-sm">
+		<div className="border border-[#70C5A1] p-5 my-6 text-sm">
 			<div className="">
 				<h1 className="text-[#B1B1B1]">Day {index + 1}</h1>
-				<div className="grid md:grid-col-6 mt-4 gap-3">
-					<div className="col-span-6 flex flex-col gap-3">
+				<div className="grid md:grid-col-6 mt-4 gap-5">
+					<div className="col-span-6">
 						<p className="text-[#bebebe]">Title</p>
 						<CustomTextInput
 							containerProps={{
@@ -93,7 +93,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 							onChange={handleChange("title")}
 						/>
 					</div>
-					<div className="col-span-2 flex flex-col gap-3">
+					<div className="col-span-2">
 						<p className="text-[#bebebe]">Date</p>
 						<CustomTextInput
 							containerProps={{
@@ -105,7 +105,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 							onChange={handleChange("date")}
 						/>
 					</div>
-					<div className="col-span-2 flex flex-col gap-3">
+					<div className="col-span-2">
 						<p className="text-[#bebebe]">Start time</p>
 						<CustomTextInput
 							containerProps={{
@@ -115,7 +115,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 							placeholder={content?.date}
 						/>
 					</div>
-					<div className="col-span-2 flex flex-col gap-3">
+					<div className="col-span-2">
 						<p className="text-[#bebebe]">End time</p>
 						<CustomTextInput
 							containerProps={{

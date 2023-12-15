@@ -295,13 +295,13 @@ export interface IWorkshopContent {
 }
 export interface IWorkshop {
 	title: string;
-	category: "Live" | "Upcoming" | "Recordings";
+	tag: "Live" | "Upcoming" | "Recordings";
 	description: string;
 	startDate: string;
 	endDate: string;
 	duration: number;
 	participants: number;
-	price: number | "free";
+	price: number;
 	mentor: IMentor;
 	available: boolean;
 	imgUrl?: string;
