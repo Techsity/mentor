@@ -1,69 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
 import workshops from "../../../../data/workshops";
 import { dummyUsers } from "../../../../data/user";
 import { IUser } from "../../../../interfaces/user.interface";
-import VideoCallParticipantCard from "../../../ui/atom/cards/call/VideoCallParticipantCard";
+import LiveWorkshopParticipants from "../../../ui/organisms/workshop/live/AllParticipants";
+import { IWorkshop } from "../../../../interfaces";
+import ConferenceCallComponent from "../../../ui/organisms/workshop/live/ConferenceCallComponent";
 
 const LiveworkshopTemplate = () => {
-	const [hasMediaAccess, setHasMediaAccess] = useState<boolean>(false);
-	const videoRef = useRef<HTMLVideoElement>(null);
 	const user = useSelector(currentUser);
 	const workshop = workshops[0];
 
 	const usersInCall: IUser[] = [user as IUser, ...dummyUsers];
-	const displayedParticipants: IUser[] = usersInCall.slice(0, 8);
-
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
+
 	const isWorkshopOwner = Boolean(user && user?.mentor?.id === workshop.mentor.id);
-	// useEffect(() => {
-	// 	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-	// 		navigator.mediaDevices
-	// 			.getUserMedia({
-	// 				audio: { echoCancellation: true, noiseSuppression: true },
-	// 				video: { width: 640, height: 480, frameRate: { ideal: 15, max: 30 } },
-	// 			})
-	// 			.then((stream) => {
-	// 				if (videoRef.current) {
-	// 					videoRef.current.srcObject = stream;
-	// 				}
-	// 				setHasMediaAccess(true);
-	// 			})
-	// 			.catch((error) => {
-	// 				setHasMediaAccess(false);
-	// 				console.error("Error accessing microphone and camera:", error.message);
-	// 			});
-	// 	} else {
-	// 		setHasMediaAccess(false);
-	// 		console.error("getUserMedia is not supported in this browser");
-	// 	}
-	// 	return () => {
-	// 		setHasMediaAccess(false);
-	// 	};
-	// }, []);
 
 	return (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[200dvh] overflow-hidden">
 			{/* Top Section */}
-			<div className="flex sm:flex-row flex-col gap-5 justify-end sm:justify-between sm:item-center sm:px-10 lg:px-0">
-				<div className="flex gap-5 items-center text-sm">
-					<h1 className="font-medium">Live Workshop</h1>
-					<p className="text-[#00AD74]">
-						{workshop.mentor.user?.name} ({workshop.title})
-					</p>
-				</div>
-				{isWorkshopOwner && <PrimaryButton className="bg-[#FF2800] px-6 p-2" title="End Session" />}
-			</div>
+			<LiveWorkshopTopSection isWorkshopOwner={isWorkshopOwner} workshop={workshop} />
 			<br />
-
 			<div className="relative h-[65dvh] md:h-[70dvh] min-w-screen z-20 flex items-center w-full">
 				{/* Left Participants Pane */}
 				<div
 					className={`duration-300 z-30 absolute w-full h-full max-w-[80%] xs:max-w-[55%] sm:max-w-[50%] lg:max-w-[40%] xl:max-w-[35%] right-0`}>
 					<div className="relative w-full h-full flex justify-end items-center">
-						{/* Pane Controller */}
+						{/* Participants Pane Controller */}
 						<div
 							className={`${
 								showParticipants ? "hidden" : ""
@@ -86,7 +51,6 @@ const LiveworkshopTemplate = () => {
 								</div>
 							</div>
 						</div>
-						{/* Participants */}
 						<div
 							className={`relative w-full h-full flex items-center animate__animated animate__fastest ${
 								showParticipants ? "animate__slideInRight" : "animate__slideOutRight"
@@ -105,48 +69,30 @@ const LiveworkshopTemplate = () => {
 									</svg>
 								</div>
 							</div>
-							<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full">
-								<div className="flex-grow w-full bg-white py-0 p-6">
-									<h1 className="text-[#bebebe] text-sm text-left mb-5">All Participants</h1>
-									<div className="grid sm:grid-cols-2 gap-3 h-full w-full bg-white">
-										{/* All Participants Component */}
-										{displayedParticipants
-											.filter((u) => u !== null)
-											.map((dummy, index) => {
-												return (
-													<VideoCallParticipantCard
-														user={dummy}
-														isHost={isWorkshopOwner}
-														key={index}
-														hideUser={(id) => {
-															displayedParticipants.splice(
-																displayedParticipants.findIndex((u) => u.id === id),
-																1,
-															);
-															// displayedParticipants.push()
-														}}
-													/>
-												);
-											})}
-										<h1 className="text-[#094B10] text-sm text-left mb-5 select-none cursor-pointer font-medium">
-											View all {usersInCall.length} participants
-										</h1>
-									</div>
-								</div>
-							</div>
+							{/* Participants */}
+							<LiveWorkshopParticipants participants={usersInCall} workshop={workshop} />
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<div className="relative md:max-w-[95%] w-full h-full bg-zinc-100 flex-grow">
-					{/* Video */}
-					<div className="left-0 bg-zinc-200 w-full h-full"></div>
-					{/* Controls */}
-					<div className="absolute bottom-0 left-0 w-full p-5 bg-black/50 backdrop-blur-sm"></div>
-				</div>
+				<ConferenceCallComponent isWorkshopOwner={isWorkshopOwner} />
 			</div>
 		</div>
 	);
 };
 
+const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; isWorkshopOwner: boolean }> = ({
+	isWorkshopOwner,
+	workshop,
+}) => (
+	<div className="flex sm:flex-row flex-col gap-5 justify-end sm:justify-between sm:item-center sm:px-10 lg:px-0">
+		<div className="flex gap-5 items-center text-sm">
+			<h1 className="font-medium">Live Workshop</h1>
+			<p className="text-[#00AD74]">
+				{workshop.mentor.user?.name} ({workshop.title})
+			</p>
+		</div>
+		{isWorkshopOwner && <PrimaryButton className="bg-[#FF2800] px-6 p-2" title="End Session" />}
+	</div>
+);
 export default LiveworkshopTemplate;
