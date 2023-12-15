@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ILoginState } from "../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { testUser } from "../../data/user";
+import { dummyUsers, testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
 import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
@@ -54,63 +54,87 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			return;
 		}
 		// Perform login api call here
-		loginUser({
-			variables: {
-				createLoginInput: {
-					email: state.email,
-					password: state.password,
+
+		dispatch(
+			setCredentials({
+				isLoggedIn: true,
+				user: {
+					...dummyUsers[0],
+					// Temporary
+					payment_cards: [
+						{
+							bank: { name: "GTbank via Paystack" },
+							card_name: "John Doe Ipsum",
+							card_number: "5399 8878 9887 99099",
+						},
+					],
 				},
-			},
-		})
-			.then((response: any) => {
-				const userData: IUser = response.data.loginUser.user;
-				const authToken = response.data.loginUser.access_token;
-				if (response.data.loginUser.user) {
-					authenticate(authToken, () => {
-						// setLoading(false);
-						dispatch(
-							setCredentials({
-								isLoggedIn: true,
-								user: {
-									...userData,
-									// Temporary
-									payment_cards: [
-										{
-											bank: { name: "GTbank via Paystack" },
-											card_name: "John Doe Ipsum",
-											card_number: "5399 8878 9887 99099",
-										},
-									],
-								},
-								mentorProfile: mentors[0],
-							}),
-						);
-						const next = router.query.next as string;
-						if (next) {
-							router.replace(decodeURIComponent(next));
-						} else {
-							router.replace(`/profile`);
-						}
-					});
-				}
-			})
-			.catch((error: any) => {
-				// console.error(JSON.stringify(error));
-				console.error(error);
-				setLoading(false);
-				const errorMessage = formatGqlError(error);
-				// If account is not active, redirect to otp screen
-				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
-					toast.error(errorMessage + "Redirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
-					setTimeout(function () {
-						toast.dismiss("auth_form_pop");
-						// mutation to request for otp here, before redirecting
-						router.push("/auth/verification/" + crypto.randomUUID() + "/signup");
-					}, 2000);
-					return;
-				}
-				toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
-			});
+				mentorProfile: mentors[0],
+			}),
+		);
+		const next = router.query.next as string;
+		if (next) {
+			router.replace(decodeURIComponent(next));
+		} else {
+			router.replace(`/profile`);
+		}
+		// loginUser({
+		// 	variables: {
+		// 		createLoginInput: {
+		// 			email: state.email,
+		// 			password: state.password,
+		// 		},
+		// 	},
+		// })
+		// 	.then((response: any) => {
+		// 		const userData: IUser = response.data.loginUser.user;
+		// 		const authToken = response.data.loginUser.access_token;
+		// 		if (response.data.loginUser.user) {
+		// 			authenticate(authToken, () => {
+		// 				// setLoading(false);
+		// 				dispatch(
+		// 					setCredentials({
+		// 						isLoggedIn: true,
+		// 						user: {
+		// 							...userData,
+		// 							// Temporary
+		// 							payment_cards: [
+		// 								{
+		// 									bank: { name: "GTbank via Paystack" },
+		// 									card_name: "John Doe Ipsum",
+		// 									card_number: "5399 8878 9887 99099",
+		// 								},
+		// 							],
+		// 						},
+		// 						mentorProfile: mentors[0],
+		// 					}),
+		// 				);
+		// 				const next = router.query.next as string;
+		// 				if (next) {
+		// 					router.replace(decodeURIComponent(next));
+		// 				} else {
+		// 					router.replace(`/profile`);
+		// 				}
+		// 			});
+		// 		}
+		// 	})
+		// 	.catch((error: any) => {
+		// 		// console.error(JSON.stringify(error));
+		// 		console.error(error);
+		// 		setLoading(false);
+		// 		const errorMessage = formatGqlError(error);
+		// 		// If account is not active, redirect to otp screen
+		// 		if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
+		// 			toast.error(errorMessage + "Redirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
+		// 			setTimeout(function () {
+		// 				toast.dismiss("auth_form_pop");
+		// 				// mutation to request for otp here, before redirecting
+		// 				router.push("/auth/verification/" + crypto.randomUUID() + "/signup");
+		// 			}, 2000);
+		// 			return;
+		// 		}
+		// 		toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
+		// 	});
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };
 };

@@ -16,4 +16,5 @@ export const getServerSideProps = (ctx: GetServerSidePropsContext): GetServerSid
 	return { props: {} };
 };
 
-export default protectedPageWrapper(LiveWorkshop);
+export default LiveWorkshop;
+// export default protectedPageWrapper(LiveWorkshop);
