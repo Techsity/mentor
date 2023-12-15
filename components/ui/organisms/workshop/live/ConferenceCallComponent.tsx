@@ -3,25 +3,33 @@ import { MicMuted, RecIcon, ShareScreenIcon, SpeakingIcon } from "../../../atom/
 
 const ConferenceCallComponent = ({ isWorkshopOwner }: { isWorkshopOwner: boolean }) => {
 	const [hasMediaAccess, setHasMediaAccess] = useState<boolean>(false);
-	const [videoIsMuted, setVideoIsMuted] = useState<boolean>(false);
+	const [videoIsMuted, setVideoIsMuted] = useState<boolean>(true);
 	const videoRef = useRef<HTMLVideoElement>(null);
 
 	const handleMute = () => setVideoIsMuted(!videoIsMuted);
 
+	// useEffect(() => {
+	// 	if (videoRef.current) {
+	// 		setVideoIsMuted(videoRef.current?.muted ? true : false);
+	// 	}
+	// 	console.log(videoRef.current?.muted);
+	// }, [videoRef.current?.muted]);
+
 	useEffect(() => {
-		console.log(hasMediaAccess);
+		// console.log(hasMediaAccess);
 		if (!hasMediaAccess)
 			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				navigator.mediaDevices
 					.getUserMedia({
-						audio: { echoCancellation: true, noiseSuppression: true },
-						// video: { width: 640, height: 480, frameRate: { ideal: 15, max: 30 } },
-						video: true,
+						audio: { echoCancellation: true, noiseSuppression: true, },
+						video: { width: 640, height: 480, frameRate: { ideal: 15, max: 30 } },
+						// video: true,
 					})
 					.then((stream) => {
 						if (isWorkshopOwner) {
 							if (videoRef.current) {
 								videoRef.current.srcObject = stream;
+								videoRef.current.volume = 0;
 							}
 							setHasMediaAccess(true);
 						}
