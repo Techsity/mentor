@@ -20,6 +20,7 @@ export const dummyUsers = [
 		isPremium: false,
 	},
 	{
+		id: "93e14672-3bb0-4419-a754-6e752b4bbfb9",
 		email: "user@mail.io",
 		name: "Test User",
 		country: countries[0].label,
@@ -34,7 +35,7 @@ export const dummyUsers = [
 		isPremium: false,
 	},
 	{
-		id: "user-1",
+		id: "93e14672-3bb0-4419-a754-6e752b4bbfb7",
 		email: "user@example.com",
 		name: "Alice",
 		phone: "123-456-7890",

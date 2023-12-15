@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/features/authSlice";
@@ -8,15 +8,50 @@ import { IUser } from "../../../../interfaces/user.interface";
 import LiveWorkshopParticipants from "../../../ui/organisms/workshop/live/AllParticipants";
 import { IWorkshop } from "../../../../interfaces";
 import ConferenceCallComponent from "../../../ui/organisms/workshop/live/ConferenceCallComponent";
+import { useRouter } from "next/router";
 
 const LiveworkshopTemplate = () => {
+	const router = useRouter();
+	const workshopId = router.query.id as string;
+	const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 	const user = useSelector(currentUser);
 	const workshop = workshops[0];
 
-	const usersInCall: IUser[] = [user as IUser, ...dummyUsers];
+	const [participants, setParticipants] = useState<IUser[]>([]);
+	const [usersJoined, setUsersJoined] = useState<any>({});
+
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 
 	const isWorkshopOwner = Boolean(user && user?.mentor?.id === workshop.mentor.id);
+
+	let localTracks;
+
+	const joinWorkshop = async () => {
+		const AgoraRTC = (await import("agora-rtc-sdk-ng")).default;
+		if (user) {
+			localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+			localTracks[1].play(document.getElementById(`user__${user.id}`) as HTMLElement, { mirror: true });
+		}
+	};
+
+	const initAgoraSDK = async () => {
+		const AgoraRTC = (await import("agora-rtc-sdk-ng")).default;
+		const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+		if (user && workshopId && process.env.NEXT_PUBLIC_AGORA_APP_ID) {
+			setParticipants((prev) => {
+				return [...prev, { ...(user as IUser) }];
+			});
+			await client.join(process.env.NEXT_PUBLIC_AGORA_APP_ID as string, workshopId, null, user.id);
+			joinWorkshop();
+		}
+	};
+
+	useEffect(() => {
+		if (!hasLoaded) {
+			initAgoraSDK();
+		}
+		setHasLoaded(true);
+	}, []);
 
 	return (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[200dvh] overflow-hidden">
@@ -32,7 +67,7 @@ const LiveworkshopTemplate = () => {
 						<div
 							className={`${
 								showParticipants ? "hidden" : ""
-							} md:-right-10 absolute animate__animated animate__slideInLeft`}>
+							} md:-right-6 absolute animate__animated animate__slideInLeft`}>
 							<div
 								onClick={() => setShowParticipants(!showParticipants)}
 								className={`duration-300 bg-white group top-44 p-5 rounded-tl-full rounded-bl-full cursor-pointer select-none ${""}`}>
@@ -70,12 +105,19 @@ const LiveworkshopTemplate = () => {
 								</div>
 							</div>
 							{/* Participants */}
-							<LiveWorkshopParticipants participants={usersInCall} workshop={workshop} />
+							<LiveWorkshopParticipants
+								participants={participants.filter((uid) => uid.id !== workshop.mentor.user.id)}
+								workshop={workshop}
+							/>
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent isWorkshopOwner={isWorkshopOwner} />
+				<ConferenceCallComponent
+					workshop={workshop}
+					participants={participants}
+					isWorkshopOwner={isWorkshopOwner}
+				/>
 			</div>
 		</div>
 	);

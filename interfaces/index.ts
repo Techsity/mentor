@@ -255,6 +255,7 @@ export interface ICourseCategory {
 }
 
 export interface ICourse {
+	id?: string;
 	title: string;
 	description: string;
 	course_images: string;
@@ -294,6 +295,7 @@ export interface IWorkshopContent {
 	date: string;
 }
 export interface IWorkshop {
+	id?: string;
 	title: string;
 	tag: "Live" | "Upcoming" | "Recordings";
 	description: string;
