@@ -69,9 +69,9 @@ const EditCourseContent = (props: Props) => {
 			updated[index].course_sections = [...updated[index].course_sections, ...emptyState.course_sections];
 			return updated;
 		});
-		if (lastContentContainerRef.current) {
-			lastContentContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-		}
+		// if (lastContentContainerRef.current) {
+		// 	lastContentContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+		// }
 	};
 
 	const handleDuplicateLecture = (index: number, section_index: number) => {
@@ -103,12 +103,14 @@ const EditCourseContent = (props: Props) => {
 					});
 				}
 			} else {
-				toast.error(
-					"You must have at least, 2 outlines in each lecture.",
-					ToastDefaultOptions({ id: "error" }),
-				);
+				toast.error("Each lecture must have at least, 2 outlines.", ToastDefaultOptions({ id: "error" }));
 			}
 		}
+	};
+	const handleAddNewOutline = () => {
+		setState((prev) => {
+			return [...prev, emptyState];
+		});
 	};
 
 	return (
@@ -125,6 +127,7 @@ const EditCourseContent = (props: Props) => {
 						contentLength={state.length}
 						index={index}
 						contentContainerRef={index === state.length - 1 ? lastContentContainerRef : refs[index]}
+						handleAddNewOutline={handleAddNewOutline}
 					/>
 				);
 			})}

@@ -12,6 +12,7 @@ interface ContentEditComponentProps extends ICourseContent {
 		section_index?: number,
 	) => (e: ChangeEvent<HTMLInputElement>) => void;
 	handleAddNewLecture: () => void;
+	handleAddNewOutline: () => void;
 	handleDuplicateLecture: (index: number, section_index: number) => void;
 	handleDeleteLecture: (index: number, section_index: number) => void;
 	index: number;
@@ -29,6 +30,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	title,
 	course_sections,
 	contentLength,
+	handleAddNewOutline,
 }) => {
 	const fileUploadInputRef = useRef<HTMLInputElement>(null);
 
@@ -127,7 +129,9 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			</div>
 			<div className="my-4 flex justify-end items-center max-w-2xl">
 				{index === contentLength - 1 && (
-					<div className="cursor-pointer text-[#70C5A1] select-none">+ Add New Outline</div>
+					<div onClick={handleAddNewOutline} className="cursor-pointer text-[#70C5A1] select-none">
+						+ Add New Outline
+					</div>
 				)}
 			</div>
 		</div>
