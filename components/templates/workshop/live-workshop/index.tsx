@@ -145,7 +145,7 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 				<h1 className="flex-grow text-sm">Live Chat</h1>
 				<h1 className="w-full max-w-[30%] text-sm md:block hidden">Resource Center</h1>
 			</div>
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-center gap-6">
 				<div className="flex-grow">
 					<section className="animate__animated animate__fadeIn">
 						<form
@@ -175,7 +175,7 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 									<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
 										{message.content}
 									</p>
-									<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] w-[25%]">
+									<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] sm:w-[25%]">
 										<div className="flex lg:flex-col items-center lg:items-start gap-3">
 											<img
 												src={
@@ -185,7 +185,7 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 												alt="message"
 												className="w-10 h-10 rounded-full"
 											/>
-											<p className="text-sm">
+											<p className="text-sxsm">
 												{message.user &&
 													message.user.name.split(" ")[0] +
 														" " +

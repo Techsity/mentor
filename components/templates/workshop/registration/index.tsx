@@ -19,7 +19,7 @@ const WorkshopRegistrationPageTemplate = () => {
 		return;
 	}
 
-	return workshop.price === "free" ? (
+	return workshop.price === 0 ? (
 		<>
 			<WorkshopRegisterHeader {...workshop} />
 			<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">

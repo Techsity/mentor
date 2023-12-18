@@ -2,6 +2,7 @@ import React from "react";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ProfileTabLinkType } from "../../../../interfaces";
 import LiveworkshopTemplate from "../../../../components/templates/workshop/live-workshop";
+import protectedPageWrapper from "../../../protectedPageWrapper";
 
 const LiveWorkshop = () => {
 	return <LiveworkshopTemplate />;
@@ -19,5 +20,5 @@ export const getServerSideProps = (
 	return { props: { workshopId: id } };
 };
 
-export default LiveWorkshop;
-// export default protectedPageWrapper(LiveWorkshop);
+// export default LiveWorkshop;
+export default protectedPageWrapper(LiveWorkshop);
