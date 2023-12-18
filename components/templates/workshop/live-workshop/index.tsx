@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, memo, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import LiveWorkshopParticipants from "../../../ui/organisms/workshop/live/AllParticipants";
 import { IWorkshop } from "../../../../interfaces";
@@ -95,13 +95,19 @@ const LiveworkshopTemplate = () => {
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">
-				<LiveWorkshopChatSection {...{ user: user as IUser }} />
+				<LiveWorkshopChatSection {...{ user: user as IUser, currentUserIsWorkshopOwner }} />
 			</div>
 		</div>
 	);
 };
 
-const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
+const LiveWorkshopChatSection = memo(function LiveWorkshopChatSection({
+	user,
+	currentUserIsWorkshopOwner,
+}: {
+	user: IUser;
+	currentUserIsWorkshopOwner: boolean;
+}) {
 	type LiveWorkshopChat = {
 		content: string;
 		user: IUser;
@@ -139,46 +145,47 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 		}
 	};
 
+	const resources: string[] = ["video1234.mp4", "image.png"];
 	return (
 		<>
-			<div className="flex justify-between items-center gap-5 p-3 md:px-6 bg-zinc-200">
+			<div className="flex justify-between items-center gap-6 p-3 md:px-6 bg-zinc-200">
 				<h1 className="flex-grow text-sm">Live Chat</h1>
-				<h1 className="w-full max-w-[30%] text-sm md:block hidden">Resource Center</h1>
+				<h1 className="w-full max-w-[35%] text-sm md:block hidden">Resource Center</h1>
 			</div>
-			<div className="flex justify-between items-center gap-6">
-				<div className="flex-grow">
-					<section className="animate__animated animate__fadeIn">
-						<form
-							onSubmit={(e) => e.preventDefault()}
-							className="border border-[#70C5A1] bg-transparent duration-300 my-4 flex sm:flex-row flex-col sm:items-center sm:px-3">
-							<input
-								name=""
-								maxLength={100}
-								id=""
-								placeholder="Ask a question or leave a comment..."
-								value={newChat?.content}
-								onChange={handleChange}
-								className="outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-4 px-6 flex-grow"
-							/>
-							<PrimaryButton
-								type="submit"
-								onClick={addNewReview}
-								title={!loading ? "Send" : ""}
-								className="h-full p-2 flex items-center justify-center text-center w-full lg:max-w-[15%] md:max-w-[20%]"
-								icon={loading ? <ActivityIndicator /> : null}
-							/>
-						</form>
-						<div className="bg-white h-40 overflow--hidden overflow-y-auto p-2 border border-[#eee]">
+			<div className="flex justify-between items-start gap-6 mt-5">
+				<div className="flex-grow animate__animated animate__fadeIn">
+					<form
+						onSubmit={(e) => e.preventDefault()}
+						className="border border-[#70C5A1] bg-transparent duration-300 my-4 flex sm:flex-row flex-col sm:items-center sm:px-3">
+						<input
+							name=""
+							maxLength={200}
+							id=""
+							placeholder="Ask a question or leave a comment..."
+							value={newChat?.content}
+							onChange={handleChange}
+							className="outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-4 px-6 flex-grow"
+						/>
+						<PrimaryButton
+							type="submit"
+							onClick={addNewReview}
+							title={!loading ? "Send" : ""}
+							className="h-full p-2 flex items-center justify-center text-center w-full lg:max-w-[15%] md:max-w-[20%]"
+							icon={loading ? <ActivityIndicator /> : null}
+						/>
+					</form>
+					{chats.length > 0 && (
+						<div className="bg-white sm:h-56 sm:overflow-hidden sm:overflow-y-auto p-2 border border-[#eee]">
 							{chats
 								.map((message, i) => (
 									<div
 										key={i}
-										className="w-full animate__animated animate__fadeIn flex justify-between lg:flex-row flex-col lg:items-center gap-5 border p-3 border-[#70C5A1] bg-transparent duration-300 min-h-[45px] my-4">
+										className="w-full animate__animated animate__fadeInDown flex justify-between lg:flex-row flex-col divide-x lg:items-center gap-5 border p-3 border-[#70C5A1] bg-transparent duration-300 h-20 my-4">
 										<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
 											{message.content}
 										</p>
-										<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] sm:w-[25%]">
-											<div className="flex lg:flex-col items-center lg:items-start gap-3">
+										<div className="sm:pl-5 sm:w-[25%]">
+											<div className="flex lg:flex-col items-center lg:items-start gap-1">
 												<img
 													src={
 														(message.user && message.user.avatar) ||
@@ -188,11 +195,12 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 													alt="message"
 													className="w-10 h-10 rounded-full"
 												/>
-												<p className="text-sxsm">
-													{message.user &&
-														message.user.name.split(" ")[0] +
-															" " +
-															message.user.name.split(" ")[1]}
+												<p className="text-xs">
+													{message.user && message.user.name.split(" ").length > 1
+														? message.user.name.split(" ")[0] +
+														  " " +
+														  message.user.name.split(" ")[1]
+														: message.user.name}
 												</p>
 											</div>
 										</div>
@@ -200,13 +208,67 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 								))
 								.reverse()}
 						</div>
-					</section>
+					)}
 				</div>
-				<div className="w-full max-w-[30%] text-sm md:block hidden"></div>
+				<div className="w-full max-w-[35%] text-sm md:block hidden">
+					{/* Upload Resources */}
+					{currentUserIsWorkshopOwner && (
+						<div className="grid">
+							<h1 className="my-2 text-[#b1b1b1] text-xs">Upload Resources</h1>
+							<div className="bg-white p-2 border border-[#eee] w-full">
+								<div className="flex sm:flex-row flex-col gap-3 sm:items-center w-full">
+									<div className="grid gap-2 flex-grow">
+										<input
+											name=""
+											id=""
+											placeholder="Link"
+											className="border border-[#70C5A1]  outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-2 w-full"
+										/>
+										<input
+											name=""
+											maxLength={200}
+											id=""
+											type="url"
+											placeholder="Paste Link"
+											className="border border-[#70C5A1]  outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-2 w-full"
+										/>
+									</div>
+									<PrimaryButton
+										type="submit"
+										title={"Post"}
+										className="h-full p-2 flex items-center justify-center text-center w-full md:w-[25%]"
+									/>
+								</div>
+							</div>
+						</div>
+					)}
+					{/* All Resources */}
+					{resources.length > 0 && (
+						<>
+							<h1 className="my-2 mt-5 text-[#b1b1b1] text-xs">All Resources</h1>
+							{resources.map((resourceName, i) => {
+								return (
+									<div
+										key={i}
+										className="border border-[#70C5A1] bg-transparent duration-300 my-4 flex sm:flex-row flex-col sm:items-center sm:px-3">
+										<p className="text-[#b1b1b1] text-xs outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-4 px-6 flex-grow">
+											{resourceName}
+										</p>
+										<PrimaryButton
+											type="button"
+											title={"Download"}
+											className="h-full p-2 flex items-center justify-center text-center w-full md:max-w-[30%]"
+										/>
+									</div>
+								);
+							})}
+						</>
+					)}
+				</div>
 			</div>
 		</>
 	);
-};
+});
 
 const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; currentUserIsWorkshopOwner: boolean }> = ({
 	currentUserIsWorkshopOwner,

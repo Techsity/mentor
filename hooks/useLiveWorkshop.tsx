@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
 import {
 	IMicrophoneAudioTrack,
 	IRemoteAudioTrack,
@@ -38,7 +38,9 @@ const useLiveWorkshop = (): ReturnProps => {
 
 	const [showParticipants, setShowParticipants] = useState<boolean>(true);
 
-	const currentUserIsWorkshopOwner = Boolean(user && user?.mentor?.id === workshop.mentor.id);
+	const currentUserIsWorkshopOwner = useMemo(() => {
+		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
+	}, [user, workshop]);
 
 	const [localTracks, setLocalTracks] = useState<any>([]); // For tracking and setting user permission -  i.e: show camera or not, unmute mic or not
 
@@ -125,9 +127,6 @@ const useLiveWorkshop = (): ReturnProps => {
 	// 		client.off("user-left", handleUserLeft);
 	// 	};
 	// }, []);
-
-
-	
 
 	return { setShowParticipants, currentUserIsWorkshopOwner, localTracks, participants, showParticipants, workshop };
 };

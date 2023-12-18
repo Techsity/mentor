@@ -71,7 +71,7 @@ const workshops: IWorkshop[] = [
 			"Social Media Algorithms",
 			"Positioning ads to precise target audience",
 		],
-		mentor: mentors[0],
+		mentor: mentors[1],
 		price: 20000,
 		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
 		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
