@@ -25,7 +25,8 @@ const AuthWrapper = ({ children, user }: { children: ReactNode; user: IUser | nu
 						},
 					],
 				},
-				mentorProfile: mentors[0],
+				// Todo: set mentor profile properly from the mentorProfile query
+				mentorProfile: user.is_admin ? mentors[0] : null,
 			}),
 		);
 

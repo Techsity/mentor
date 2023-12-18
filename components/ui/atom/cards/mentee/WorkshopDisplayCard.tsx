@@ -19,7 +19,7 @@ const WorkshopDisplayCard = ({
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
 			<div className="select-none absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
 				{!profile && (
-					<Link href={`/workshops/${slugify(workshop.title)}`}>
+					<Link href={`/workshops/${slugify(workshop.title)}`} prefetch={false}>
 						<button className="px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300">
 							Register for Workshop
 						</button>

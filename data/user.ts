@@ -37,7 +37,7 @@ export const dummyUsers = [
 	{
 		id: "93e14672-3bb0-4419-a754-6e752b4bbfb7",
 		email: "user@example.com",
-		name: "Alice",
+		name: "CodePriest",
 		phone: "123-456-7890",
 		avatar: "/assets/images/avatar2.png",
 		country: "US",

@@ -7,7 +7,6 @@ import { SelectedCountry } from "../../interfaces/country-selector.interface";
 import { REGISTER_USER } from "../../services/graphql/mutations/auth";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import ResponseMessages from "../../constants/response-codes";
 import { formatGqlError } from "../../utils/auth";
 
 export interface IFieldError {

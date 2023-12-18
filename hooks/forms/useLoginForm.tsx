@@ -82,7 +82,8 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 										},
 									],
 								},
-								mentorProfile: mentors[0],
+								// Todo: set mentor profile properly from the mentorProfile query
+								mentorProfile: userData.is_admin ? mentors[0] : null,
 							}),
 						);
 						const next = router.query.next as string;

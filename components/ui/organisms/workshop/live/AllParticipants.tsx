@@ -5,14 +5,16 @@ import { useSelector } from "react-redux";
 
 import { IWorkshop } from "../../../../../interfaces";
 import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { slugify } from "../../../../../utils";
+import { ConferenceUser } from "../../../../../hooks/useLiveWorkshop";
 
 type Props = {
-	participants: IUser[];
+	participants: ConferenceUser[];
 	workshop: IWorkshop;
 };
 const LiveWorkshopParticipants = ({ participants, workshop }: Props) => {
 	const user = useSelector(currentUser);
-
 	const isWorkshopOwner = Boolean(user && user?.mentor?.id === workshop.mentor.id);
 
 	return (
@@ -22,24 +24,30 @@ const LiveWorkshopParticipants = ({ participants, workshop }: Props) => {
 				{/* All Participants Component */}
 				<div className="grid sm:grid-cols-2 gap-3 h-full w-full bg-white">
 					{participants
-						.filter((u) => u !== null)
-						.map((liveUser, index) => {
+						.map((participant, index) => {
 							return (
 								<VideoCallParticipantCard
-									user={liveUser}
+									user={participant}
 									isHost={isWorkshopOwner}
 									key={index}
 									hideUser={(id) => {
-										participants.splice(
-											participants.findIndex((u) => u.id === id),
-											1,
-										);
+										console.log(id);
+										// participants.splice(
+										// 	participants.findIndex((username) => username === id),
+										// 	1,
+										// );
 										// displayedParticipants.push()
 									}}
 								/>
 							);
 						})
 						.slice(0, 8)}
+					{participants.filter((u) => u !== null).length < 1 && (
+						<div className="flex justify-center items-center">
+							{/* <ActivityIndicator size={30} /> */}
+							<p className="text-sm text-zinc-300">Nobody has joined yet.</p>
+						</div>
+					)}
 				</div>
 				{participants.length > 8 && (
 					<h1 className="text-[#094B10] text-sm text-left mb-5 select-none cursor-pointer font-medium">

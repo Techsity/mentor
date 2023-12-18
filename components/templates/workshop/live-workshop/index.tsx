@@ -1,63 +1,31 @@
-import React, { FC, useEffect, useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { ChangeEvent, FC, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
-import workshops from "../../../../data/workshops";
-import { dummyUsers } from "../../../../data/user";
-import { IUser } from "../../../../interfaces/user.interface";
 import LiveWorkshopParticipants from "../../../ui/organisms/workshop/live/AllParticipants";
 import { IWorkshop } from "../../../../interfaces";
 import ConferenceCallComponent from "../../../ui/organisms/workshop/live/ConferenceCallComponent";
-import { useRouter } from "next/router";
+import { slugify } from "../../../../utils";
+import useLiveWorkshop from "../../../../hooks/useLiveWorkshop";
+import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
+import { IUser } from "../../../../interfaces/user.interface";
+import { useSelector } from "react-redux";
+import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../constants";
+import CustomTextArea from "../../../ui/atom/inputs/CustomTextArea";
 
 const LiveworkshopTemplate = () => {
-	const router = useRouter();
-	const workshopId = router.query.id as string;
-	const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 	const user = useSelector(currentUser);
-	const workshop = workshops[0];
-
-	const [participants, setParticipants] = useState<IUser[]>([]);
-	const [usersJoined, setUsersJoined] = useState<any>({});
-
-	const [showParticipants, setShowParticipants] = useState<boolean>(false);
-
-	const isWorkshopOwner = Boolean(user && user?.mentor?.id === workshop.mentor.id);
-
-	let localTracks;
-
-	const joinWorkshop = async () => {
-		const AgoraRTC = (await import("agora-rtc-sdk-ng")).default;
-		if (user) {
-			localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
-			localTracks[1].play(document.getElementById(`user__${user.id}`) as HTMLElement, { mirror: true });
-		}
-	};
-
-	const initAgoraSDK = async () => {
-		const AgoraRTC = (await import("agora-rtc-sdk-ng")).default;
-		const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-		if (user && workshopId && process.env.NEXT_PUBLIC_AGORA_APP_ID) {
-			setParticipants((prev) => {
-				return [...prev, { ...(user as IUser) }];
-			});
-			await client.join(process.env.NEXT_PUBLIC_AGORA_APP_ID as string, workshopId, null, user.id);
-			joinWorkshop();
-		}
-	};
-
-	useEffect(() => {
-		if (!hasLoaded) {
-			initAgoraSDK();
-		}
-		setHasLoaded(true);
-	}, []);
+	const { currentUserIsWorkshopOwner, participants, showParticipants, workshop, setShowParticipants } =
+		useLiveWorkshop();
 
 	return (
-		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[200dvh] overflow-hidden">
+		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			{/* Top Section */}
-			<LiveWorkshopTopSection isWorkshopOwner={isWorkshopOwner} workshop={workshop} />
+			<LiveWorkshopTopSection currentUserIsWorkshopOwner={currentUserIsWorkshopOwner} workshop={workshop} />
 			<br />
+			{/* Conference Section */}
 			<div className="relative h-[65dvh] md:h-[70dvh] min-w-screen z-20 flex items-center w-full">
 				{/* Left Participants Pane */}
 				<div
@@ -106,7 +74,10 @@ const LiveworkshopTemplate = () => {
 							</div>
 							{/* Participants */}
 							<LiveWorkshopParticipants
-								participants={participants.filter((uid) => uid.id !== workshop.mentor.user.id)}
+								participants={participants.filter(
+									(participant) =>
+										slugify(participant.username) !== slugify(workshop.mentor.user.name),
+								)}
 								workshop={workshop}
 							/>
 						</div>
@@ -116,15 +87,125 @@ const LiveworkshopTemplate = () => {
 				<ConferenceCallComponent
 					workshop={workshop}
 					participants={participants}
-					isWorkshopOwner={isWorkshopOwner}
+					isWorkshopOwner={currentUserIsWorkshopOwner}
+					callHost={participants.find(
+						(participant) => slugify(participant.username) === slugify(workshop.mentor.user.name),
+					)}
 				/>
+			</div>
+			{/* Chat Section */}
+			<div className="mt-5">
+				<LiveWorkshopChatSection {...{ user: user as IUser }} />
 			</div>
 		</div>
 	);
 };
 
-const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; isWorkshopOwner: boolean }> = ({
-	isWorkshopOwner,
+const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
+	type LiveWorkshopChat = {
+		content: string;
+		user: IUser;
+	};
+
+	const emptyChat: LiveWorkshopChat = {
+		content: "",
+		user,
+	};
+	const [loading, setLoading] = useState<boolean>(false);
+	const [chats, setChats] = useState<LiveWorkshopChat[]>([]);
+	const [newChat, setNewChat] = useState<LiveWorkshopChat>(emptyChat);
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+		setNewChat((prevReview) => ({
+			...prevReview,
+			content: e.target.value,
+		}));
+
+	const addNewReview = () => {
+		if (user) {
+			if (newChat?.content) {
+				setLoading(true);
+				setTimeout(function () {
+					setChats((prev) => {
+						return [...prev, newChat];
+					});
+					setLoading(false);
+					setNewChat(emptyChat);
+				}, 1000);
+				// Api Logic
+			}
+		} else {
+			toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
+		}
+	};
+
+	return (
+		<>
+			<div className="flex justify-between items-center gap-5 p-3 md:px-6 bg-zinc-200">
+				<h1 className="flex-grow text-sm">Live Chat</h1>
+				<h1 className="w-full max-w-[30%] text-sm md:block hidden">Resource Center</h1>
+			</div>
+			<div className="flex justify-between items-center">
+				<div className="flex-grow">
+					<section className="animate__animated animate__fadeIn">
+						<form
+							onSubmit={(e) => e.preventDefault()}
+							className="border border-[#70C5A1] bg-transparent duration-300 my-4 flex sm:flex-row flex-col sm:items-center sm:px-3">
+							<input
+								name=""
+								id=""
+								placeholder="Ask a question or leave a comment..."
+								value={newChat?.content}
+								onChange={handleChange}
+								className="outline-none focus:ring-0 placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE] p-4 px-6 flex-grow"
+							/>
+							<PrimaryButton
+								type="submit"
+								onClick={addNewReview}
+								title={!loading ? "Send" : ""}
+								className="h-full p-2 flex items-center justify-center text-center w-full lg:max-w-[15%] md:max-w-[20%]"
+								icon={loading ? <ActivityIndicator /> : null}
+							/>
+						</form>
+						{chats
+							.map((message, i) => (
+								<div
+									key={i}
+									className="w-full animate__animated animate__fadeIn flex justify-between lg:flex-row flex-col lg:items-center gap-5 border p-3 border-[#70C5A1] bg-transparent duration-300 min-h-[45px] my-4">
+									<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
+										{message.content}
+									</p>
+									<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] w-[25%]">
+										<div className="flex lg:flex-col items-center lg:items-start gap-3">
+											<img
+												src={
+													(message.user && message.user.avatar) || "/assets/images/avatar.png"
+												}
+												loading="lazy"
+												alt="message"
+												className="w-10 h-10 rounded-full"
+											/>
+											<p className="text-sm">
+												{message.user &&
+													message.user.name.split(" ")[0] +
+														" " +
+														message.user.name.split(" ")[1]}
+											</p>
+										</div>
+									</div>
+								</div>
+							))
+							.reverse()}
+					</section>
+				</div>
+				<div className="w-full max-w-[30%] text-sm md:block hidden"></div>
+			</div>
+		</>
+	);
+};
+
+const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; currentUserIsWorkshopOwner: boolean }> = ({
+	currentUserIsWorkshopOwner,
 	workshop,
 }) => (
 	<div className="flex sm:flex-row flex-col gap-5 justify-end sm:justify-between sm:item-center sm:px-10 lg:px-0">
@@ -134,7 +215,7 @@ const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; isWorkshopOwner: boolean
 				{workshop.mentor.user?.name} ({workshop.title})
 			</p>
 		</div>
-		{isWorkshopOwner && <PrimaryButton className="bg-[#FF2800] px-6 p-2" title="End Session" />}
+		{currentUserIsWorkshopOwner && <PrimaryButton className="bg-[#FF2800] px-6 p-2" title="End Session" />}
 	</div>
 );
 export default LiveworkshopTemplate;
