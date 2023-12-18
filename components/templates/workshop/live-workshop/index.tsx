@@ -153,6 +153,7 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 							className="border border-[#70C5A1] bg-transparent duration-300 my-4 flex sm:flex-row flex-col sm:items-center sm:px-3">
 							<input
 								name=""
+								maxLength={100}
 								id=""
 								placeholder="Ask a question or leave a comment..."
 								value={newChat?.content}
@@ -167,35 +168,38 @@ const LiveWorkshopChatSection = ({ user }: { user: IUser }) => {
 								icon={loading ? <ActivityIndicator /> : null}
 							/>
 						</form>
-						{chats
-							.map((message, i) => (
-								<div
-									key={i}
-									className="w-full animate__animated animate__fadeIn flex justify-between lg:flex-row flex-col lg:items-center gap-5 border p-3 border-[#70C5A1] bg-transparent duration-300 min-h-[45px] my-4">
-									<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
-										{message.content}
-									</p>
-									<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] sm:w-[25%]">
-										<div className="flex lg:flex-col items-center lg:items-start gap-3">
-											<img
-												src={
-													(message.user && message.user.avatar) || "/assets/images/avatar.png"
-												}
-												loading="lazy"
-												alt="message"
-												className="w-10 h-10 rounded-full"
-											/>
-											<p className="text-sxsm">
-												{message.user &&
-													message.user.name.split(" ")[0] +
-														" " +
-														message.user.name.split(" ")[1]}
-											</p>
+						<div className="bg-white h-40 overflow--hidden overflow-y-auto p-2 border border-[#eee]">
+							{chats
+								.map((message, i) => (
+									<div
+										key={i}
+										className="w-full animate__animated animate__fadeIn flex justify-between lg:flex-row flex-col lg:items-center gap-5 border p-3 border-[#70C5A1] bg-transparent duration-300 min-h-[45px] my-4">
+										<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
+											{message.content}
+										</p>
+										<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] sm:w-[25%]">
+											<div className="flex lg:flex-col items-center lg:items-start gap-3">
+												<img
+													src={
+														(message.user && message.user.avatar) ||
+														"/assets/images/avatar.png"
+													}
+													loading="lazy"
+													alt="message"
+													className="w-10 h-10 rounded-full"
+												/>
+												<p className="text-sxsm">
+													{message.user &&
+														message.user.name.split(" ")[0] +
+															" " +
+															message.user.name.split(" ")[1]}
+												</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							))
-							.reverse()}
+								))
+								.reverse()}
+						</div>
 					</section>
 				</div>
 				<div className="w-full max-w-[30%] text-sm md:block hidden"></div>

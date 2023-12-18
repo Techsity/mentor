@@ -6,7 +6,7 @@ import { IUser } from "../../../../../interfaces/user.interface";
 import { IWorkshop } from "../../../../../interfaces";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { slugify } from "../../../../../utils";
-import { ConferenceUser } from "../../../../templates/workshop/live-workshop";
+import { ConferenceUser } from "../../../../../hooks/useLiveWorkshop";
 import { isCameraVideoTrack, iseAudioTrack } from "../../../atom/cards/call/VideoCallParticipantCard";
 
 const ConferenceCallComponent = ({
