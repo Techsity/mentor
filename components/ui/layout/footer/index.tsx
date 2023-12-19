@@ -61,10 +61,11 @@ const Footer = () => {
 					</div>
 					<div>
 						<ul className="text-white mt-10" style={{ fontWeight: "300" }}>
-							<Link href="#">
+							{/* //Todo update links to go to all live workshops page */}
+							<Link href="/profile/workshop/live?id=dujhedjkgfju">
 								<li className="mb-4 cursor-pointer text-[14px]">Live Mentorship Events</li>
 							</Link>
-							<Link href="#">
+							<Link href="/mentors">
 								<li className="mb-4 cursor-pointer text-[14px]">Find Mentors</li>
 							</Link>
 							<Link href={"/mentor/onboarding"}>
@@ -79,21 +80,29 @@ const Footer = () => {
 							Contact
 						</h2>
 						<ul className="text-white" style={{ fontWeight: "300" }}>
-							<Link href="#">
+							<Link href="mailto:mentor@tecsity.io" prefetch={false}>
 								<li className="mb-3 cursor-pointer text-[14px]">mentor@tecsity.io</li>
 							</Link>
 							<SocialIcons />
-							<Link href="/premium">
+							<Link href="/premium" prefetch={false}>
 								<li className="mb-4 cursor-pointer text-[15px] font-medium">Mentor Premium</li>
 							</Link>
 						</ul>
 					</div>
 					<div className="flex justify-center items-center">
 						<div className="grid" style={{ fontWeight: "300" }}>
-							<MentorLogoLight />
+							<div
+								className=""
+								onClick={() => {
+									router.push("/");
+								}}>
+								<MentorLogoLight />
+							</div>
 							<span className="mb-4 text-white cursor-pointer text-[14px]">from Techsity</span>
 							<span className="mb-4 text-white cursor-pointer text-[14px]">
-								(c) Copyright mentör 2023 - All rights reserved
+								(c) Copyright mentör 2023
+								<br />
+								All rights reserved
 							</span>
 						</div>
 					</div>
