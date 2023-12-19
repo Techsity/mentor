@@ -6,30 +6,52 @@ import { PrimaryButton } from "../../buttons";
 import { scrollToTop } from "../../../../../utils";
 import mentors from "../../../../../data/mentors";
 import { useRouter } from "next/router";
+import { useLazyQuery } from "@apollo/client";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
+import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/mutations/auth";
+import { PowerOutline } from "react-ionicons";
+import { logoutUser } from "../../../../../utils/auth";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const user = useSelector(currentUser);
-	const handleSwitchProfile = () => {
+	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
+
+	const handleSwitchProfile = async () => {
 		if (user?.mentor) {
 			dispatch(switchProfile({ profile: null }));
 		} else {
+			await getMentorProfile()
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
 			dispatch(switchProfile({ profile: mentors[0] }));
 		}
-		router.replace("/profile");
+		// router.replace("/profile");
 	};
 	return (
 		<div>
 			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
 			<div className="my-6 grid xl:grid-cols-1 sm:grid-cols-2 gap-6">
-				<div className="flex items-center gap-1">
-					<img src={user?.avatar || "/assets/images/avatar.png"} alt="" className="rounded-full w-12 h-12" />
-					<div className="text-sm">
-						<p className="font-medium">{user?.name}</p>
-						{/* <p>{user?.role}</p> */}
-
-						<p className="text-[#70C5A1]">{user?.mentor ? "Mentor" : "User"}</p>
+				<div className="flex items-center w-full justify-between">
+					<div className="flex items-center gap-1">
+						<img
+							src={user?.avatar || "/assets/images/avatar.png"}
+							alt=""
+							className="rounded-full w-12 h-12"
+						/>
+						<div className="text-sm">
+							<p className="font-medium">{user?.name}</p>
+							{/* <p>{user?.role}</p> */}
+							<p className="text-[#70C5A1]">{user?.mentor ? "Mentor" : "User"}</p>
+						</div>
+					</div>
+					<div className="cursor-pointer" onClick={() => logoutUser()}>
+						<PowerOutline color="#d31119" />
 					</div>
 				</div>
 				<div className="my-5 text-sm grid gap-3">

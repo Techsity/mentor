@@ -161,14 +161,7 @@ const ProfileSettings = () => {
 						disabled={loading}
 						className="p-4 flex justify-center px-12 w-full text-lg"
 					/>
-					<PrimaryButton
-						type="submit"
-						title={loading ? "" : "Logout"}
-						icon={loading ? <ActivityIndicator /> : null}
-						disabled={loading}
-						className="p-4 flex justify-center px-12 w-full text-lg bg-[#d31119] hover:bg-red-800 text-white"
-						onClick={() => logoutUser()}
-					/>
+					
 				</div>
 			</form>
 		</div>
