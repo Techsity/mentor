@@ -106,7 +106,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					setTimeout(function () {
 						toast.dismiss("auth_form_pop");
 						// mutation to request for otp here, before redirecting
-						router.push("/auth/verification/" + crypto.randomUUID() + "/signup");
+						router.push("/auth/verification/signup");
 					}, 2000);
 					return;
 				}
