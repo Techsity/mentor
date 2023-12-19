@@ -62,15 +62,11 @@ const CoursesSection = () => {
 			{courseQuery.type || courseQuery.category ? (
 				<div className="mt-6 text-sm md:mx-10 mx-5 md:p-5">
 					<p className="capitalize">
-						Query:{" "}
-						{courseQuery.type && (
-							<span className="">
-								course type {">"} {courseQuery.type}{" "}
-							</span>
-						)}
-						{courseQuery.type && courseQuery.category && "& "}
+						Category{" > "}
+						{courseQuery.type && <span className="">{courseQuery.type} </span>}
+						{courseQuery.type && courseQuery.category && "> "}
 						{courseQuery.category && (
-							<span className="">{courseQuery.category && "category > " + courseQuery.category}</span>
+							<span className="">{courseQuery.category && courseQuery.category}</span>
 						)}
 					</p>
 				</div>
