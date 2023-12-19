@@ -40,16 +40,6 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		return <PageComponent {...props} />;
 	};
 
-	// Page.getInitialProps = async (ctx: NextPageContext): Promise<PageProps> => {
-	// 	const user = store.getState().auth.user;
-	// 	const auth = store.getState().auth.isLoggedIn;
-
-	// 	if (ctx.req) {
-	// 		console.log(ctx.req);
-	// 	}
-	// 	return { user, auth };
-	// };
-
 	return Page;
 };
 

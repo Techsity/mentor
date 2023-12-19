@@ -20,51 +20,31 @@ export const GET_ALL_MENTORS = gql`
 				created_at
 				updated_at
 			}
-			courses {
-				title
-				course_level
-				description
-				category {
-					title
-					description
-					created_at
-					updated_at
-				}
-				what_to_learn
-				requirements
-				price
-				course_images
-				course_contents {
-					title
-					course_sections {
-						section_name
-						video_url
-						notes
-					}
-				}
-				mentor {
-					id
-					about
-					role
-					skills {
-						skill_name
-						years_of_exp
-					}
-					exp_level
-					certifications {
-						organization
-						title
-						year
-					}
-					hourly_rate
-					language
-					mentor_verified
-					created_at
-					updated_at
-				}
-				created_at
-				updated_at
-			}
+			# courses {
+			# 	title
+			# 	course_level
+			# 	description
+			# 	category {
+			# 		title
+			# 		description
+			# 		created_at
+			# 		updated_at
+			# 	}
+			# 	what_to_learn
+			# 	requirements
+			# 	price
+			# 	course_images
+			# 	course_contents {
+			# 		title
+			# 		course_sections {
+			# 			section_name
+			# 			video_url
+			# 			notes
+			# 		}
+			# 	}
+			# 	created_at
+			# 	updated_at
+			# }
 			reviews {
 				type
 				content
@@ -96,8 +76,8 @@ export const GET_ALL_MENTORS = gql`
 				company
 				job_role
 				description
-				from_year
-				to_year
+				# from_year
+				# to_year
 			}
 			projects {
 				company
@@ -109,8 +89,8 @@ export const GET_ALL_MENTORS = gql`
 				school
 				credential_type
 				course_of_study
-				from_year
-				to_year
+				# from_year
+				# to_year
 			}
 			hourly_rate
 			availability {

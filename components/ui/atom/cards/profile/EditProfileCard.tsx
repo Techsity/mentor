@@ -60,7 +60,7 @@ const EditProfileCard = () => {
 				</div>
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
-						title={user?.mentor ? "Switch to Mentee Dashboard" : "Get a Mentor Profile"}
+						title={user?.mentor ? "Switch to Mentee Dashboard" : "Switch to Mentor Profile"}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
 						onClick={handleSwitchProfile}

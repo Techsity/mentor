@@ -6,7 +6,7 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateRatingsInReviews } from "../../../../../utils";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
-	const ratings = calculateRatingsInReviews(mentor.reviews);
+	const ratings = mentor.reviews ? calculateRatingsInReviews(mentor.reviews) : 0;
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
 			<div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-auto rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
@@ -27,7 +27,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 								: mentor.user.name}
 						</h1>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em] capitalize">
-							{mentor.role.split("/")[0]}
+							{mentor.role.split("_").join(" ")}
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1]">
 							{mentor.work_experience?.length === 1
@@ -59,16 +59,18 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 				</div>
 				<div className="hidden oveflow-hidden z-10 group-hover:md:grid absolute bg-[#042608] animate__animated animate__fadeInRight animate__faster text-white h-full px-4 w-1/2 right-0 top-0">
 					<div className="relative">
-						<ul className="">
-							<h1 className="my-2 mt-4 font-normal text-sm">Top Skills</h1>
-							{mentor.skills
-								.map((skill, i) => (
-									<li key={i} className="text-xs font-extralight">
-										{skill.skill_name}
-									</li>
-								))
-								.slice(0, 5)}
-						</ul>
+						{mentor.skills && mentor.skills.length > 0 && (
+							<ul className="">
+								<h1 className="my-2 mt-4 font-normal text-sm">Top Skills</h1>
+								{mentor.skills
+									.map((skill, i) => (
+										<li key={i} className="text-xs font-extralight">
+											{skill.skill_name}
+										</li>
+									))
+									.slice(0, 5)}
+							</ul>
+						)}
 						<h1 className="my-2 mt-4 text-sm font-normal">Availablity</h1>
 						<ul className="grid">
 							{mentor.availability.map((day, i) => (

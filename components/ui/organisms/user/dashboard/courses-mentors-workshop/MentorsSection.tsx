@@ -4,10 +4,14 @@ import allMentors from "../../../../../../data/mentors";
 import { scrollUp } from "../../../../../../utils";
 import MentorProfileCard from "../../../../atom/cards/mentor/MentorProfileCard";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/mentors";
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
 	const [loading, setLoading] = useState<boolean>(true);
+	const [getAllMentors] = useLazyQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+
 	const [mentors, setMentors] = useState<IMentor[]>([]);
 
 	const filteredMentors = useMemo(() => {
@@ -21,9 +25,18 @@ const MentorsSection = () => {
 						});
 	}, [mentors, tab]);
 
-	const fetchMentors = () => {
+	const fetchMentors = async () => {
 		console.log("Fetching Mentors...");
 		setLoading(true);
+		//! API is working
+		//Todo: set sll mentors state with the result
+		// await getAllMentors()
+		// 	.then((result) => {
+		// 		console.log(result.data);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.error("Error fetchinng mentors: ", err);
+		// 	});
 		setTimeout(function () {
 			setMentors(allMentors);
 			setLoading(false);

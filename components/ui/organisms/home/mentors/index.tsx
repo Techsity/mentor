@@ -7,7 +7,7 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { useRouter } from "next/router";
 
 const MeetOurMentors = () => {
-	const { data } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+	const { data, error } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
 	const mentors = data?.viewAllMentors;
 	const router = useRouter();
 	return (

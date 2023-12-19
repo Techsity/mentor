@@ -7,15 +7,19 @@ import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
 import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
 import { setCredentials } from "../../redux/reducers/features/authSlice";
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../services/graphql/mutations/auth";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { GET_MENTOR_PROFILE, LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
 import { authenticate, formatGqlError } from "../../utils/auth";
 import ResponseMessages from "../../constants/response-codes";
 import mentors from "../../data/mentors";
+import { IMentor } from "../../interfaces/mentor.interface";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;
+};
+type LoginResponse = {
+	loginUser: { user: IUser; access_token: string };
 };
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
@@ -28,9 +32,10 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [state, setState] = useState<ILoginState>(initialValues || initial);
-	const [error, setError] = useState<string[]>([]);
 
-	const [loginUser] = useMutation<ILoginState, ICreateLoginInput>(LOGIN_USER);
+	const [error, setError] = useState<string[]>([]);
+	const [loginUser] = useMutation<LoginResponse, ICreateLoginInput>(LOGIN_USER);
+	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
 
 	const handleChange = (field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
 		setLoading(false);
@@ -62,37 +67,57 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				},
 			},
 		})
-			.then((response: any) => {
-				const userData: IUser = response.data.loginUser.user;
-				const authToken = response.data.loginUser.access_token;
-				if (response.data.loginUser.user) {
-					authenticate(authToken, () => {
-						// setLoading(false);
-						dispatch(
-							setCredentials({
-								isLoggedIn: true,
-								user: {
-									...userData,
-									// Temporary
-									payment_cards: [
-										{
-											bank: { name: "GTbank via Paystack" },
-											card_name: "John Doe Ipsum",
-											card_number: "5399 8878 9887 99099",
-										},
-									],
-								},
-								// Todo: set mentor profile properly from the mentorProfile query
-								mentorProfile: userData.is_admin ? mentors[0] : null,
-							}),
-						);
-						const next = router.query.next as string;
-						if (next) {
-							router.replace(decodeURIComponent(next));
-						} else {
-							router.replace(`/profile`);
-						}
-					});
+			.then((response) => {
+				if (response.data) {
+					const userData: IUser = response.data.loginUser.user;
+					const authToken = response.data.loginUser.access_token;
+					if (response.data.loginUser.user) {
+						setLoading(false);
+						authenticate(authToken, async () => {
+							await getMentorProfile()
+								.then((result) => {
+									if (result.data?.getMentorProfile) {
+										const mentorProfile: IMentor = result.data.getMentorProfile;
+										dispatch(
+											setCredentials({
+												isLoggedIn: true,
+												user: {
+													...userData,
+													// Temporary
+													payment_cards: [
+														{
+															bank: { name: "GTbank via Paystack" },
+															card_name: "John Doe Ipsum",
+															card_number: "5399 8878 9887 99099",
+														},
+													],
+													//
+												},
+												mentorProfile,
+											}),
+										);
+										const next = router.query.next as string;
+										if (next) {
+											router.replace(decodeURIComponent(next));
+										} else {
+											router.replace(`/profile`);
+										}
+									} else if (result.error) {
+										// Todo: Error handling
+										setLoading(false);
+										console.log(result.error);
+									}
+								})
+								.catch((err) => {
+									// Todo: Error handling
+									setLoading(false);
+									console.log(err);
+								});
+							// setLoading(false);
+						});
+					}
+				} else {
+					setLoading(false);
 				}
 			})
 			.catch((error: any) => {
