@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { currentUser, setCredentials, switchProfile } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
@@ -11,27 +11,38 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/mutations/auth";
 import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
+import ActivityIndicator from "../../loader/ActivityIndicator";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const [loading, setLoading] = useState<boolean>(false);
 	const user = useSelector(currentUser);
 	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
 
 	const handleSwitchProfile = async () => {
+		setLoading(true);
 		if (user?.mentor) {
-			dispatch(switchProfile({ profile: null }));
+			setTimeout(function () {
+				setLoading(false);
+				dispatch(switchProfile({ profile: null }));
+				router.replace("/profile");
+			}, 1000);
 		} else {
 			await getMentorProfile()
 				.then((res) => {
-					console.log(res);
+					setLoading(false);
+					const mentorProfile = res.data?.getMentorProfile;
+					if (mentorProfile) {
+						dispatch(switchProfile({ profile: mentorProfile }));
+						router.replace("/profile");
+					}
 				})
 				.catch((err) => {
 					console.error(err);
+					setLoading(false);
 				});
-			dispatch(switchProfile({ profile: mentors[0] }));
 		}
-		// router.replace("/profile");
 	};
 	return (
 		<div>
@@ -82,10 +93,14 @@ const EditProfileCard = () => {
 				</div>
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
-						title={user?.mentor ? "Switch to Mentee Dashboard" : "Switch to Mentor Profile"}
+						title={
+							!loading ? (user?.mentor ? "Switch to Mentee Dashboard" : "Switch to Mentor Profile") : ""
+						}
+						icon={loading ? <ActivityIndicator /> : null}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
 						onClick={handleSwitchProfile}
+						disabled={loading}
 					/>
 				</div>
 			</div>

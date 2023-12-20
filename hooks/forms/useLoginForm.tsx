@@ -75,6 +75,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					if (response.data.loginUser.user) {
 						setLoading(false);
 						authenticate(authToken, async () => {
+							// Todo: get user.is_mentor and set mentor profile properly
 							if (userData.is_mentor) {
 								await getMentorProfile()
 									.then((result) => {

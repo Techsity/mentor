@@ -24,7 +24,6 @@ const ProfileNavCard = ({
 	const activeLink = useMemo(() => tab, [router, tab, user]);
 
 	useEffect(() => {
-		console.log(tab);
 		if (activeLink) {
 			if (tabLinks.includes(activeLink)) {
 				setActiveTab(activeLink);
