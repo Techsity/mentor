@@ -39,6 +39,10 @@ const courseInitialState: Omit<ICourse, "mentor"> = {
 	course_contents: [],
 	category: {
 		title: "",
+		category_type: {
+			description: "",
+			type: "",
+		},
 		description: "",
 		created_at: "",
 		updated_at: "",
