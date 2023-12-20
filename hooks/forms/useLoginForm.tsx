@@ -69,7 +69,6 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			},
 		})
 			.then((response) => {
-				console.log(response.data);
 				if (response.data) {
 					const userData: IUser = response.data.loginUser.user;
 					const authToken = response.data.loginUser.access_token;
