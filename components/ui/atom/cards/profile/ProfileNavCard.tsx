@@ -16,17 +16,20 @@ const ProfileNavCard = ({
 	activeTab: ProfileTabLinkType;
 	setActiveTab: Dispatch<SetStateAction<ProfileTabLinkType>>;
 }) => {
+	const user = useSelector(currentUser);
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 	const tab = router.query.tab as ProfileTabLinkType;
 
-	const activeLink = useMemo(() => tab, [router, tab]);
+	const activeLink = useMemo(() => tab, [router, tab, user]);
 
 	useEffect(() => {
-		if (activeLink)
+		console.log(tab);
+		if (activeLink) {
 			if (tabLinks.includes(activeLink)) {
 				setActiveTab(activeLink);
 			}
+		}
 		scrollTo({ top: 0, behavior: "smooth" });
 	}, [activeLink, router]);
 

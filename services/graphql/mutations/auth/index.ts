@@ -25,6 +25,7 @@ export const LOGIN_USER = gql`
 				is_active
 				is_admin
 				is_online
+				is_mentor
 				is_verified
 				phone
 			}
@@ -51,6 +52,7 @@ export const GET_USER_PROFILE = gql`
 			is_active
 			is_verified
 			is_admin
+			is_mentor
 			created_at
 			updated_at
 		}
