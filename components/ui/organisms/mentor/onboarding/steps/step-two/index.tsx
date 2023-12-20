@@ -17,7 +17,7 @@ import { IMentorSkills } from "../../../../../../../interfaces/mentor.interface"
 const StepTwoMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: 0 };
+	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: 1 };
 	const [currentSkill, setCurrentSkill] = useState<IMentorSkills>(emptySkillState);
 
 	const addSkill = (skill: IMentorSkills) => {
@@ -65,28 +65,30 @@ const StepTwoMentorOnboarding = () => {
 						<div className="flex-grow">
 							<TagsInput
 								textLength={30}
-								addTag={(tag) =>
-									setCurrentSkill((prev) => {
-										return { ...prev, skill_name: tag };
-									})
-								}
 								tagsState={onboardingMentor.skills.map((item) => item.skill_name)}
 								showSelectedTags={false}
 								value={currentSkill.skill_name}
+								onChange={(value) => {
+									setCurrentSkill((prev) => {
+										return { ...prev, skill_name: value as string };
+									});
+								}}
 								showAddBtn={false}
 								placeholder="skill"
 							/>
 						</div>
 						<div className="sm:max-w-[30%] md:max-w-[25%]">
 							<TagsInput
+								min={1}
+								inputType="number"
 								textLength={2}
-								addTag={(tag) => {
-									setCurrentSkill((prev) => {
-										return { ...prev, years_of_exp: parseInt(tag) };
-									});
-								}}
 								tagsState={onboardingMentor.skills.map((item) => item.years_of_exp.toString())}
 								value={currentSkill.years_of_exp.toString()}
+								onChange={(value) => {
+									setCurrentSkill((prev) => {
+										return { ...prev, years_of_exp: value as number };
+									});
+								}}
 								showAddBtn={false}
 								showSelectedTags={false}
 								placeholder="years of exp"
@@ -95,6 +97,9 @@ const StepTwoMentorOnboarding = () => {
 						<div className="flex justify-start">
 							<PrimaryButton
 								onClick={() => {
+									if (typeof currentSkill.years_of_exp !== "number") {
+										currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
+									}
 									if (
 										onboardingMentor.skills.length > 0 &&
 										onboardingMentor.skills.every(
@@ -102,7 +107,7 @@ const StepTwoMentorOnboarding = () => {
 										)
 									) {
 										toast.info(
-											"Tag has aleady been added!",
+											"Tag has already been added!",
 											ToastDefaultOptions({
 												id: "info",
 												theme: "dark",
@@ -110,17 +115,8 @@ const StepTwoMentorOnboarding = () => {
 										);
 										return;
 									}
-									if (currentSkill.skill_name && currentSkill.years_of_exp > 0) {
+									if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
 										addSkill(currentSkill);
-									} else if (isNaN(currentSkill.years_of_exp)) {
-										toast.error(
-											"Invalid Input for Year of Experience.",
-											ToastDefaultOptions({
-												id: "info",
-												theme: "dark",
-											}),
-										);
-									}
 								}}
 								title="Add"
 								className="flex justify-center w-full px-5 p-4 h-full"

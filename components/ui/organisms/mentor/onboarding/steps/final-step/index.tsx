@@ -23,15 +23,15 @@ import {
 	IMentorProjectType,
 	IMentorSkills,
 } from "../../../../../../../interfaces/mentor.interface";
-import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import { PrimaryButton } from "../../../../../atom/buttons";
 import ActivityIndicator from "../../../../../atom/loader/ActivityIndicator";
 import { useMutation } from "@apollo/client";
 import { ONBOARD_MENTOR } from "../../../../../../../services/graphql/mutations/mentors";
-import { formatGqlError, getCookie } from "../../../../../../../utils/auth";
+import { formatGqlError } from "../../../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../../../../../../constants";
+import { ToastDefaultOptions } from "../../../../../../../constants";
+import { switchProfile } from "../../../../../../../redux/reducers/features/authSlice";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
@@ -40,6 +40,7 @@ const FinalMentorOnboardingStep = () => {
 	const [createMentorProfile] = useMutation<OnboardingMentorMutationResponse, OnboardingMentorMutationVariables>(
 		ONBOARD_MENTOR,
 	);
+	const dispatch = useDispatch();
 
 	const handleSubmit = () => {
 		setLoading(true);
@@ -65,8 +66,7 @@ const FinalMentorOnboardingStep = () => {
 				console.log(response.data?.createMentorProfile);
 				if (response.data?.createMentorProfile) {
 					// setLoading(false);
-					//Todo: set mentorProfile state here
-					// /
+					// dispatch(switchProfile({ profile: response.data?.createMentorProfile }));
 					router.replace("/profile");
 				}
 			})
@@ -85,7 +85,7 @@ const FinalMentorOnboardingStep = () => {
 					)
 				) {
 					toast.info("Account already created", ToastDefaultOptions({ id: "error" }));
-					router.replace("/profile");
+					// router.replace("/profile");
 				}
 			});
 	};

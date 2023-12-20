@@ -8,7 +8,6 @@ import { slugify } from "../../../../../../../utils";
 import MentorEducationCard from "../../../../../atom/cards/mentor/MentorEducationCard";
 
 const FinalStepEducationEdit = () => {
-	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const [editEducation, setEditEducation] = useState<boolean>(false);
 

@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import { IMentorOnboardingState } from "../../../interfaces/mentor.interface";
-import { setLocalStorage } from "../../../utils/auth";
 
 const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,

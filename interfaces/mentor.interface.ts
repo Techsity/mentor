@@ -2,11 +2,11 @@ import { ICourse, IReview } from "./index";
 import { IUser } from "./user.interface";
 
 export interface IMentorEducation {
+	course_of_study: string;
+	credential_type: string;
+	from_year: string;
 	school: string;
-	endDate: string;
-	startDate: string;
-	course?: string;
-	degree?: string;
+	to_year: string;
 }
 export interface IMentorOnboardingState {
 	currentStep: number;

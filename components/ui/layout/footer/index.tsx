@@ -5,9 +5,12 @@ import SocialIcons from "./SocialIcons";
 import { MentorLogoLight } from "../../atom/icons/svgs";
 import { useRouter } from "next/router";
 import { courseTypes } from "../../../../data/courses";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/features/authSlice";
 
 const Footer = () => {
 	const router = useRouter();
+	const user = useSelector(currentUser);
 	const excludedPaths: string[] = ["purchase", "register", "profile"];
 	const hideFooter: boolean = excludedPaths.some((path) => router.asPath.includes(path));
 
@@ -24,18 +27,18 @@ const Footer = () => {
 							Company
 						</h2>
 						<ul className="text-white" style={{ fontWeight: "300" }}>
-							<Link href="/about">
+							<Link prefetch={false} href="/about">
 								<li className="mb-4 cursor-pointer text-[14px]">About Us</li>
 							</Link>
 							<div className="flex gap-4 items-center">
-								<Link href="/help">
+								<Link prefetch={false} href="/help">
 									<li className="mb-4 cursor-pointer text-[14px]">Help</li>
 								</Link>
-								<Link href="/blog">
+								<Link prefetch={false} href="/blog">
 									<li className="mb-4 cursor-pointer text-[14px]">Blog</li>
 								</Link>
 							</div>
-							<Link href="/privacy">
+							<Link prefetch={false} href="/privacy">
 								<li className="mb-4 cursor-pointer text-[14px]">Privacy Policy</li>
 							</Link>
 						</ul>
@@ -62,13 +65,13 @@ const Footer = () => {
 					<div>
 						<ul className="text-white mt-10" style={{ fontWeight: "300" }}>
 							{/* //Todo update links to go to all live workshops page */}
-							<Link href="/profile/workshop/live?id=dujhedjkgfju">
+							<Link prefetch={false} href="/profile/workshop/live?id=dujhedjkgfju">
 								<li className="mb-4 cursor-pointer text-[14px]">Live Mentorship Events</li>
 							</Link>
-							<Link href="/mentors">
+							<Link prefetch={false} href="/mentors">
 								<li className="mb-4 cursor-pointer text-[14px]">Find Mentors</li>
 							</Link>
-							<Link href={"/mentor/onboarding"}>
+							<Link prefetch={false} href={!user?.is_mentor ? "/mentor/onboarding" : "#"}>
 								<li className="mb-4 cursor-pointer text-[14px]">Become a Mentor</li>
 							</Link>
 						</ul>
@@ -80,11 +83,11 @@ const Footer = () => {
 							Contact
 						</h2>
 						<ul className="text-white" style={{ fontWeight: "300" }}>
-							<Link href="mailto:mentor@tecsity.io" prefetch={false}>
+							<Link prefetch={false} href="mailto:mentor@tecsity.io">
 								<li className="mb-3 cursor-pointer text-[14px]">mentor@tecsity.io</li>
 							</Link>
 							<SocialIcons />
-							<Link href="/premium" prefetch={false}>
+							<Link prefetch={false} href="/premium">
 								<li className="mb-4 cursor-pointer text-[15px] font-medium">Mentor Premium</li>
 							</Link>
 						</ul>

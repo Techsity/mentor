@@ -77,7 +77,7 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 					query: GET_MENTOR_PROFILE,
 				});
 				if (mentorProfile) return { pageProps: { ...pageProps, user, mentorProfile } };
-				return { pageProps: { ...pageProps, user } };
+				return { pageProps: { ...pageProps, user, mentorProfile: null } };
 			}
 		} catch (error: any) {
 			console.error(JSON.stringify(error));

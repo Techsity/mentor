@@ -1,8 +1,22 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, HTMLInputTypeAttribute, MouseEvent, useEffect, useState } from "react";
 import { PrimaryButton } from "../buttons";
 import CustomTextInput from "./CustomTextInput";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../constants";
+
+type TagsInputProps = {
+	textLength?: number;
+	tagsState: string[];
+	showSelectedTags?: boolean;
+	addTag?: (tag: string) => void;
+	onChange?: (tag: string | number) => void;
+	onRemove?: (tag: string) => void;
+	showAddBtn?: boolean;
+	placeholder?: string;
+	value?: string;
+	inputType?: HTMLInputTypeAttribute;
+	min?: number;
+};
 
 const TagsInput = ({
 	addTag,
@@ -14,17 +28,9 @@ const TagsInput = ({
 	placeholder,
 	value,
 	onChange,
-}: {
-	textLength?: number;
-	tagsState: string[];
-	showSelectedTags?: boolean;
-	addTag?: (tag: string) => void;
-	onChange?: (tag: string) => void;
-	onRemove?: (tag: string) => void;
-	showAddBtn?: boolean;
-	placeholder?: string;
-	value?: string;
-}) => {
+	inputType,
+	min,
+}: TagsInputProps) => {
 	const [currentTag, setCurrentTag] = useState<string>(value || "");
 
 	useEffect(() => {
@@ -49,8 +55,8 @@ const TagsInput = ({
 	return (
 		<>
 			<div className="flex items-center text-sm flex-row gap-2">
-				<div className="w-full">
-					<label>
+				<div className="w-full ">
+					<label className="relative">
 						<CustomTextInput
 							maxLength={textLength}
 							onChange={(e) => {
@@ -59,17 +65,18 @@ const TagsInput = ({
 									onChange(e.target.value);
 								}
 							}}
-							value={currentTag}
-							type="text"
-							className="bg-white invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
+							min={min}
+							value={value || currentTag}
+							type={inputType || "text"}
+							className="appearance-none bg-white invalid:text-pink-800 invalid:focus:ring-pink-800 invalid:focus:border-pink-800 peer"
 							placeholder={placeholder || "Type something"}
 							containerProps={{
 								className: "border border-[#00D569]",
 							}}
 						/>
-						{/* <p className="ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
-											less than 5 characters
-										</p> */}
+						{/* <p className="absolute -top-10 ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
+							Invalid input
+						</p> */}
 					</label>
 				</div>
 				{showAddBtn && (

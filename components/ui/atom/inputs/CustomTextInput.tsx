@@ -1,6 +1,7 @@
 import React, {
 	ForwardedRef,
 	HTMLAttributes,
+	HTMLInputTypeAttribute,
 	InputHTMLAttributes,
 	ReactNode,
 	forwardRef,
@@ -18,14 +19,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 	props: ICustomTextInputProps,
 	ref?: ForwardedRef<HTMLInputElement>,
 ) {
-	const {
-		containerProps,
-		rightIcon,
-		rightButton,
-		children,
-		rightIconClass,
-		...inputProps
-	} = props;
+	const { containerProps, rightIcon, rightButton, children, rightIconClass, type, ...inputProps } = props;
 
 	return (
 		<div
@@ -38,7 +32,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				ref={ref}
 				{...inputProps}
 				disabled={inputProps.disabled}
-				type={inputProps?.type}
+				type={type}
 				required={inputProps?.required}
 				className={classNames(
 					"p-4 h-full focus:ring-0 outline-none",
@@ -48,12 +42,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 			/>
 			{rightButton ? rightButton : null}
 			{rightIcon ? (
-				<div
-					className={classNames(
-						rightIconClass
-							? rightIconClass
-							: "absolute top-[30%] right-5",
-					)}>
+				<div className={classNames(rightIconClass ? rightIconClass : "absolute top-[30%] right-5")}>
 					{rightIcon}
 				</div>
 			) : null}

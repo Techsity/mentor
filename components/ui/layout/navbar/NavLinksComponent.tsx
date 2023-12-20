@@ -135,7 +135,7 @@ const NavLinksComponent = () => {
 				</Link>
 			) : (
 				user &&
-				!user.mentor && (
+				!user?.is_mentor && (
 					<Link href={"/mentor/onboarding"} prefetch={false}>
 						<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 							Become a Mentor

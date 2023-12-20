@@ -27,7 +27,7 @@ const AuthWrapper = ({
 				isLoggedIn: true,
 				user: {
 					...user,
-					is_mentor: true,
+					is_mentor: mentorProfile ? true : false,
 					payment_cards: [
 						{
 							bank: { name: "GTbank via Paystack" },

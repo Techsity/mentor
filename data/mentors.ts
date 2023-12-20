@@ -30,8 +30,20 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
 		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
@@ -74,8 +86,21 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
 		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
@@ -118,8 +143,20 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
 		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
@@ -162,8 +199,21 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
 		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],

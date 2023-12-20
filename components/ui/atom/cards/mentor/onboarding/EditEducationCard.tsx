@@ -22,11 +22,11 @@ const EditEducationCard = ({
 	exisitingEducation?: ExtractedEducationType;
 }) => {
 	const initalState: ExtractedEducationType = {
+		course_of_study: "",
+		credential_type: "",
+		from_year: "",
 		school: "",
-		endDate: "",
-		startDate: "",
-		course: "",
-		degree: "",
+		to_year: "",
 	};
 	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
 	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
@@ -37,8 +37,8 @@ const EditEducationCard = ({
 		return allEducationData.some(
 			(edu) =>
 				slugify(edu.school) === slugify(education.school) &&
-				edu.startDate === education.startDate &&
-				edu.endDate === education.endDate,
+				edu.from_year === education.from_year &&
+				edu.to_year === education.to_year,
 		);
 	}, [education, allEducationData]);
 
@@ -52,7 +52,7 @@ const EditEducationCard = ({
 		const updatedEducation = [...allEducationData];
 		// This adds a new education
 		if (!exisitingEducation && !isDuplicate)
-			if (education.school && education.startDate && education.endDate) {
+			if (education.school && education.from_year && education.to_year) {
 				updatedEducation.push(education);
 				console.log({ updatedEducation, allEducationData });
 				setTimeout(function () {
@@ -64,11 +64,11 @@ const EditEducationCard = ({
 		// this updates the existing education
 		const updateEducationIndex = updatedEducation.findIndex(
 			(ed) =>
-				ed.course === exisitingEducation?.course &&
-				ed.degree === exisitingEducation?.degree &&
+				ed.course_of_study === exisitingEducation?.course_of_study &&
+				ed.credential_type === exisitingEducation?.credential_type &&
 				ed.school === exisitingEducation?.school &&
-				ed.startDate === exisitingEducation?.startDate &&
-				ed.endDate === exisitingEducation?.endDate,
+				ed.from_year === exisitingEducation?.from_year &&
+				ed.to_year === exisitingEducation?.to_year,
 		);
 		if (updateEducationIndex !== -1)
 			updatedEducation[updateEducationIndex] = {
@@ -87,8 +87,8 @@ const EditEducationCard = ({
 			const updated = allEducationData.filter(
 				(edu) =>
 					slugify(edu.school) !== slugify(education.school) &&
-					edu.startDate !== education.startDate &&
-					edu.endDate !== education.endDate,
+					edu.from_year !== education.from_year &&
+					edu.to_year !== education.to_year,
 			);
 			if (onUpdate) {
 				onUpdate(updated);
@@ -150,7 +150,7 @@ const EditEducationCard = ({
 						type="text"
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
-						value={education.startDate}
+						value={education.from_year}
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
@@ -167,7 +167,7 @@ const EditEducationCard = ({
 									const date = new Date(props as Date).toLocaleDateString();
 									setEducation({
 										...education,
-										startDate: date,
+										from_year: date,
 									});
 									setStartDateCalendarIsOpen(false);
 								}}
@@ -188,7 +188,7 @@ const EditEducationCard = ({
 						type="text"
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
-						value={education.endDate}
+						value={education.to_year}
 						containerProps={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
@@ -205,12 +205,12 @@ const EditEducationCard = ({
 									const date = new Date(props as Date).toLocaleDateString();
 									setEducation({
 										...education,
-										endDate: date,
+										to_year: date,
 									});
 									setEndDateCalendarIsOpen(false);
 								}}
 								maxDate={new Date()}
-								minDate={new Date(education.startDate)}
+								minDate={new Date(education.from_year)}
 							/>
 						</div>
 					)}
@@ -230,11 +230,11 @@ const EditEducationCard = ({
 						containerProps={{
 							className: "border border-zinc-200",
 						}}
-						value={education.degree}
+						value={education.credential_type}
 						onChange={(e) =>
 							setEducation({
 								...education,
-								degree: e.target.value,
+								credential_type: e.target.value,
 							})
 						}
 					/>
@@ -251,11 +251,11 @@ const EditEducationCard = ({
 						placeholder="Course"
 						type="text"
 						className="text-black"
-						value={education.course}
+						value={education.course_of_study}
 						onChange={(e) =>
 							setEducation({
 								...education,
-								course: e.target.value,
+								course_of_study: e.target.value,
 							})
 						}
 						containerProps={{

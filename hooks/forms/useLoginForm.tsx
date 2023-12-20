@@ -19,7 +19,7 @@ type ICreateLoginInput = {
 	createLoginInput: ILoginState;
 };
 type LoginResponse = {
-	loginUser: { user: IUser; access_token: string };
+	loginUser: { user: IUser; access_token: string; is_mentor: boolean };
 };
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
@@ -72,11 +72,12 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				if (response.data) {
 					const userData: IUser = response.data.loginUser.user;
 					const authToken = response.data.loginUser.access_token;
+					const is_mentor = response.data.loginUser.is_mentor;
 					if (response.data.loginUser.user) {
 						setLoading(false);
 						authenticate(authToken, async () => {
 							// Todo: get user.is_mentor and set mentor profile properly
-							if (userData.is_mentor) {
+							if (is_mentor) {
 								await getMentorProfile()
 									.then((result) => {
 										if (result.data?.getMentorProfile) {
@@ -86,6 +87,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 													isLoggedIn: true,
 													user: {
 														...userData,
+														is_mentor: true,
 														// Temporary
 														payment_cards: [
 															{
@@ -122,8 +124,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 										isLoggedIn: true,
 										user: {
 											...userData,
-											// Remove
-											is_mentor: true,
+											is_mentor: false,
 											// Temporary
 											payment_cards: [
 												{
@@ -133,8 +134,6 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 												},
 											],
 										},
-										// Temporary
-										mentorProfile: mentors[0],
 									}),
 								);
 								const next = router.query.next as string;

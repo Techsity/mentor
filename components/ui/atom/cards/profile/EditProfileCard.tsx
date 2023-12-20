@@ -20,26 +20,30 @@ const EditProfileCard = () => {
 
 	const handleSwitchProfile = async () => {
 		setLoading(true);
-		if (user?.mentor) {
-			setTimeout(function () {
-				setLoading(false);
-				dispatch(switchProfile({ profile: null }));
-				router.replace("/profile");
-			}, 1000);
+		if (user?.is_mentor) {
+			if (user?.mentor) {
+				setTimeout(function () {
+					setLoading(false);
+					dispatch(switchProfile({ profile: null }));
+					router.replace("/profile");
+				}, 1000);
+			} else {
+				await getMentorProfile()
+					.then((res) => {
+						setLoading(false);
+						const mentorProfile = res.data?.getMentorProfile;
+						if (mentorProfile) {
+							dispatch(switchProfile({ profile: mentorProfile }));
+							router.replace("/profile");
+						}
+					})
+					.catch((err) => {
+						console.error(err);
+						setLoading(false);
+					});
+			}
 		} else {
-			await getMentorProfile()
-				.then((res) => {
-					setLoading(false);
-					const mentorProfile = res.data?.getMentorProfile;
-					if (mentorProfile) {
-						dispatch(switchProfile({ profile: mentorProfile }));
-						router.replace("/profile");
-					}
-				})
-				.catch((err) => {
-					console.error(err);
-					setLoading(false);
-				});
+			router.push("/mentor/onboarding");
 		}
 	};
 	return (
@@ -92,13 +96,13 @@ const EditProfileCard = () => {
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
 						title={
-							!loading
-								? user?.is_mentor
-									? user?.mentor
-										? "Switch to Mentee Dashboard"
-										: "Switch to Mentor Profile"
-									: "Get Mentor Profile"
-								: ""
+							loading
+								? ""
+								: user?.is_mentor
+								? user?.mentor
+									? "Switch to Mentee Dashboard"
+									: "Switch to Mentor Profile"
+								: "Get mentor profile"
 						}
 						icon={loading ? <ActivityIndicator /> : null}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
