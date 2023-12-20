@@ -30,7 +30,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 							{mentor.role.split("_").join(" ")}
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1]">
-							{mentor.work_experience?.length === 1
+							{mentor.work_experience && mentor.work_experience?.length === 1
 								? mentor.work_experience.length + " year"
 								: mentor.work_experience.length
 								? mentor.work_experience.length + " years"
@@ -73,11 +73,12 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						)}
 						<h1 className="my-2 mt-4 text-sm font-normal">Availablity</h1>
 						<ul className="grid">
-							{mentor.availability.map((day, i) => (
-								<li key={i} className="text-xs font-extralight">
-									{day.day}
-								</li>
-							))}
+							{mentor.availability &&
+								mentor.availability.map((day, i) => (
+									<li key={i} className="text-xs font-extralight">
+										{day.day}
+									</li>
+								))}
 						</ul>
 					</div>
 					<div className="absolute bottom-4 w-full left-4 flex items-center gap-2 select-none animate__animated animate__fadeInUp">

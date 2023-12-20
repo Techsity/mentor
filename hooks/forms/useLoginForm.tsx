@@ -68,61 +68,86 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			},
 		})
 			.then((response) => {
-				if (response.data) {
-					const userData: IUser = response.data.loginUser.user;
-					const authToken = response.data.loginUser.access_token;
-					if (response.data.loginUser.user) {
-						setLoading(false);
-						authenticate(authToken, async () => {
-							await getMentorProfile()
-								.then((result) => {
-									if (result.data?.getMentorProfile) {
-										const mentorProfile: IMentor = result.data.getMentorProfile;
-										dispatch(
-											setCredentials({
-												isLoggedIn: true,
-												user: {
-													...userData,
-													// Temporary
-													payment_cards: [
-														{
-															bank: { name: "GTbank via Paystack" },
-															card_name: "John Doe Ipsum",
-															card_number: "5399 8878 9887 99099",
-														},
-													],
-													//
-												},
-												mentorProfile,
-											}),
-										);
-										const next = router.query.next as string;
-										if (next) {
-											router.replace(decodeURIComponent(next));
-										} else {
-											router.replace(`/profile`);
-										}
-									} else if (result.error) {
-										// Todo: Error handling
-										setLoading(false);
-										console.log(result.error);
-									}
-								})
-								.catch((err) => {
-									// Todo: Error handling
-									setLoading(false);
-									console.log(err);
-								});
-							// setLoading(false);
-						});
-					}
-				} else {
-					setLoading(false);
-				}
+				console.log(response.data);
+				// if (response.data) {
+				// 	const userData: IUser = response.data.loginUser.user;
+				// 	const authToken = response.data.loginUser.access_token;
+				// 	if (response.data.loginUser.user) {
+				// 		setLoading(false);
+				// 		authenticate(authToken, async () => {
+				// 			if (userData.is_mentor) {
+				// 				await getMentorProfile()
+				// 					.then((result) => {
+				// 						if (result.data?.getMentorProfile) {
+				// 							const mentorProfile: IMentor = result.data.getMentorProfile;
+				// 							dispatch(
+				// 								setCredentials({
+				// 									isLoggedIn: true,
+				// 									user: {
+				// 										...userData,
+				// 										// Temporary
+				// 										payment_cards: [
+				// 											{
+				// 												bank: { name: "GTbank via Paystack" },
+				// 												card_name: "John Doe Ipsum",
+				// 												card_number: "5399 8878 9887 99099",
+				// 											},
+				// 										],
+				// 										//
+				// 									},
+				// 									mentorProfile,
+				// 								}),
+				// 							);
+				// 							const next = router.query.next as string;
+				// 							if (next) {
+				// 								router.replace(decodeURIComponent(next));
+				// 							} else {
+				// 								router.replace(`/profile`);
+				// 							}
+				// 						} else if (result.error) {
+				// 							// Todo: Error handling
+				// 							setLoading(false);
+				// 							console.log(result.error);
+				// 						}
+				// 					})
+				// 					.catch((err) => {
+				// 						// Todo: Error handling
+				// 						setLoading(false);
+				// 						console.log(err);
+				// 					});
+				// 			} else {
+				// 				dispatch(
+				// 					setCredentials({
+				// 						isLoggedIn: true,
+				// 						user: {
+				// 							...userData,
+				// 							// Temporary
+				// 							payment_cards: [
+				// 								{
+				// 									bank: { name: "GTbank via Paystack" },
+				// 									card_name: "John Doe Ipsum",
+				// 									card_number: "5399 8878 9887 99099",
+				// 								},
+				// 							],
+				// 						},
+				// 					}),
+				// 				);
+				// 				const next = router.query.next as string;
+				// 				if (next) {
+				// 					router.replace(decodeURIComponent(next));
+				// 				} else {
+				// 					router.replace(`/profile`);
+				// 				}
+				// 			}
+				// 		});
+				// 	}
+				// } else {
+				// 	setLoading(false);
+				// }
 			})
 			.catch((error: any) => {
 				// console.error(JSON.stringify(error));
-				console.error(error);
+				console.error("Error logging in: ", error);
 				setLoading(false);
 				const errorMessage = formatGqlError(error);
 				// If account is not active, redirect to otp screen
