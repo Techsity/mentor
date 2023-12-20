@@ -9,16 +9,10 @@ export const GET_ALL_MENTORS = gql`
 				id
 				email
 				name
-				phone
 				avatar
 				country
 				is_online
-				is_active
-				isPremium
 				is_verified
-				is_admin
-				created_at
-				updated_at
 			}
 			# courses {
 			# 	title
@@ -55,16 +49,8 @@ export const GET_ALL_MENTORS = gql`
 					phone
 					avatar
 					country
-					subsciptions {
-						id
-						is_completed
-						created_at
-						updated_at
-					}
 					is_online
-					is_active
 					is_verified
-					is_admin
 					created_at
 					updated_at
 				}

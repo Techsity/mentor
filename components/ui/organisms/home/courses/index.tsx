@@ -9,6 +9,8 @@ import Link from "next/link";
 import CoursesList from "./CoursesList";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { CourseType, ICourseCategory } from "../../../../../interfaces";
+import { useLazyQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
@@ -16,6 +18,7 @@ const HomepageCourseSection = () => {
 	const [categories, setCategories] = useState<ICourseCategory[]>([]);
 	const [activeCourseType, setActiveCourseType] = useState<ActiveCourseType>(courseTypes[0]);
 	const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
+	const [fetchAllCategories] = useLazyQuery(GET_ALL_CATEGORIES);
 
 	const currentCategory = useMemo<string>(() => {
 		return categories.length >= 1 ? categories[activeCategoryIndex].title : "";
@@ -24,6 +27,13 @@ const HomepageCourseSection = () => {
 	// Query to fetch course categories
 	const fetchCategories = async () => {
 		console.log("Fetching categories...");
+		await fetchAllCategories()
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.error("Error fetching categories: ", err);
+			});
 		return new Promise<ICourseCategory[]>((resolve, reject) => resolve(courseCategories)); // data fetch simulation
 	};
 

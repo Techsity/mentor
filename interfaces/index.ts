@@ -250,6 +250,10 @@ export interface ICourseContent {
 export interface ICourseCategory {
 	title: string;
 	description: string;
+	category_type: {
+		description: string;
+		type: string;
+	};
 	created_at: string;
 	updated_at: string;
 }
