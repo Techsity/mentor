@@ -5,12 +5,12 @@ import { getCookie } from "./auth";
 
 const client = (authToken?: string) => {
 	const httpLink = new HttpLink({
-		uri: process.env.NEXT_PUBLIC_API_BASE_URL,
+		uri: "/api/graphql",
 	});
 
 	const authLink = setContext((_, { headers }) => {
 		// const token = typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
-		const token = authToken ? authToken : typeof window !== "undefined" && getCookie(AUTH_TOKEN_KEY);
+		const token = authToken ? authToken : typeof window !== "undefined" && (getCookie(AUTH_TOKEN_KEY) as string);
 
 		// If there's no token, return the original headers
 		if (!token) {
@@ -19,7 +19,7 @@ const client = (authToken?: string) => {
 		return {
 			headers: {
 				...headers,
-				authorization: `Bearer ${token.toString()}`,
+				authorization: `Bearer ${token}`,
 			},
 		};
 	});

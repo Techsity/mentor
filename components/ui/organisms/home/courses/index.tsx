@@ -18,7 +18,7 @@ const HomepageCourseSection = () => {
 	const [categories, setCategories] = useState<ICourseCategory[]>([]);
 	const [activeCourseType, setActiveCourseType] = useState<ActiveCourseType>(courseTypes[0]);
 	const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
-	const [fetchAllCategories] = useLazyQuery(GET_ALL_CATEGORIES);
+	const [fetchAllCategories] = useLazyQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
 
 	const currentCategory = useMemo<string>(() => {
 		return categories.length >= 1 ? categories[activeCategoryIndex].title : "";
@@ -29,24 +29,16 @@ const HomepageCourseSection = () => {
 		console.log("Fetching categories...");
 		await fetchAllCategories()
 			.then((res) => {
-				console.log(res);
+				console.log(res.data?.getAllCategories);
+				if (res.data?.getAllCategories) setCategories(res.data?.getAllCategories);
 			})
 			.catch((err) => {
 				console.error("Error fetching categories: ", err);
 			});
-		return new Promise<ICourseCategory[]>((resolve, reject) => resolve(courseCategories)); // data fetch simulation
 	};
 
 	useEffect(() => {
-		fetchCategories()
-			.then((courseCategories) => {
-				setTimeout(function () {
-					setCategories(courseCategories);
-				}, 1000);
-			})
-			.catch((err) => {
-				console.error("Error fetchng course catgories: ", err);
-			});
+		fetchCategories();
 	}, []);
 
 	return (
@@ -85,8 +77,8 @@ const HomepageCourseSection = () => {
 
 					<Link href="/courses" prefetch={false}>
 						<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
-							<div className="relative flex items-center gap-2">
-								{activeCourseType.categories.length >= 1 ? "View All" : "See More"}
+							<div className="relative flex items-center gap-1">
+								View All
 								<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
 								<div className="flex">
 									<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />

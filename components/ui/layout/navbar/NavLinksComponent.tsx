@@ -18,7 +18,7 @@ const NavLinksComponent = () => {
 	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	//Todo: implement GET_ALL_CATEGORIES query (then, maybe categorize by their course type)
+	//Todo: implement GET_ALL_CATEGORIES query (then categorize by their course type)
 	//
 	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
 		{

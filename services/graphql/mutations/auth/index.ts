@@ -12,22 +12,25 @@ export const REGISTER_USER = gql`
 	}
 `;
 export const LOGIN_USER = gql`
-	mutation loginUser($createLoginInput: CreateLoginInput!) {
+	mutation LoginUser($createLoginInput: CreateLoginInput!) {
 		loginUser(createLoginInput: $createLoginInput) {
 			access_token
 			user {
 				id
-				name
-				email
 				avatar
 				country
+				is_admin
+				is_verified
 				created_at
+				email
 				is_active
 				is_admin
 				is_online
-				is_mentor
 				is_verified
+				# is_mentor
 				phone
+				name
+				updated_at
 			}
 		}
 	}
