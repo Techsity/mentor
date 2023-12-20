@@ -27,11 +27,11 @@ export const LOGIN_USER = gql`
 				is_admin
 				is_online
 				is_verified
-				# is_mentor
 				phone
 				name
 				updated_at
 			}
+			is_mentor
 		}
 	}
 `;
@@ -55,7 +55,6 @@ export const GET_USER_PROFILE = gql`
 			is_active
 			is_verified
 			is_admin
-			is_mentor
 			created_at
 			updated_at
 		}

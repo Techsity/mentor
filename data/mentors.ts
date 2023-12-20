@@ -184,3 +184,21 @@ const mentors: IMentor[] = [
 ];
 
 export default mentors;
+
+export const mentorRoles: string[] = [
+	"Frontend Developer",
+	"Backend Developer",
+	"Mobile Developer",
+	"Product Designer",
+	"Graphic Designer",
+	"Product Manager",
+	"Product Owner",
+	"Solutions Architect",
+	"Cyber Security Specialist",
+	"Scrum Master",
+	"QA Engineer",
+	"Technical Writer",
+	"Teacher",
+	"Project Manager",
+	"Central Applications Planner",
+];

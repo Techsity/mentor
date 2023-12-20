@@ -39,7 +39,6 @@ const MentorOnboardingSteps = () => {
 
 	const handleNext = () => {
 		setLoading(true);
-		console.log(onboardingMentor.currentStep);
 		if (currentStep < totalSteps) {
 			if (currentStep === 1) {
 				if (onboardingMentor.bio && onboardingMentor.role) {

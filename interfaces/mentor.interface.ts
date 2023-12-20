@@ -1,7 +1,5 @@
-import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse, IReview } from "./index";
 import { IUser } from "./user.interface";
-import { MENTOR_ROLES } from "../constants/mentor";
 
 export interface IMentorEducation {
 	school: string;
@@ -14,9 +12,9 @@ export interface IMentorOnboardingState {
 	currentStep: number;
 	agreedToTerms: boolean;
 	user?: IUser | null;
-	role: MENTOR_ROLES | null;
+	role: string;
 	bio: string;
-	skills: string[];
+	skills: IMentorSkills[];
 	yearsOfExp: number;
 	projects: IMentorProjectType[];
 	certificates: IMentorCertificate[];
@@ -65,7 +63,7 @@ export interface IMentor {
 	courses: ICourse[];
 	// courses: Omit<ICourse,"mentor">[];
 	mentor_verified: boolean;
-	role: MENTOR_ROLES;
+	role: string;
 	followers: number;
 	skills: IMentorSkills[];
 	availability: IMentorAvailability[];

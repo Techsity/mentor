@@ -9,21 +9,21 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
+import { mentorRoles } from "../../../../../../../data/mentors";
 
 const FinalStepAboutYouEdit = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const bioInputRef = useRef<HTMLTextAreaElement>(null);
 	const jobTitleInputRef = useRef<HTMLInputElement>(null);
-	const mentorRolesArray = Object.keys(MENTOR_ROLES);
 
-	const [role, setRole] = useState<string>(onboardingMentor.role?.split("_").join(" ") || "");
+	const [role, setRole] = useState<string>(onboardingMentor.role || "");
 	const { SuggestionsComponent, setSelectedSuggestions } = useSuggestions<string>({
-		suggestions: mentorRolesArray.map((item) => item.split("_").join(" ")),
+		suggestions: mentorRoles,
 		inputValue: role,
 	});
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setRole(e.target.value as MENTOR_ROLES);
+		setRole(e.target.value);
 	};
 
 	return (
@@ -44,7 +44,7 @@ const FinalStepAboutYouEdit = () => {
 						type="text"
 						name="job_title"
 						id="job_title"
-						className="bg-transparent px-0"
+						className="bg-transparent"
 						containerProps={{
 							className: "bg-transparent border-transparent w-full",
 						}}

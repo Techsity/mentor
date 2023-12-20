@@ -1,22 +1,33 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import React, { ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../../redux/reducers/features/authSlice";
-import { GET_USER_PROFILE } from "../../../services/graphql/mutations/auth";
+import { setCredentials, switchProfile } from "../../../redux/reducers/features/authSlice";
+import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../../../services/graphql/mutations/auth";
 import { getCookie } from "../../../utils/auth";
 import { AUTH_TOKEN_KEY } from "../../../constants";
 import { IUser } from "../../../interfaces/user.interface";
 import mentors from "../../../data/mentors";
+import router from "next/router";
+import { IMentor } from "../../../interfaces/mentor.interface";
 
-const AuthWrapper = ({ children, user }: { children: ReactNode; user: IUser | null }) => {
+const AuthWrapper = ({
+	children,
+	user,
+	mentorProfile,
+}: {
+	children: ReactNode;
+	user: IUser | null;
+	mentorProfile: IMentor | null;
+}) => {
 	const dispatch = useDispatch();
 
-	if (user)
+	if (user) {
 		dispatch(
 			setCredentials({
 				isLoggedIn: true,
 				user: {
 					...user,
+					is_mentor: true,
 					payment_cards: [
 						{
 							bank: { name: "GTbank via Paystack" },
@@ -25,11 +36,10 @@ const AuthWrapper = ({ children, user }: { children: ReactNode; user: IUser | nu
 						},
 					],
 				},
-				// Todo: set mentor profile properly from the mentorProfile query
-				mentorProfile: user.is_admin ? mentors[0] : null,
+				mentorProfile,
 			}),
 		);
-
+	}
 	return <>{children}</>;
 };
 

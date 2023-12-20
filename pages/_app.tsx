@@ -14,10 +14,10 @@ import "../constants/fonts";
 import { ThemeProvider } from "../context/theme.context";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
-import { GET_USER_PROFILE } from "../services/graphql/mutations/auth";
+import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../services/graphql/mutations/auth";
 import { IUser } from "../interfaces/user.interface";
 import { setCredentials } from "../redux/reducers/features/authSlice";
 import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
@@ -25,14 +25,14 @@ import AuthWrapper from "../components/templates/auth/AuthWrapper";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	// const token = getCookie(AUTH_TOKEN_KEY);
-	const { user } = pageProps;
+	const { user, mentorProfile } = pageProps;
 
 	// useEffect(()=>{},[pageProps])
 
 	return (
 		<Provider store={store}>
 			<ApolloProvider client={apolloClient()}>
-				<AuthWrapper user={user}>
+				<AuthWrapper {...{ user, mentorProfile }}>
 					<ThemeProvider>
 						<Head>
 							<title>Mentör: Connect with experienced Mentors</title>
@@ -64,19 +64,23 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
 	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 	if (ctx.req) {
+		const authToken = checkAuthServerSide(ctx.req) as string;
+		// console.log(authToken);
 		try {
-			const authToken = checkAuthServerSide(ctx.req);
-			const { data } = await apolloClient(authToken).query({
+			const { data } = await apolloClient({ authToken, ssr: true }).query({
 				query: GET_USER_PROFILE,
 			});
 			const user: IUser | null = data?.userProfile || null;
-			// console.log(user);
+
 			if (user) {
-				// store.dispatch(setCredentials({ isLoggedIn: true, user }));
+				const { data: mentorProfile } = await apolloClient({ authToken, ssr: true }).query({
+					query: GET_MENTOR_PROFILE,
+				});
+				if (mentorProfile) return { pageProps: { ...pageProps, user, mentorProfile } };
 				return { pageProps: { ...pageProps, user } };
 			}
-		} catch (error) {
-			console.error(error);
+		} catch (error: any) {
+			console.error(JSON.stringify(error));
 			const errorMessage = formatGqlError(error);
 			// if (errorMessage === "Unauthorized") logoutUser();
 		}

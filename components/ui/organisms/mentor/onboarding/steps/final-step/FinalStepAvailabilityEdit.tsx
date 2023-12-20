@@ -11,25 +11,29 @@ const FinalStepAvailabilityEdit = () => {
 		<div className="my-2">
 			<FinalStepEditButton title="Your Availability" editAction={() => setEditAvailability(!editAvailability)} />
 			{editAvailability ? (
-				<Availability />
+				<div className="mt-3">
+					<Availability />
+				</div>
 			) : (
 				<>
-					<div className="bg-white border border-[#70C5A1] flex flex-col w-full gap-5 p-4 mt-3 max-w-xl">
-						{onboardingMentor.availability.map((schedule, index) => {
-							return (
-								schedule.day && (
-									<div
-										className="flex justify-between items-center text-sm tracking-tight"
-										key={index}>
-										<h1 className="basis-3/5">{schedule.day}</h1>
-										<span className="flex-grow">
-											{schedule.timeSlots[0].startTime} - {schedule.timeSlots[0].endTime}
-										</span>
-									</div>
-								)
-							);
-						})}
-					</div>
+					{onboardingMentor.availability.length > 0 && (
+						<div className="bg-white border border-[#70C5A1] flex flex-col w-full gap-5 p-4 mt-3 max-w-xl">
+							{onboardingMentor.availability.map((schedule, index) => {
+								return (
+									schedule.day && (
+										<div
+											className="flex justify-between items-center text-sm tracking-tight"
+											key={index}>
+											<h1 className="basis-3/5">{schedule.day}</h1>
+											<span className="flex-grow">
+												{schedule.timeSlots[0].startTime} - {schedule.timeSlots[0].endTime}
+											</span>
+										</div>
+									)
+								);
+							})}
+						</div>
+					)}
 				</>
 			)}
 		</div>

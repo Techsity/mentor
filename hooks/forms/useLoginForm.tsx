@@ -122,6 +122,8 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 										isLoggedIn: true,
 										user: {
 											...userData,
+											// Remove
+											is_mentor: true,
 											// Temporary
 											payment_cards: [
 												{

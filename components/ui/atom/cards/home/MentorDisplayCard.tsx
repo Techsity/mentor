@@ -27,7 +27,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 								: mentor.user.name}
 						</h1>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em] capitalize">
-							{mentor.role && mentor.role.split("_").join(" ")}
+							{mentor.role && mentor.role}
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1]">
 							{mentor.work_experience

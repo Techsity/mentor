@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,23 +6,21 @@ import {
 	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
-import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
+import { mentorRoles } from "../../../../../../../data/mentors";
 
 const StepOneMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
-	const mentorRolesArray = Object.keys(MENTOR_ROLES);
-
-	const [role, setRole] = useState<string>(onboardingMentor?.role?.split("_").join(" ") || "");
+	const [role, setRole] = useState<string>(onboardingMentor?.role || "");
 
 	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<string>({
-		suggestions: mentorRolesArray.map((item) => item.split("_").join(" ")),
+		suggestions: mentorRoles.map((item) => item),
 		inputValue: role,
 	});
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setRole(e.target.value as MENTOR_ROLES);
+		setRole(e.target.value);
 	};
 
 	return (
@@ -38,7 +36,7 @@ const StepOneMentorOnboarding = () => {
 					<h1 className="text-sm text-[#B1B1B1]">What do you do?</h1>
 					<CustomTextInput
 						onChange={handleChange}
-						value={role?.split("_").join(" ")}
+						value={role}
 						type="text"
 						name="job_title"
 						id="job_title"
@@ -54,7 +52,7 @@ const StepOneMentorOnboarding = () => {
 								dispatch(
 									setOnboardingMentor({
 										...onboardingMentor,
-										role: r.split(" ").join("_") as MENTOR_ROLES,
+										role: r,
 									}),
 								);
 							}}

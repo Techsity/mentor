@@ -10,14 +10,41 @@ const TagsInput = ({
 	tagsState,
 	textLength = 15,
 	showSelectedTags = true,
+	showAddBtn = true,
+	placeholder,
+	value,
+	onChange,
 }: {
 	textLength?: number;
 	tagsState: string[];
 	showSelectedTags?: boolean;
 	addTag?: (tag: string) => void;
+	onChange?: (tag: string) => void;
 	onRemove?: (tag: string) => void;
+	showAddBtn?: boolean;
+	placeholder?: string;
+	value?: string;
 }) => {
-	const [currentTag, setCurrentTag] = useState<string>("");
+	const [currentTag, setCurrentTag] = useState<string>(value || "");
+
+	useEffect(() => {
+		if (!showAddBtn) {
+			if (tagsState.includes(currentTag)) {
+				toast.info(
+					"Tag has aleady been added!",
+					ToastDefaultOptions({
+						id: "info",
+						theme: "dark",
+					}),
+				);
+				return;
+			}
+			if (addTag) {
+				addTag(currentTag.trim());
+				// setCurrentTag("");
+			}
+		}
+	}, [currentTag, showAddBtn]);
 
 	return (
 		<>
@@ -26,11 +53,16 @@ const TagsInput = ({
 					<label>
 						<CustomTextInput
 							maxLength={textLength}
-							onChange={(e) => setCurrentTag(e.target.value)}
+							onChange={(e) => {
+								if (!onChange) setCurrentTag(e.target.value);
+								else {
+									onChange(e.target.value);
+								}
+							}}
 							value={currentTag}
 							type="text"
 							className="bg-white invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
-							placeholder="Type something"
+							placeholder={placeholder || "Type something"}
 							containerProps={{
 								className: "border border-[#00D569]",
 							}}
@@ -40,29 +72,31 @@ const TagsInput = ({
 										</p> */}
 					</label>
 				</div>
-				<div className="flex justify-start">
-					<PrimaryButton
-						onClick={() => {
-							if (tagsState.includes(currentTag)) {
-								toast.info(
-									"Tag has aleady been added!",
-									ToastDefaultOptions({
-										id: "info",
-										theme: "dark",
-									}),
-								);
-								return;
-							}
-							if (addTag) {
-								addTag(currentTag.trim());
-								setCurrentTag("");
-							}
-							// addTag && addTag(currentTag.trim());
-						}}
-						title="Add"
-						className="flex justify-center w-full px-5 p-4 h-full"
-					/>
-				</div>
+				{showAddBtn && (
+					<div className="flex justify-start">
+						<PrimaryButton
+							onClick={() => {
+								if (tagsState.includes(currentTag)) {
+									toast.info(
+										"Tag has aleady been added!",
+										ToastDefaultOptions({
+											id: "info",
+											theme: "dark",
+										}),
+									);
+									return;
+								}
+								if (addTag) {
+									addTag(currentTag.trim());
+									setCurrentTag("");
+								}
+								// addTag && addTag(currentTag.trim());
+							}}
+							title="Add"
+							className="flex justify-center w-full px-5 p-4 h-full"
+						/>
+					</div>
+				)}
 			</div>
 			{showSelectedTags && tagsState.length > 0 && (
 				<div className="mt-2 px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">

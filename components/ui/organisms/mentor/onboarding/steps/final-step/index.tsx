@@ -44,7 +44,6 @@ const FinalMentorOnboardingStep = () => {
 	const handleSubmit = () => {
 		setLoading(true);
 
-		const exampleSkills = onboardingMentor.skills.map((skill_name) => ({ skill_name, years_of_exp: 6 }));
 		createMentorProfile({
 			variables: {
 				createMentorInput: {
@@ -56,8 +55,8 @@ const FinalMentorOnboardingStep = () => {
 					hourly_rate: 10,
 					language: onboardingMentor.languages,
 					projects: onboardingMentor.projects,
-					role: onboardingMentor.role as MENTOR_ROLES,
-					skills: exampleSkills,
+					role: onboardingMentor.role,
+					skills: onboardingMentor.skills,
 					work_experience: onboardingMentor.workHistory || [],
 				},
 			},
@@ -80,8 +79,6 @@ const FinalMentorOnboardingStep = () => {
 					router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 					toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
 				}
-				// console.log(JSON.stringify(err));
-				// console.error(err.graphQLErrors[0].message);
 				if (
 					errMessage.includes(
 						`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`,
@@ -172,7 +169,7 @@ type OnboardingMentorMutationVariables = {
 		hourly_rate: number;
 		language: string[];
 		projects: IMentorProjectType[];
-		role: MENTOR_ROLES;
+		role: string;
 		work_experience: IMentorExperience[];
 		skills: IMentorSkills[];
 	};

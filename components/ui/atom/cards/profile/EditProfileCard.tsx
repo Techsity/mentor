@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, setCredentials, switchProfile } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser, switchProfile } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
-import { scrollToTop } from "../../../../../utils";
-import mentors from "../../../../../data/mentors";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
@@ -94,7 +92,13 @@ const EditProfileCard = () => {
 				<div className="flex items-center justify-start mt-10">
 					<PrimaryButton
 						title={
-							!loading ? (user?.mentor ? "Switch to Mentee Dashboard" : "Switch to Mentor Profile") : ""
+							!loading
+								? user?.is_mentor
+									? user?.mentor
+										? "Switch to Mentee Dashboard"
+										: "Switch to Mentor Profile"
+									: "Get Mentor Profile"
+								: ""
 						}
 						icon={loading ? <ActivityIndicator /> : null}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"

@@ -9,7 +9,7 @@ const initialMentorOnboardingState: IMentorOnboardingState = {
 	agreedToTerms: false,
 	user: null,
 	bio: "",
-	role: null,
+	role: "",
 	skills: [],
 	yearsOfExp: 1,
 	workHistory: [],
