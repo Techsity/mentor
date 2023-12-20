@@ -27,14 +27,16 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 								: mentor.user.name}
 						</h1>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em] capitalize">
-							{mentor.role.split("_").join(" ")}
+							{mentor.role && mentor.role.split("_").join(" ")}
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1]">
-							{mentor.work_experience && mentor.work_experience?.length === 1
-								? mentor.work_experience.length + " year"
-								: mentor.work_experience.length
-								? mentor.work_experience.length + " years"
-								: "<1 year"}{" "}
+							{mentor.work_experience
+								? mentor.work_experience?.length === 1
+									? mentor.work_experience.length + " year"
+									: mentor.work_experience.length
+									? mentor.work_experience.length + " years"
+									: "<1 year"
+								: 0 + " years"}{" "}
 							of experience
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">2 sessions</p>
