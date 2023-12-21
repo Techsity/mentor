@@ -5,7 +5,6 @@ import workshopReducer from "./reducers/features/workshopSlice";
 import coursesReducer from "./reducers/features/coursesSlice";
 import { FLUSH, PAUSE, persistReducer, persistStore, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { createWrapper } from "next-redux-wrapper";
 
 const persistConfig = { storage, key: "root", version: 1 };
 
@@ -34,8 +33,6 @@ const setupStore = () => {
 export type AppStore = ReturnType<typeof setupStore>;
 
 export type RootState = ReturnType<typeof store.getState>;
-
-export const reduxWrapper = createWrapper<AppStore>(setupStore);
 
 export const persistor = persistStore(store);
 
