@@ -23,8 +23,10 @@ const authSlice = createSlice({
 			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 		},
 		logOut: (state) => {
+			console.log("Logging out...");
 			state.isLoggedIn = false;
 			state.user = null;
+			return state;
 		},
 		updateUser: (state, action: { payload: IUser | null }) => {
 			state.user = action.payload;

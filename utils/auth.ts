@@ -83,6 +83,7 @@ export const logoutUser = (next?: Function) => {
 	store.dispatch(logOut());
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
+	removeLocalStorage("persist:root");
 	next && next();
 };
 

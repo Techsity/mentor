@@ -19,9 +19,11 @@ import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
 import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../services/graphql/mutations/auth";
 import { IUser } from "../interfaces/user.interface";
-import { checkAuthServerSide, formatGqlError } from "../utils/auth";
+import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
 import { PersistGate } from "redux-persist/integration/react";
+import jwt from "jsonwebtoken";
+import { logOut } from "../redux/reducers/features/authSlice";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const { user, mentorProfile } = pageProps;
@@ -66,22 +68,35 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 	if (ctx.req) {
 		const authToken = checkAuthServerSide(ctx.req) as string;
-		try {
-			const { data } = await apolloClient({ authToken, ssr: true }).query({
-				query: GET_USER_PROFILE,
-			});
-			const user: IUser | null = data?.userProfile || null;
+		const decodedToken: any = jwt.decode(authToken);
+		// console.log(decodedToken);
+		if (decodedToken)
+			if (decodedToken.exp < Date.now() / 1000) {
+				console.log("Auth Token has expired");
+				logoutUser();
+			} else {
+				console.log("Auth Token is still valid");
+				try {
+					const { data } = await apolloClient({ authToken, ssr: true }).query({
+						query: GET_USER_PROFILE,
+					});
+					const user: IUser | null = data?.userProfile || null;
 
-			if (user) {
-				const { data: mentorProfile } = await apolloClient({ authToken, ssr: true }).query({
-					query: GET_MENTOR_PROFILE,
-				});
-				if (mentorProfile) return { pageProps: { ...pageProps, user, mentorProfile } };
-				return { pageProps: { ...pageProps, user, mentorProfile: null } };
+					if (user) {
+						const { data: mentorProfile } = await apolloClient({ authToken, ssr: true }).query({
+							query: GET_MENTOR_PROFILE,
+						});
+						if (mentorProfile) return { pageProps: { ...pageProps, user, mentorProfile } };
+						return { pageProps: { ...pageProps, user, mentorProfile: null } };
+					}
+				} catch (error: any) {
+					console.error(JSON.stringify(error));
+					const errorMessage = formatGqlError(error);
+				}
 			}
-		} catch (error: any) {
-			console.error(JSON.stringify(error));
-			const errorMessage = formatGqlError(error);
+		else {
+			console.error("Error decoding auth token");
+			logoutUser();
 		}
 	}
 	return { pageProps: { ...pageProps } };

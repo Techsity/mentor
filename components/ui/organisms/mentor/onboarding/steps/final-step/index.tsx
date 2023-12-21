@@ -40,7 +40,6 @@ const FinalMentorOnboardingStep = () => {
 	const [createMentorProfile] = useMutation<OnboardingMentorMutationResponse, OnboardingMentorMutationVariables>(
 		ONBOARD_MENTOR,
 	);
-	const dispatch = useDispatch();
 
 	const handleSubmit = () => {
 		setLoading(true);
