@@ -7,7 +7,7 @@ import {
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/features/onboardingSlice";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
-import { mentorRoles } from "../../../../../../../data/mentors";
+import mentorRoles from "../../../../../../../data/global/mentorRoles.json";
 
 const StepOneMentorOnboarding = () => {
 	const dispatch = useDispatch();

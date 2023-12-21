@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
-import { mentorRoles } from "../../../../../../../data/mentors";
+import mentorRoles from "../../../../../../../data/global/mentorRoles.json";
 
 const FinalStepAboutYouEdit = () => {
 	const dispatch = useDispatch();

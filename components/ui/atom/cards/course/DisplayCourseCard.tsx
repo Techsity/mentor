@@ -14,7 +14,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 	return (
 		<>
 			<div className="animate__animated animate__fadeIn animate__faster inline-block snap-start">
-				<div className="rounded sm:w-full w-[300px] h-auto md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+				<div className="rounded w-full sm:w-[300px] h-auto md:max-w-sm xl:max-w-xl relative overflow-hidden shadow pb-4 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
 					<>
 						{/* Wishlist Feature - Start */}
 						{!loading && (

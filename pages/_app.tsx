@@ -13,7 +13,7 @@ import "react-calendar/dist/Calendar.css";
 import "../constants/fonts";
 import { ThemeProvider } from "../context/theme.context";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import { store, persistor } from "../redux/store";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
@@ -22,41 +22,43 @@ import { IUser } from "../interfaces/user.interface";
 import { setCredentials } from "../redux/reducers/features/authSlice";
 import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
+import { PersistGate } from "redux-persist/integration/react";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-	// const token = getCookie(AUTH_TOKEN_KEY);
 	const { user, mentorProfile } = pageProps;
-
-	// useEffect(()=>{},[pageProps])
 
 	return (
 		<Provider store={store}>
-			<ApolloProvider client={apolloClient()}>
-				<AuthWrapper {...{ user, mentorProfile }}>
-					<ThemeProvider>
-						<Head>
-							<title>Mentör: Connect with experienced Mentors</title>
-							<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
-							<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-						</Head>
-						<SidebarProvider>
-							<LayoutContainer>
-								<ToastContainer
-									limit={1}
-									// newestOnTop
-									autoClose={5000}
-									theme="dark"
-									hideProgressBar
-									closeOnClick
-									draggable
+			<PersistGate persistor={persistor} loading={null}>
+				<ApolloProvider client={apolloClient()}>
+					<AuthWrapper {...{ user, mentorProfile }}>
+						<ThemeProvider>
+							<Head>
+								<title>Mentör: Connect with experienced Mentors</title>
+								<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+								<meta
+									name="viewport"
+									content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 								/>
-								{/* {initialLoad && <PagePreLoader />} */}
-								<Component {...pageProps} />
-							</LayoutContainer>
-						</SidebarProvider>
-					</ThemeProvider>
-				</AuthWrapper>
-			</ApolloProvider>
+							</Head>
+							<SidebarProvider>
+								<LayoutContainer>
+									<ToastContainer
+										limit={1}
+										// newestOnTop
+										autoClose={5000}
+										theme="dark"
+										hideProgressBar
+										closeOnClick
+										draggable
+									/>
+									<Component {...pageProps} />
+								</LayoutContainer>
+							</SidebarProvider>
+						</ThemeProvider>
+					</AuthWrapper>
+				</ApolloProvider>
+			</PersistGate>
 		</Provider>
 	);
 };
@@ -65,7 +67,6 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 	if (ctx.req) {
 		const authToken = checkAuthServerSide(ctx.req) as string;
-		// console.log(authToken);
 		try {
 			const { data } = await apolloClient({ authToken, ssr: true }).query({
 				query: GET_USER_PROFILE,
@@ -82,7 +83,6 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 		} catch (error: any) {
 			console.error(JSON.stringify(error));
 			const errorMessage = formatGqlError(error);
-			// if (errorMessage === "Unauthorized") logoutUser();
 		}
 	}
 	return { pageProps: { ...pageProps } };
