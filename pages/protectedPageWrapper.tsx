@@ -1,14 +1,9 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { currentUser, isLoggedIn, setCredentials } from "../redux/reducers/features/authSlice";
-import { NextPage, NextPageContext } from "next";
+import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
+import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useLazyQuery } from "@apollo/client";
-import { GET_USER_PROFILE } from "../services/graphql/mutations/auth";
-import { AppContext, AppInitialProps } from "next/app";
-import store from "../redux/store";
 import { IUser } from "../interfaces/user.interface";
 
 interface PageProps {
