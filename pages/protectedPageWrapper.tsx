@@ -4,12 +4,6 @@ import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
 import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";
-import { IUser } from "../interfaces/user.interface";
-
-interface PageProps {
-	user: IUser | null;
-	auth: boolean;
-}
 
 const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 	const Page = (props: any) => {

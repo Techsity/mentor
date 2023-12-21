@@ -1,12 +1,4 @@
-import { useQuery } from "@apollo/client";
-import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useRef, useState } from "react";
-import { IUser } from "../interfaces/user.interface";
-import { setCredentials } from "../redux/reducers/features/authSlice";
-import store from "../redux/store";
-import { GET_USER_PROFILE } from "../services/graphql/mutations/auth";
-import apolloClient from "../utils/apolloClient";
-import { getCookie } from "../utils/auth";
-import { AUTH_TOKEN_KEY } from "../constants";
+import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 interface IAuthContext {
 	theme: "dark" | "light";

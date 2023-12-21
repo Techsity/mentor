@@ -14,13 +14,12 @@ import "../constants/fonts";
 import { ThemeProvider } from "../context/theme.context";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
 import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../services/graphql/mutations/auth";
 import { IUser } from "../interfaces/user.interface";
-import { setCredentials } from "../redux/reducers/features/authSlice";
-import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
+import { checkAuthServerSide, formatGqlError } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
 import { PersistGate } from "redux-persist/integration/react";
 
