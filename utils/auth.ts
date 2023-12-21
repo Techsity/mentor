@@ -1,7 +1,7 @@
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
 import { logOut } from "../redux/reducers/features/authSlice";
-import store from "../redux/store";
+import { store } from "../redux/store";
 import Cookies from "js-cookie";
 
 export const currentUserRole = (): "mentee" | "mentor" => {
