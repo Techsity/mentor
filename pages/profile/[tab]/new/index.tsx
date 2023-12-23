@@ -22,11 +22,22 @@ const EditPageContainer = () => {
 		return Boolean(tab === "workshop");
 	}, [router]);
 
+	const isNewItemPage = useMemo(() => {
+		return (
+			Boolean(tab === "courses" && router.asPath.split("/")[router.asPath.split("/").length - 1] === "new") ||
+			Boolean(tab === "workshop" && router.asPath.split("/")[router.asPath.split("/").length - 1] === "new")
+		);
+	}, [router]);
+
 	return (
 		<ProfileLayout>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">{isCourse ? "Add new course" : isWorkshop && "Add new Workshop"}</h1>
-				{isMentor && tab === "courses" && isCourse ? (
+				{isMentor && tab === "courses" && isNewItemPage ? (
+					<div className="flex items-center gap-3 lg:pr-8">
+						<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
+					</div>
+				) : isCourse ? (
 					<div className="flex items-center gap-3">
 						<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
 						<PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" />
@@ -44,9 +55,21 @@ const EditPageContainer = () => {
 				)}
 			</div>
 			{isCourse ? (
-				<WorkshopAndCourseEditTemplate handleSave={() => {}} isCourse />
+				<WorkshopAndCourseEditTemplate
+					handleSave={(state) => {
+						console.log({ course: state });
+					}}
+					isCourse
+				/>
 			) : (
-				isWorkshop && <WorkshopAndCourseEditTemplate handleSave={() => {}} isWorkshop />
+				isWorkshop && (
+					<WorkshopAndCourseEditTemplate
+						handleSave={(state) => {
+							console.log({ workshop: state });
+						}}
+						isWorkshop
+					/>
+				)
 			)}
 		</ProfileLayout>
 	);

@@ -20,7 +20,7 @@ export interface ExtendedCourseWorkshopType extends Omit<ICourse, "mentor">, Omi
 type Props = {
 	isCourse?: boolean;
 	isWorkshop?: boolean;
-	handleSave: (updatedValues: Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">) => void;
+	handleSave: (state: Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">) => void;
 	state?: ExtendedCourseWorkshopType;
 };
 

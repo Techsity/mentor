@@ -7,14 +7,41 @@ const isClient = typeof window !== "undefined" && window.localStorage;
 const userWishlistedCoursesLocal = isClient ? window.localStorage.getItem("userWishlistedCourses") : "";
 const data: ICourse[] = userWishlistedCoursesLocal ? JSON.parse(userWishlistedCoursesLocal) : [];
 
+const newCourseInitialState: Omit<ICourse, "mentor"> = {
+	title: "",
+	description: "",
+	course_images: "",
+	course_level: "ALL_LEVELS",
+	duration: 0,
+	limit: 0,
+	rating: 0,
+	price: 0,
+	available: false,
+	imgUrl: "",
+	requirements: [],
+	course_contents: [],
+	category: {
+		title: "",
+		category_type: {
+			description: "",
+			type: "",
+		},
+		description: "",
+		created_at: "",
+		updated_at: "",
+	},
+	reviews: [],
+	what_to_learn: [],
+};
+
 const initialState: {
 	userWishlistedCourses: ICourse[];
 	courseCategories: ICourseCategory[];
-	newCourse: ICourse | null;
+	newCourse: Omit<ICourse, "mentor"> | null;
 } = {
 	userWishlistedCourses: data,
 	courseCategories: [],
-	newCourse: null,
+	newCourse: newCourseInitialState,
 };
 
 const coursesSlice = createSlice({
@@ -33,7 +60,7 @@ const coursesSlice = createSlice({
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
-		setNewCourse: (state, action: { payload: ICourse | null }) => {
+		setNewCourse: (state, action: { payload: Omit<ICourse, "mentor"> | null }) => {
 			state.newCourse = action.payload;
 		},
 	},

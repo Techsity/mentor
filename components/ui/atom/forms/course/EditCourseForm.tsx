@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import { PrimaryButton } from "../../buttons";
 import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
+import { useDispatch, useSelector } from "react-redux";
+import { newCourse, setNewCourse } from "../../../../../redux/reducers/features/coursesSlice";
 
-type StateType = Omit<IWorkshop, "mentor"> | Omit<ICourse, "mentor">;
+type OmittedCourseType = Omit<ICourse, "mentor">;
+
+type StateType = Omit<IWorkshop, "mentor"> | OmittedCourseType;
 
 type Props = {
 	handleSave: (updatedValues: StateType) => void;
@@ -17,20 +19,19 @@ type Props = {
 };
 
 const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) => {
+	const dispatch = useDispatch();
+	const newCourseData = useSelector(newCourse);
+
 	const [formState, setFormState] = useState<StateType>(state);
+
 	const [hasPrice, setHasPrice] = useState<boolean>(formState.price && formState.price !== 0 ? true : false);
 
-	const requirementsArray = formState.requirements.concat(
-		Array.from({ length: 6 - formState.requirements.length }).map(() => ``),
-	);
-	const whatToLearnArray = formState.what_to_learn.concat(
-		Array.from({ length: 6 - formState.what_to_learn.length }).map(() => ``),
-	);
-
 	const handleChange = (field: keyof ExtendedCourseWorkshopType) => (e: ChangeEvent<HTMLInputElement>) => {
-		setFormState((prev) => {
-			return { ...prev, [field]: e.target.value };
-		});
+		{
+			setFormState((prev) => {
+				return { ...prev, [field]: e.target.value };
+			});
+		}
 	};
 
 	return (
@@ -51,8 +52,17 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						value={formState.title}
-						onChange={handleChange("title")}
+						value={isCourse && newCourseData ? newCourseData?.title : formState.title}
+						onChange={(e) => {
+							handleChange("title")(e);
+							if (isCourse)
+								dispatch(
+									setNewCourse({
+										...(newCourseData as OmittedCourseType),
+										title: e.target.value,
+									}),
+								);
+						}}
 					/>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative">
@@ -109,32 +119,68 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 			</>
 			{/* Course Details Input - end */}
 			{/* What to learn and requirements section - start */}
+			{/* //Todo: make the list dynamic - starting with 1 input */}
 			<>
 				<div className="sm:col-span-2 col-span-4">
 					<h1 className="text-sm font-normal my-2">What would be learnt</h1>
-					{whatToLearnArray.map((value, index) => {
-						return (
-							<div
-								key={index}
-								className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-								<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
-								<CustomTextInput
-									id="what-to-learn"
-									containerProps={{
-										className: "text-sm",
-									}}
-									value={value}
-									onChange={(e) => {
-										setFormState((prev) => {
-											const updated = [...formState.what_to_learn];
-											updated[index] = e.target.value;
-											return { ...prev, what_to_learn: updated };
-										});
-									}}
-								/>
-							</div>
-						);
-					})}
+					{formState.what_to_learn.length > 0 ? (
+						formState.what_to_learn.map((value, index) => {
+							return (
+								<div
+									key={index}
+									className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+									<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
+									<CustomTextInput
+										id={
+											isCourse
+												? "course-what_to_learn"
+												: isWorkshop
+												? "workshop-what_to_learn"
+												: ""
+										}
+										containerProps={{
+											className: "text-sm",
+										}}
+										value={value}
+										onChange={(e) => {
+											setFormState((prev) => {
+												const updated = [...formState.what_to_learn];
+												updated[index] = e.target.value;
+												return { ...prev, what_to_learn: updated };
+											});
+										}}
+									/>
+								</div>
+							);
+						})
+					) : (
+						<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+							<p className="text-sm text-[#B1B1B1]">{1}.</p>
+							<CustomTextInput
+								id={isCourse ? "course-what_to_learn" : isWorkshop ? "workshop-what_to_learn" : ""}
+								containerProps={{
+									className: "text-sm",
+								}}
+								value={formState.what_to_learn[0]}
+								onChange={(e) => {
+									setFormState((prev) => {
+										return { ...prev, what_to_learn: [e.target.value] };
+									});
+								}}
+							/>
+						</div>
+					)}
+					{formState.what_to_learn.length < 6 ? (
+						<span
+							className="text-[#70C5A1] text-sm cursor-pointer my-3"
+							onClick={() => {
+								setFormState((prev) => {
+									return { ...prev, what_to_learn: [...prev.what_to_learn, " "] };
+								});
+							}}>
+							+ Add
+						</span>
+					) : null}
 				</div>
 				<div className="sm:col-span-2 col-span-4">
 					<h1
@@ -142,29 +188,60 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					t-sm font-normal my-2">
 						Requirements
 					</h1>
-					{requirementsArray.map((value, index) => {
-						return (
-							<div
-								key={index}
-								className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-								<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
-								<CustomTextInput
-									id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
-									containerProps={{
-										className: "text-sm",
-									}}
-									value={value}
-									onChange={(e) => {
-										setFormState((prev) => {
-											const updated = [...formState.requirements];
-											updated[index] = e.target.value;
-											return { ...prev, requirements: updated };
-										});
-									}}
-								/>
-							</div>
-						);
-					})}
+					{formState.requirements.length > 0 ? (
+						formState.requirements.map((value, index) => {
+							return (
+								<div
+									key={index}
+									className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+									<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
+									<CustomTextInput
+										id={
+											isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""
+										}
+										containerProps={{
+											className: "text-sm",
+										}}
+										value={value}
+										onChange={(e) => {
+											setFormState((prev) => {
+												const updated = [...formState.requirements];
+												updated[index] = e.target.value;
+												return { ...prev, requirements: updated };
+											});
+										}}
+									/>
+								</div>
+							);
+						})
+					) : (
+						<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+							<p className="text-sm text-[#B1B1B1]">{1}.</p>
+							<CustomTextInput
+								id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
+								containerProps={{
+									className: "text-sm",
+								}}
+								value={formState.requirements[0]}
+								onChange={(e) => {
+									setFormState((prev) => {
+										return { ...prev, requirements: [e.target.value] };
+									});
+								}}
+							/>
+						</div>
+					)}
+					{formState.requirements.length < 6 ? (
+						<span
+							className="text-[#70C5A1] text-sm cursor-pointer my-3"
+							onClick={() => {
+								setFormState((prev) => {
+									return { ...prev, requirements: [...prev.requirements, " "] };
+								});
+							}}>
+							+ Add
+						</span>
+					) : null}
 				</div>
 			</>
 			{/* What to learn and requirements section - end */}
