@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, switchProfile } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser, switchProfile } from "../../../../../redux/reducers/authSlice";
 import { PrimaryButton } from "../../buttons";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";

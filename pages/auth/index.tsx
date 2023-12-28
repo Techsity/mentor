@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import LoginAndAuthPageTemplate from "../../components/templates/auth/login-and-signup";
 import { useSelector } from "react-redux";
-import { isLoggedIn, currentUser } from "../../redux/reducers/features/authSlice";
+import { isLoggedIn, currentUser } from "../../redux/reducers/authSlice";
 import { useRouter } from "next/router";
 import ActivityIndicator from "../../components/ui/atom/loader/ActivityIndicator";
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import {
 	onboardingMentorState,
 	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch } from "react-redux";
 import FinalStepAboutYouEdit from "./FinalStepAboutYouEdit";
 import FinalStepSkillEdit from "./FinalStepSkillEdit";
@@ -31,7 +31,7 @@ import { formatGqlError } from "../../../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import { switchProfile } from "../../../../../../../redux/reducers/features/authSlice";
+import { switchProfile } from "../../../../../../../redux/reducers/authSlice";
 
 const FinalMentorOnboardingStep = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);

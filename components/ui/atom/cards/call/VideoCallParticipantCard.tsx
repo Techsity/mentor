@@ -2,7 +2,7 @@ import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { IUser } from "../../../../../interfaces/user.interface";
 import { MicMuted, SpeakingIcon } from "../../icons/svgs/call";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 import { slugify } from "../../../../../utils";
 import {
 	IAgoraRTCRemoteUser,

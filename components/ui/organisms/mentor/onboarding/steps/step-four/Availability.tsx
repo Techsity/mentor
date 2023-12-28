@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";

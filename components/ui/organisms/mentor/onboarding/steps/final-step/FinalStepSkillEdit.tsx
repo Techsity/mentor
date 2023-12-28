@@ -3,7 +3,7 @@ import { FinalStepEditButton } from "./index";
 import {
 	onboardingMentorState,
 	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import TagsInput from "../../../../../atom/inputs/TagsInput";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";

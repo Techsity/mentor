@@ -1,25 +1,36 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials, switchProfile } from "../../../redux/reducers/features/authSlice";
-import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../../../services/graphql/mutations/auth";
-import { getCookie } from "../../../utils/auth";
-import { AUTH_TOKEN_KEY } from "../../../constants";
+import { setCredentials } from "../../../redux/reducers/authSlice";
+import { checkAuth, getCookie, logoutUser } from "../../../utils/auth";
 import { IUser } from "../../../interfaces/user.interface";
-import mentors from "../../../data/mentors";
-import router from "next/router";
 import { IMentor } from "../../../interfaces/mentor.interface";
+import { useRouter } from "next/router";
+import { AUTH_TOKEN_KEY } from "../../../constants";
 
 const AuthWrapper = ({
 	children,
 	user,
 	mentorProfile,
+	logout,
 }: {
 	children: ReactNode;
 	user: IUser | null;
 	mentorProfile: IMentor | null;
+	logout: boolean;
 }) => {
 	const dispatch = useDispatch();
+
+	// const checkAuthValidity = () => {
+	// 	const authToken = checkAuth();
+	// 	console.log(authToken);
+	// };
+
+	// useEffect(() => {
+	// 	window.addEventListener("storage", checkAuthValidity);
+	// 	return () => {
+	// 		window.removeEventListener("storage", checkAuthValidity);
+	// 	};
+	// }, []);
 
 	if (user) {
 		dispatch(
@@ -39,6 +50,8 @@ const AuthWrapper = ({
 				mentorProfile,
 			}),
 		);
+	} else if (logout) {
+		logoutUser();
 	}
 	return <>{children}</>;
 };

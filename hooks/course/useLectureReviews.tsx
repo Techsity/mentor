@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { IUser } from "../../interfaces/user.interface";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../redux/reducers/features/authSlice";
+import { currentUser } from "../../redux/reducers/authSlice";
 import reviewsData from "../../data/reviews";
 import { IReview } from "../../interfaces";
 

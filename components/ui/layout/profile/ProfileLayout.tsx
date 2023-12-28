@@ -3,7 +3,7 @@ import ProfileNavCard from "../../atom/cards/profile/ProfileNavCard";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { ProfileTabLinkType } from "../../../../interfaces";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 import EditProfileCard from "../../atom/cards/profile/EditProfileCard";
 import { PrimaryButton } from "../../atom/buttons";
 

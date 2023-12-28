@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	onboardingMentorState,
 	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
 import mentorRoles from "../../../../../../../data/global/mentorRoles.json";
 

@@ -12,7 +12,7 @@ import ResponseMessages from "../../../../../constants/response-codes";
 import { FORGOT_PASSWORD, RESET_PASSWORD } from "../../../../../services/graphql/mutations/auth";
 import { formatGqlError } from "../../../../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../../redux/reducers/features/authSlice";
+import { resetPasswordState, setResetPasswordState } from "../../../../../redux/reducers/authSlice";
 
 type VerifyUserResponseType = {
 	data: { resetPassword: { message: keyof typeof ResponseMessages } };

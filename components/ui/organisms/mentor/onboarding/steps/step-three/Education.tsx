@@ -2,7 +2,7 @@ import React from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { slugify } from "../../../../../../../utils";
 import EditEducationCard from "../../../../../atom/cards/mentor/onboarding/EditEducationCard";

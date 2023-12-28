@@ -3,7 +3,7 @@ import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
 import { courseTypes } from "../../../../data/courses";
 

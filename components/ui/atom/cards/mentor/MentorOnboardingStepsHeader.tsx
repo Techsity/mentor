@@ -1,30 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../redux/reducers/onboardingSlice";
 import { scrollToTop } from "../../../../../utils";
 import { toast } from "react-toastify";
 
-const MentorOnboardingStepsHeader = (props: {
-	stepsLength?: number;
-	currentStep: number;
-}) => {
+const MentorOnboardingStepsHeader = (props: { stepsLength?: number; currentStep: number }) => {
 	const { stepsLength = 4, currentStep } = props;
-	const stepNumbers = Array.from(
-		{ length: stepsLength - 1 },
-		(_, index) => index + 1,
-	);
+	const stepNumbers = Array.from({ length: stepsLength - 1 }, (_, index) => index + 1);
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 
 	return (
 		<div className="relative grid grid-cols-4 w-full justify-between mb-6 py-6 items-center sticky z-10 top-20 h-full bg-[#F6F9F85A] backdrop-blur-sm">
 			{stepNumbers.map((step, id) => (
-				<div
-					key={id}
-					className="relative w-full flex justify-start items-center select-none">
+				<div key={id} className="relative w-full flex justify-start items-center select-none">
 					<div
 						onClick={() => {
 							dispatch(
@@ -42,9 +31,7 @@ const MentorOnboardingStepsHeader = (props: {
 						}`}>
 						{step}
 					</div>
-					{step < stepsLength - 1 && (
-						<div className="absolute h-1 w-full bg-zinc-200" />
-					)}
+					{step < stepsLength - 1 && <div className="absolute h-1 w-full bg-zinc-200" />}
 					{step < stepsLength - 1 ? (
 						<div
 							className={`absolute h-1 ${

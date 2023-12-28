@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import Education from "../step-three/Education";
 import { slugify } from "../../../../../../../utils";
 import MentorEducationCard from "../../../../../atom/cards/mentor/MentorEducationCard";

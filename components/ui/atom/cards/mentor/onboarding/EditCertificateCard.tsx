@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import CustomTextInput from "../../../inputs/CustomTextInput";
 import Calendar from "react-calendar";
 import { IMentorOnboardingState } from "../../../../../../interfaces/mentor.interface";
-import { setOnboardingMentor } from "../../../../../../redux/reducers/features/onboardingSlice";
+import { setOnboardingMentor } from "../../../../../../redux/reducers/onboardingSlice";
 import { slugify } from "../../../../../../utils";
 import { PrimaryButton } from "../../../buttons";
 import ActivityIndicator from "../../../loader/ActivityIndicator";

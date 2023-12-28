@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import Languages from "../step-four/Languages";
 import { useSelector } from "react-redux";
-import { onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 
 const FinalStepLanguageEdit = () => {
 	const [editAvailability, setEditAvailability] = useState<boolean>(false);

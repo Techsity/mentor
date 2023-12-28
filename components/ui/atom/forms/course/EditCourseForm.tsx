@@ -5,7 +5,7 @@ import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
 import { PrimaryButton } from "../../buttons";
 import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 import { useDispatch, useSelector } from "react-redux";
-import { newCourse, setNewCourse } from "../../../../../redux/reducers/features/coursesSlice";
+import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
 
 type OmittedCourseType = Omit<ICourse, "mentor">;
 

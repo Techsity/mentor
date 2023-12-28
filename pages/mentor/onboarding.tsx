@@ -1,7 +1,7 @@
 import React from "react";
 import MentorOnboardingPageTemplate from "../../components/templates/mentor/onboarding";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../redux/reducers/features/authSlice";
+import { currentUser } from "../../redux/reducers/authSlice";
 import { useRouter } from "next/router";
 
 const MentorOnboardingPage = () => {

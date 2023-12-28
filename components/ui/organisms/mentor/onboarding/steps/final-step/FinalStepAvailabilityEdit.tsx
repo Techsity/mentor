@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
 import { useDispatch, useSelector } from "react-redux";
-import { onboardingMentorState } from "../../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import Availability from "../step-four/Availability";
 
 const FinalStepAvailabilityEdit = () => {

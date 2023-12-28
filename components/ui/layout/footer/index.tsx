@@ -6,7 +6,7 @@ import { MentorLogoLight } from "../../atom/icons/svgs";
 import { useRouter } from "next/router";
 import { courseTypes } from "../../../../data/courses";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const Footer = () => {
 	const router = useRouter();

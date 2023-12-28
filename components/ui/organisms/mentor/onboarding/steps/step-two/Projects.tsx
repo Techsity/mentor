@@ -2,7 +2,7 @@ import React from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { slugify } from "../../../../../../../utils";

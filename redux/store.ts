@@ -1,15 +1,23 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "./reducers/features/authSlice";
-import onboardingReducer from "./reducers/features/onboardingSlice";
-import workshopReducer from "./reducers/features/workshopSlice";
-import coursesReducer from "./reducers/features/coursesSlice";
+import authReducer from "./reducers/authSlice";
+import onboardingReducer from "./reducers/onboardingSlice";
+import workshopReducer from "./reducers/workshopSlice";
+import coursesReducer from "./reducers/coursesSlice";
 import { FLUSH, PAUSE, persistReducer, persistStore, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/lib/storage/session";
 
-const persistConfig = { storage, key: "root", version: 1 };
+const persistConfig = { storage, key: "root", version: 1, blacklist: ["auth"] };
+
+const userPersistConfig = {
+	key: "auth",
+	storage: sessionStorage,
+	version: 1,
+};
 
 const rootReducer = combineReducers({
-	auth: authReducer,
+	auth: persistReducer(userPersistConfig, authReducer),
+	// auth: authReducer,
 	onboarding: onboardingReducer,
 	workshop: workshopReducer,
 	courses: coursesReducer,

@@ -23,16 +23,15 @@ import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
 import { PersistGate } from "redux-persist/integration/react";
 import jwt from "jsonwebtoken";
-import { logOut } from "../redux/reducers/features/authSlice";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-	const { user, mentorProfile } = pageProps;
+	const { user, mentorProfile, logout } = pageProps;
 
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor} loading={null}>
 				<ApolloProvider client={apolloClient()}>
-					<AuthWrapper {...{ user, mentorProfile }}>
+					<AuthWrapper {...{ user, mentorProfile, logout }}>
 						<ThemeProvider>
 							<Head>
 								<title>Mentör: Connect with experienced Mentors</title>
@@ -73,15 +72,16 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 		if (decodedToken)
 			if (decodedToken.exp < Date.now() / 1000) {
 				console.log("Auth Token has expired");
-				logoutUser();
+				// logoutUser();
+				return { pageProps: { ...pageProps, logout: true } };
 			} else {
 				console.log("Auth Token is still valid");
 				try {
 					const { data } = await apolloClient({ authToken, ssr: true }).query({
 						query: GET_USER_PROFILE,
 					});
-					const user: IUser | null = data?.userProfile || null;
 
+					const user: IUser | null = data?.userProfile || null;
 					if (user) {
 						const { data: mentorProfile } = await apolloClient({ authToken, ssr: true }).query({
 							query: GET_MENTOR_PROFILE,
@@ -96,7 +96,8 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppIniti
 			}
 		else {
 			console.error("Error decoding auth token");
-			logoutUser();
+			// logoutUser();
+			return { pageProps: { ...pageProps, logout: true } };
 		}
 	}
 	return { pageProps: { ...pageProps } };

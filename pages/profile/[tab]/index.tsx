@@ -4,7 +4,7 @@ import ProfileLayout from "../../../components/ui/layout/profile/ProfileLayout";
 import { useRouter } from "next/router";
 import { ProfileTabLinkType } from "../../../interfaces";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../redux/reducers/authSlice";
 import ProfileSettings from "../../../components/ui/organisms/user/profile/ProfileSettings";
 import CourseInProgressDisplayCard from "../../../components/ui/atom/cards/course/CourseInProgressDisplayCard";
 import courses from "../../../data/courses";

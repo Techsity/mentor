@@ -4,7 +4,7 @@ import { calculateTotalDuration, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
-import { setWorkshopToRegister } from "../../../../../redux/reducers/features/workshopSlice";
+import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 import { useRouter } from "next/router";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 

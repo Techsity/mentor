@@ -5,7 +5,7 @@ import { FinalStepEditButton } from "./index";
 import {
 	onboardingMentorState,
 	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";

@@ -4,7 +4,7 @@ import router, { useRouter } from "next/router";
 import ProfileLayout from "../../../../../components/ui/layout/profile/ProfileLayout";
 import { PrimaryButton } from "../../../../../components/ui/atom/buttons";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 const ContentEditPageContainer = () => {
 	const router = useRouter();

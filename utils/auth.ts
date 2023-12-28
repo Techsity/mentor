@@ -1,6 +1,6 @@
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
-import { logOut } from "../redux/reducers/features/authSlice";
+import { logOut } from "../redux/reducers/authSlice";
 import { store } from "../redux/store";
 import Cookies from "js-cookie";
 
@@ -83,7 +83,7 @@ export const logoutUser = (next?: Function) => {
 	store.dispatch(logOut());
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
-	removeLocalStorage("persist:root");
+	// removeLocalStorage("persist:root");
 	next && next();
 };
 

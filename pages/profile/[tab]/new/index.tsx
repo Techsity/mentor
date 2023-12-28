@@ -6,7 +6,7 @@ import { ProfileTabLinkType } from "../../../../interfaces";
 import WorkshopAndCourseEditTemplate from "../../../../components/templates/course/edit";
 import { useSelector } from "react-redux";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const EditPageContainer = () => {
 	const router = useRouter();

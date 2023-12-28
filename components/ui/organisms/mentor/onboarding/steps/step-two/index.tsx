@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
 import Projects from "./Projects";

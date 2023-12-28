@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);

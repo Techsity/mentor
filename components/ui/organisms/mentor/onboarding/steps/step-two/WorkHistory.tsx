@@ -2,7 +2,7 @@ import React from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import EditWorkHistoryCard from "../../../../../atom/cards/mentor/onboarding/EditWorkHistoryCard";
 import OnboardingWorkHistoryDisplayCard from "../../../../../atom/cards/mentor/onboarding/OnboardingWorkHistoryDisplayCard";

@@ -6,7 +6,7 @@ import { testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
 import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
-import { setCredentials } from "../../redux/reducers/features/authSlice";
+import { setCredentials } from "../../redux/reducers/authSlice";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { GET_MENTOR_PROFILE, LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
@@ -59,7 +59,6 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 			return;
 		}
 		// Perform login api call here
-
 		loginUser({
 			variables: {
 				createLoginInput: {
@@ -74,9 +73,8 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					const authToken = response.data.loginUser.access_token;
 					const is_mentor = response.data.loginUser.is_mentor;
 					if (response.data.loginUser.user) {
-						setLoading(false);
+						// setLoading(false);
 						authenticate(authToken, async () => {
-							// Todo: get user.is_mentor and set mentor profile properly
 							if (is_mentor) {
 								await getMentorProfile()
 									.then((result) => {
@@ -147,6 +145,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					}
 				} else {
 					setLoading(false);
+					console.log({ response: response });
 				}
 			})
 			.catch((error: any) => {
@@ -156,7 +155,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				const errorMessage = formatGqlError(error);
 				// If account is not active, redirect to otp screen
 				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
-					toast.error(errorMessage + "Redirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
+					toast.error(errorMessage + "\nRedirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
 					setTimeout(function () {
 						toast.dismiss("auth_form_pop");
 						// mutation to request for otp here, before redirecting

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { link } from "fs";
 import { ProfileTabLinkType } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 const ProfileNavCard = ({
 	activeTab,

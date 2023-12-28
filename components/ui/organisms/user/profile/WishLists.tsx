@@ -1,5 +1,5 @@
 import React from "react";
-import { wishlistedCourses as wishlist } from "../../../../../redux/reducers/features/coursesSlice";
+import { wishlistedCourses as wishlist } from "../../../../../redux/reducers/coursesSlice";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 import { useSelector } from "react-redux";
 

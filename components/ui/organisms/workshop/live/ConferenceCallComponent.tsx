@@ -1,7 +1,7 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import { MicMuted, RecIcon, ShareScreenIcon, SpeakingIcon } from "../../../atom/icons/svgs/call";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 import { IUser } from "../../../../../interfaces/user.interface";
 import { IWorkshop } from "../../../../../interfaces";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";

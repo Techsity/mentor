@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
-import { IAuthState } from "../../../interfaces/auth.interface";
-import { IUser } from "../../../interfaces/user.interface";
-import { IMentor } from "../../../interfaces/mentor.interface";
+import { IAuthState } from "../../interfaces/auth.interface";
+import { IMentor } from "../../interfaces/mentor.interface";
+import { IUser } from "../../interfaces/user.interface";
+import { RootState } from "../store";
 
 const initialState: IAuthState = {
 	isLoggedIn: false,
@@ -11,7 +11,7 @@ const initialState: IAuthState = {
 };
 
 const authSlice = createSlice({
-	name: "auth",
+	name: "auth",	
 	initialState: initialState,
 	reducers: {
 		setCredentials: (

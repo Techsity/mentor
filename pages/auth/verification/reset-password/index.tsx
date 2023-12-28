@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import OtpTemplate from "../../../../components/templates/auth/verification/OtpTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/features/authSlice";
+import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/authSlice";
 
 const PasswordResetOtpVerificationPage = () => {
 	const router = useRouter();

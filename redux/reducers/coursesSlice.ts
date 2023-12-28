@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ICourse, ICourseCategory } from "../../../interfaces";
-import { RootState } from "../../store";
+import { ICourse, ICourseCategory } from "../../interfaces";
+import { RootState } from "../store";
 
 const isClient = typeof window !== "undefined" && window.localStorage;
 

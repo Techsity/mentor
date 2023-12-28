@@ -9,7 +9,7 @@ import EditCourseContent from "../../components/ui/organisms/course/edit-course/
 import MentorProfileOverview from "../../components/ui/organisms/user/mentor/MentorProfileOverview.tsx";
 import MentorProfileCourses from "../../components/ui/organisms/user/mentor/courses/MentorProfileCourses";
 import { ProfileTabLinkType } from "../../interfaces";
-import { currentUser } from "../../redux/reducers/features/authSlice";
+import { currentUser } from "../../redux/reducers/authSlice";
 import courses from "../../data/courses";
 
 const UserProfilePage = () => {

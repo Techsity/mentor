@@ -3,7 +3,7 @@ import React from "react";
 import protectedPageWrapper from "../../../../pages/protectedPageWrapper";
 import WorkshopContents from "../../../ui/organisms/workshop/body/WorkshopContents";
 import { useSelector } from "react-redux";
-import { workshopToRegister } from "../../../../redux/reducers/features/workshopSlice";
+import { workshopToRegister } from "../../../../redux/reducers/workshopSlice";
 import { useRouter } from "next/router";
 import { formatFollowersCount } from "../../../../utils";
 import FreePurchaseForm from "../../../ui/atom/forms/purchase-form/FreePurchaseForm";

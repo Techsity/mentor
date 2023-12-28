@@ -9,7 +9,7 @@ import {
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import workshops from "../data/workshops";
-import { currentUser } from "../redux/reducers/features/authSlice";
+import { currentUser } from "../redux/reducers/authSlice";
 import { IWorkshop } from "../interfaces";
 
 export type ConferenceUser = {

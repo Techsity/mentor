@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
+import { currentUser, isLoggedIn } from "../redux/reducers/authSlice";
 import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";

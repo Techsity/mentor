@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 import { IUser } from "../../../../../interfaces/user.interface";
 import CountrySelectorComp from "../../../atom/inputs/CountrySelector";
 import { PrimaryButton } from "../../../atom/buttons";

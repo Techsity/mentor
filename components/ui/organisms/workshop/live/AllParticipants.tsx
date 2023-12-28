@@ -4,7 +4,7 @@ import VideoCallParticipantCard from "../../../atom/cards/call/VideoCallParticip
 import { useSelector } from "react-redux";
 
 import { IWorkshop } from "../../../../../interfaces";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { slugify } from "../../../../../utils";
 import { ConferenceUser } from "../../../../../hooks/useLiveWorkshop";

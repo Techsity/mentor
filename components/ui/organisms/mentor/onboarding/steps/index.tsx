@@ -7,7 +7,7 @@ import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import StepTwoMentorOnboarding from "./step-two";
 import { scrollToTop } from "../../../../../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { onboardingMentorState, setOnboardingMentor } from "../../../../../../redux/reducers/features/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../redux/reducers/onboardingSlice";
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";

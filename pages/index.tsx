@@ -1,7 +1,7 @@
 import React from "react";
 import HomepageTemplate from "../components/templates/home";
 import { GetServerSidePropsContext } from "next";
-import { currentUser, isLoggedIn } from "../redux/reducers/features/authSlice";
+import { currentUser, isLoggedIn } from "../redux/reducers/authSlice";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 

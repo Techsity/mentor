@@ -10,7 +10,7 @@ import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import { IUser } from "../../../../interfaces/user.interface";
 import { useSelector } from "react-redux";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../constants";
 import CustomTextArea from "../../../ui/atom/inputs/CustomTextArea";
