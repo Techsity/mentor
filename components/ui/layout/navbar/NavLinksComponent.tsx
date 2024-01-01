@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
 import { courseTypes } from "../../../../data/courses";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../services/graphql/mutations/courses";
 
 type MainCourseType = {
 	courseType: CourseType;
@@ -18,22 +20,29 @@ const NavLinksComponent = () => {
 	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	//Todo: implement GET_ALL_CATEGORIES query (then categorize by their course type)
-	//
-	const [dropDownLinks, setDropDownLinks] = useState<MainCourseType[]>([
-		{
-			courseType: "technical",
-			categories: courseTypes[courseTypes.findIndex((type) => type.name === "technical")].categories,
-		},
-		{
-			courseType: "vocational",
-			categories: courseTypes[courseTypes.findIndex((type) => type.name === "vocational")].categories,
-		},
-		{
-			courseType: "educational",
-			categories: courseTypes[courseTypes.findIndex((type) => type.name === "educational")].categories,
-		},
-	]);
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES, {
+		fetchPolicy: "cache-and-network",
+		ssr: false,
+	});
+
+	const categories = useMemo(() => {
+		if (!loading) {
+			if (error) {
+				console.error({ error: error });
+				return [];
+			} else if (data && data.getAllCategories) {
+				return data.getAllCategories;
+			}
+			return [];
+		}
+	}, [data, loading, error]);
+
+	const filteredCategories =
+		categories && categories.length > 0
+			? categories.filter(
+					(cat) => cat.category_type.type.toLowerCase().trim() === activeDropdown?.toLowerCase().trim(),
+			  )
+			: [];
 
 	return (
 		<div className="hidden md:flex justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">
@@ -74,39 +83,30 @@ const NavLinksComponent = () => {
 														{sublink.name}
 													</div>
 												</div>
-												{sublink.dropdown === activeDropdown &&
-													dropDownLinks[
-														dropDownLinks.findIndex(
-															(type) => type.courseType === activeDropdown,
-														)
-													]?.categories.length > 0 && (
-														<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
-															{dropDownLinks[
-																dropDownLinks.findIndex(
-																	(type) => type.courseType === activeDropdown,
-																)
-															]?.categories.map(({ title }, dropdownIndex) => (
+												{filteredCategories.length > 0 && (
+													<div className="absolute w-full text-[#70C5A1] top-[100%] py-5 pb-10 left-0 border border-[#70C5A1] border-t-transparent bg-white hidden group-hover:grid grid-cols-3 gap-5 overflow-hidden animate__animate animate__fadeIn">
+														{filteredCategories.map(({ title }, dropdownIndex) => (
+															<div
+																key={dropdownIndex}
+																onClick={() =>
+																	router.push(
+																		`/courses?type=${sublink.dropdown.toLowerCase()}&category=${title.toLowerCase()}`,
+																	)
+																}>
 																<div
-																	key={dropdownIndex}
-																	onClick={() =>
-																		router.push(
-																			`/courses?type=${sublink.dropdown}&category=${title}`,
-																		)
-																	}>
-																	<div
-																		key={i}
-																		onClick={() => {
-																			setActiveSublink(null);
-																			setActiveDropdown(null);
-																		}}
-																		className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
-																		{title}
-																		<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
-																	</div>
+																	key={i}
+																	onClick={() => {
+																		setActiveSublink(null);
+																		setActiveDropdown(null);
+																	}}
+																	className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
+																	{title}
+																	<span className="absolute -right-4 bg-[#094B10] bg-opacity-20 h-[200%] w-[1px]"></span>
 																</div>
-															))}
-														</div>
-													)}
+															</div>
+														))}
+													</div>
+												)}
 											</div>
 										))}
 									</div>
