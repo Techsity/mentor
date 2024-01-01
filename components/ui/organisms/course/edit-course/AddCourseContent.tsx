@@ -30,7 +30,6 @@ const AddCourseContent: FC<Props> = ({ state }) => {
 								<p className="text-sm">{content.title}</p>
 								{/* <span className="text-xs">{55}</span> */}
 							</div>
-
 							<div
 								onClick={() => {
 									!isContentPage && router.push(router.asPath + `/content`);

@@ -151,6 +151,8 @@ export const courseTypes: { name: CourseType; categories: ICourseCategory[] }[] 
 	{ name: "educational", categories: [] },
 ];
 
+export const courseLevels = ["all_levels", "beginner", "intermmediate", "advanced"];
+
 const courses: ICourse[] = [
 	{
 		title: "Introduction to Programming",

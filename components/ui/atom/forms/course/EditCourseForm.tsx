@@ -9,10 +9,12 @@ import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSl
 import * as API from "../../../../../services/api";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
+import { courseLevels, courseTypes } from "../../../../../data/courses";
 
 type OmittedCourseType = Omit<ICourse, "mentor">;
+type OmittedWorkshopType = Omit<IWorkshop, "mentor">;
 
-type StateType = Omit<IWorkshop, "mentor"> | OmittedCourseType;
+type StateType = OmittedWorkshopType | OmittedCourseType;
 
 type Props = {
 	handleSave: (updatedValues: StateType) => void;
@@ -25,21 +27,18 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
 
-	const [formState, setFormState] = useState<StateType>(state);
+	const [formState, setFormState] = useState<StateType>(state || newCourseData);
 
 	const [hasPrice, setHasPrice] = useState<boolean>(formState.price && formState.price !== 0 ? true : false);
 
-	const handleChange = (field: keyof ExtendedCourseWorkshopType) => (e: ChangeEvent<HTMLInputElement>) => {
-		{
+	const handleChange =
+		(field: keyof ExtendedCourseWorkshopType) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 			setFormState((prev) => {
 				return { ...prev, [field]: e.target.value };
 			});
-		}
-	};
+		};
 
-	const { data, loading, error, refetch } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(
-		GET_ALL_CATEGORIES,
-	);
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
 
 	const categories = useMemo(() => {
 		if (!loading) {
@@ -52,6 +51,10 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 			return [];
 		}
 	}, [data, loading]);
+
+	useEffect(() => {
+		dispatch(setNewCourse({ ...newCourseData, ...(formState as OmittedCourseType) }));
+	}, [formState]);
 
 	return (
 		<form
@@ -74,27 +77,26 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						value={isCourse && newCourseData ? newCourseData?.title : formState.title}
 						onChange={(e) => {
 							handleChange("title")(e);
-							if (isCourse)
-								dispatch(
-									setNewCourse({
-										...(newCourseData as OmittedCourseType),
-										title: e.target.value,
-									}),
-								);
 						}}
 					/>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative">
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
 					<label htmlFor="level" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Level
 					</label>
-					<CustomTextInput
-						id="level"
-						containerProps={{
-							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+					<select
+						onChange={(e) => {
+							handleChange("course_level")(e);
 						}}
-						value={"All Levels"}
-					/>
+						className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
+						{courseLevels.map((val, index) => {
+							return (
+								<option key={val} value={val} className="capitalize">
+									{val.split("_").join(" ")}
+								</option>
+							);
+						})}
+					</select>
 				</div>
 				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
 					<label
@@ -103,8 +105,12 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						Type of {isCourse ? "Course" : isWorkshop && "Workshop"}
 					</label>
 					<select className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
-						{Array.from(["technical", "educational", "vocational"]).map((val, index) => {
-							return <option key={val}>{val}</option>;
+						{courseTypes.map((val, index) => {
+							return (
+								<option key={val.name} value={val.name.toLowerCase()}>
+									{val.name}
+								</option>
+							);
 						})}
 					</select>
 				</div>
@@ -115,20 +121,21 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						Category
 					</label>
 					<select
-						onClick={() => {
-							if (!categories || categories.length < 1) refetch();
+						onChange={(e) => {
+							handleChange("category")(e);
 						}}
 						className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
-						<option>Select</option>
-						{categories &&
-							categories.length > 0 &&
-							categories.map((val, index) => {
-								return (
-									<option value={val.title} key={val.title}>
-										{val.title}
-									</option>
-								);
-							})}
+						<option></option>
+						{categories
+							? categories.length > 0 &&
+							  categories.map((val, index) => {
+									return (
+										<option value={val.title} key={val.title}>
+											{val.title}
+										</option>
+									);
+							  })
+							: "Loading..."}
 					</select>
 				</div>
 				<div className="col-span-4 relative">
@@ -146,61 +153,63 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 				</div>
 			</>
 			{/* Course Details Input - end */}
+
 			{/* What to learn and requirements section - start */}
-			{/* //Todo: make the list dynamic - starting with 1 input */}
-			<>
-				<div className="sm:col-span-2 col-span-4">
+			<div className="flex justify-between w-full items-start gap-2 col-span-4">
+				<div className="grid gap-4">
 					<h1 className="text-sm font-normal my-2">What would be learnt</h1>
-					{formState.what_to_learn.length > 0 ? (
-						formState.what_to_learn.map((value, index) => {
-							return (
-								<div
-									key={index}
-									className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-									<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
-									<CustomTextInput
-										id={
-											isCourse
-												? "course-what_to_learn"
-												: isWorkshop
-												? "workshop-what_to_learn"
-												: ""
-										}
-										containerProps={{
-											className: "text-sm",
-										}}
-										value={value}
-										onChange={(e) => {
-											setFormState((prev) => {
-												const updated = [...formState.what_to_learn];
-												updated[index] = e.target.value;
-												return { ...prev, what_to_learn: updated };
-											});
-										}}
-									/>
-								</div>
-							);
-						})
-					) : (
-						<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-							<p className="text-sm text-[#B1B1B1]">{1}.</p>
-							<CustomTextInput
-								id={isCourse ? "course-what_to_learn" : isWorkshop ? "workshop-what_to_learn" : ""}
-								containerProps={{
-									className: "text-sm",
-								}}
-								value={formState.what_to_learn[0]}
-								onChange={(e) => {
-									setFormState((prev) => {
-										return { ...prev, what_to_learn: [e.target.value] };
-									});
-								}}
-							/>
-						</div>
-					)}
+					<div className="">
+						{formState.what_to_learn.length > 0 ? (
+							formState.what_to_learn.map((value, index) => {
+								return (
+									<div
+										key={index}
+										className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+										<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
+										<CustomTextInput
+											id={
+												isCourse
+													? "course-what_to_learn"
+													: isWorkshop
+													? "workshop-what_to_learn"
+													: ""
+											}
+											containerProps={{
+												className: "text-sm",
+											}}
+											value={value}
+											onChange={(e) => {
+												setFormState((prev) => {
+													const updated = [...formState.what_to_learn];
+													updated[index] = e.target.value;
+													return { ...prev, what_to_learn: updated };
+												});
+											}}
+										/>
+									</div>
+								);
+							})
+						) : (
+							<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+								<p className="text-sm text-[#B1B1B1]">{1}.</p>
+								<CustomTextInput
+									id={isCourse ? "course-what_to_learn" : isWorkshop ? "workshop-what_to_learn" : ""}
+									containerProps={{
+										className: "text-sm",
+									}}
+									value={formState.what_to_learn[0]}
+									onChange={(e) => {
+										setFormState((prev) => {
+											return { ...prev, what_to_learn: [e.target.value] };
+										});
+									}}
+								/>
+							</div>
+						)}
+					</div>
 					{formState.what_to_learn.length < 6 ? (
 						<span
-							className="text-[#70C5A1] text-sm cursor-pointer my-3"
+							className="text-[#70C5A1] text-sm cursor-pointer"
 							onClick={() => {
 								setFormState((prev) => {
 									return { ...prev, what_to_learn: [...prev.what_to_learn, " "] };
@@ -210,58 +219,60 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						</span>
 					) : null}
 				</div>
-				<div className="sm:col-span-2 col-span-4">
-					<h1
-						className="te
-					t-sm font-normal my-2">
-						Requirements
-					</h1>
-					{formState.requirements.length > 0 ? (
-						formState.requirements.map((value, index) => {
-							return (
-								<div
-									key={index}
-									className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-									<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
-									<CustomTextInput
-										id={
-											isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""
-										}
-										containerProps={{
-											className: "text-sm",
-										}}
-										value={value}
-										onChange={(e) => {
-											setFormState((prev) => {
-												const updated = [...formState.requirements];
-												updated[index] = e.target.value;
-												return { ...prev, requirements: updated };
-											});
-										}}
-									/>
-								</div>
-							);
-						})
-					) : (
-						<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
-							<p className="text-sm text-[#B1B1B1]">{1}.</p>
-							<CustomTextInput
-								id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
-								containerProps={{
-									className: "text-sm",
-								}}
-								value={formState.requirements[0]}
-								onChange={(e) => {
-									setFormState((prev) => {
-										return { ...prev, requirements: [e.target.value] };
-									});
-								}}
-							/>
-						</div>
-					)}
+				<div className="grid gap-4">
+					<h1 className="text-sm font-normal my-2">Requirements</h1>
+					<div className="">
+						{formState.requirements.length > 0 ? (
+							formState.requirements.map((value, index) => {
+								return (
+									<div
+										key={index}
+										className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+										<p className="text-sm text-[#B1B1B1]">{index + 1}.</p>
+										<CustomTextInput
+											id={
+												isCourse
+													? "course-requirements"
+													: isWorkshop
+													? "workshop-requirements"
+													: ""
+											}
+											containerProps={{
+												className: "text-sm",
+											}}
+											value={value}
+											onChange={(e) => {
+												setFormState((prev) => {
+													const updated = [...formState.requirements];
+													updated[index] = e.target.value;
+													return { ...prev, requirements: updated };
+												});
+											}}
+										/>
+									</div>
+								);
+							})
+						) : (
+							<div className="relative flex gap-1 items-center border-b border-[#bebebe] hover:border-black duration-300">
+								<p className="text-sm text-[#B1B1B1]">{1}.</p>
+								<CustomTextInput
+									id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
+									containerProps={{
+										className: "text-sm",
+									}}
+									value={formState.requirements[0]}
+									onChange={(e) => {
+										setFormState((prev) => {
+											return { ...prev, requirements: [e.target.value] };
+										});
+									}}
+								/>
+							</div>
+						)}
+					</div>
 					{formState.requirements.length < 6 ? (
 						<span
-							className="text-[#70C5A1] text-sm cursor-pointer my-3"
+							className="text-[#70C5A1] text-sm cursor-pointer"
 							onClick={() => {
 								setFormState((prev) => {
 									return { ...prev, requirements: [...prev.requirements, " "] };
@@ -271,7 +282,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						</span>
 					) : null}
 				</div>
-			</>
+			</div>
 			{/* What to learn and requirements section - end */}
 			{/* Set Price and thumbnail - start */}
 			<div className="sm:col-span-2 col-span-4">

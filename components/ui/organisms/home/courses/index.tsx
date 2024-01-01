@@ -1,45 +1,36 @@
-// Still need to be cleaned up
-
-import React, { useEffect, useMemo, useState } from "react";
-import { AnimationOnScroll } from "react-animation-on-scroll";
+import React, { useMemo, useState } from "react";
 import CoursesNav from "./CoursesNav";
-import { courseCategories, courseTypes } from "../../../../../data/courses";
+import { courseTypes } from "../../../../../data/courses";
 import { ChevronForwardSharp } from "react-ionicons";
 import Link from "next/link";
 import CoursesList from "./CoursesList";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { CourseType, ICourseCategory } from "../../../../../interfaces";
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
 const HomepageCourseSection = () => {
-	const [categories, setCategories] = useState<ICourseCategory[]>([]);
 	const [activeCourseType, setActiveCourseType] = useState<ActiveCourseType>(courseTypes[0]);
 	const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
-	const [fetchAllCategories] = useLazyQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
+
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
+
+	const categories = useMemo(() => {
+		if (!loading) {
+			if (error) {
+				console.error({ error: error });
+				return [];
+			} else if (data && data.getAllCategories) {
+				return data.getAllCategories;
+			}
+			return [];
+		}
+	}, [data, loading]);
 
 	const currentCategory = useMemo<string>(() => {
-		return categories.length >= 1 ? categories[activeCategoryIndex].title : "";
+		return categories && categories.length >= 1 ? categories[activeCategoryIndex].title : "";
 	}, [categories, activeCategoryIndex]);
-
-	// Query to fetch course categories
-	const fetchCategories = async () => {
-		console.log("Fetching categories...");
-		await fetchAllCategories()
-			.then((res) => {
-				console.log(res.data?.getAllCategories);
-				if (res.data?.getAllCategories) setCategories(res.data?.getAllCategories);
-			})
-			.catch((err) => {
-				console.error("Error fetching categories: ", err);
-			});
-	};
-
-	useEffect(() => {
-		fetchCategories();
-	}, []);
 
 	return (
 		<div className="min-h-[65dvh] py-20 scroll-mt-20 overflow-hidden mx-5" id="courses">
@@ -59,7 +50,8 @@ const HomepageCourseSection = () => {
 				/>
 
 				<div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
-					{categories.length >= 1 &&
+					{categories &&
+						categories.length >= 1 &&
 						categories
 							.map((category, indx) => {
 								return (

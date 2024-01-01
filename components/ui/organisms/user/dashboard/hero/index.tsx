@@ -1,47 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { LiveWorkshopGlobeSvg } from "../../../../atom/icons/svgs";
 import DashboardSearchbar from "../../../../atom/inputs/DashboardSearchbar";
 import { ICourseCategory } from "../../../../../../interfaces";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
-import { courseCategories, courseTypes } from "../../../../../../data/courses";
 import { useRouter } from "next/router";
+import { useLazyQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../../../services/graphql/mutations/courses";
 
 type PropState = { categories: ICourseCategory[]; loading: boolean };
 
 const MenteeDashboardHero = () => {
 	const router = useRouter();
 	const courseType = router.query.type;
-	const [state, setState] = React.useState<PropState>({ categories: [], loading: courseType ? true : false });
+	const [state, setState] = React.useState<PropState>({ categories: [], loading: true });
 	const { categories, loading } = state;
 
-	//Todo: implement GET_ALL_CATEGORIES query
-	//
-	// Query to fetch course categories
-	const fetchCategories = async () => {
-		setState({ ...state, loading: true });
-		console.log("Fetching categories...");
-		return new Promise<ICourseCategory[]>((resolve, reject) => resolve(courseCategories)); // data fetch simulation
-	};
+	const [fetchCategories] = useLazyQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES, {
+		fetchPolicy: "cache-and-network",
+		
+	});
 
 	useEffect(() => {
-		// if (courseType)
 		fetchCategories()
-			.then((courseCategories) => {
-				setTimeout(function () {
+			.then((res) => {
+				if (res.data)
 					setState({
 						...state,
-						categories: courseCategories,
-						loading: false,
+						categories: res.data?.getAllCategories,
+						loading: res.loading,
 					});
-				}, 1000);
 			})
 			.catch((err) => {
 				console.error("Error fetchng course catgories: ", err);
 				setState({ ...state, loading: false });
 			});
-		// }, [courseType]);
 	}, []);
 
 	return (

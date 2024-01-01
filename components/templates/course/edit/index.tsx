@@ -95,12 +95,13 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 							)
 						)}
 					</div>
-					{isCourse && (
+					{isCourse ? (
 						<div className="border border-[#70C5A1] p-5 mt-6">
 							<AddCourseContent {...{ state: courseState }} />
 						</div>
+					) : (
+						isWorkshop && <AddWorkShopSchedule {...{ state: workshopState }} />
 					)}
-					{isWorkshop && <AddWorkShopSchedule {...{ state: workshopState }} />}
 				</div>
 				<div className="xl:max-w-[40%] w-full">
 					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
