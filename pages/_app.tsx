@@ -23,41 +23,49 @@ import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
 import AuthWrapper from "../components/templates/auth/AuthWrapper";
 import { PersistGate } from "redux-persist/integration/react";
 import jwt from "jsonwebtoken";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const { user, mentorProfile, logout } = pageProps;
-
+	const [queryClient] = useState<QueryClient>(() => new QueryClient());
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor} loading={null}>
-				<ApolloProvider client={apolloClient()}>
-					<AuthWrapper {...{ user, mentorProfile, logout }}>
-						<ThemeProvider>
-							<Head>
-								<title>Mentör: Connect with experienced Mentors</title>
-								<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
-								<meta
-									name="viewport"
-									content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-								/>
-							</Head>
-							<SidebarProvider>
-								<LayoutContainer>
-									<ToastContainer
-										limit={1}
-										// newestOnTop
-										autoClose={5000}
-										theme="dark"
-										hideProgressBar
-										closeOnClick
-										draggable
+				<QueryClientProvider client={queryClient}>
+					{process.env.NEXT_PUBLIC_APP_ENV === "development" && (
+						<ReactQueryDevtools initialIsOpen={false} position="bottom" buttonPosition="bottom-right" />
+					)}
+					<ApolloProvider client={apolloClient()}>
+						<AuthWrapper {...{ user, mentorProfile, logout }}>
+							<ThemeProvider>
+								<Head>
+									<title>Mentör: Connect with experienced Mentors</title>
+									<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+									<meta
+										name="viewport"
+										content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 									/>
-									<Component {...pageProps} />
-								</LayoutContainer>
-							</SidebarProvider>
-						</ThemeProvider>
-					</AuthWrapper>
-				</ApolloProvider>
+								</Head>
+								<SidebarProvider>
+									<LayoutContainer>
+										<ToastContainer
+											limit={1}
+											// newestOnTop
+											autoClose={5000}
+											theme="dark"
+											hideProgressBar
+											closeOnClick
+											draggable
+										/>
+										<Component {...pageProps} />
+									</LayoutContainer>
+								</SidebarProvider>
+							</ThemeProvider>
+						</AuthWrapper>
+					</ApolloProvider>
+				</QueryClientProvider>
 			</PersistGate>
 		</Provider>
 	);

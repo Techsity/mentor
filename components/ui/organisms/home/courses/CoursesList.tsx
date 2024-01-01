@@ -32,7 +32,7 @@ const CoursesList = ({ activeCategory, activeCourseType, limit = 10, skip = 0 }:
 	if (error) console.log(error);
 
 	return (
-		<div className="grid lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 items-start 2xl:grid-cols-4 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
+		<div className="grid lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 items-start bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
 			{loading ? (
 				Array.from({ length: 3 }).map((_, indx) => {
 					return <DisplayCourseCard loading={loading} course={null} key={indx} />;

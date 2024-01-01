@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
 import { PrimaryButton } from "../../buttons";
 import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
+import * as API from "../../../../../services/api";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 
 type OmittedCourseType = Omit<ICourse, "mentor">;
 
@@ -33,6 +36,22 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 			});
 		}
 	};
+
+	const { data, loading, error, refetch } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(
+		GET_ALL_CATEGORIES,
+	);
+
+	const categories = useMemo(() => {
+		if (!loading) {
+			if (error) {
+				console.error({ error: error });
+				return [];
+			} else if (data && data.getAllCategories) {
+				return data.getAllCategories;
+			}
+			return [];
+		}
+	}, [data, loading]);
 
 	return (
 		<form
@@ -77,31 +96,40 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						value={"All Levels"}
 					/>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative">
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
 					<label
 						htmlFor={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
 						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Type of {isCourse ? "Course" : isWorkshop && "Workshop"}
 					</label>
-					<CustomTextInput
-						id={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
-						containerProps={{
-							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
-						}}
-						value={"Technical"}
-						//Todo: implement a dropdown to select course or workshop type
-					/>
+					<select className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
+						{Array.from(["technical", "educational", "vocational"]).map((val, index) => {
+							return <option key={val}>{val}</option>;
+						})}
+					</select>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative">
-					<label htmlFor="category" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
+					<label
+						htmlFor={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
+						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Category
 					</label>
-					<CustomTextInput
-						containerProps={{
-							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+					<select
+						onClick={() => {
+							if (!categories || categories.length < 1) refetch();
 						}}
-						value={(isCourse && (formState as ICourse).category.title) || ""}
-					/>
+						className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
+						<option>Select</option>
+						{categories &&
+							categories.length > 0 &&
+							categories.map((val, index) => {
+								return (
+									<option value={val.title} key={val.title}>
+										{val.title}
+									</option>
+								);
+							})}
+					</select>
 				</div>
 				<div className="col-span-4 relative">
 					<label htmlFor="about-course" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">

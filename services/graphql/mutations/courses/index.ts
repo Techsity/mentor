@@ -55,6 +55,7 @@ export const ALL_COURSES = gql`
 export const GET_ALL_CATEGORIES = gql`
 	query GetAllCategories {
 		getAllCategories {
+			# id
 			title
 			description
 			category_type {

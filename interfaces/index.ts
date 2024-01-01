@@ -248,6 +248,7 @@ export interface ICourseContent {
 }
 
 export interface ICourseCategory {
+	id?: string;
 	title: string;
 	description: string;
 	category_type: {
