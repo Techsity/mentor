@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { newCourse } from "../../../../../redux/reducers/coursesSlice";
 
 type Props = {
 	state: Omit<ICourse, "mentor">;
@@ -8,7 +10,16 @@ type Props = {
 
 const AddCourseContent: FC<Props> = ({ state }) => {
 	const router = useRouter();
+	const newCourseData = useSelector(newCourse);
 	const isContentPage = Boolean(router.asPath.split("#")[2] as "content");
+
+	const courseContents = useMemo(
+		() =>
+			newCourseData?.course_contents
+				? newCourseData.course_contents
+				: state.course_contents && state.course_contents,
+		[state, newCourseData],
+	);
 
 	return (
 		<div className="grid gap-4">
@@ -22,7 +33,7 @@ const AddCourseContent: FC<Props> = ({ state }) => {
 			</div>
 			{/* Content */}
 			<div className="grid gap-4">
-				{state.course_contents.map((content, index) => {
+				{courseContents.map((content, index) => {
 					// const mainDuration = calculateTotalDuration(content);
 					return (
 						<div key={index} className="flex bg-[#70C5A1] p-3 items-center justify-between text-white">

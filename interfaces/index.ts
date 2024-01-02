@@ -259,13 +259,14 @@ export interface ICourseCategory {
 	updated_at: string;
 }
 
+export type COURSE_LEVEL = "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
 export interface ICourse {
 	id?: string;
 	title: string;
 	description: string;
 	course_images: string;
-	// course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "ADVANCED";
-	course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
+	course_level: COURSE_LEVEL;
+	course_type?: string;
 	duration: number;
 	limit: number;
 	rating: number;

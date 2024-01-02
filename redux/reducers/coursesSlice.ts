@@ -4,10 +4,7 @@ import { RootState } from "../store";
 
 const isClient = typeof window !== "undefined" && window.localStorage;
 
-const userWishlistedCoursesLocal = isClient ? window.localStorage.getItem("userWishlistedCourses") : "";
-const data: ICourse[] = userWishlistedCoursesLocal ? JSON.parse(userWishlistedCoursesLocal) : [];
-
-const newCourseInitialState: Omit<ICourse, "mentor"> = {
+export const newCourseInitialState: Omit<ICourse, "mentor"> = {
 	title: "",
 	description: "",
 	course_images: "",
@@ -39,7 +36,7 @@ const initialState: {
 	courseCategories: ICourseCategory[];
 	newCourse: Omit<ICourse, "mentor"> | null;
 } = {
-	userWishlistedCourses: data,
+	userWishlistedCourses: [],
 	courseCategories: [],
 	newCourse: newCourseInitialState,
 };
@@ -51,17 +48,17 @@ const coursesSlice = createSlice({
 		setWishlist: (state, action: { payload: ICourse[] }) => {
 			if (action.payload) {
 				state.userWishlistedCourses = action.payload;
-				// Save to local storage too, to persist state
-				if (isClient) {
-					window.localStorage.setItem("userWishlistedCourses", JSON.stringify(action.payload));
-				}
+				// // Save to local storage too, to persist state
+				// if (isClient) {
+				// 	window.localStorage.setItem("userWishlistedCourses", JSON.stringify(action.payload));
+				// }
 			}
 		},
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
-		setNewCourse: (state, action: { payload: Omit<ICourse, "mentor"> | null }) => {
-			state.newCourse = action.payload;
+		setNewCourse: (state, action: { payload: Partial<Omit<ICourse, "mentor">> | null }) => {
+			state.newCourse = action.payload as Omit<ICourse, "mentor">;
 		},
 	},
 });

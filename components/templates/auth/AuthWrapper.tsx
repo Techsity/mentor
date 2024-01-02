@@ -1,11 +1,12 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../../redux/reducers/authSlice";
+import { isLoggedIn, setCredentials } from "../../../redux/reducers/authSlice";
 import { checkAuth, getCookie, logoutUser } from "../../../utils/auth";
 import { IUser } from "../../../interfaces/user.interface";
 import { IMentor } from "../../../interfaces/mentor.interface";
 import { useRouter } from "next/router";
 import { AUTH_TOKEN_KEY } from "../../../constants";
+import { useSelector } from "react-redux";
 
 const AuthWrapper = ({
 	children,
@@ -19,18 +20,22 @@ const AuthWrapper = ({
 	logout: boolean;
 }) => {
 	const dispatch = useDispatch();
+	const isAuth = useSelector(isLoggedIn);
 
-	// const checkAuthValidity = () => {
-	// 	const authToken = checkAuth();
-	// 	console.log(authToken);
-	// };
+	const checkAuthValidity = () => {
+		// if (isAuth) {
+		const authToken = checkAuth();
+		if (!authToken) logoutUser();
+		else {
+			// console.log(authToken);
+		}
+		// }
+	};
 
-	// useEffect(() => {
-	// 	window.addEventListener("storage", checkAuthValidity);
-	// 	return () => {
-	// 		window.removeEventListener("storage", checkAuthValidity);
-	// 	};
-	// }, []);
+	useEffect(() => {
+		document.addEventListener("visibilitychange", checkAuthValidity);
+		return () => document.removeEventListener("visibilitychange", checkAuthValidity);
+	}, []);
 
 	if (user) {
 		dispatch(

@@ -67,8 +67,14 @@ const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 };
 
 const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state }: Props) => {
-	const [courseState, setCourseState] = useState<Omit<ICourse, "mentor">>(state || courseInitialState);
-	const [workshopState, setWorkshopState] = useState<Omit<IWorkshop, "mentor">>(state || workshopInitialState);
+	const courseState = useMemo(() => {
+		return state ? state : courseInitialState;
+	}, [state]);
+
+	const workshopState = useMemo(() => {
+		return state ? state : workshopInitialState;
+	}, [state]);
+
 	const router = useRouter();
 	const tab = router.query.tab as ProfileTabLinkType;
 
@@ -81,17 +87,21 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 
 	return (
 		<div className="">
-			<div className="items-start flex gap-3 flex-col xl:flex-row justify-between">
-				<div className="xl:max-w-[60%] w-full">
+			<div className="items-start flex gap-3 flex-col 2xl:flex-row justify-between">
+				<div className="2xl:max-w-[60%] w-full">
 					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
 						{isCourse ? "Course Overview" : isWorkshop && "Workshop Overview"}
 					</h1>
 					<div className="border border-[#70C5A1] p-3">
 						{isCourse ? (
-							<EditCourseForm isCourse state={{ ...courseState }} handleSave={handleSave} />
+							<EditCourseForm isCourse state={{ ...(courseState as any) }} handleSave={handleSave} />
 						) : (
 							isWorkshop && (
-								<EditCourseForm isWorkshop state={{ ...workshopState }} handleSave={handleSave} />
+								<EditCourseForm
+									isWorkshop
+									state={{ ...(workshopState as any) }}
+									handleSave={handleSave}
+								/>
 							)
 						)}
 					</div>
@@ -103,14 +113,14 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 						isWorkshop && <AddWorkShopSchedule {...{ state: workshopState }} />
 					)}
 				</div>
-				<div className="xl:max-w-[40%] w-full">
+				<div className="2xl:max-w-[40%] w-full">
 					<h1 className="my-3 text-[#B1B1B1] font-normal text-sm">
 						How this {isCourse ? "course" : isWorkshop && "workshop"} is doing
 					</h1>
 					<div
 						className={`border border-[#70C5A1] p-3 grid ${
 							!isNewItemPage && "items-center"
-						} gap-4 min-h-[40dvh] xl:min-h-screen`}>
+						} gap-4 min-h-[40dvh] 2xl:min-h-screen`}>
 						<StatsDisplay />
 						{/* Reviews section - start */}
 						{!isNewItemPage && (

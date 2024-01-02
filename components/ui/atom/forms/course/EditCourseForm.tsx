@@ -1,20 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
-import { ICourse, IWorkshop, ICourseCategory } from "../../../../../interfaces";
+import { ICourse, IWorkshop, ICourseCategory, COURSE_LEVEL } from "../../../../../interfaces";
 import { PrimaryButton } from "../../buttons";
 import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 import { useDispatch, useSelector } from "react-redux";
-import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
-import * as API from "../../../../../services/api";
+import { newCourse, newCourseInitialState, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 import { courseLevels, courseTypes } from "../../../../../data/courses";
+import { Select } from "../../inputs/Select";
+import CustomTextArea from "../../inputs/CustomTextArea";
 
 type OmittedCourseType = Omit<ICourse, "mentor">;
 type OmittedWorkshopType = Omit<IWorkshop, "mentor">;
 
-type StateType = OmittedWorkshopType | OmittedCourseType;
+type StateType = OmittedCourseType & OmittedWorkshopType;
 
 type Props = {
 	handleSave: (updatedValues: StateType) => void;
@@ -27,12 +28,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
 
-	const [formState, setFormState] = useState<StateType>(state || newCourseData);
+	const [formState, setFormState] = useState<StateType>((newCourseData as StateType) || state);
 
 	const [hasPrice, setHasPrice] = useState<boolean>(formState.price && formState.price !== 0 ? true : false);
 
 	const handleChange =
-		(field: keyof ExtendedCourseWorkshopType) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+		(field: keyof ExtendedCourseWorkshopType) =>
+		(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 			setFormState((prev) => {
 				return { ...prev, [field]: e.target.value };
 			});
@@ -52,9 +54,10 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 		}
 	}, [data, loading]);
 
-	useEffect(() => {
-		dispatch(setNewCourse({ ...newCourseData, ...(formState as OmittedCourseType) }));
-	}, [formState]);
+	// useEffect(() => {
+	// 	dispatch(setNewCourse({ ...newCourseData, ...newCourseInitialState }));
+	// 	console.log(newCourseData);
+	// }, []);
 
 	return (
 		<form
@@ -74,81 +77,72 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						containerProps={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						value={isCourse && newCourseData ? newCourseData?.title : formState.title}
+						value={formState.title}
 						onChange={(e) => {
 							handleChange("title")(e);
+							dispatch(setNewCourse({ ...newCourseData, title: e.target.value }));
 						}}
 					/>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
-					<label htmlFor="level" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
-						Level
-					</label>
-					<select
-						onChange={(e) => {
-							handleChange("course_level")(e);
-						}}
-						className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
-						{courseLevels.map((val, index) => {
-							return (
-								<option key={val} value={val} className="capitalize">
-									{val.split("_").join(" ")}
-								</option>
-							);
-						})}
-					</select>
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe] w-full h-full">
+					<div className="flex items-center justify-center p-3">
+						<Select<string>
+							data={courseLevels.map((item) => item.split("_").join(" "))}
+							title={formState?.course_level ? formState?.course_level?.split("_").join(" ") : ""}
+							handleSelected={(item: COURSE_LEVEL) => {
+								setFormState((prev) => {
+									return { ...prev, course_level: item };
+								});
+								dispatch(setNewCourse({ ...newCourseData, course_level: item }));
+							}}
+							label="Level"
+						/>
+					</div>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
-					<label
-						htmlFor={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
-						Type of {isCourse ? "Course" : isWorkshop && "Workshop"}
-					</label>
-					<select className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
-						{courseTypes.map((val, index) => {
-							return (
-								<option key={val.name} value={val.name.toLowerCase()}>
-									{val.name}
-								</option>
-							);
-						})}
-					</select>
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe] w-full h-full">
+					<div className="flex items-center justify-center p-3">
+						<Select<string>
+							data={courseTypes.map((item) => item.name)}
+							// title={formState.tag || ""}
+							handleSelected={(item: string) => {
+								// setFormState((prev) => {
+								// 	return { ...prev, tag: item };
+								// });
+							}}
+							label={`Type of ${isCourse ? "Course" : "Workshop"}`}
+						/>
+					</div>
 				</div>
-				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe]">
-					<label
-						htmlFor={isCourse ? "course-type" : isWorkshop ? "workshop-type" : ""}
-						className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
-						Category
-					</label>
-					<select
-						onChange={(e) => {
-							handleChange("category")(e);
-						}}
-						className="placeholder:text-[#A3A6A7] text-sm outline-none w-full bg-transparent p-4 h-full mt-3">
-						<option></option>
-						{categories
-							? categories.length > 0 &&
-							  categories.map((val, index) => {
-									return (
-										<option value={val.title} key={val.title}>
-											{val.title}
-										</option>
-									);
-							  })
-							: "Loading..."}
-					</select>
+				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe] w-full h-full">
+					<div className="flex items-center justify-center p-3">
+						<Select<ICourseCategory>
+							data={categories && categories.length > 0 ? categories : []}
+							title={formState.category ? formState.category.title : ""}
+							handleSelected={(item: ICourseCategory) => {
+								setFormState((prev) => {
+									return { ...prev, category: item };
+								});
+								dispatch(setNewCourse({ ...newCourseData, category: item }));
+							}}
+							displayProperty="title"
+							label="Category"
+						/>
+					</div>
 				</div>
 				<div className="col-span-4 relative">
 					<label htmlFor="about-course" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						About {isCourse ? "Course" : isWorkshop && "Workshop"}
 					</label>
-					<CustomTextInput
+					<CustomTextArea
 						id={isCourse ? "about-course" : isWorkshop ? "about-workshop" : ""}
 						containerProps={{
-							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
+							className: "border border-[#bebebe] pt-8 pb-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
-						value={formState.description || ""}
-						onChange={handleChange("description")}
+						value={formState.description}
+						onChange={(e) => {
+							handleChange("description")(e);
+							dispatch(setNewCourse({ ...newCourseData, description: e.target.value }));
+						}}
 					/>
 				</div>
 			</>
@@ -184,6 +178,12 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 													updated[index] = e.target.value;
 													return { ...prev, what_to_learn: updated };
 												});
+												dispatch(
+													setNewCourse({
+														...newCourseData,
+														what_to_learn: formState.what_to_learn,
+													}),
+												);
 											}}
 										/>
 									</div>
@@ -247,6 +247,12 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 													updated[index] = e.target.value;
 													return { ...prev, requirements: updated };
 												});
+												dispatch(
+													setNewCourse({
+														...newCourseData,
+														requirements: formState.requirements,
+													}),
+												);
 											}}
 										/>
 									</div>
@@ -323,7 +329,15 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 						}}
 						value={formState.price !== 0 ? formState.price.toLocaleString() : ""}
-						onChange={handleChange("price")}
+						onChange={(e) => {
+							handleChange("price")(e);
+							dispatch(
+								setNewCourse({
+									...newCourseData,
+									price: formState.price,
+								}),
+							);
+						}}
 					/>
 				) : null}
 			</div>

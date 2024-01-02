@@ -4,15 +4,18 @@ import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/profile/ProfileLayout";
 import { ProfileTabLinkType } from "../../../../interfaces";
 import WorkshopAndCourseEditTemplate from "../../../../components/templates/course/edit";
-import { useSelector } from "react-redux";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import { currentUser } from "../../../../redux/reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { newCourse, setNewCourse } from "../../../../redux/reducers/coursesSlice";
 
 const EditPageContainer = () => {
 	const router = useRouter();
 	const tab = router.query.tab as ProfileTabLinkType;
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
+	const dispatch = useDispatch();
+	const newCourseData = useSelector(newCourse);
 
 	const isCourse = useMemo(() => {
 		return Boolean(tab === "courses");
@@ -57,7 +60,7 @@ const EditPageContainer = () => {
 			{isCourse ? (
 				<WorkshopAndCourseEditTemplate
 					handleSave={(state) => {
-						console.log({ course: state });
+						dispatch(setNewCourse({ ...newCourseData, ...state }));
 					}}
 					isCourse
 				/>

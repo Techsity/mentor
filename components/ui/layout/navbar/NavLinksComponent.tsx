@@ -45,7 +45,7 @@ const NavLinksComponent = () => {
 			: [];
 
 	return (
-		<div className="hidden md:flex justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">
+		<div className="hidden md:flex justify-end lg:justify-between gap-6 items-center text-[#094B10] flex-grow max-w-lg">
 			<ul className="hidden lg:flex items-center gap-6 whitespace-nowrap ml-4">
 				{navLinks.map(({ link, name, sublinks, id }, index) => {
 					return sublinks ? (
@@ -114,35 +114,35 @@ const NavLinksComponent = () => {
 							) : null}
 						</li>
 					) : (
-						<Link href={link} key={index} prefetch={false}>
-							<li className="relative px-2 font-[300] text-sm select-none">
-								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
-								<span
-									className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
-										router.asPath.includes(link) ? "w-full" : "hover:w-full"
-									}`}
-								/>
-							</li>
-						</Link>
+						<li onClick={() => router.push(link)} className="relative px-2 font-[300] text-sm select-none">
+							<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
+							<span
+								className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
+									router.asPath.includes(link) ? "w-full" : "hover:w-full"
+								}`}
+							/>
+						</li>
 					);
 				})}
 			</ul>
-			{!user ? (
-				<Link href={"/mentor/onboarding"} prefetch={false}>
-					<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
+			<div className="">
+				{!user ? (
+					<div
+						onClick={() => router.push("/mentor/onboarding")}
+						className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 						Become a Mentor
 					</div>
-				</Link>
-			) : (
-				user &&
-				!user?.is_mentor && (
-					<Link href={"/mentor/onboarding"} prefetch={false}>
-						<div className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
+				) : (
+					user &&
+					!user?.is_mentor && (
+						<div
+							onClick={() => router.push("/mentor/onboarding")}
+							className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 							Become a Mentor
 						</div>
-					</Link>
-				)
-			)}
+					)
+				)}
+			</div>
 		</div>
 	);
 };
