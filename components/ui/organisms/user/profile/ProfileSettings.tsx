@@ -41,8 +41,8 @@ const ProfileSettings = () => {
 
 	return (
 		<div className="min-h-screen">
-			<form onSubmit={handleSubmit} className="grid gap-6 2xl:max-w-md">
-				<div className="grid md:grid-cols-2 gap-6">
+			<form onSubmit={handleSubmit} className="grid gap-6 2xl:max-w-xl">
+				<div className="grid md:grid-cols-2 2xl:grid-cols-3 gap-6 2xl:gap-3">
 					<div className="flex flex-col gap-1">
 						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="fullName">
 							FullName
@@ -93,7 +93,7 @@ const ProfileSettings = () => {
 							customIcon={IconComp ? <IconComp width="25px" height="25px" /> : null}
 						/>
 					</div>
-					<div className="flex flex-col gap-1">
+					<div className="flex flex-col gap-1 2xl:col-span-3">
 						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="phone">
 							Phone Number
 						</label>
@@ -112,11 +112,11 @@ const ProfileSettings = () => {
 							}}
 						/>
 					</div>
-					<div className="flex flex-col gap-2">
+					<div className="flex flex-col gap-2 sm:col-span-2 2xl:col-span-3 col-span-1">
 						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="oldPassword">
 							Change Password
 						</label>
-						<div className="space-y-2">
+						<div className="flex flex-col sm:flex-row justify-between gap-3 sm:items-center w-full">
 							<CustomTextInput
 								// value={}
 								// onChange={handleChange("email")}
@@ -161,7 +161,6 @@ const ProfileSettings = () => {
 						disabled={loading}
 						className="p-4 flex justify-center px-12 w-full text-lg"
 					/>
-					
 				</div>
 			</form>
 		</div>

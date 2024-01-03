@@ -50,7 +50,7 @@ const NavLinksComponent = () => {
 				{navLinks.map(({ link, name, sublinks, id }, index) => {
 					return sublinks ? (
 						<li
-							key={id}
+							key={index}
 							className="relative px-2 font-[300] text-sm select-none"
 							onMouseEnter={() => setActiveSublink(index)}
 							onMouseLeave={() => {

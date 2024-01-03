@@ -197,5 +197,7 @@ export function formatAmount(amount: number, options?: { withFraction?: boolean 
 }
 
 export const calculateRatingsInReviews = (reviews: IReview[]): string => {
-	return formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0);
+	return reviews
+		? formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0)
+		: "";
 };

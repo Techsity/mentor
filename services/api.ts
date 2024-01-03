@@ -7,10 +7,11 @@ import { DocumentNode } from "graphql";
 import { AUTH_TOKEN_KEY } from "../constants";
 import { getCookie } from "../utils/auth";
 import { InMemoryCache } from "@apollo/client";
+import { VIEW_MENTOR_PROFILE } from "./graphql/mutations/mentors";
 
 const apiEndpoint = "/api/graphql";
 
-const gqlRequestInstance = (args?: { authToken?: string; ssr?: boolean }) => {
+export const gqlRequestInstance = (args?: { authToken?: string; ssr?: boolean }) => {
 	const { authToken, ssr } = args || {};
 	const token = authToken ? authToken : typeof window !== "undefined" && (getCookie(AUTH_TOKEN_KEY) as string);
 	// If there's no token, return the original headers
@@ -43,12 +44,15 @@ export const fetchCourses = async (variables?: {
 	category?: string;
 	courseType?: string;
 }) => {
-	const res = await gqlRequestInstance().request(ALL_COURSES, {
+	return await gqlRequestInstance().request(ALL_COURSES, {
 		take: Number(20 || variables?.take),
 		skip: Number(variables?.skip !== undefined ? variables.skip : 0),
 		...variables,
 	});
-	return res;
+};
+
+export const viewMentor = async ({ viewMentorId }: { viewMentorId: string }) => {
+	return await gqlRequestInstance().request(VIEW_MENTOR_PROFILE, { viewMentorId });
 };
 
 //

@@ -5,7 +5,7 @@ import { ICourse, IWorkshop, ICourseCategory, COURSE_LEVEL } from "../../../../.
 import { PrimaryButton } from "../../buttons";
 import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 import { useDispatch, useSelector } from "react-redux";
-import { newCourse, newCourseInitialState, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
+import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 import { courseLevels, courseTypes } from "../../../../../data/courses";
@@ -313,10 +313,8 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 						className="bg-[#F3F3F3] p-1 rounded-full px-4 relative cursor-pointer">
 						<div className="bg-transparent rounded-full p-2" />
 						<div
-							className={`rounded-full p-2 animate__animated animate__faster absolute top-1 duration-300 ${
-								hasPrice
-									? "right-2 bg-[#70C5A1] animate__slideInLeft"
-									: "left-2 bg-zinc-400 animate__slideInRight"
+							className={`rounded-full p-2 absolute top-1 duration-300 ${
+								hasPrice ? "right-2 bg-[#70C5A1]" : "left-2 bg-zinc-400"
 							}`}
 						/>
 					</div>
@@ -325,16 +323,16 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					<CustomTextInput
 						id={isCourse ? "course-price" : isWorkshop ? "workshop-price" : ""}
 						containerProps={{
-							className:
-								"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
+							className: "mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm",
 						}}
-						value={formState.price !== 0 ? formState.price.toLocaleString() : ""}
+						type="number"
+						value={formState.price !== 0 ? formState.price : ""}
 						onChange={(e) => {
 							handleChange("price")(e);
 							dispatch(
 								setNewCourse({
 									...newCourseData,
-									price: formState.price,
+									price: Number(e.target.value),
 								}),
 							);
 						}}

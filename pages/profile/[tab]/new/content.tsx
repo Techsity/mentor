@@ -24,13 +24,25 @@ const ContentEditPageContainer = () => {
 		);
 	}, [router]);
 
+	const navigateBack = () => {
+		if (window && window.history.length > 1) {
+			router.back();
+		} else {
+			router.push("/profile/courses/new");
+		}
+	};
+
 	return (
 		<ProfileLayout>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">Add {isCourse ? "course" : isWorkshop && "workshop"} contents</h1>
 				{isNewItemPage && (
 					<div className="flex items-center gap-3 lg:pr-8">
-						<PrimaryButton title="Save" className="bg-[#FFB100] text-[#000] p-2 px-4" />
+						<PrimaryButton
+							onClick={navigateBack}
+							title="Back"
+							className="bg-[#FFB100] text-[#000] p-2 px-4"
+						/>
 						{/* <PrimaryButton title="Delete" className="bg-[#E96850] text-[#fff] p-2 px-4" /> */}
 					</div>
 				)}

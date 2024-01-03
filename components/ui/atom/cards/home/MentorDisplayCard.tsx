@@ -4,8 +4,10 @@ import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
 import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateRatingsInReviews } from "../../../../../utils";
+import { useRouter } from "next/router";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
+	const router = useRouter();
 	const ratings = mentor.reviews ? calculateRatingsInReviews(mentor.reviews) : 0;
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
@@ -51,11 +53,11 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 							{ratings} ratings
 						</span>
 						<div className="md:hidden py-5">
-							<Link href={`/mentors/${mentor.user.name}`}>
-								<div className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
-									Book me
-								</div>
-							</Link>
+							<div
+								onClick={() => router.push(`/mentors/${mentor.id}`)}
+								className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
+								Book me
+							</div>
 						</div>
 					</div>
 				</div>
@@ -84,9 +86,11 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						</ul>
 					</div>
 					<div className="absolute bottom-4 w-full left-4 flex items-center gap-2 select-none animate__animated animate__fadeInUp">
-						<Link href={`/mentors/${mentor.user.name}`}>
-							<div className="bg-[#094B10] px-4 p-1 text-xs cursor-pointer">Book me</div>
-						</Link>
+						<div
+							onClick={() => router.push(`/mentors/${mentor.id}`)}
+							className="bg-[#094B10] px-4 p-1 text-xs cursor-pointer">
+							Book me
+						</div>
 						<ArrowForwardSharp color="#fff" width="20px" />
 					</div>
 				</div>

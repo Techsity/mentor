@@ -13,6 +13,7 @@ interface ICustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	rightIconClass?: string;
 	rightButton?: JSX.Element | null;
 	children?: ReactNode;
+	type?: HTMLInputTypeAttribute;
 }
 
 const CustomTextInput = forwardRef(function CustomTextInput(
@@ -36,6 +37,8 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				required={inputProps?.required}
 				className={classNames(
 					"p-4 h-full focus:ring-0 outline-none",
+					type === "number" &&
+						"[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
 					rightIcon ? "w-[93%]" : "w-full flex-grow",
 					inputProps?.className,
 				)}

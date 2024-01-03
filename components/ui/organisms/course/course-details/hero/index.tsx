@@ -3,8 +3,10 @@ import React from "react";
 import { ICourse } from "../../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../../utils";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const CourseDetailsPageHero = (course: ICourse) => {
+	const router = useRouter();
 	return (
 		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
 			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 sm:gap-10">
@@ -34,15 +36,16 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					</div>
 				</div>
 				<div className="my-2 sm:my-4 flex items-center gap-2">
-					<Link href={`/mentors/${course.mentor.user.name}`}>
-						<div className="flex gap-1.5 items-center cursor-pointer">
-							<img
-								src={course.mentor.user.avatar || "/assets/images/avatar.png"}
-								className="rounded-full w-20"
-								alt={course.mentor.user.name}
-							/>
-						</div>
-					</Link>
+					<div
+						onClick={() => router.push(`/mentors/${course.mentor.id}`)}
+						className="flex gap-1.5 items-center cursor-pointer">
+						<img
+							src={course.mentor.user.avatar || "/assets/images/avatar.png"}
+							className="rounded-full w-20"
+							alt={course.mentor.user.name}
+						/>
+					</div>
+
 					<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
 						<h1 className="font-semibold text-lg flex item-center gap-2">
 							{course.mentor.user.name}
