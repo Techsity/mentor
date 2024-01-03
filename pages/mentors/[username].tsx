@@ -26,25 +26,18 @@ const MentorDetails = () => {
 	const mentor = data && (data?.viewMentor as IMentor);
 
 	if (isConsultationPage) return mentor && <ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />;
-
-	return (
-		<div className="min-h-screen">
-			{!loading ? (
-				mentor && !mentor?.user ? (
-					<div className="text-red-600 text-xl h-screen flex justify-center items-center">
-						Mentor is unavailable
-					</div>
-				) : (
-					error && (
-						<div className="text-red-600 text-xl h-screen flex justify-center items-center">
-							Any error occured. Please refresh page and try again.
-						</div>
-					)
-				)
-			) : (
-				<MentorDetailsTemplate {...{ mentor: mentor, loading }} />
-			)}
-		</div>
+	return !loading ? (
+		mentor && !mentor?.user ? (
+			<div className="text-red-600 text-xl h-screen flex justify-center items-center">Mentor is unavailable</div>
+		) : (
+			error && (
+				<div className="text-red-600 text-xl h-screen flex justify-center items-center">
+					Any error occured. Please refresh page and try again.
+				</div>
+			)
+		)
+	) : (
+		<MentorDetailsTemplate {...{ mentor: mentor, loading }} />
 	);
 };
 

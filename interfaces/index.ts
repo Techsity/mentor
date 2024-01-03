@@ -255,8 +255,8 @@ export interface ICourseCategory {
 		description: string;
 		type: string;
 	};
-	created_at: string;
-	updated_at: string;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export type COURSE_LEVEL = "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
@@ -279,6 +279,8 @@ export interface ICourse {
 	category: ICourseCategory;
 	reviews: IReview[];
 	what_to_learn: string[];
+	created_at?: string;
+	updated_at?: string;
 }
 export interface IAboutHeroCarouselData {
 	title: string;

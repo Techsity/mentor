@@ -226,6 +226,8 @@ export const VIEW_MENTOR_PROFILE = gql`
 					endTime
 				}
 			}
+			created_at
+			updated_at
 		}
 	}
 `;
