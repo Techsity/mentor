@@ -8,14 +8,13 @@ import PaymentMethods from "./PaymentMethods";
 import ProfileSettings from "./ProfileSettings";
 import { ProfileTabLinkType } from "../../../../../interfaces";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
 import MentorProfileOverview from "../mentor/MentorProfileOverview.tsx";
-import MentorProfileCourses from "../mentor/MentorProfileCourses";
 import { PrimaryButton } from "../../../atom/buttons";
 import { useRouter } from "next/router";
 import EditCourseTemplate from "../../../../templates/course/edit";
 import EditCourseContent from "../../course/edit-course/EditCourseContent";
-
+import { currentUser } from "../../../../../redux/reducers/authSlice";
+import MentorProfileCourses from "../mentor/courses/MentorProfileCourses";
 
 const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => {
 	const router = useRouter();
@@ -40,7 +39,7 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						: activeTab}
 				</h1>
 				{isMentor &&
-					activeTab === "Courses" &&
+					activeTab === "courses" &&
 					(!isEditCourse ? (
 						<PrimaryButton title="+ New Course" className="bg-[#FFB100] text-[#000] p-2 px-4" />
 					) : (
@@ -52,14 +51,14 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 			</div>
 
 			{
-				activeTab === "Overview" && isMentor ? (
+				activeTab === "overview" && isMentor ? (
 					<div className="animate__animated animate__fadeIn">
 						<MentorProfileOverview />
 					</div>
-				) : activeTab === "Courses" && isMentor ? (
+				) : activeTab === "courses" && isMentor ? (
 					isEditCourse && !isContentPage ? (
 						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
-						<EditCourseTemplate />
+						<EditCourseTemplate isCourse handleSave={() => {}} />
 					) : // </div>
 					isEditCourse && isContentPage ? (
 						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
@@ -68,24 +67,24 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						// </div>
 						<MentorProfileCourses />
 					)
-				) : activeTab === "My Courses" ? (
+				) : activeTab === "my-courses" ? (
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 						{myCourses.map((course, i) => (
 							<CourseInProgressDisplayCard {...{ course }} key={i} />
 						))}
 					</div>
-				) : activeTab === "My Workshop" ? (
+				) : activeTab === "my-workshop" ? (
 					<RegitsteredWorkshops />
-				) : activeTab === "Mentorship" ? (
+				) : activeTab === "mentorship" ? (
 					<RegisteredMentorships />
-				) : activeTab === "Wish Lists" ? (
+				) : activeTab === "wishlists" ? (
 					<div className="md:px-2 px-5">
 						<WishLists />
 					</div>
-				) : activeTab === "Payment Methods" ? (
+				) : activeTab === "payment-methods" ? (
 					<PaymentMethods />
 				) : (
-					activeTab === "Profile Settings" && <ProfileSettings />
+					activeTab === "profile-settings" && <ProfileSettings />
 				)
 				// : (
 				// 	<>
