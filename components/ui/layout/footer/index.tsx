@@ -4,13 +4,15 @@ import React from "react";
 import SocialIcons from "./SocialIcons";
 import { MentorLogoLight } from "../../atom/icons/svgs";
 import { useRouter } from "next/router";
+import { courseTypes } from "../../../../data/courses";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const Footer = () => {
 	const router = useRouter();
+	const user = useSelector(currentUser);
 	const excludedPaths: string[] = ["purchase", "register", "profile"];
-	const hideFooter: boolean = excludedPaths.some((path) =>
-		router.asPath.includes(path),
-	);
+	const hideFooter: boolean = excludedPaths.some((path) => router.asPath.includes(path));
 
 	return hideFooter ? (
 		<></>
@@ -24,30 +26,20 @@ const Footer = () => {
 							style={{ fontFamily: "Days One" }}>
 							Company
 						</h2>
-						<ul
-							className="text-white"
-							style={{ fontWeight: "300" }}>
-							<Link href="/about">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									About Us
-								</li>
+						<ul className="text-white" style={{ fontWeight: "300" }}>
+							<Link prefetch={false} href="/about">
+								<li className="mb-4 cursor-pointer text-[14px]">About Us</li>
 							</Link>
 							<div className="flex gap-4 items-center">
-								<Link href="/help">
-									<li className="mb-4 cursor-pointer text-[14px]">
-										Help
-									</li>
+								<Link prefetch={false} href="/help">
+									<li className="mb-4 cursor-pointer text-[14px]">Help</li>
 								</Link>
-								<Link href="/blog">
-									<li className="mb-4 cursor-pointer text-[14px]">
-										Blog
-									</li>
+								<Link prefetch={false} href="/blog">
+									<li className="mb-4 cursor-pointer text-[14px]">Blog</li>
 								</Link>
 							</div>
-							<Link href="/privacy">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Privacy Policy
-								</li>
+							<Link prefetch={false} href="/privacy">
+								<li className="mb-4 cursor-pointer text-[14px]">Privacy Policy</li>
 							</Link>
 						</ul>
 					</div>
@@ -57,44 +49,30 @@ const Footer = () => {
 							style={{ fontFamily: "Days One" }}>
 							Products
 						</h2>
-						<ul
-							className="text-white"
-							style={{ fontWeight: "300" }}>
-							<Link href="#">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Technical Courses
-								</li>
-							</Link>
-							<Link href="#">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Vocational Courses
-								</li>
-							</Link>
-							<Link href="#">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Educational Courses
-								</li>
-							</Link>
+						<ul className="text-white" style={{ fontWeight: "300" }}>
+							{courseTypes.map((ct, index) => {
+								return (
+									<li
+										onClick={() => router.push(`/courses?type=${ct.name}`)}
+										key={index}
+										className="capitalize mb-4 cursor-pointer text-[14px]">
+										{ct.name} Courses
+									</li>
+								);
+							})}
 						</ul>
 					</div>
 					<div>
-						<ul
-							className="text-white mt-10"
-							style={{ fontWeight: "300" }}>
-							<Link href="#">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Live Mentorship Events
-								</li>
+						<ul className="text-white mt-10" style={{ fontWeight: "300" }}>
+							{/* //Todo update links to go to all live workshops page */}
+							<Link prefetch={false} href="/profile/workshop/live?id=dujhedjkgfju">
+								<li className="mb-4 cursor-pointer text-[14px]">Live Mentorship Events</li>
 							</Link>
-							<Link href="#">
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Find Mentors
-								</li>
+							<Link prefetch={false} href="/mentors">
+								<li className="mb-4 cursor-pointer text-[14px]">Find Mentors</li>
 							</Link>
-							<Link href={"/mentor/onboarding"}>
-								<li className="mb-4 cursor-pointer text-[14px]">
-									Become a Mentor
-								</li>
+							<Link prefetch={false} href={!user?.is_mentor ? "/mentor/onboarding" : "#"}>
+								<li className="mb-4 cursor-pointer text-[14px]">Become a Mentor</li>
 							</Link>
 						</ul>
 					</div>
@@ -104,30 +82,30 @@ const Footer = () => {
 							style={{ fontFamily: "Days One" }}>
 							Contact
 						</h2>
-						<ul
-							className="text-white"
-							style={{ fontWeight: "300" }}>
-							<Link href="#">
-								<li className="mb-3 cursor-pointer text-[14px]">
-									mentor@tecsity.io
-								</li>
+						<ul className="text-white" style={{ fontWeight: "300" }}>
+							<Link prefetch={false} href="mailto:mentor@tecsity.io">
+								<li className="mb-3 cursor-pointer text-[14px]">mentor@tecsity.io</li>
 							</Link>
 							<SocialIcons />
-							<Link href="/premium">
-								<li className="mb-4 cursor-pointer text-[15px] font-medium">
-									Mentor Premium
-								</li>
+							<Link prefetch={false} href="/premium">
+								<li className="mb-4 cursor-pointer text-[15px] font-medium">Mentor Premium</li>
 							</Link>
 						</ul>
 					</div>
 					<div className="flex justify-center items-center">
 						<div className="grid" style={{ fontWeight: "300" }}>
-							<MentorLogoLight />
+							<div
+								className=""
+								onClick={() => {
+									router.push("/");
+								}}>
+								<MentorLogoLight />
+							</div>
+							<span className="mb-4 text-white cursor-pointer text-[14px]">from Techsity</span>
 							<span className="mb-4 text-white cursor-pointer text-[14px]">
-								from Techsity
-							</span>
-							<span className="mb-4 text-white cursor-pointer text-[14px]">
-								(c) Copyright mentör 2023 - All rights reserved
+								(c) Copyright mentör 2023
+								<br />
+								All rights reserved
 							</span>
 						</div>
 					</div>

@@ -1,41 +1,35 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
-import TimePicker, {
-	ICurrentTime,
-} from "../../../../../atom/common/TimePicker";
+import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
+import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
 
 const Availability = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const initialSchedule = {
+	const initialSchedule: IMentorAvailability = {
 		day: "",
-		time: { end: "", start: "" },
+		timeSlots: [],
 	};
-	const [schedule, setSchedule] = useState<ISchedule>(initialSchedule);
-	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(
-		false,
-	);
-	const [endTimeIsOpen, setEndTimeIsOpen] = useState<React.Key | false>(
-		false,
-	);
+	const [schedule, setSchedule] = useState<IMentorAvailability>(initialSchedule);
+	const [startTimeIsOpen, setStartTimeIsOpen] = useState<React.Key | false>(false);
+	const [endTimeIsOpen, setEndTimeIsOpen] = useState<React.Key | false>(false);
+	const timepickerRef = useRef<HTMLDivElement>(null);
 
 	const closeTimePicker = () => {
 		setStartTimeIsOpen(false);
 		setEndTimeIsOpen(false);
 	};
-	const openTimePicker = (args: {
-		field: "end" | "start";
-		id: React.Key;
-	}) => {
+	const openTimePicker = (args: { field: "end" | "start"; id: React.Key }) => {
 		const { field, id } = args;
 		if (field === "end") {
-			if (endTimeIsOpen === id) setEndTimeIsOpen(false);
-			else {
+			if (endTimeIsOpen === id) {
+				setEndTimeIsOpen(false);
+			} else {
 				setEndTimeIsOpen(id);
 			}
 			setStartTimeIsOpen(false);
@@ -51,25 +45,36 @@ const Availability = () => {
 	const isDuplicate = useMemo(() => {
 		return (
 			onboardingMentor.availability.length >= 1 &&
-			onboardingMentor.availability.some(
-				(sch) => sch.day === schedule.day,
-			)
+			onboardingMentor.availability.some((sch) => sch.day === schedule.day)
 		);
 	}, [onboardingMentor, schedule]);
 
-	const updateSchedule = (args: {
-		field: keyof ISchedule["time"];
-		time: ICurrentTime;
-		day: string;
-	}) => {
+	const updateSchedule = (args: { field: keyof TimeSlot; time: ICurrentTime; day: string }) => {
 		const { day, time, field } = args;
-		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(
-			time.min,
-		).padStart(2, "0")}${time.meridan}`;
+		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(time.min).padStart(2, "0")}${time.meridan}`;
 
-		setSchedule({
-			day,
-			time: { ...schedule.time, [field]: formattedTime },
+		setSchedule((prev) => {
+			const updated = { ...prev };
+			if (field === "startTime") {
+				updated.timeSlots = [
+					{
+						...schedule.timeSlots[0],
+						startTime: formattedTime,
+					},
+					...schedule.timeSlots.slice(1),
+				];
+			}
+			if (field === "endTime") {
+				updated.timeSlots = [
+					{
+						...schedule.timeSlots[0],
+						endTime: formattedTime,
+					},
+					...schedule.timeSlots.slice(1),
+				];
+			}
+			updated.day = day;
+			return updated;
 		});
 
 		setEndTimeIsOpen(false);
@@ -77,16 +82,14 @@ const Availability = () => {
 	};
 
 	useEffect(() => {
-		console.log(schedule);
+		// console.log(schedule);
 		// Reflect Updates
 		const newArr = [...onboardingMentor.availability];
 		if (!isDuplicate && schedule !== initialSchedule) {
 			newArr.push(schedule);
 			// setSchedule(initialSchedule);
 		}
-		const toBeUpdated = onboardingMentor.availability.findIndex(
-			(sch) => sch.day === schedule.day,
-		);
+		const toBeUpdated = onboardingMentor.availability.findIndex((sch) => sch.day === schedule.day);
 		newArr[toBeUpdated] = { ...newArr[toBeUpdated], ...schedule };
 		dispatch(
 			setOnboardingMentor({
@@ -95,6 +98,12 @@ const Availability = () => {
 			}),
 		);
 	}, [schedule]);
+
+	useEffect(() => {
+		if (timepickerRef.current)
+			if (startTimeIsOpen || endTimeIsOpen)
+				timepickerRef.current.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+	}, [startTimeIsOpen, endTimeIsOpen]);
 
 	return (
 		<div className="">
@@ -122,9 +131,8 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find(
-										(sch) => sch.day === day,
-									)?.time.start
+									onboardingMentor.availability.find((schedule) => schedule.day === day)?.timeSlots[0]
+										.startTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -136,9 +144,10 @@ const Availability = () => {
 							{startTimeIsOpen === id && !endTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
+										ref={timepickerRef}
 										onChange={(time) =>
 											updateSchedule({
-												field: "start",
+												field: "startTime",
 												time,
 												day,
 											})
@@ -160,9 +169,8 @@ const Availability = () => {
 								}}
 								readOnly
 								value={
-									onboardingMentor.availability.find(
-										(sch) => sch.day === day,
-									)?.time.end
+									onboardingMentor.availability.find((schedule) => schedule.day === day)?.timeSlots[0]
+										.endTime
 								}
 								onClick={() =>
 									openTimePicker({
@@ -174,9 +182,10 @@ const Availability = () => {
 							{endTimeIsOpen === id && !startTimeIsOpen && (
 								<div className="absolute right-0 top-16 w-full">
 									<TimePicker
+										ref={timepickerRef}
 										onChange={(time) =>
 											updateSchedule({
-												field: "end",
+												field: "endTime",
 												time,
 												day,
 											})
@@ -193,19 +202,6 @@ const Availability = () => {
 	);
 };
 
-export interface ISchedule {
-	day: string;
-	time: { start: string; end: string };
-}
-
-const days: string[] = [
-	"Mondays",
-	"Tuesdays",
-	"Wednesdays",
-	"Thursdays",
-	"Fridays",
-	"Saturdays",
-	"Sundays",
-];
+const days: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export default Availability;

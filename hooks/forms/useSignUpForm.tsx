@@ -7,7 +7,6 @@ import { SelectedCountry } from "../../interfaces/country-selector.interface";
 import { REGISTER_USER } from "../../services/graphql/mutations/auth";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import ResponseMessages from "../../constants/response-codes";
 import { formatGqlError } from "../../utils/auth";
 
 export interface IFieldError {
@@ -20,10 +19,7 @@ type ICreateRegisterInput = {
 	};
 };
 
-const useSignUpForm = (props?: {
-	initialValues?: ISignUpState;
-	onSubmit?: (state: ISignUpState) => void;
-}) => {
+const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state: ISignUpState) => void }) => {
 	const router = useRouter();
 	const initial: ISignUpState = {
 		fullName: "",
@@ -35,123 +31,80 @@ const useSignUpForm = (props?: {
 	};
 	const { initialValues, onSubmit } = props || {};
 	const [loading, setLoading] = useState<boolean>(false);
-	const [values, setValues] = React.useState<ISignUpState>(
-		initialValues || initial,
-	);
+	const [values, setValues] = React.useState<ISignUpState>(initialValues || initial);
 	const [errors, setErrors] = useState<IFieldError[]>([]);
-	const [registerUser] = useMutation<ISignUpState, ICreateRegisterInput>(
-		REGISTER_USER,
-	);
+	const [registerUser] = useMutation<ISignUpState, ICreateRegisterInput>(REGISTER_USER);
 
-	const handleError =
-		(fieldName: keyof ISignUpState) =>
-		(e?: FormEvent<HTMLInputElement>) => {
-			window.scrollTo({ top: 0, behavior: "smooth" });
-			if (!errors.find((error) => error.field === fieldName)) {
-				setErrors([...errors, { field: fieldName, error: "Error" }]);
+	const handleError = (fieldName: keyof ISignUpState) => (e?: FormEvent<HTMLInputElement>) => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+		if (!errors.find((error) => error.field === fieldName)) {
+			setErrors([...errors, { field: fieldName, error: "Error" }]);
+		}
+		if (fieldName === "fullName") {
+			toast.error("Full name is required", ToastDefaultOptions({ id: "auth_form_pop" }));
+		}
+		if (fieldName === "email") {
+			if (!values.email) {
+				toast.error("Email is required", ToastDefaultOptions({ id: "auth_form_pop" }));
+				return;
 			}
-			if (fieldName === "fullName") {
-				toast.error(
-					"Full name is required",
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+			toast.error("Invalid Email", ToastDefaultOptions({ id: "auth_form_pop" }));
+		}
+		if (fieldName === "phone") {
+			if (!values.phone) {
+				toast.error("Phone number is required", ToastDefaultOptions({ id: "auth_form_pop" }));
+				return;
 			}
-			if (fieldName === "email") {
-				if (!values.email) {
-					toast.error(
-						"Email is required",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-					return;
-				}
-				toast.error(
-					"Invalid Email",
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+			if (!isValidPhoneNumber(values.phone))
+				toast.error("Invalid Phone Number", ToastDefaultOptions({ id: "auth_form_pop" }));
+		}
+		if (fieldName === "password") {
+			if (values.password) {
+			} else {
+				toast.error("Password is required", ToastDefaultOptions({ id: "auth_form_pop" }));
+				return;
 			}
-			if (fieldName === "phone") {
-				if (!values.phone) {
-					toast.error(
-						"Phone number is required",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-					return;
-				}
-				if (!isValidPhoneNumber(values.phone))
-					toast.error(
-						"Invalid Phone Number",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
+		}
+		if (fieldName === "country") {
+			if (!values.country) {
+				toast.error("Please select your country", ToastDefaultOptions({ id: "auth_form_pop" }));
+				return;
 			}
-			if (fieldName === "password") {
-				if (values.password) {
-				} else {
-					toast.error(
-						"Password is required",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-					return;
-				}
+		}
+		if (fieldName === "confirmPassword") {
+			if (!values.confirmPassword) {
+				toast.error("Please confirm password", ToastDefaultOptions({ id: "auth_form_pop" }));
+				return;
 			}
-			if (fieldName === "country") {
-				if (!values.country) {
-					toast.error(
-						"Please select your country",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-					return;
-				}
-			}
-			if (fieldName === "confirmPassword") {
-				if (!values.confirmPassword) {
-					toast.error(
-						"Please confirm password",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
-					return;
-				}
-			}
-		};
+		}
+	};
 
 	const handleCountrySelect = (country: SelectedCountry | null) => {
 		if (country) setValues({ ...values, country: country.label });
 		setErrors([]);
 	};
-	const handleChange =
-		(name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
-			setValues({ ...values, [name]: e?.target.value });
-			setErrors([]);
-			toast.dismiss("auth_form_pop");
-		};
+	const handleChange = (name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
+		setValues({ ...values, [name]: e?.target.value });
+		setErrors([]);
+		toast.dismiss("auth_form_pop");
+	};
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		if (!validatePassword(values.password.trim(), "8")) {
-			toast.error(
-				"Password must not be less than 8-digits",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Password must not be less than 8-digits", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		if (!validatePassword(values.password.trim(), "capital")) {
-			toast.error(
-				"Password must include a capital letter",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Password must include a capital letter", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		if (!validatePassword(values.password.trim(), "number")) {
-			toast.error(
-				"Password must include a number",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Password must include a number", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		if (values.password.trim() !== values.confirmPassword.trim()) {
-			toast.error(
-				"Passwords do not match",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Passwords do not match", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		setErrors([]);
@@ -164,7 +117,8 @@ const useSignUpForm = (props?: {
 					createRegisterInput: {
 						name: fullName,
 						country,
-						phone: phone.slice(-10),
+						phone: phone,
+						// phone: phone.slice(-10),
 						email,
 						password,
 					},
@@ -179,10 +133,7 @@ const useSignUpForm = (props?: {
 					console.error(error);
 					setLoading(false);
 					const errorMessage = formatGqlError(error);
-					toast.error(
-						errorMessage,
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
+					toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 				});
 
 			// setTimeout(function () {

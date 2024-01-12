@@ -1,49 +1,67 @@
 /* eslint-disable @next/next/no-img-element */
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import Link from "next/link";
+import { IReview } from "../../../../../interfaces";
 
-const MentorProfileCard = ({ detailsPage = false, mentor }: { mentor: IMentor; detailsPage?: boolean }) => {
-	const country: string = mentor.user.country.charAt(0) + mentor.user.country.charAt(1).toLowerCase();
+type MentorProfileCardProps = {
+	mentor: IMentor | null | undefined;
+	detailsPage?: boolean;
+	loading?: boolean;
+};
+
+const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
+	const router = useRouter();
+	const country: string = mentor ? mentor?.user.country.charAt(0) + mentor?.user.country.charAt(1).toLowerCase() : "";
+
 	interface IconType {
 		[key: string]: React.ElementType;
 	}
 	const IconComponent: IconType = FlagIcons;
-	const IconComp: any = mentor.user.country ? IconComponent[country] : null;
+	const IconComp: any = mentor?.user.country ? IconComponent[country] : null;
+
+	// router.push(`/mentors/${mentor?.user.name}`)
+	const handleFollow = () => {
+		if (!loading && mentor) {
+			console.log("Followed");
+		}
+	};
 	return (
-		<Link href={`/mentors/${mentor.user.name}`}>
-			<div className="animate__animated animate__fadeIn border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
-				<div className="w-full pr-4 flex items-start gap-3">
-					<div className="flex justify-center items-center">
-						<div className="relative">
-							<img
-								src={mentor.user.avatar || "/assets/images/avatar.png"}
-								alt=""
-								className="w-28 rounded-full"
-								loading="lazy"
-							/>
-							<span
-								className={`absolute ${
-									mentor.user.is_online ? "bg-[#00AD74]" : "bg-[#F6937B]"
-								} w-3 h-3 sm:h-5 sm:w-5 border-white border-2 top-0 left-0 xs:left-2 rounded-full`}
-							/>
-							{/* <div className="flex justify-center items-center -ml-3 mt-4 flex-wrap">
-                            <button className="text-[#70C5A1] text-sm xl:hidden sm:hidden xs:hidden hover:underline">
-                                + Follow
-                            </button>
-                        </div> */}
+		<div className="border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
+			<div className="w-full pr-4 flex sm:flex-row flex-col items-start gap-3">
+				<div className="flex justify-center items-center">
+					<div className="relative">
+						<div className="w-20 h-20 rounded-full relative bg-zinc-100 overflow-hidden">
+							{loading ? (
+								<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
+							) : (
+								<img
+									src={mentor?.user.avatar || ""}
+									alt=""
+									className="w-full h-full rounded-full"
+									loading="lazy"
+								/>
+							)}
 						</div>
+						<span
+							className={`absolute ${
+								!loading ? (mentor?.user.is_online ? "bg-[#00AD74]" : "bg-[#F6937B]") : "bg-zinc-300"
+							} w-4 h-4 sm:h-5 sm:w-5 border-white border-2 top-0 left-2 rounded-full`}
+						/>
 					</div>
-					<div className="">
-						<div className="flex items-center gap-3 whitespace-nowrap">
+				</div>
+				<div className="">
+					<div className="flex items-center gap-3 whitespace-nowrap">
+						{loading ? (
+							<span className="bg-zinc-200 h-1 w-20" />
+						) : (
 							<h1 className="text-lg text-[#094B10] font-semibold flex items-center gap-2">
-								{mentor.user.name}
-								{mentor.mentor_verified ? (
+								{mentor?.user.name}
+								{mentor?.mentor_verified ? (
 									<svg
 										width="16"
 										height="16"
@@ -65,34 +83,55 @@ const MentorProfileCard = ({ detailsPage = false, mentor }: { mentor: IMentor; d
 									/>
 								)}
 							</h1>
-							<p className="text-sm">{formatFollowersCount(mentor.followers)} followers</p>
-							<button className="text-[#70C5A1] text-sm xs:block sm:block hidden xl:block hover:underline">
-								+ Follow
-							</button>
-						</div>
-						<div className="mt-2 whitespace-nowrap">
-							<span className="flex flex-wrap gap-2 xs:text-sm text-xs text-[#B1B1B1]">
-								<p className="capitalize text-black">{mentor.role.split("/")[0]}</p>
-								<p className="flex gap-1 items-center">
-									<GlobeIconSvg />
-									{mentor.language.join(" | ")}
-								</p>
-							</span>
-						</div>
-						<div className="mt-2 flex gap-2 items-center text-[#70C5A1] whitespace-nowrap">
-							{mentor.skills
+						)}
+						{loading ? (
+							<span className="bg-zinc-200 h-1 w-5" />
+						) : (
+							<p className="text-sm">{formatFollowersCount(mentor?.followers as number)} followers</p>
+						)}
+						<button
+							onClick={handleFollow}
+							className="text-[#70C5A1] text-sm xs:block sm:block hidden xl:block hover:underline">
+							+ Follow
+						</button>
+					</div>
+					<div className="mt-2 whitespace-nowrap">
+						<span className="flex flex-wrap gap-2 xs:text-sm text-xs text-[#B1B1B1] items-center">
+							{!loading ? (
+								<p className="capitalize text-black">{mentor?.role.split("/")[0]}</p>
+							) : (
+								<span className="bg-zinc-200 h-1 w-20" />
+							)}
+							<p className="flex gap-1 items-center">
+								<GlobeIconSvg />
+								{!loading ? (
+									mentor?.language.join(" | ")
+								) : (
+									<span className="bg-zinc-200 h-1 w-10 animate__animated animate__fadeIn animate__infinite animate__fast" />
+								)}
+							</p>
+						</span>
+					</div>
+					<div className="mt-2 flex gap-2 items-center text-[#70C5A1] whitespace-nowrap">
+						{!loading &&
+							mentor?.skills
 								.map((skill, i) => (
 									<p className="text-xs" key={i}>
 										{skill.skill_name}
 									</p>
 								))
 								.slice(0, 3)}
-						</div>
-						<div className="mt-2 text-xs flex gap-3 items-center text-[#b1b1b1] whitespace-nowrap">
+					</div>
+					<div className="mt-2 text-xs flex gap-3 sm:items-center text-[#b1b1b1] whitespace-nowrap">
+						{!loading ? (
 							<p className="">{mentor?.work_experience?.length} Year of Experience</p>
-							{/* <p className="">
-								{mentor.sessions === 1 ? mentor.sessions + " session" : mentor.sessions + " sessions"}
+						) : (
+							<span className="bg-zinc-200 h-1 w-40 animate__animated animate__fadeIn animate__infinite animate__slow" />
+						)}
+						{/* <p className="">
+								{mentor?.sessions === 1 ? mentor?.sessions + " session" : mentor?.sessions + " sessions"}
 							</p> */}
+						{!loading ? (
 							<p className="flex gap-1 items-center">
 								<svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-[-1px]">
 									<path
@@ -101,36 +140,57 @@ const MentorProfileCard = ({ detailsPage = false, mentor }: { mentor: IMentor; d
 										fillOpacity="0.65"
 									/>
 								</svg>
-								{calculateRatingsInReviews(mentor.reviews)} (200 Ratings)
+								{calculateRatingsInReviews(mentor?.reviews as IReview[])} (200 Ratings)
 							</p>
-						</div>
-						<div className="mt-10 flex justify-start items-center gap-5">
+						) : (
+							<span className="bg-zinc-200 h-1 w-20" />
+						)}
+					</div>
+					<div className="mt-5 sm:mt-10 flex justify-start items-center gap-5">
+						{!loading ? (
 							<div
 								className="px-4 p-2 select-none bg-[#A3A6A7] text-sm text-white"
 								style={{ fontFamily: "Days One" }}>
-								${mentor.hourly_rate} / hour
+								${mentor?.hourly_rate} / hour
 							</div>
-							{/* <svg width="24" height="19" viewBox="0 0 24 19" fill="none">
-                            <rect width="8" height="19" fill="#078661" />
-                            <rect x="8" width="8" height="19" fill="white" />
-                            <rect x="16" width="8" height="19" fill="#078661" />
-                        </svg> */}
+						) : (
+							<span className="bg-zinc-100 h-8 w-20" />
+						)}
+						{!loading && mentor?.user.country ? (
 							<IconComp width="25px" height="25px" />
-						</div>
+						) : (
+							<span className="bg-zinc-200 h-6 w-8" />
+						)}
 					</div>
 				</div>
-				<div className="w-full lg:border-l-[.2em] border-[#D9D9D9] pl-4 mt-3">
-					<p className="text-[#9A9898] text-sm">{mentor.about}</p>
-					{!detailsPage ? (
-						<div className="flex gap-5 items-center mt-10">
-							<PrimaryButton title="Consult" link={`/mentors/${mentor.user.name}`} className="px-5 p-2" />
+			</div>
+			<div className="w-full lg:border-l-[.2em] border-[#D9D9D9] sm:pl-4 mt-3 sm:pt-8 grid sm:gap-1 gap-3">
+				{!loading ? (
+					<p className="text-[#9A9898] text-sm">{mentor?.about}</p>
+				) : (
+					<div className="grid gap-2 mb-5">
+						<span className="bg-zinc-200 h-1 w-full" />
+						<span className="bg-zinc-200 h-1 w-full" />
+						<span className="bg-zinc-200 h-1 w-full" />
+					</div>
+				)}
+				{!detailsPage ? (
+					!loading ? (
+						<div className="flex gap-5 items-center">
+							<PrimaryButton
+								title="Consult"
+								onClick={() => router.push(`/mentors/${mentor?.id}`)}
+								className="px-5 p-1.5 text-sm"
+							/>
 						</div>
 					) : (
-						<p className="">Links</p>
-					)}
-				</div>
+						<span className="bg-zinc-200 h-4 w-20" />
+					)
+				) : (
+					<p className="">Links</p>
+				)}
 			</div>
-		</Link>
+		</div>
 	);
 };
 

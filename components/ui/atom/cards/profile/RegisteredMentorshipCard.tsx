@@ -6,13 +6,13 @@ const RegisteredMentorshipCard = (session: IMentorshipSession) => {
 	const SessionIndicator = () => {
 		return session.pending ? (
 			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{session.date.toLocaleDateString()}</p>
+				<p className="">{new Date(session.date).toLocaleDateString()}</p>
 				<p className="">||</p>
-				<p className="">{session.date.toLocaleDateString()}</p>
+				<p className="">{new Date(session.date).toLocaleDateString()}</p>
 			</div>
 		) : session.upcoming ? (
 			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{session.date.toLocaleDateString()}</p>
+				<p className="">{new Date(session.date).toLocaleDateString()}</p>
 			</div>
 		) : session.concluded ? (
 			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
@@ -20,9 +20,9 @@ const RegisteredMentorshipCard = (session: IMentorshipSession) => {
 			</div>
 		) : (
 			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{session.date.toLocaleDateString()}</p>
+				<p className="">{new Date(session.date).toLocaleDateString()}</p>
 				<p className="">||</p>
-				<p className="">{session.date.toLocaleDateString()}</p>
+				<p className="">{new Date(session.date).toLocaleDateString()}</p>
 			</div>
 		);
 	};

@@ -4,7 +4,7 @@ import { calculateTotalDuration, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
-import { setWorkshopToRegister } from "../../../../../redux/reducers/features/workshopSlice";
+import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 import { useRouter } from "next/router";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 
@@ -29,12 +29,8 @@ const WorkshopContents = ({
 						<h1 className="grid items-center gap-2">
 							{content.title}{" "}
 							<span className="flex items-center gap-10">
-								<span className={`text-white text-sm`}>
-									{content.date.toDateString()}
-								</span>
-								<span className={`text-white text-sm`}>
-									1:00pm - 2:15PM
-								</span>
+								<span className={`text-white text-sm`}>{new Date(content.date).toDateString()}</span>
+								<span className={`text-white text-sm`}>1:00pm - 2:15PM</span>
 							</span>
 						</h1>
 					</div>
@@ -50,7 +46,7 @@ const WorkshopContents = ({
 			)}>
 			<div className="flex items-center justify-between">
 				<h1 className="font-semibold text-xl">Workshop Schedule</h1>
-				{workshop.price !== "free" ? (
+				{workshop.price !== 0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						₦{workshop.price.toLocaleString()}
 					</div>
@@ -72,11 +68,7 @@ const WorkshopContents = ({
 							dispatch(setWorkshopToRegister(workshop));
 							setLoading(true);
 							setTimeout(function () {
-								router.push(
-									`/workshops/${slugify(
-										workshop.title,
-									)}?register`,
-								);
+								router.push(`/workshops/${slugify(workshop.title)}?register`);
 							}, 1000);
 						}}
 						className="p-4 text-lg flex justify-center items-center my-6"

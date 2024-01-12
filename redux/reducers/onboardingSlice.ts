@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
-import { IUser } from "../../../interfaces/user.interface";
-import { IMentorOnboardingState } from "../../../interfaces/mentor.interface";
+import { IMentorOnboardingState } from "../../interfaces/mentor.interface";
+import { IUser } from "../../interfaces/user.interface";
+import { RootState } from "../store";
 
 const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
 	agreedToTerms: false,
 	user: null,
 	bio: "",
-	jobTitle: "",
+	role: "",
 	skills: [],
 	yearsOfExp: 1,
 	workHistory: [],
@@ -30,22 +30,21 @@ const onboardingSlice = createSlice({
 	name: "onboarding",
 	initialState,
 	reducers: {
-		setOnboardingMentor: (
-			state,
-			action: { payload: IMentorOnboardingState },
-		) => {
+		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState }) => {
 			state.mentor = action.payload;
+			// action.payload.user = null;
+			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
-		setOnboardingUser: (state, action: {}) => {},
+		setOnboardingUser: (state, action: {}) => {
+			//
+		},
 	},
 });
 
 export const { setOnboardingMentor } = onboardingSlice.actions;
 
-export const mentorOnboardingTermsAgreed = (state: RootState) =>
-	state.onboarding.mentor.agreedToTerms;
+export const mentorOnboardingTermsAgreed = (state: RootState) => state.onboarding.mentor.agreedToTerms;
 
-export const onboardingMentorState = (state: RootState) =>
-	state.onboarding.mentor;
+export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
 
 export default onboardingSlice.reducer;

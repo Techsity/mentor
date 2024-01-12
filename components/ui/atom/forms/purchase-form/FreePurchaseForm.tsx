@@ -3,7 +3,7 @@ import CustomTextInput from "../../inputs/CustomTextInput";
 import { PrimaryButton } from "../../buttons";
 import CountrySelectorComp from "../../inputs/CountrySelector";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 interface IFormState {
 	fullName: string;

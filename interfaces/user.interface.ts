@@ -16,10 +16,10 @@ export interface IUser {
 	is_verified: boolean;
 	is_admin: boolean;
 	payment_cards?: IUserPaymentCard[];
-	mentor: any;
+	is_mentor: boolean;
 	isPremium: boolean;
-	created_at?: Date;
-	updated_at?: Date;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export interface IUserUpdate extends IUser {

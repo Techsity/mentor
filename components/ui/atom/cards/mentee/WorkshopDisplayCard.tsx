@@ -1,27 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { HeartOutline, HeartSharp, ArrowForwardSharp } from "react-ionicons";
 import { IWorkshop } from "../../../../../interfaces";
 import Link from "next/link";
-import {
-	formatDateDifference,
-	formatFollowersCount,
-	slugify,
-} from "../../../../../utils";
+import { formatDateDifference, formatFollowersCount, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 
 const WorkshopDisplayCard = ({
 	workshop,
 	profile = false,
+	owner = false,
 }: {
 	workshop: IWorkshop;
 	profile?: boolean;
+	owner?: boolean;
 }) => {
+	// workshop = workshops[0];
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
 			<div className="select-none absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
 				{!profile && (
-					<Link href={`/workshops/${slugify(workshop.title)}`}>
+					<Link href={`/workshops/${slugify(workshop.title)}`} prefetch={false}>
 						<button className="px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300">
 							Register for Workshop
 						</button>
@@ -31,14 +29,12 @@ const WorkshopDisplayCard = ({
 				<div
 					className={
 						profile
-							? "px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300"
+							? // ? "px-6 p-2 text-center border border-white hover:bg-white hover:text-black duration-300"
+							  "px-6 p-2 text-center border border-white duration-300"
 							: ""
 					}>
 					<h1 className={!profile ? "mt-4" : ""}>
-						{workshop.startDate
-							.toLocaleDateString()
-							.split("/")
-							.join("-")}
+						{new Date(workshop.startDate).toLocaleDateString().split("/").join("-")}
 					</h1>
 				</div>
 			</div>
@@ -46,10 +42,7 @@ const WorkshopDisplayCard = ({
 				<div className="relative">
 					<div className="bg-black w-full h-full bg-opacity-50 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 					<img
-						src={
-							workshop.imgUrl ||
-							"/assets/images/mockups/course_one.png"
-						}
+						src={workshop.imgUrl || "/assets/images/mockups/course_one.png"}
 						className="w-full h-full"
 						alt=""
 						loading="lazy"
@@ -57,7 +50,7 @@ const WorkshopDisplayCard = ({
 				</div>
 				<h1 className="px-5 font-medium tracking-tight flex items-center justify-between">
 					{workshop.title}
-					{workshop.category === "Live" && (
+					{workshop.tag === "Live" && (
 						<span className="flex gap-2 items-center">
 							<span className="bg-[#d31119] p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 							Live
@@ -65,18 +58,9 @@ const WorkshopDisplayCard = ({
 					)}
 				</h1>
 				<div className="flex items-center gap-6 px-5 text-sm mt-2">
-					<span className="">
-						{formatDateDifference(
-							workshop.startDate,
-							workshop.endDate,
-						)}
-					</span>
-					<span className="">
-						{workshop.duration.toFixed(1)} hours
-					</span>
-					<span className="">
-						{formatFollowersCount(workshop.participants)} students
-					</span>
+					<span className="">{formatDateDifference(workshop.startDate, workshop.endDate)}</span>
+					<span className="">{workshop.duration.toFixed(1)} hours</span>
+					<span className="">{formatFollowersCount(workshop.participants)} students</span>
 					{/* <div className="flex items-center gap-2 text-[#094B10] ml-8 text-[16px]">
                     {workshop.rating} 
 						<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
@@ -88,17 +72,12 @@ const WorkshopDisplayCard = ({
 						</svg>
 					</div> */}
 				</div>
-				<p className="text-sm px-5">
-					{workshop.description.slice(0, 160)}...
-				</p>
+				<p className="text-sm px-5">{workshop.description.slice(0, 160)}...</p>
 				<div className="flex items-center justify-between mt-5 px-5">
 					<div className="flex gap-2 items-center text-sm relative">
 						<img
-							src={
-								workshop.mentor.user.avatar ||
-								"/assets/images/avatar.png"
-							}
-							alt={workshop.mentor.user.name}
+							src={workshop?.mentor.user.avatar || "/assets/images/avatar.png"}
+							alt={workshop?.mentor.user.name}
 							className="w-10 rounded-full"
 							loading="lazy"
 						/>
@@ -106,15 +85,21 @@ const WorkshopDisplayCard = ({
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
 					{!profile ? (
-						workshop.price === "free" ? (
-							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">
-								Free
-							</div>
+						workshop.price === 0 ? (
+							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">Free</div>
 						) : (
 							<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">
 								₦{workshop.price.toLocaleString()}
 							</div>
 						)
+					) : profile && owner ? (
+						<div className="flex justify-end items-center">
+							<PrimaryButton
+								link={`/profile/workshop/edit/${slugify(workshop.title)}`}
+								title="Edit"
+								className="p-2 px-6"
+							/>
+						</div>
 					) : (
 						<div className="flex justify-end items-center">
 							<PrimaryButton

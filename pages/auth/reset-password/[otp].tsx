@@ -6,24 +6,13 @@ import ResetPasswordWeldone from "../../../components/templates/auth/password/re
 
 const SetNewPassword = () => {
 	const router = useRouter();
-	const resetFinished = router.asPath.split("?")[1] === "finish";
-	return !resetFinished ? (
-		<ResetNewPasswordTemplate />
-	) : (
-		<ResetPasswordWeldone />
-	);
+	const resetFinished = Object.keys(router.query).find((key) => key === "finish");
+	return !resetFinished ? <ResetNewPasswordTemplate /> : <ResetPasswordWeldone />;
 };
 
-export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	const { otp } = ctx.query;
-	// check if otp exists in the url query
-	if (!otp || otp.length > 6)
-		return {
-			props: {},
-			redirect: { destination: "/auth", permanent: true },
-		};
-	// then check if it matches the one stored in the cookies
-	// validate or redirect
+	if (!otp) return { notFound: true };
 	return { props: {} };
 };
 

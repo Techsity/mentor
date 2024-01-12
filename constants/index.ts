@@ -15,9 +15,7 @@ interface ToastId {
 interface ICustomToastProps extends ToastOptions {
 	id: keyof ToastId | "";
 }
-export const ToastDefaultOptions = (
-	props?: ICustomToastProps,
-): ToastOptions => {
+export const ToastDefaultOptions = (props?: ICustomToastProps): ToastOptions => {
 	const { id, ...rest } = props || {};
 	return {
 		autoClose: 5000,
@@ -52,3 +50,5 @@ export const ToastDefaultOptions = (
 // 		toastId: "message_pop",
 // 	},
 // );
+
+export const AUTH_TOKEN_KEY = "authToken";

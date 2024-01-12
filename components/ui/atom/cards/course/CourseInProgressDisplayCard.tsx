@@ -73,7 +73,7 @@ const CourseInProgressDisplayCard: FC<{
 						<PrimaryButton
 							title="Edit Course"
 							className="p-2 px-4 text-xs"
-							link={`/profile/#my-courses/${slugify(course.title)}/edit`}
+							link={`/profile/courses/edit/${slugify(course.title)}`}
 						/>
 					)}
 				</div>

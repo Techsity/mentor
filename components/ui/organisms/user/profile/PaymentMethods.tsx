@@ -1,7 +1,7 @@
 import React from "react";
 import PaymentCard from "../../../atom/common/user/PaymentCard";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 import AddPaymentMethodForm from "../../../atom/forms/profile/AddPaymentMethodForm";
 
 const PaymentMethods = () => {

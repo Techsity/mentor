@@ -2,7 +2,7 @@ import { CourseType, ICourse, ICourseCategory, ICourseContent } from "../interfa
 import mentors from "./mentors";
 import reviews from "./reviews";
 
-const courseContents: [ICourseContent[], ICourseContent[]] = [
+export const courseContents: [ICourseContent[], ICourseContent[]] = [
 	[
 		{
 			title: "Introduction to Programming",
@@ -106,26 +106,42 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Programming",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		category_type: {
+			description: "Lorem Ipsum",
+			type: "technical",
+		},
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Digital Marketing",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		category_type: {
+			description: "Lorem Ipsum",
+			type: "vocational",
+		},
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Python",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		category_type: {
+			description: "Lorem Ipsum",
+			type: "technical",
+		},
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 	{
 		title: "Data Science",
 		description: "Courses related to programming and software development.",
-		created_at: new Date(),
-		updated_at: new Date(),
+		category_type: {
+			description: "Lorem Ipsum",
+			type: "technical",
+		},
+		created_at: new Date().toDateString(),
+		updated_at: new Date().toDateString(),
 	},
 ];
 
@@ -134,6 +150,8 @@ export const courseTypes: { name: CourseType; categories: ICourseCategory[] }[] 
 	{ name: "vocational", categories: courseCategories.slice(2) },
 	{ name: "educational", categories: [] },
 ];
+
+export const courseLevels = ["all_levels", "beginner", "intermmediate", "advanced"];
 
 const courses: ICourse[] = [
 	{

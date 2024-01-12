@@ -9,11 +9,13 @@ const CourseNav = ({
 	setActiveCourseType,
 	setActiveCategoryIndex,
 	courseTypes,
-}: {
+}: // loading,
+{
 	activeCourseType: ActiveCourseType;
 	setActiveCourseType: Dispatch<SetStateAction<ActiveCourseType>>;
 	setActiveCategoryIndex: Dispatch<SetStateAction<number>>;
 	courseTypes: ActiveCourseType[];
+	// loading: boolean;
 }) => {
 	return (
 		<div>

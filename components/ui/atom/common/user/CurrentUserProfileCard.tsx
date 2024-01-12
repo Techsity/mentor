@@ -2,31 +2,25 @@
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);
-	const links: { name: string; path: string }[] = [
-		{ name: "My Learning", path: "/dashboard/my-courses/learning" },
-		{ name: "My Cart", path: "/cart" },
-		{ name: "Wishlist", path: "/dashboard/wishlist" },
-		{ name: "Archive", path: "/dashboard/archive" },
-		{ name: "Profile", path: "/profile" },
-	];
+
 	return (
 		<div className="relative group cursor-pointer h-full">
 			<Link href={`/profile`}>
 				<div className="flex items-center gap-3">
-					<div className="rounded-full w-9 h-9 relative">
+					<div className="rounded-full object-cover w-9 h-9 relative">
 						<img
 							src={user?.avatar || "/assets/images/avatar.png"}
-							alt={user?.name}
-							className="w-full h-full"
+							alt={""}
+							className="w-full h-full bg-zinc-300 rounded-full"
 							loading="lazy"
 						/>
 					</div>
 					<div className="leading-none sm:inline-block hidden">
-						<h1 className="text-lg font-medium">
+						<h1 className="text-sm font-medium">
 							{/* {user?.name.split(" ")[0] +
 								" " +
 								user?.name.split(" ")[1]} */}

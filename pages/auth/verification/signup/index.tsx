@@ -10,29 +10,23 @@ import { formatGqlError } from "../../../../utils/auth";
 import ResponseMessages from "../../../../constants/response-codes";
 
 type VerifyUserResponseType = {
-	data: { verifyUser: { message: keyof typeof ResponseMessages } };
+	verifyUser: { message: keyof typeof ResponseMessages };
 };
 
 const SignupOtpVerificationPage = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const [verifyUser] = useMutation<VerifyUserResponseType, { otp: string }>(
-		VERIFY_USER,
-	);
+	const [verifyUser] = useMutation<any, { otp: string }>(VERIFY_USER);
 
 	const handleVerifyOtp = (otp: string) => {
 		verifyUser({ variables: { otp } })
 			.then((response) => {
 				console.log(response);
-				if (
-					response.data?.data.verifyUser.message ===
-					ResponseMessages.USER_VERIFIED
-				) {
-					// toast.success(
-					// 	ResponseMessages.USER_VERIFIED,
-					// 	ToastDefaultOptions({ id: "success" }),
-					// );
+				setLoading(false);
+				// 7
+				if (response.data.verifyUser.message === ResponseMessages.USER_VERIFIED) {
+					toast.success(ResponseMessages.USER_VERIFIED, ToastDefaultOptions({ id: "success" }));
 					router.replace(`/onboarding/interests`);
 				}
 			})
@@ -40,38 +34,17 @@ const SignupOtpVerificationPage = () => {
 				setLoading(false);
 				console.error(error);
 				const errorMessage = formatGqlError(error);
+				// Check if account has already been verified
 				if (errorMessage === ResponseMessages["statusCode: 13404"]) {
 					setTimeout(function () {
 						router.replace("/auth?login");
 					}, 2000);
 				}
-				toast.error(
-					errorMessage,
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+				toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 			});
 	};
 
-	return (
-		<OtpTemplate
-			{...{ loading, setLoading }}
-			next={handleVerifyOtp}
-			timeLimit={60}
-		/>
-	);
-};
-
-export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
-	const { jwt } = ctx.query;
-	// check if jwt exists in the url query
-	if (!jwt)
-		return {
-			props: {},
-			redirect: { destination: "/auth", permanent: true },
-		};
-	// then check if it matches the one stored in the cookies
-	// validate or redirect
-	return { props: {} };
+	return <OtpTemplate {...{ loading, setLoading }} next={handleVerifyOtp} timeLimit={60} />;
 };
 
 export default SignupOtpVerificationPage;

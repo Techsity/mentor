@@ -248,18 +248,25 @@ export interface ICourseContent {
 }
 
 export interface ICourseCategory {
+	id?: string;
 	title: string;
 	description: string;
-	created_at: Date;
-	updated_at: Date;
+	category_type: {
+		description: string;
+		type: string;
+	};
+	created_at?: string;
+	updated_at?: string;
 }
 
+export type COURSE_LEVEL = "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
 export interface ICourse {
+	id?: string;
 	title: string;
 	description: string;
 	course_images: string;
-	// course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "ADVANCED";
-	course_level: "ALL_LEVELS" | "BEGINNER" | "INTERMMEDIATE" | "SENIOR";
+	course_level: COURSE_LEVEL;
+	course_type?: string;
 	duration: number;
 	limit: number;
 	rating: number;
@@ -272,6 +279,8 @@ export interface ICourse {
 	category: ICourseCategory;
 	reviews: IReview[];
 	what_to_learn: string[];
+	created_at?: string;
+	updated_at?: string;
 }
 export interface IAboutHeroCarouselData {
 	title: string;
@@ -291,37 +300,39 @@ export interface IBlogPost {
 }
 export interface IWorkshopContent {
 	title: string;
-	date: Date;
+	date: string;
 }
 export interface IWorkshop {
+	id?: string;
 	title: string;
-	category: "Live" | "Upcoming" | "Recordings";
+	tag: "Live" | "Upcoming" | "Recordings";
 	description: string;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 	duration: number;
 	participants: number;
-	price: number | "free";
+	price: number;
 	mentor: IMentor;
 	available: boolean;
 	imgUrl?: string;
-	toLearn: string[];
+	what_to_learn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];
+	reviews: IReview[];
 }
 
 export type ProfileTabLinkType =
-	| "Overview"
-	| "Courses"
-	| "My Courses"
-	| "Workshop"
-	| "My Workshop"
-	| "Mentorship"
-	| "Wish Lists"
-	| "Payment Methods"
-	| "Payments"
-	| "Profile Settings"
-	| "Edit Course";
+	| "overview"
+	| "courses"
+	| "my-courses"
+	| "workshop"
+	| "my-workshop"
+	| "mentorship"
+	| "wishlists"
+	| "payment-methods"
+	| "payments"
+	| "profile-settings"
+	| "edit-course";
 
 export type CourseType = "technical" | "vocational" | "educational";
 

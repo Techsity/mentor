@@ -94,19 +94,19 @@ export function parseVideoDuration(duration: number): string {
 }
 
 export const calculateTotalDuration = (content: ICourseContent): string => {
-	let totalHours = 0;
-	let totalMinutes = 0;
-	content.course_sections.forEach((item) => {
-		const [hours, minutes] = item.duration.split(":").map(Number);
-		if (!isNaN(hours) && !isNaN(minutes)) {
-			totalHours += hours;
-			totalMinutes += minutes;
-		}
-	});
-	const extraHours = Math.floor(totalMinutes / 60);
-	totalMinutes %= 60;
-	totalHours += extraHours;
-	const totalDuration = `${String(totalHours).padStart(2, "0")}:${String(totalMinutes).padStart(2, "0")}`;
+	// let totalHours = 0;
+	// let totalMinutes = 0;
+	// content.course_sections.forEach((item) => {
+	// 	const [hours, minutes] = item.duration.split(":").map(Number);
+	// 	if (!isNaN(hours) && !isNaN(minutes)) {
+	// 		totalHours += hours;
+	// 		totalMinutes += minutes;
+	// 	}
+	// });
+	// const extraHours = Math.floor(totalMinutes / 60);
+	// totalMinutes %= 60;
+	// totalHours += extraHours;
+	const totalDuration = `${String(100).padStart(2, "0")}:${String(2000).padStart(2, "0")}`;
 
 	return totalDuration;
 };
@@ -197,5 +197,7 @@ export function formatAmount(amount: number, options?: { withFraction?: boolean 
 }
 
 export const calculateRatingsInReviews = (reviews: IReview[]): string => {
-	return formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0);
+	return reviews
+		? formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0)
+		: "";
 };

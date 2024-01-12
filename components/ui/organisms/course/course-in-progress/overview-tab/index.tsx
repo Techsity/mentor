@@ -11,8 +11,7 @@ type videoNavType = "about-course" | "review" | "lecture-notes";
 
 const CourseOverviewTab = (course: ICourse) => {
 	const [active, setActive] = useState<videoNavType>("about-course");
-	const { loading, newReview, addNewReview, handleChange, reviews } =
-		useLectureReviews();
+	const { loading, newReview, addNewReview, handleChange, reviews } = useLectureReviews();
 
 	const Nav = () => {
 		return (
@@ -20,27 +19,21 @@ const CourseOverviewTab = (course: ICourse) => {
 				<div
 					onClick={() => setActive("about-course")}
 					className={`${
-						active === "about-course"
-							? "text-black lg:font-medium"
-							: "text-[#666]"
+						active === "about-course" ? "text-black lg:font-medium" : "text-[#666]"
 					} select-none cursor-pointer capitalize`}>
 					About Course
 				</div>
 				<div
 					onClick={() => setActive("review")}
 					className={`${
-						active === "review"
-							? "text-black lg:font-medium"
-							: "text-[#666]"
+						active === "review" ? "text-black lg:font-medium" : "text-[#666]"
 					} select-none cursor-pointer capitalize`}>
 					Review
 				</div>
 				<div
 					onClick={() => setActive("lecture-notes")}
 					className={`${
-						active === "lecture-notes"
-							? "text-black lg:font-medium"
-							: "text-[#666]"
+						active === "lecture-notes" ? "text-black lg:font-medium" : "text-[#666]"
 					} select-none cursor-pointer capitalize`}>
 					Lecture Notes
 				</div>
@@ -62,70 +55,46 @@ const CourseOverviewTab = (course: ICourse) => {
 							placeholder="Leave a Review..."
 							className="placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE]"
 							containerProps={{
-								className:
-									"border border-[#70C5A1] bg-transparent duration-300 min-h-[40px] my-4",
+								className: "border border-[#70C5A1] bg-transparent duration-300 min-h-[40px] my-4",
 							}}
-							value={newReview !== null ? newReview?.comment : ""}
+							value={newReview !== null ? newReview?.content : ""}
 							onChange={handleChange}
 							rightButton={
 								<PrimaryButton
 									onClick={addNewReview}
 									title={!loading ? "Send" : ""}
 									className="h-full p-2 flex items-center justify-center text-center px-6 w-full"
-									icon={
-										loading ? <ActivityIndicator /> : null
-									}
+									icon={loading ? <ActivityIndicator /> : null}
 								/>
 							}
 						/>
-						{reviews
-							.map((review, i) => (
-								<LectureReviewCard key={i} {...review} />
-							))
-							.reverse()}
+						{reviews.map((review, i) => <LectureReviewCard key={i} {...review} />).reverse()}
 					</section>
 				) : active === "lecture-notes" ? (
 					<>
 						<p className="text-sm">
-							I once thought digital marketing was for the big
-							guys until i took this course, thank you for making
-							it so easy and simple I once thought digital
-							marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple I
-							once thought digital marketing was for the big guys
-							until i took this course, thank you for making it so
-							easy and simple I once thought digital marketing was
-							for the big guys until i took this course, thank you
-							for making it so easy and simple I once thought
-							digital marketing was for the big guys until i took
-							this course, thank you for making it so easy and
-							simple I once thought digital marketing was for the
-							big guys until i took this course, thank you for
-							making it so easy and simple I once thought digital
-							marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple I
-							once thought digital marketing was for the big guys
-							until i took this course, thank you for making it so
-							easy and simple I once thought digital marketing was
-							for the big guys until i took this course, thank you
-							for making it so easy and simple I once thought
-							digital marketing was for the big guys until i took
-							this course, thank you for making it so easy and
-							simple I once thought digital marketing was for the
-							big guys until i took this course, thank you for
-							making it so easy and simple I once thought digital
-							marketing was for the big guys until i took this
-							course, thank you for making it so easy and simple I
-							once thought digital marketing was for the big guys
-							until i took this course, thank you for making it so
-							easy and simple I once thought digital marketing was
-							for the big guys until i took this course, thank you
-							for making it so easy and simple I once thought
-							digital marketing was for the big guys until i took
-							this course, thank you for making it so easy and
-							simple I once thought digital marketing was for the
-							big guys until i took this course, thank you for
-							making it so easy and simple
+							I once thought digital marketing was for the big guys until i took this course, thank you
+							for making it so easy and simple I once thought digital marketing was for the big guys until
+							i took this course, thank you for making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the big guys until i took this course, thank
+							you for making it so easy and simple I once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the big guys until i took this course, thank
+							you for making it so easy and simple I once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the big guys until i took this course, thank
+							you for making it so easy and simple I once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the big guys until i took this course, thank
+							you for making it so easy and simple I once thought digital marketing was for the big guys
+							until i took this course, thank you for making it so easy and simple I once thought digital
+							marketing was for the big guys until i took this course, thank you for making it so easy and
+							simple I once thought digital marketing was for the big guys until i took this course, thank
+							you for making it so easy and simple
 						</p>
 					</>
 				) : null}

@@ -5,12 +5,9 @@ import { useRouter } from "next/router";
 import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../redux/reducers/features/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../redux/reducers/onboardingSlice";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/features/authSlice";
+import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const MentorOnboardingPageTemplate = () => {
 	const router = useRouter();
@@ -20,9 +17,7 @@ const MentorOnboardingPageTemplate = () => {
 	const pageKey: any = Object.keys(router.query)[0];
 	const [current, setCurrent] = useState<"signup" | "">(pageKey);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [agree, setAgree] = useState<boolean>(
-		onboardingMentor.agreedToTerms || false,
-	);
+	const [agree, setAgree] = useState<boolean>(onboardingMentor.agreedToTerms || false);
 
 	const handleNavigate = () => {
 		setLoading(true);
@@ -71,14 +66,11 @@ const MentorOnboardingPageTemplate = () => {
 								<h1
 									className="text-[#00D569] text-xl sm:text-3xl animate__animated animate__fadeInLeft"
 									style={{ fontFamily: "Days One" }}>
-									This is an awesome decision you’ve decided
-									to make
+									This is an awesome decision you’ve decided to make
 								</h1>
 								<p className="text-sm animate__animated animate__fadeInLeft animate__slow">
-									The beauty of knowledge is when it is
-									shared... and we are thrilled that you’ve
-									made the decision to pass your knowledge to
-									the public.
+									The beauty of knowledge is when it is shared... and we are thrilled that you’ve made
+									the decision to pass your knowledge to the public.
 								</p>
 								<div className="flex items-center gap-2 flex-nowrap select-none animate__animated animate__fadeInLeft animate__slow">
 									<input
@@ -90,28 +82,17 @@ const MentorOnboardingPageTemplate = () => {
 										onChange={() => setAgree(!agree)}
 									/>
 									<p className="text-[15px]">
-										Agree to our{" "}
-										<span className="text-[#70C5A1]">
-											Terms and Policy
-										</span>{" "}
-										to Continue
+										Agree to our <span className="text-[#70C5A1]">Terms and Policy</span> to
+										Continue
 									</p>
 								</div>
 								<div className="animate__animated animate__fadeInLeft animate__slow">
 									<PrimaryButton
 										type="button"
-										title={
-											loading
-												? ""
-												: "Let's take you through the process"
-										}
+										title={loading ? "" : "Let's take you through the process"}
 										className="p-4 px-8 text-sm flex justify-center"
 										disabled={!agree || loading}
-										icon={
-											loading ? (
-												<ActivityIndicator />
-											) : null
-										}
+										icon={loading ? <ActivityIndicator /> : null}
 										// link="/mentor/onboarding?signup"
 										onClick={handleNavigate}
 									/>
@@ -125,8 +106,8 @@ const MentorOnboardingPageTemplate = () => {
 								className="animate__animated animate__fadeInDown"
 							/>
 							<p className="max-w-sm text-sm text-center text-zinc-500 animate__animated animate__fadeInUp">
-								Start making money from your knowledge, Share
-								your knowledge in any language of your choice
+								Start making money from your knowledge, Share your knowledge in any language of your
+								choice
 							</p>
 						</div>
 					</div>

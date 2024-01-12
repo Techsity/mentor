@@ -1,8 +1,22 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, HTMLInputTypeAttribute, MouseEvent, useEffect, useState } from "react";
 import { PrimaryButton } from "../buttons";
 import CustomTextInput from "./CustomTextInput";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../constants";
+
+type TagsInputProps = {
+	textLength?: number;
+	tagsState: string[];
+	showSelectedTags?: boolean;
+	addTag?: (tag: string) => void;
+	onChange?: (tag: string | number) => void;
+	onRemove?: (tag: string) => void;
+	showAddBtn?: boolean;
+	placeholder?: string;
+	value?: string;
+	inputType?: HTMLInputTypeAttribute;
+	min?: number;
+};
 
 const TagsInput = ({
 	addTag,
@@ -10,62 +24,89 @@ const TagsInput = ({
 	tagsState,
 	textLength = 15,
 	showSelectedTags = true,
-}: {
-	textLength?: number;
-	tagsState: string[];
-	showSelectedTags?: boolean;
-	addTag?: (tag: string) => void;
-	onRemove?: (tag: string) => void;
-}) => {
-	const [currentTag, setCurrentTag] = useState<string>("");
+	showAddBtn = true,
+	placeholder,
+	value,
+	onChange,
+	inputType,
+	min,
+}: TagsInputProps) => {
+	const [currentTag, setCurrentTag] = useState<string>(value || "");
+
+	useEffect(() => {
+		if (!showAddBtn) {
+			if (tagsState.includes(currentTag)) {
+				toast.info(
+					"Tag has aleady been added!",
+					ToastDefaultOptions({
+						id: "info",
+						theme: "dark",
+					}),
+				);
+				return;
+			}
+			if (addTag) {
+				addTag(currentTag.trim());
+				// setCurrentTag("");
+			}
+		}
+	}, [currentTag, showAddBtn]);
 
 	return (
 		<>
 			<div className="flex items-center text-sm flex-row gap-2">
-				<div className="w-full">
-					<label>
+				<div className="w-full ">
+					<label className="relative">
 						<CustomTextInput
 							maxLength={textLength}
-							onChange={(e) => setCurrentTag(e.target.value)}
-							value={currentTag}
-							type="text"
-							className="bg-white invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer"
-							placeholder="Type something"
+							onChange={(e) => {
+								if (!onChange) setCurrentTag(e.target.value);
+								else {
+									onChange(e.target.value);
+								}
+							}}
+							min={min}
+							value={value || currentTag}
+							type={inputType || "text"}
+							className="appearance-none bg-white invalid:text-pink-800 invalid:focus:ring-pink-800 invalid:focus:border-pink-800 peer"
+							placeholder={placeholder || "Type something"}
 							containerProps={{
 								className: "border border-[#00D569]",
 							}}
 						/>
-						{/* <p className="ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
-											less than 5 characters
-										</p> */}
+						{/* <p className="absolute -top-10 ml-2 text-xs text-pink-700 invisible peer-invalid:visible">
+							Invalid input
+						</p> */}
 					</label>
 				</div>
-				<div className="flex justify-start">
-					<PrimaryButton
-						onClick={() => {
-							if (tagsState.includes(currentTag)) {
-								toast.info(
-									"Tag has aleady been added!",
-									ToastDefaultOptions({
-										id: "info",
-										theme: "dark",
-									}),
-								);
-								return;
-							}
-							if (addTag) {
-								addTag(currentTag.trim());
-								setCurrentTag("");
-							}
-							// addTag && addTag(currentTag.trim());
-						}}
-						title="Add"
-						className="flex justify-center w-full px-5 p-4 h-full"
-					/>
-				</div>
+				{showAddBtn && (
+					<div className="flex justify-start">
+						<PrimaryButton
+							onClick={() => {
+								if (tagsState.includes(currentTag)) {
+									toast.info(
+										"Tag has aleady been added!",
+										ToastDefaultOptions({
+											id: "info",
+											theme: "dark",
+										}),
+									);
+									return;
+								}
+								if (addTag) {
+									addTag(currentTag.trim());
+									setCurrentTag("");
+								}
+								// addTag && addTag(currentTag.trim());
+							}}
+							title="Add"
+							className="flex justify-center w-full px-5 p-4 h-full"
+						/>
+					</div>
+				)}
 			</div>
 			{showSelectedTags && tagsState.length > 0 && (
-				<div className="px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
+				<div className="mt-2 px-2 pt-2 py-6 flex flex-wrap rounded border border-[#00D569] bg-[#70C5A13A] animate__fadeIn animate__animated animate__fastest overflow-hidden">
 					{tagsState.map((tag, id) => (
 						<span
 							key={id}

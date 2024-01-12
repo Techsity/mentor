@@ -1,20 +1,22 @@
 import { IWorkshop } from "../interfaces";
 import courses from "./courses";
 import mentors from "./mentors";
+import reviews from "./reviews";
 
 const workshops: IWorkshop[] = [
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Upcoming",
+		reviews: reviews,
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
 		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
 		],
 		duration: 4,
 		requirements: [
@@ -23,9 +25,9 @@ const workshops: IWorkshop[] = [
 			"Book and Jotter",
 			"A laptop",
 			"Social media tools",
-			"Your attention",
+			// "Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -35,21 +37,22 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[0],
 		price: 6900,
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("December 04, 2023 12:00:00"),
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("December 04, 2023 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Recordings",
+		tag: "Recordings",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
 		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
 		],
 		duration: 4,
 		requirements: [
@@ -60,7 +63,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -68,23 +71,24 @@ const workshops: IWorkshop[] = [
 			"Social Media Algorithms",
 			"Positioning ads to precise target audience",
 		],
-		mentor: mentors[3],
+		mentor: mentors[1],
 		price: 20000,
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("January 01, 2024 12:00:00"),
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Live",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
 		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
 		],
 		duration: 4,
 		requirements: [
@@ -95,42 +99,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
-			"What is Digital Marketing",
-			"Who is a Digital Marketer",
-			"How digital marketing works",
-			"Digital marketing tools",
-			"Social Media Algorithms",
-			"Positioning ads to precise target audience",
-		],
-		mentor: mentors[0],
-		price: 5000,
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("February 01, 2024 12:00:00"),
-	},
-	{
-		title: "Design Secrets",
-		available: true,
-		category: "Upcoming",
-		description:
-			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
-		participants: 2000,
-		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
-		],
-		duration: 4,
-		requirements: [
-			"Mobile Phone",
-			"Data and good network area",
-			"Book and Jotter",
-			"A laptop",
-			"Social media tools",
-			"Your attention",
-		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -139,22 +108,59 @@ const workshops: IWorkshop[] = [
 			"Positioning ads to precise target audience",
 		],
 		mentor: mentors[2],
+		price: 5000,
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("February 01, 2024 12:00:00").toDateString(),
+	},
+	{
+		title: "Design Secrets",
+		available: true,
+		tag: "Upcoming",
+		reviews: [],
+		description:
+			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
+		participants: 2000,
+		contents: [
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+		],
+		duration: 4,
+		requirements: [
+			"Mobile Phone",
+			"Data and good network area",
+			"Book and Jotter",
+			"A laptop",
+			"Social media tools",
+			"Your attention",
+		],
+		what_to_learn: [
+			"What is Digital Marketing",
+			"Who is a Digital Marketer",
+			"How digital marketing works",
+			"Digital marketing tools",
+			"Social Media Algorithms",
+			"Positioning ads to precise target audience",
+		],
+		mentor: mentors[0],
 		price: 45000,
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("January 01, 2024 12:00:00"),
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Upcoming",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
 		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
 		],
 		duration: 4,
 		requirements: [
@@ -165,7 +171,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -173,23 +179,24 @@ const workshops: IWorkshop[] = [
 			"Social Media Algorithms",
 			"Positioning ads to precise target audience",
 		],
-		mentor: mentors[0],
-		price: "free",
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("January 01, 2024 12:00:00"),
+		mentor: mentors[1],
+		price: 0,
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
 		available: true,
-		category: "Live",
+		tag: "Live",
+		reviews: [],
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
 		contents: [
-			{ date: new Date(), title: "Introduction to Design" },
-			{ date: new Date(), title: "Design Secrets 1" },
-			{ date: new Date(), title: "Design Secrets 2" },
-			{ date: new Date(), title: "Pricing as a Designer" },
+			{ date: new Date().toDateString(), title: "Introduction to Design" },
+			{ date: new Date().toDateString(), title: "Design Secrets 1" },
+			{ date: new Date().toDateString(), title: "Design Secrets 2" },
+			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
 		],
 		duration: 4,
 		requirements: [
@@ -200,7 +207,7 @@ const workshops: IWorkshop[] = [
 			"Social media tools",
 			"Your attention",
 		],
-		toLearn: [
+		what_to_learn: [
 			"What is Digital Marketing",
 			"Who is a Digital Marketer",
 			"How digital marketing works",
@@ -208,10 +215,10 @@ const workshops: IWorkshop[] = [
 			"Social Media Algorithms",
 			"Positioning ads to precise target audience",
 		],
-		mentor: mentors[0],
+		mentor: mentors[1],
 		price: 6900,
-		startDate: new Date("December 01, 2023 12:00:00"),
-		endDate: new Date("January 01, 2024 12:00:00"),
+		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
+		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 ];
 export default workshops;

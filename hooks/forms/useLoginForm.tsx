@@ -5,16 +5,21 @@ import { useDispatch } from "react-redux";
 import { testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../constants";
-import { setCredentials } from "../../redux/reducers/features/authSlice";
-import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../services/graphql/mutations/auth";
+import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
+import { setCredentials } from "../../redux/reducers/authSlice";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { GET_MENTOR_PROFILE, LOGIN_USER } from "../../services/graphql/mutations/auth";
 import { IUser } from "../../interfaces/user.interface";
-import { formatGqlError } from "../../utils/auth";
+import { authenticate, formatGqlError } from "../../utils/auth";
 import ResponseMessages from "../../constants/response-codes";
+import mentors from "../../data/mentors";
+import { IMentor } from "../../interfaces/mentor.interface";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;
+};
+type LoginResponse = {
+	loginUser: { user: IUser; access_token: string; is_mentor: boolean };
 };
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
@@ -27,16 +32,16 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [state, setState] = useState<ILoginState>(initialValues || initial);
+
 	const [error, setError] = useState<string[]>([]);
+	const [loginUser] = useMutation<LoginResponse, ICreateLoginInput>(LOGIN_USER);
+	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
 
-	const [loginUser] = useMutation<ILoginState, ICreateLoginInput>(LOGIN_USER);
-
-	const handleChange =
-		(field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
-			setLoading(false);
-			setError([]);
-			setState({ ...state, [field]: e.target.value });
-		};
+	const handleChange = (field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
+		setLoading(false);
+		setError([]);
+		setState({ ...state, [field]: e.target.value });
+	};
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
@@ -44,19 +49,13 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 		if (!isEmail(state.email)) {
 			setLoading(false);
 			setError(["email"]);
-			toast.error(
-				"Please enter a valid email",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Please enter a valid email", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		if (!state.password) {
 			setLoading(false);
 			setError(["password"]);
-			toast.error(
-				"Please enter your password",
-				ToastDefaultOptions({ id: "auth_form_pop" }),
-			);
+			toast.error("Please enter your password", ToastDefaultOptions({ id: "auth_form_pop" }));
 			return;
 		}
 		// Perform login api call here
@@ -68,70 +67,103 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				},
 			},
 		})
-			.then((response: any) => {
-				const userData: IUser = response.data.loginUser.user;
-				const authToken = response.data.loginUser.access_token;
-				if (response.data.loginUser.user) {
-					console.log(userData);
-					// toast.success("Login successful");
-					// sessionStorage.setItem(
-					// 	"authToken",
-					// authToken
-					// );
-					localStorage.setItem("authToken", authToken);
-					// setLoading(false);
-					dispatch(
-						setCredentials({
-							isLoggedIn: true,
-							user: {
-								...userData,
-								// Temporary
-								payment_cards: [
-									{
-										bank: { name: "GTbank via Paystack" },
-										card_name: "John Doe Ipsum",
-										card_number: "5399 8878 9887 99099",
-									},
-								],
-								mentor: true,
-								//
-							},
-						}),
-					);
-					const next = router.query.next as string;
-					if (next) {
-						router.replace(decodeURIComponent(next));
-					} else {
-						router.replace(`/profile`);
+			.then((response) => {
+				if (response.data) {
+					const userData: IUser = response.data.loginUser.user;
+					const authToken = response.data.loginUser.access_token;
+					const is_mentor = response.data.loginUser.is_mentor;
+					if (response.data.loginUser.user) {
+						// setLoading(false);
+						authenticate(authToken, async () => {
+							if (is_mentor) {
+								await getMentorProfile()
+									.then((result) => {
+										if (result.data?.getMentorProfile) {
+											const mentorProfile: IMentor = result.data.getMentorProfile;
+											dispatch(
+												setCredentials({
+													isLoggedIn: true,
+													user: {
+														...userData,
+														is_mentor: true,
+														// Temporary
+														payment_cards: [
+															{
+																bank: { name: "GTbank via Paystack" },
+																card_name: "John Doe Ipsum",
+																card_number: "5399 8878 9887 99099",
+															},
+														],
+														//
+													},
+													mentorProfile,
+												}),
+											);
+											const next = router.query.next as string;
+											if (next) {
+												router.replace(decodeURIComponent(next));
+											} else {
+												router.replace(`/profile`);
+											}
+										} else if (result.error) {
+											// Todo: Error handling
+											setLoading(false);
+											console.log(result.error);
+										}
+									})
+									.catch((err) => {
+										// Todo: Error handling
+										setLoading(false);
+										console.log(err);
+									});
+							} else {
+								dispatch(
+									setCredentials({
+										isLoggedIn: true,
+										user: {
+											...userData,
+											is_mentor: false,
+											// Temporary
+											payment_cards: [
+												{
+													bank: { name: "GTbank via Paystack" },
+													card_name: "John Doe Ipsum",
+													card_number: "5399 8878 9887 99099",
+												},
+											],
+										},
+									}),
+								);
+								const next = router.query.next as string;
+								if (next) {
+									router.replace(decodeURIComponent(next));
+								} else {
+									router.replace(`/profile`);
+								}
+							}
+						});
 					}
+				} else {
+					setLoading(false);
+					console.log({ response: response });
 				}
 			})
 			.catch((error: any) => {
-				// console.error(JSON.stringify(error));
-				console.error(error);
+				console.error(JSON.stringify(error));
+				// console.error("Error logging in: ", error);
 				setLoading(false);
 				const errorMessage = formatGqlError(error);
 				// If account is not active, redirect to otp screen
 				if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
-					toast.error(
-						errorMessage + "Redirecting...",
-						ToastDefaultOptions({ id: "auth_form_pop" }),
-					);
+					toast.error(errorMessage + "\nRedirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
 					setTimeout(function () {
 						toast.dismiss("auth_form_pop");
 						// mutation to request for otp here, before redirecting
-						router.push(
-							"/auth/verification/" +
-								crypto.randomUUID() +
-								"/signup",
-						);
+						router.push("/auth/verification/signup");
 					}, 2000);
 					return;
 				}
-				toast.error(
-					errorMessage,
-					ToastDefaultOptions({ id: "auth_form_pop" }),
-				);
+				toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 			});
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };

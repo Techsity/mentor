@@ -1,4 +1,7 @@
-import { IMentor } from "../interfaces/mentor.interface";
+import { MENTOR_ROLES } from "../constants/mentor";
+import { IMentor, IMentorExpLevel } from "../interfaces/mentor.interface";
+import { courseCategories, courseContents } from "./courses";
+import reviews from "./reviews";
 import { dummyUsers } from "./user";
 
 const mentors: IMentor[] = [
@@ -6,7 +9,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -27,14 +30,26 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "93e14672-3bb0-4419-a754-6e752b4bbfb7",
 		user: dummyUsers[2],
 		work_experience: [
 			{
@@ -50,7 +65,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: "Software Engineer",
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -71,15 +86,141 @@ const mentors: IMentor[] = [
 			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
 		],
 		education_bg: [
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
-			{ endDate: "2022", school: "National Open University of Nigeria", startDate: "2018" },
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
 		],
-		exp_level: "LEVEL_3",
+		exp_level: IMentorExpLevel.LEVEL_3,
 		language: ["English"],
 		projects: [],
 		reviews: [],
 		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
-		user: dummyUsers[1],
+		user: dummyUsers[0],
+		work_experience: [
+			{
+				company: "Lorem Ipsum",
+				description: "wodifushejdu efuefuou uejf",
+				from_year: "2022",
+				job_role: "DevRel",
+				to_year: "2023",
+			},
+		],
+	},
+	{
+		about: "Experienced software engineer with a passion for teaching.",
+		courses: [],
+		followers: 20000,
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		hourly_rate: 320,
+		skills: [
+			{ skill_name: "Javascript", years_of_exp: 6 },
+			{ skill_name: "React", years_of_exp: 6 },
+			{ skill_name: "Golang", years_of_exp: 6 },
+			{ skill_name: "Python", years_of_exp: 6 },
+			{ skill_name: "Docker", years_of_exp: 6 },
+			{ skill_name: "HTML", years_of_exp: 6 },
+		],
+		mentor_verified: false,
+		availability: [
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+		],
+		certifications: [
+			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
+			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
+		],
+		education_bg: [
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+		],
+		exp_level: IMentorExpLevel.LEVEL_3,
+		language: ["English"],
+		projects: [],
+		reviews: [],
+		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		user: dummyUsers[3],
+		work_experience: [
+			{
+				company: "Lorem Ipsum",
+				description: "wodifushejdu efuefuou uejf",
+				from_year: "2022",
+				job_role: "DevRel",
+				to_year: "2023",
+			},
+		],
+	},
+	{
+		about: "Experienced software engineer with a passion for teaching.",
+		courses: [],
+		followers: 20000,
+		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		hourly_rate: 320,
+		skills: [
+			{ skill_name: "Javascript", years_of_exp: 6 },
+			{ skill_name: "React", years_of_exp: 6 },
+			{ skill_name: "Golang", years_of_exp: 6 },
+			{ skill_name: "Python", years_of_exp: 6 },
+			{ skill_name: "Docker", years_of_exp: 6 },
+			{ skill_name: "HTML", years_of_exp: 6 },
+		],
+		mentor_verified: true,
+		availability: [
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+		],
+		certifications: [
+			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
+			{ organization: "Docker", title: "Certifed Kubenetes Engineer", year: "2023" },
+		],
+		education_bg: [
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+
+			{
+				to_year: "2022",
+				school: "National Open University of Nigeria",
+				from_year: "2018",
+				course_of_study: "Computer Science",
+				credential_type: "BSC",
+			},
+		],
+		exp_level: IMentorExpLevel.LEVEL_3,
+		language: ["English"],
+		projects: [],
+		reviews: [],
+		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		user: dummyUsers[3],
 		work_experience: [
 			{
 				company: "Lorem Ipsum",
@@ -93,3 +234,4 @@ const mentors: IMentor[] = [
 ];
 
 export default mentors;
+

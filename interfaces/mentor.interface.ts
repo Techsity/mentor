@@ -1,44 +1,40 @@
-import { CountryCode } from "react-country-flags-select/dist/types";
 import { ICourse, IReview } from "./index";
 import { IUser } from "./user.interface";
-import { ISchedule } from "../components/ui/organisms/mentor/onboarding/steps/step-four/Availability";
 
 export interface IMentorEducation {
+	course_of_study: string;
+	credential_type: string;
+	from_year: string;
 	school: string;
-	endDate: string;
-	startDate: string;
-	course?: string;
-	degree?: string;
+	to_year: string;
 }
 export interface IMentorOnboardingState {
 	currentStep: number;
 	agreedToTerms: boolean;
 	user?: IUser | null;
-	jobTitle: string;
+	role: string;
 	bio: string;
-	skills: string[];
+	skills: IMentorSkills[];
 	yearsOfExp: number;
 	projects: IMentorProjectType[];
-	certificates: { institution: string; type: string; year: string }[];
+	certificates: IMentorCertificate[];
 	workHistory?: IMentorExperience[];
 	education: IMentorEducation[];
 	languages: string[];
-	availability: ISchedule[];
+	availability: IMentorAvailability[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
 
-type IMentorSkills = {
+export type IMentorSkills = {
 	skill_name: string;
 	years_of_exp: number;
 };
+export type TimeSlot = { endTime: string; startTime: string };
 
-type IMentorAvailability = {
+export type IMentorAvailability = {
 	day: string;
-	timeSlots: {
-		endTime: string;
-		startTime: string;
-	}[];
+	timeSlots: TimeSlot[];
 };
 
 export type IMentorProjectType = {
@@ -47,18 +43,25 @@ export type IMentorProjectType = {
 	job_role: string;
 };
 
-type IMentorCertificate = {
+export type IMentorCertificate = {
 	organization: string;
 	title: string;
 	year: string;
 };
 
-type IMentorExpLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3" | "LEVEL_4";
+export enum IMentorExpLevel {
+	LEVEL_1 = "LEVEL_1",
+	LEVEL_2 = "LEVEL_2",
+	LEVEL_3 = "LEVEL_3",
+	LEVEL_4 = "LEVEL_4",
+}
+
 export interface IMentor {
 	id: string;
 	user: IUser;
 	about: string;
 	courses: ICourse[];
+	// courses: Omit<ICourse,"mentor">[];
 	mentor_verified: boolean;
 	role: string;
 	followers: number;
@@ -72,12 +75,12 @@ export interface IMentor {
 	language: string[];
 	projects: IMentorProjectType[];
 	reviews: IReview[];
-	created_at?: Date;
-	updated_at?: Date;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export interface IMentorshipSession {
-	date: Date;
+	date: string;
 	pending: boolean;
 	concluded: boolean;
 	upcoming: boolean;

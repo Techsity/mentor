@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	setOnboardingMentor,
 	onboardingMentorState,
-} from "../../../../../../../redux/reducers/features/onboardingSlice";
+} from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 
 const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
@@ -80,8 +80,8 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 				type="text"
 				onChange={handleChange}
 				value={languageInput}
-				className="bg-white"
 				ref={languageInputRef}
+				className="bg-white"
 				containerProps={{
 					className: "border border-[#00D569]",
 				}}

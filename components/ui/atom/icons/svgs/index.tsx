@@ -1157,8 +1157,9 @@ export const LiveWorkshopGlobeSvg = ({
 			fill="none"
 			// 3d rotation animation
 			className={
-				"animate-[spin_5s_linear] overflow-hidden" +
-				" " +
+				// "animate-[spin_5s_linear] overflow-hidden" +
+				"overflow-hidden " +
+
 				className
 			}>
 			<path

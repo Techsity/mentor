@@ -1,76 +1,39 @@
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { IUser } from "../../interfaces/user.interface";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../redux/reducers/features/authSlice";
+import { currentUser } from "../../redux/reducers/authSlice";
+import reviewsData from "../../data/reviews";
+import { IReview } from "../../interfaces";
 
-export interface ILectureReview {
-	user: Pick<IUser, "name" | "avatar"> | null;
-	comment: string;
-}
-
-const reviews: ILectureReview[] = [
-	{
-		comment:
-			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
-		user: {
-			name: "Adewole Sulaiman",
-			avatar: "/assets/images/avatar.png",
-		},
-	},
-	{
-		comment:
-			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
-		user: {
-			name: "Adewole Sulaiman",
-			avatar: "/assets/images/avatar.png",
-		},
-	},
-	{
-		comment:
-			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
-		user: {
-			name: "Adewole Sulaiman",
-			avatar: "/assets/images/avatar.png",
-		},
-	},
-	{
-		comment:
-			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
-		user: {
-			name: "Adewole Sulaiman",
-			avatar: "/assets/images/avatar.png",
-		},
-	},
-	{
-		comment:
-			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
-		user: {
-			name: "Adewole Sulaiman",
-			avatar: "/assets/images/avatar.png",
-		},
-	},
-];
 const useLectureReviews = () => {
 	const user = useSelector(currentUser);
+	const emptyReview: IReview = {
+		content: "",
+		ratings: 4.5,
+		reviewed_by: user as IUser,
+		type: "",
+	};
 	const [loading, setLoading] = useState<boolean>(false);
-	const [newReview, setNewReview] = useState<ILectureReview | null>(null);
-	const handleChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) =>
-			setNewReview((prevReview) => ({
-				...prevReview,
-				comment: e.target.value,
-				user,
-			})),
-		[setNewReview, user],
-	);
+	const [reviews, setReviews] = useState<IReview[]>(reviewsData);
+	const [newReview, setNewReview] = useState<IReview>(emptyReview);
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+		setNewReview((prevReview) => ({
+			...prevReview,
+			content: e.target.value,
+		}));
+
 	const addNewReview = () => {
-		if (newReview?.comment) {
+		if (newReview?.content) {
 			setLoading(true);
 			setTimeout(function () {
-				reviews.push(newReview);
+				setReviews((prev) => {
+					return [...prev, newReview];
+				});
 				setLoading(false);
-				setNewReview(null);
+				setNewReview(emptyReview);
 			}, 1000);
+			// Api AddReview Endpoint Logic
 		}
 	};
 	// const memoizedReviews = useMemo(() => reviews.reverse(), [reviews]);

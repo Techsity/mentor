@@ -18,8 +18,8 @@ const MentorCertificateCard = ({
 			<div className="flex justify-between gap-6 items-center mb-4">
 				<div className="flex items-start gap-5">
 					<div className="">
-						<h1 className="font-[500]">{certificate.type}</h1>
-						<p className="font-[300]">{certificate.institution} </p>
+						<h1 className="font-[500]">{certificate.title}</h1>
+						<p className="font-[300]">{certificate.organization} </p>
 					</div>
 					<h1 className="">
 						{new Date(certificate.year).getFullYear()}

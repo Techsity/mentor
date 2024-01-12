@@ -15,17 +15,13 @@ const OnboardingCongratulations = () => {
 	}, []);
 	return (
 		<>
-			<Confetti active={celebrate} config={{ ...confettiConfig }} />
-			<div className="pt-20 flex justify-center min-h-[80vh] px-10 md:px-20">
-				<div className="mt-20">
-					<h1
-						className="md:text-8xl text-4xl text-[#00D569]"
-						style={{ fontFamily: "Days One" }}>
+			<div className="flex justify-center items-center min-h-[80vh] px-10 md:px-20">
+				<Confetti active={celebrate} config={{ ...confettiConfig }} />
+				<div className="">
+					<h1 className="md:text-8xl text-4xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
 						Congra <br /> tulations!
 					</h1>
-					<div
-						className="my-5 text-[#094B10] text-xl"
-						style={{ fontFamily: "Days One" }}>
+					<div className="my-5 text-[#094B10] text-xl" style={{ fontFamily: "Days One" }}>
 						Begin your Journey to endless knowledge
 					</div>
 					<div className="sm:flex grid gap-5 mt-5 items-center my-5">

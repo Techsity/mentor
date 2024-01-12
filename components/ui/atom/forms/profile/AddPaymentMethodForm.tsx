@@ -5,7 +5,7 @@ import ActivityIndicator from "../../loader/ActivityIndicator";
 import {
 	currentUser,
 	updateUser,
-} from "../../../../../redux/reducers/features/authSlice";
+} from "../../../../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { IUserPaymentCard } from "../../../../../interfaces/user.interface";

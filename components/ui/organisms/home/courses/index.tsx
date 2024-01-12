@@ -1,49 +1,36 @@
-// Still need to be cleaned up
-
-import React, { useEffect, useMemo, useState } from "react";
-import { AnimationOnScroll } from "react-animation-on-scroll";
+import React, { useMemo, useState } from "react";
 import CoursesNav from "./CoursesNav";
-import { courseTypes as allCourseTypes } from "../../../../../data/courses";
+import { courseTypes } from "../../../../../data/courses";
 import { ChevronForwardSharp } from "react-ionicons";
 import Link from "next/link";
 import CoursesList from "./CoursesList";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { CourseType, ICourseCategory } from "../../../../../interfaces";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
 const HomepageCourseSection = () => {
-	const [loading, setLoading] = useState<boolean>(true);
-	const [courseTypes, setCourseTypes] = useState<ActiveCourseType[]>([]);
 	const [activeCourseType, setActiveCourseType] = useState<ActiveCourseType>(courseTypes[0]);
 	const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
 
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
+
+	const categories = useMemo(() => {
+		if (!loading) {
+			if (error) {
+				console.error({ error: error });
+				return [];
+			} else if (data && data.getAllCategories) {
+				return data.getAllCategories;
+			}
+			return [];
+		}
+	}, [data, loading]);
+
 	const currentCategory = useMemo<string>(() => {
-		return activeCourseType && activeCourseType.categories.length >= 1
-			? activeCourseType.categories[activeCategoryIndex].title
-			: "";
-	}, [activeCourseType, activeCategoryIndex]);
-
-	const fetchCourseTypes = async () => {
-		// query for fetching all course types which also comes with their respective course categories
-		console.log("api call 1");
-		await new Promise<{ courseTypes: typeof courseTypes }>((resolve) => resolve({ courseTypes: allCourseTypes })) // mock api call
-			.then((data) => {
-				// delay simulation
-				setTimeout(function () {
-					setLoading(false);
-					setActiveCourseType(data.courseTypes[0]);
-					setCourseTypes(data.courseTypes);
-				}, 1000);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	};
-
-	useEffect(() => {
-		fetchCourseTypes();
-	}, []);
+		return categories && categories.length >= 1 ? categories[activeCategoryIndex].title : "";
+	}, [categories, activeCategoryIndex]);
 
 	return (
 		<div className="min-h-[65dvh] py-20 scroll-mt-20 overflow-hidden mx-5" id="courses">
@@ -62,80 +49,41 @@ const HomepageCourseSection = () => {
 					courseTypes={courseTypes}
 				/>
 
-				{!loading ? (
-					<>
-						{/* <div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
-							{courseCategories.length >= 1 &&
-								courseCategories.filter((category)=>category.type)
-									.map((category, indx) => {
-										return (
-											<div
-												key={indx}
-												onClick={() => setActiveCategoryIndex(indx)}
-												className={`cursor-pointer duration-300 p-1 animate__animated font-medium animate__fadeInUp font-sm ${
-													currentCategory === category.title ? "text-[#033]" : "text-[#888]"
-												}`}>
-												{category.title}
-											</div>
-										);
-									})
-									.slice(0, 5)}
-
-							<Link href="/courses">
-								<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
-									<div className="relative flex items-center gap-2">
-										{courseCategories.length >= 1 ? "View All" : "See More"}
-										<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
-										<div className="flex">
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-										</div>
+				<div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
+					{categories &&
+						categories.length >= 1 &&
+						categories
+							.map((category, indx) => {
+								return (
+									<div
+										key={indx}
+										onClick={() => setActiveCategoryIndex(indx)}
+										className={`cursor-pointer duration-300 p-1 animate__animated font-medium animate__fadeInUp font-sm ${
+											currentCategory === category.title ? "text-[#033]" : "text-[#888]"
+										}`}>
+										{category.title}
 									</div>
-								</div>
-							</Link>
-						</div> */}
-						<div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
-							{activeCourseType &&
-								activeCourseType.categories.length >= 1 &&
-								activeCourseType.categories
-									.map((category, indx) => {
-										return (
-											<div
-												key={indx}
-												onClick={() => setActiveCategoryIndex(indx)}
-												className={`cursor-pointer duration-300 p-1 animate__animated font-medium animate__fadeInUp font-sm ${
-													currentCategory === category.title ? "text-[#033]" : "text-[#888]"
-												}`}>
-												{category.title}
-											</div>
-										);
-									})
-									.slice(0, 5)}
+								);
+							})
+							.slice(0, 5)}
 
-							<Link href="/courses">
-								<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
-									<div className="relative flex items-center gap-2">
-										{activeCourseType.categories.length >= 1 ? "View All" : "See More"}
-										<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
-										<div className="flex">
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-											<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
-										</div>
-									</div>
+					<Link href="/courses" prefetch={false}>
+						<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
+							<div className="relative flex items-center gap-1">
+								View All
+								<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
+								<div className="flex">
+									<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
+									<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
+									<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />
 								</div>
-							</Link>
+							</div>
 						</div>
-						<div className="md:border md:mx-10 md:p-5 bg-[#FDFDFD]">
-							<CoursesList activeCategory={currentCategory} />
-						</div>
-					</>
-				) : (
-					<div className="flex w-full justify-center mx-auto items-center">
-						<ActivityIndicator size={56} />
-					</div>
-				)}
+					</Link>
+				</div>
+				<div className="md:border md:mx-10 md:p-5 bg-[#FDFDFD]">
+					<CoursesList activeCourseType={activeCourseType.name} activeCategory={currentCategory} />
+				</div>
 			</div>
 		</div>
 	);

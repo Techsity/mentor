@@ -4,9 +4,11 @@ import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
 import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateRatingsInReviews } from "../../../../../utils";
+import { useRouter } from "next/router";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
-	const ratings = calculateRatingsInReviews(mentor.reviews);
+	const router = useRouter();
+	const ratings = mentor.reviews ? calculateRatingsInReviews(mentor.reviews) : 0;
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
 			<div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-auto rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
@@ -27,14 +29,16 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 								: mentor.user.name}
 						</h1>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em] capitalize">
-							{mentor.role.split("/")[0]}
+							{mentor.role && mentor.role}
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1]">
-							{mentor.work_experience?.length === 1
-								? mentor.work_experience.length + " year"
-								: mentor.work_experience.length
-								? mentor.work_experience.length + " years"
-								: "<1 year"}{" "}
+							{mentor.work_experience
+								? mentor.work_experience?.length === 1
+									? mentor.work_experience.length + " year"
+									: mentor.work_experience.length
+									? mentor.work_experience.length + " years"
+									: "<1 year"
+								: 0 + " years"}{" "}
 							of experience
 						</p>
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">2 sessions</p>
@@ -49,39 +53,44 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 							{ratings} ratings
 						</span>
 						<div className="md:hidden py-5">
-							<Link href={`/mentors/${mentor.user.name}`}>
-								<div className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
-									Book me
-								</div>
-							</Link>
+							<div
+								onClick={() => router.push(`/mentors/${mentor.id}`)}
+								className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
+								Book me
+							</div>
 						</div>
 					</div>
 				</div>
 				<div className="hidden oveflow-hidden z-10 group-hover:md:grid absolute bg-[#042608] animate__animated animate__fadeInRight animate__faster text-white h-full px-4 w-1/2 right-0 top-0">
 					<div className="relative">
-						<ul className="">
-							<h1 className="my-2 mt-4 font-normal text-sm">Top Skills</h1>
-							{mentor.skills
-								.map((skill, i) => (
-									<li key={i} className="text-xs font-extralight">
-										{skill.skill_name}
-									</li>
-								))
-								.slice(0, 5)}
-						</ul>
+						{mentor.skills && mentor.skills.length > 0 && (
+							<ul className="">
+								<h1 className="my-2 mt-4 font-normal text-sm">Top Skills</h1>
+								{mentor.skills
+									.map((skill, i) => (
+										<li key={i} className="text-xs font-extralight">
+											{skill.skill_name}
+										</li>
+									))
+									.slice(0, 5)}
+							</ul>
+						)}
 						<h1 className="my-2 mt-4 text-sm font-normal">Availablity</h1>
 						<ul className="grid">
-							{mentor.availability.map((day, i) => (
-								<li key={i} className="text-xs font-extralight">
-									{day.day}
-								</li>
-							))}
+							{mentor.availability &&
+								mentor.availability.map((day, i) => (
+									<li key={i} className="text-xs font-extralight">
+										{day.day}
+									</li>
+								))}
 						</ul>
 					</div>
 					<div className="absolute bottom-4 w-full left-4 flex items-center gap-2 select-none animate__animated animate__fadeInUp">
-						<Link href={`/mentors/${mentor.user.name}`}>
-							<div className="bg-[#094B10] px-4 p-1 text-xs cursor-pointer">Book me</div>
-						</Link>
+						<div
+							onClick={() => router.push(`/mentors/${mentor.id}`)}
+							className="bg-[#094B10] px-4 p-1 text-xs cursor-pointer">
+							Book me
+						</div>
 						<ArrowForwardSharp color="#fff" width="20px" />
 					</div>
 				</div>

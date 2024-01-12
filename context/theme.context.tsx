@@ -1,11 +1,4 @@
-import React, {
-	Dispatch,
-	SetStateAction,
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 interface IAuthContext {
 	theme: "dark" | "light";
@@ -25,19 +18,13 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 			const newColorScheme = event.matches ? "dark" : "light";
 			setTheme(newColorScheme);
 		};
-		window
-			.matchMedia("(prefers-color-scheme: dark)")
-			.addEventListener("change", handleThemeChange);
-		return window
-			.matchMedia("(prefers-color-scheme: dark)")
-			.removeEventListener("change", handleThemeChange);
+		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", handleThemeChange);
+		return () => {
+			window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", handleThemeChange);
+		};
 	}, []);
 
-	return (
-		<ThemeContext.Provider value={{ theme, setTheme }}>
-			{children}
-		</ThemeContext.Provider>
-	);
+	return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
 };
 
 export function useTheme() {

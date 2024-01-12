@@ -48,40 +48,42 @@ const EditProjectCard = ({
 	};
 
 	const handleProjectUpdate = () => {
-		const updatedProjects = [...projectsArr];
-		// if (!isValidUrl(project.link)) {
-		// 	// check if project link is a valid url
-		// 	toast.error(
-		// 		"Invalid project URL",
-		// 		ToastDefaultOptions({
-		// 			id: "error",
-		// 			theme: "dark",
-		// 		}),
-		// 	);
-		// 	return;
-		// }
-		// Add new project
-		if (!existingProject && !isDuplicate) {
-			console.log(updatedProjects);
-			updatedProjects.push(project);
+		if (project.company && project.description && project.job_role) {
+			const updatedProjects = [...projectsArr];
+			// if (!isValidUrl(project.link)) {
+			// 	// check if project link is a valid url
+			// 	toast.error(
+			// 		"Invalid project URL",
+			// 		ToastDefaultOptions({
+			// 			id: "error",
+			// 			theme: "dark",
+			// 		}),
+			// 	);
+			// 	return;
+			// }
+			// Add new project
+			if (!existingProject && !isDuplicate) {
+				updatedProjects.push(project);
+			}
+			// Update project if it already exists
+			const indexOfProjectToUpdate = updatedProjects.findIndex(
+				(project) =>
+					project.company === existingProject?.company &&
+					project.description === existingProject?.description &&
+					project.job_role === existingProject?.job_role,
+			);
+			if (indexOfProjectToUpdate !== -1) {
+				updatedProjects[indexOfProjectToUpdate] = {
+					...updatedProjects[indexOfProjectToUpdate],
+					...project,
+				};
+			}
+			if (onUpdate) onUpdate(updatedProjects);
+			existingProject && toast.success("Field updated successfully");
+			setProject(initialState);
 		}
-		// Update project if it already exists
-		const indexOfProjectToUpdate = updatedProjects.findIndex(
-			(project) =>
-				project.company === existingProject?.company &&
-				project.description === existingProject?.description &&
-				project.job_role === existingProject?.job_role,
-		);
-		if (indexOfProjectToUpdate !== -1) {
-			updatedProjects[indexOfProjectToUpdate] = {
-				...updatedProjects[indexOfProjectToUpdate],
-				...project,
-			};
-		}
-		if (onUpdate) onUpdate(updatedProjects);
-		existingProject && toast.success("Field updated successfully");
-		setProject(initialState);
 	};
+
 	const handleRemoveProject = () => {
 		if (projectsArr && existingProject) {
 			const updatedProjects = projectsArr.filter(
@@ -127,7 +129,7 @@ const EditProjectCard = ({
 						}}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-4 grid gap-1 relative">
 					<label htmlFor="" className="text-xs">
 						Project Description
 					</label>
@@ -145,7 +147,7 @@ const EditProjectCard = ({
 						onChange={handleChange("description")}
 					/>
 				</div>
-				<div className="col-span-2 grid gap-1 relative">
+				<div className="col-span-8 grid gap-1 relative">
 					<label htmlFor="" className="text-xs">
 						Role
 					</label>

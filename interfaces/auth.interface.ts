@@ -1,8 +1,14 @@
+import { IMentor } from "./mentor.interface";
 import { IUser } from "./user.interface";
+
+interface IUserWithMentor extends IUser {
+	mentor?: IMentor | null;
+}
 
 export interface IAuthState {
 	isLoggedIn: boolean;
-	user: IUser | null;
+	user: IUserWithMentor | null;
+	resetPasswordState?: { email: string; otp: string };
 }
 
 export interface IForgotPasswordState {

@@ -55,6 +55,7 @@ const OtpTemplate = ({
 	const handleResendOtp = () => {
 		setCountdown(timeLimit);
 		setLoading(false);
+		// Todo: implement the logic for resending otp during signup
 	};
 
 	const ActionButtons = () => {

@@ -20,6 +20,24 @@ const reviews: IReview[] = [
 		reviewed_by: dummyUsers[2],
 		type: "course",
 	},
+	{
+		content: "Great course!",
+		ratings: 4.5,
+		reviewed_by: dummyUsers[2],
+		type: "course",
+	},
+	{
+		content: "Great course!",
+		ratings: 4.5,
+		reviewed_by: dummyUsers[2],
+		type: "course",
+	},
+	{
+		content: "Great course!",
+		ratings: 4.5,
+		reviewed_by: dummyUsers[2],
+		type: "course",
+	},
 ];
 
 export default reviews;
