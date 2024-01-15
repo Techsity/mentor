@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICourse, ICourseCategory } from "../../interfaces";
 import { RootState } from "../store";
+import { courseTypes } from "../../data/courses";
 
 const isClient = typeof window !== "undefined" && window.localStorage;
 
 export const newCourseInitialState: Omit<ICourse, "mentor"> = {
 	title: "",
 	description: "",
+	course_type: courseTypes[0].name,
 	course_images: "",
 	course_level: "ALL_LEVELS",
 	duration: 0,

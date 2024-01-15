@@ -54,11 +54,6 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 		}
 	}, [data, loading]);
 
-	// useEffect(() => {
-	// 	dispatch(setNewCourse({ ...newCourseData, ...newCourseInitialState }));
-	// 	console.log(newCourseData);
-	// }, []);
-
 	return (
 		<form
 			onSubmit={(e) => {
@@ -103,11 +98,12 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					<div className="flex items-center justify-center p-3">
 						<Select<string>
 							data={courseTypes.map((item) => item.name)}
-							// title={formState.tag || ""}
+							title={formState.course_type || ""}
 							handleSelected={(item: string) => {
-								// setFormState((prev) => {
-								// 	return { ...prev, tag: item };
-								// });
+								setFormState((prev) => {
+									return { ...prev, course_type: item };
+								});
+								dispatch(setNewCourse({ ...newCourseData, course_type: item }));
 							}}
 							label={`Type of ${isCourse ? "Course" : "Workshop"}`}
 						/>

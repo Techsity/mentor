@@ -51,6 +51,8 @@ const ProfileNavgationContainer = () => {
 				<div className="md:px-2 px-5">
 					<WishLists />
 				</div>
+			) : tab === "payments" ? (
+				<PaymentMethods />
 			) : tab === "payment-methods" ? (
 				<PaymentMethods />
 			) : (
