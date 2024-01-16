@@ -72,7 +72,7 @@ const ProfileLayout = ({ children }: Props) => {
 						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : isPaymentsTab ? "xl:pr-12" : "xl:pr-0"
 					}`}>
 					{!isEditCourse && !isEditWorkshop && !isCourseContentPage && !isNewItemPage && (
-						<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
+						<div className="hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 							<h1 className="capitalize">{activeTab.split("-").join(" ")}</h1>
 							{tab === "courses" && (
 								<PrimaryButton
