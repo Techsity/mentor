@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MentorDetailsTemplate from "../../components/templates/mentor/details";
 import { useRouter } from "next/router";
 import ScheduleConsultationTemplate from "../../components/templates/mentor/schedule-consultation";
@@ -15,7 +15,11 @@ const MentorDetails = () => {
 		variables: { viewMentorId: username },
 	});
 
-	if (error) console.error({ errorFetchingMentor: error });
+	useEffect(() => {
+		scrollTo({ top: -6000, behavior: "smooth" });
+	}, [data, loading]);
+
+	if (error) console.error({ errorFetchingMentor: JSON.stringify(error) });
 
 	const mentor = data && (data?.viewMentor as IMentor);
 
