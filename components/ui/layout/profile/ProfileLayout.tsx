@@ -92,7 +92,7 @@ const ProfileLayout = ({ children }: Props) => {
 						return child;
 					})}
 				</div>
-				{!isEditCourse && isEditWorkshop && !isPaymentsTab && (
+				{!isEditCourse && !isEditWorkshop && !isPaymentsTab && (
 					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">
 						<EditProfileCard />
 					</div>
