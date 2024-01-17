@@ -1,11 +1,25 @@
-import React from "react";
+import React, { lazy, useState } from "react";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ProfileTabLinkType } from "../../../../interfaces";
 import LiveworkshopTemplate from "../../../../components/templates/workshop/live-workshop";
 import protectedPageWrapper from "../../../protectedPageWrapper";
+import AgoraClientProvider from "../../../../hooks/agora";
+import { ClientConfig } from "agora-rtc-react";
+import dynamic from "next/dynamic";
+const LiveVideo = dynamic(() => import("./LiveVideo"), {
+	ssr: false,
+});
 
 const LiveWorkshop = () => {
-	return <LiveworkshopTemplate />;
+	const config: ClientConfig = { codec: "vp8", mode: "rtc" };
+
+	return (
+		<AgoraClientProvider clientConfig={config}>
+			{typeof window !== "undefined" && window && <LiveVideo />}
+		</AgoraClientProvider>
+	);
+
+	// return <LiveworkshopTemplate />;
 };
 
 export const getServerSideProps = (
@@ -20,5 +34,5 @@ export const getServerSideProps = (
 	return { props: { workshopId: id } };
 };
 
-// export default LiveWorkshop;
-export default protectedPageWrapper(LiveWorkshop);
+export default LiveWorkshop;
+// export default protectedPageWrapper(LiveWorkshop);

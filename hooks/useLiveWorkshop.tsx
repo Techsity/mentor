@@ -36,7 +36,7 @@ const useLiveWorkshop = (): ReturnProps => {
 
 	const [participants, setParticipants] = useState<ConferenceUser[]>([]);
 
-	const [showParticipants, setShowParticipants] = useState<boolean>(true);
+	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 
 	const currentUserIsWorkshopOwner = useMemo(() => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);

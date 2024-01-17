@@ -62,7 +62,7 @@ const AddPaymentMethodForm = () => {
 	};
 	const banks = ["Bank A", "Bank B", "Bank C", "Bank D", "Bank E"];
 	return (
-		<form onSubmit={addCard} className="bg-white shadow rounded-3xl w-full grid gap-3 p-8">
+		<form onSubmit={addCard} className="bg-white sm:shadow rounded-3xl w-full grid gap-3 p-3 sm:p-8">
 			<h1 className="font-[300] text-sm">Enter Card Info</h1>
 			<Select<string>
 				newClassName="relative border-[#70C5A1] border flex items-center w-full bg-white p-4 appearance-none"
