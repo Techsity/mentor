@@ -8,19 +8,11 @@ const AgoraRTCProviderPrimitive = dynamic(
 		ssr: false,
 	},
 );
+const AgoraRTC = (await import("agora-rtc-react")).default;
 
-export default function AgoraRTCProvider(props: { clientConfig: ClientConfig; children?: ReactNode }) {
-	const clientConfigRef = useRef<ClientConfig>(props.clientConfig);
-	const [client, setClient] = useState<IAgoraRTCClient | null>(null);
+const config: ClientConfig = { codec: "vp8", mode: "rtc" };
 
-	useEffect(() => {
-		if (typeof window !== "undefined") {
-			const initSdk = async () => {
-				const AgoraRTC = (await import("agora-rtc-react")).default;
-				setClient(AgoraRTC.createClient(clientConfigRef.current));
-			};
-			initSdk();
-		}
-	}, []);
+export const client = AgoraRTC.createClient(config);
+export default function AgoraRTCProvider(props: { children?: ReactNode }) {
 	return client !== null && <AgoraRTCProviderPrimitive client={client}>{props.children}</AgoraRTCProviderPrimitive>;
 }

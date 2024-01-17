@@ -1,25 +1,20 @@
 import React, { lazy, useState } from "react";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ProfileTabLinkType } from "../../../../interfaces";
-import LiveworkshopTemplate from "../../../../components/templates/workshop/live-workshop";
 import protectedPageWrapper from "../../../protectedPageWrapper";
-import AgoraClientProvider from "../../../../hooks/agora";
-import { ClientConfig } from "agora-rtc-react";
 import dynamic from "next/dynamic";
-const LiveVideo = dynamic(() => import("./LiveVideo"), {
+
+const AgoraClientProvider = dynamic(() => import("../../../../hooks/agora"), { ssr: false });
+const LiveworkshopTemplate = dynamic(() => import("../../../../components/templates/workshop/live"), {
 	ssr: false,
 });
 
 const LiveWorkshop = () => {
-	const config: ClientConfig = { codec: "vp8", mode: "rtc" };
-
 	return (
-		<AgoraClientProvider clientConfig={config}>
-			{typeof window !== "undefined" && window && <LiveVideo />}
+		<AgoraClientProvider>
+			<LiveworkshopTemplate />
 		</AgoraClientProvider>
 	);
-
-	// return <LiveworkshopTemplate />;
 };
 
 export const getServerSideProps = (
