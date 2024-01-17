@@ -1,5 +1,14 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
-import { IAgoraRTCRemoteUser, useJoin, useNetworkQuality, useRTCClient, useRemoteUsers, } from "agora-rtc-react";
+import React, { FC, useEffect, useMemo, useRef, useState } from "react";
+import {
+	AgoraRTCReactError,
+	FetchArgs,
+	IAgoraRTCError,
+	IAgoraRTCRemoteUser,
+	useJoin,
+	useNetworkQuality,
+	useRTCClient,
+	useRemoteUsers,
+} from "agora-rtc-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -8,6 +17,11 @@ import { currentUser } from "../../../../redux/reducers/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { client } from "../../../../hooks/agora";
+import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
+import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
+import ChannelEntrance from "../../../ui/organisms/workshop/live/ChannelEntrance";
+import { networkLabels } from "../../../../constants";
+
 const LiveWorkshopParticipants = dynamic(() => import("../../../ui/organisms/workshop/live/AllParticipants"), {
 	ssr: false,
 });
@@ -16,37 +30,28 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 });
 
 const LiveWorkshopTemplate = () => {
+	const router = useRouter();
+	const user = useSelector(currentUser);
 	const appId = process.env.NEXT_PUBLIC_AGORA_APP_ID as string;
-	const [activeConnection, setActiveConnection] = useState<boolean>(true);
+
+	const [activeConnection, setActiveConnection] = useState<boolean>(!true);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 	const [participants, setParticipants] = useState<IAgoraRTCRemoteUser[]>([]);
-	const router = useRouter();
-	const workshopId = router.query.id as string;
-	const networkLabels: { [key: number]: { message: string; color: string } } = {
-		0: { message: "Unknown", color: "#d31119" },
-		1: { message: "Excellent", color: "#00AD74" },
-		2: { message: "Good", color: "#00AD74" },
-		3: { message: "Poor", color: "orange" },
-		4: { message: "Bad", color: "#d311195A" },
-		5: { message: "Very Bad", color: "#d31119" },
-		6: { message: "No Connection", color: "#d31119" },
+	const [channelName, setChannelName] = useState("");
+
+	const fetchArgs: FetchArgs = {
+		appid: appId,
+		channel: channelName,
+		token: "007eJxTYIj8/bhG/o7LgUk3vjMk96z8xBBZuaCpqXThghieBM6S+TMUGJINTMxNEy0NzS0TTUwsklKSLExTTIyNU5MTTcxTTI0N9vKuSG0IZGQ40iHOysgAgSA+D0NKaVZGakpWdnpaVikDAwCb4iMA",
+		uid: user?.email.toLowerCase(),
 	};
-	const user = useSelector(currentUser);
 	const workshop = workshops[0];
 
 	const currentUserIsWorkshopOwner = useMemo(() => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	useJoin(
-		{
-			appid: appId,
-			channel: workshopId,
-			token: "007eJxTYIj8/bhG/o7LgUk3vjMk96z8xBBZuaCpqXThghieBM6S+TMUGJINTMxNEy0NzS0TTUwsklKSLExTTIyNU5MTTcxTTI0N9vKuSG0IZGQ40iHOysgAgSA+D0NKaVZGakpWdnpaVikDAwCb4iMA",
-			uid: user?.email.toLowerCase(),
-		},
-		activeConnection,
-	);
+	const { error, isLoading: isJoining } = useJoin(fetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
 	const remoteUsers = useRemoteUsers();
@@ -61,7 +66,9 @@ const LiveWorkshopTemplate = () => {
 		console.log("Session ended");
 	};
 
-	return (
+	const retry = 10000;
+
+	return activeConnection && !error && !isJoining ? (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			<label style={{ color: networkLabels[networkQuality.uplinkNetworkQuality].color }}>
 				Network Quality: {networkLabels[networkQuality.uplinkNetworkQuality].message}
@@ -137,6 +144,22 @@ const LiveWorkshopTemplate = () => {
 				{/* <LiveWorkshopChatSection {...{ user: user as IUser, currentUserIsWorkshopOwner }} /> */}
 			</div>
 		</div>
+	) : (
+		<ChannelEntrance
+			next={(c) => {
+				if (c) setChannelName(c);
+				setActiveConnection(true);
+			}}
+			error={error}
+			onErrorJoin={() => {
+				const timeout = setTimeout(function () {
+					setActiveConnection(false);
+					clearTimeout(timeout);
+				}, retry);
+			}}
+			retry={retry}
+			loading={isJoining}
+		/>
 	);
 };
 
