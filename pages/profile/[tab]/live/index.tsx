@@ -1,13 +1,16 @@
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ProfileTabLinkType } from "../../../../interfaces";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import dynamic from "next/dynamic";
 
+
 const AgoraClientProvider = dynamic(() => import("../../../../hooks/agora"), { ssr: false });
 const LiveworkshopTemplate = dynamic(() => import("../../../../components/templates/workshop/live"), {
 	ssr: false,
 });
+
+
 
 const LiveWorkshop = () => {
 	return (

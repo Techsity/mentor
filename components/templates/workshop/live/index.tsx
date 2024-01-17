@@ -1,6 +1,5 @@
-import React, { FC, useMemo, useState } from "react";
-
-import { useJoin, useRemoteAudioTracks, useRemoteUsers } from "agora-rtc-react";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import { useJoin, useRTCClient } from "agora-rtc-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import workshops from "../../../../data/workshops";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
+import { client } from "../../../../hooks/agora";
 const LiveWorkshopParticipants = dynamic(() => import("../../../ui/organisms/workshop/live/AllParticipants"), {
 	ssr: false,
 });
@@ -44,10 +44,16 @@ const LiveVideo = () => {
 		activeConnection,
 	);
 
+	const endSession = () => {
+		setActiveConnection(false);
+		router.push("/");
+		console.log("Session ended");
+	};
+
 	return (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			{/* Top Section */}
-			<LiveWorkshopTopSection currentUserIsWorkshopOwner={currentUserIsWorkshopOwner} workshop={workshop} />
+			<LiveWorkshopTopSection endSession={endSession} currentUserIsWorkshopOwner={true} workshop={workshop} />
 			<br />
 			{/* Conference Section */}
 			<div className="relative h-[65dvh] md:h-[70dvh] min-w-screen z-20 flex items-center w-full">
@@ -102,7 +108,7 @@ const LiveVideo = () => {
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent isWorkshopOwner={currentUserIsWorkshopOwner} />
+				<ConferenceCallComponent isWorkshopOwner={true} />
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">
@@ -112,10 +118,11 @@ const LiveVideo = () => {
 	);
 };
 
-const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; currentUserIsWorkshopOwner: boolean }> = ({
-	currentUserIsWorkshopOwner,
-	workshop,
-}) => (
+const LiveWorkshopTopSection: FC<{
+	workshop: IWorkshop;
+	currentUserIsWorkshopOwner: boolean;
+	endSession: () => void;
+}> = ({ currentUserIsWorkshopOwner, workshop, endSession }) => (
 	<div className="flex sm:flex-row flex-col gap-5 justify-end sm:justify-between sm:item-center sm:px-10 lg:px-0">
 		<div className="flex gap-5 items-center text-sm">
 			<h1 className="font-medium">Live Workshop</h1>
@@ -123,7 +130,9 @@ const LiveWorkshopTopSection: FC<{ workshop: IWorkshop; currentUserIsWorkshopOwn
 				{workshop.mentor.user?.name} ({workshop.title})
 			</p>
 		</div>
-		{currentUserIsWorkshopOwner && <PrimaryButton className="bg-[#FF2800] px-6 p-2" title="End Session" />}
+		{currentUserIsWorkshopOwner && (
+			<PrimaryButton onClick={endSession} className="bg-[#FF2800] px-6 p-2" title="End Session" />
+		)}
 	</div>
 );
 

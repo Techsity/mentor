@@ -36,7 +36,6 @@ const ConferenceCallComponent = ({ isWorkshopOwner }: { isWorkshopOwner: boolean
 	// 	(participant) => slugify(participant.username) === slugify(workshop.mentor.user?.name),
 	// )?.username as string;
 
-	// const client = useRTCClient()
 
 	const ref = useRef<HTMLDivElement>(null);
 
