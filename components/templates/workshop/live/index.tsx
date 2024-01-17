@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import { useJoin, useRTCClient } from "agora-rtc-react";
+import { IAgoraRTCRemoteUser, useJoin, useNetworkQuality, useRTCClient, useRemoteUsers, } from "agora-rtc-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -15,14 +15,22 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 	ssr: false,
 });
 
-const LiveVideo = () => {
+const LiveWorkshopTemplate = () => {
 	const appId = process.env.NEXT_PUBLIC_AGORA_APP_ID as string;
 	const [activeConnection, setActiveConnection] = useState<boolean>(true);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
+	const [participants, setParticipants] = useState<IAgoraRTCRemoteUser[]>([]);
 	const router = useRouter();
 	const workshopId = router.query.id as string;
-	const channelName = workshopId;
-
+	const networkLabels: { [key: number]: { message: string; color: string } } = {
+		0: { message: "Unknown", color: "#d31119" },
+		1: { message: "Excellent", color: "#00AD74" },
+		2: { message: "Good", color: "#00AD74" },
+		3: { message: "Poor", color: "orange" },
+		4: { message: "Bad", color: "#d311195A" },
+		5: { message: "Very Bad", color: "#d31119" },
+		6: { message: "No Connection", color: "#d31119" },
+	};
 	const user = useSelector(currentUser);
 	const workshop = workshops[0];
 
@@ -30,19 +38,22 @@ const LiveVideo = () => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	const {
-		data,
-		error: joinError,
-		isConnected,
-		isLoading: isJoining,
-	} = useJoin(
+	useJoin(
 		{
 			appid: appId,
-			channel: channelName!,
-			token: null,
+			channel: workshopId,
+			token: "007eJxTYIj8/bhG/o7LgUk3vjMk96z8xBBZuaCpqXThghieBM6S+TMUGJINTMxNEy0NzS0TTUwsklKSLExTTIyNU5MTTcxTTI0N9vKuSG0IZGQ40iHOysgAgSA+D0NKaVZGakpWdnpaVikDAwCb4iMA",
+			uid: user?.email.toLowerCase(),
 		},
 		activeConnection,
 	);
+
+	const networkQuality = useNetworkQuality(client);
+	const remoteUsers = useRemoteUsers();
+
+	useEffect(() => {
+		setParticipants(remoteUsers);
+	}, [remoteUsers]);
 
 	const endSession = () => {
 		setActiveConnection(false);
@@ -52,8 +63,15 @@ const LiveVideo = () => {
 
 	return (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
+			<label style={{ color: networkLabels[networkQuality.uplinkNetworkQuality].color }}>
+				Network Quality: {networkLabels[networkQuality.uplinkNetworkQuality].message}
+			</label>
 			{/* Top Section */}
-			<LiveWorkshopTopSection endSession={endSession} currentUserIsWorkshopOwner={true} workshop={workshop} />
+			<LiveWorkshopTopSection
+				endSession={endSession}
+				currentUserIsWorkshopOwner={currentUserIsWorkshopOwner}
+				workshop={workshop}
+			/>
 			<br />
 			{/* Conference Section */}
 			<div className="relative h-[65dvh] md:h-[70dvh] min-w-screen z-20 flex items-center w-full">
@@ -103,12 +121,16 @@ const LiveVideo = () => {
 								</div>
 							</div>
 							{/* Participants */}
-							<LiveWorkshopParticipants workshop={workshop} />
+							<LiveWorkshopParticipants
+								isWorkshopOwner={currentUserIsWorkshopOwner}
+								workshop={workshop}
+								participants={participants}
+							/>
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent isWorkshopOwner={true} />
+				<ConferenceCallComponent isWorkshopOwner={currentUserIsWorkshopOwner} />
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">
@@ -136,4 +158,4 @@ const LiveWorkshopTopSection: FC<{
 	</div>
 );
 
-export default LiveVideo;
+export default LiveWorkshopTemplate;

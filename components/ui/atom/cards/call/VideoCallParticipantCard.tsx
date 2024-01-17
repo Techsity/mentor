@@ -3,7 +3,7 @@ import { IUser } from "../../../../../interfaces/user.interface";
 import { MicMuted, SpeakingIcon } from "../../icons/svgs/call";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
-import { IAgoraRTCRemoteUser, ClientRole, ClientRoleOptions, useClientEvent, } from "agora-rtc-react";
+import { IAgoraRTCRemoteUser, ClientRole, ClientRoleOptions, useClientEvent } from "agora-rtc-react";
 
 import dynamic from "next/dynamic";
 
@@ -25,6 +25,9 @@ const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost
 	const toggleMute = () => {
 		setMuted((a) => !a);
 	};
+	const toggleCamera = () => {
+		setCameraOn((b) => !b);
+	};
 
 	if (!user) return <></>;
 	// console.log({ user: user });
@@ -32,7 +35,7 @@ const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost
 	return (
 		<div className="h-full w-full bg-white border border-[#70C5A1] p-2 flex flex-col gap-4 overflow-hidden">
 			<div className="flex justify-between items-center">
-				<p className="capitalize text-sm">Username</p>
+				<p className="lowercase text-sm">{user.uid}</p>
 				<div className="" title={!muted ? "Unmute" : "Mute"}>
 					{!muted ? (
 						<MicMuted size={15} onClick={toggleMute} className="cursor-pointer" />
@@ -57,8 +60,8 @@ const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost
 					/>
 				</div>
 			</div>
-			<span onClick={() => setCameraOn((b) => !b)} className="text-sm cursor-pointer text-[#] select-none">
-				{!cameraOn ? "Open Camera" : "Hide"}
+			<span onClick={toggleCamera} className="text-sm cursor-pointer text-[#] select-none">
+				{!cameraOn ? "Show" : "Hide"}
 			</span>
 		</div>
 	);

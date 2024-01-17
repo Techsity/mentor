@@ -53,16 +53,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 								<LayoutContainer>
 									<ToastContainer
 										limit={1}
-										// newestOnTop
 										autoClose={5000}
 										theme="dark"
 										hideProgressBar
 										closeOnClick
 										draggable
 									/>
-									{/* <AgoraClientProvider> */}
 										<Component {...pageProps} />
-									{/* </AgoraClientProvider> */}
 								</LayoutContainer>
 							</SidebarProvider>
 						</ThemeProvider>

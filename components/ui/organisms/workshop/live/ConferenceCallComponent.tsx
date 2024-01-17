@@ -36,7 +36,6 @@ const ConferenceCallComponent = ({ isWorkshopOwner }: { isWorkshopOwner: boolean
 	// 	(participant) => slugify(participant.username) === slugify(workshop.mentor.user?.name),
 	// )?.username as string;
 
-
 	const ref = useRef<HTMLDivElement>(null);
 
 	const toggleMute = () => {
@@ -66,21 +65,11 @@ const ConferenceCallComponent = ({ isWorkshopOwner }: { isWorkshopOwner: boolean
 				</div>
 			</div>
 			{/* Controls */}
-			{/* {callHost?.username && ( */}
-			<CallControls isWorkshopOwner={true} isMuted={micOn} handleMute={toggleMute} />
-			{/* )} */}
+			{isWorkshopOwner && <CallControls isMuted={micOn} handleMute={toggleMute} />}
 		</div>
 	);
 };
-const CallControls = ({
-	handleMute,
-	isMuted,
-	isWorkshopOwner,
-}: {
-	handleMute: any;
-	isMuted: boolean;
-	isWorkshopOwner: boolean;
-}) => {
+const CallControls = ({ handleMute, isMuted }: { handleMute: any; isMuted: boolean }) => {
 	return (
 		<div className="group-hover:flex hidden sm:flex absolute z-10 bottom-0 text-white left-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-md items-center justify-center sm:justify-between gap-3 select-none">
 			<div className="flex gap-6 text-sm items-center">
@@ -88,22 +77,21 @@ const CallControls = ({
 					<span className="bg-red-600 p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 					Live
 				</span>
-				{isWorkshopOwner && (
-					<div className="flex gap-1 items-center cursor-pointer">
-						<p className="">Share Screen</p>
-						<ShareScreenIcon />
-					</div>
-				)}
+
+				<div className="flex gap-1 items-center cursor-pointer">
+					<p className="">Share Screen</p>
+					<ShareScreenIcon />
+				</div>
+
 				<div onClick={handleMute} className="flex gap-1 items-center cursor-pointer">
-					{isWorkshopOwner && <p className="">{!isMuted ? "Mute" : "Unmute"}</p>}
+					<p className="">{!isMuted ? "Mute" : "Unmute"}</p>
 					{!isMuted ? <MicMuted size={15} /> : <SpeakingIcon size={15} />}
 				</div>
-				{isWorkshopOwner && (
-					<div className="hidden sm:flex gap-1 items-center cursor-pointer">
-						<p className="">Record Session</p>
-						<RecIcon />
-					</div>
-				)}
+
+				<div className="hidden sm:flex gap-1 items-center cursor-pointer">
+					<p className="">Record Session</p>
+					<RecIcon />
+				</div>
 			</div>
 		</div>
 	);

@@ -4,13 +4,10 @@ import { ProfileTabLinkType } from "../../../../interfaces";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import dynamic from "next/dynamic";
 
-
 const AgoraClientProvider = dynamic(() => import("../../../../hooks/agora"), { ssr: false });
 const LiveworkshopTemplate = dynamic(() => import("../../../../components/templates/workshop/live"), {
 	ssr: false,
 });
-
-
 
 const LiveWorkshop = () => {
 	return (
@@ -32,5 +29,5 @@ export const getServerSideProps = (
 	return { props: { workshopId: id } };
 };
 
-export default LiveWorkshop;
-// export default protectedPageWrapper(LiveWorkshop);
+// export default LiveWorkshop;
+export default protectedPageWrapper(LiveWorkshop);
