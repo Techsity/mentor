@@ -14,52 +14,58 @@ import {
 	useRemoteAudioTracks,
 	useRemoteUsers,
 	useRTCClient,
+	RemoteUser,
 } from "agora-rtc-react";
 
 const LocalUser = dynamic(() => import("agora-rtc-react").then(({ LocalUser }) => LocalUser), {
 	ssr: false,
 });
 
-const ConferenceCallComponent = ({ isWorkshopOwner }: { isWorkshopOwner: boolean }) => {
+const ConferenceCallComponent = ({ isWorkshopOwner, workshop }: { isWorkshopOwner: boolean; workshop: IWorkshop }) => {
 	const user = useSelector(currentUser);
 	const [micOn, setMicOn] = useState<boolean>(false);
 	const [cameraOn, setCamera] = useState<boolean>(true);
 	const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
 	const { localCameraTrack } = useLocalCameraTrack(cameraOn);
-	const { error: publishError, isLoading } = usePublish([localMicrophoneTrack, localCameraTrack]);
-	const remoteUsers = useRemoteUsers();
-	const { audioTracks } = useRemoteAudioTracks(remoteUsers);
-
-	// audioTracks.forEach((track) => track.play());
-
-	// const mainUsername = participants.find(
-	// 	(participant) => slugify(participant.username) === slugify(workshop.mentor.user?.name),
-	// )?.username as string;
-
-	const ref = useRef<HTMLDivElement>(null);
+	usePublish([localMicrophoneTrack, localCameraTrack]);
+	const participants = useRemoteUsers();
 
 	const toggleMute = () => {
 		setMicOn((a) => !a);
 	};
-
+	const workshopHost = participants.filter((participant) => participant.uid === workshop.mentor.user.email)[0];
 	return (
 		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group">
 			<div className="left-0 bg-zinc-200 w-auto h-auto md:w-full md:h-full">
+				{workshop.mentor.user.email}
 				{/* Video */}
-				<div className="h-full w-full" id={slugify("username" as string)} ref={ref}>
+				<div className="h-full w-full">
 					{/* {!callHost?.username && ( */}
 					<div className="flex flex-col justify-center items-center w-full h-full">
-						<LocalUser
-							audioTrack={localMicrophoneTrack}
-							videoTrack={localCameraTrack}
-							cameraOn={cameraOn}
-							micOn={micOn}
-							playAudio={micOn}
-							playVideo={cameraOn}
-							height={100}
-							width={100}
-							volume={0}
-						/>
+						{isWorkshopOwner ? (
+							<LocalUser
+								audioTrack={localMicrophoneTrack}
+								videoTrack={localCameraTrack}
+								cameraOn={cameraOn}
+								micOn={micOn}
+								playAudio={micOn}
+								playVideo={cameraOn}
+								height={100}
+								width={100}
+								muted
+								// volume={0}
+							/>
+						) : participants.length >= 1 && workshopHost ? (
+							<RemoteUser
+								user={workshopHost}
+								playAudio={true}
+								playVideo={true}
+								height={100}
+								width={100}
+							/>
+						) : (
+							<p>Host is yet to join...</p>
+						)}
 					</div>
 					{/* )} */}
 				</div>

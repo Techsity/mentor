@@ -35,10 +35,8 @@ export const getCookie = (name: string) => {
 	const cookies = document.cookie.split("; ");
 	for (let i = 0; i < cookies.length; i++) {
 		const cookie = cookies[i].split("=");
-		if (cookie[0] === name) {
-			const cookieValue = decodeURIComponent(cookie[1]);
-			return cookieValue;
-		}
+		const cookieValue = decodeURIComponent(cookie[1]);
+		if (cookie[0] === name) return cookieValue;
 	}
 	return null;
 };

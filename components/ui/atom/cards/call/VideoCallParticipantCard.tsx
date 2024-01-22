@@ -3,9 +3,19 @@ import { IUser } from "../../../../../interfaces/user.interface";
 import { MicMuted, SpeakingIcon } from "../../icons/svgs/call";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
-import { IAgoraRTCRemoteUser, ClientRole, ClientRoleOptions, useClientEvent } from "agora-rtc-react";
+import {
+	IAgoraRTCRemoteUser,
+	ClientRole,
+	ClientRoleOptions,
+	useClientEvent,
+	useRemoteAudioTracks,
+	useRemoteUserTrack,
+	useRemoteUsers,
+	useRTCClient,
+} from "agora-rtc-react";
 
 import dynamic from "next/dynamic";
+import { client } from "../../../../../hooks/agora";
 
 const RemoteUser = dynamic(() => import("agora-rtc-react").then(({ RemoteUser }) => RemoteUser), {
 	ssr: false,
@@ -14,34 +24,43 @@ const RemoteUser = dynamic(() => import("agora-rtc-react").then(({ RemoteUser })
 type Props = {
 	user: IAgoraRTCRemoteUser;
 	isHost: boolean;
-	hideUser: (userId: string) => void;
 };
 
 const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost, user }: Props) {
-	const [muted, setMuted] = useState<boolean>(true);
 	const signedInUser = useSelector(currentUser);
+	const [muted, setMuted] = useState<boolean>(false);
 	const [cameraOn, setCameraOn] = useState<boolean>(true);
 
-	const toggleMute = () => {
-		setMuted((a) => !a);
-	};
+	const participants = useRemoteUsers();
+	const { audioTracks } = useRemoteAudioTracks(participants);
+
 	const toggleCamera = () => {
 		setCameraOn((b) => !b);
+		// console.log({ isPlaying: audioTracks });
+		console.log({ isPlaying: user });
 	};
 
-	if (!user) return <></>;
-	// console.log({ user: user });
+	// const remoteUser = useRemoteUserTrack(user, user);
+	// const remoteTracks= useRemoteAudioTracks()
 
-	return (
+	// useEffect(()=>{},[])
+
+	const rtcClient = useRTCClient(client);
+
+	// useEffect(() => {
+	// 	(async function () {
+	// 		await rtcClient.subscribe(user, "audio");
+	// 	})();
+	// }, [rtcClient]);
+
+	return !user ? (
+		<></>
+	) : (
 		<div className="h-full w-full bg-white border border-[#70C5A1] p-2 flex flex-col gap-4 overflow-hidden">
 			<div className="flex justify-between items-center">
 				<p className="lowercase text-sm">{user.uid}</p>
-				<div className="" title={!muted ? "Unmute" : "Mute"}>
-					{!muted ? (
-						<MicMuted size={15} onClick={toggleMute} className="cursor-pointer" />
-					) : (
-						<SpeakingIcon size={15} onClick={toggleMute} className="cursor-pointer" />
-					)}
+				<div className="" title={user.audioTrack?.getMediaStreamTrack().muted ? "Unmuted" : "Muted"}>
+					{!user.audioTrack?.isPlaying ? <MicMuted size={15} /> : <SpeakingIcon size={15} />}
 				</div>
 			</div>
 			<div className="flex justify-center items-center h-full w-full rounded-full">

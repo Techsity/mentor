@@ -8,8 +8,6 @@ const LiveworkshopTemplate = dynamic(() => import("../../../../components/templa
 });
 
 const LiveWorkshop = () => {
-
-	
 	return (
 		<AgoraClientProvider>
 			<LiveworkshopTemplate />
@@ -17,6 +15,6 @@ const LiveWorkshop = () => {
 	);
 };
 
-
-// export default LiveWorkshop;
-export default protectedPageWrapper(LiveWorkshop);
+export default LiveWorkshop;
+// Todo:
+// export default protectedPageWrapper(LiveWorkshop);

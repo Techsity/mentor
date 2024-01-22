@@ -32,18 +32,19 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 const LiveWorkshopTemplate = () => {
 	const router = useRouter();
 	const user = useSelector(currentUser);
-	const appId = process.env.NEXT_PUBLIC_AGORA_APP_ID as string;
+	const appId = String(process.env.NEXT_PUBLIC_AGORA_APP_ID);
+	const rtcClient = useRTCClient(client);
 
 	const [activeConnection, setActiveConnection] = useState<boolean>(!true);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
-	const [participants, setParticipants] = useState<IAgoraRTCRemoteUser[]>([]);
 	const [channelName, setChannelName] = useState("");
 
 	const fetchArgs: FetchArgs = {
 		appid: appId,
 		channel: channelName,
-		token: "007eJxTYIj8/bhG/o7LgUk3vjMk96z8xBBZuaCpqXThghieBM6S+TMUGJINTMxNEy0NzS0TTUwsklKSLExTTIyNU5MTTcxTTI0N9vKuSG0IZGQ40iHOysgAgSA+D0NKaVZGakpWdnpaVikDAwCb4iMA",
-		uid: user?.email.toLowerCase(),
+		token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
+		// Todo:
+		// uid: user?.email.toLowerCase(),
 	};
 	const workshop = workshops[0];
 
@@ -54,16 +55,12 @@ const LiveWorkshopTemplate = () => {
 	const { error, isLoading: isJoining } = useJoin(fetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
-	const remoteUsers = useRemoteUsers();
-
-	useEffect(() => {
-		setParticipants(remoteUsers);
-	}, [remoteUsers]);
 
 	const endSession = () => {
+		console.log("You Exited The Session");
 		setActiveConnection(false);
-		router.push("/");
-		console.log("Session ended");
+		rtcClient.leave();
+		rtcClient.removeAllListeners();
 	};
 
 	const retry = 10000;
@@ -131,13 +128,12 @@ const LiveWorkshopTemplate = () => {
 							<LiveWorkshopParticipants
 								isWorkshopOwner={currentUserIsWorkshopOwner}
 								workshop={workshop}
-								participants={participants}
 							/>
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent isWorkshopOwner={currentUserIsWorkshopOwner} />
+				<ConferenceCallComponent workshop={workshop} isWorkshopOwner={currentUserIsWorkshopOwner} />
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">
@@ -175,9 +171,11 @@ const LiveWorkshopTopSection: FC<{
 				{workshop.mentor.user?.name} ({workshop.title})
 			</p>
 		</div>
-		{currentUserIsWorkshopOwner && (
-			<PrimaryButton onClick={endSession} className="bg-[#FF2800] px-6 p-2" title="End Session" />
-		)}
+		<PrimaryButton
+			onClick={endSession}
+			className="bg-[#FF2800] px-6 p-2"
+			title={currentUserIsWorkshopOwner ? "End Session" : "Leave"}
+		/>
 	</div>
 );
 

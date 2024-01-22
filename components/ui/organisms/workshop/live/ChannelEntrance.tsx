@@ -19,7 +19,6 @@ const ChannelEntrance = ({
 }) => {
 	const [countdown, setCountdown] = useState<number>(retry / 1000);
 	const inputRef = useRef<HTMLInputElement>(null);
-	console.log(JSON.stringify(error));
 	// dujhedjkgfju
 	const handleJoin = () => {
 		if (inputRef.current)
@@ -32,6 +31,7 @@ const ChannelEntrance = ({
 		let intervalId: NodeJS.Timeout;
 
 		if (error) {
+			console.log(JSON.stringify(error));
 			onErrorJoin();
 			if (retry > 0)
 				intervalId = setInterval(() => {
@@ -47,13 +47,20 @@ const ChannelEntrance = ({
 		? "Invalid channel ID"
 		: error?.message.includes("INVALID_PARAMS")
 		? "Invalid channel ID"
+		: error?.message.includes("UID_CONFLICT")
+		? "UID_CONFLICT - You can't join this session in multiple tabs. Kindly refresh page and try again."
 		: error?.message;
 
 	return (
 		<div className="w-screen h-screen overflow-hidden">
 			<div className="flex flex-col gap-2 max-w-lg m-auto justify-center items-center h-full w-full relative">
 				<p className="flex w-full justify-start text-rose-500">{formattedErr}</p>
-				<CustomTextInput placeholder="Enter Channel ID" ref={inputRef} />
+				<CustomTextInput
+					value={"dujhedjkgfju"}
+					onChange={() => {}}
+					placeholder="Enter Channel ID"
+					ref={inputRef}
+				/>
 				{error && countdown !== 0 ? (
 					<span className="text-sm">Try again in a few seconds</span>
 				) : (
