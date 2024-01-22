@@ -266,7 +266,7 @@ export interface ICourse {
 	description: string;
 	course_images: string;
 	course_level: COURSE_LEVEL;
-	course_type?: string;
+	course_type: string;
 	duration: number;
 	limit: number;
 	rating: number;

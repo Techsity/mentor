@@ -30,6 +30,10 @@ const ProfileLayout = ({ children }: Props) => {
 		return Boolean(tab === "workshop" && typeof id !== "undefined");
 	}, [router]);
 
+	const isPaymentsTab = useMemo(() => {
+		return Boolean(tab === "payments");
+	}, [router]);
+
 	const isCourseContentPage = useMemo(() => {
 		return Boolean(
 			tab === "courses" &&
@@ -65,10 +69,10 @@ const ProfileLayout = ({ children }: Props) => {
 				</div>
 				<div
 					className={`flex-grow py-10 min-h-screen w-full px-4 col-span-4 h-full ${
-						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : "xl:pr-0"
+						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : isPaymentsTab ? "xl:pr-12" : "xl:pr-0"
 					}`}>
 					{!isEditCourse && !isEditWorkshop && !isCourseContentPage && !isNewItemPage && (
-						<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
+						<div className="hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 							<h1 className="capitalize">{activeTab.split("-").join(" ")}</h1>
 							{tab === "courses" && (
 								<PrimaryButton
@@ -88,7 +92,7 @@ const ProfileLayout = ({ children }: Props) => {
 						return child;
 					})}
 				</div>
-				{isEditCourse ? null : isEditWorkshop ? null : (
+				{!isEditCourse && !isEditWorkshop && !isPaymentsTab && (
 					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">
 						<EditProfileCard />
 					</div>

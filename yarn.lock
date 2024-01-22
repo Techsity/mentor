@@ -689,6 +689,11 @@ acorn@^8.9.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.10.0.tgz#8be5b3907a67221a81ab23c7889c4c5526b62ec5"
   integrity sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==
 
+agora-rtc-react@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/agora-rtc-react/-/agora-rtc-react-2.1.0.tgz#b4855e79b8c42e5b348595bc1fe7a7f8c82cf7f4"
+  integrity sha512-3FGteA7FG51oK5MusbYNgAcKZaAQK+4sbEz4F0DPzcpDxqNANpocJDqOsmXoUAj5yDBsBZelmagU3abd++6RGA==
+
 agora-rtc-sdk-ng@^4.20.0:
   version "4.20.0"
   resolved "https://registry.yarnpkg.com/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.20.0.tgz#94ad4ce5ffa25a940799b2a2dd6d73efb27cfaa1"

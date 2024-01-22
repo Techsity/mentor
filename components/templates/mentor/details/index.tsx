@@ -18,19 +18,7 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 		<>
 			{/* && */}
 			<div className="min-h-screen pt-5 h-full">
-				<div className=" animate__animated animate__slideInDown lg:px-20 sm:px-12 px-6">
-					{/* {loading ? (
-						<div className="relative overflow-hidden p-[1.5px] flex justify-center items-center h-52 shadow">
-							<div className="bg-[#70C5A1] absolute top-0 w-[200%] animate-[spin_4s_infinite] h-full" />
-							<div className="z-10 border bg-white p-5 w-full h-full lg:flex justify-between shadow">
-								<div className="">
-									<div></div>
-								</div>
-							</div>
-						</div>
-					) : (
-						<MentorProfileCard mentor={mentor} detailsPage />
-					)} */}
+				<div className="animate__animated animate__slideInDown lg:px-20 sm:px-12 px-6">
 					<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
 				</div>
 				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start sm:px-12 px-6">

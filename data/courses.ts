@@ -156,6 +156,7 @@ export const courseLevels = ["all_levels", "beginner", "intermmediate", "advance
 const courses: ICourse[] = [
 	{
 		title: "Introduction to Programming",
+		course_type: courseTypes[0].name,
 		description: "A beginner-friendly course to learn the basics of programming.",
 		course_images: "/assets/images/mockups/course_one.png",
 		course_level: "BEGINNER",
@@ -179,6 +180,7 @@ const courses: ICourse[] = [
 	},
 	{
 		title: "The Basics of Digital Marketing",
+		course_type: courseTypes[0].name,
 		description: "This Beginners Course Teaches You The Basics of Digital Marketing Fast.",
 		course_images: "/assets/images/mockups/course_one.png",
 		course_level: "BEGINNER",
@@ -211,6 +213,7 @@ const courses: ICourse[] = [
 	},
 	{
 		title: "The Basics of Digital Marketing",
+		course_type: courseTypes[0].name,
 		description: "This Beginners Course Teaches You The Basics of Digital Marketing.",
 		course_images: "/assets/images/mockups/course_one.png",
 		course_level: "BEGINNER",

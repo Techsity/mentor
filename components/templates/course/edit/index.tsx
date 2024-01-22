@@ -8,7 +8,7 @@ import { StarRatingIcon } from "../../../ui/atom/icons/svgs";
 import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
 import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
 import { ICourse, IWorkshop, ProfileTabLinkType } from "../../../../interfaces";
-import courses, { courseCategories, courseContents } from "../../../../data/courses";
+import courses, { courseCategories, courseContents, courseTypes } from "../../../../data/courses";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import workshops from "../../../../data/workshops";
 import AddWorkShopSchedule from "../../../ui/organisms/workshop/edit-workshop/AddWorkShopSchedule";
@@ -27,6 +27,7 @@ type Props = {
 const courseInitialState: Omit<ICourse, "mentor"> = {
 	title: "",
 	description: "",
+	course_type: courseTypes[0].name,
 	course_images: "",
 	course_level: "ALL_LEVELS",
 	duration: 0,

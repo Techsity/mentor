@@ -14,8 +14,6 @@ import PaymentMethods from "../../../components/ui/organisms/user/profile/Paymen
 import RegisteredMentorships from "../../../components/ui/organisms/user/profile/RegisteredMentorships";
 import RegitsteredWorkshops from "../../../components/ui/organisms/user/profile/RegitsteredWorkshops";
 import WishLists from "../../../components/ui/organisms/user/profile/WishLists";
-import WorkshopAndCourseEditTemplate from "../../../components/templates/course/edit";
-import EditCourseContent from "../../../components/ui/organisms/course/edit-course/EditCourseContent";
 import MentorProfileCourses from "../../../components/ui/organisms/user/mentor/courses/MentorProfileCourses";
 
 const ProfileNavgationContainer = () => {
@@ -27,35 +25,39 @@ const ProfileNavgationContainer = () => {
 
 	return (
 		<ProfileLayout>
-			{isMentor && tab === "overview" ? (
-				<div className="animate__animated animate__fadeIn">
-					<MentorProfileOverview />
-				</div>
-			) : tab === "courses" && isMentor ? (
-				<MentorProfileCourses />
-			) : tab === "my-courses" ? (
-				<div className="animate__animated animate__fadeIn">
-					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...{ course }} key={i} />
-						))}
+			<div className="md:px-10 lg:px-0">
+				{isMentor && tab === "overview" ? (
+					<div className="animate__animated animate__fadeIn">
+						<MentorProfileOverview />
 					</div>
-				</div>
-			) : tab === "workshop" && isMentor ? (
-				<MentorProfileWorkshop />
-			) : tab === "my-workshop" ? (
-				<RegitsteredWorkshops />
-			) : tab === "mentorship" ? (
-				<RegisteredMentorships />
-			) : tab === "wishlists" ? (
-				<div className="md:px-2 px-5">
-					<WishLists />
-				</div>
-			) : tab === "payment-methods" ? (
-				<PaymentMethods />
-			) : (
-				tab === "profile-settings" && <ProfileSettings />
-			)}
+				) : tab === "courses" && isMentor ? (
+					<MentorProfileCourses />
+				) : tab === "my-courses" ? (
+					<div className="animate__animated animate__fadeIn">
+						<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+							{myCourses.map((course, i) => (
+								<CourseInProgressDisplayCard {...{ course }} key={i} />
+							))}
+						</div>
+					</div>
+				) : tab === "workshop" && isMentor ? (
+					<MentorProfileWorkshop />
+				) : tab === "my-workshop" ? (
+					<RegitsteredWorkshops />
+				) : tab === "mentorship" ? (
+					<RegisteredMentorships />
+				) : tab === "wishlists" ? (
+					<div className="md:px-2 px-5">
+						<WishLists />
+					</div>
+				) : tab === "payments" ? (
+					<PaymentMethods />
+				) : tab === "payment-methods" ? (
+					<PaymentMethods />
+				) : (
+					tab === "profile-settings" && <ProfileSettings />
+				)}
+			</div>
 		</ProfileLayout>
 	);
 };

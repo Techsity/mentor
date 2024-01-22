@@ -33,10 +33,12 @@ const ProfileNavCard = ({
 	}, [activeLink, router]);
 
 	const handleNavigate = (link: ProfileTabLinkType) => {
-		scrollToTop();
-		setActiveTab(link);
-		setOpenDropdown(false);
-		router.push(`/profile/${slugify(link)}`);
+		if (link !== activeTab) {
+			scrollToTop();
+			setActiveTab(link);
+			setOpenDropdown(false);
+			router.push(`/profile/${slugify(link)}`);
+		}
 	};
 
 	return (

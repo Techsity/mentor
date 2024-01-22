@@ -73,25 +73,25 @@ const LiveworkshopTemplate = () => {
 								</div>
 							</div>
 							{/* Participants */}
-							<LiveWorkshopParticipants
+							{/* <LiveWorkshopParticipants
 								participants={participants.filter(
 									(participant) =>
 										slugify(participant.username) !== slugify(workshop.mentor.user.name),
 								)}
 								workshop={workshop}
-							/>
+							/> */}
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent
+				{/* <ConferenceCallComponent
 					workshop={workshop}
 					participants={participants}
 					isWorkshopOwner={currentUserIsWorkshopOwner}
 					callHost={participants.find(
 						(participant) => slugify(participant.username) === slugify(workshop.mentor.user.name),
 					)}
-				/>
+				/> */}
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">

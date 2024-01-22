@@ -52,3 +52,12 @@ export const ToastDefaultOptions = (props?: ICustomToastProps): ToastOptions => 
 // );
 
 export const AUTH_TOKEN_KEY = "authToken";
+export const networkLabels: { [key: number]: { message: string; color: string } } = {
+	0: { message: "Unknown", color: "#d31119" },
+	1: { message: "Excellent", color: "#00AD74" },
+	2: { message: "Good", color: "#00AD74" },
+	3: { message: "Poor", color: "orange" },
+	4: { message: "Bad", color: "#d311195A" },
+	5: { message: "Very Bad", color: "#d31119" },
+	6: { message: "No Connection", color: "#d31119" },
+};

@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "esnext",
-		"types": ["react-redux", "classnames"],
+		"types": ["react-redux", "classnames", "agora-rtc-react"],
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,

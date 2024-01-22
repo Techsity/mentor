@@ -2,15 +2,13 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { PrimaryButton } from "../../buttons";
 import ActivityIndicator from "../../loader/ActivityIndicator";
-import {
-	currentUser,
-	updateUser,
-} from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUser } from "../../../../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { IUserPaymentCard } from "../../../../../interfaces/user.interface";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
+import { Select } from "../../inputs/Select";
 
 interface NewCardState extends IUserPaymentCard {
 	cvv: string;
@@ -31,78 +29,59 @@ const AddPaymentMethodForm = () => {
 		cvv: "",
 		expiry: "",
 	};
-	const [newPaymentCard, setNewPaymentCard] =
-		useState<NewCardState>(initialState);
+	const [newPaymentCard, setNewPaymentCard] = useState<NewCardState>(initialState);
 
-	const handleChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-	) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
-
-		if (name === "bankName") {
-			setNewPaymentCard({
-				...newPaymentCard,
-				bank: { name: value },
-			});
-		} else {
-			setNewPaymentCard({
-				...newPaymentCard,
-				[name]: value,
-			});
-		}
+		setNewPaymentCard({
+			...newPaymentCard,
+			[name]: value,
+		});
 	};
 
 	const addCard = (e: FormEvent) => {
 		e.preventDefault();
-		if (newPaymentCard)
+		if (newPaymentCard) {
 			if (user && user?.payment_cards) {
 				if (user?.payment_cards?.length < 3) {
 					const updatedUser = {
 						...user,
-						payment_cards: [
-							...(user.payment_cards || []),
-							newPaymentCard,
-						],
+						payment_cards: [...(user.payment_cards || []), newPaymentCard],
 					};
-					console.log(newPaymentCard);
 					dispatch(updateUser(updatedUser));
 				} else {
-					toast.error(
-						"Cards Limit reached!",
-						ToastDefaultOptions({ id: "error", theme: "dark" }),
-					);
+					toast.error("Cards Limit reached!", ToastDefaultOptions({ id: "error", theme: "dark" }));
 				}
 			}
+		}
 	};
+	const formatCardNumber = (value: string) => {
+		const numericValue = value.replace(/\D/g, "");
+		const formattedValue = numericValue.replace(/(\d{4})/g, "$1-").trim();
+		return formattedValue;
+	};
+	const banks = ["Bank A", "Bank B", "Bank C", "Bank D", "Bank E"];
 	return (
-		<form
-			onSubmit={addCard}
-			className="bg-white shadow rounded-3xl w-full grid gap-3 p-8">
+		<form onSubmit={addCard} className="bg-white sm:shadow rounded-3xl w-full grid gap-3 p-3 sm:p-8">
 			<h1 className="font-[300] text-sm">Enter Card Info</h1>
-			<div className="">
-				{/* <CustomTextInput
-					className="placeholder:text-sm placeholder:font-[300]"
-					disabled={loading}
-					required
-					placeholder="Bank"
-				/> */}
-				<select
-					name="bankName"
-					className="relative border-[#70C5A1] border overflow-hidden flex items-center w-full bg-white p-4 appearance-none"
-					value={newPaymentCard.bank.name}
-					onChange={handleChange}>
-					<option value="">Select Bank</option>
-					<option value="Bank A">Bank A</option>
-					<option value="Bank B">Bank B</option>
-				</select>
-			</div>
+			<Select<string>
+				newClassName="relative border-[#70C5A1] border flex items-center w-full bg-white p-4 appearance-none"
+				data={banks}
+				label={newPaymentCard.bank.name || ""}
+				handleSelected={(val) => {
+					setNewPaymentCard({
+						...newPaymentCard,
+						bank: { name: val },
+					});
+				}}
+			/>
 			<div className="">
 				<CustomTextInput
 					type="text"
-					className="placeholder:text-sm placeholder:font-[300]"
+					className="text-sm placeholder:font-[300]"
 					disabled={loading}
 					required
-					value={newPaymentCard.card_number}
+					value={formatCardNumber(newPaymentCard.card_number)}
 					onChange={handleChange}
 					name="card_number"
 					placeholder="Card Number"
@@ -113,7 +92,7 @@ const AddPaymentMethodForm = () => {
 			</div>
 			<div className="">
 				<CustomTextInput
-					className="placeholder:text-sm placeholder:font-[300]"
+					className="text-sm placeholder:font-[300]"
 					disabled={loading}
 					required
 					type="text"
@@ -126,20 +105,17 @@ const AddPaymentMethodForm = () => {
 			<div className="flex justify-between gap-3 items-center">
 				<CustomTextInput
 					type="date"
-					className="placeholder:text-sm placeholder:font-[300]"
+					className="text-sm placeholder:font-[300]"
 					value={newPaymentCard.expiry}
 					onChange={handleChange}
 					name="expiry"
 					disabled={loading}
 					required
-					placeholder="Exp"
-					pattern="^(0[1-9]|1[0-2])/\d{2}$"
-					inputMode="numeric"
 					title="Please enter a valid card expiry (MM/YY)"
-					min={new Date().toDateString()}
+					min={`${new Date().toDateString()}`}
 				/>
 				<CustomTextInput
-					className="placeholder:text-sm placeholder:font-[300]"
+					className="text-sm placeholder:font-[300]"
 					disabled={loading}
 					required
 					placeholder="CVV"
@@ -154,7 +130,7 @@ const AddPaymentMethodForm = () => {
 			</div>
 			<div className="">
 				<CustomTextInput
-					className="placeholder:text-sm placeholder:font-[300]"
+					className="text-sm placeholder:font-[300]"
 					disabled={loading}
 					required
 					placeholder="Card Pin"

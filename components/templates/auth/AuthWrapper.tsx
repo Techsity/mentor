@@ -16,7 +16,7 @@ const AuthWrapper = ({
 }: {
 	children: ReactNode;
 	user: IUser | null;
-	mentorProfile: IMentor | null;
+	mentorProfile: { getMentorProfile: IMentor | null };
 	logout: boolean;
 }) => {
 	const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const AuthWrapper = ({
 						},
 					],
 				},
-				mentorProfile,
+				mentorProfile: mentorProfile.getMentorProfile,
 			}),
 		);
 	} else if (logout) {
