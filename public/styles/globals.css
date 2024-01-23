@@ -40,6 +40,10 @@ body {
 	overflow-x: hidden !important;
 }
 
+.scroll_x {
+	overflow-x: auto !important;
+}
+
 @keyframes slide-forward {
 	0% {
 		transform: translateX(5%);
