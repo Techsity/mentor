@@ -20,16 +20,10 @@ const AuthWrapper = ({
 	logout: boolean;
 }) => {
 	const dispatch = useDispatch();
-	const isAuth = useSelector(isLoggedIn);
 
 	const checkAuthValidity = () => {
-		// if (isAuth) {
 		const authToken = checkAuth();
 		if (!authToken) logoutUser();
-		else {
-			// console.log(authToken);
-		}
-		// }
 	};
 
 	useEffect(() => {

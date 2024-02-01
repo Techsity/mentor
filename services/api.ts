@@ -8,6 +8,7 @@ import { AUTH_TOKEN_KEY } from "../constants";
 import { getCookie } from "../utils/auth";
 import { InMemoryCache } from "@apollo/client";
 import { VIEW_MENTOR_PROFILE } from "./graphql/mutations/mentors";
+import mentors from "../data/mentors";
 
 const apiEndpoint = "/api/graphql";
 
@@ -55,23 +56,125 @@ export const viewMentor = async ({ viewMentorId }: { viewMentorId: string }) => 
 	return await gqlRequestInstance().request(VIEW_MENTOR_PROFILE, { viewMentorId });
 };
 
-//
-//
-//
-//
-//
-//
-//
-// const { data, isLoading, error } = useQuery({
-// 	queryKey: ["all-courses"],
-// 	queryFn: () => API.fetchCourses(),
-// 	_optimisticResults: "optimistic",
-// });
-
-// useEffect(() => {
-// 	if (!isLoading)
-// 		if (error) console.error(error);
-// 		else {
-// 			console.log({ data: data });
-// 		}
-// }, [data, isLoading]);
+export const fetchAllCourses = async (args?: { skip?: number; limit?: number }) => {
+	const { limit = 7, skip = 0 } = args || {};
+	const coursesRecord: Partial<ICourse>[] = [
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 12500,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 12500,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 12500,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 12500,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 12500,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "vocational",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 20000,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 4999,
+			rating: 4.2,
+			course_type: "vocational",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 4999,
+			rating: 4.2,
+			course_type: "educational",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "technical",
+		},
+		{
+			title: "Digital Marketing for beginners",
+			created_at: new Date().toLocaleDateString(),
+			mentor: mentors[1],
+			price: 0,
+			rating: 4.2,
+			course_type: "technical",
+		},
+	];
+	return new Promise<typeof coursesRecord>((resolve) => {
+		setTimeout(() => {
+			resolve(coursesRecord);
+		}, 2000);
+	});
+};

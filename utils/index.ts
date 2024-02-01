@@ -171,20 +171,19 @@ export function formatAmount(amount: number, options?: { withFraction?: boolean 
 				minimumFractionDigits: withFraction ? 2 : 0,
 				maximumFractionDigits: withFraction ? 2 : 0,
 			});
-		} else if (amount < 1000000) {
+		} else if (amount <= 1000000) {
 			// Format in thousands
 			const thousands = Math.floor(amount / 1000);
-			// return `${thousands}K`;
-			return amount.toLocaleString();
-		} else if (amount < 1000000000) {
+			return `${thousands}K`;
+		} else if (amount <= 1000000000) {
 			// Format in millions
 			const millions = (amount / 1000000).toFixed(withFraction ? 1 : 0);
 			return `${millions}M`;
-		} else if (amount < 1000000000000) {
+		} else if (amount <= 1000000000000) {
 			// Format in billions
 			const billions = (amount / 1000000000).toFixed(withFraction ? 1 : 0);
 			return `${billions}B`;
-		} else if (amount < 1000000000000000) {
+		} else if (amount <= 1000000000000000) {
 			// Format in trillions
 			const trillions = (amount / 1000000000000).toFixed(withFraction ? 1 : 0);
 			return `${trillions}T`;

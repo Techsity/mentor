@@ -9,7 +9,7 @@ const CurrentUserProfileCard = () => {
 
 	return (
 		<div className="relative group cursor-pointer h-full">
-			<Link href={`/profile`}>
+			<Link href={user?.is_admin ? "/admin" : `/profile`}>
 				<div className="flex items-center gap-3">
 					<div className="rounded-full object-cover w-9 h-9 relative">
 						<img

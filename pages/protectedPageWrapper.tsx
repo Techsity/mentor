@@ -15,10 +15,12 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		useEffect(() => {
 			if (!auth || !user) {
 				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+			} else if (user.is_admin) {
+				router.replace("/admin");
 			}
 		}, [auth, user, next, router]);
 
-		if (!auth || !user) {
+		if (!auth || !user || user.is_admin) {
 			return (
 				<div className="min-h-screen items-center flex justify-center">
 					<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />

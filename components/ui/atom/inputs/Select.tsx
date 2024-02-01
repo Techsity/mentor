@@ -11,6 +11,7 @@ interface SelectProps<T> {
 	displayProperty?: keyof T;
 	showIcon?: boolean;
 	label: string;
+	htmlTitle?: string;
 }
 
 export function Select<T>({
@@ -23,6 +24,7 @@ export function Select<T>({
 	showIcon = true,
 	label,
 	newClassName,
+	htmlTitle,
 }: SelectProps<T>) {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -45,21 +47,26 @@ export function Select<T>({
 	}, []);
 
 	return (
-		<div ref={selectRef} className={newClassName ? newClassName : `inline-block text-left w-full ${className}`}>
+		<div
+			title={htmlTitle}
+			onClick={toggleSelectDropdown}
+			ref={selectRef}
+			className={newClassName ? newClassName : `inline-block text-left w-full ${className}`}>
 			<div
 				onClick={toggleSelectDropdown}
 				className="cursor-pointer capitalize text-[#70C5A1] font-normal text-xs w-full flex justify-between items-center">
-				<div className="grid gap-2">
-					<p className="">{label}</p>
-					<p className="text-xs text-black">{title}</p>
+				<div className="grid gap-2 items-center justify-center">
+					{label ? <p className="">{label}</p> : <p className="text-xs text-black">{title}</p>}
 				</div>
-				<span className="" onClick={toggleSelectDropdown}>
-					{isOpen ? (
-						<ChevronUp color={"#70C5A1"} onClick={toggleSelectDropdown} />
-					) : (
-						<ChevronDown onClick={toggleSelectDropdown} color={"#70C5A1"} />
-					)}
-				</span>
+				{showIcon && (
+					<span className="" onClick={toggleSelectDropdown}>
+						{isOpen ? (
+							<ChevronUp color={"#70C5A1"} onClick={toggleSelectDropdown} />
+						) : (
+							<ChevronDown onClick={toggleSelectDropdown} color={"#70C5A1"} />
+						)}
+					</span>
+				)}
 			</div>
 			{isOpen && (
 				<div className="origin-top-right absolute left-0 mt-2 top-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 w-full z-20 animate__animated animate__fadeIn animate__faster max-h-[50dvh] overflow-hidden overflow-y-scroll">
@@ -72,7 +79,7 @@ export function Select<T>({
 									toggleSelectDropdown();
 								}}
 								className="capitalize cursor-pointer block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">
-								{item[displayProperty] || item}
+								{item[displayProperty] || item.split("-").join(" ")}
 							</div>
 						))}
 					</div>

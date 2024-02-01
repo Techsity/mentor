@@ -33,7 +33,7 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 
 	return (
 		<div className="min-h-screen h-full relative w-full flex">
-			<nav className="z-30 sticky top-20 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
+			<nav className="z-30 sticky top-0 pt-24 xl:top-20 xl:pt-6 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
 				<div className="mb-12 duration-300 hidden sm:flex justify-center items-center flex-col gap-3">
 					<div className="w-10 xl:w-16 h-10 xl:h-16 bg-zinc-200 rounded-full overflow-hidden">
 						<img src="/assets/images/avatar.png" alt="" className="w-full h-full" />
@@ -84,7 +84,7 @@ const NavItem = ({
 				`group relative select-none cursor-pointer duration-300 border p-3 xl:px-6 flex gap-5 items-center justify-center lg:justify-between my-5`,
 				activeTab === t.icon ? "border-[#70C5A1] bg-white " : "border-transparent bg-[#70C5A1]",
 			)}>
-			<div className="text-[#70C5A1] whitespace-nowrap group-hover:lg:hidden hidden group-hover:flex w-auto absolute left-12 animate__animated animate__fastest animate__fadeIn p-2 px-5 text-sm bg-white border border-[#70C5A1]">
+			<div className="text-[#70C5A1] whitespace-nowrap group-hover:xl:hidden hidden group-hover:flex w-auto absolute left-12 animate__animated animate__fastest animate__fadeIn p-2 px-5 text-sm bg-white border border-[#70C5A1]">
 				{t.label}
 			</div>
 			<span className={`xl:flex hidden text-sm ${activeTab === t.icon ? "text-[#70C5A1]" : "text-white"}`}>

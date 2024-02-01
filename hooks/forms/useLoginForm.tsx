@@ -19,7 +19,7 @@ type ICreateLoginInput = {
 	createLoginInput: ILoginState;
 };
 type LoginResponse = {
-	loginUser: { user: IUser; access_token: string; is_mentor: boolean };
+	loginUser: { user: IUser; access_token: string; is_mentor: boolean; is_admin: boolean };
 };
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
@@ -72,10 +72,31 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 					const userData: IUser = response.data.loginUser.user;
 					const authToken = response.data.loginUser.access_token;
 					const is_mentor = response.data.loginUser.is_mentor;
+					const is_admin = response.data.loginUser.is_admin;
 					if (response.data.loginUser.user) {
 						// setLoading(false);
 						authenticate(authToken, async () => {
-							if (is_mentor) {
+							if (is_admin) {
+								dispatch(
+									setCredentials({
+										isLoggedIn: true,
+										user: {
+											...userData,
+											is_mentor: true,
+											is_admin: true,
+											is_online: true,
+											// Temporary
+											payment_cards: [
+												{
+													bank: { name: "GTbank via Paystack" },
+													card_name: "John Doe Ipsum",
+													card_number: "5399 8878 9887 99099",
+												},
+											],
+										},
+									}),
+								);
+							} else if (is_mentor) {
 								await getMentorProfile()
 									.then((result) => {
 										if (result.data?.getMentorProfile) {
@@ -86,6 +107,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 													user: {
 														...userData,
 														is_mentor: true,
+														is_online: true,
 														// Temporary
 														payment_cards: [
 															{
@@ -123,6 +145,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 										user: {
 											...userData,
 											is_mentor: false,
+											is_online: true,
 											// Temporary
 											payment_cards: [
 												{

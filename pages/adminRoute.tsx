@@ -15,7 +15,7 @@ const adminRoute = (PageComponent: NextPage<any> | React.FC<any>) => {
 		useEffect(() => {
 			if (!auth || !user) {
 				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-			} else if (!user.is_admin) router.replace(`/`);
+			} else if (!user.is_admin) router.replace(`/profile`);
 		}, [auth, user, next, router]);
 
 		if (!auth || !user || !user.is_admin) {

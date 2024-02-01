@@ -1,57 +1,59 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { ICourse } from "../../../../../interfaces";
 import mentors from "../../../../../data/mentors";
 import { CustomTrashBin, CustomRocket } from "../../../atom/icons/video";
 import { useRouter } from "next/router";
+import { formatAmount } from "../../../../../utils";
+import { Select } from "../../../atom/inputs/Select";
+import { Filter } from "react-ionicons";
+import { fetchAllCourses } from "../../../../../services/api";
+
+type OrderType = "asc" | "desc";
 
 const AdminCoursesManagement = () => {
-	const coursesRecord: Partial<ICourse>[] = [
-		{
-			title: "Digital Marketing for beginners",
-			created_at: new Date().toLocaleString(),
-			mentor: mentors[1],
-			price: 0,
-			rating: 4.2,
-			course_type: "technical",
-		},
-		{
-			title: "Digital Marketing for beginners",
-			created_at: new Date().toLocaleString(),
-			mentor: mentors[1],
-			price: 0,
-			rating: 4.2,
-			course_type: "technical",
-		},
-		{
-			title: "Digital Marketing for beginners",
-			created_at: new Date().toLocaleString(),
-			mentor: mentors[1],
-			price: 0,
-			rating: 4.2,
-			course_type: "technical",
-		},
-		{
-			title: "Digital Marketing for beginners",
-			created_at: new Date().toLocaleString(),
-			mentor: mentors[1],
-			price: 0,
-			rating: 4.2,
-			course_type: "technical",
-		},
-	];
+	const filter: string[] = ["all-courses", "date-created"];
+	const [currentFilter, setCurrentFilter] = useState<string>(filter[0]);
+	const [order, setOrder] = useState<OrderType>("desc");
+
 	return (
 		<div className="relative">
-			<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+			{/* Top Header Section */}
+			<div className="mb-10 flex justify-between items-center w-full">
+				{/* <p className="text-sm text-zinc-500">All Courses ({formatAmount(coursesRecord.length)}) </p> */}
+				{/* Filter Section */}
+				<div className="flex items-center">
+					<div
+						onClick={() => {
+							setOrder((p) => (p == "asc" ? "desc" : "asc"));
+						}}
+						title="Sort in ascending or descending order"
+						className="bg-[#70C5A1] p-1.5 px-3 flex justify-center items-center cursor-pointer">
+						<Filter color="#fff" cssClasses={`duration-300 ${order == "asc" ? "rotate-[180deg]" : ""}`} />
+					</div>
+					<Select<string>
+						htmlTitle="Select filter"
+						data={filter}
+						label={currentFilter.split("-").join(" ")}
+						handleSelected={(val) => {
+							setCurrentFilter(val);
+						}}
+						newClassName="w-auto h-full border border-[#70C5A1] inline-block px-8 p-2 text-center relative cursor-pointer"
+						showIcon={false}
+					/>
+				</div>
+			</div>
+			{/* Table Section */}
+			<table className="w-full text-sm text-left rtl:text-right">
 				<TableHead />
 				<tbody className="">
-					{coursesRecord.map((course, index) => {
+					{/* {coursesRecord.map((course, index) => {
 						return (
 							<Fragment>
 								<br />
 								<TableItem key={index} {...{ course }} />
 							</Fragment>
 						);
-					})}
+					})} */}
 				</tbody>
 			</table>
 		</div>
@@ -70,11 +72,21 @@ const TableItem = ({ course }: { course: Partial<ICourse> }) => {
 				className="px-4 py-4 text-xs font-normal whitespace-nowrap cursor-pointer hover:underline">
 				{course.title?.slice(0, 12) + "..."}
 			</th>
-			<td className="px-6 py-4 text-xs">Silver</td>
-			<td className="px-6 py-4 text-xs">Laptop</td>
-			<td className="px-6 py-4 text-xs">$2999</td>
-			<td className="px-6 py-4 text-xs">3.0 lb.</td>
-			<td className="px-6 py-4 text-xs">3.0 lb.</td>
+			<td className="px-6 py-4 text-xs">{course.created_at?.split("/").join("-")}</td>
+			<td className="px-6 py-4 text-xs">
+				<div className="flex items-center gap-1">
+					<img src="/assets/images/avatar.png" alt="" className="w-5 h-5" />
+					<p className="text-xs">
+						{course.mentor?.user.name.split(" ")[0]}{" "}
+						{course.mentor?.user.name.split(" ")[1].slice(0, 8) + "..."}
+					</p>
+				</div>
+			</td>
+			<td className="px-6 py-4 text-xs">
+				{course.price === 0 ? "Free" : "₦" + formatAmount(Number(course.price))}
+			</td>
+			{/* <td className="px-6 py-4 text-xs">20</td> */}
+			<td className="px-6 py-4 text-xs capitalize">{course.course_type}</td>
 			<td className="px-10 py-4 w-full flex items-center justify-between gap-5 text-xs">
 				<span className="flex justify-start">
 					<CustomTrashBin className="cursor-pointer" />
@@ -106,9 +118,9 @@ const TableHead = () => {
 				<th scope="col" className="px-6 py-3 font-normal">
 					Price
 				</th>
-				<th scope="col" className="px-6 py-3 font-normal">
+				{/* <th scope="col" className="px-6 py-3 font-normal">
 					Students
-				</th>
+				</th> */}
 				<th scope="col" className="px-6 py-3 font-normal">
 					Course Type
 				</th>
