@@ -19,18 +19,6 @@ type AdminDashboardLayoutProps = {
 };
 
 const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashboardLayoutProps) => {
-	const router = useRouter();
-
-	const activeLink = adminTabs.filter((t) => t.link.split("#")[1] === router.asPath.split("#")[2]);
-
-	useEffect(() => {
-		setActiveTab(activeLink.length >= 1 ? activeLink[0].icon : adminTabs[0].icon);
-		return () => {
-			setActiveTab(adminTabs[0].icon);
-			scrollToTop();
-		};
-	}, [router]);
-
 	return (
 		<div className="min-h-screen h-full relative w-full flex">
 			<nav className="z-30 sticky top-0 pt-24 xl:top-20 xl:pt-6 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
@@ -44,7 +32,7 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 					</div>
 				</div>
 				{adminTabs.map((t, index) => (
-					<NavItem {...{ activeTab, router, setActiveTab, t }} key={index} />
+					<NavItem {...{ activeTab, setActiveTab, t }} key={index} />
 				))}
 			</nav>
 			<div className="px-5 py-5 min-h-[120dvh] flex-grow">
@@ -60,23 +48,22 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 };
 
 const NavItem = ({
-	router,
 	t,
 	setActiveTab,
 	activeTab,
 }: {
-	router: NextRouter;
 	t: AdminDashboardTabType;
 	setActiveTab: Dispatch<SetStateAction<AdminDashboardTabType["icon"]>>;
 	activeTab: AdminDashboardTabType["icon"];
 }) => {
 	const IconComp = AdminIcons[t.icon];
+	const router = useRouter();
+
 	return (
 		<div
 			onClick={() => {
 				if (activeTab !== t.icon) {
-					setActiveTab(t.icon);
-					router.push({ pathname: router.pathname, hash: t.link });
+					router.push(`/admin${t.link}`);
 					scrollToTop();
 				}
 			}}
@@ -105,21 +92,21 @@ export const adminTabs: AdminDashboardTabType[] = [
 	{
 		icon: "DashboardIcon",
 		label: "Dashboard",
-		link: "/#dashboard",
+		link: "/dashboard",
 	},
-	{ icon: "CoursesIcon", label: "Courses", link: "/#courses", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
-	{ icon: "WorkshopIcon", label: "Workshop", link: "/#workshop", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
-	{ icon: "MentorIcon", label: "Mentors", link: "/#mentors", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "CoursesIcon", label: "Courses", link: "/courses", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "WorkshopIcon", label: "Workshop", link: "/workshop", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "MentorIcon", label: "Mentors", link: "/mentors", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{
 		icon: "UsersIcon",
 		label: "Users",
-		link: "/#users",
+		link: "/users",
 	},
-	{ icon: "ReportIcon", label: "Report", link: "/#report", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "ReportIcon", label: "Report", link: "/report", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{
 		icon: "SettingsIcon",
 		label: "Role Settings",
-		link: "/#settings",
+		link: "/settings",
 	},
 ];
 

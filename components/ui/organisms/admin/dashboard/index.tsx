@@ -2,7 +2,7 @@ import React from "react";
 
 // activeTab
 const AdminDashboardOverview = ({}) => {
-	return <div></div>;
+	return <div>Dashboard</div>;
 };
 
 export default AdminDashboardOverview;

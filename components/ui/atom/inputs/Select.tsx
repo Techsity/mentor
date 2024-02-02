@@ -69,7 +69,7 @@ export function Select<T>({
 				)}
 			</div>
 			{isOpen && (
-				<div className="origin-top-right absolute left-0 mt-2 top-10 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 w-full z-20 animate__animated animate__fadeIn animate__faster max-h-[50dvh] overflow-hidden overflow-y-scroll">
+				<div className="origin-top-right absolute left-0 mt-2 top-8 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 w-full z-20 animate__animated animate__fadeIn animate__faster max-h-[50dvh] overflow-hidden overflow-y-scroll">
 					<div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 						{data.map((item, index) => (
 							<div

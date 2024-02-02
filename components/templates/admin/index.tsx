@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminDashboardLayout, { AdminDashboardTabType, adminTabs } from "../../ui/layout/profile/AdminDashboardLayout";
 import AdminDashboardOverview from "../../ui/organisms/admin/dashboard";
 import AdminUsersManagement from "../../ui/organisms/admin/users-management";
@@ -7,9 +7,17 @@ import AdminReports from "../../ui/organisms/admin/report";
 import AdminCoursesManagement from "../../ui/organisms/admin/courses";
 import AdminWorkshopsManagement from "../../ui/organisms/admin/workshop";
 import AdminRolesManagement from "../../ui/organisms/admin/role-settings";
+import { ParsedUrlQuery } from "querystring";
+import { useRouter } from "next/router";
 
-const AdminPageTemplate = () => {
-	const [activeTab, setActiveTab] = useState<AdminDashboardTabType["icon"]>(adminTabs[0].icon);
+const AdminPageTemplate = ({ query }: { query: ParsedUrlQuery }) => {
+	const router = useRouter();
+	const tab = router.query.tab as string;
+	const active = adminTabs.find((t) => t.link.split("/")[1].trim().toLowerCase() === tab.trim().toLowerCase());
+	const [activeTab, setActiveTab] = useState<AdminDashboardTabType["icon"]>(active?.icon || adminTabs[0].icon);
+	useEffect(() => {
+		setActiveTab(active ? active.icon : adminTabs[0].icon);
+	}, [router]);
 	return (
 		<AdminDashboardLayout {...{ activeTab, setActiveTab }}>
 			{activeTab === "DashboardIcon" ? (
@@ -17,7 +25,7 @@ const AdminPageTemplate = () => {
 			) : activeTab === "UsersIcon" ? (
 				<AdminUsersManagement />
 			) : activeTab === "CoursesIcon" ? (
-				<AdminCoursesManagement />
+				<AdminCoursesManagement serverQuery={query} />
 			) : activeTab === "MentorIcon" ? (
 				<AdminMentorsManagement />
 			) : activeTab === "ReportIcon" ? (

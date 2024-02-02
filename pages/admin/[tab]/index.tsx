@@ -1,10 +1,10 @@
 import React from "react";
-import adminRoute from "../adminRoute";
-import AdminPageTemplate from "../../components/templates/admin";
+import adminRoute from "../../adminRoute";
+import AdminPageTemplate from "../../../components/templates/admin";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ParsedUrlQuery } from "querystring";
 
-const AdminPage = ({ query }: { query: ParsedUrlQuery }) => {
+const AdminDynamicTabPage = ({ query }: { query: ParsedUrlQuery }) => {
 	return <AdminPageTemplate query={query} />;
 };
 export const getServerSideProps = (
@@ -12,5 +12,5 @@ export const getServerSideProps = (
 ): GetServerSidePropsResult<{ query: ParsedUrlQuery }> => {
 	return { props: { query: ctx.query } };
 };
-// export default adminRoute(AdminPage);
-export default AdminPage;
+// export default adminRoute(AdminDynamicTabPage);
+export default AdminDynamicTabPage;

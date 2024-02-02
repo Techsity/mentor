@@ -1,25 +1,56 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ICourse } from "../../../../../interfaces";
-import mentors from "../../../../../data/mentors";
 import { CustomTrashBin, CustomRocket } from "../../../atom/icons/video";
 import { useRouter } from "next/router";
 import { formatAmount } from "../../../../../utils";
 import { Select } from "../../../atom/inputs/Select";
 import { Filter } from "react-ionicons";
-import { fetchAllCourses } from "../../../../../services/api";
+import * as API from "../../../../../services/api";
+import { ParsedUrlQuery } from "querystring";
 
 type OrderType = "asc" | "desc";
 
-const AdminCoursesManagement = () => {
+const AdminCoursesManagement = ({ serverQuery, ...props }: { serverQuery: ParsedUrlQuery; props?: any }) => {
+	const router = useRouter();
+
 	const filter: string[] = ["all-courses", "date-created"];
 	const [currentFilter, setCurrentFilter] = useState<string>(filter[0]);
 	const [order, setOrder] = useState<OrderType>("desc");
+	const [coursesRecord, setCoursesRecord] = useState<Partial<ICourse>[]>([]);
+	const [pagination, setPagination] = useState<{ limit: number; skip: number }>({
+		limit: Number(serverQuery.limit) || 10,
+		skip: Number(serverQuery.skip) || 0,
+	});
+
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const { limit, skip } = pagination;
+
+	const pages = useMemo(() => {
+		return Math.ceil(coursesRecord.length / pagination.limit);
+	}, [coursesRecord, limit, skip]);
+
+	const fetchAllCourses = async () => {
+		setLoading(true);
+		try {
+			const data = await API.fetchAllCourses({ limit, skip });
+			setCoursesRecord(data);
+		} catch (err) {
+			console.error("Error fetching all courses: ", err);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchAllCourses();
+	}, [pagination]);
 
 	return (
 		<div className="relative">
 			{/* Top Header Section */}
 			<div className="mb-10 flex justify-between items-center w-full">
-				{/* <p className="text-sm text-zinc-500">All Courses ({formatAmount(coursesRecord.length)}) </p> */}
+				<p className="text-sm text-zinc-500">All Courses ({formatAmount(coursesRecord.length) || "0"}) </p>
 				{/* Filter Section */}
 				<div className="flex items-center">
 					<div
@@ -28,7 +59,11 @@ const AdminCoursesManagement = () => {
 						}}
 						title="Sort in ascending or descending order"
 						className="bg-[#70C5A1] p-1.5 px-3 flex justify-center items-center cursor-pointer">
-						<Filter color="#fff" cssClasses={`duration-300 ${order == "asc" ? "rotate-[180deg]" : ""}`} />
+						<Filter
+							title={order.charAt(0).toUpperCase() + order.slice(1)}
+							color="#fff"
+							cssClasses={`duration-300 ${order == "asc" ? "rotate-[180deg]" : ""}`}
+						/>
 					</div>
 					<Select<string>
 						htmlTitle="Select filter"
@@ -37,7 +72,7 @@ const AdminCoursesManagement = () => {
 						handleSelected={(val) => {
 							setCurrentFilter(val);
 						}}
-						newClassName="w-auto h-full border border-[#70C5A1] inline-block px-8 p-2 text-center relative cursor-pointer"
+						newClassName="w-[180px] h-full border border-[#70C5A1] inline-block px-10 p-2 text-center relative cursor-pointer"
 						showIcon={false}
 					/>
 				</div>
@@ -56,6 +91,28 @@ const AdminCoursesManagement = () => {
 					})} */}
 				</tbody>
 			</table>
+			<div className="flex gap-4 items-center justify-center">
+				dfed
+				{loading ? "loading" : "not loading"}
+				{limit}
+				{JSON.stringify({ serverQuery })}
+				{JSON.stringify({ props })}
+				{Array.from({ length: pages }).map((_, index) => {
+					const id = index + 1;
+					return (
+						<div
+							key={index}
+							className="cursor-pointer"
+							onClick={() => {
+								setPagination((p) => {
+									return { limit: p.limit * id, skip: p.skip * id };
+								});
+							}}>
+							{id}
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
@@ -126,7 +183,7 @@ const TableHead = () => {
 				</th>
 				<th
 					scope="col"
-					className="text-[#70C5A1] px-6 py-3 font-normal flex justify-between items-center gap-5 w-full text-xxs">
+					className="text-[#70C5A1] px-6 py-3 font-normal flex justify-between items-center gap-5 w-full text-xs">
 					<span className="">Delete</span>
 					<span className="">Boost</span>
 					<span className="">Ratings</span>
