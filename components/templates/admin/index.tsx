@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import AdminDashboardLayout, { AdminDashboardTabType, adminTabs } from "../../ui/layout/profile/AdminDashboardLayout";
+import AdminDashboardLayout, {
+	AdminDashboardTabType,
+	AdminRouterTabType,
+	adminTabs,
+} from "../../ui/layout/profile/AdminDashboardLayout";
 import AdminDashboardOverview from "../../ui/organisms/admin/dashboard";
 import AdminUsersManagement from "../../ui/organisms/admin/users-management";
 import AdminMentorsManagement from "../../ui/organisms/admin/mentors-management";
@@ -12,31 +16,24 @@ import { useRouter } from "next/router";
 
 const AdminPageTemplate = ({ query }: { query: ParsedUrlQuery }) => {
 	const router = useRouter();
-	const tab = router.query.tab as string;
-	const active = tab
-		? adminTabs.filter((t) => t.link.split("/")[1].trim().toLowerCase() === tab.trim().toLowerCase())[0]
-		: adminTabs[0];
-	const [activeTab, setActiveTab] = useState<AdminDashboardTabType["icon"]>(active.icon);
-
-	useEffect(() => {
-		setActiveTab(active ? active.icon : adminTabs[0].icon);
-	}, [router]);
+	const tab = router.query.tab as AdminRouterTabType;
+	const active = tab ? adminTabs.filter((t) => t.link === tab)[0] : adminTabs[0];
 
 	return (
-		<AdminDashboardLayout {...{ activeTab, setActiveTab }}>
-			{activeTab === "DashboardIcon" ? (
+		<AdminDashboardLayout>
+			{tab === "dashboard" ? (
 				<AdminDashboardOverview />
-			) : activeTab === "UsersIcon" ? (
+			) : tab === "users" ? (
 				<AdminUsersManagement />
-			) : activeTab === "CoursesIcon" ? (
+			) : tab === "courses" ? (
 				<AdminCoursesManagement serverQuery={query} />
-			) : activeTab === "MentorIcon" ? (
-				<AdminMentorsManagement />
-			) : activeTab === "ReportIcon" ? (
+			) : tab === "mentors" ? (
+				<AdminMentorsManagement serverQuery={query} />
+			) : tab === "report" ? (
 				<AdminReports />
-			) : activeTab === "WorkshopIcon" ? (
+			) : tab === "workshops" ? (
 				<AdminWorkshopsManagement serverQuery={query} />
-			) : activeTab === "SettingsIcon" ? (
+			) : tab === "settings" ? (
 				<AdminRolesManagement />
 			) : (
 				<AdminDashboardOverview />

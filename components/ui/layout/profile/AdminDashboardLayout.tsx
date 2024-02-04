@@ -5,20 +5,20 @@ import { NextRouter, useRouter } from "next/router";
 import classNames from "classnames";
 import { scrollToTop } from "../../../../utils";
 
+export type AdminRouterTabType = "dashboard" | "courses" | "workshops" | "mentors" | "users" | "report" | "settings";
+
 export type AdminDashboardTabType = {
 	label: string;
 	icon: keyof typeof AdminIcons;
 	iconProps?: {};
-	link: string;
+	link: AdminRouterTabType;
 };
 
 type AdminDashboardLayoutProps = {
 	children: ReactNode;
-	activeTab: AdminDashboardTabType["icon"];
-	setActiveTab: Dispatch<SetStateAction<AdminDashboardTabType["icon"]>>;
 };
 
-const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashboardLayoutProps) => {
+const AdminDashboardLayout = ({ children }: AdminDashboardLayoutProps) => {
 	return (
 		<div className="relative w-full flex">
 			<div className="z-30 sticky top-0 pt-24 xl:top-20 md:pt-10 xl:pt-6 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
@@ -32,13 +32,13 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 					</div>
 				</div>
 				{adminTabs.map((t, index) => (
-					<NavItem {...{ activeTab, setActiveTab, t }} key={index} />
+					<NavItem {...{ t }} key={index} />
 				))}
 			</div>
 			<div className="px-5 py-5 pb-10 min-h-[120dvh] flex-grow">
 				{React.Children.map(children, (child) => {
 					if (React.isValidElement(child)) {
-						return React.cloneElement<any>(child, { activeTab });
+						return React.cloneElement<any>(child, {});
 					}
 					return child;
 				})}
@@ -47,40 +47,32 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 	);
 };
 
-const NavItem = ({
-	t,
-	setActiveTab,
-	activeTab,
-}: {
-	t: AdminDashboardTabType;
-	setActiveTab: Dispatch<SetStateAction<AdminDashboardTabType["icon"]>>;
-	activeTab: AdminDashboardTabType["icon"];
-}) => {
+const NavItem = ({ t }: { t: AdminDashboardTabType }) => {
 	const IconComp = AdminIcons[t.icon];
 	const router = useRouter();
+	const tab = router.query.tab as AdminRouterTabType;
+	const isActive = t.link === tab;
 
 	return (
 		<div
 			onClick={() => {
-				if (activeTab !== t.icon) {
-					router.push(`/admin${t.link}`);
+				if (!isActive) {
+					router.push(`/admin/${t.link}`);
 					scrollToTop();
 				}
 			}}
 			className={classNames(
 				`group relative select-none cursor-pointer duration-300 border p-3 xl:px-6 flex gap-5 items-center justify-center lg:justify-between my-5`,
-				activeTab === t.icon ? "border-[#70C5A1] bg-white " : "border-transparent bg-[#70C5A1]",
+				isActive ? "border-[#70C5A1] bg-white " : "border-transparent bg-[#70C5A1]",
 			)}>
 			<div className="text-[#70C5A1] whitespace-nowrap group-hover:xl:hidden hidden group-hover:flex w-auto absolute left-12 animate__animated animate__fastest animate__fadeIn p-2 px-5 text-sm bg-white border border-[#70C5A1]">
 				{t.label}
 			</div>
-			<span className={`xl:flex hidden text-sm ${activeTab === t.icon ? "text-[#70C5A1]" : "text-white"}`}>
-				{t.label}
-			</span>
+			<span className={`xl:flex hidden text-sm ${isActive ? "text-[#70C5A1]" : "text-white"}`}>{t.label}</span>
 			<IconComp
 				{...{
 					...t.iconProps,
-					color: activeTab === t.icon ? "#70C5A1" : "#ffffff",
+					color: isActive ? "#70C5A1" : "#ffffff",
 					className: "h-4 w-4",
 				}}
 			/>
@@ -92,21 +84,21 @@ export const adminTabs: AdminDashboardTabType[] = [
 	{
 		icon: "DashboardIcon",
 		label: "Dashboard",
-		link: "/dashboard",
+		link: "dashboard",
 	},
-	{ icon: "CoursesIcon", label: "Courses", link: "/courses", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
-	{ icon: "WorkshopIcon", label: "Workshop", link: "/workshops", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
-	{ icon: "MentorIcon", label: "Mentors", link: "/mentors", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "CoursesIcon", label: "Courses", link: "courses", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "WorkshopIcon", label: "Workshop", link: "workshops", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "MentorIcon", label: "Mentors", link: "mentors", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{
 		icon: "UsersIcon",
 		label: "Users",
-		link: "/users",
+		link: "users",
 	},
-	{ icon: "ReportIcon", label: "Report", link: "/report", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "ReportIcon", label: "Report", link: "report", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{
 		icon: "SettingsIcon",
 		label: "Role Settings",
-		link: "/settings",
+		link: "settings",
 	},
 ];
 
