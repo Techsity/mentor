@@ -20,8 +20,8 @@ type AdminDashboardLayoutProps = {
 
 const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashboardLayoutProps) => {
 	return (
-		<div className="min-h-screen h-full relative w-full flex">
-			<nav className="z-30 sticky top-0 pt-24 xl:top-20 xl:pt-6 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
+		<div className="relative w-full flex">
+			<div className="z-30 sticky top-0 pt-24 xl:top-20 md:pt-10 xl:pt-6 h-screen w-auto xl:w-[20%] bg-[#F9FFFD] p-4 hidden sm:inline-block">
 				<div className="mb-12 duration-300 hidden sm:flex justify-center items-center flex-col gap-3">
 					<div className="w-10 xl:w-16 h-10 xl:h-16 bg-zinc-200 rounded-full overflow-hidden">
 						<img src="/assets/images/avatar.png" alt="" className="w-full h-full" />
@@ -34,8 +34,8 @@ const AdminDashboardLayout = ({ children, activeTab, setActiveTab }: AdminDashbo
 				{adminTabs.map((t, index) => (
 					<NavItem {...{ activeTab, setActiveTab, t }} key={index} />
 				))}
-			</nav>
-			<div className="px-5 py-5 min-h-[120dvh] flex-grow">
+			</div>
+			<div className="px-5 py-5 pb-10 min-h-[120dvh] flex-grow">
 				{React.Children.map(children, (child) => {
 					if (React.isValidElement(child)) {
 						return React.cloneElement<any>(child, { activeTab });
@@ -95,7 +95,7 @@ export const adminTabs: AdminDashboardTabType[] = [
 		link: "/dashboard",
 	},
 	{ icon: "CoursesIcon", label: "Courses", link: "/courses", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
-	{ icon: "WorkshopIcon", label: "Workshop", link: "/workshop", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
+	{ icon: "WorkshopIcon", label: "Workshop", link: "/workshops", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{ icon: "MentorIcon", label: "Mentors", link: "/mentors", iconProps: { className: "h-6 w-6 lg:h-4 w-4" } },
 	{
 		icon: "UsersIcon",

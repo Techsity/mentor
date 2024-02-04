@@ -1,25 +1,32 @@
+import * as FlagIcons from "react-country-flags-select";
 import React, { useEffect, useMemo, useState } from "react";
-import { ICourse } from "../../../../../interfaces";
-import { CustomTrashBin, CustomRocket } from "../../../atom/icons/video";
+import { IWorkshop } from "../../../../../interfaces";
+import { CustomTrashBin, CustomRocket, RestrictIcon } from "../../../atom/icons/video";
 import { useRouter } from "next/router";
 import { formatAmount } from "../../../../../utils";
 import { Select } from "../../../atom/inputs/Select";
 import { Filter } from "react-ionicons";
-import { useAllCourses } from "../../../../../hooks/admin/admin-resources";
+import { useAllWorkshops } from "../../../../../hooks/admin/admin-resources";
 import { ParsedUrlQuery } from "querystring";
-import classNames from "classnames";
 import Pagination from "../../../atom/common/Pagination";
+import classNames from "classnames";
+import mentors from "../../../../../data/mentors";
+import { IMentor } from "../../../../../interfaces/mentor.interface";
+import countries from "../../../../../data/countries";
+import CountrySelectorComp from "../../../atom/inputs/CountrySelector";
+import { IUser } from "../../../../../interfaces/user.interface";
 
-const AdminCoursesManagement = ({ serverQuery, ...props }: { serverQuery?: ParsedUrlQuery; props?: any }) => {
-	const { changeOrder, order, paginate, currentFilter, loading, setCurrentFilter, coursesRecord, currentPage } =
-		useAllCourses({
+const AdminMentorsManagement = ({ serverQuery, ...props }: { serverQuery?: ParsedUrlQuery; props?: any }) => {
+	const { changeOrder, order, paginate, currentFilter, loading, setCurrentFilter, workshops, currentPage } =
+		useAllWorkshops({
 			serverQuery,
 		});
+
 	return (
 		<div className="relative">
 			{/* Top Header Section */}
 			<div className="mb-10 flex justify-between items-center w-full">
-				<p className="text-sm text-zinc-500">All Courses ({formatAmount(coursesRecord.length) || "0"}) </p>
+				<p className="text-sm text-zinc-500">All workshops ({formatAmount(workshops.length) || "0"}) </p>
 				{/* Filter Section */}
 				<div className="flex items-center">
 					<div
@@ -33,13 +40,13 @@ const AdminCoursesManagement = ({ serverQuery, ...props }: { serverQuery?: Parse
 						/>
 					</div>
 					<Select<string>
-						htmlTitle="Select filter"
-						data={["all-courses", "date-created"]}
+						htmlTitle="Filter by status"
+						data={["Completed", "Live", "Recordings", "Upcoming", "All"] as (IWorkshop["tag"] | "All")[]}
 						label={currentFilter.split("-").join(" ")}
 						handleSelected={(val: typeof currentFilter) => {
 							setCurrentFilter(val);
 						}}
-						newClassName="w-[180px] h-full border border-[#70C5A1] inline-block px-10 p-2 text-center relative cursor-pointer"
+						newClassName="w-[140px] h-full border border-[#70C5A1] inline-block px-10 p-2 text-center relative cursor-pointer"
 						showIcon={false}
 					/>
 				</div>
@@ -53,51 +60,58 @@ const AdminCoursesManagement = ({ serverQuery, ...props }: { serverQuery?: Parse
 							return (
 								<>
 									<br />
-									<TableItem loading={loading} key={index} {...{ course: {} }} />
+									<TableItem loading={loading} key={index} {...{ mentor: {} }} />
 								</>
 							);
 						})
 					) : (
 						<>
-							{coursesRecord.map((course, index) => {
-								return (
-									<>
-										<br />
-										<TableItem loading={loading} key={index} {...{ course }} />
-									</>
-								);
-							})}
+							{/* {workshops.length > 0 ? (
+								workshops.map((workshop, index) => {
+									return (
+										<>
+											<br />
+											<TableItem loading={loading} key={index} {...{ workshop }} />
+										</>
+									);
+								})
+							) : (
+								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center">
+									No workshops found
+								</div>
+							)} */}
+							<TableItem mentor={mentors[0]} />
 						</>
 					)}
 				</tbody>
 			</table>
-			<Pagination {...{ array: coursesRecord, currentPage, loading, paginate }} />
+			<Pagination {...{ array: mentors, currentPage, loading, paginate }} />
 		</div>
 	);
 };
 
-const TableItem = ({ course, loading }: { course: Partial<ICourse>; loading?: boolean }) => {
+const TableItem = ({ mentor, loading }: { mentor: Partial<IMentor>; loading?: boolean }) => {
 	const router = useRouter();
+	const country: string = countries.find((c) => c.countryCode === mentor.user?.country)?.countryCode as string;
+
+	interface IconType {
+		[key: string]: React.ElementType;
+	}
+	const IconComponent: IconType = FlagIcons;
+
+	const IconComp: any = country ? (
+		IconComponent[country.charAt(0).toUpperCase() + country.charAt(1).toLowerCase()] ||
+		IconComponent[
+			(mentor.user as IUser).country.charAt(0).toUpperCase() +
+				(mentor.user as IUser).country.charAt(1).toLowerCase()
+		]
+	) : (
+		<></>
+	);
+
 	return (
 		<tr className="bg-white border border-[#AEF4D6] hover:bg-[#AEF4D62A] w-full duration-300 cursor-default">
-			<th
-				scope="row"
-				// Todo:
-				// onClick={()=>router.push(`/courses/${course.id}`)}
-				onClick={() => router.push(router.asPath)}
-				className="whitespace-nowrap px-4 py-4 text-xs font-normal cursor-pointer hover:underline">
-				{loading && (
-					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
-				)}
-				{!loading && course.title?.slice(0, 12) + "..."}
-			</th>
-			<td className="px-6 py-4 text-xs">
-				{loading && (
-					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
-				)}
-				{!loading && course.created_at?.split("/").join("-")}
-			</td>
-			<td className="px-6 py-4 text-xs">
+			<td scope="row" className="p-4 text-xs">
 				{loading && (
 					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
 				)}
@@ -105,8 +119,11 @@ const TableItem = ({ course, loading }: { course: Partial<ICourse>; loading?: bo
 					<div className="flex items-center gap-1">
 						<img src="/assets/images/avatar.png" alt="" className="w-5 h-5" />
 						<p className="text-xs">
-							{course.mentor?.user.name.split(" ")[0]}{" "}
-							{course.mentor?.user.name.split(" ")[1].slice(0, 8) + "..."}
+							{mentor?.user?.name.split(" ")[0]}{" "}
+							{mentor?.user?.name &&
+								mentor?.user?.name.split(" ").length >= 1 &&
+								mentor?.user?.name.split(" ")[1] &&
+								mentor?.user?.name.split(" ")[1].slice(0, 8) + "..."}
 						</p>
 					</div>
 				)}
@@ -115,21 +132,38 @@ const TableItem = ({ course, loading }: { course: Partial<ICourse>; loading?: bo
 				{loading && (
 					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
 				)}
-				{!loading ? (course.price === 0 ? "Free" : "₦" + formatAmount(Number(course.price))) : null}
+				{!loading && mentor.created_at} {"20-12-2024"}
 			</td>
-			{/* <td className="px-6 py-4 text-xs">20</td> */}
-			<td className="px-6 py-4 text-xs capitalize">
+			<td className="px-6 py-4 text-xs">
 				{loading && (
 					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
 				)}
-				{!loading && course.course_type}
+				{!loading && IconComp && <IconComp width="25px" height="25px" />}
+			</td>
+			<td className="px-6 py-4 text-xs">
+				{loading && (
+					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
+				)}
+				{!loading && <>12k</>}
+			</td>
+			<td className="px-6 py-4 text-xs">
+				{loading && (
+					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
+				)}
+				{!loading && <>12k</>}
+			</td>
+			<td className={classNames("")}>
+				{loading && (
+					<span className="p-1 w-full flex bg-zinc-200 animate__animated animate__fadeIn animate__infinite" />
+				)}
+				18k
 			</td>
 			<td className="px-10 py-4 w-full flex items-center justify-between gap-5 text-xs">
 				<span className="flex justify-start">
 					<CustomTrashBin className="cursor-pointer" />
 				</span>
 				<span className="flex justify-start">
-					<CustomRocket className="cursor-pointer" />
+					<RestrictIcon className="cursor-pointer" />
 				</span>
 				<span className="flex justify-start">
 					{loading && (
@@ -147,28 +181,28 @@ const TableHead = () => {
 		<thead className="text-xs text-[#A3A6A7] captalize">
 			<tr>
 				<th scope="col" className="px-3 pr-6 py-3 font-normal">
-					Course Title
+					Mentor
 				</th>
 				<th scope="col" className="px-6 py-3 font-normal">
-					Date Created
+					Joined
 				</th>
 				<th scope="col" className="px-6 py-3 font-normal">
-					Created by
+					Country
 				</th>
 				<th scope="col" className="px-6 py-3 font-normal">
-					Price
+					Sessions
 				</th>
-				{/* <th scope="col" className="px-6 py-3 font-normal">
-					Students
-				</th> */}
 				<th scope="col" className="px-6 py-3 font-normal">
-					Course Type
+					Courses
+				</th>
+				<th scope="col" className="px-6 py-3 font-normal">
+					Workshops
 				</th>
 				<th
 					scope="col"
 					className="text-[#70C5A1] px-6 py-3 font-normal flex justify-between items-center gap-5 w-full text-xs">
-					<span className="">Delete</span>
-					<span className="">Boost</span>
+					<span className="">Remove</span>
+					<span className="">Restrict</span>
 					<span className="">Ratings</span>
 				</th>
 			</tr>
@@ -176,4 +210,4 @@ const TableHead = () => {
 	);
 };
 
-export default AdminCoursesManagement;
+export default AdminMentorsManagement;

@@ -8,8 +8,8 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<Fragment>
 			<Progressbar />
-			<Navbar />
 			<Sidebar />
+			<Navbar />
 			<div className="relative">{children}</div>
 			<Footer />
 		</Fragment>

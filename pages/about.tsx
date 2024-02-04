@@ -2,11 +2,7 @@ import React from "react";
 import AboutPageTemplate from "../components/templates/about";
 
 const AboutPage = () => {
-	return (
-		<div>
-			<AboutPageTemplate />
-		</div>
-	);
+	return <AboutPageTemplate />;
 };
 
 export default AboutPage;

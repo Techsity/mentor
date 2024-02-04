@@ -2,10 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../../redux/reducers/onboardingSlice";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
 import mentorRoles from "../../../../../../../data/global/mentorRoles.json";
 
@@ -15,7 +12,7 @@ const StepOneMentorOnboarding = () => {
 
 	const [role, setRole] = useState<string>(onboardingMentor?.role || "");
 
-	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions<string>({
+	const { SuggestionsComponent } = useSuggestions<string>({
 		suggestions: mentorRoles.map((item) => item),
 		inputValue: role,
 	});

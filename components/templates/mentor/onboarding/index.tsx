@@ -5,19 +5,20 @@ import { useRouter } from "next/router";
 import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
-import { setOnboardingMentor, onboardingMentorState } from "../../../../redux/reducers/onboardingSlice";
+import {
+	setOnboardingMentor,
+	onboardingMentorState,
+	initialMentorOnboardingState,
+} from "../../../../redux/reducers/onboardingSlice";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 
 const MentorOnboardingPageTemplate = () => {
-	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const pageKey: any = Object.keys(router.query)[0];
-	const [current, setCurrent] = useState<"signup" | "">(pageKey);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [agree, setAgree] = useState<boolean>(onboardingMentor.agreedToTerms || false);
+	const [agree, setAgree] = useState<boolean>(onboardingMentor?.agreedToTerms || false);
 
 	const handleNavigate = () => {
 		setLoading(true);
@@ -26,10 +27,9 @@ const MentorOnboardingPageTemplate = () => {
 				dispatch(
 					setOnboardingMentor({
 						...onboardingMentor,
-						agreedToTerms: !onboardingMentor.agreedToTerms,
+						agreedToTerms: !onboardingMentor?.agreedToTerms || !agree,
 					}),
 				);
-				setCurrent("signup");
 				setLoading(false);
 			}, 3000);
 		} else {
@@ -38,25 +38,13 @@ const MentorOnboardingPageTemplate = () => {
 	};
 
 	useEffect(() => {
+		if (!onboardingMentor) setOnboardingMentor({ ...initialMentorOnboardingState });
 		if (user) dispatch(setOnboardingMentor({ ...onboardingMentor, user }));
-		if (onboardingMentor.agreedToTerms) {
-			setCurrent("signup");
-		}
-		// if (pageKey === "signup") setCurrent("signup");
-		// else {
-		// 	setCurrent("");
-		// }
-		return () => {
-			setLoading(false);
-			// setCurrent("");
-		};
-	}, [pageKey]);
+	}, []);
 
 	return (
 		<div className="bg-[#F6F9F8] min-h-[50dvh]">
-			{pageKey === "signup" && onboardingMentor.agreedToTerms ? (
-				<MentorOnboardingSteps />
-			) : current === "signup" && onboardingMentor.agreedToTerms ? (
+			{onboardingMentor.agreedToTerms ? (
 				<MentorOnboardingSteps />
 			) : (
 				<>

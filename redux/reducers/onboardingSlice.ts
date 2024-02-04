@@ -3,7 +3,7 @@ import { IMentorOnboardingState } from "../../interfaces/mentor.interface";
 import { IUser } from "../../interfaces/user.interface";
 import { RootState } from "../store";
 
-const initialMentorOnboardingState: IMentorOnboardingState = {
+export const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
 	agreedToTerms: false,
 	user: null,

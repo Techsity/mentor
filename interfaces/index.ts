@@ -305,7 +305,7 @@ export interface IWorkshopContent {
 export interface IWorkshop {
 	id?: string;
 	title: string;
-	tag: "Live" | "Upcoming" | "Recordings";
+	tag: "Live" | "Upcoming" | "Recordings" | "Completed";
 	description: string;
 	startDate: string;
 	endDate: string;

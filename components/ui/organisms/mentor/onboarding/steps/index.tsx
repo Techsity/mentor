@@ -22,36 +22,31 @@ const MentorOnboardingSteps = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const moveToNextStep = () => {
+		console.log("Next", { step: onboardingMentor.currentStep });
 		setLoading(true);
-		setTimeout(function () {
-			if (currentStep < totalSteps) {
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						currentStep: onboardingMentor.currentStep + 1,
-					}),
-				);
-				scrollToTop();
-			}
-			setLoading(false);
-		}, 1500);
+		if (currentStep < totalSteps) {
+			dispatch(
+				setOnboardingMentor({
+					...onboardingMentor,
+					currentStep: onboardingMentor.currentStep + 1,
+				}),
+			);
+			scrollToTop();
+		}
+		setLoading(false);
 	};
 
 	const handleNext = () => {
 		setLoading(true);
-		if (currentStep < totalSteps) {
-			if (currentStep === 1) {
-				if (onboardingMentor.bio && onboardingMentor.role) {
-					moveToNextStep();
-				} else {
-					setLoading(false);
-				}
-			}
-			if (currentStep === 2 || currentStep === 3 || currentStep === 4) {
+		if (currentStep === 1) {
+			if (onboardingMentor.bio && onboardingMentor.role) {
 				moveToNextStep();
+			} else {
+				setLoading(false);
 			}
-		} else {
-			setLoading(false);
+		}
+		if (currentStep === 2 || currentStep === 3 || currentStep === 4) {
+			moveToNextStep();
 		}
 	};
 
