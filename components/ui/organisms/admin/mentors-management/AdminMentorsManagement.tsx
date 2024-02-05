@@ -13,7 +13,7 @@ import * as FlagIcons from "react-country-flags-select";
 import { SelectedCountry } from "../../../../../interfaces/country-selector.interface";
 
 const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }) => {
-	const { changeOrder, order, paginate, currentFilter, loading, setCurrentFilter, mentors, currentPage } =
+	const { changeOrder, order, paginate, currentFilter, loading, changeCountryFilter, mentors, currentPage } =
 		useAllMentors({
 			serverQuery,
 		});
@@ -24,6 +24,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 			<div className="mb-10 flex justify-between items-center w-full">
 				<p className="text-sm text-zinc-500">All mentors ({formatAmount(mentors.length) || "0"}) </p>
 				{/* Filter Section */}
+				<p className="capitalize">{currentFilter.toLowerCase() !== "all" && "Mentors in " + currentFilter}</p>
 				<div className="flex items-center">
 					<div
 						onClick={changeOrder}
@@ -40,7 +41,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 						data={["All", ...countries.map((c) => c.label)]}
 						label={currentFilter.split("-").join(" ")}
 						handleSelected={(val: typeof currentFilter) => {
-							setCurrentFilter(val);
+							changeCountryFilter(val);
 						}}
 						newClassName="w-[140px] h-full border border-[#70C5A1] inline-block px-10 p-2 text-center relative cursor-pointer"
 						showIcon={false}
@@ -73,7 +74,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 								})
 							) : currentFilter !== "All" ? (
 								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center w-full">
-									No mentors found in this country - {currentFilter}
+									No mentors found in {currentFilter}
 								</div>
 							) : (
 								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center w-full">

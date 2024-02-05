@@ -1,11 +1,10 @@
 //! Still needs to be cleaned up
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as API from "../../services/api";
 import { useRouter } from "next/router";
 import { ICourse, IWorkshop } from "../../interfaces";
 import { ParsedUrlQuery } from "querystring";
-import { scrollToTop } from "../../utils";
 import { IMentor } from "../../interfaces/mentor.interface";
 
 type OrderType = "asc" | "desc";
@@ -187,7 +186,7 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 	const { serverQuery } = args || {};
 	const router = useRouter();
 
-	const [currentFilter, setCurrentFilter] = useState<string | "all">("all");
+	const [currentFilter, setCurrentFilter] = useState<string | "all">(String(serverQuery?.country) || "all");
 
 	const [order, setOrder] = useState<OrderType>((serverQuery?.order as OrderType) || "desc");
 	const [mentors, setMentors] = useState<Partial<IMentor>[]>([]);
@@ -204,11 +203,15 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 
 	const { limit, skip } = pagination;
 
+	const filter = String(serverQuery?.country).toLowerCase() || currentFilter.toLowerCase();
+
 	const fetchMentorData = async () => {
 		setLoading(true);
 		try {
 			const data = await API.fetchAllMentors();
-			setMentors(data);
+			setMentors(() => {
+				return data.filter((m) => m.user?.country.toLowerCase() === filter);
+			});
 			setOriginalArray(data);
 		} catch (err) {
 			console.error("Error fetching all mentors: ", err);
@@ -228,10 +231,33 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 		fetchMentorData();
 	}, [pagination]);
 
+	const changeCountryFilter = useCallback(
+		(country?: string) => {
+			if (country) {
+				setMentors((w) => {
+					router.push({
+						pathname: router.pathname,
+						query: { ...router.query, order, country: currentFilter.toLowerCase() },
+					});
+					return originalArray.filter((p) => p.user?.country.toLowerCase() === filter);
+				});
+			} else if (currentFilter.toLowerCase() !== "all")
+				setMentors((w) => {
+					router.push({
+						pathname: router.pathname,
+						query: { ...router.query, order, country: currentFilter.toLowerCase() },
+					});
+					return originalArray.filter((p) => p.user?.country.toLowerCase() === filter);
+				});
+			else if (filter.toLowerCase() === "all") setMentors(originalArray);
+		},
+		[serverQuery?.country],
+	);
+
 	useEffect(() => {
-		if (currentFilter !== "All") setMentors((w) => originalArray.filter((p) => p.user?.country === currentFilter));
-		else setMentors(originalArray);
-	}, [currentFilter]);
+		console.log({ cty: serverQuery?.country });
+		changeCountryFilter();
+	}, [currentFilter, filter]);
 
 	useEffect(() => {
 		if (order === "asc") mentors.reverse();
@@ -256,7 +282,7 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 		limit,
 		skip,
 		currentFilter,
-		setCurrentFilter,
+		changeCountryFilter,
 		mentors,
 		paginate,
 		currentPage,

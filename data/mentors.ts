@@ -1,7 +1,5 @@
 import { MENTOR_ROLES } from "../constants/mentor";
 import { IMentor, IMentorExpLevel } from "../interfaces/mentor.interface";
-import { courseCategories, courseContents } from "./courses";
-import reviews from "./reviews";
 import { dummyUsers } from "./user";
 
 const mentors: IMentor[] = [

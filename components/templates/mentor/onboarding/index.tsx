@@ -38,7 +38,6 @@ const MentorOnboardingPageTemplate = () => {
 	};
 
 	useEffect(() => {
-		if (!onboardingMentor) setOnboardingMentor({ ...initialMentorOnboardingState });
 		if (user) dispatch(setOnboardingMentor({ ...onboardingMentor, user }));
 	}, []);
 

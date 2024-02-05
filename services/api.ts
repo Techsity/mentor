@@ -11,6 +11,8 @@ import { VIEW_MENTOR_PROFILE } from "./graphql/mutations/mentors";
 import mentors from "../data/mentors";
 import workshops from "../data/workshops";
 import { IMentor } from "../interfaces/mentor.interface";
+import { dummyUsers } from "../data/user";
+import { IUser } from "../interfaces/user.interface";
 
 const apiEndpoint = "/api/graphql";
 
@@ -88,6 +90,14 @@ export const fetchAllMentors = async (args?: { skip?: number; limit?: number }):
 	return new Promise<Partial<IMentor>[]>((resolve) => {
 		setTimeout(() => {
 			resolve(mentors.slice(skip, skip + limit));
+		}, 2000);
+	});
+};
+export const fetchAllUsers = async (args?: { skip?: number; limit?: number }): Promise<Partial<IUser>[]> => {
+	const { limit = 10, skip = 0 } = args || {};
+	return new Promise<Partial<IUser>[]>((resolve) => {
+		setTimeout(() => {
+			resolve(dummyUsers.slice(skip, skip + limit));
 		}, 2000);
 	});
 };
