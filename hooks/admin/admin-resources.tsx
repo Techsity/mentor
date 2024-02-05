@@ -56,9 +56,9 @@ export const useAllCourses = (args?: { serverQuery?: ParsedUrlQuery }) => {
 
 	useEffect(() => {
 		if (currentFilter === "date-created") {
-			const sortedCourses = [...courses].sort((a, b) => {
-				const dateA = new Date(a.created_at.split("/").reverse().join("/"));
-				const dateB = new Date(b.created_at.split("/").reverse().join("/"));
+			const sortedCourses = [...courses].sort((a: any, b: any) => {
+				const dateA: any = new Date(a.created_at.split("/").reverse().join("/"));
+				const dateB: any = new Date(b.created_at.split("/").reverse().join("/"));
 				return dateB - dateA;
 			});
 			setSortedCourses(sortedCourses);
