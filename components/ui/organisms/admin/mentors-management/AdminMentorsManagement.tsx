@@ -3,11 +3,8 @@ import { ParsedUrlQuery } from "querystring";
 import React from "react";
 import { Filter } from "react-ionicons";
 import countries from "../../../../../data/countries";
-import mentors from "../../../../../data/mentors";
-import { useAllWorkshops } from "../../../../../hooks/admin/admin-resources";
-import { IWorkshop } from "../../../../../interfaces";
+import { useAllMentors } from "../../../../../hooks/admin/admin-resources";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { IUser } from "../../../../../interfaces/user.interface";
 import { formatAmount } from "../../../../../utils";
 import Pagination from "../../../atom/common/Pagination";
 import { CustomTrashBin, RestrictIcon } from "../../../atom/icons/video";
@@ -16,8 +13,8 @@ import * as FlagIcons from "react-country-flags-select";
 import { SelectedCountry } from "../../../../../interfaces/country-selector.interface";
 
 const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }) => {
-	const { changeOrder, order, paginate, currentFilter, loading, setCurrentFilter, workshops, currentPage } =
-		useAllWorkshops({
+	const { changeOrder, order, paginate, currentFilter, loading, setCurrentFilter, mentors, currentPage } =
+		useAllMentors({
 			serverQuery,
 		});
 
@@ -25,7 +22,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 		<div className="relative">
 			{/* Top Header Section */}
 			<div className="mb-10 flex justify-between items-center w-full">
-				<p className="text-sm text-zinc-500">All workshops ({formatAmount(workshops.length) || "0"}) </p>
+				<p className="text-sm text-zinc-500">All mentors ({formatAmount(mentors.length) || "0"}) </p>
 				{/* Filter Section */}
 				<div className="flex items-center">
 					<div
@@ -40,7 +37,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 					</div>
 					<Select<string>
 						htmlTitle="Filter by status"
-						data={["Completed", "Live", "Recordings", "Upcoming", "All"] as (IWorkshop["tag"] | "All")[]}
+						data={["All", ...countries.map((c) => c.label)]}
 						label={currentFilter.split("-").join(" ")}
 						handleSelected={(val: typeof currentFilter) => {
 							setCurrentFilter(val);
@@ -74,9 +71,13 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 										</>
 									);
 								})
+							) : currentFilter !== "All" ? (
+								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center w-full">
+									No mentors found in this country - {currentFilter}
+								</div>
 							) : (
-								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center">
-									No mentors found
+								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center w-full">
+									Network error
 								</div>
 							)}
 						</>

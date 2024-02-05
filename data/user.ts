@@ -8,7 +8,7 @@ export const dummyUsers = [
 	{
 		email: "user@mail.offline",
 		name: "Test User Offline",
-		country: countries[0].label,
+		country: "NG",
 		created_at: new Date().toDateString(),
 		is_active: true,
 		is_admin: false,
@@ -40,7 +40,7 @@ export const dummyUsers = [
 		name: "CodePriest",
 		phone: "123-456-7890",
 		avatar: "/assets/images/avatar2.png",
-		country: countries[0].label,
+		country: "NG",
 		is_online: true,
 		is_active: true,
 		is_verified: true,

@@ -1,13 +1,14 @@
+//! Still needs to be cleaned up
+
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import * as API from "../../services/api";
 import { useRouter } from "next/router";
 import { ICourse, IWorkshop } from "../../interfaces";
 import { ParsedUrlQuery } from "querystring";
 import { scrollToTop } from "../../utils";
+import { IMentor } from "../../interfaces/mentor.interface";
 
 type OrderType = "asc" | "desc";
-
-//! Still needs to be cleaned up
 export const useAllCourses = (args?: { serverQuery?: ParsedUrlQuery }) => {
 	const { serverQuery } = args || {};
 	const router = useRouter();
@@ -98,9 +99,8 @@ export const useAllCourses = (args?: { serverQuery?: ParsedUrlQuery }) => {
 	};
 };
 
-//! ============================================================
+// ===========================================================
 
-//! Also needs to be cleaned up
 export const useAllWorkshops = (args?: { serverQuery?: ParsedUrlQuery }) => {
 	const { serverQuery } = args || {};
 	const router = useRouter();
@@ -176,6 +176,88 @@ export const useAllWorkshops = (args?: { serverQuery?: ParsedUrlQuery }) => {
 		currentFilter,
 		setCurrentFilter,
 		workshops,
+		paginate,
+		currentPage,
+	};
+};
+
+// ===========================================================
+
+export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
+	const { serverQuery } = args || {};
+	const router = useRouter();
+
+	const [currentFilter, setCurrentFilter] = useState<string | "all">("all");
+
+	const [order, setOrder] = useState<OrderType>((serverQuery?.order as OrderType) || "desc");
+	const [mentors, setMentors] = useState<Partial<IMentor>[]>([]);
+	const [originalArray, setOriginalArray] = useState<Partial<IMentor>[]>([]);
+
+	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	const [pagination, setPagination] = useState<{ limit: number; skip: number }>({
+		limit: parseInt(serverQuery?.limit as string) || 10,
+		skip: parseInt(serverQuery?.skip as string) || 0,
+	});
+
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const { limit, skip } = pagination;
+
+	const fetchMentorData = async () => {
+		setLoading(true);
+		try {
+			const data = await API.fetchAllMentors();
+			setMentors(data);
+			setOriginalArray(data);
+		} catch (err) {
+			console.error("Error fetching all mentors: ", err);
+		} finally {
+			setLoading(false);
+			scrollTo({ behavior: "smooth", top: 0 });
+		}
+	};
+
+	const changeOrder = () => {
+		setOrder((p) => (p == "asc" ? "desc" : "asc"));
+		router.push({ pathname: router.pathname, query: { ...router.query, order } });
+	};
+
+	useEffect(() => {
+		scrollTo({ behavior: "smooth", top: 0 });
+		fetchMentorData();
+	}, [pagination]);
+
+	useEffect(() => {
+		if (currentFilter !== "All") setMentors((w) => originalArray.filter((p) => p.user?.country === currentFilter));
+		else setMentors(originalArray);
+	}, [currentFilter]);
+
+	useEffect(() => {
+		if (order === "asc") mentors.reverse();
+		else mentors.reverse();
+	}, [order]);
+
+	const paginate = (page: number) => {
+		if (!loading)
+			if (currentPage !== page) {
+				setPagination((p) => {
+					return { limit: p.limit * page, skip: p.skip * page };
+				});
+				router.push({ pathname: router.pathname, query: { tab: "mentors", page, skip, limit } });
+				setCurrentPage(page);
+			}
+	};
+
+	return {
+		order,
+		changeOrder,
+		loading,
+		limit,
+		skip,
+		currentFilter,
+		setCurrentFilter,
+		mentors,
 		paginate,
 		currentPage,
 	};

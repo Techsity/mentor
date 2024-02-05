@@ -10,6 +10,7 @@ import { InMemoryCache } from "@apollo/client";
 import { VIEW_MENTOR_PROFILE } from "./graphql/mutations/mentors";
 import mentors from "../data/mentors";
 import workshops from "../data/workshops";
+import { IMentor } from "../interfaces/mentor.interface";
 
 const apiEndpoint = "/api/graphql";
 
@@ -72,11 +73,21 @@ export const fetchAllCourses = async (args?: { skip?: number; limit?: number }):
 		}, 2000);
 	});
 };
+
 export const fetchAllWorkshops = async (args?: { skip?: number; limit?: number }): Promise<Partial<IWorkshop>[]> => {
 	const { limit = 10, skip = 0 } = args || {};
 	return new Promise<Partial<IWorkshop>[]>((resolve) => {
 		setTimeout(() => {
 			resolve(workshops.slice(skip, skip + limit));
+		}, 2000);
+	});
+};
+
+export const fetchAllMentors = async (args?: { skip?: number; limit?: number }): Promise<Partial<IMentor>[]> => {
+	const { limit = 10, skip = 0 } = args || {};
+	return new Promise<Partial<IMentor>[]>((resolve) => {
+		setTimeout(() => {
+			resolve(mentors.slice(skip, skip + limit));
 		}, 2000);
 	});
 };
