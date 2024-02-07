@@ -24,7 +24,7 @@ const AdminPageTemplate = ({ query }: { query: ParsedUrlQuery }) => {
 			{tab === "dashboard" ? (
 				<AdminDashboardOverview />
 			) : tab === "users" ? (
-				<AdminUsersManagement />
+				<AdminUsersManagement serverQuery={query} />
 			) : tab === "courses" ? (
 				<AdminCoursesManagement serverQuery={query} />
 			) : tab === "mentors" ? (

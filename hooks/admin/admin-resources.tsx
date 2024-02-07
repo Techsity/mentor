@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { ICourse, IWorkshop } from "../../interfaces";
 import { ParsedUrlQuery } from "querystring";
 import { IMentor } from "../../interfaces/mentor.interface";
+import countries from "../../data/countries";
+import { IUser } from "../../interfaces/user.interface";
 
 type OrderType = "asc" | "desc";
 export const useAllCourses = (args?: { serverQuery?: ParsedUrlQuery }) => {
@@ -226,10 +228,32 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 	};
 
 	const changeCountryFilter = (country?: string) => {
-		router.push({
-			pathname: router.pathname,
-			query: { ...router.query, order, country: String(country).toLowerCase() },
-		});
+		if (country)
+			router.push({
+				pathname: router.pathname,
+				query: { ...router.query, order, country: String(country).toLowerCase() },
+			});
+		else {
+			router.push({
+				pathname: router.pathname,
+				query: { ...router.query, order, country: filter.toLowerCase() },
+			});
+
+			setMentors((w) =>
+				originalArray.filter((p) => {
+					const filteredCountry = countries.find(
+						(cntry) =>
+							cntry.label.toLowerCase() == filter.toLowerCase() ||
+							cntry.countryCode.toLowerCase() == filter.toLowerCase(),
+					);
+					const selectedMentors =
+						p.user?.country.toLowerCase() == filteredCountry?.label.toLowerCase() ||
+						p.user?.country.toLowerCase() == filteredCountry?.countryCode.toLowerCase();
+
+					return selectedMentors;
+				}),
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -239,14 +263,7 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 
 	useEffect(() => {
 		if (filter.toLowerCase() === "all-countries" || !filter || filter == "undefined") setMentors(originalArray);
-		else
-			setMentors((w) => {
-				router.push({
-					pathname: router.pathname,
-					query: { ...router.query, order, country: filter.toLowerCase() },
-				});
-				return originalArray.filter((p) => p.user?.country.toLowerCase() === filter);
-			});
+		else changeCountryFilter();
 	}, [filter]);
 
 	useEffect(() => {
@@ -274,6 +291,120 @@ export const useAllMentors = (args?: { serverQuery?: ParsedUrlQuery }) => {
 		currentFilter: filter,
 		changeCountryFilter,
 		mentors,
+		paginate,
+		currentPage,
+	};
+};
+
+// ===========================================================
+
+export const useAllUsers = (args?: { serverQuery?: ParsedUrlQuery }) => {
+	const { serverQuery } = args || {};
+	const router = useRouter();
+
+	const [order, setOrder] = useState<OrderType>((serverQuery?.order as OrderType) || "desc");
+	const [users, setUsers] = useState<Partial<IUser>[]>([]);
+	const [originalArray, setOriginalArray] = useState<Partial<IUser>[]>([]);
+
+	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	const [pagination, setPagination] = useState<{ limit: number; skip: number }>({
+		limit: parseInt(serverQuery?.limit as string) || 10,
+		skip: parseInt(serverQuery?.skip as string) || 0,
+	});
+
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const { limit, skip } = pagination;
+
+	const filter = useMemo(() => String(serverQuery?.country).toLowerCase() || "all-countries", [serverQuery?.country]);
+
+	const fetchMentorData = async () => {
+		setLoading(true);
+		try {
+			const data = await API.fetchAllUsers();
+			setUsers(() => {
+				return data.filter((user) => (user as IUser).country.toLowerCase() === filter);
+			});
+			if (!filter || filter == "undefined") setUsers(data);
+			setOriginalArray(data);
+		} catch (err) {
+			console.error("Error fetching all users: ", err);
+		} finally {
+			setLoading(false);
+			scrollTo({ behavior: "smooth", top: 0 });
+		}
+	};
+
+	const changeOrder = () => {
+		setOrder((p) => (p == "asc" ? "desc" : "asc"));
+		router.push({ pathname: router.pathname, query: { ...router.query, order } });
+	};
+
+	const changeCountryFilter = (country?: string) => {
+		if (country)
+			router.push({
+				pathname: router.pathname,
+				query: { ...router.query, order, country: String(country).toLowerCase() },
+			});
+		else {
+			router.push({
+				pathname: router.pathname,
+				query: { ...router.query, order, country: filter.toLowerCase() },
+			});
+
+			setUsers((w) =>
+				originalArray.filter((user) => {
+					const filteredCountry = countries.find(
+						(cntry) =>
+							cntry.label.toLowerCase() == filter.toLowerCase() ||
+							cntry.countryCode.toLowerCase() == filter.toLowerCase(),
+					);
+					const selectedUsers =
+						user?.country?.toLowerCase() == filteredCountry?.label.toLowerCase() ||
+						user?.country?.toLowerCase() == filteredCountry?.countryCode.toLowerCase();
+
+					return selectedUsers;
+				}),
+			);
+		}
+	};
+
+	useEffect(() => {
+		scrollTo({ behavior: "smooth", top: 0 });
+		fetchMentorData();
+	}, [pagination]);
+
+	useEffect(() => {
+		if (filter.toLowerCase() === "all-countries" || !filter || filter == "undefined") setUsers(originalArray);
+		else changeCountryFilter();
+	}, [filter]);
+
+	useEffect(() => {
+		if (order === "asc") users.reverse();
+		else users.reverse();
+	}, [order]);
+
+	const paginate = (page: number) => {
+		if (!loading)
+			if (currentPage !== page) {
+				setPagination((p) => {
+					return { limit: p.limit * page, skip: p.skip * page };
+				});
+				router.push({ pathname: router.pathname, query: { tab: "users", page, skip, limit } });
+				setCurrentPage(page);
+			}
+	};
+
+	return {
+		order,
+		changeOrder,
+		loading,
+		limit,
+		skip,
+		currentFilter: filter,
+		changeCountryFilter,
+		users,
 		paginate,
 		currentPage,
 	};

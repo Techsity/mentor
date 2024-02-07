@@ -22,14 +22,15 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 		<div className="relative">
 			{/* Top Header Section */}
 			<div className="mb-10 flex justify-between items-center w-full">
-				<p className="text-sm text-zinc-500">All mentors ({formatAmount(mentors.length) || "0"}) </p>
-				{/* Filter Section */}
-				<p className="capitalize">
-					{currentFilter &&
+				<p className="text-sm text-zinc-500 capitalize">
+					{(currentFilter &&
 						currentFilter !== "undefined" &&
 						currentFilter.toLowerCase() !== "all" &&
-						"Mentors in " + currentFilter}
+						"Mentors in " + currentFilter.split("-").join(" ")) ||
+						"All mentors"}{" "}
+					({formatAmount(mentors.length) || "0"}){" "}
 				</p>
+				{/* Filter Section */}
 				<div className="flex items-center">
 					<div
 						onClick={changeOrder}
@@ -68,7 +69,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 						})
 					) : (
 						<>
-							{mentors.length > 0 ? (
+							{mentors.length >= 1 ? (
 								mentors.map((mentor, index) => {
 									return (
 										<>
@@ -79,7 +80,7 @@ const AdminMentorsManagement = ({ serverQuery }: { serverQuery: ParsedUrlQuery }
 								})
 							) : currentFilter && currentFilter !== "undefined" && currentFilter !== "All" ? (
 								<div className="text-red-500 text-sm text-center my-5 flex justify-center items-center w-full">
-									No mentors found in {currentFilter}
+									No mentors found in {currentFilter.split("-").join(" ")}
 								</div>
 							) : (
 								currentFilter &&
