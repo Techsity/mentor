@@ -21,6 +21,7 @@
 		"agora-rtc-react": "^2.1.0",
 		"animate.css": "^4.1.1",
 		"axios": "^1.4.0",
+		"dayjs": "^1.11.10",
 		"graphql": "^16.8.1",
 		"graphql-request": "^6.1.0",
 		"graphql-tag": "^2.12.6",
