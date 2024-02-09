@@ -15,8 +15,6 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		useEffect(() => {
 			if (!auth || !user) {
 				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-			} else if (user.is_admin) {
-				router.replace("/admin");
 			}
 		}, [auth, user, next, router]);
 

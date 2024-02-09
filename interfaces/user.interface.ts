@@ -22,6 +22,8 @@ export interface IUser {
 	updated_at?: string;
 }
 
+export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };
+
 export interface IUserUpdate extends IUser {
 	payment_cards?: IUserPaymentCard[];
 }

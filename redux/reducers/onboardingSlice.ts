@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IMentorOnboardingState } from "../../interfaces/mentor.interface";
-import { IUser } from "../../interfaces/user.interface";
+import { IUser, IUserOnboardingState } from "../../interfaces/user.interface";
 import { RootState } from "../store";
 
 export const initialMentorOnboardingState: IMentorOnboardingState = {
@@ -19,7 +19,7 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 	availability: [],
 };
 
-const initialUserOnboardingState: { user: IUser | null } = { user: null };
+const initialUserOnboardingState: IUserOnboardingState = { country: "", email: "", fullName: "", phone: "" };
 
 const initialState = {
 	mentor: initialMentorOnboardingState,
@@ -35,16 +35,17 @@ const onboardingSlice = createSlice({
 			// action.payload.user = null;
 			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
-		setOnboardingUser: (state, action: {}) => {
-			//
+		setOnboardingUser: (state, action: { payload: IUserOnboardingState }) => {
+			state.user = action.payload;
 		},
 	},
 });
 
-export const { setOnboardingMentor } = onboardingSlice.actions;
+export const { setOnboardingMentor, setOnboardingUser } = onboardingSlice.actions;
 
 export const mentorOnboardingTermsAgreed = (state: RootState) => state.onboarding.mentor.agreedToTerms;
 
 export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
+export const onboardingUserState = (state: RootState) => state.onboarding.user;
 
 export default onboardingSlice.reducer;

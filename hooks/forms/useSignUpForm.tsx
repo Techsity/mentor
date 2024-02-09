@@ -8,6 +8,9 @@ import { REGISTER_USER } from "../../services/graphql/mutations/auth";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { formatGqlError } from "../../utils/auth";
+import { onboardingUserState, setOnboardingUser } from "../../redux/reducers/onboardingSlice";
+import { useSelector, useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
 
 export interface IFieldError {
 	field: keyof ISignUpState | "";
@@ -20,14 +23,17 @@ type ICreateRegisterInput = {
 };
 
 const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state: ISignUpState) => void }) => {
+	const dispatch = useDispatch();
+	const onboardingUser = useSelector(onboardingUserState);
 	const router = useRouter();
+
 	const initial: ISignUpState = {
-		fullName: "",
-		email: "",
+		fullName: onboardingUser.fullName || "",
+		email: onboardingUser.email || "",
+		phone: onboardingUser.phone || "",
+		country: onboardingUser.country || "",
 		password: "",
 		confirmPassword: "",
-		phone: "",
-		country: "",
 	};
 	const { initialValues, onSubmit } = props || {};
 	const [loading, setLoading] = useState<boolean>(false);
@@ -85,6 +91,8 @@ const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state
 	};
 	const handleChange = (name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [name]: e?.target.value });
+		if (name !== "password" && name !== "confirmPassword")
+			dispatch(setOnboardingUser({ ...onboardingUser, [name]: e?.target.value }));
 		setErrors([]);
 		toast.dismiss("auth_form_pop");
 	};
@@ -111,6 +119,11 @@ const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state
 		if (values) {
 			const { fullName, country, phone, email, password } = values;
 			setLoading(true);
+
+			const token = jwt.sign({ email, fullName }, String(process.env.NEXT_PUBLIC_TOKEN_HASH_SECRET), {
+				expiresIn: 3600,
+			});
+			console.log({ token });
 
 			registerUser({
 				variables: {

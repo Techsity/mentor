@@ -19,7 +19,7 @@ const OnboardingCongratulations = () => {
 				<Confetti active={celebrate} config={{ ...confettiConfig }} />
 				<div className="">
 					<h1 className="md:text-8xl text-4xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
-						Congra <br /> tulations!
+						Congratulations!
 					</h1>
 					<div className="my-5 text-[#094B10] text-xl" style={{ fontFamily: "Days One" }}>
 						Begin your Journey to endless knowledge
@@ -29,7 +29,7 @@ const OnboardingCongratulations = () => {
 							onClick={() => {
 								setLoading(true);
 								setTimeout(function () {
-									router.replace("/dashboard");
+									router.replace("/auth?login");
 								}, 2000);
 							}}
 							disabled={loading}
