@@ -1,34 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { useRouter } from "next/router";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);
+	const router = useRouter();
+	const adminUrl = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
+	const navigate = () => {
+		user?.is_admin && adminUrl ? window.open(adminUrl, "_blank") : router.push("/profile");
+	};
 
 	return (
-		<div className="relative group cursor-pointer h-full">
-			<Link href={user?.is_admin ? "/admin" : `/profile`}>
-				<div className="flex items-center gap-3">
-					<div className="rounded-full object-cover w-9 h-9 relative">
-						<img
-							src={user?.avatar || "/assets/images/avatar.png"}
-							alt={""}
-							className="w-full h-full bg-zinc-300 rounded-full"
-							loading="lazy"
-						/>
-					</div>
-					<div className="leading-none sm:inline-block hidden">
-						<h1 className="text-sm font-medium">
-							{/* {user?.name.split(" ")[0] +
+		<div onClick={navigate} className="relative group cursor-pointer h-full">
+			<div className="flex items-center gap-3">
+				<div className="rounded-full object-cover w-9 h-9 relative">
+					<img
+						src={user?.avatar || "/assets/images/avatar.png"}
+						alt={""}
+						className="w-full h-full bg-zinc-300 rounded-full"
+						loading="lazy"
+					/>
+				</div>
+				<div className="leading-none sm:inline-block hidden">
+					<h1 className="text-sm font-medium">
+						{/* {user?.name.split(" ")[0] +
 								" " +
 								user?.name.split(" ")[1]} */}
-							{user?.name.split(" ")[0]}
-						</h1>
-					</div>
+						{user?.name.split(" ")[0]}
+					</h1>
 				</div>
-			</Link>
+			</div>
 			{/* <div className="group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20dvw] right-0 hidden absolute w-full sm:max-w-[25dvw] max-w-[100dvw] bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
 				<div className="flex flex-col items-center w-full">
 					{links.map((link, i) => (

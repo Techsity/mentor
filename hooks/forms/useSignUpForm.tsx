@@ -26,12 +26,13 @@ const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state
 	const dispatch = useDispatch();
 	const onboardingUser = useSelector(onboardingUserState);
 	const router = useRouter();
+	const toastId = React.useId();
 
 	const initial: ISignUpState = {
-		fullName: onboardingUser.fullName || "",
-		email: onboardingUser.email || "",
-		phone: onboardingUser.phone || "",
-		country: onboardingUser.country || "",
+		fullName: onboardingUser?.fullName || "",
+		email: onboardingUser?.email || "",
+		phone: onboardingUser?.phone || "",
+		country: onboardingUser?.country || "",
 		password: "",
 		confirmPassword: "",
 	};
@@ -92,67 +93,64 @@ const useSignUpForm = (props?: { initialValues?: ISignUpState; onSubmit?: (state
 	const handleChange = (name: keyof ISignUpState) => (e?: ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [name]: e?.target.value });
 		if (name !== "password" && name !== "confirmPassword")
-			dispatch(setOnboardingUser({ ...onboardingUser, [name]: e?.target.value }));
+			dispatch(setOnboardingUser({ ...(onboardingUser as any), [name]: e?.target.value }));
 		setErrors([]);
 		toast.dismiss("auth_form_pop");
 	};
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		if (!validatePassword(values.password.trim(), "8")) {
-			toast.error("Password must not be less than 8-digits", ToastDefaultOptions({ id: "auth_form_pop" }));
-			return;
-		}
-		if (!validatePassword(values.password.trim(), "capital")) {
-			toast.error("Password must include a capital letter", ToastDefaultOptions({ id: "auth_form_pop" }));
-			return;
-		}
-		if (!validatePassword(values.password.trim(), "number")) {
-			toast.error("Password must include a number", ToastDefaultOptions({ id: "auth_form_pop" }));
-			return;
-		}
-		if (values.password.trim() !== values.confirmPassword.trim()) {
-			toast.error("Passwords do not match", ToastDefaultOptions({ id: "auth_form_pop" }));
-			return;
-		}
-		setErrors([]);
-		if (values) {
-			const { fullName, country, phone, email, password } = values;
-			setLoading(true);
 
-			const token = jwt.sign({ email, fullName }, String(process.env.NEXT_PUBLIC_TOKEN_HASH_SECRET), {
-				expiresIn: 3600,
-			});
-			console.log({ token });
+		try {
+			if (!validatePassword(values.password.trim(), "8"))
+				return toast.error(
+					"Password must not be less than 8-digits",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
 
-			registerUser({
-				variables: {
-					createRegisterInput: {
-						name: fullName,
-						country,
-						phone: phone,
-						// phone: phone.slice(-10),
-						email,
-						password,
+			if (!validatePassword(values.password.trim(), "capital"))
+				return toast.error(
+					"Password must include a capital letter",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
+
+			if (!validatePassword(values.password.trim(), "number"))
+				return toast.error("Password must include a number", ToastDefaultOptions({ id: "auth_form_pop" }));
+
+			if (values.password.trim() !== values.confirmPassword.trim())
+				return toast.error("Passwords do not match", ToastDefaultOptions({ id: "auth_form_pop" }));
+
+			setErrors([]);
+			if (values) {
+				const { fullName, country, phone, email, password } = values;
+				setLoading(true);
+				registerUser({
+					variables: {
+						createRegisterInput: {
+							name: fullName,
+							country,
+							phone: phone,
+							email,
+							password,
+						},
 					},
-				},
-			})
-				.then(() => {
-					setTimeout(function () {
-						router.push(`/auth/verification/signup`);
-					}, 2000);
 				})
-				.catch((error: any) => {
-					console.error(error);
-					setLoading(false);
-					const errorMessage = formatGqlError(error);
-					toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
-				});
-
-			// setTimeout(function () {
-			// 	onSubmit && onSubmit(values);
-			// 	// setLoading(false);
-			// }, 3000);
+					.then(() => {
+						setTimeout(function () {
+							router.push(`/auth/verification/signup`);
+						}, 2000);
+					})
+					.catch((error: any) => {
+						console.error({ error: JSON.stringify(error) });
+						setLoading(false);
+						const errorMessage = formatGqlError(error);
+						toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
+					});
+			}
+		} catch (error) {
+			console.log({ error: JSON.stringify(error) });
+			setLoading(false);
+			toast("An error ocurred. Please try again.", { type: "error", toastId, theme: "light" });
 		}
 	};
 

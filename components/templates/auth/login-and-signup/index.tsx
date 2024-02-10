@@ -4,55 +4,44 @@ import LoginAndSignupForm from "../../../ui/atom/forms/auth/login-and-signup";
 
 const LoginAndSignupPageTemplate = () => {
 	return (
-		<>
-			<div className="relative w-full hidden xl:block">
-				{/* <Particles /> */}
+		<div className="min-h-screen h-full grid overflow-hidden md:grid-cols-12 bg-[#F6F9F8]">
+			<div
+				className="xl:pl-20 md:pt-16 pt-10 px-5 md:col-span-6 mb-20"
+				style={{
+					scrollbarWidth: "none",
+				}}>
+				<LoginAndSignupForm />
 			</div>
-			<div className="min-h-screen h-full grid overflow-hidden md:grid-cols-12 bg-[#F6F9F8]">
-				<div
-					className="xl:pl-20 md:pt-16 pt-10 px-5 md:col-span-6 mb-20"
-					style={{
-						scrollbarWidth: "none",
-					}}>
-					<LoginAndSignupForm />
-				</div>
-				<div className="md:inline-block hidden col-span-6 animate__animated animate__slideInRight overflow-hidden">
-					<div className="w-full h-full bg-[#B5FFDF5A] h-full">
-						<div className="flex justify-center items-center pt-10">
-							<div className="grid">
-								<img
-									src="/assets/images/map3.png"
-									alt=""
-									className="max-w-md"
-									loading="lazy"
-								/>
+			<div className="md:inline-block hidden col-span-6 animate__animated animate__slideInRight overflow-hidden">
+				<div className="w-full bg-[#B5FFDF5A] h-full">
+					<div className="flex justify-center items-center pt-10">
+						<div className="grid">
+							<img src="/assets/images/map3.png" alt="" className="max-w-md" loading="lazy" />
+							<h1
+								style={{ fontFamily: "Days One" }}
+								className="max-w-md text-[#094B10] text-center pl-6 lg:text-lg">
+								Learn anywhere, anytime, from anyone, at your convenience
+							</h1>
+							<div className="mt-16 grid gap-5">
 								<h1
 									style={{ fontFamily: "Days One" }}
-									className="max-w-md text-[#094B10] text-center pl-6 lg:text-lg">
-									Learn anywhere, anytime, from anyone, at
-									your convenience
+									className="max-w-md text-black text-center pl-10">
+									Big companies where our students work
 								</h1>
-								<div className="mt-16 grid gap-5">
-									<h1
-										style={{ fontFamily: "Days One" }}
-										className="max-w-md text-black text-center pl-10">
-										Big companies where our students work
-									</h1>
-									<div className="flex justify-center mt-5">
-										<img
-											src="/assets/images/supporters.png"
-											alt=""
-											className="lg:max-w-md max-w-[22em]"
-											loading="lazy"
-										/>
-									</div>
+								<div className="flex justify-center mt-5">
+									<img
+										src="/assets/images/supporters.png"
+										alt=""
+										className="lg:max-w-md max-w-[22em]"
+										loading="lazy"
+									/>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

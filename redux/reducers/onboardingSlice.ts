@@ -21,9 +21,9 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 
 const initialUserOnboardingState: IUserOnboardingState = { country: "", email: "", fullName: "", phone: "" };
 
-const initialState = {
+const initialState: { mentor: typeof initialMentorOnboardingState; user: typeof initialUserOnboardingState | null } = {
 	mentor: initialMentorOnboardingState,
-	user: initialUserOnboardingState,
+	user: null,
 };
 
 const onboardingSlice = createSlice({
@@ -35,7 +35,7 @@ const onboardingSlice = createSlice({
 			// action.payload.user = null;
 			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
-		setOnboardingUser: (state, action: { payload: IUserOnboardingState }) => {
+		setOnboardingUser: (state, action: { payload: IUserOnboardingState | null }) => {
 			state.user = action.payload;
 		},
 	},

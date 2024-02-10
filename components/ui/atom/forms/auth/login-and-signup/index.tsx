@@ -1,6 +1,4 @@
-import React, { lazy, useEffect, useState } from "react";
-// import LoginForm from "./login/LoginForm";
-// import SignUpForm from "./signup/SignUpForm";
+import React, { useEffect, useState } from "react";
 import LoginAndSignupFormHeader from "../../../../organisms/auth/LoginAndSignupFormHeader";
 import Link from "next/link";
 import { GoogleIconSvg } from "../../../icons/svgs";
@@ -24,10 +22,7 @@ const LoginAndSignupForm = () => {
 
 	return (
 		<div className="w-full max-w-lg pt-3">
-			<LoginAndSignupFormHeader
-				currentForm={currentForm}
-				setCurrentForm={setCurrentForm}
-			/>
+			<LoginAndSignupFormHeader currentForm={currentForm} setCurrentForm={setCurrentForm} />
 			<div className="mt-6 w-full">
 				<div className={currentForm === "login" ? "" : "hidden"}>
 					<LoginForm />
@@ -36,15 +31,8 @@ const LoginAndSignupForm = () => {
 					<SignUpForm />
 				</div>
 				<div className="mt-6 items-center animate__animated animate__fadeInUp flex md:flex-row flex-col gap-5">
-					<h1 className="">
-						-or sign {currentForm === "signup" ? "up" : "in"} with-
-					</h1>
-					<Link
-						href={
-							currentForm === "login"
-								? "#google_auth_login"
-								: "#google_auth_signup"
-						}>
+					<h1 className="">- or {currentForm} with -</h1>
+					<Link href={currentForm === "login" ? "#google_auth_login" : "#google_auth_signup"}>
 						<div className="cursor-pointer">
 							<GoogleIconSvg />
 						</div>

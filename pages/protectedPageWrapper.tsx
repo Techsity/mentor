@@ -5,7 +5,8 @@ import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";
 
-const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
+const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>, props?: { adminCanView: boolean }) => {
+	const { adminCanView } = props || {};
 	const Page = (props: any) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
@@ -18,7 +19,7 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 			}
 		}, [auth, user, next, router]);
 
-		if (!auth || !user || user.is_admin) {
+		if (!auth || !user || (user.is_admin && !adminCanView)) {
 			return (
 				<div className="min-h-screen items-center flex justify-center">
 					<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
