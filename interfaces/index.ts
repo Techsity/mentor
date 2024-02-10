@@ -331,7 +331,7 @@ export type ProfileTabLinkType =
 	| "wishlists"
 	| "payment-methods"
 	| "payments"
-	| "profile-settings"
+	| "settings"
 	| "edit-course";
 
 export type CourseType = "technical" | "vocational" | "educational";

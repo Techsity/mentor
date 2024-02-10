@@ -81,7 +81,7 @@ const EditProfileCard = () => {
 						<span className="font-medium">{user?.country || "null"}</span>
 					</div>
 					<div className="flex items-center justify-start">
-						<PrimaryButton title="Edit Profile" className="p-3 px-6" link="/profile/profile-settings" />
+						<PrimaryButton title="Edit Profile" className="p-3 px-6" link="/profile/settings" />
 					</div>
 				</div>
 				<div className="">

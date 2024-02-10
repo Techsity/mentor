@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import protectedPageWrapper from "../../protectedPageWrapper";
-import ProfileLayout from "../../../components/ui/layout/profile/ProfileLayout";
+import ProfileLayout from "../../../components/ui/layout/ProfileLayout";
 import { useRouter } from "next/router";
 import { ProfileTabLinkType } from "../../../interfaces";
 import { useSelector } from "react-redux";
@@ -55,7 +55,7 @@ const ProfileNavgationContainer = () => {
 				) : tab === "payment-methods" ? (
 					<PaymentMethods />
 				) : (
-					tab === "profile-settings" && <ProfileSettings />
+					tab === "settings" && <ProfileSettings />
 				)}
 			</div>
 		</ProfileLayout>

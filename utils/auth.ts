@@ -3,6 +3,7 @@ import ResponseMessages from "../constants/response-codes";
 import { logOut } from "../redux/reducers/authSlice";
 import { store } from "../redux/store";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
 export const currentUserRole = (): "mentee" | "mentor" => {
 	return "mentee";
@@ -55,14 +56,19 @@ export const removeLocalStorage = (key: string) => {
 
 export const checkAuth = () => {
 	if (process.browser) {
-		const token = getCookie(AUTH_TOKEN_KEY);
-		if (token) {
-			return token;
-		} else {
+		const token = getCookie(AUTH_TOKEN_KEY) || localStorage.getItem(AUTH_TOKEN_KEY);
+		if (!token) return null;
+		const decodedToken: any = jwt.decode(token);
+		if (!decodedToken) {
+			console.error("Error decoding auth token");
 			return null;
 		}
+		if (decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
+			console.log("Auth Token has expired");
+			return null;
+		}
+		return token;
 	}
-	return null;
 };
 
 export const checkAuthServerSide = (req: any) => {

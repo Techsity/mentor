@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import EditCourseContent from "../../../../components/ui/organisms/course/edit-course/EditCourseContent";
 import { useRouter } from "next/router";
-import ProfileLayout from "../../../../components/ui/layout/profile/ProfileLayout";
+import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 

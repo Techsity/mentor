@@ -20,8 +20,9 @@ const AuthPage = () => {
 
 	if (auth || user) {
 		return (
-			<div className="min-h-screen items-center flex justify-center">
+			<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2">
 				<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+				{auth && user && <p className="text-sm text-center text-[#70C5A1]">Preparing your dashboard...</p>}
 			</div>
 		);
 	}

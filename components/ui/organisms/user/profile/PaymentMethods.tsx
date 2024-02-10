@@ -39,7 +39,7 @@ const MentorPayments = () => {
 	const user = useSelector(currentUser);
 	const tabs: Tab[] = ["payment-methods", "my-payments"];
 
-	const [activeTab, setActiveTab] = useState<Tab>(tabs[0]);
+	const [activetab, setActivetab] = useState<Tab>(tabs[0]);
 	return (
 		<div className="flex flex-col xl:flex-row gap-6 2xl:gap-10 justify-between items-start animate__animated animate__fadeInUp overflow-hidden pb-20">
 			<div className="xl:max-w-[45%] w-full">
@@ -49,12 +49,12 @@ const MentorPayments = () => {
 							<div
 								key={i}
 								className={`capitalize text-xs sm:text-sm duration-300 border border-[#094B10] text-[#094B10] px-5 sm:px-8 p-3 cursor-pointer w-full ${
-									activeTab === tab
+									activetab === tab
 										? "bg-[#094B10] text-white"
 										: "hover:text-[#fff] hover:bg-[#094B10]"
 								}`}
 								style={{ fontFamily: "Days One" }}
-								onClick={() => setActiveTab(tab)}>
+								onClick={() => setActivetab(tab)}>
 								{tab.split("-").join(" ")}
 							</div>
 						);

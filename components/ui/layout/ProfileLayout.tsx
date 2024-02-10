@@ -1,11 +1,11 @@
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
-import ProfileNavCard from "../../atom/cards/profile/ProfileNavCard";
+import ProfileNavCard from "../atom/cards/profile/ProfileNavCard";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { ProfileTabLinkType } from "../../../../interfaces";
-import { currentUser } from "../../../../redux/reducers/authSlice";
-import EditProfileCard from "../../atom/cards/profile/EditProfileCard";
-import { PrimaryButton } from "../../atom/buttons";
+import { ProfileTabLinkType } from "../../../interfaces";
+import { currentUser } from "../../../redux/reducers/authSlice";
+import EditProfileCard from "../atom/cards/profile/EditProfileCard";
+import { PrimaryButton } from "../atom/buttons";
 
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 
@@ -17,10 +17,10 @@ const ProfileLayout = ({ children }: Props) => {
 	const { tab, id } = router.query as { id: string | undefined; tab: ProfileTabLinkType };
 
 	const tabLinks: ProfileTabLinkType[] = isMentor
-		? ["overview", "courses", "workshop", "mentorship", "wishlists", "payments", "profile-settings", "edit-course"]
-		: ["my-courses", "my-workshop", "mentorship", "wishlists", "payment-methods", "profile-settings"];
+		? ["overview", "courses", "workshop", "mentorship", "wishlists", "payments", "settings", "edit-course"]
+		: ["my-courses", "my-workshop", "mentorship", "wishlists", "payment-methods", "settings"];
 
-	const [activeTab, setActiveTab] = useState<ProfileTabLinkType>("my-courses");
+	const [activetab, setActivetab] = useState<ProfileTabLinkType>(tab || "my-courses");
 
 	const isEditCourse = useMemo(() => {
 		return Boolean(tab === "courses" && typeof id !== "undefined");
@@ -52,18 +52,18 @@ const ProfileLayout = ({ children }: Props) => {
 	}, [router]);
 
 	useEffect(() => {
-		if (!tab) setActiveTab(tabLinks[0]);
+		if (!tab) setActivetab(tabLinks[0]);
 	}, [tab, router]);
 
 	return (
 		<>
-			<div className="flex lg:grid grid-cols-6 xl:flex flex-col xl:gap-6 xl:flex-row item-start w-full h-full min-w-screen">
+			<div className="flex lg:grid grid-cols-6 xl:flex flex-col xl:flex-row item-start w-full h-full min-w-screen">
 				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
 					<div className="w-full overflow-hidden hide-scroll-bar">
 						<ProfileNavCard
 							tabLinks={tabLinks.filter((nav) => nav !== "edit-course")}
-							activeTab={activeTab}
-							setActiveTab={setActiveTab}
+							activetab={activetab}
+							setActivetab={setActivetab}
 						/>
 					</div>
 				</div>
@@ -72,8 +72,10 @@ const ProfileLayout = ({ children }: Props) => {
 						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : isPaymentsTab ? "xl:pr-12" : "xl:pr-0"
 					}`}>
 					{!isEditCourse && !isEditWorkshop && !isCourseContentPage && !isNewItemPage && (
-						<div className="hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
-							<h1 className="capitalize">{activeTab.split("-").join(" ")}</h1>
+						<div className="hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4 xl:pl-3">
+							<h1 className="capitalize">
+								{activetab === "settings" ? "Profile Settings" : activetab.split("-").join(" ")}
+							</h1>
 							{tab === "courses" && (
 								<PrimaryButton
 									style={{ color: "#000" }}
@@ -84,16 +86,15 @@ const ProfileLayout = ({ children }: Props) => {
 							)}
 						</div>
 					)}
-
-					{React.Children.map(children, (child) => {
-						if (React.isValidElement(child)) {
-							return React.cloneElement<any>(child, { activeTab });
-						}
-						return child;
-					})}
+					<div className="xl:px-3">
+						{React.Children.map(children, (child) => {
+							if (React.isValidElement(child)) return React.cloneElement<any>(child, { activetab });
+							return child;
+						})}
+					</div>
 				</div>
 				{!isEditCourse && !isEditWorkshop && !isPaymentsTab && (
-					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-[90dvh] h-full px-6 col-span-6">
+					<div className="hidden xl:inline-block xl:sticky top-20 xl:order-none order-last bg-[#F6F9F8] p-4 w-full xl:max-w-xs 2xl:max-w-sm xl:min-h-screen h-full px-6 col-span-6">
 						<EditProfileCard />
 					</div>
 				)}

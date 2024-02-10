@@ -1,21 +1,21 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useId, useState } from "react";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "../../../../../interfaces/user.interface";
 import CountrySelectorComp from "../../../atom/inputs/CountrySelector";
 import { PrimaryButton } from "../../../atom/buttons";
 import * as FlagIcons from "react-country-flags-select";
 import countries from "../../../../../data/countries";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
-import { logoutUser } from "../../../../../utils/auth";
+import { toast } from "react-toastify";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 const ProfileSettings = () => {
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
-	const [state, setState] = useState<IUser>(user as IUser);
+	const [state, setState] = useState<Partial<IUser>>({ ...user });
 	const [loading, setLoading] = useState<boolean>(false);
+	const toastId = useId();
 
 	const handleChange = (field: keyof IUser) => (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -25,9 +25,19 @@ const ProfileSettings = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
+		setLoading(true);
+		try {
+			// Todo: update profile mutation
+		} catch (error) {
+			console.error({ error });
+			toast("An error occured. Please ty again", { type: "error", toastId });
+		}
 	};
 
-	const country: string = countries.find((c) => c.label === state.country)?.countryCode as string;
+	const country: string =
+		state.country && state.country !== "null"
+			? (countries.find((c) => c.label === state.country)?.countryCode as string)
+			: "";
 
 	interface IconType {
 		[key: string]: React.ElementType;
@@ -78,7 +88,7 @@ const ProfileSettings = () => {
 							Country
 						</label>
 						<CountrySelectorComp
-							selected={state.country}
+							selected={state.country && state.country !== "null" ? state.country : null}
 							onSelect={(country) => {
 								if (country?.label)
 									setState({
@@ -90,7 +100,11 @@ const ProfileSettings = () => {
 								input: "bg-transparent border border-[#094B10] p-3",
 								container: "border border-[#094B10] p-[2px]",
 							}}
-							customIcon={IconComp ? <IconComp width="25px" height="25px" /> : null}
+							customIcon={
+								state.country && state.country !== "null" ? (
+									<IconComp width="25px" height="25px" />
+								) : null
+							}
 						/>
 					</div>
 					<div className="flex flex-col gap-1 2xl:col-span-3">
@@ -101,7 +115,7 @@ const ProfileSettings = () => {
 							name="phone"
 							type="tel"
 							pattern="/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/"
-							value={"+234 " + state.phone.trim()}
+							value={(state.phone && state.phone.trim()) || ""}
 							onChange={handleChange("phone")}
 							inputMode="numeric"
 							required={true}
@@ -118,8 +132,6 @@ const ProfileSettings = () => {
 						</label>
 						<div className="flex flex-col sm:flex-row justify-between gap-3 sm:items-center w-full">
 							<CustomTextInput
-								// value={}
-								// onChange={handleChange("email")}
 								name="oldPassword"
 								className="p-2 border placeholder:text-black placeholder:text-sm"
 								placeholder="Old Password"
@@ -129,8 +141,6 @@ const ProfileSettings = () => {
 								}}
 							/>
 							<CustomTextInput
-								// value={}
-								// onChange={handleChange("email")}
 								name="newPassword"
 								className="p-2 border placeholder:text-black placeholder:text-sm"
 								placeholder="New Password"
@@ -140,11 +150,9 @@ const ProfileSettings = () => {
 								}}
 							/>
 							<CustomTextInput
-								// value={}
-								// onChange={handleChange("email")}
 								name="confirmPassword"
 								className="p-2 border placeholder:text-black placeholder:text-sm"
-								placeholder="Confirm Password"
+								placeholder="Confirm New Password"
 								type="password"
 								containerProps={{
 									className: "border-[#094B10] border",

@@ -16,7 +16,7 @@ import EditCourseContent from "../../course/edit-course/EditCourseContent";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
 import MentorProfileCourses from "../mentor/courses/MentorProfileCourses";
 
-const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => {
+const ProfileComponents = ({ activetab }: { activetab: ProfileTabLinkType }) => {
 	const router = useRouter();
 	const myCourses = useMemo(() => courses, []);
 	const user = useSelector(currentUser);
@@ -36,10 +36,10 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						? "edit course"
 						: isEditCourse && isContentPage
 						? "edit course content"
-						: activeTab}
+						: activetab}
 				</h1>
 				{isMentor &&
-					activeTab === "courses" &&
+					activetab === "courses" &&
 					(!isEditCourse ? (
 						<PrimaryButton title="+ New Course" className="bg-[#FFB100] text-[#000] p-2 px-4" />
 					) : (
@@ -51,11 +51,11 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 			</div>
 
 			{
-				activeTab === "overview" && isMentor ? (
+				activetab === "overview" && isMentor ? (
 					<div className="animate__animated animate__fadeIn">
 						<MentorProfileOverview />
 					</div>
-				) : activeTab === "courses" && isMentor ? (
+				) : activetab === "courses" && isMentor ? (
 					isEditCourse && !isContentPage ? (
 						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
 						<EditCourseTemplate isCourse handleSave={() => {}} />
@@ -67,24 +67,24 @@ const ProfileComponents = ({ activeTab }: { activeTab: ProfileTabLinkType }) => 
 						// </div>
 						<MentorProfileCourses />
 					)
-				) : activeTab === "my-courses" ? (
+				) : activetab === "my-courses" ? (
 					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 						{myCourses.map((course, i) => (
 							<CourseInProgressDisplayCard {...{ course }} key={i} />
 						))}
 					</div>
-				) : activeTab === "my-workshop" ? (
+				) : activetab === "my-workshop" ? (
 					<RegitsteredWorkshops />
-				) : activeTab === "mentorship" ? (
+				) : activetab === "mentorship" ? (
 					<RegisteredMentorships />
-				) : activeTab === "wishlists" ? (
+				) : activetab === "wishlists" ? (
 					<div className="md:px-2 px-5">
 						<WishLists />
 					</div>
-				) : activeTab === "payment-methods" ? (
+				) : activetab === "payment-methods" ? (
 					<PaymentMethods />
 				) : (
-					activeTab === "profile-settings" && <ProfileSettings />
+					activetab === "settings" && <ProfileSettings />
 				)
 				// : (
 				// 	<>

@@ -23,13 +23,16 @@ const authSlice = createSlice({
 			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 		},
 		logOut: (state) => {
-			console.log("Logging out...");
+			// console.log("Logging out...");
 			state.isLoggedIn = false;
 			state.user = null;
 			return state;
 		},
-		updateUser: (state, action: { payload: IUser | null }) => {
-			state.user = action.payload;
+		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
+			state.user = action.payload as IUser | null;
+		},
+		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
+			if (state.user) state.user.mentor = action.payload as IMentor | null;
 		},
 		setResetPasswordState: (state, action: { payload: { email: string; otp: string } }) => {
 			state.resetPasswordState = action.payload;
@@ -41,7 +44,8 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setCredentials, logOut, updateUser, setResetPasswordState, switchProfile } = authSlice.actions;
+export const { setCredentials, logOut, updateUserProfile, setResetPasswordState, switchProfile, updateMentorProfile } =
+	authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user;
