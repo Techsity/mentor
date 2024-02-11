@@ -1,12 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
-import { courseTypes } from "../../../../data/courses";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../services/graphql/mutations/courses";
 
 type MainCourseType = {
@@ -66,8 +65,8 @@ const NavLinksComponent = () => {
 								}`}
 							/>
 							{activeSublink === index && sublinks && sublinks?.length > 0 ? (
-								<div className="absolute top-6 -left-6 pt-8 mx-auto">
-									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
+								<div className="absolute top-0 left-0 pt-10 mx-auto">
+									<div className="mx-auto h-[80px] duration-300 group bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
 											<div key={i}>
 												<div

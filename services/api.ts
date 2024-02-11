@@ -37,7 +37,7 @@ export const getMentorCourses = (username: string): ICourse[] => {
 	return mentorCourses;
 };
 export const getCourseById = (courseId: string): ICourse | null => {
-	const course = courses.find((course) => slugify(course.title) === courseId);
+	const course = courses.find((course) => slugify(course.title) === slugify(courseId));
 	// const course: ICourse = courses.find((course) => slugify(course.title) === courseId) as ICourse;
 	if (!course) return null;
 	return course;

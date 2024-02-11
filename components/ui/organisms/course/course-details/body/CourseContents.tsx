@@ -165,7 +165,7 @@ const CourseContents = ({
 					// 		: "Purchase Course"
 					// }
 					title={"Purchase Course"}
-					link={course.price !== 0 ? `/courses/${slugify(course.title)}?purchase` : undefined}
+					link={`/courses/${slugify(course.title)}/purchase`}
 					className="p-4 text-lg flex justify-center items-center"
 				/>
 			</div>

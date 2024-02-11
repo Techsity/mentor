@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import CountrySelectorComp from "../../inputs/CountrySelector";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 interface PaymentMethod {
 	name?: string;
@@ -16,36 +18,30 @@ const paymentMethods: PaymentMethod[] = [
 ];
 
 const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
+	const user = useSelector(currentUser);
 	const { reason = "course" } = props || {};
-	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(
-		null,
-	);
-	const [selectedCountry, setSelectedCountry] = useState<string>("");
+	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+	const [selectedCountry, setSelectedCountry] = useState<string | null>(user?.country || null);
 
 	return (
 		<>
 			<div className="flex items-center lg:px-28 sm:px-12 px-6 md:py-20 py-5">
 				<div className="">
-					<h1
-						className="text-[#00D569] font-thin text-3xl capitalize"
-						style={{ fontFamily: "Days One" }}>
-						{reason === "workshop"
-							? "Pay to Join"
-							: "Buy this Course"}
+					<h1 className="text-[#00D569] font-thin text-3xl capitalize" style={{ fontFamily: "Days One" }}>
+						{reason === "workshop" ? "Pay to Join" : "Buy this Course"}
 					</h1>
 					<div className="grid gap-3">
 						<h1 className="font-medium mt-3">Billing Address</h1>
 						<p className="max-w-md text-sm">
-							Mentör is by law required to collect applicable
-							transaction taxes for purchases made in certain tax
-							jurisdictions.
+							Mentör is by law required to collect applicable transaction taxes for purchases made in
+							certain tax jurisdictions.
 						</p>
 						<div className="">
 							<CountrySelectorComp
-								selected={null}
+								disabled={user?.country ? true : false}
+								selected={selectedCountry}
 								onSelect={(country) => {
-									if (country?.label)
-										setSelectedCountry(country?.label);
+									if (country?.label) setSelectedCountry(country?.label);
 								}}
 								classes={{
 									input: "bg-transparent",
@@ -57,9 +53,7 @@ const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
 								<div className="grid gap-3">
 									{paymentMethods.map((method, i) => (
 										<span
-											onClick={() =>
-												setSelectedMethod(method)
-											}
+											onClick={() => setSelectedMethod(method)}
 											className="border border-[#70C5A1] p-3 overflow-hidden flex justify-between items-center cursor-pointer"
 											key={i}>
 											<span className="flex gap-4 items-center">
@@ -71,18 +65,11 @@ const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
 														loading="lazy"
 													/>
 												)}
-												{method.icon && (
-													<span className="">
-														{method.icon}
-													</span>
-												)}
+												{method.icon && <span className="">{method.icon}</span>}
 											</span>
-											<span className="flex-grow ml-3">
-												{method.name}
-											</span>
+											<span className="flex-grow ml-3">{method.name}</span>
 											<>
-												{selectedMethod &&
-												selectedMethod == method ? (
+												{selectedMethod && selectedMethod == method ? (
 													<svg
 														width="23"
 														height="23"

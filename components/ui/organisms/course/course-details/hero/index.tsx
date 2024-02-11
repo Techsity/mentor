@@ -2,7 +2,6 @@
 import React from "react";
 import { ICourse } from "../../../../../../interfaces";
 import { formatFollowersCount } from "../../../../../../utils";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const CourseDetailsPageHero = (course: ICourse) => {
