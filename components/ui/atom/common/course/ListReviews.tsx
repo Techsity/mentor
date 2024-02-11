@@ -1,14 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { AnimationOnScroll } from "react-animation-on-scroll";
 import { PrimaryButton } from "../../buttons";
-import Link from "next/link";
 import reviews from "../../../../../data/reviews";
 
 const ListReviews = () => (
 	<div className="grid gap-3 mt-9">
-		<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
-			<h1 className="text-xl font-semibold">Featured Reviews</h1>
-		</AnimationOnScroll>
+		<h1 className="font-semibold">Featured Reviews</h1>
 		<span className="grid sm:grid-cols-2 items-center gap-3 lg:max-w-xl w-full">
 			{reviews.map((review) => {
 				return (

@@ -29,7 +29,10 @@ const authSlice = createSlice({
 			return state;
 		},
 		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
-			state.user = action.payload as IUser | null;
+			if (action.payload) {
+				state.isLoggedIn = true;
+				state.user = action.payload as IUser | null;
+			}
 		},
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
 			if (state.user) state.user.mentor = action.payload as IMentor | null;

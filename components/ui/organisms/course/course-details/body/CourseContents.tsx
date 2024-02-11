@@ -35,7 +35,7 @@ const CourseContents = ({
 					} select-none cursor-pointer duration-300 relative z-10`}>
 					<div className="group relative w-full h-full">
 						<div className="flex justify-between items-center duration-300">
-							<h1 className="grid items-center gap-2">
+							<h1 className="grid items-center gap-2 text-xs">
 								{content.title}{" "}
 								<span className={`${activeContent === content ? "text-[#A3A6A7]" : "text-white"}`}>
 									{mainDuration}
@@ -70,10 +70,10 @@ const CourseContents = ({
 						</div>
 						<div className="p-2 pb-3 grid gap-2 animate__animated animate__fadeIn animate__faster">
 							{content.course_sections.map((item, index) => (
-								<div key={index} className="flex items-center justify-between">
+								<div key={index} className="flex items-center justify-between text-xs">
 									{item.section_name}
-									<span className="flex items-center gap-3 text-sm text-[#A3A6A7]">
-										item.duration
+									<span className="flex items-center gap-3 text-sm text-[#A3A6A7] text-xs">
+										{"item.duration"}
 										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 											<path
 												d="M8 0.5C6.51664 0.5 5.0666 0.939867 3.83323 1.76398C2.59986 2.58809 1.63856 3.75943 1.07091 5.12988C0.50325 6.50032 0.354725 8.00832 0.644114 9.46318C0.933503 10.918 1.64781 12.2544 2.6967 13.3033C3.7456 14.3522 5.08197 15.0665 6.53683 15.3559C7.99168 15.6453 9.49968 15.4968 10.8701 14.9291C12.2406 14.3614 13.4119 13.4001 14.236 12.1668C15.0601 10.9334 15.5 9.48336 15.5 8C15.5 7.01509 15.306 6.03982 14.9291 5.12988C14.5522 4.21993 13.9997 3.39314 13.3033 2.6967C12.6069 2.00026 11.7801 1.44781 10.8701 1.0709C9.96019 0.693993 8.98492 0.5 8 0.5ZM6.5 11.375V4.625L11 8L6.5 11.375Z"
@@ -97,7 +97,7 @@ const CourseContents = ({
 			)}>
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
-				<h1 className="font-semibold text-xl mb-3">Course Content</h1>
+				<h1 className="font-semibold mb-3">Course Content</h1>
 				{/* {course.price !==0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						₦{course.price.toLocaleString()}
@@ -132,7 +132,7 @@ const CourseContents = ({
 			)}>
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
-				<h1 className="font-semibold text-xl">Course Content</h1>
+				<h1 className="font-semibold">Course Content</h1>
 				{course.price !== 0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						₦{course.price.toLocaleString()}
@@ -166,7 +166,7 @@ const CourseContents = ({
 					// }
 					title={"Purchase Course"}
 					link={`/courses/${slugify(course.title)}/purchase`}
-					className="p-4 text-lg flex justify-center items-center"
+					className="p-3 text-lg flex justify-center items-center text-sm"
 				/>
 			</div>
 		</div>

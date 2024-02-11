@@ -7,16 +7,16 @@ import { useRouter } from "next/router";
 const CourseDetailsPageHero = (course: ICourse) => {
 	const router = useRouter();
 	return (
-		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
-			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 sm:gap-10">
-				<span className="flex gap-1 cursor-default text-sm items-center whitespace-nowrap flex-wrap">
+		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex lg:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
+			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 lg:gap-10 items-start">
+				<span className="flex gap-1 cursor-default text-xs items-center whitespace-nowrap flex-wrap">
 					Courses / Technical / Marketing /
 					<span className="text-[#CEFFEA]">
 						{course.title.length > 50 ? course.title.slice(0, 50) + "..." : course.title}
 					</span>
 				</span>
 				<div className="my-2 sm:my-4 grid gap-2">
-					<h1 className="md:text-2xl 2xl:text-4xl font-bold" style={{ fontFamily: "Days One" }}>
+					<h1 className="md:text-xl lg:text-2xl 2xl:text-4xl font-bold" style={{ fontFamily: "Days One" }}>
 						{course.title}
 					</h1>
 					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
@@ -34,7 +34,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 						</div>
 					</div>
 				</div>
-				<div className="my-2 sm:my-4 flex items-center gap-2">
+				<div className="lg:my-4 hidden lg:flex items-center gap-2">
 					<div
 						onClick={() => router.push(`/mentors/${course.mentor.id}`)}
 						className="flex gap-1.5 items-center cursor-pointer">
@@ -44,7 +44,6 @@ const CourseDetailsPageHero = (course: ICourse) => {
 							alt={course.mentor.user.name}
 						/>
 					</div>
-
 					<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
 						<h1 className="font-semibold text-lg flex item-center gap-2">
 							{course.mentor.user.name}
@@ -66,12 +65,42 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					</div>
 				</div>
 			</div>
-			<div className="w-auto h-auto lg:max-w-lg 2xl:max-w-2xl sm:max-w-md overflow-hidden">
+			<div className="w-full h-auto max-h-72 lg:max-h-max lg:max-w-lg 2xl:max-w-2xl overflow-hidden rounded-lg">
 				<img
 					src={course.imgUrl || "/assets/images/thumbnails/tmb_2.png"}
 					alt={course.title}
 					className="w-full h-full rounded-lg animate__animated animate__slideInRight"
 				/>
+			</div>
+			<div className="lg:my-4 lg:hidden flex items-center gap-2">
+				<div
+					onClick={() => router.push(`/mentors/${course.mentor.id}`)}
+					className="flex gap-1.5 items-center cursor-pointer">
+					<img
+						src={course.mentor.user.avatar || "/assets/images/avatar.png"}
+						className="rounded-full w-20"
+						alt={course.mentor.user.name}
+					/>
+				</div>
+				<div className="items-center max-w-sm font-[300] text-xs">
+					<h1 className="font-semibold text-[16px] flex item-center gap-2">
+						{course.mentor.user.name}
+						{course.mentor.mentor_verified ? (
+							<svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="mt-1.5">
+								<path
+									d="M6.29757 11L4 8.60232L5.04704 7.50965L6.29757 8.81853L9.95296 5L11 6.09266L6.29757 11Z"
+									fill="#0CF27E"
+								/>
+								<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
+							</svg>
+						) : null}
+					</h1>
+					<p className="">{course.mentor.role} </p>
+					<p className="flex gap-1 items-center">
+						{/* {formatFollowersCount(course.mentor.courses.length)}{" "} */}
+						20 Courses | {formatFollowersCount(course.mentor.followers)} Followers
+					</p>
+				</div>
 			</div>
 		</div>
 	);
