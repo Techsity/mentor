@@ -46,10 +46,10 @@ const ProfileSettings = () => {
 			}
 		}
 		if (
-			state.avatar !== user?.avatar ||
-			state.name !== user?.name ||
-			state.phone !== user?.phone ||
-			state.country !== user?.country
+			state?.avatar?.trim() !== user?.avatar?.trim() ||
+			state?.name?.trim() !== user?.name?.trim() ||
+			state?.phone?.trim() !== user?.phone?.trim() ||
+			state?.country?.trim() !== user?.country?.trim()
 		) {
 			try {
 				// update profile mutation
