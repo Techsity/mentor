@@ -43,7 +43,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							<SidebarProvider>
 								<LayoutContainer>
 									<ToastContainer
-										limit={1}
+										limit={2}
 										autoClose={5000}
 										theme="dark"
 										hideProgressBar

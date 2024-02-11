@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { IUser } from "../../../../../interfaces/user.interface";
+import React, { useState } from "react";
 import VideoCallParticipantCard from "../../../atom/cards/call/VideoCallParticipantCard";
 import { useSelector } from "react-redux";
-
 import { IWorkshop } from "../../../../../interfaces";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
-import { slugify } from "../../../../../utils";
-import { ConferenceUser } from "../../../../../hooks/useLiveWorkshop";
 import {
-	IAgoraRTCRemoteUser,
 	LocalUser,
 	useLocalCameraTrack,
-	RemoteUser,
-	RemoteVideoTrack,
 	useLocalMicrophoneTrack,
 	useRemoteUsers,
 	useRemoteAudioTracks,
-	useRemoteVideoTracks,
-	useRTCClient,
 } from "agora-rtc-react";
 import { MicMuted, SpeakingIcon } from "../../../atom/icons/svgs/call";
-import { client } from "../../../../../hooks/agora";
 
 type Props = {
 	isWorkshopOwner: boolean;

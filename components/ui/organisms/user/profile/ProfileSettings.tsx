@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useId, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useId, useState } from "react";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "../../../../../interfaces/user.interface";
@@ -8,31 +8,84 @@ import * as FlagIcons from "react-country-flags-select";
 import countries from "../../../../../data/countries";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { toast } from "react-toastify";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USER_PROFILE } from "../../../../../services/graphql/mutations/user";
+
+const phoneRegex = /^[0-9]{11}$/;
 
 const ProfileSettings = () => {
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
 	const [state, setState] = useState<Partial<IUser>>({ ...user });
-	const [loading, setLoading] = useState<boolean>(false);
+	// const [loading, setLoading] = useState<boolean>(false);
 	const toastId = useId();
+	const [updateProfile, { loading }] = useMutation<
+		{ updateUserProfile: IUser },
+		{ userUpdateInput: Partial<Pick<IUser, "name" | "country" | "phone" | "avatar">> }
+	>(UPDATE_USER_PROFILE);
 
 	const handleChange = (field: keyof IUser) => (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setLoading(false);
+		const { value } = e.target;
+		// setLoading(false);
 		setState({ ...state, [field]: value });
 	};
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		setLoading(true);
-		try {
-			// Todo: update profile mutation
-		} catch (error) {
-			console.error({ error });
-			toast("An error occured. Please ty again", { type: "error", toastId });
+		// setLoading(true);
+		if (state.phone !== user?.phone) {
+			if (!phoneRegex.test(String(state.phone))) {
+				// Todo: send otp to confirm new phone number
+				toast("Invalid phone number. Please enter your 11-digits phone number", {
+					type: "error",
+					toastId,
+					theme: "light",
+				});
+				return;
+			}
+		}
+		if (
+			state.avatar !== user?.avatar ||
+			state.name !== user?.name ||
+			state.phone !== user?.phone ||
+			state.country !== user?.country
+		) {
+			try {
+				// update profile mutation
+				const { data, errors } = await updateProfile({
+					variables: {
+						userUpdateInput: {
+							avatar: state.avatar,
+							country: state.country,
+							name: state.name,
+							phone: state.phone,
+						},
+					},
+				});
+				if (errors) {
+					console.error("Error updating profile: ", errors);
+					toast("Network Error. Please try again.", { type: "error", toastId });
+				}
+				if (data) {
+					dispatch(
+						updateUserProfile({
+							...data.updateUserProfile,
+						}),
+					);
+					setState({ ...data.updateUserProfile });
+					toast("Profile updated successfully", { type: "success", toastId, theme: "light" });
+				}
+			} catch (error) {
+				console.error({ error });
+				toast("An error occured. Please ty again", { type: "error", toastId });
+			}
 		}
 	};
+
+	useEffect(() => {
+		setState({ ...user });
+	}, [user]);
 
 	const country: string =
 		state.country && state.country !== "null"
@@ -78,6 +131,8 @@ const ProfileSettings = () => {
 							name="email"
 							className="p-2 border"
 							placeholder=""
+							disabled
+							readOnly
 							containerProps={{
 								className: "border-[#094B10] border",
 							}}
@@ -113,8 +168,7 @@ const ProfileSettings = () => {
 						</label>
 						<CustomTextInput
 							name="phone"
-							type="tel"
-							pattern="/^([0|+[0-9]{1,5})?([7-9][0-9]{9})$/"
+							type="number"
 							value={(state.phone && state.phone.trim()) || ""}
 							onChange={handleChange("phone")}
 							inputMode="numeric"
@@ -136,6 +190,8 @@ const ProfileSettings = () => {
 								className="p-2 border placeholder:text-black placeholder:text-sm"
 								placeholder="Old Password"
 								type="password"
+								readOnly
+								disabled
 								containerProps={{
 									className: "border-[#094B10] border",
 								}}
@@ -145,6 +201,8 @@ const ProfileSettings = () => {
 								className="p-2 border placeholder:text-black placeholder:text-sm"
 								placeholder="New Password"
 								type="password"
+								readOnly
+								disabled
 								containerProps={{
 									className: "border-[#094B10] border",
 								}}
@@ -154,6 +212,8 @@ const ProfileSettings = () => {
 								className="p-2 border placeholder:text-black placeholder:text-sm"
 								placeholder="Confirm New Password"
 								type="password"
+								readOnly
+								disabled
 								containerProps={{
 									className: "border-[#094B10] border",
 								}}

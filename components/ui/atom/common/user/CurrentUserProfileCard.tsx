@@ -28,7 +28,7 @@ const CurrentUserProfileCard = () => {
 						{/* {user?.name.split(" ")[0] +
 								" " +
 								user?.name.split(" ")[1]} */}
-						{user?.name.split(" ")[0]}
+						{user && user?.name.split(" ")[0]}
 					</h1>
 				</div>
 			</div>

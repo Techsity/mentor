@@ -14,10 +14,13 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>, prop
 		const next = router.basePath.concat(router.asPath);
 
 		useEffect(() => {
-			if (!auth || !user || user?.is_admin) {
-				if (user?.is_admin && !adminCanView) {
+			if (auth && user && user?.is_admin && !adminCanView)
+				setTimeout(function () {
 					window.location.href = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
-				} else if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+				}, 1000);
+			else if (!auth || !user) {
+				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+				else router.replace(`/auth?login`);
 			}
 		}, [auth, user, next, router]);
 

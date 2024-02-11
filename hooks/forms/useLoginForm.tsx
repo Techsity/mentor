@@ -19,7 +19,7 @@ type ICreateLoginInput = {
 	createLoginInput: ILoginState;
 };
 type LoginResponse = {
-	loginUser: { user: IUser; access_token: string; is_mentor: boolean; is_admin: boolean };
+	loginUser: { user: IUser & { is_admin: boolean }; access_token: string; is_mentor: boolean };
 };
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
@@ -72,7 +72,7 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 				const userData: IUser = response.data.loginUser.user;
 				const authToken = response.data.loginUser.access_token;
 				const is_mentor = response.data.loginUser.is_mentor;
-				const is_admin = response.data.loginUser.is_admin;
+				const is_admin = response.data.loginUser.user.is_admin;
 				if (response.data.loginUser.user) {
 					// setLoading(false);
 					authenticate(authToken, async () => {

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { PrimaryButton } from "../../buttons";
 import ActivityIndicator from "../../loader/ActivityIndicator";
-import { currentUser, updateUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { IUserPaymentCard } from "../../../../../interfaces/user.interface";
@@ -48,7 +48,7 @@ const AddPaymentMethodForm = () => {
 						...user,
 						payment_cards: [...(user.payment_cards || []), newPaymentCard],
 					};
-					dispatch(updateUser(updatedUser));
+					dispatch(updateUserProfile(updatedUser));
 				} else {
 					toast.error("Cards Limit reached!", ToastDefaultOptions({ id: "error", theme: "dark" }));
 				}
