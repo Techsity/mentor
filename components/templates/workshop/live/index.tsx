@@ -39,7 +39,7 @@ const LiveWorkshopTemplate = () => {
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 	const [channelName, setChannelName] = useState("");
 
-	const fetchArgs: FetchArgs = {
+	const fetchArgs = {
 		appid: appId,
 		channel: channelName,
 		// token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
