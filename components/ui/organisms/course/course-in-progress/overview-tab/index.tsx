@@ -46,7 +46,7 @@ const CourseOverviewTab = (course: ICourse) => {
 			<div className="my-5">
 				<Nav />
 			</div>
-			<div className="min-h-[200px]">
+			<div className="min-h-[100px]">
 				{active === "about-course" ? (
 					<CourseOverview overview={course.description} />
 				) : active === "review" ? (

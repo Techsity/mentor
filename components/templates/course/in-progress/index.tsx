@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { ICourse } from "../../../../interfaces";
-import { formatFollowersCount } from "../../../../utils";
 import Link from "next/link";
 import Socials from "../../../ui/atom/common/course/Socials";
 import CourseContents from "../../../ui/organisms/course/course-details/body/CourseContents";
@@ -12,14 +10,14 @@ import courses from "../../../../data/courses";
 
 const CourseInProgressTemplate = () => {
 	const course = courses[0];
+	const [loading, setLoading] = useState<boolean>(false);
+
 	return (
-		<div className="min-h-[50vh] h-full lg:px-16 sm:px-10 px-4 pb-20">
-			<div className="">
-				<CourseInProgressTopHeader {...course} />
-			</div>
+		<div className="min-h-[50vh] h-full sm:px-10 px-4 pb-20">
+			<CourseInProgressTopHeader {...course} />
 			<div className="flex flex-col lg:flex-row justify-between gap-5 w-full items-start">
-				<div className="relative flex-grow">
-					<VideoComponent course={course} />
+				<div className="relative flex-grow mt-5">
+					<VideoComponent {...{ course }} loading={loading} />
 					<CourseOverviewTabComponent {...course} />
 					<div className="flex items-center gap-5 mt-5 flex-wrap">
 						<Link href="#">
@@ -28,7 +26,7 @@ const CourseInProgressTemplate = () => {
 						<Socials />
 					</div>
 				</div>
-				<CourseContents inProgress course={course} className="lg:max-w-[30%] xl:mt-6" />
+				<CourseContents inProgress course={course} className="lg:max-w-[30%] lg:mt-6 xl:mt-6" />
 			</div>
 		</div>
 	);

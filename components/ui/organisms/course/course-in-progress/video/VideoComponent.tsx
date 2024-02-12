@@ -1,18 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React from "react";
 import { ICourse } from "../../../../../../interfaces";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
+import classNames from "classnames";
 
-const VideoComponent = (props: { course: ICourse; setLoading?: Dispatch<SetStateAction<boolean>> }) => {
-	const videoUrl = "https://vimeo.com/169599296";
-	const [loading, setLoading] = useState<boolean>(true);
-	const handleLoadedData = () => {
-		setLoading(false);
-	};
+const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolean }) => {
+	const videoUrl = "https://player.vimeo.com/video/166240148";
 
 	return (
-		<div className="flex-grow relative my-6">
+		<div className="flex-grow relative mb-6">
 			<div className="lg:max-w-[65dvw] w-full group overflow-hidden">
-				<div className="relative bg-zinc-200 w-full h-[400px]">
+				<div className={classNames("relative w-full h-[400px]", loading ? "bg-zinc-200" : "bg-zinc-200")}>
 					{loading ? (
 						<div className="bg-zinc-100 absolute top-0 left-0 h-full w-full animate__animated animate__fadeIn animate__infinite flex justify-center">
 							<div className="mx-auto flex items-center justify-center">
@@ -20,12 +17,15 @@ const VideoComponent = (props: { course: ICourse; setLoading?: Dispatch<SetState
 							</div>
 						</div>
 					) : (
-						<div className="absolute bottom-0 left-0 w-full h-full">
-							<video
-								onLoadedData={handleLoadedData}
-								controls
+						<div className="absolute top-0 left-0 w-full h-full">
+							<iframe
 								src={videoUrl}
-								style={{ aspectRatio: "4/3", width: "100%", height: "100%" }}></video>
+								width="100%"
+								height="100%"
+								allow="autoplay; fullscreen"
+								allowFullScreen
+								title={course.title}
+							/>
 						</div>
 					)}
 				</div>
