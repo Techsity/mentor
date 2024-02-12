@@ -42,9 +42,8 @@ const LiveWorkshopTemplate = () => {
 	const fetchArgs: FetchArgs = {
 		appid: appId,
 		channel: channelName,
-		token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
-		// Todo:
-		// uid: user?.email.toLowerCase(),
+		// token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
+		uid: user?.email.toLowerCase(),
 	};
 	const workshop = workshops[0];
 
