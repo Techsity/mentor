@@ -22,6 +22,10 @@ const OnboardingCongratulations = () => {
 		}
 	}, [onBoardingUser, router]);
 
+	useEffect(() => {
+		if (onBoardingUser) setCelebrate(true);
+	}, []);
+
 	if (!onBoardingUser) {
 		return (
 			<div className="min-h-screen items-center flex justify-center">
@@ -29,9 +33,6 @@ const OnboardingCongratulations = () => {
 			</div>
 		);
 	}
-	useEffect(() => {
-		setCelebrate(true);
-	}, []);
 
 	const navigateToLogin = () => {
 		setLoading(true);
