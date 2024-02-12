@@ -51,7 +51,7 @@ const LiveWorkshopTemplate = () => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	const { error, isLoading: isJoining } = useJoin(fetchArgs, activeConnection);
+	const { error, isLoading: isJoining } = useJoin(fetchArgs as FetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
 
