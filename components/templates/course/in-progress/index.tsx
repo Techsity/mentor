@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Socials from "../../../ui/atom/common/course/Socials";
 import CourseContents from "../../../ui/organisms/course/course-details/body/CourseContents";
@@ -10,7 +10,17 @@ import courses from "../../../../data/courses";
 
 const CourseInProgressTemplate = () => {
 	const course = courses[0];
-	const [loading, setLoading] = useState<boolean>(!false);
+	const [loading, setLoading] = useState<boolean>(true);
+
+	// Todo: remove loading simulation
+	useEffect(() => {
+		setTimeout(function () {
+			setLoading(false);
+		}, 1200);
+		return () => {
+			setLoading(false);
+		};
+	}, []);
 
 	return (
 		<div className="min-h-[50vh] h-full sm:px-10 px-4 pb-20">
