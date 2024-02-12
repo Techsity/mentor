@@ -28,7 +28,9 @@ const CourseInProgressTemplate = () => {
 			<div className="flex flex-col lg:flex-row justify-between gap-5 w-full items-start">
 				<div className="relative flex-grow mt-5">
 					<VideoComponent {...{ course }} loading={loading} />
-					<CourseOverviewTabComponent {...course} />
+					<div className="max-w-5xl">
+						<CourseOverviewTabComponent {...course} />
+					</div>
 					<div className="flex items-center gap-5 mt-5 flex-wrap">
 						<Link href="#">
 							<p className="text-[red]">! Report Course</p>
