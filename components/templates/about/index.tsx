@@ -3,10 +3,11 @@ import AboutPageHero from "../../ui/organisms/about/hero";
 import Connect from "../../ui/organisms/about/connect";
 import WhyMentor from "../../ui/organisms/about/why";
 import HowToAttendWorkshop from "../../ui/organisms/about/how-to-attend-workshop";
-import HowMentorsCanMentorYou from "../../ui/organisms/about/how";
+import HowMentorsCanHelpYou from "../../ui/organisms/about/how";
 import AboutBlogSection from "../../ui/organisms/about/blog";
 import NewsLetterForm from "../../ui/atom/forms/NewsLetterForm";
 import HomepageTestimonialSection from "../../ui/organisms/home/testimonials";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const AboutPageTemplate = () => {
 	return (
@@ -15,8 +16,12 @@ const AboutPageTemplate = () => {
 			<Connect />
 			<WhyMentor />
 			<HowToAttendWorkshop />
-			<HowMentorsCanMentorYou />
-			<AboutBlogSection />
+			<AnimationOnScroll animateOnce animateIn="animate__fadeInUp">
+				<HowMentorsCanHelpYou />
+			</AnimationOnScroll>
+			<AnimationOnScroll animateOnce animateIn="animate__fadeInUp">
+				<AboutBlogSection />
+			</AnimationOnScroll>
 			<HomepageTestimonialSection className="mt-10" />
 			<>
 				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>

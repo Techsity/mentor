@@ -2,18 +2,14 @@ import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const WhyMentor = () => {
-	const reasons: {}[] = [];
 	return (
 		<div className="min-h-[50vh] pb-20 mt-10 bg-[#FFFDF8] py-10 md:px-20 px-6 overflow-hidden">
-			<h1
-				className="text-center text-2xl md:text-3xl text-[#70C5A1]"
-				style={{ fontFamily: "Days One" }}
-			>
+			<h1 className="text-center text-2xl md:text-3xl text-[#70C5A1]" style={{ fontFamily: "Days One" }}>
 				Why Mentör
 			</h1>
-			<div className="lg:flex grid items-center gap-6 justify-between mt-20 lg:px-10">
+			<div className="flex flex-col xl:flex-row gap-6 justify-center xl:justify-between mt-20 xl:px-10">
 				<AnimationOnScroll animateIn="animate__slideInLeft" animateOnce={true}>
-					<div className="bg-[#fff] h-auto lg:h-[500px] xl:h-[360px] border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default">
+					<div className="bg-[#fff] h-full border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default overflow-hidden">
 						<div className="flex gap-2 items-center">
 							<svg width="71" height="34" viewBox="0 0 71 34" fill="none">
 								<path
@@ -30,25 +26,21 @@ const WhyMentor = () => {
 							</svg>
 						</div>
 						<div className="mt-4">
-							<h1
-								className="text-xl text-[#70C5A1]"
-								style={{ fontFamily: "Days One" }}
-							>
+							<h1 className="text-xl text-[#70C5A1]" style={{ fontFamily: "Days One" }}>
 								Free and Unlimited Course
 							</h1>
 							<p className="mt-6 text-[15px] max-w-lg">
-								On Mentör, there are thousand of free courses waiting for you. It&apos;s
-								as simple as logging in, selecting your desired course, and diving into
-								the world of learning. Whether you&apos;re interested in technical
-								subjects like programming, vocational fields such as fashion design, or
-								even educational pursuits like linguistics and physics, we&apos;ve got a
-								diverse array of courses available, all at no cost to you.
+								On Mentör, there are thousand of free courses waiting for you. It&apos;s as simple as
+								logging in, selecting your desired course, and diving into the world of learning.
+								Whether you&apos;re interested in technical subjects like programming, vocational fields
+								such as fashion design, or even educational pursuits like linguistics and physics,
+								we&apos;ve got a diverse array of courses available, all at no cost to you.
 							</p>
 						</div>
 					</div>
 				</AnimationOnScroll>
 				<AnimationOnScroll animateIn="animate__slideInUp" animateOnce={true}>
-					<div className="bg-[#fff] h-auto lg:h-[500px] xl:h-[360px] border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default">
+					<div className="bg-[#fff] h-full border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default overflow-hidden">
 						<div className="flex gap-2 items-center">
 							<svg width="46" height="37" viewBox="0 0 46 37" fill="none">
 								<path
@@ -74,24 +66,20 @@ const WhyMentor = () => {
 							</svg>
 						</div>
 						<div className="mt-4">
-							<h1
-								className="text-xl text-[#70C5A1]"
-								style={{ fontFamily: "Days One" }}
-							>
+							<h1 className="text-xl text-[#70C5A1]" style={{ fontFamily: "Days One" }}>
 								Mentorship anytime, anywhere!
 							</h1>
 							<p className="mt-3 text-[15px] max-w-lg">
-								Location and time constraints are a thing of the past with Mentör. We
-								have a dedicated network of mentors available from around the globe.
-								Whether you find yourself in a predicament in the morning or the dead of
-								night, rest assured that there&apos;s a mentor out there eager to
-								provide you with the guidance and support you seek.
+								Location and time constraints are a thing of the past with Mentör. We have a dedicated
+								network of mentors available from around the globe. Whether you find yourself in a
+								predicament in the morning or the dead of night, rest assured that there&apos;s a mentor
+								out there eager to provide you with the guidance and support you seek.
 							</p>
 						</div>
 					</div>
 				</AnimationOnScroll>
 				<AnimationOnScroll animateIn="animate__slideInRight" animateOnce={true}>
-					<div className="bg-[#fff] h-auto lg:h-[500px] xl:h-[360px] border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default">
+					<div className="bg-[#fff] h-full border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default overflow-hidden">
 						<div className="flex gap-2 items-center">
 							<svg width="41" height="37" viewBox="0 0 41 37" fill="none">
 								<path
@@ -101,19 +89,15 @@ const WhyMentor = () => {
 							</svg>
 						</div>
 						<div className="mt-4">
-							<h1
-								className="text-xl text-[#70C5A1]"
-								style={{ fontFamily: "Days One" }}
-							>
+							<h1 className="text-xl text-[#70C5A1]" style={{ fontFamily: "Days One" }}>
 								Live Interaction
 							</h1>
 							<p className="mt-6 text-[15px] max-w-lg">
-								Now, you have the opportunity to engage with others through live events.
-								Our mentors have thoughtfully curated these events to provide you and
-								others with real-time insights into their respective areas of expertise.
-								Think of our live events as the physical skill acquisition workshops or
-								specialized tutorials where you can interact with fellow participants,
-								but this time, it&apos;s all happening online.
+								Now, you have the opportunity to engage with others through live events. Our mentors
+								have thoughtfully curated these events to provide you and others with real-time insights
+								into their respective areas of expertise. Think of our live events as the physical skill
+								acquisition workshops or specialized tutorials where you can interact with fellow
+								participants, but this time, it&apos;s all happening online.
 							</p>
 						</div>
 					</div>

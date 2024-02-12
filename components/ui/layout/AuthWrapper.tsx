@@ -17,7 +17,10 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
 	const checkAuthValidity = async () => {
 		const authToken = getCookie(AUTH_TOKEN_KEY);
 		const decodedToken: any = jwt.decode(String(authToken));
-		if (!decodedToken || decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) logoutUser();
+		if (!decodedToken || decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
+			logoutUser();
+			return;
+		}
 		await fetchUser()
 			.then(({ data }) => {
 				const user = data?.userProfile as IUser;

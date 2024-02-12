@@ -23,9 +23,7 @@ const CourseDetailsBody = (course: ICourse) => {
 					</div>
 					<div className="">
 						<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
-							<p className="text-[#F15E63] cursor-pointer hover:underline">
-								! Report Mentor
-							</p>
+							<p className="text-[#F15E63] cursor-pointer hover:underline text-sm">! Report Mentor</p>
 							<Socials />
 						</div>
 					</div>

@@ -3,7 +3,8 @@ import { dummyUsers } from "./user";
 
 const reviews: IReview[] = [
 	{
-		content: "Great course for beginners!",
+		content:
+			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple.",
 		ratings: 5,
 		reviewed_by: dummyUsers[1],
 		type: "course",
@@ -21,19 +22,21 @@ const reviews: IReview[] = [
 		type: "course",
 	},
 	{
-		content: "Great course!",
+		content: "I once thought digital marketing was for the big guys until i took this course. Great course!",
 		ratings: 4.5,
 		reviewed_by: dummyUsers[2],
 		type: "course",
 	},
 	{
-		content: "Great course!",
+		content:
+			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
 		ratings: 4.5,
 		reviewed_by: dummyUsers[2],
 		type: "course",
 	},
 	{
-		content: "Great course!",
+		content:
+			"I once thought digital marketing was for the big guys until i took this course, thank you for making it so easy and simple",
 		ratings: 4.5,
 		reviewed_by: dummyUsers[2],
 		type: "course",
