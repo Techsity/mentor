@@ -7,7 +7,7 @@ const WhyMentor = () => {
 			<h1 className="text-center text-2xl md:text-3xl text-[#70C5A1]" style={{ fontFamily: "Days One" }}>
 				Why Mentör
 			</h1>
-			<div className="flex flex-col xl:flex-row gap-6 justify-center xl:justify-between mt-20 xl:px-10">
+			<div className="flex flex-col xl:flex-row gap-6 justify-center xl:justify-between mt-6 xl:px-10">
 				<AnimationOnScroll animateIn="animate__slideInLeft" animateOnce={true}>
 					<div className="bg-[#fff] h-full border-r-8 border-b-8 shadow border-[#70C5A1] p-5 duration-300 hover:translate-y-[-6%] cursor-default overflow-hidden">
 						<div className="flex gap-2 items-center">

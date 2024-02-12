@@ -1,11 +1,9 @@
 import React from "react";
-import courses from "../../../data/courses";
 import CourseInProgressTemplate from "../../../components/templates/course/in-progress";
 import protectedPageWrapper from "../../protectedPageWrapper";
 
 const CourseInProgress = () => {
-	const course = courses[0];
-	return <CourseInProgressTemplate {...course} />;
+	return <CourseInProgressTemplate />;
 };
 
 export default protectedPageWrapper(CourseInProgress);

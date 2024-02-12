@@ -39,7 +39,7 @@ const WorkshopDisplayCard = ({
 				</div>
 			</div>
 			<div className="grid gap-2">
-				<div className="relative">
+				<div className="relative bg-zinc-100 h-full w-full min-h-[200px]">
 					<div className="bg-black w-full h-full bg-opacity-50 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 					<img
 						src={workshop.imgUrl || "/assets/images/mockups/course_one.png"}
@@ -57,8 +57,8 @@ const WorkshopDisplayCard = ({
 						</span>
 					)}
 				</h1>
-				<div className="flex items-center gap-6 px-5 text-sm mt-2">
-					<span className="">{formatDateDifference(workshop.startDate, workshop.endDate)}</span>
+				<div className="flex items-center gap-6 px-5 text-xs mt-2">
+					<span className="capitalize">{formatDateDifference(workshop.startDate, workshop.endDate)}</span>
 					<span className="">{workshop.duration.toFixed(1)} hours</span>
 					<span className="">{formatFollowersCount(workshop.participants)} students</span>
 					{/* <div className="flex items-center gap-2 text-[#094B10] ml-8 text-[16px]">
@@ -72,7 +72,7 @@ const WorkshopDisplayCard = ({
 						</svg>
 					</div> */}
 				</div>
-				<p className="text-sm px-5">{workshop.description.slice(0, 160)}...</p>
+				<p className="text-xs px-5">{workshop.description.slice(0, 160)}...</p>
 				<div className="flex items-center justify-between mt-5 px-5">
 					<div className="flex gap-2 items-center text-sm relative">
 						<img
@@ -81,7 +81,7 @@ const WorkshopDisplayCard = ({
 							className="w-10 rounded-full"
 							loading="lazy"
 						/>
-						<h1>{workshop.mentor.user.name}</h1>
+						<h1 className="text-xs">{workshop.mentor.user.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
 					{!profile ? (
@@ -97,7 +97,7 @@ const WorkshopDisplayCard = ({
 							<PrimaryButton
 								link={`/profile/workshop/edit/${slugify(workshop.title)}`}
 								title="Edit"
-								className="p-2 px-6"
+								className="p-2 px-6 text-sm"
 							/>
 						</div>
 					) : (
@@ -105,7 +105,7 @@ const WorkshopDisplayCard = ({
 							<PrimaryButton
 								link={`/workshops/${slugify(workshop.title)}`}
 								title="View"
-								className="p-2 px-6"
+								className="p-2 px-6 text-sm"
 							/>
 						</div>
 					)}

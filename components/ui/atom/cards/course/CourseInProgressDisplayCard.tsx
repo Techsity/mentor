@@ -14,9 +14,9 @@ const CourseInProgressDisplayCard: FC<{
 	const watchedTime = 1050;
 	const totalTime = 2300;
 	const percentageWatched = parseInt(((watchedTime / totalTime) * 100).toFixed(0));
-
+	const watched = false;
 	return (
-		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[400px]">
+		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[360px]">
 			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
 				<div className="justify-between flex items-center w-full">
 					<span className="text-xs font-medium">
@@ -52,7 +52,6 @@ const CourseInProgressDisplayCard: FC<{
 						<StarRatingIcon />
 					</div>
 				</div>
-
 				<p className="text-xsm font-normal w-full mt-3">{course.description}</p>
 				<div className="flex items-center justify-between mt-3 w-full">
 					<div className="flex gap-2 items-center text-xsm relative">
@@ -66,8 +65,9 @@ const CourseInProgressDisplayCard: FC<{
 					</div>
 					{!owner ? (
 						<PrimaryButton
-							title={percentageWatched >= 100 ? "Start Over" : "Continue"}
+							title={percentageWatched >= 100 ? "Start Over" : !watched ? "Start" : "Continue"}
 							className="p-2 px-4 text-xs"
+							link={`/courses/${slugify(course.title)}/learn`}
 						/>
 					) : (
 						<PrimaryButton

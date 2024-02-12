@@ -1,6 +1,6 @@
 import React from "react";
-import PurchaseCourseTemplate from "../../../../components/templates/course/purchase";
-import courses from "../../../../data/courses";
+import PurchaseCourseTemplate from "../../../components/templates/course/purchase";
+import courses from "../../../data/courses";
 
 const PurchaseCourse = () => {
 	// Todo: fetch course to be purchased

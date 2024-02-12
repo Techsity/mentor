@@ -7,7 +7,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -63,7 +63,7 @@ const mentors: IMentor[] = [
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
 		followers: 20000,
-		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },

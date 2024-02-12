@@ -1,74 +1,33 @@
-import React, {
-	Dispatch,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-import ReactPlayer from "react-player/lazy";
-import VideoControls from "./VideoControls";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { ICourse } from "../../../../../../interfaces";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 
-const VideoComponent = (props: {
-	course: ICourse;
-	setLoading?: Dispatch<SetStateAction<boolean>>;
-}) => {
+const VideoComponent = (props: { course: ICourse; setLoading?: Dispatch<SetStateAction<boolean>> }) => {
 	const videoUrl = "https://vimeo.com/169599296";
-	const [loading, setLoading] = useState<boolean>(false);
-	// const videoPlayerRef = useRef<ReactPlayer>(null);
-	// &&
+	const [loading, setLoading] = useState<boolean>(true);
+	const handleLoadedData = () => {
+		setLoading(false);
+	};
+
 	return (
-		<div className="flex-grow relative xl:-top-24 mt-10 lg:mt-0">
+		<div className="flex-grow relative my-6">
 			<div className="lg:max-w-[65dvw] w-full group overflow-hidden">
-				<div className="relative bg-zinc-10 w-full min-h-[250px] :min-h-[400px] 2xl:min-h-[420px]">
+				<div className="relative bg-zinc-200 w-full h-[400px]">
 					{loading ? (
-						<div className="mx-auto">
-							<ActivityIndicator
-								color="#70C5A1"
-								size={85}
-								className="border-[.5em]"
-							/>
+						<div className="bg-zinc-100 absolute top-0 left-0 h-full w-full animate__animated animate__fadeIn animate__infinite flex justify-center">
+							<div className="mx-auto flex items-center justify-center">
+								<ActivityIndicator color="black" size={50} className="border-[.3em]" />
+							</div>
 						</div>
 					) : (
 						<div className="absolute bottom-0 left-0 w-full h-full">
-							<ReactPlayer
-								// ref={videoPlayerRef}
-								url={videoUrl}
-								height={"100%"}
-								width={"100%"}
-								// playing={playing}
-								onBuffer={() => {
-									console.log("Loading");
-									setLoading(false);
-								}}
-								onBufferEnd={() => {
-									setLoading(false);
-									console.log("Loaded");
-								}}
+							<video
+								onLoadedData={handleLoadedData}
 								controls
-							/>
+								src={videoUrl}
+								style={{ aspectRatio: "4/3", width: "100%", height: "100%" }}></video>
 						</div>
 					)}
-					{/* <VideoControls
-						videoDuration={videoDuration ? videoDuration : "00:00"}
-						videoProgress={
-							videoProgress
-								? parseVideoDuration(
-										parseInt(
-											videoProgress
-												.toFixed(2)
-												.split(".")
-												.join(""),
-										),
-								  )
-								: "00:00:00"
-						}
-						setVideoDuration={setVideoDuration}
-						handleBackward={() => null}
-						handleForward={() => null}
-						handlePlay={() => setPlaying(!playing)}
-					/> */}
 				</div>
 			</div>
 		</div>
