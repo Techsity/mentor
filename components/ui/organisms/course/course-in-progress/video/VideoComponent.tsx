@@ -4,7 +4,8 @@ import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import classNames from "classnames";
 
 const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolean }) => {
-	const videoUrl = "https://player.vimeo.com/video/166240148";
+	// const videoUrl = "https://player.vimeo.com/video/166240148";
+	const videoUrl = "https://www.youtube.com/embed/07BTQBu5oM4";
 
 	return (
 		<div className="flex-grow relative mb-6">
@@ -22,7 +23,7 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 								src={videoUrl}
 								width="100%"
 								height="100%"
-								allow="autoplay; fullscreen"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
 								allowFullScreen
 								title={course.title}
 							/>
