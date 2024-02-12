@@ -10,7 +10,7 @@ import courses from "../../../../data/courses";
 
 const CourseInProgressTemplate = () => {
 	const course = courses[0];
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(!false);
 
 	return (
 		<div className="min-h-[50vh] h-full sm:px-10 px-4 pb-20">

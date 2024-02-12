@@ -9,7 +9,7 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 	return (
 		<div className="flex-grow relative mb-6">
 			<div className="lg:max-w-[65dvw] w-full group overflow-hidden">
-				<div className={classNames("relative w-full h-[400px]", loading ? "bg-zinc-200" : "bg-zinc-200")}>
+				<div className={classNames("relative w-full h-[400px] bg-black/10 backdrop-blur-sm")}>
 					{loading ? (
 						<div className="bg-zinc-100 absolute top-0 left-0 h-full w-full animate__animated animate__fadeIn animate__infinite flex justify-center">
 							<div className="mx-auto flex items-center justify-center">
