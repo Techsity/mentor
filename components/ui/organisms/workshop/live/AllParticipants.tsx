@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import VideoCallParticipantCard from "../../../atom/cards/call/VideoCallParticipantCard";
-import { useSelector } from "react-redux";
 import { IWorkshop } from "../../../../../interfaces";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
 import {
-	LocalUser,
 	useLocalMicrophoneTrack,
 	useRemoteUsers,
 	useCurrentUID,
@@ -19,13 +16,14 @@ type Props = {
 	// participants: IAgoraRTCRemoteUser[];
 };
 const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop }: Props) => {
-	const user = useSelector(currentUser);
 	const [muted, setMuted] = useState<boolean>(true);
 	const { localMicrophoneTrack } = useLocalMicrophoneTrack(muted);
 	const uid = useCurrentUID();
 
 	const toggleMute = () => {
+		localMicrophoneTrack?.setEnabled(muted);
 		setMuted((a) => !a);
+		console.log({ enabled: localMicrophoneTrack?.enabled });
 	};
 
 	const participants = useRemoteUsers();
