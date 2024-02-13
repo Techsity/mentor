@@ -26,7 +26,7 @@ const MentorProfileOverview = () => {
 			<div className="">
 				<div className="text-white bg-[#70C5A1] p-6 md:max-w-[35%] xs:max-w-[40%]">
 					<div className="text-sm">Total Earnings on Mentor</div>
-					<p className="font-semibold text-3xl">₦{formatAmount(200000)}</p>
+					<p className="font-semibold text-3xl">${formatAmount(200000)}</p>
 				</div>
 			</div>
 

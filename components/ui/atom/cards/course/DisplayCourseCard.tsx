@@ -98,7 +98,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 												? "font-normal"
 												: "px-5 bg-zinc-200 h-1.5 animate__animated animate__fadeIn animate__infinite"
 										}>
-										{!loading && course?.limit.toLocaleString() + " students"}
+										{!loading && course?.reviews && course.reviews.toLocaleString() + " reviews"}
 									</span>
 									{!loading ? (
 										<div className="flex items-center gap-2 text-[#094B10] ml-3 text-[13px]">
@@ -151,7 +151,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 											</div>
 										) : (
 											<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-8 p-2 cursor-pointer">
-												₦{course?.price.toLocaleString()}
+												${course?.price.toLocaleString()}
 											</div>
 										)
 									) : (

@@ -24,7 +24,7 @@ const CourseInProgressDisplayCard: FC<{
 							? percentageWatched < 100
 								? `${percentageWatched}% complete`
 								: `${percentageWatched}% complete`
-							: formatFollowersCount(course.limit) + " students"}
+							: formatFollowersCount(course.reviews.length) + " students"}
 					</span>
 					<Link href={`/courses/${slugify(course.title)}`}>
 						<div className="cursor-pointer">
@@ -46,7 +46,7 @@ const CourseInProgressDisplayCard: FC<{
 				<div className="flex items-center gap-2 justify-between text-xxs w-full">
 					<span className="font-normal">{course.course_level}</span>
 					<span className="font-normal">{course.duration} hours</span>
-					<span className="font-normal">{formatFollowersCount(course.limit)} students</span>
+					<span className="font-normal">{formatFollowersCount(course.reviews.length)} students</span>
 					<div className="flex items-center gap-2 text-[#094B10]">
 						{course.rating}
 						<StarRatingIcon />

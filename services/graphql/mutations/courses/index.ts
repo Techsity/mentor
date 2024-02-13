@@ -16,24 +16,24 @@ export const ALL_COURSES = gql`
 			course_images
 			course_level
 			description
-			mentor {
-				about
-				courses {
-					category {
-						description
-						title
-					}
-					title
-					description
-				}
-				about
-				mentor_verified
-				role
-				skills {
-					skill_name
-					years_of_exp
-				}
-			}
+			# mentor {
+			# 	about
+			# 	courses {
+			# 		category {
+			# 			description
+			# 			title
+			# 		}
+			# 		title
+			# 		description
+			# 	}
+			# 	about
+			# 	mentor_verified
+			# 	role
+			# 	skills {
+			# 		skill_name
+			# 		years_of_exp
+			# 	}
+			# }
 			price
 			reviews {
 				content

@@ -138,6 +138,15 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 												card_number: "5399 8878 9887 99099",
 											},
 										],
+										// Temporary
+										subscriptions: [
+											{
+												id: "introduction-to-programming",
+												is_completed: false,
+												created_at: new Date().toISOString(),
+												updated_at: new Date().toISOString(),
+											},
+										],
 									},
 								}),
 							);

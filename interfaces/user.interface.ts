@@ -4,6 +4,13 @@ export interface IUserPaymentCard {
 	bank: { name: string; logo?: string };
 }
 
+type Subscription = {
+	id: string;
+	is_completed: boolean;
+	created_at?: string;
+	updated_at?: string;
+};
+
 export interface IUser {
 	id?: string;
 	email: string;
@@ -20,6 +27,7 @@ export interface IUser {
 	isPremium: boolean;
 	created_at?: string;
 	updated_at?: string;
+	subscriptions?: Subscription[];
 }
 
 export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };

@@ -22,7 +22,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
 						<p className="">{course.course_level}</p>
 						<p className="">{course.duration} hours</p>
-						<p className="">{course.limit.toLocaleString()} students</p>
+						<p className="">{course.reviews && course.reviews.toLocaleString()} reviews</p>
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{course.rating}
 							<svg width="13" height="13" viewBox="0 0 9 9" fill="none">

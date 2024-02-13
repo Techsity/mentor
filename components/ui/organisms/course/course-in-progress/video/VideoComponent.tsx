@@ -5,7 +5,8 @@ import classNames from "classnames";
 
 const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolean }) => {
 	// const videoUrl = "https://player.vimeo.com/video/166240148";
-	const videoUrl = "https://www.youtube.com/embed/07BTQBu5oM4";
+	// const videoUrl = "https://www.youtube.com/embed/07BTQBu5oM4";
+	const videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 	return (
 		<div className="flex-grow relative mb-6">

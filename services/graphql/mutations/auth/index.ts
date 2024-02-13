@@ -83,7 +83,6 @@ export const RESET_PASSWORD = gql`
 		}
 	}
 `;
-
 export const GET_MENTOR_PROFILE = gql`
 	query GetMentorProfile {
 		getMentorProfile {
@@ -156,6 +155,13 @@ export const GET_MENTOR_PROFILE = gql`
 			mentor_verified
 			created_at
 			updated_at
+		}
+	}
+`;
+export const REQUEST_OTP = gql`
+	mutation RequestOtp($email: String!) {
+		requestOtp(email: $email) {
+			message
 		}
 	}
 `;

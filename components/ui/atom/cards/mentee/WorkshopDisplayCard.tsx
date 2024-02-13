@@ -89,7 +89,7 @@ const WorkshopDisplayCard = ({
 							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">Free</div>
 						) : (
 							<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">
-								₦{workshop.price.toLocaleString()}
+								${workshop.price.toLocaleString()}
 							</div>
 						)
 					) : profile && owner ? (

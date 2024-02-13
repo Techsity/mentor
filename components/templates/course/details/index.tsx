@@ -1,14 +1,19 @@
 import React from "react";
 import CourseDetailsPageHero from "../../../ui/organisms/course/course-details/hero";
-import { ICourse } from "../../../../interfaces";
 import CourseDetailsBody from "../../../ui/organisms/course/course-details/body";
 import { ChevronUpOutline } from "react-ionicons";
 import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import CoursePageAboutMentor from "../../../ui/organisms/course/course-details/about-mentor";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
+import courses from "../../../../data/courses";
+import { useRouter } from "next/router";
 
-const CourseDetailsPageTemplate = (course: ICourse) => {
+const CourseDetailsPageTemplate = () => {
+	const router = useRouter();
+	const courseId = String(router.query.courseId);
+	// Todo: use useQuery to fetch course
+	const course = courses[0];
 	return (
 		<>
 			<div className="">

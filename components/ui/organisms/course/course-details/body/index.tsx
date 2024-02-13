@@ -1,8 +1,5 @@
-import React, { MouseEventHandler, useState } from "react";
-import { ICourse, ICourseContent } from "../../../../../../interfaces";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import { calculateTotalDuration, parseDuration } from "../../../../../../utils";
-import { PrimaryButton } from "../../../../atom/buttons";
+import React, {  } from "react";
+import { ICourse } from "../../../../../../interfaces";
 import ListReviews from "../../../../atom/common/course/ListReviews";
 import Socials from "../../../../atom/common/course/Socials";
 import CourseRequirements from "./CourseRequirements";

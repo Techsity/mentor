@@ -16,10 +16,9 @@ const MenteeDashboardHero = () => {
 	const courseType = router.query.type;
 	const [state, setState] = React.useState<PropState>({ categories: [], loading: true });
 	const { categories, loading } = state;
-
+	// Todo: implement a search query global caching system
 	const [fetchCategories] = useLazyQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES, {
 		fetchPolicy: "cache-and-network",
-		
 	});
 
 	useEffect(() => {

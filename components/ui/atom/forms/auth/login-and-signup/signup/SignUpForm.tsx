@@ -18,7 +18,7 @@ const SignUpForm = () => {
 				handleCountrySelect={handleCountrySelect}
 				disabled={loading}
 			/>
-			<div className="flex lg:flex-row flex-col gap-8 justify-between mt-5 items-center w-full">
+			<div className="flex lg:flex-row flex-col gap-8 justify-between items-center w-full">
 				<PrimaryButton
 					type="submit"
 					disabled={loading}

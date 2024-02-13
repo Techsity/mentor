@@ -49,7 +49,7 @@ const LoginForm = () => {
 					</div>
 				}
 			/>
-			<div className="sm:flex-row flex flex-col gap-5 justify-between mt-5 items-center">
+			<div className="sm:flex-row flex flex-col gap-5 justify-between items-center">
 				<PrimaryButton
 					type="submit"
 					disabled={loading}
@@ -61,7 +61,7 @@ const LoginForm = () => {
 							</div>
 						) : null
 					}
-					className="px-10 p-3 rounded text-center flex justify-center sm:w-auto w-full"
+					className="px-10 p-3 text-center flex justify-center sm:w-auto w-full"
 				/>
 				<Link href="/auth/forgot-password">
 					<div className="cursor-pointer">

@@ -6,4 +6,4 @@ const CourseInProgress = () => {
 	return <CourseInProgressTemplate />;
 };
 
-export default protectedPageWrapper(CourseInProgress);
+export default protectedPageWrapper(CourseInProgress, { adminCanView: true });

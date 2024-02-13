@@ -1,5 +1,5 @@
-import { useState, useEffect, ReactNode, useRef } from "react";
-import type { ClientConfig, IAgoraRTCClient } from "agora-rtc-react";
+import { ReactNode } from "react";
+import type { ClientConfig } from "agora-rtc-react";
 import dynamic from "next/dynamic";
 
 const AgoraRTCProviderPrimitive = dynamic(
@@ -8,11 +8,12 @@ const AgoraRTCProviderPrimitive = dynamic(
 		ssr: false,
 	},
 );
-const AgoraRTC = (await import("agora-rtc-react")).default;
-
+const { createClient, createMicrophoneAndCameraTracks } = (await import("agora-rtc-react")).default;
 const config: ClientConfig = { codec: "vp8", mode: "rtc" };
 
-export const client = AgoraRTC.createClient(config);
+export const client = createClient(config);
+
 export default function AgoraRTCProvider(props: { children?: ReactNode }) {
 	return client !== null && <AgoraRTCProviderPrimitive client={client}>{props.children}</AgoraRTCProviderPrimitive>;
 }
+export const createTracks = createMicrophoneAndCameraTracks;

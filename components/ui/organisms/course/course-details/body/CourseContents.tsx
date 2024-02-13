@@ -1,17 +1,22 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useMemo, useState } from "react";
 import { ICourse, ICourseContent } from "../../../../../../interfaces";
-import { calculateTotalDuration, parseDuration, scrollUp, slugify } from "../../../../../../utils";
+import { slugify } from "../../../../../../utils";
 import { PrimaryButton } from "../../../../atom/buttons";
 import classNames from "classnames";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../../redux/reducers/authSlice";
 
 const CourseContents = ({
 	course,
 	className,
 	inProgress = false,
+	loading,
 }: {
 	course: ICourse;
 	className?: string;
 	inProgress?: boolean;
+	loading?: boolean;
 }) => {
 	const [activeContent, setActiveContent] = useState<ICourseContent | null>(course.course_contents[0]);
 	const CourseContentItem = ({
@@ -89,24 +94,29 @@ const CourseContents = ({
 			</>
 		);
 	};
+
+	const router = useRouter();
+	const courseId = String(router.query.courseId);
+	const user = useSelector(currentUser);
+	const selectedSubscription = user?.subscriptions?.find((sub) => sub.id === courseId);
+
+	const isSubscribed = useMemo(
+		() => Boolean(selectedSubscription),
+		[selectedSubscription, user?.subscriptions, courseId],
+	);
+	const videos: string[] = [
+		"https://www.w3schools.com/html/movie.mp4",
+		"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+	];
+
 	return inProgress ? (
 		<div
 			className={classNames(
 				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] p-4 sm:py-6 text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
 				className,
 			)}>
-			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
 				<h1 className="font-semibold mb-3">Course Content</h1>
-				{/* {course.price !==0 ? (
-					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
-						₦{course.price.toLocaleString()}
-					</div>
-				) : (
-					<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
-						Free
-					</div>
-				)} */}
 			</div>
 			<div className="my-6 grid gap-4 overflow-hidden">
 				{course.course_contents.map((content, index) => (
@@ -135,7 +145,7 @@ const CourseContents = ({
 				<h1 className="font-semibold">Course Content</h1>
 				{course.price !== 0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
-						₦{course.price.toLocaleString()}
+						${course.price.toLocaleString()}
 					</div>
 				) : (
 					<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
@@ -159,13 +169,18 @@ const CourseContents = ({
 				))}
 
 				<PrimaryButton
-					// title={
-					// purchased?
-					// 		? "Start Course"
-					// 		: "Purchase Course"
-					// }
-					title={"Purchase Course"}
-					link={`/courses/${slugify(course.title)}/purchase`}
+					title={
+						isSubscribed
+							? selectedSubscription?.is_completed
+								? "Start over"
+								: "Continue"
+							: "Purchase Course"
+					}
+					link={
+						isSubscribed
+							? `/courses/${slugify(course.title)}/learn`
+							: `/courses/${slugify(course.title)}/purchase`
+					}
 					className="p-3 text-lg flex justify-center items-center text-sm"
 				/>
 			</div>

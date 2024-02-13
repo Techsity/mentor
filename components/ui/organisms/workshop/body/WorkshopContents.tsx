@@ -48,7 +48,7 @@ const WorkshopContents = ({
 				<h1 className="font-semibold text-xl">Workshop Schedule</h1>
 				{workshop.price !== 0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
-						₦{workshop.price.toLocaleString()}
+						${workshop.price.toLocaleString()}
 					</div>
 				) : (
 					<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">

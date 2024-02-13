@@ -7,19 +7,19 @@ import CourseInProgressTopHeader from "../../../ui/organisms/course/course-in-pr
 import VideoComponent from "../../../ui/organisms/course/course-in-progress/video/VideoComponent";
 import CourseOverviewTabComponent from "../../../ui/organisms/course/course-in-progress/overview-tab";
 import courses from "../../../../data/courses";
+import { useRouter } from "next/router";
 
 const CourseInProgressTemplate = () => {
+	const router = useRouter();
 	const course = courses[0];
 	const [loading, setLoading] = useState<boolean>(true);
 
 	// Todo: remove loading simulation
+
 	useEffect(() => {
 		setTimeout(function () {
 			setLoading(false);
 		}, 1200);
-		return () => {
-			setLoading(false);
-		};
 	}, []);
 
 	return (
@@ -38,7 +38,12 @@ const CourseInProgressTemplate = () => {
 						<Socials />
 					</div>
 				</div>
-				<CourseContents inProgress course={course} className="lg:max-w-[30%] lg:mt-6 xl:mt-6" />
+				<CourseContents
+					loading={loading}
+					inProgress
+					course={course}
+					className="lg:max-w-[30%] lg:mt-6 xl:mt-6"
+				/>
 			</div>
 		</div>
 	);

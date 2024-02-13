@@ -5,8 +5,12 @@ import {
 	IAgoraRTCError,
 	IAgoraRTCRemoteUser,
 	useJoin,
+	useLocalCameraTrack,
+	useLocalMicrophoneTrack,
 	useNetworkQuality,
+	usePublish,
 	useRTCClient,
+	useRemoteAudioTracks,
 	useRemoteUsers,
 } from "agora-rtc-react";
 import dynamic from "next/dynamic";
@@ -16,7 +20,7 @@ import workshops from "../../../../data/workshops";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { client } from "../../../../hooks/agora";
+import { client, createTracks } from "../../../../hooks/agora";
 import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import ChannelEntrance from "../../../ui/organisms/workshop/live/ChannelEntrance";
@@ -30,7 +34,6 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 });
 
 const LiveWorkshopTemplate = () => {
-	const router = useRouter();
 	const user = useSelector(currentUser);
 	const appId = String(process.env.NEXT_PUBLIC_AGORA_APP_ID);
 	const rtcClient = useRTCClient(client);
@@ -41,8 +44,8 @@ const LiveWorkshopTemplate = () => {
 
 	const fetchArgs = {
 		appid: appId,
-		// channel: channelName,
-		// token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
+		channel: channelName,
+		token: null,
 		uid: user?.email.toLowerCase(),
 	};
 	const workshop = workshops[0];
@@ -51,7 +54,7 @@ const LiveWorkshopTemplate = () => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	const { error, isLoading: isJoining } = useJoin(fetchArgs as FetchArgs, activeConnection);
+	const { error, isLoading: isJoining, isConnected } = useJoin(fetchArgs as FetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
 
@@ -63,6 +66,10 @@ const LiveWorkshopTemplate = () => {
 	};
 
 	const retry = 10000;
+
+	const { localMicrophoneTrack: audioTrack } = useLocalMicrophoneTrack(true);
+	const { localCameraTrack: cameraTrack } = useLocalCameraTrack(true);
+	usePublish([audioTrack, cameraTrack]);
 
 	return activeConnection && !error && !isJoining ? (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">

@@ -30,14 +30,14 @@ const LoginAndSignupForm = () => {
 				<div className={currentForm === "signup" ? "" : "hidden"}>
 					<SignUpForm />
 				</div>
-				<div className="mt-6 items-center animate__animated animate__fadeInUp flex md:flex-row flex-col gap-5">
+				{/* <div className="mt-6 items-center animate__animated animate__fadeInUp flex md:flex-row flex-col gap-5">
 					<h1 className="">- or {currentForm} with -</h1>
 					<Link href={currentForm === "login" ? "#google_auth_login" : "#google_auth_signup"}>
 						<div className="cursor-pointer">
 							<GoogleIconSvg />
 						</div>
 					</Link>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
