@@ -9,6 +9,7 @@ import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { IReview } from "../../../../../interfaces";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { toast } from "react-toastify";
+import countries from "../../../../../data/countries";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
@@ -18,14 +19,17 @@ type MentorProfileCardProps = {
 
 const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
 	const router = useRouter();
-	const country: string = mentor ? mentor?.user.country.charAt(0) + mentor?.user.country.charAt(1).toLowerCase() : "";
+	const userCountry: string = mentor
+		? String(countries.find((c) => c.label === mentor.user.country)?.countryCode)
+		: "";
+	const country: string = userCountry.charAt(0) + userCountry.charAt(1).toLowerCase();
 	const toastId = useId();
 
 	interface IconType {
 		[key: string]: React.ElementType;
 	}
 	const IconComponent: IconType = FlagIcons;
-	const IconComp: any = mentor?.user.country ? IconComponent[country] : null;
+	const IconComp: any = userCountry ? IconComponent[country] : null;
 
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
