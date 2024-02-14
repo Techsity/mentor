@@ -25,7 +25,6 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		if (props && props.closeOnBackgroundClick !== undefined)
 			setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
 		else setCloseOnBackgroundClick(true);
-		console.log({ closeOnBackgroundClick, props });
 		setModalContent(content);
 	};
 
