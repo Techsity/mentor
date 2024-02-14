@@ -1,3 +1,4 @@
+import { NextRouter } from "next/router";
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
 import { logOut } from "../redux/reducers/authSlice";
@@ -95,4 +96,10 @@ export const authenticate = async (accessToken: string, next?: Function) => {
 	setCookie(AUTH_TOKEN_KEY, accessToken);
 	setLocalStorage(AUTH_TOKEN_KEY, accessToken);
 	next && next();
+};
+
+export const navigateToAuthPage = (router: NextRouter, link: string) => {
+	if (!store.getState().auth.isLoggedIn || store.getState().auth.user)
+		router.push(`/auth?login&next=${encodeURIComponent(link)}`);
+	else router.push(link);
 };

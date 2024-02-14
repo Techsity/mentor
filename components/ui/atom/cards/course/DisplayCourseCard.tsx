@@ -5,8 +5,10 @@ import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 import Link from "next/link";
 import { slugify } from "../../../../../utils";
 import useWishlist from "../../../../../hooks/course/useWishlist";
+import { useRouter } from "next/router";
 
 const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
+	const router = useRouter();
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 	const hasBeenAdded = wishlist.find(
 		(wishlistedCourse) => slugify(wishlistedCourse?.title as string) === slugify(course?.title as string),
@@ -46,7 +48,10 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 						)}
 						{/* Wishlist Feature - End*/}
 
-						<Link href={!loading ? `/courses/${slugify(course?.title as string)}` : "#"}>
+						<div
+							onClick={() => {
+								if (!loading) router.push(`/courses/${slugify(course?.title as string)}`);
+							}}>
 							<div className="flex flex-col items-start gap-4 cursor-pointer h-full w-full">
 								<div className="relative h-full max-h-[40%] w-full bg-zinc-200 overflow-hidden">
 									{!loading && (
@@ -98,7 +103,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 												? "font-normal"
 												: "px-5 bg-zinc-200 h-1.5 animate__animated animate__fadeIn animate__infinite"
 										}>
-										{!loading && course?.reviews && course.reviews.toLocaleString() + " reviews"}
+										{!loading && course?.reviews && course.reviews.length + " reviews"}
 									</span>
 									{!loading ? (
 										<div className="flex items-center gap-2 text-[#094B10] ml-3 text-[13px]">
@@ -159,7 +164,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									)}
 								</div>
 							</div>
-						</Link>
+						</div>
 					</>
 				</div>
 			</div>

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowForwardSharp, Play } from "react-ionicons";
 import { StarRatingIcon } from "../../icons/svgs";
 import { PrimaryButton } from "../../buttons";
+import { navigateToAuthPage } from "../../../../../utils/auth";
+import { useRouter } from "next/router";
 
 const CourseInProgressDisplayCard: FC<{
 	course: ICourse;
@@ -15,6 +17,8 @@ const CourseInProgressDisplayCard: FC<{
 	const totalTime = 2300;
 	const percentageWatched = parseInt(((watchedTime / totalTime) * 100).toFixed(0));
 	const watched = false;
+	const router = useRouter();
+
 	return (
 		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[360px]">
 			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
@@ -73,7 +77,7 @@ const CourseInProgressDisplayCard: FC<{
 						<PrimaryButton
 							title="Edit Course"
 							className="p-2 px-4 text-xs"
-							link={`/profile/courses/edit/${slugify(course.title)}`}
+							onClick={() => navigateToAuthPage(router, `/profile/courses/edit/${slugify(course.title)}`)}
 						/>
 					)}
 				</div>

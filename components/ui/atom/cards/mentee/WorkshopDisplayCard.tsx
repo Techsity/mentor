@@ -4,6 +4,8 @@ import { IWorkshop } from "../../../../../interfaces";
 import Link from "next/link";
 import { formatDateDifference, formatFollowersCount, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
+import { navigateToAuthPage } from "../../../../../utils/auth";
+import { useRouter } from "next/router";
 
 const WorkshopDisplayCard = ({
 	workshop,
@@ -15,6 +17,7 @@ const WorkshopDisplayCard = ({
 	owner?: boolean;
 }) => {
 	// workshop = workshops[0];
+	const router = useRouter();
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
 			<div className="select-none absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col hidden p-6">
@@ -95,7 +98,9 @@ const WorkshopDisplayCard = ({
 					) : profile && owner ? (
 						<div className="flex justify-end items-center">
 							<PrimaryButton
-								link={`/profile/workshop/edit/${slugify(workshop.title)}`}
+								onClick={() =>
+									navigateToAuthPage(router, `/profile/workshop/edit/${slugify(workshop.title)}`)
+								}
 								title="Edit"
 								className="p-2 px-6 text-sm"
 							/>
