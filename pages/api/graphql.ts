@@ -16,11 +16,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		});
 		const data = await response.json();
 
-		if (!response.ok)
-			// throw await response.json();
+		if (!response.ok) {
+			console.log({ data });
 			return res.status(response.status).json({ message: response.statusText, error: { ...data } });
-		// return;
-
+		}
 		res.status(response.status).json(data);
 	} catch (error) {
 		console.error("Error forwarding GraphQL request > ", error);

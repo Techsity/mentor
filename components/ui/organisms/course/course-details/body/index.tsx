@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React from "react";
 import { ICourse } from "../../../../../../interfaces";
 import ListReviews from "../../../../atom/common/course/ListReviews";
 import Socials from "../../../../atom/common/course/Socials";
@@ -25,7 +25,7 @@ const CourseDetailsBody = (course: ICourse) => {
 						</div>
 					</div>
 				</div>
-				<CourseContents course={course} />
+				<CourseContents className="lg:max-w-[30%]" course={course} />
 			</div>
 		</div>
 	);
