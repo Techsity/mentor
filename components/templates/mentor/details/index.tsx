@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from "react";
+import React from "react";
 import { IMentor } from "../../../../interfaces/mentor.interface";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import { AvailabiltySchedule, Experience, MentorProjects, Skills } from "../../../ui/organisms/mentor/details/";
-import { getMentorCourses } from "../../../../services/api";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
-import { AnimationOnScroll } from "react-animation-on-scroll";
 import ListReviews from "../../../ui/atom/common/course/ListReviews";
 import Socials from "../../../ui/atom/common/course/Socials";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
@@ -24,7 +22,6 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start sm:px-12 px-6">
 					<div className="flex-grow min-h-screen overflow-hidden">
 						<Skills skills={mentor?.skills} loading={loading} />
-
 						<Experience experience={mentor?.work_experience} loading={loading} />
 						<div className="my-5 lg:max-w-xl">
 							<MentorProjects projects={mentor?.projects} loading={loading} />

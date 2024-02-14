@@ -184,9 +184,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 			reviews {
 				type
 				content
-				reviewed_by {
-					id
-				}
+				reviewed_by
 				ratings
 			}
 			skills {

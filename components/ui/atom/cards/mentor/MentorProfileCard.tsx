@@ -7,6 +7,7 @@ import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { IReview } from "../../../../../interfaces";
+import { navigateToAuthPage } from "../../../../../utils/auth";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
@@ -40,7 +41,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 								<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
 							) : (
 								<img
-									src={mentor?.user.avatar || ""}
+									src={mentor?.user.avatar || "/assets/images/avatar.png"}
 									alt=""
 									className="w-full h-full rounded-full"
 									loading="lazy"
@@ -179,7 +180,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						<div className="flex gap-5 items-center">
 							<PrimaryButton
 								title="Consult"
-								onClick={() => router.push(`/mentors/${mentor?.id}`)}
+								onClick={() => navigateToAuthPage(router, `/mentors/${mentor?.id}`)}
 								className="px-5 p-1.5 text-sm"
 							/>
 						</div>

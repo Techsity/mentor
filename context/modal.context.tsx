@@ -57,13 +57,15 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick }: any) =
 		if (closeOnBackgroundClick) closeModal();
 	};
 	return (
-		<div
-			onClick={handleBackgroundClick}
-			className="fixed top-0 left-0 z-50 bg-black/50 backdrop-blur-sm h-screen w-screen">
-			<div className="flex justify-center items-center h-full">
+		<>
+			<div
+				onClick={handleBackgroundClick}
+				className="fixed top-0 left-0 z-40 bg-black/50 backdrop-blur-sm h-screen w-screen"
+			/>
+			<div className="flex justify-center items-center z-50 fixed w-screen h-screen top-0">
 				<div className="animate__animated animate__bounceIn animate__fast">{children}</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import MentorDetailsTemplate from "../../components/templates/mentor/details";
+import MentorDetailsTemplate from "../../../components/templates/mentor/details";
 import { useRouter } from "next/router";
-import ScheduleConsultationTemplate from "../../components/templates/mentor/schedule-consultation";
-import { IMentor } from "../../interfaces/mentor.interface";
-import { VIEW_MENTOR_PROFILE } from "../../services/graphql/mutations/mentors";
+import { IMentor } from "../../../interfaces/mentor.interface";
+import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/mutations/mentors";
 import { useQuery } from "@apollo/client";
+import mentors from "../../../data/mentors";
+import protectedPageWrapper from "../../protectedPageWrapper";
 
 const MentorDetails = () => {
 	const router = useRouter();
 	const username = router.query.username as string;
-	const isConsultationPage = Object.keys(router.query)[0] === "consult";
 
 	const { data, error, loading } = useQuery<{ viewMentor: IMentor }, { viewMentorId: string }>(VIEW_MENTOR_PROFILE, {
 		variables: { viewMentorId: username },
@@ -21,10 +21,9 @@ const MentorDetails = () => {
 
 	if (error) console.error({ errorFetchingMentor: JSON.stringify(error) });
 
-	const mentor = data && (data?.viewMentor as IMentor);
+	const mentor = (data && (data?.viewMentor as IMentor)) || mentors[0];
 
-	if (isConsultationPage) return mentor && <ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />;
-	return !loading && error ? (
+	return !loading && error && !mentor ? (
 		<div className="text-red-600 text-xl h-screen flex justify-center items-center">
 			Any error occured. Please refresh page and try again.
 		</div>
@@ -34,3 +33,4 @@ const MentorDetails = () => {
 };
 
 export default MentorDetails;
+// export default protectedPageWrapper(MentorDetails);

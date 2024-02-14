@@ -153,7 +153,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 			</div>
 			<div className="flex justify-center absolute mt-10 bottom-10 w-full mx-auto left-0 px-8 md:px-10">
 				<div
-					onClick={() => router.push(`/mentors/${mentor.id}?consult`)}
+					onClick={() => router.push(`/mentors/${mentor.id}/consult`)}
 					className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
 					style={{ fontFamily: "Days One" }}>
 					Consult
