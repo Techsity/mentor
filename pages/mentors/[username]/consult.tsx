@@ -4,7 +4,7 @@ import React from "react";
 import ScheduleConsultationTemplate from "../../../components/templates/mentor/schedule-consultation";
 import { IMentor } from "../../../interfaces/mentor.interface";
 import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/mutations/mentors";
-import mentors from "../../../data/mentors";
+import protectedPageWrapper from "../../protectedPageWrapper";
 
 const MentorConsultationPage = () => {
 	const router = useRouter();
@@ -15,7 +15,13 @@ const MentorConsultationPage = () => {
 	});
 
 	const mentor = data && (data?.viewMentor as IMentor);
-	return !mentor && <ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />;
+	return !loading && error && !mentor ? (
+		<div className="text-red-600 text-xl h-screen flex justify-center items-center">
+			Any error occured. Please refresh page and try again.
+		</div>
+	) : (
+		<ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />
+	);
 };
 
-export default MentorConsultationPage;
+export default protectedPageWrapper(MentorConsultationPage);

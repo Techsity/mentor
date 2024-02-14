@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useId } from "react";
 import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
@@ -8,6 +8,7 @@ import * as FlagIcons from "react-country-flags-select";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { IReview } from "../../../../../interfaces";
 import { navigateToAuthPage } from "../../../../../utils/auth";
+import { toast } from "react-toastify";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
@@ -18,6 +19,7 @@ type MentorProfileCardProps = {
 const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
 	const router = useRouter();
 	const country: string = mentor ? mentor?.user.country.charAt(0) + mentor?.user.country.charAt(1).toLowerCase() : "";
+	const toastId = useId();
 
 	interface IconType {
 		[key: string]: React.ElementType;
@@ -27,9 +29,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
-		if (!loading && mentor) {
-			console.log("Followed");
-		}
+		if (!loading && mentor) console.log("Followed");
+		toast.success("Followed", { toastId, theme: "light" });
 	};
 	return (
 		<div className="border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
@@ -88,7 +89,9 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						{loading ? (
 							<span className="bg-zinc-200 h-1 w-5" />
 						) : (
-							<p className="text-sm">{formatFollowersCount(mentor?.followers as number)} followers</p>
+							<p className="text-sm">
+								{formatFollowersCount((mentor?.followers as number) || 0)} followers
+							</p>
 						)}
 						<button
 							onClick={handleFollow}

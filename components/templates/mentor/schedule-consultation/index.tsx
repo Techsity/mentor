@@ -24,7 +24,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 
 	return (
 		<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6">
-			<div className=" animate__animated animate__slideInDown">
+			<div className="animate__animated animate__slideInDown animate__fast">
 				<MentorProfileCard mentor={mentor} detailsPage />
 			</div>
 			<div className="flex md:flex-row flex-col justify-between gap-5 py-6 w-full mt-10 items-start">
@@ -34,7 +34,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 						<p className="text-[#CEFFEA] font-[300] text-sm mt-2">Lagos (GMT +1)</p>
 						{/* {mentor.daysOpen} */}
 						<div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
-							{mentor.availability.map((date, ind) => {
+							{mentor?.availability.map((date, ind) => {
 								return (
 									<div
 										key={ind}

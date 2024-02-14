@@ -99,7 +99,7 @@ export const authenticate = async (accessToken: string, next?: Function) => {
 };
 
 export const navigateToAuthPage = (router: NextRouter, link: string) => {
-	if (!store.getState().auth.isLoggedIn || store.getState().auth.user)
+	if (!store.getState().auth.isLoggedIn || !store.getState().auth.user)
 		router.push(`/auth?login&next=${encodeURIComponent(link)}`);
 	else router.push(link);
 };
