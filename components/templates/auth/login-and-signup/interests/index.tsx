@@ -58,8 +58,8 @@ const OnboardingInterestsTemplate = () => {
 				{interests.map((interest, index) => {
 					return (
 						<div key={index} className="w-full">
-							<h1 className="text-lg text-[#021A05]">{interest.category}</h1>
-							<div className="grid grid-cols-2 sm:grid-cols-12 items-center gap-5 mt-10 pb-20 w-full">
+							<h1 className="text-lg text-[#021A05] font-semibold">{interest.category}</h1>
+							<div className="grid grid-cols-2 sm:grid-cols-12 items-center gap-5 mt-4 pb-20 w-full">
 								{interest.data.map((int, index) => (
 									<div className="sm:col-span-4 lg:col-span-3 xl:col-span-2 w-full" key={index}>
 										<div className="grid gap-4 bg-white items-center shadow p-1.5 px-3 rounded">
