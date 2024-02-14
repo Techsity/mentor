@@ -36,19 +36,16 @@ const OnboardingInterestsTemplate = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (!onBoardingUser) {
-	// 		router.replace(`/auth?signup`);
-	// 	}
-	// }, [onBoardingUser, router]);
+	useEffect(() => {
+		if (!onBoardingUser) router.replace(`/auth?signup`);
+	}, [onBoardingUser, router]);
 
-	// if (!onBoardingUser) {
-	// 	return (
-	// 		<div className="min-h-screen items-center flex justify-center">
-	// 			<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
-	// 		</div>
-	// 	);
-	// }
+	if (!onBoardingUser)
+		return (
+			<div className="min-h-screen items-center flex justify-center">
+				<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+			</div>
+		);
 
 	return (
 		<div className="min-h-screen lg:pt-24 sm:pt-20 relative px-6 sm:px-12 md:px-20 pb-20">

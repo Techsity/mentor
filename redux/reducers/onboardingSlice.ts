@@ -19,9 +19,7 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 	availability: [],
 };
 
-const initialUserOnboardingState: IUserOnboardingState = { country: "", email: "", fullName: "", phone: "" };
-
-const initialState: { mentor: typeof initialMentorOnboardingState; user: typeof initialUserOnboardingState | null } = {
+const initialState: { mentor: typeof initialMentorOnboardingState; user: IUserOnboardingState | null } = {
 	mentor: initialMentorOnboardingState,
 	user: null,
 };
