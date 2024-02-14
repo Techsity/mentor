@@ -11,7 +11,7 @@ const ReviewsModal = () => {
 				&times;
 				{/* & */}
 			</div>
-			<div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-3 w-full p-6">
+			<div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-3 w-full p-6">
 				{reviews.map((review, index) => {
 					return (
 						<div
