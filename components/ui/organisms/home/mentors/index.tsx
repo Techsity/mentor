@@ -2,12 +2,12 @@ import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import MentorDisplayCard from "../../../atom/cards/home/MentorDisplayCard";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_MENTORS } from "../../../../../services/graphql/mutations/mentors";
+import { HOMEPAGE_MENTORS_LIST } from "../../../../../services/graphql/mutations/mentors";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { useRouter } from "next/router";
 
 const MeetOurMentors = () => {
-	const { data, error } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+	const { data, error } = useQuery<{ viewAllMentors: IMentor[] }>(HOMEPAGE_MENTORS_LIST);
 	const mentors = data?.viewAllMentors;
 	const router = useRouter();
 	return (

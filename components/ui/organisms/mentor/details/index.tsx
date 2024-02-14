@@ -156,7 +156,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 					onClick={() => router.push(`/mentors/${mentor.id}?consult`)}
 					className="w-full text-center p-4 bg-white select-none cursor-pointer text-black"
 					style={{ fontFamily: "Days One" }}>
-					Book me now
+					Consult
 				</div>
 			</div>
 		</div>

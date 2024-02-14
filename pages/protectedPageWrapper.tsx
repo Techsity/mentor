@@ -15,7 +15,9 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>, prop
 
 		useEffect(() => {
 			if (auth && user && user?.is_admin && !adminCanView)
+				setTimeout(function () {
 					window.location.href = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
+				}, 2000);
 			else if (!auth || !user) {
 				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
 				else router.replace(`/auth?login`);

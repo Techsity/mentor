@@ -14,22 +14,22 @@ const ListReviews = () => {
 			<h1 className="font-semibold">Featured Reviews</h1>
 			<div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-3 lg:max-w-xl w-full">
 				{reviews
-					.map((review) => {
+					.map((review, index) => {
 						return (
-							<>
-								<div className="border border-[#70C5A1] text-sm p-5 cursor-pointer flex items-start justify-between flex-col">
-									<p className="">{review.content}</p>
-									<div className="flex items-center mt-5 gap-3">
-										<img
-											src={review.reviewed_by.avatar || "/assets/images/avatar.png"}
-											alt=""
-											className="w-10 rounded-full bg-zinc-300"
-											loading="lazy"
-										/>
-										<p className="text-xs">{review.reviewed_by.name}</p>
-									</div>
+							<div
+								key={index}
+								className="border border-[#70C5A1] text-sm p-5 cursor-pointer flex items-start justify-between flex-col">
+								<p className="">{review.content}</p>
+								<div className="flex items-center mt-5 gap-3">
+									<img
+										src={review.reviewed_by.avatar || "/assets/images/avatar.png"}
+										alt=""
+										className="w-10 rounded-full bg-zinc-300"
+										loading="lazy"
+									/>
+									<p className="text-xs">{review.reviewed_by.name}</p>
 								</div>
-							</>
+							</div>
 						);
 					})
 					.slice(0, 6)}

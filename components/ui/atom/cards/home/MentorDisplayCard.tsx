@@ -56,7 +56,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 							<div
 								onClick={() => router.push(`/mentors/${mentor.id}`)}
 								className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
-								Book me
+								Consult
 							</div>
 						</div>
 					</div>
@@ -89,7 +89,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						<div
 							onClick={() => router.push(`/mentors/${mentor.id}`)}
 							className="bg-[#094B10] px-4 p-1 text-xs cursor-pointer">
-							Book me
+							Consult
 						</div>
 						<ArrowForwardSharp color="#fff" width="20px" />
 					</div>

@@ -51,7 +51,9 @@ const NavLinksComponent = () => {
 						<li
 							key={index}
 							className="relative px-2 font-[300] text-sm select-none"
-							onMouseEnter={() => setActiveSublink(index)}
+							onMouseEnter={() => {
+								setActiveSublink(index);
+							}}
 							onMouseLeave={() => {
 								setActiveSublink(null);
 								setActiveDropdown(null);
@@ -87,16 +89,16 @@ const NavLinksComponent = () => {
 														{filteredCategories.map(({ title }, dropdownIndex) => (
 															<div
 																key={dropdownIndex}
-																onClick={() =>
-																	router.push(
-																		`/courses?type=${sublink.dropdown.toLowerCase()}&category=${title.toLowerCase()}`,
-																	)
-																}>
+																onClick={() => {
+																	const url = `/courses?type=${activeDropdown}&category=${encodeURIComponent(
+																		title.toLowerCase(),
+																	)}`;
+																	router.push(url);
+																}}>
 																<div
 																	key={i}
 																	onClick={() => {
 																		setActiveSublink(null);
-																		setActiveDropdown(null);
 																	}}
 																	className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
 																	{title}
