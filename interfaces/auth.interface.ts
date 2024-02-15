@@ -8,7 +8,7 @@ interface IUserWithMentor extends IUser {
 export interface IAuthState {
 	isLoggedIn: boolean;
 	user: IUserWithMentor | null;
-	resetPasswordState?: { email: string; otp: string };
+	resetPasswordState?: { email: string } | null;
 }
 
 export interface IForgotPasswordState {

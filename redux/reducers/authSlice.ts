@@ -7,7 +7,7 @@ import { RootState } from "../store";
 const initialState: IAuthState = {
 	isLoggedIn: false,
 	user: null,
-	resetPasswordState: { email: "", otp: "" },
+	resetPasswordState: null,
 };
 
 const authSlice = createSlice({
@@ -37,7 +37,7 @@ const authSlice = createSlice({
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
 			if (state.user) state.user.mentor = action.payload as IMentor | null;
 		},
-		setResetPasswordState: (state, action: { payload: { email: string; otp: string } }) => {
+		setResetPasswordState: (state, action: { payload: { email: string } | null }) => {
 			state.resetPasswordState = action.payload;
 			return state;
 		},
