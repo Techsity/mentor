@@ -46,8 +46,10 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
-		if (!auth || !user) toast.error("You're not logged in", { theme: "light", toastId });
-
+		if (!auth || !user) {
+			toast.error("You're not logged in", { theme: "light", toastId });
+			return;
+		}
 		setTimeout(async () => {
 			if (!loading && mentor)
 				await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
