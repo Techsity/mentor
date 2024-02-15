@@ -5,7 +5,6 @@ import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateRatingsInReviews } from "../../../../../utils";
 import { useRouter } from "next/router";
-import { navigateToAuthPage } from "../../../../../utils/auth";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();
@@ -55,7 +54,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						</span>
 						<div className="md:hidden py-5">
 							<div
-								onClick={() => navigateToAuthPage(router, `/mentors/${mentor?.id}`)}
+								onClick={() => router.push(`/mentors/${mentor.id}`)}
 								className="bg-[#094B10] text-center text-white px-4 p-1 rounded cursor-pointer">
 								Consult
 							</div>

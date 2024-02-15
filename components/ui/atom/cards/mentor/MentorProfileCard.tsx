@@ -214,7 +214,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						<div className="flex gap-5 items-center">
 							<PrimaryButton
 								title="Consult"
-								onClick={() => navigateToAuthPage(router, `/mentors/${mentor?.id}`)}
+								// onClick={() => navigateToAuthPage(router, `/mentors/${mentor?.id}`)}
+								onClick={() => router.push(`/mentors/${mentor?.id}`)}
 								className="px-5 p-1.5 text-sm"
 							/>
 						</div>
