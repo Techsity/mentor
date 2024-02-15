@@ -227,3 +227,9 @@ export const VIEW_MENTOR_PROFILE = gql`
 		}
 	}
 `;
+
+export const FOLLOW_MENTOR = gql`
+	mutation ToggleFollowMentor($mentorId: String!, $follow: Boolean!) {
+		toggleFollowMentor(mentorId: $mentorId, follow: $follow)
+	}
+`;

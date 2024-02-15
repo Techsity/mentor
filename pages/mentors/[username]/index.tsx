@@ -21,6 +21,7 @@ const MentorDetails = () => {
 
 	if (error) console.error({ errorFetchingMentor: JSON.stringify(error) });
 
+	//! The mentor[0] is temporary
 	const mentor = (data && (data?.viewMentor as IMentor)) || mentors[0];
 
 	return !loading && error && !mentor ? (

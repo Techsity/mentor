@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import React, { useId } from "react";
+import React, { useId, useState } from "react";
 import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
@@ -10,6 +10,9 @@ import { IReview } from "../../../../../interfaces";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { toast } from "react-toastify";
 import countries from "../../../../../data/countries";
+import { useMutation } from "@apollo/client";
+import { FOLLOW_MENTOR } from "../../../../../services/graphql/mutations/mentors";
+import ActivityIndicator from "../../loader/ActivityIndicator";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
@@ -18,30 +21,39 @@ type MentorProfileCardProps = {
 };
 
 const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
+	const toastId = useId();
 	const router = useRouter();
+	const hasFollowedMentor = !true;
+	const [followingMentor, setFollowingMentor] = useState<boolean>(hasFollowedMentor || false);
+	const [followMentorMutation, { loading: followLoading }] = useMutation(FOLLOW_MENTOR);
+	// mentorId
+	// follow
 	const userCountry: string = mentor
-		? String(countries.find((c) => c.label === mentor.user.country)?.countryCode)
+		? String(countries.find((c) => c.label === mentor?.user.country)?.countryCode) ||
+		  String(countries.find((c) => c.countryCode === mentor?.user.country)?.countryCode)
 		: "";
 	const country: string = userCountry.charAt(0) + userCountry.charAt(1).toLowerCase();
-	const toastId = useId();
-
 	interface IconType {
 		[key: string]: React.ElementType;
 	}
 	const IconComponent: IconType = FlagIcons;
-	const IconComp: any = userCountry ? IconComponent[country] : null;
+	const IconComp: any = IconComponent[country] || IconComponent["Ng"];
 
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
-		if (!loading && mentor) console.log("Followed");
-		toast.success("Followed", { toastId, theme: "light" });
+		setTimeout(async () => {
+			if (!loading && mentor)
+				await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
+					.then(() => setFollowingMentor((p) => !p))
+					.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
+		}, 1000);
 	};
 	return (
 		<div className="border bg-white border-[#70C5A1] p-5 w-full lg:flex justify-between shadow">
 			<div className="w-full pr-4 flex sm:flex-row flex-col items-start gap-3">
 				<div className="flex justify-center items-center">
 					<div className="relative">
-						<div className="w-20 h-20 rounded-full relative bg-zinc-100 overflow-hidden">
+						<div className=" h-20 rounded-full relative bg-zinc-100 overflow-hidden">
 							{loading ? (
 								<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
 							) : (
@@ -97,16 +109,22 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 								{formatFollowersCount((mentor?.followers as number) || 0)} followers
 							</p>
 						)}
-						<button
-							onClick={handleFollow}
-							className="text-[#70C5A1] text-sm xs:block sm:block hidden xl:block hover:underline">
-							+ Follow
-						</button>
+						{!followLoading ? (
+							<button
+								onClick={handleFollow}
+								className="text-[#70C5A1] text-sm xs:block sm:block hidden xl:block hover:underline">
+								{followingMentor ? "Following" : "+ Follow"}
+							</button>
+						) : (
+							<ActivityIndicator className="border-[.1em]" size={10} />
+						)}
 					</div>
 					<div className="mt-2 whitespace-nowrap">
 						<span className="flex flex-wrap gap-2 xs:text-sm text-xs text-[#B1B1B1] items-center">
 							{!loading ? (
-								<p className="capitalize text-black">{mentor?.role.split("/")[0]}</p>
+								<p className="capitalize text-black">
+									{mentor?.role.split("_").join(" ").toLowerCase()}
+								</p>
 							) : (
 								<span className="bg-zinc-200 h-1 w-20" />
 							)}
@@ -167,7 +185,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						{!loading && mentor?.user.country ? (
 							<IconComp width="25px" height="25px" />
 						) : (
-							<span className="bg-zinc-200 h-6 w-8" />
+							loading && <span className="bg-zinc-200 h-6 w-8" />
 						)}
 					</div>
 				</div>
