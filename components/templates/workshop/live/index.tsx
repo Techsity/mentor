@@ -37,8 +37,7 @@ const LiveWorkshopTemplate = () => {
 	const user = useSelector(currentUser);
 	const appId = String(process.env.NEXT_PUBLIC_AGORA_APP_ID);
 	const rtcClient = useRTCClient(client);
-
-	const [activeConnection, setActiveConnection] = useState<boolean>(!true);
+	const [activeConnection, setActiveConnection] = useState<boolean>(false);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 	const [channelName, setChannelName] = useState("");
 
@@ -48,13 +47,14 @@ const LiveWorkshopTemplate = () => {
 		token: null,
 		uid: user?.email.toLowerCase(),
 	};
+
 	const workshop = workshops[0];
 
 	const currentUserIsWorkshopOwner = useMemo(() => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	const { error, isLoading: isJoining, isConnected } = useJoin(fetchArgs as FetchArgs, activeConnection);
+	const { error, isLoading: isJoining } = useJoin(fetchArgs as FetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
 
@@ -71,6 +71,12 @@ const LiveWorkshopTemplate = () => {
 	const { localCameraTrack: cameraTrack } = useLocalCameraTrack(true);
 	usePublish([audioTrack, cameraTrack]);
 
+	// !pageLoaded ? (
+	// 	<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2 fixed w-full">
+	// 		<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+	// 		<p className="text-sm text-center text-[#70C5A1]">Preparing your classroom...</p>
+	// 	</div>
+	// ) :
 	return activeConnection && !error && !isJoining ? (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			<label style={{ color: networkLabels[networkQuality.uplinkNetworkQuality].color }}>
