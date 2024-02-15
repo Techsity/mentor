@@ -13,34 +13,41 @@ import countries from "../../../../../data/countries";
 import { useMutation } from "@apollo/client";
 import { FOLLOW_MENTOR } from "../../../../../services/graphql/mutations/mentors";
 import ActivityIndicator from "../../loader/ActivityIndicator";
+import { useSelector } from "react-redux";
+import { currentUser, isLoggedIn } from "../../../../../redux/reducers/authSlice";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
 	detailsPage?: boolean;
 	loading?: boolean;
 };
+interface IconType {
+	[key: string]: React.ElementType;
+}
 
 const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
 	const toastId = useId();
 	const router = useRouter();
+	const user = useSelector(currentUser);
+	const auth = useSelector(isLoggedIn);
 	const hasFollowedMentor = !true;
 	const [followingMentor, setFollowingMentor] = useState<boolean>(hasFollowedMentor || false);
 	const [followMentorMutation, { loading: followLoading }] = useMutation(FOLLOW_MENTOR);
-	// mentorId
-	// follow
+
 	const userCountry: string = mentor
-		? String(countries.find((c) => c.label === mentor?.user.country)?.countryCode) ||
-		  String(countries.find((c) => c.countryCode === mentor?.user.country)?.countryCode)
+		? String(
+				countries.find((c) => c.label === mentor?.user.country || c.countryCode === mentor?.user.country)
+					?.countryCode,
+		  )
 		: "";
 	const country: string = userCountry.charAt(0) + userCountry.charAt(1).toLowerCase();
-	interface IconType {
-		[key: string]: React.ElementType;
-	}
 	const IconComponent: IconType = FlagIcons;
-	const IconComp: any = IconComponent[country] || IconComponent["Ng"];
+	const IconComp: any = IconComponent[country] || <></>;
 
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
+		if (!auth || !user) toast.error("You're not logged in", { theme: "light", toastId });
+
 		setTimeout(async () => {
 			if (!loading && mentor)
 				await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
