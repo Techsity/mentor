@@ -200,3 +200,14 @@ export const calculateRatingsInReviews = (reviews: IReview[]): string => {
 		? formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0)
 		: "";
 };
+
+// Format time in HH:MM:SS
+export const formatTime = (timeInSeconds: number) => {
+  const hours = Math.floor(timeInSeconds / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+
+  return `${hours}:${String(minutes).padStart(2, "0")}:${String(
+    seconds,
+  ).padStart(2, "0")}`;
+};
