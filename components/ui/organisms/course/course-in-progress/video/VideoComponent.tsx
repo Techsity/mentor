@@ -100,7 +100,7 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 											{formatTime(currentTime)} / {formatTime(duration)}
 										</span>
 									</div>
-									<div className="flex items-center gap-5">
+									<div className="hidden md:flex items-center gap-5">
 										<PlayerInPlayerIcon height={20} width={24} />
 										<SettingsOutline cssClasses="cursor-pointer" color="#fff" />
 									</div>
