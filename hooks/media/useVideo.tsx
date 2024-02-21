@@ -8,7 +8,7 @@ const useVideo = (videoRef: RefObject<HTMLVideoElement>) => {
 	const [duration, setDuration] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<string>("");
-	const waitingTimeThreshold = 2000; // 30s
+	const waitingTimeThreshold = 30000; // 30s
 
 	const currentVideo = videoRef.current;
 
