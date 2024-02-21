@@ -14,7 +14,7 @@ const PasswordResetOtpVerificationPage = () => {
 
 	const handleVerifyOtp = (otp: string) => {
 		if (otp) {
-			dispatch(setResetPasswordState({ email: resetPasswordData?.email as string }));
+			dispatch(setResetPasswordState({ email: resetPasswordData?.email as string, otp }));
 			// Todo: verify reset password otp
 		}
 	};

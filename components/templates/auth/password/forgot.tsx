@@ -39,11 +39,11 @@ const ForgotPasswordTemplate = () => {
 					const response = await forgotPassword({ variables: { email: state.email } });
 					console.log({ response: response.data });
 					setState({ ...state, loading: false });
-					// if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
-					// 	dispatch(setResetPasswordState({ email, }));
-					// 	toast.info(ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT, ToastDefaultOptions({ id: "info" }));
-					// 	router.push(`/auth/verification/reset-password`);
-					// }
+					if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
+						dispatch(setResetPasswordState({ email }));
+						toast.info(ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT, ToastDefaultOptions({ id: "info" }));
+						router.push(`/auth/verification/reset-password`);
+					}
 				} catch (error) {
 					console.error({ error });
 					const errorMessage = formatGqlError(error);

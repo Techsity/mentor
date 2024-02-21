@@ -37,8 +37,8 @@ const authSlice = createSlice({
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
 			if (state.user) state.user.mentor = action.payload as IMentor | null;
 		},
-		setResetPasswordState: (state, action: { payload: { email: string } | null }) => {
-			state.resetPasswordState = action.payload;
+		setResetPasswordState: (state, action: { payload: Partial<IAuthState["resetPasswordState"]> | null }) => {
+			state.resetPasswordState = action.payload as IAuthState["resetPasswordState"];
 			return state;
 		},
 		switchProfile: (state, action: { payload: { profile: IMentor | null } }) => {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
 import CustomTextInput from "../../../../ui/atom/inputs/CustomTextInput";
@@ -12,7 +12,7 @@ import ResponseMessages from "../../../../../constants/response-codes";
 import { FORGOT_PASSWORD, RESET_PASSWORD } from "../../../../../services/graphql/mutations/auth";
 import { formatGqlError } from "../../../../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../../redux/reducers/authSlice";
+import { resetPasswordState } from "../../../../../redux/reducers/authSlice";
 
 type VerifyUserResponseType = {
 	data: { resetPassword: { message: keyof typeof ResponseMessages } };
