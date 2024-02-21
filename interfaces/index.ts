@@ -251,7 +251,7 @@ export interface ICourseCategory {
 	id?: string;
 	title: string;
 	description: string;
-	category_type: {
+	course_type: {
 		description: string;
 		type: string;
 	};

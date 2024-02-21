@@ -39,7 +39,7 @@ const NavLinksComponent = () => {
 	const filteredCategories =
 		categories && categories.length > 0
 			? categories.filter(
-					(cat) => cat.category_type.type.toLowerCase().trim() === activeDropdown?.toLowerCase().trim(),
+					(cat) => cat.course_type.type.toLowerCase().trim() === activeDropdown?.toLowerCase().trim(),
 			  )
 			: [];
 

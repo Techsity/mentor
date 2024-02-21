@@ -159,7 +159,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 				category {
 					title
 					description
-					category_type {
+					course_type {
 						type
 						description
 					}

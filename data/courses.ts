@@ -106,7 +106,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Programming",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
@@ -116,7 +116,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Digital Marketing",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "vocational",
 		},
@@ -126,7 +126,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Python",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
@@ -136,7 +136,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Data Science",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
