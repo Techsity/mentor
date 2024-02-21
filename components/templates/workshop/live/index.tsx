@@ -1,28 +1,19 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import {
-	AgoraRTCReactError,
 	FetchArgs,
-	IAgoraRTCError,
-	IAgoraRTCRemoteUser,
 	useJoin,
-	useLocalCameraTrack,
 	useLocalMicrophoneTrack,
 	useNetworkQuality,
 	usePublish,
 	useRTCClient,
-	useRemoteAudioTracks,
-	useRemoteUsers,
 } from "agora-rtc-react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import workshops from "../../../../data/workshops";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { client, createTracks } from "../../../../hooks/agora";
-import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
+import { client } from "../../../../hooks/agora";
 import ChannelEntrance from "../../../ui/organisms/workshop/live/ChannelEntrance";
 import { networkLabels } from "../../../../constants";
 
@@ -58,18 +49,15 @@ const LiveWorkshopTemplate = () => {
 
 	const networkQuality = useNetworkQuality(client);
 
-	const endSession = () => {
+	const retry = 10000;
+
+	const endSession = async () => {
 		console.log("You Exited The Session");
 		setActiveConnection(false);
+		rtcClient.unpublish();
 		rtcClient.leave();
 		rtcClient.removeAllListeners();
 	};
-
-	const retry = 10000;
-
-	const { localMicrophoneTrack: audioTrack } = useLocalMicrophoneTrack(true);
-	const { localCameraTrack: cameraTrack } = useLocalCameraTrack(true);
-	usePublish([audioTrack, cameraTrack]);
 
 	// !pageLoaded ? (
 	// 	<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2 fixed w-full">

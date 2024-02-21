@@ -1,77 +1,101 @@
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MicMuted, RecIcon, ShareScreenIcon, SpeakingIcon } from "../../../atom/icons/svgs/call";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
-import { IUser } from "../../../../../interfaces/user.interface";
 import { IWorkshop } from "../../../../../interfaces";
-import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
-import { slugify } from "../../../../../utils";
 import dynamic from "next/dynamic";
-import {
-	useLocalMicrophoneTrack,
-	useLocalCameraTrack,
-	usePublish,
-	useRemoteAudioTracks,
-	useRemoteUsers,
-	useRTCClient,
-	RemoteUser,
-} from "agora-rtc-react";
+import { useLocalMicrophoneTrack, useLocalCameraTrack, usePublish, useRemoteUsers, RemoteUser } from "agora-rtc-react";
 
 const LocalUser = dynamic(() => import("agora-rtc-react").then(({ LocalUser }) => LocalUser), {
 	ssr: false,
 });
 
-const ConferenceCallComponent = ({ isWorkshopOwner, workshop }: { isWorkshopOwner: boolean; workshop: IWorkshop }) => {
+const ConferenceCallComponent = ({
+	// isWorkshopOwner ,
+	workshop,
+}: {
+	isWorkshopOwner: boolean;
+	workshop: IWorkshop;
+}) => {
 	const user = useSelector(currentUser);
 	const [micOn, setMicOn] = useState<boolean>(false);
 	const [cameraOn, setCamera] = useState<boolean>(true);
-	const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
-	const { localCameraTrack } = useLocalCameraTrack(cameraOn);
+	const { localMicrophoneTrack } = useLocalMicrophoneTrack();
+	const { localCameraTrack } = useLocalCameraTrack(true, { optimizationMode: "motion" });
+	const [hostIsJoining, setHostIsJoining] = useState<boolean>(false);
 	usePublish([localMicrophoneTrack, localCameraTrack]);
 	const participants = useRemoteUsers();
 
 	const toggleMute = () => {
 		setMicOn((a) => !a);
+		localMicrophoneTrack?.setEnabled(false);
 	};
-	const workshopHost = participants.filter((participant) => participant.uid === workshop.mentor.user.email)[0];
+	//! Temp
+	const userEmail = "josh@dev.ts";
+	// const workshopHost = participants.find((participant) => participant.uid === workshop.mentor.user.email);
+	const workshopHost = participants.find((participant) => participant.uid === userEmail);
+	const isWorkshopOwner = user?.email === userEmail;
+
+	let timeout: NodeJS.Timeout;
+
+	// useEffect(() => {
+	// 	if (!hostIsJoining) {
+	// 		setHostIsJoining(true);
+	// 		timeout = setTimeout(function () {
+	// 			setHostIsJoining(false);
+	// 		}, 1000);
+	// 	}
+	// 	return () => {
+	// 		clearTimeout(timeout);
+	// 	};
+	// }, [workshopHost]);
+
 	return (
 		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group">
 			<div className="left-0 bg-zinc-200 w-auto h-auto md:w-full md:h-full">
-				{workshop.mentor.user.email}
 				{/* Video */}
 				<div className="h-full w-full">
 					{/* {!callHost?.username && ( */}
 					<div className="flex flex-col justify-center items-center w-full h-full">
+						{/* {owner && isWorkshopOwner ? ( */}
 						{isWorkshopOwner ? (
 							<LocalUser
 								audioTrack={localMicrophoneTrack}
 								videoTrack={localCameraTrack}
 								cameraOn={cameraOn}
 								micOn={micOn}
-								playAudio={micOn}
+								playAudio={false}
 								playVideo={cameraOn}
 								height={100}
 								width={100}
-								muted
-								// volume={0}
-							/>
-						) : participants.length >= 1 && workshopHost ? (
-							<RemoteUser
-								user={workshopHost}
-								playAudio={true}
-								playVideo={true}
-								height={100}
-								width={100}
+								muted={micOn}
 							/>
 						) : (
-							<p>Host is yet to join...</p>
+							participants.length >= 1 &&
+							workshopHost &&
+							!hostIsJoining && (
+								<RemoteUser
+									user={workshopHost}
+									playAudio={true}
+									playVideo={true}
+									height={100}
+									width={100}
+								/>
+							)
+						)}
+						{!workshopHost && !isWorkshopOwner && !hostIsJoining ? (
+							<p>Host is yet to join</p>
+						) : (
+							hostIsJoining && !isWorkshopOwner && <p>Host is joining...</p>
 						)}
 					</div>
 					{/* )} */}
 				</div>
 			</div>
 			{/* Controls */}
-			{isWorkshopOwner && <CallControls isMuted={micOn} handleMute={toggleMute} />}
+			{isWorkshopOwner && (
+				<CallControls isMuted={Boolean(localMicrophoneTrack?.enabled)} handleMute={toggleMute} />
+			)}
 		</div>
 	);
 };

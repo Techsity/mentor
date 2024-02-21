@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VideoCallParticipantCard from "../../../atom/cards/call/VideoCallParticipantCard";
 import { IWorkshop } from "../../../../../interfaces";
 import {
@@ -9,6 +9,7 @@ import {
 	useRemoteAudioTracks,
 } from "agora-rtc-react";
 import { MicMuted, SpeakingIcon } from "../../../atom/icons/svgs/call";
+import { client } from "../../../../../hooks/agora";
 
 type Props = {
 	isWorkshopOwner: boolean;
@@ -17,18 +18,21 @@ type Props = {
 };
 const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop }: Props) => {
 	const [muted, setMuted] = useState<boolean>(true);
-	const { localMicrophoneTrack } = useLocalMicrophoneTrack(muted);
 	const uid = useCurrentUID();
+	const { localMicrophoneTrack } = useLocalMicrophoneTrack(true, { ANS: true, AEC: true });
+	const participants = useRemoteUsers();
 
 	const toggleMute = () => {
-		localMicrophoneTrack?.setEnabled(muted);
 		setMuted((a) => !a);
-		console.log({ enabled: localMicrophoneTrack?.enabled });
+		localMicrophoneTrack?.setEnabled(!muted);
 	};
 
-	const participants = useRemoteUsers();
 	const { audioTracks } = useRemoteAudioTracks(participants);
 	audioTracks.map((a) => a.play());
+
+	useEffect(() => {
+		if (uid) client.publish([localMicrophoneTrack, {} as any]);
+	}, [localMicrophoneTrack]);
 
 	return (
 		<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full">
@@ -38,8 +42,8 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop }: Props) => {
 					<div className="h-full w-full bg-white border border-[#70C5A1] p-2 flex flex-col gap-4 overflow-hidden">
 						<div className="flex justify-between items-center">
 							<p className="text-sm">You</p>
-							<div className="" title={!muted ? "Unmute" : "Mute"}>
-								{!muted ? (
+							<div className="" title={muted ? "Unmute" : "Mute"}>
+								{muted ? (
 									<MicMuted size={15} onClick={toggleMute} className="cursor-pointer" />
 								) : (
 									<SpeakingIcon size={15} onClick={toggleMute} className="cursor-pointer" />
@@ -52,7 +56,7 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop }: Props) => {
 									src="/assets/images/avatar.png"
 									className="absolute top-0 left-0 h-full w-full z-20"
 								/>
-								<LocalAudioTrack track={localMicrophoneTrack} muted={muted} play={false} />
+								<LocalAudioTrack disabled={muted} play={false} track={localMicrophoneTrack} />
 							</div>
 						</div>
 					</div>

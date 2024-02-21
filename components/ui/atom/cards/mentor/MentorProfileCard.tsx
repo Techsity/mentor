@@ -47,7 +47,10 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = () => {
 		if (!auth || !user) {
-			toast.error("You're not logged in", { theme: "light", toastId });
+			toast.error("You're not logged in!", { theme: "light", toastId });
+			setTimeout(function () {
+				navigateToAuthPage(router, `/mentors/${mentor?.id}`);
+			}, 1000);
 			return;
 		}
 		setTimeout(async () => {
@@ -118,14 +121,14 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 								{formatFollowersCount((mentor?.followers as number) || 0)} followers
 							</p>
 						)}
-						{!followLoading ? (
+						{!loading && !followLoading ? (
 							<button
 								onClick={handleFollow}
 								className="text-[#70C5A1] text-sm xs:block sm:block hidden xl:block hover:underline">
 								{followingMentor ? "Following" : "+ Follow"}
 							</button>
 						) : (
-							<ActivityIndicator className="border-[.1em]" size={10} />
+							followLoading && <ActivityIndicator className="border-[.1em]" size={10} />
 						)}
 					</div>
 					<div className="mt-2 whitespace-nowrap">

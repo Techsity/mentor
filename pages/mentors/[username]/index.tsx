@@ -24,9 +24,9 @@ const MentorDetails = () => {
 	//! The mentor[0] is temporary
 	const mentor = (data && (data?.viewMentor as IMentor)) || mentors[0];
 
-	return !loading && error && !mentor ? (
+	return !loading && !mentor && error ? (
 		<div className="text-red-600 text-xl h-screen flex justify-center items-center">
-			Any error occured. Please refresh page and try again.
+			Network error. Please refresh page and try again.
 		</div>
 	) : (
 		<MentorDetailsTemplate {...{ mentor: mentor, loading }} />
