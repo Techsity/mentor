@@ -86,8 +86,8 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 										}>
 										{!loading &&
 											course &&
-											course?.course_level.charAt(0).toUpperCase() +
-												course?.course_level.slice(1).toLowerCase()}
+											course?.course_level?.charAt(0).toUpperCase() +
+												course?.course_level?.slice(1).toLowerCase()}
 									</span>
 									<span
 										className={
@@ -95,7 +95,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 												? "font-normal"
 												: "px-5 bg-zinc-200 h-1.5 animate__animated animate__fadeIn animate__infinite"
 										}>
-										{!loading && course?.duration + " hours"}
+										{!loading && course?.duration || 0 + " hours"}
 									</span>
 									<span
 										className={

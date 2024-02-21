@@ -21,7 +21,7 @@ export const newCourseInitialState: Omit<ICourse, "mentor"> = {
 	course_contents: [],
 	category: {
 		title: "",
-		category_type: {
+		course_type: {
 			description: "",
 			type: "",
 		},

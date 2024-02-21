@@ -1,64 +1,96 @@
 import gql from "graphql-tag";
 
 export const ALL_COURSES = gql`
-	query allCourses($take: Float!, $skip: Float!, $category: String, $courseType: String) {
-		allCourses(take: $take, skip: $skip, category: $category, courseType: $courseType) {
-			category {
-				title
-			}
-			course_contents {
-				title
-				course_sections {
-					notes
-					section_name
-				}
-			}
-			course_images
-			course_level
-			description
-			# mentor {
-			# 	about
-			# 	courses {
-			# 		category {
-			# 			description
-			# 			title
-			# 		}
-			# 		title
-			# 		description
-			# 	}
-			# 	about
-			# 	mentor_verified
-			# 	role
-			# 	skills {
-			# 		skill_name
-			# 		years_of_exp
-			# 	}
-			# }
-			price
-			reviews {
-				content
-				ratings
-				reviewed_by
-				type
-			}
-			title
-			what_to_learn
-			created_at
-			requirements
-			updated_at
-		}
-	}
+  query AllCourses(
+    $take: Float!
+    $skip: Float!
+    $courseType: String
+    $category: String
+  ) {
+    allCourses(
+      take: $take
+      skip: $skip
+      courseType: $courseType
+      category: $category
+    ) {
+      title
+      description
+      what_to_learn
+      requirements
+      price
+      course_images
+      course_level
+      mentor {
+        ...MentorFields
+      }
+      category {
+        title
+        description
+      }
+      course_type {
+        type
+        description
+      }
+    }
+  }
+  # Use fragment to avoid deeply nested queries (N+1 query issues)
+  fragment MentorFields on MentorDTO {
+    user {
+      ...UserFields
+    }
+    about
+    role
+    skills {
+      skill_name
+      years_of_exp
+    }
+    work_experience {
+      ...WorkExperience
+    }
+    projects {
+      ...Project
+    }
+    # Fetch the needed fields
+  }
+
+  fragment UserFields on User {
+    email
+    id
+    name
+    phone
+    avatar
+    country
+    is_online
+    is_verified
+    is_active
+    isPremium
+    is_admin
+    created_at
+    updated_at
+  }
+  fragment Project on PastProjectsDTO {
+    company
+    description
+    job_role
+  }
+  fragment WorkExperience on WorkExperienceDTO {
+    company
+    job_role
+    description
+    from_year
+    to_year
+  }
 `;
 export const GET_ALL_CATEGORIES = gql`
-	query GetAllCategories {
-		getAllCategories {
-			title
-			description
-			category_type {
-				type
-			}
-			created_at
-			updated_at
-		}
-	}
+  query GetAllCategories {
+    getAllCategories {
+      title
+      description
+      course_type {
+        type
+      }
+      created_at
+      updated_at
+    }
+  }
 `;
