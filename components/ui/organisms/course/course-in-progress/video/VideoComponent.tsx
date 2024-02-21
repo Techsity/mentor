@@ -3,8 +3,9 @@ import { ICourse } from "../../../../../../interfaces";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import classNames from "classnames";
 import { formatTime } from "../../../../../../utils";
-import { BackwardIcon, ForwardIcon, PauseICon, PlayIcon } from "../../../../atom/icons/video";
+import { BackwardIcon, ForwardIcon, PauseICon, PlayIcon, PlayerInPlayerIcon } from "../../../../atom/icons/video";
 import useVideo from "../../../../../../hooks/media/useVideo";
+import { SettingsOutline } from "react-ionicons";
 
 const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolean }) => {
 	const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,6 +25,7 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 		handleVolumeChange,
 		isLoading,
 		togglePlay,
+		errorMessage,
 	} = useVideo(videoRef);
 
 	return (
@@ -31,8 +33,13 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 			<div className="lg:max-w-[65dvw] w-full group overflow-hidden relative">
 				<div className={classNames("relative w-full h-[400px] bg-black/10 backdrop-blur-sm")}>
 					{isLoading && (
-						<div className="absolute top-0 left-0 bg-black/20 z-10 h-full w-full flex justify-center items-center">
+						<div
+							className={classNames(
+								"absolute top-0 left-0 z-10 h-full w-full flex justify-center items-center",
+								errorMessage ? " bg-black/50" : "bg-black/20",
+							)}>
 							<ActivityIndicator color="white" size={50} className="border-[.3em]" />
+							<p className="text-white text-sm text-center">{errorMessage && errorMessage}</p>
 						</div>
 					)}
 					{loading ? (
@@ -47,6 +54,7 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 								<video
 									ref={videoRef}
 									src={videoUrl}
+									controls={false}
 									className="w-full h-full"
 									// allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
 									onLoadedMetadata={handleLoadedMetadata}
@@ -67,29 +75,35 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 										<div className="absolute bg-[#FF0000] h-full w-1 p-1 right-0 -top-1 rounded-full" />
 									</div>
 								</div>
-								<div className="flex w-full items-center gap-5 px-6">
-									<button
-										onClick={togglePlay}
-										className="bg-transparent border-none text-white cursor-pointer mr-4">
-										{!isPlaying ? (
-											<PlayIcon
-												size={25}
-												className="animate__animated animate__rotateIn animate__fastest"
-											/>
-										) : (
-											<PauseICon
-												size={25}
-												className="animate__animated animate__rotateIn animate__fastest"
-											/>
-										)}
-									</button>
-									<div className="flex gap-2 items-center">
-										<BackwardIcon size={25} onClick={handleSeekPrev} />
-										<ForwardIcon size={25} onClick={handleSeekForward} />
+								<div className="flex justify-between items-center px-6 w-full">
+									<div className="flex items-center gap-5">
+										<button
+											onClick={togglePlay}
+											className="bg-transparent border-none text-white cursor-pointer mr-4">
+											{!isPlaying ? (
+												<PlayIcon
+													size={25}
+													className="animate__animated animate__rotateIn animate__fastest"
+												/>
+											) : (
+												<PauseICon
+													size={25}
+													className="animate__animated animate__rotateIn animate__fastest"
+												/>
+											)}
+										</button>
+										<div className="flex gap-2 items-center">
+											<BackwardIcon size={25} onClick={handleSeekPrev} />
+											<ForwardIcon size={25} onClick={handleSeekForward} />
+										</div>
+										<span className="text-white text-xs">
+											{formatTime(currentTime)} / {formatTime(duration)}
+										</span>
 									</div>
-									<span className="text-white text-xs">
-										{formatTime(currentTime)} / {formatTime(duration)}
-									</span>
+									<div className="flex items-center gap-5">
+										<PlayerInPlayerIcon height={20} width={24} />
+										<SettingsOutline cssClasses="cursor-pointer" color="#fff" />
+									</div>
 								</div>
 								{/* <input
 									type="range"
@@ -100,7 +114,6 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 									onChange={handleVolumeChange}
 									className="flex-grow h-2 bg-gray-500 rounded-md"
 								/> */}
-
 								{/* Add more custom controls as needed */}
 							</div>
 						</>
