@@ -6,7 +6,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
@@ -62,7 +62,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
@@ -119,7 +119,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -175,7 +175,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -232,7 +232,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -289,7 +289,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
