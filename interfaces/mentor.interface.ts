@@ -64,7 +64,7 @@ export interface IMentor {
 	// courses: Omit<ICourse,"mentor">[];
 	mentor_verified: boolean;
 	role: string;
-	followers: number;
+	followers: Pick<IUser, "name">[];
 	skills: IMentorSkills[];
 	availability: IMentorAvailability[];
 	certifications: IMentorCertificate[];

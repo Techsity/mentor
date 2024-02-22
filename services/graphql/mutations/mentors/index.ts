@@ -52,7 +52,10 @@ export const GET_ALL_MENTORS = gql`
 			reviews {
 				type
 				content
-				reviewed_by
+				# reviewed_by
+				reviewed_by {
+					name
+				}
 				ratings
 			}
 			about
@@ -184,7 +187,10 @@ export const VIEW_MENTOR_PROFILE = gql`
 			reviews {
 				type
 				content
-				reviewed_by
+				# reviewed_by
+				reviewed_by {
+					name
+				}
 				ratings
 			}
 			skills {
@@ -222,6 +228,9 @@ export const VIEW_MENTOR_PROFILE = gql`
 					endTime
 				}
 			}
+			# followers {
+			# 	name
+			# }
 			created_at
 			updated_at
 		}

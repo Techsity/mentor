@@ -9,58 +9,40 @@ import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/me
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
-	const [loading, setLoading] = useState<boolean>(true);
-	const [getAllMentors] = useLazyQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
-
-	const [mentors, setMentors] = useState<IMentor[]>([]);
+	const { data, loading, error } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+	const mentors = data?.viewAllMentors;
 
 	const filteredMentors = useMemo(() => {
 		return tab === "all"
-			? mentors.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
+			? mentors?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
 			: tab === "online" &&
 					mentors
-						.filter((mentor) => mentor.user.is_online)
+						?.filter((mentor) => mentor.user.is_online)
 						.map((mentor, index) => {
 							return <MentorProfileCard mentor={mentor} key={index} />;
 						});
-	}, [mentors, tab]);
-
-	const fetchMentors = async () => {
-		console.log("Fetching Mentors...");
-		setLoading(true);
-		//! API is working
-		//Todo: set sll mentors state with the result
-		// await getAllMentors()
-		// 	.then((result) => {
-		// 		console.log(result.data);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.error("Error fetchinng mentors: ", err);
-		// 	});
-		setTimeout(function () {
-			setMentors(allMentors);
-			setLoading(false);
-		}, 1200);
-	};
-
-	useEffect(() => {
-		fetchMentors();
-	}, [tab]);
+	}, [mentors, tab, loading, data]);
 
 	const switchTab = (active: typeof tab) => {
-		if (tab !== active) {
-			if (tab === "all") {
-				setTab("online");
-			} else {
-				setTab("all");
-			}
-		}
+		if (tab !== active)
+			if (tab === "all") setTab("online");
+			else setTab("all");
 		scrollUp(-800);
 	};
+
+	if (!loading && error) {
+		console.error({ error: JSON.stringify(error) });
+		return (
+			<div className="text-red-600 text-xl h-screen flex justify-center items-center">
+				Network error. Please refresh page and try again.
+			</div>
+		);
+	}
+
 	return (
 		<>
 			<div className="sticky h-20 top-[4em] z-10 bg-[#FDFDFD] flex justify-center items-center">
-				<div className="flex items-center gap-10 animate__animated animate__fadeInUp">
+				<div className="flex items-center gap-10 animate__animated animate__fadeInUp relative z-30">
 					<button
 						onClick={() => switchTab("all")}
 						className={`overflow-hidden relative text-[#094B10] ${tab === "all" ? "font-semibold" : ""}`}>
