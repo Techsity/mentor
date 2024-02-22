@@ -60,7 +60,7 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 						<p className="flex gap-1 items-center">
 							{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
 							{/* 20 Courses | {formatFollowersCount(workshop.mentor.sessions)} Sessions |{" "} */}
-							{formatFollowersCount(workshop.mentor.followers)} Followers
+							{formatFollowersCount(workshop.mentor.followers.length)} Followers
 						</p>
 					</div>
 				</div>

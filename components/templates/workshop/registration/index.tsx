@@ -71,7 +71,7 @@ const WorkshopRegistrationPageTemplate = () => {
 								{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
 								20 Courses | {/* {formatFollowersCount(workshop.mentor.sessions)}{" "} */}
 								{/* Sessions | */}
-								{formatFollowersCount(workshop.mentor.followers)} Followers
+								{formatFollowersCount(workshop.mentor.followers.length)} Followers
 								{/* |{" "} */}
 								{/* {formatFollowersCount(
 									workshop.mentor.subscribers,
