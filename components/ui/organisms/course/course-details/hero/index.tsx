@@ -60,7 +60,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 						<p className="">{course.mentor.role} </p>
 						<p className="flex gap-1 items-center">
 							{/* {formatFollowersCount(course.mentor.courses.length)}{" "} */}
-							20 Courses | {formatFollowersCount(course.mentor.followers)} Followers
+							20 Courses | {formatFollowersCount(course.mentor.followers.length)} Followers
 						</p>
 					</div>
 				</div>
@@ -98,7 +98,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					<p className="">{course.mentor.role} </p>
 					<p className="flex gap-1 items-center">
 						{/* {formatFollowersCount(course.mentor.courses.length)}{" "} */}
-						20 Courses | {formatFollowersCount(course.mentor.followers)} Followers
+						20 Courses | {formatFollowersCount(course.mentor.followers.length)} Followers
 					</p>
 				</div>
 			</div>

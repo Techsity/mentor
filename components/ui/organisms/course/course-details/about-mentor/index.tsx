@@ -28,7 +28,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 									<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
 								</svg>
 							) : null}
-							<p className="flex items-center">{formatFollowersCount(mentor.followers)} followers</p>
+							<p className="flex items-center">{formatFollowersCount(mentor.followers.length)} followers</p>
 							<p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p>
 						</div>
 						<p className="">{mentor.role} </p>
@@ -37,7 +37,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 							{formatFollowersCount(mentor.courses.length)} Courses | {formatFollowersCount(31)} Sessions
 							{/* |{" "} */}
 							{/* {formatFollowersCount(mentor.mentees.length)} Mentee */}|{" "}
-							{formatFollowersCount(mentor.followers)} Followers
+							{formatFollowersCount(mentor.followers.length)} Followers
 						</p>
 					</div>
 				</div>
