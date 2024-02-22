@@ -62,7 +62,7 @@ const CourseInProgressTopHeader = (course: ICourse) => {
 						</p>
 						<p className="flex gap-1 items-center text-xs">
 							{/* {formatFollowersCount(course.mentor.courses.length)}{" "} */}
-							20 Courses | {formatFollowersCount(course.mentor.followers)} Followers
+							20 Courses | {formatFollowersCount(course.mentor.followers.length)} Followers
 						</p>
 					</div>
 				</div>
