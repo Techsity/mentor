@@ -21,19 +21,22 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 	const addSchedule = () => {
 		if (scheduleList.length < 4) setScheduleList([...scheduleList, emptyState]);
 	};
-
+	const handleDeleteSchedule = (schedule: ScheduleItem, index: number) => {
+		if (index !== 0)
+			if (scheduleList.length > 1)
+				setScheduleList((prevScheduleList) => prevScheduleList.filter(({ id }) => schedule.id !== id));
+	};
 	return (
 		<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6">
 			<div className="animate__animated animate__slideInDown animate__fast">
 				<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
 			</div>
-			<div className="flex md:flex-row flex-col justify-between gap-5 py-6 w-full mt-10 items-start">
-				<div className="bg-[#06310B] p-8 px-10 text-white overflow-hidden flex-grow sm:w-auto w-full animate__animated animate__slideInUp">
+			<div className="flex lg:flex-row flex-col justify-between gap-5 py-6 w-full md:mt-10 items-start">
+				<div className="bg-[#06310B] p-4 md:p-8 md:px-10 text-white overflow-hidden flex-grow lg:w-auto w-full animate__animated animate__slideInUp">
 					<div className="">
 						<h1 className="font-medium">My Availability</h1>
 						<p className="text-[#CEFFEA] font-[300] text-sm mt-2">Lagos (GMT +1)</p>
-						{/* {mentor.daysOpen} */}
-						<div className="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
+						<div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-5 mt-10">
 							{mentor?.availability.map((date, ind) => {
 								return (
 									<div
@@ -49,20 +52,17 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 						</div>
 					</div>
 				</div>
-				<div className="grid gap-3 flex-grow mt-5">
+				<div className="grid gap-3 flex-grow mt-5 w-full lg:w-auto">
 					{scheduleList.map((schedule, index) => (
 						<div className="relative mb-8" key={index}>
-							<SchedulerDiv />{" "}
-							<span
-								className="absolute right-0 -top-6"
-								onClick={() => {
-									if (scheduleList.length > 1)
-										setScheduleList((prevScheduleList) =>
-											prevScheduleList.filter(({ id }) => schedule.id !== id),
-										);
-								}}>
-								<CloseSharp color="red" cssClasses="cursor-pointer" />
-							</span>
+							<SchedulerDiv />
+							{index !== 0 && (
+								<span
+									className="absolute right-0 -top-6"
+									onClick={() => handleDeleteSchedule(schedule, index)}>
+									<CloseSharp color="red" cssClasses="cursor-pointer" />
+								</span>
+							)}
 						</div>
 					))}
 					<div className="my-5">
@@ -80,7 +80,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 };
 
 const SchedulerDiv = () => (
-	<div className="text-[#06310B] flex xl:flex-row sm:flex-col md:flex-nowrap flex-wrap items-start xl:items-center gap-4 animate__animated animate__fadeInUp">
+	<div className="text-[#06310B] flex sm:flex-row flex-col sm:flex-nowrap flex-wrap items-start xl:items-center gap-4 animate__animated animate__fadeInUp">
 		<div className="border border-[#70C5A1] overflow-hidden relative w-full">
 			<label htmlFor="date" className="absolute top-0 left-3 text-sm text-[#094B10]">
 				Date

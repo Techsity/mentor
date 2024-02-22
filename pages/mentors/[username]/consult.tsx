@@ -5,6 +5,7 @@ import ScheduleConsultationTemplate from "../../../components/templates/mentor/s
 import { IMentor } from "../../../interfaces/mentor.interface";
 import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/mutations/mentors";
 import protectedPageWrapper from "../../protectedPageWrapper";
+import NewsLetterForm from "../../../components/ui/atom/forms/NewsLetterForm";
 
 const MentorConsultationPage = () => {
 	const router = useRouter();
@@ -20,7 +21,17 @@ const MentorConsultationPage = () => {
 			Any error occured. Please refresh page and try again.
 		</div>
 	) : (
-		<ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />
+		<>
+			<ScheduleConsultationTemplate {...{ mentor: mentor, loading }} />
+			<>
+				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
+					Subscribe to our Newsletter
+				</h1>
+				<div className="flex justify-center my-5 mb-10">
+					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
+				</div>
+			</>
+		</>
 	);
 };
 
