@@ -42,7 +42,10 @@ const authSlice = createSlice({
 			return state;
 		},
 		switchProfile: (state, action: { payload: { profile: IMentor | null } }) => {
-			if (state?.user) state.user.mentor = action.payload.profile;
+			if (state?.user) {
+				if (state.user.mentor) state.user.is_mentor = true;
+				state.user.mentor = action.payload.profile;
+			}
 		},
 	},
 });

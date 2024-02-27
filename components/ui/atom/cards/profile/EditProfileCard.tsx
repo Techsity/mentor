@@ -20,27 +20,26 @@ const EditProfileCard = () => {
 
 	const handleSwitchProfile = async () => {
 		setLoading(true);
-		if (user?.is_mentor) {
-			if (user?.mentor) {
+		if (user?.is_mentor || user?.mentor) {
+			if (user?.mentor || user?.mentor) {
 				setTimeout(function () {
 					setLoading(false);
 					dispatch(switchProfile({ profile: null }));
 					router.replace("/profile");
 				}, 1000);
 			} else {
-				await getMentorProfile()
-					.then((res) => {
+				try {
+					const res = await getMentorProfile();
+					const mentorProfile = res.data?.getMentorProfile;
+					if (mentorProfile) {
 						setLoading(false);
-						const mentorProfile = res.data?.getMentorProfile;
-						if (mentorProfile) {
-							dispatch(switchProfile({ profile: mentorProfile }));
-							router.replace("/profile");
-						}
-					})
-					.catch((err) => {
-						console.error(err);
-						setLoading(false);
-					});
+						dispatch(switchProfile({ profile: mentorProfile }));
+						router.replace("/profile");
+					}
+				} catch (err) {
+					console.error(err);
+					setLoading(false);
+				}
 			}
 		} else {
 			router.push("/mentor/onboarding");
@@ -98,7 +97,7 @@ const EditProfileCard = () => {
 						title={
 							loading
 								? ""
-								: user?.is_mentor
+								: user?.is_mentor || user?.mentor
 								? user?.mentor
 									? "Switch to Mentee Dashboard"
 									: "Switch to Mentor Profile"

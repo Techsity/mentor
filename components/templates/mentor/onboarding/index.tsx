@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BecomeMentorSvg } from "../../../ui/atom/icons/svgs";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { useRouter } from "next/router";
 import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-	initialMentorOnboardingState,
-} from "../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../redux/reducers/onboardingSlice";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 
@@ -22,7 +17,7 @@ const MentorOnboardingPageTemplate = () => {
 
 	const handleNavigate = () => {
 		setLoading(true);
-		if (agree) {
+		if (agree)
 			setTimeout(function () {
 				dispatch(
 					setOnboardingMentor({
@@ -32,9 +27,7 @@ const MentorOnboardingPageTemplate = () => {
 				);
 				setLoading(false);
 			}, 3000);
-		} else {
-			setLoading(false);
-		}
+		else setLoading(false);
 	};
 
 	useEffect(() => {

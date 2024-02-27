@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
+	initialMentorOnboardingState,
 	onboardingMentorState,
 	setOnboardingMentor,
 } from "../../../../../../../redux/reducers/onboardingSlice";
@@ -34,6 +35,7 @@ import { ToastDefaultOptions } from "../../../../../../../constants";
 import { switchProfile } from "../../../../../../../redux/reducers/authSlice";
 
 const FinalMentorOnboardingStep = () => {
+	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const [loading, setLoading] = useState<boolean>(false);
 	const router = useRouter();
@@ -41,52 +43,52 @@ const FinalMentorOnboardingStep = () => {
 		ONBOARD_MENTOR,
 	);
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		setLoading(true);
 
-		createMentorProfile({
-			variables: {
-				createMentorInput: {
-					about: onboardingMentor.bio,
-					availability: onboardingMentor.availability,
-					certifications: onboardingMentor.certificates,
-					education_bg: onboardingMentor.education,
-					exp_level: IMentorExpLevel.LEVEL_2, //Todo: remove this and set exp_level properly from the form
-					hourly_rate: 10,
-					language: onboardingMentor.languages,
-					projects: onboardingMentor.projects,
-					role: onboardingMentor.role,
-					skills: onboardingMentor.skills,
-					work_experience: onboardingMentor.workHistory || [],
+		try {
+			const response = await createMentorProfile({
+				variables: {
+					createMentorInput: {
+						about: onboardingMentor.bio,
+						availability: onboardingMentor.availability,
+						certifications: onboardingMentor.certificates,
+						education_bg: onboardingMentor.education,
+						exp_level: IMentorExpLevel.LEVEL_2, //Todo: remove this and set exp_level properly from the form
+						hourly_rate: 10,
+						language: onboardingMentor.languages,
+						projects: onboardingMentor.projects,
+						role: onboardingMentor.role,
+						skills: onboardingMentor.skills,
+						work_experience: onboardingMentor.workHistory || [],
+					},
 				},
-			},
-		})
-			.then((response) => {
-				console.log(response.data?.createMentorProfile);
-				if (response.data?.createMentorProfile) {
-					// setLoading(false);
-					// dispatch(switchProfile({ profile: response.data?.createMentorProfile }));
-					router.replace("/profile");
-				}
-			})
-			.catch((err) => {
-				console.error(err);
-				setLoading(false);
-				const errMessage = formatGqlError(err);
-				if (errMessage === "Unauthorized") {
-					const next = router.basePath.concat(router.asPath);
-					router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-					toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
-				}
-				if (
-					errMessage.includes(
-						`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`,
-					)
-				) {
-					toast.info("Account already created", ToastDefaultOptions({ id: "error" }));
-					// router.replace("/profile");
-				}
 			});
+			console.log(response.data?.createMentorProfile);
+			if (response.data?.createMentorProfile) {
+				setLoading(false);
+				dispatch(switchProfile({ profile: response.data?.createMentorProfile }));
+				router.replace("/profile").then((done) => {
+					if (done) dispatch(setOnboardingMentor(initialMentorOnboardingState));
+				});
+			}
+		} catch (err) {
+			console.error(err);
+			setLoading(false);
+			const errMessage = formatGqlError(err);
+			if (errMessage === "Unauthorized") {
+				const next = router.basePath.concat(router.asPath);
+				router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
+				toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
+			}
+			if (
+				errMessage.includes(`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`)
+			) {
+				// Account already created
+				toast.info("Redirecting...", ToastDefaultOptions({ id: "error" }));
+				router.replace("/profile");
+			}
+		}
 	};
 	return (
 		<>
