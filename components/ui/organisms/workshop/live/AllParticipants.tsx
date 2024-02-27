@@ -30,9 +30,9 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop }: Props) => {
 	const { audioTracks } = useRemoteAudioTracks(participants);
 	audioTracks.map((a) => a.play());
 
-	useEffect(() => {
-		if (uid) client.publish([localMicrophoneTrack, {} as any]);
-	}, [localMicrophoneTrack]);
+	// useEffect(() => {
+	// 	if (uid) client.publish([localMicrophoneTrack, {} as any]);
+	// }, [localMicrophoneTrack]);
 
 	return (
 		<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full">

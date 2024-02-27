@@ -41,9 +41,7 @@ const EditProfileCard = () => {
 					setLoading(false);
 				}
 			}
-		} else {
-			router.push("/mentor/onboarding");
-		}
+		} else router.push("/mentor/onboarding");
 	};
 	return (
 		<div>
