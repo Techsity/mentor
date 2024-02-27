@@ -63,7 +63,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 	const links = ["www.linkedin.com/example_link", "www.example.com"];
 	return (
 		<div className="relative w-full md:h-56 p-[1.5px] flex items-center justify-center overflow-hidden group">
-			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" />
+			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full" />
+			{/* <div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" /> */}
 			<div className="z-20 xl:min-h-56 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
 				<div className="relative h-full md:w-[52%] w-full flex sm:flex-row flex-col items-start gap-2">
 					<div className="w-24 xs:w-28 lg:w-40 xl:w-48 h-24 lg:h-32 xl:h-40 rounded-full overflow-hidden">
@@ -145,6 +146,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 						</div>
 						<div className="mt-2 flex gap-2 items-center text-[#70C5A1] whitespace-nowrap">
 							{!loading &&
+								mentor?.skills &&
 								mentor?.skills
 									.map((skill, i) => (
 										<p className="text-xs" key={i}>
