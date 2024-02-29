@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { validatePassword, getRuleRegex } from "../../../../../../../utils";
 
-const PasswordValidationComponent = ({ password }: { password: string }) => {
+const PasswordValidationComponent = ({
+	password,
+	isValid,
+}: {
+	password: string;
+	isValid?: (checked: boolean) => void;
+}) => {
 	const rules: { rule: "8" | "number" | "capital"; name: string }[] = [
 		{ name: "8 Characters", rule: "8" },
 		{ name: "Number", rule: "number" },
 		{ name: "Capital letter", rule: "capital" },
 	];
 
-	const [passedRules, setPassedRules] = useState<
-		{ rule: string; passed: boolean }[]
-	>(rules.map((rule) => ({ rule: rule.name, passed: false })));
+	const [passedRules, setPassedRules] = useState<{ rule: string; passed: boolean }[]>(
+		rules.map((rule) => ({ rule: rule.name, passed: false })),
+	);
+
+	const updatedPassedRules = rules.map((rule) => ({
+		rule: rule.name,
+		passed: validatePassword(password, rule.rule),
+	}));
 
 	useEffect(() => {
-		const updatedPassedRules = rules.map((rule) => ({
-			rule: rule.name,
-			passed: validatePassword(password, rule.rule),
-		}));
 		setPassedRules(updatedPassedRules);
 	}, [password]);
 
+	useEffect(() => {
+		const allRulesPassed = updatedPassedRules.every((rule) => rule.passed);
+		if (isValid) isValid(allRulesPassed);
+	}, [passedRules]);
 	return (
-		<>
+		<div className="flex flex-col gap-2">
 			<h1 className="text-sm">Password hint:</h1>
-			<div className="flex flex-wrap gap-5 items-center whitespace-nowrap mt-2">
+			<div className="flex flex-wrap gap-5 items-center whitespace-nowrap">
 				{rules.map((rule, index) => (
 					<div key={index} className="flex text-[12px] items-center cursor-default">
 						<div className="flex justify-center border p-[2px] border-[#70C5A1]">
@@ -41,7 +52,7 @@ const PasswordValidationComponent = ({ password }: { password: string }) => {
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	);
 };
 

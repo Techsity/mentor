@@ -39,12 +39,12 @@ const Navbar = () => {
 				{!user && !auth ? (
 					<div className="hidden sm:flex items-center gap-6 pl-10 2xl:pl-40">
 						<span
-							onClick={() => router.push("/auth?login")}
+							onClick={() => router.push("/auth?login", "/auth?login", { scroll: true })}
 							className="hover:text-[#FFB100] text-sm text-[#094B10] cursor-pointer duration-300">
 							Login
 						</span>
 						<span
-							onClick={() => router.push("/auth?signup")}
+							onClick={() => router.push("/auth?signup", "/auth?signup", { scroll: true })}
 							className="bg-[#FFB100] text-sm select-none duration-300 hover:bg-[#C68900] p-2 px-5 text-[#094B10] cursor-pointer rounded-lg">
 							Signup
 						</span>

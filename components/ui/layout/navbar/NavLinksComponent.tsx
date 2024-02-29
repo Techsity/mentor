@@ -8,11 +8,6 @@ import { CourseType, ICourseCategory } from "../../../../interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../services/graphql/mutations/courses";
 
-type MainCourseType = {
-	courseType: CourseType;
-	categories: ICourseCategory[];
-};
-
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
@@ -58,9 +53,12 @@ const NavLinksComponent = () => {
 								setActiveSublink(null);
 								setActiveDropdown(null);
 							}}>
-							<Link href={link} prefetch={false}>
+							<div
+								onClick={() => {
+									router.push(link, link, { scroll: false });
+								}}>
 								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
-							</Link>
+							</div>
 							<span
 								className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
 									router.asPath.includes(link) ? "w-full" : "hover:w-full"
@@ -73,7 +71,7 @@ const NavLinksComponent = () => {
 											<div key={i}>
 												<div
 													onClick={() =>
-														router.push(sublink.link, undefined, { scroll: true })
+														router.push(sublink.link, sublink.link, { scroll: false })
 													}>
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
@@ -93,7 +91,7 @@ const NavLinksComponent = () => {
 																	const url = `/courses?type=${activeDropdown}&category=${encodeURIComponent(
 																		title.toLowerCase(),
 																	)}`;
-																	router.push(url);
+																	router.push(url, url, { scroll: false });
 																}}>
 																<div
 																	key={i}

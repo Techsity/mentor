@@ -37,7 +37,6 @@ const ForgotPasswordTemplate = () => {
 			if (isEmail(email)) {
 				try {
 					const response = await forgotPassword({ variables: { email: state.email } });
-					console.log({ response: response.data });
 					setState({ ...state, loading: false });
 					if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
 						dispatch(setResetPasswordState({ email }));

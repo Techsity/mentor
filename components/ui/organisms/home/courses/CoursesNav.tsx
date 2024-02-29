@@ -7,13 +7,11 @@ type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 const CourseNav = ({
 	activeCourseType,
 	setActiveCourseType,
-	setActiveCategoryIndex,
 	courseTypes,
 }: // loading,
 {
 	activeCourseType: ActiveCourseType;
 	setActiveCourseType: Dispatch<SetStateAction<ActiveCourseType>>;
-	setActiveCategoryIndex: Dispatch<SetStateAction<number>>;
 	courseTypes: ActiveCourseType[];
 	// loading: boolean;
 }) => {
@@ -31,10 +29,7 @@ const CourseNav = ({
 										: "hover:text-[#fff] hover:bg-[#094B10]"
 								}`}
 								style={{ fontFamily: "Days One" }}
-								onClick={() => {
-									setActiveCourseType(type);
-									setActiveCategoryIndex(0);
-								}}>
+								onClick={() => setActiveCourseType(type)}>
 								{type.name}
 							</div>
 						);

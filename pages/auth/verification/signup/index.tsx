@@ -16,6 +16,9 @@ const SignupOtpVerificationPage = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [verifyUser] = useMutation<any, { otp: string }>(VERIFY_USER);
 	const onBoardingUser = useSelector(onboardingUserState);
+	// const [requestOtp]= useMutation()
+
+	const handleResendOtp = () => {};
 
 	const handleVerifyOtp = (otp: string) => {
 		verifyUser({ variables: { otp } })
@@ -54,7 +57,9 @@ const SignupOtpVerificationPage = () => {
 		);
 	}
 
-	return <OtpTemplate {...{ loading, setLoading }} next={handleVerifyOtp} timeLimit={60} />;
+	return (
+		<OtpTemplate {...{ loading, setLoading, resendOtp: handleResendOtp }} next={handleVerifyOtp} timeLimit={60} />
+	);
 };
 
 export default SignupOtpVerificationPage;

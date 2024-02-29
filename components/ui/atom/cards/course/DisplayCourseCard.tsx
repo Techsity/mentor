@@ -82,12 +82,9 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 										className={
 											!loading
 												? "font-normal"
-												: "px-5 bg-zinc-200 h-1.5 animate__animated animate__fadeIn animate__infinite"
+												: "px-5 bg-zinc-200 h-1.5 capitalize animate__animated animate__fadeIn animate__infinite"
 										}>
-										{!loading &&
-											course &&
-											course?.course_level?.charAt(0).toUpperCase() +
-												course?.course_level?.slice(1).toLowerCase()}
+										{!loading && course && course?.course_level.split("_").join(" ")}
 									</span>
 									<span
 										className={
@@ -95,7 +92,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 												? "font-normal"
 												: "px-5 bg-zinc-200 h-1.5 animate__animated animate__fadeIn animate__infinite"
 										}>
-										{!loading && course?.duration || 0 + " hours"}
+										{(!loading && course?.duration) || 0 + " hours"}
 									</span>
 									<span
 										className={

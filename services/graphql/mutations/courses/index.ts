@@ -34,12 +34,12 @@ export const ALL_COURSES = gql`
 			skill_name
 			years_of_exp
 		}
-		work_experience {
-			...WorkExperience
-		}
-		projects {
-			...Project
-		}
+		# work_experience {
+		# 	...WorkExperience
+		# }
+		# projects {
+		# 	...Project
+		# }
 		# Fetch the needed fields
 	}
 
@@ -50,29 +50,29 @@ export const ALL_COURSES = gql`
 		is_online
 	}
 
-	fragment Project on PastProjectsDTO {
-		company
-		description
-		job_role
-	}
-	fragment WorkExperience on WorkExperienceDTO {
-		company
-		job_role
-		description
-		from_year
-		to_year
-	}
+	# fragment Project on PastProjectsDTO {
+	# 	company
+	# 	description
+	# 	job_role
+	# }
+	# fragment WorkExperience on WorkExperienceDTO {
+	# 	company
+	# 	job_role
+	# 	description
+	# 	from_year
+	# 	to_year
+	# }
 `;
 export const GET_ALL_CATEGORIES = gql`
-	query GetAllCategories {
-		getAllCategories {
+	query GetAllCategories($courseType: String) {
+		getAllCategories(courseType: $courseType) {
+			id
 			title
 			description
+			slug
 			course_type {
 				type
 			}
-			created_at
-			updated_at
 		}
 	}
 `;

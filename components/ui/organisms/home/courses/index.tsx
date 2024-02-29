@@ -12,25 +12,26 @@ type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
 const HomepageCourseSection = () => {
 	const [activeCourseType, setActiveCourseType] = useState<ActiveCourseType>(courseTypes[0]);
-	const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
+	const [currentCategory, setCurrentCategory] = useState<string>("");
 
-	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES, {
+		variables: {
+			courseType: activeCourseType.name,
+		},
+	});
 
 	const categories = useMemo(() => {
 		if (!loading) {
 			if (error) {
 				console.error({ error: error });
 				return [];
-			} else if (data && data.getAllCategories) {
+			} else if (data && data.getAllCategories && data.getAllCategories.length) {
+				setCurrentCategory(data.getAllCategories[0].title);
 				return data.getAllCategories;
 			}
 			return [];
 		}
 	}, [data, loading]);
-
-	const currentCategory = useMemo<string>(() => {
-		return categories && categories.length >= 1 ? categories[activeCategoryIndex].title : "";
-	}, [categories, activeCategoryIndex]);
 
 	return (
 		<div className="min-h-[65dvh] py-20 scroll-mt-20 overflow-hidden mx-5" id="courses">
@@ -44,33 +45,37 @@ const HomepageCourseSection = () => {
 
 				<CoursesNav
 					activeCourseType={activeCourseType}
-					setActiveCategoryIndex={setActiveCategoryIndex}
 					setActiveCourseType={setActiveCourseType}
 					courseTypes={courseTypes}
 				/>
 
 				<div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
-					{categories &&
-						categories.length >= 1 &&
-						categories
-							.map((category, indx) => {
-								return (
-									<div
-										key={indx}
-										onClick={() => setActiveCategoryIndex(indx)}
-										className={`cursor-pointer duration-300 p-1 animate__animated font-medium animate__fadeInUp font-sm ${
-											currentCategory === category.title ? "text-[#033]" : "text-[#888]"
-										}`}>
-										{category.title}
-									</div>
-								);
-							})
-							.slice(0, 5)}
+					{loading
+						? Array.from({ length: 3 }).map((_, i) => {
+								return <span className="p-0.5 px-8 bg-gray-200" key={i} />;
+						  })
+						: categories &&
+						  categories.length >= 1 &&
+						  categories
+								.map((category, indx) => {
+									return (
+										<div
+											key={indx}
+											onClick={() => setCurrentCategory(category.title)}
+											className={`cursor-pointer duration-300 p-1 animate__animated font-medium animate__fadeIn font-sm ${
+												currentCategory === category.title ? "text-[#033]" : "text-[#888]"
+											}`}>
+											{category.title}
+										</div>
+									);
+								})
+								.slice(0, 5)}
 
 					<Link href="/courses" prefetch={false}>
 						<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
 							<div className="relative flex items-center gap-1">
-								View All
+								{categories &&
+									(categories.length >= 1 ? "View All" : categories?.length < 1 && "Related Courses")}
 								<span className="absolute h-[2px] duration-300 w-0 group-hover:left-0 right-0 group-hover:w-full -bottom-2 bg-[#33AC15]" />
 								<div className="flex">
 									<ChevronForwardSharp color="#33AC15" height="15px" width="15px" />

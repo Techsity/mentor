@@ -1,20 +1,18 @@
-import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react";
-import Link from "next/link";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import OTPForm from "../../../ui/atom/forms/auth/OTPForm";
-import { isValidNumber } from "../../../../utils";
-import { toast } from "react-toastify";
 
 export interface IOTPTemplateProps {
 	timeLimit?: number;
 	next: (otp: string) => void;
+	resendOtp: (cb: () => void) => void;
 	length?: number;
 	loading: boolean;
 	setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const OtpTemplate = ({ timeLimit = 60, next, length, loading, setLoading }: IOTPTemplateProps) => {
+const OtpTemplate = ({ timeLimit = 60, next, length, loading, setLoading, resendOtp }: IOTPTemplateProps) => {
 	const [countdown, setCountdown] = useState<number>(timeLimit);
 	const [otp, setOtp] = useState<string>("");
 
@@ -26,24 +24,21 @@ const OtpTemplate = ({ timeLimit = 60, next, length, loading, setLoading }: IOTP
 		}, 1000);
 		return () => clearInterval(countDownInterval);
 	}, [countdown]);
-
+	// 7
 	const handleSubmit = () => {
 		setLoading(true);
-		setTimeout(function () {
-			next(otp);
-		}, 2000);
+		next(otp);
 	};
 
 	useEffect(() => {
-		if (otp.length === 6) {
-			handleSubmit();
-		}
+		if (otp.length === 6) handleSubmit();
 	}, [otp]);
 
 	const handleResendOtp = () => {
-		setCountdown(timeLimit);
-		setLoading(false);
-		// Todo: implement the logic for resending otp during signup
+		resendOtp(() => {
+			setCountdown(timeLimit);
+			setLoading(false);
+		});
 	};
 
 	const ActionButtons = () => {
@@ -85,7 +80,7 @@ const OtpTemplate = ({ timeLimit = 60, next, length, loading, setLoading }: IOTP
 
 	return (
 		<div className="min-h-[80vh] flex justify-center pt-20 sm:mt-24 relative md:px-24">
-			<ReusableParticles />
+			{/* <ReusableParticles /> */}
 			<div className="">
 				<h1 className="text-3xl text-[#00D569] px-5 sm:px-auto" style={{ fontFamily: "Days One" }}>
 					Enter OTP

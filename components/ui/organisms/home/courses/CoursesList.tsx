@@ -38,7 +38,7 @@ const CoursesList = ({ activeCategory, activeCourseType, limit = 10, skip = 0 }:
 					return <DisplayCourseCard loading={loading} course={null} key={indx} />;
 				})
 			) : !loading && !error && allCourses.length < 1 ? (
-				<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
+				<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this category</h1>
 			) : (
 				allCourses.map((course, indx) => {
 					return <DisplayCourseCard loading={loading} course={course} key={indx} />;
