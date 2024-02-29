@@ -33,7 +33,7 @@ const ResetNewPasswordTemplate = () => {
 	>(FORGOT_PASSWORD, { variables: { email: String(resetPasswordData?.email) } });
 
 	const [resetPassword, { loading }] = useMutation<
-		{ message: string },
+		{ resetPassword: { message: string } },
 		{ resetData: { otp: string; password: string } }
 	>(RESET_PASSWORD);
 
@@ -55,7 +55,7 @@ const ResetNewPasswordTemplate = () => {
 			if (response) {
 				const data = response.data;
 				console.log({ response: response.data });
-				if (data && data.message) router.replace(`/auth/reset-password/finish`);
+				if (data && data.resetPassword.message) router.replace(`/auth/reset-password/finish`);
 			}
 		} catch (error: any) {
 			console.error(JSON.stringify(error));
