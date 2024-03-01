@@ -178,8 +178,8 @@ const CourseContents = ({
 					}
 					link={
 						isSubscribed
-							? `/courses/${slugify(course.title)}/learn`
-							: `/courses/${slugify(course.title)}/purchase`
+							? `/courses/${slugify(String(course.id))}/learn`
+							: `/courses/${slugify(String(course.id))}/purchase`
 					}
 					className="p-3 text-lg flex justify-center items-center text-sm"
 				/>
