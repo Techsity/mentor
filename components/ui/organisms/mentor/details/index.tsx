@@ -63,9 +63,11 @@ const Experience = ({ experience, loading }: { experience: IMentorExperience[] |
 								</div>
 							))
 							.slice(0, 2)}
-					<div className="mt-3 sm:col-span-2 lg:col-span-1">
-						<PrimaryButton title="View all Experiences" link="#" className="p-2.5 px-8" />
-					</div>
+					{experience && experience?.length >= 1 && (
+						<div className="mt-3 sm:col-span-2 lg:col-span-1">
+							<PrimaryButton title="View all Experiences" link="#" className="p-2.5 px-8" />
+						</div>
+					)}
 				</>
 			)}
 		</span>
@@ -119,7 +121,7 @@ const MentorProjects = ({
 								))
 								.slice(0, 2)}
 
-						{!reEdit && (
+						{!reEdit && projects && projects.length >= 1 && (
 							<div className="mt-3 sm:col-span-2 lg:col-span-1">
 								<PrimaryButton title="View all Projects" link="#" className="p-2.5 px-8" />
 							</div>

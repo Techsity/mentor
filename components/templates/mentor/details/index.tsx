@@ -22,15 +22,11 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start sm:px-12 px-6">
 					<div className="flex-grow min-h-screen overflow-hidden">
 						<Skills skills={mentor?.skills} loading={loading} />
-						{mentor && mentor.work_experience.length >= 1 && (
-							<Experience experience={mentor?.work_experience} loading={loading} />
-						)}
-						{mentor && mentor.projects.length >= 1 && (
-							<div className="my-5 lg:max-w-xl">
-								<MentorProjects projects={mentor?.projects} loading={loading} />
-							</div>
-						)}
-						{!loading && <ListReviews reviews={mentor?.reviews || []} />}
+						<Experience experience={mentor?.work_experience} loading={loading} />
+						<div className="my-5 lg:max-w-xl">
+							<MentorProjects projects={mentor?.projects} loading={loading} />
+						</div>
+						<ListReviews reviews={mentor?.reviews || []} />
 						<div className="flex max-w-xl justify-between items-center mt-5">
 							<p className="text-[#F15E63] cursor-pointer hover:underline text-sm">! Report Mentor</p>
 							<Socials />

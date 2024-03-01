@@ -122,6 +122,12 @@ export const VIEW_MENTOR_PROFILE = gql`
 				is_verified
 			}
 			courses {
+				mentor {
+					user {
+						name
+						avatar
+					}
+				}
 				title
 				course_level
 				description
@@ -147,8 +153,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 						notes
 					}
 				}
-				created_at
-				updated_at
+				
 			}
 			reviews {
 				type
@@ -196,7 +201,6 @@ export const VIEW_MENTOR_PROFILE = gql`
 			followers {
 				name
 			}
-			created_at
 		}
 	}
 `;

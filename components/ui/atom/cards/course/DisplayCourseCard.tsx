@@ -41,7 +41,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								/>
 							)}
 
-							<Link href={`/courses/${slugify(course?.title as string)}`}>
+							<Link href={`/courses/${slugify(course?.id as string)}`}>
 								<div className="cursor-pointer">
 									<ArrowForwardSharp color="#fff" height="20px" width="20px" />
 								</div>
