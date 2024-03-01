@@ -35,7 +35,7 @@ const CourseInProgressDisplayCard: FC<{
 						</span>
 					)}
 					{!loading && (
-						<Link href={`/courses/${slugify(String(course?.title))}`}>
+						<Link href={`/courses/${slugify(String(course?.id))}`}>
 							<div className="cursor-pointer">
 								<ArrowForwardSharp color="#fff" height="20px" width="20px" />
 							</div>
@@ -52,7 +52,10 @@ const CourseInProgressDisplayCard: FC<{
 				)}
 				{!loading && (
 					<img
-						src={String(course?.course_images) || "/assets/images/mockups/course_one.png"}
+						src={
+							String(course?.course_images && course.course_images !== "null" && course.course_images) ||
+							"/assets/images/mockups/course_one.png"
+						}
 						className="w-full h-full"
 						alt={String(course?.title)}
 						loading="lazy"
@@ -61,7 +64,9 @@ const CourseInProgressDisplayCard: FC<{
 			</div>
 			<div className="grid gap-1 mt-3 p-3 w-full">
 				<h1 className={loading ? "p-1 my-2 mb-6 w-[80%] bg-gray-200" : "tracking-tight font-normal"}>
-					{!loading && course?.title.slice(0, 31)}
+					{!loading && course?.title && course?.title.length > 30
+						? course?.title.slice(0, 30) + "..."
+						: !loading && course?.title}
 				</h1>
 				<div className="flex items-center gap-2 justify-between text-xxs w-full">
 					{loading ? (
@@ -83,7 +88,9 @@ const CourseInProgressDisplayCard: FC<{
 					)}
 				</div>
 				<p className={loading ? "my-5 p-0.5 px-8 bg-gray-200" : "text-xsm font-normal w-full mt-3"}>
-					{!loading && course?.description}
+					{!loading && course?.description && course?.description.length > 25
+						? course?.description.slice(0, 25) + "..."
+						: !loading && course?.description}
 				</p>
 				<div className="flex items-center justify-between mt-3 w-full lg:absolute bottom-3 lg:max-w-[93%]">
 					<div className="flex gap-2 items-center text-xsm relative overflow-hidden rounded-full">
@@ -105,7 +112,7 @@ const CourseInProgressDisplayCard: FC<{
 						<PrimaryButton
 							title={percentageWatched >= 100 ? "Start Over" : !watched ? "Start" : "Continue"}
 							className="p-2 px-4 text-xs"
-							link={`/courses/${slugify(String(course?.title))}/learn`}
+							link={`/courses/${slugify(String(course?.id))}/learn`}
 						/>
 					) : (
 						!loading && (

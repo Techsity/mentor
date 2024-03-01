@@ -7,11 +7,12 @@ import { BackwardIcon, ForwardIcon, PauseICon, PlayIcon, PlayerInPlayerIcon } fr
 import useVideo from "../../../../../../hooks/media/useVideo";
 import { SettingsOutline } from "react-ionicons";
 
-const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolean }) => {
+const VideoComponent = ({ course, loading }: { course?: ICourse; loading?: boolean }) => {
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 	const poster =
 		"https://www.shutterstock.com/image-photo/elearning-education-internet-lessons-online-600nw-2158034833.jpg";
+
 	const {
 		isPlaying,
 		progress,
@@ -29,8 +30,8 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 	} = useVideo(videoRef);
 
 	return (
-		<div className="flex-grow relative mb-6">
-			<div className="lg:max-w-[65dvw] w-full group overflow-hidden relative">
+		<div className="flex-grow relative mb-6 w-full">
+			<div className="lg:w-[65dvw] w-full group overflow-hidden relative">
 				<div className={classNames("relative w-full h-[400px] bg-black/10 backdrop-blur-sm")}>
 					{isLoading && (
 						<div
@@ -56,11 +57,14 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 									src={videoUrl}
 									controls={false}
 									className="w-full h-full"
-									// allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
 									onLoadedMetadata={handleLoadedMetadata}
 									onError={handleError}
-									title={course.title}
-									poster={poster} // Default image
+									title={course?.title}
+									poster={
+										course?.course_images && course?.course_images !== "null"
+											? course?.course_images
+											: poster
+									} // Default image
 									onTimeUpdate={handleTimeUpdate}
 									onVolumeChange={handleVolumeChange}
 									autoPlay={false}
@@ -105,15 +109,6 @@ const VideoComponent = ({ course, loading }: { course: ICourse; loading?: boolea
 										<SettingsOutline cssClasses="cursor-pointer" color="#fff" />
 									</div>
 								</div>
-								{/* <input
-									type="range"
-									min="0"
-									max="1"
-									step="0.01"
-									value={volume}
-									onChange={handleVolumeChange}
-									className="flex-grow h-2 bg-gray-500 rounded-md"
-								/> */}
 								{/* Add more custom controls as needed */}
 							</div>
 						</>

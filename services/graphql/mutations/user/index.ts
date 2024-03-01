@@ -48,7 +48,7 @@ export const FETCH_USER_SUBSCRIPTIONS = gql`
 					title
 					course_sections {
 						section_name
-						video_url
+						# video_url
 						notes
 					}
 				}

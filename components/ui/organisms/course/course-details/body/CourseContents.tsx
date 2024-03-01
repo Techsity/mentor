@@ -13,12 +13,14 @@ const CourseContents = ({
 	inProgress = false,
 	loading,
 }: {
-	course: ICourse;
+	course?: ICourse;
 	className?: string;
 	inProgress?: boolean;
 	loading?: boolean;
 }) => {
-	const [activeContent, setActiveContent] = useState<ICourseContent | null>(course.course_contents[0]);
+	const [activeContent, setActiveContent] = useState<ICourseContent | null>(
+		course ? course.course_contents[0] : null,
+	);
 	const CourseContentItem = ({
 		content,
 		onClick,
@@ -98,7 +100,7 @@ const CourseContents = ({
 	const router = useRouter();
 	const courseId = String(router.query.courseId);
 	const user = useSelector(currentUser);
-	const selectedSubscription = user?.subscriptions?.find((sub) => sub.id === courseId);
+	const selectedSubscription = user?.subscriptions?.find((sub) => sub.course_id === courseId);
 
 	const isSubscribed = useMemo(
 		() => Boolean(selectedSubscription),
@@ -119,19 +121,27 @@ const CourseContents = ({
 				<h1 className="font-semibold mb-3">Course Content</h1>
 			</div>
 			<div className="my-6 grid gap-4 overflow-hidden">
-				{course.course_contents.map((content, index) => (
-					<CourseContentItem
-						content={content}
-						key={index}
-						onClick={() => {
-							if (activeContent === content) {
-								setActiveContent(null);
-								return;
-							}
-							setActiveContent(content);
-						}}
-					/>
-				))}
+				{loading &&
+					Array.from({ length: 4 }).map((_, index) => (
+						<div className="bg-gray-400 p-4 w-full relative overflow-hidden" key={index}>
+							<span className="bg-gray-200 z-10 absolute top-0 left-0 w-full h-full animate__animated animate__fadeInLeft animate__infinite" />
+						</div>
+					))}
+				{!loading &&
+					course &&
+					course.course_contents.map((content, index) => (
+						<CourseContentItem
+							content={content}
+							key={index}
+							onClick={() => {
+								if (activeContent === content) {
+									setActiveContent(null);
+									return;
+								}
+								setActiveContent(content);
+							}}
+						/>
+					))}
 			</div>
 		</div>
 	) : (
@@ -143,7 +153,7 @@ const CourseContents = ({
 			{/* <div className="xl:max-w-[35%] w-full bg-[#fff] sm:p-8 p-4 xl:min-h-[85vh] text-black xl:-mt-24 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto  animate__animated animate__slideInRight order-first lg:order-last"> */}
 			<div className="flex items-center justify-between">
 				<h1 className="font-semibold">Course Content</h1>
-				{course.price !== 0 ? (
+				{course && course.price !== 0 ? (
 					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						${course.price.toLocaleString()}
 					</div>
@@ -154,19 +164,20 @@ const CourseContents = ({
 				)}
 			</div>
 			<div className="my-6 grid gap-4 overflow-hidden">
-				{course.course_contents.map((content, index) => (
-					<CourseContentItem
-						content={content}
-						key={index}
-						onClick={() => {
-							if (activeContent === content) {
-								setActiveContent(null);
-								return;
-							}
-							setActiveContent(content);
-						}}
-					/>
-				))}
+				{course &&
+					course.course_contents.map((content, index) => (
+						<CourseContentItem
+							content={content}
+							key={index}
+							onClick={() => {
+								if (activeContent === content) {
+									setActiveContent(null);
+									return;
+								}
+								setActiveContent(content);
+							}}
+						/>
+					))}
 
 				<PrimaryButton
 					title={
@@ -178,8 +189,8 @@ const CourseContents = ({
 					}
 					link={
 						isSubscribed
-							? `/courses/${slugify(String(course.id))}/learn`
-							: `/courses/${slugify(String(course.id))}/purchase`
+							? `/courses/${slugify(String(course?.id))}/learn`
+							: `/courses/${slugify(String(course?.id))}/purchase`
 					}
 					className="p-3 text-lg flex justify-center items-center text-sm"
 				/>

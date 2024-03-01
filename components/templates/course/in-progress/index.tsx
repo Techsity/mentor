@@ -8,44 +8,50 @@ import VideoComponent from "../../../ui/organisms/course/course-in-progress/vide
 import CourseOverviewTabComponent from "../../../ui/organisms/course/course-in-progress/overview-tab";
 import courses from "../../../../data/courses";
 import { useRouter } from "next/router";
+import { VIEW_COURSE } from "../../../../services/graphql/mutations/courses";
+import { useQuery } from "@apollo/client";
+import { ICourse } from "../../../../interfaces";
 
 const CourseInProgressTemplate = () => {
 	const router = useRouter();
-	const course = courses[0];
-	const [loading, setLoading] = useState<boolean>(true);
+	const courseId = router.query.courseId;
+	// const course = courses[0];
+	// const [loading, setLoading] = useState<boolean>(true);
+	const { data, loading, error } = useQuery<{ viewCourse: ICourse }, { courseId: string }>(VIEW_COURSE, {
+		variables: { courseId: String(courseId) },
+	});
 
-	// Todo: remove loading simulation
-
-	useEffect(() => {
-		setTimeout(function () {
-			setLoading(false);
-		}, 1200);
-	}, []);
+	let course = data?.viewCourse;
 
 	return (
-		<div className="min-h-[50vh] h-full sm:px-10 px-4 pb-20">
-			<CourseInProgressTopHeader {...course} />
-			<div className="flex flex-col lg:flex-row justify-between gap-5 w-full items-start">
-				<div className="relative flex-grow mt-5">
-					<VideoComponent {...{ course }} loading={loading} />
-					<div className="max-w-5xl">
-						<CourseOverviewTabComponent {...course} />
+		<>
+			{/* {!loading && error && <div className="">Something went wrong</div>} */}
+			{/* {!error && ( */}
+			<div className="min-h-[50vh] h-full sm:px-10 px-4 pb-20">
+				<CourseInProgressTopHeader {...{ course, loading }} />
+				<div className="flex flex-col lg:flex-row justify-between gap-5 w-full items-start">
+					<div className="relative flex-grow mt-5 w-full lg:w-auto">
+						<VideoComponent {...{ course }} loading={loading} />
+						<div className="lg:max-w-5xl">
+							<CourseOverviewTabComponent {...{ course }} />
+						</div>
+						<div className="flex items-center gap-5 mt-5 flex-wrap">
+							<Link href="#">
+								<p className="text-[red]">! Report Course</p>
+							</Link>
+							<Socials />
+						</div>
 					</div>
-					<div className="flex items-center gap-5 mt-5 flex-wrap">
-						<Link href="#">
-							<p className="text-[red]">! Report Course</p>
-						</Link>
-						<Socials />
-					</div>
+					<CourseContents
+						loading={loading}
+						inProgress
+						course={course}
+						className="lg:max-w-[30%] lg:mt-6 xl:mt-6"
+					/>
 				</div>
-				<CourseContents
-					loading={loading}
-					inProgress
-					course={course}
-					className="lg:max-w-[30%] lg:mt-6 xl:mt-6"
-				/>
 			</div>
-		</div>
+			{/* )} */}
+		</>
 	);
 };
 

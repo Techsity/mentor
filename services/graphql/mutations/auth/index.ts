@@ -22,6 +22,13 @@ export const LOGIN_USER = gql`
 				is_admin
 				is_verified
 				created_at
+				subscriptions {
+					id
+					course_id
+					is_completed
+					created_at
+					updated_at
+				}
 				email
 				is_active
 				is_admin
@@ -45,12 +52,13 @@ export const GET_USER_PROFILE = gql`
 			phone
 			avatar
 			country
-			# subsciptions {
-			# 	created_at
-			# 	id
-			# 	is_completed
-			# 	updated_at
-			# }
+			subscriptions {
+				id
+				course_id
+				is_completed
+				created_at
+				updated_at
+			}
 			is_online
 			is_active
 			is_verified

@@ -35,7 +35,7 @@ const MentorProfileOverview = () => {
 					return (
 						<div
 							key={index}
-							className="text-[#A3A6A7] bg-white p-6 border duration-300 hover:border-[#70C5A1] border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
+							className="text-[#A3A6A7] bg-white p-6 border hover:border-[#70C5A1] border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
 							<div className="text-sm text-[#D0D0D0]">{item.title}</div>
 							<p className="font-semibold text-3xl">{formatAmount(item.value)}</p>
 						</div>
@@ -47,7 +47,7 @@ const MentorProfileOverview = () => {
 					return (
 						<div
 							key={index}
-							className="text-[#A3A6A7] bg-white p-6 duration-300 hover:border-[#70C5A1] border border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
+							className="text-[#A3A6A7] bg-white p-6 hover:border-[#70C5A1] border border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
 							<div className="text-sm text-[#D0D0D0]">{item.title}</div>
 							<p className="font-semibold text-3xl flex gap-1 items-center">
 								{formatAmount(item.value)}

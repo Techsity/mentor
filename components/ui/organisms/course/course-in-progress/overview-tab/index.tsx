@@ -9,7 +9,7 @@ import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 
 type videoNavType = "about-course" | "review" | "lecture-notes";
 
-const CourseOverviewTab = (course: ICourse) => {
+const CourseOverviewTab = ({ course }: { course?: ICourse }) => {
 	const [active, setActive] = useState<videoNavType>("about-course");
 	const { loading, newReview, addNewReview, handleChange, reviews } = useLectureReviews();
 
@@ -48,7 +48,7 @@ const CourseOverviewTab = (course: ICourse) => {
 			</div>
 			<div className="min-h-[100px]">
 				{active === "about-course" ? (
-					<CourseOverview overview={course.description} />
+					<CourseOverview overview={String(course?.description)} />
 				) : active === "review" ? (
 					<section className="animate__animated animate__fadeIn">
 						<CustomTextInput

@@ -70,12 +70,7 @@ const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
 											<span className="flex-grow ml-3">{method.name}</span>
 											<>
 												{selectedMethod && selectedMethod == method ? (
-													<svg
-														width="23"
-														height="23"
-														viewBox="0 0 23 23"
-														fill="none"
-														className="animate__animated animate__bounceIn">
+													<svg width="23" height="23" viewBox="0 0 23 23" fill="none">
 														<path
 															fillRule="evenodd"
 															clipRule="evenodd"
@@ -84,12 +79,7 @@ const PaidPurchaseForm = (props?: { reason: "course" | "workshop" }) => {
 														/>
 													</svg>
 												) : (
-													<svg
-														width="23"
-														height="23"
-														viewBox="0 0 23 23"
-														fill="none"
-														className="animate__animated animate__bounceIn">
+													<svg width="23" height="23" viewBox="0 0 23 23" fill="none">
 														<path
 															d="M2.31173 17.2224L2.31174 17.2224C3.49287 18.9902 5.17186 20.368 7.13616 21.1817C9.10047 21.9953 11.2619 22.2082 13.3473 21.7935C15.4325 21.3786 17.348 20.3548 18.8514 18.8514C20.3548 17.348 21.3786 15.4325 21.7934 13.3472C22.2082 11.2619 21.9953 9.10046 21.1817 7.13612C20.368 5.17182 18.9902 3.49293 17.2223 2.3117L17.2223 2.31169C15.4546 1.13047 13.3761 0.5 11.25 0.5C9.83824 0.5 8.44037 0.778053 7.13617 1.31829C5.83196 1.85853 4.64684 2.65038 3.64859 3.6486C2.65037 4.6468 1.85858 5.83187 1.31827 7.13612L2.31173 17.2224ZM2.31173 17.2224C1.13047 15.4546 0.5 13.3761 0.5 11.25M2.31173 17.2224L0.5 11.25M0.5 11.25C0.5 9.83829 0.778075 8.44043 1.31825 7.13616L0.5 11.25Z"
 															stroke="#70C5A1"
