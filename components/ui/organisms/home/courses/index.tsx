@@ -7,6 +7,7 @@ import CoursesList from "./CoursesList";
 import { CourseType, ICourseCategory } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
+import { slugify } from "../../../../../utils";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };
 
@@ -49,7 +50,7 @@ const HomepageCourseSection = () => {
 					courseTypes={courseTypes}
 				/>
 
-				<div className="relative w-full pr-20 flex items-center justify-start gap-6 mt-10 mx-10 text-sm whitespace-nowrap overflow-x-auto py-6">
+				<div className="relative w-full sm:pr-20 flex items-center justify-start gap-6 mt-5 sm:mx-10 text-sm whitespace-nowrap overflow-x-auto py-4">
 					{loading
 						? Array.from({ length: 3 }).map((_, i) => {
 								return <span className="p-0.5 px-8 bg-gray-200" key={i} />;
@@ -71,7 +72,13 @@ const HomepageCourseSection = () => {
 								})
 								.slice(0, 5)}
 
-					<Link href="/courses" prefetch={false}>
+					<Link
+						href={
+							categories && categories.length >= 1
+								? `/courses?type=${slugify(activeCourseType.name)}`
+								: "/courses"
+						}
+						prefetch={false}>
 						<div className="tracking-tight text-[#33AC15] group cursor-pointer lg:block hidden">
 							<div className="relative flex items-center gap-1">
 								{categories &&
@@ -86,7 +93,7 @@ const HomepageCourseSection = () => {
 						</div>
 					</Link>
 				</div>
-				<div className="md:border md:mx-10 md:p-5 bg-[#FDFDFD]">
+				<div className="md:border md:mx-6 md:p-3 bg-[#FDFDFD]">
 					<CoursesList activeCourseType={activeCourseType.name} activeCategory={currentCategory} />
 				</div>
 			</div>

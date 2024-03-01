@@ -13,16 +13,16 @@ const CourseInProgressDisplayCard: FC<{
 	course: ICourse | null;
 	owner?: boolean;
 	loading?: boolean;
-}> = ({ course, owner }) => {
+}> = ({ course, owner, loading }) => {
 	const watchedTime = 1050;
 	const totalTime = 2300;
 	const percentageWatched = parseInt(((watchedTime / totalTime) * 100).toFixed(0));
 	const watched = false;
 	const router = useRouter();
-	const loading = true;
+
 	const ratings = course !== null && calculateRatingsInReviews(course.reviews);
 	return (
-		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[360px]">
+		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[360px] overflow-hidden">
 			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
 				<div className="justify-between flex items-center w-full">
 					{!loading && (
@@ -85,27 +85,21 @@ const CourseInProgressDisplayCard: FC<{
 				<p className={loading ? "my-5 p-0.5 px-8 bg-gray-200" : "text-xsm font-normal w-full mt-3"}>
 					{!loading && course?.description}
 				</p>
-				<div className="flex items-center justify-between mt-3 w-full">
-					<div className="flex gap-2 items-center text-xsm relative overflow-hidden rounded-full w-8 h-8">
-						{loading && (
-							<>
-								<div className="bg-gray-400 absolute h-full w-full top-0 left-0" />
-								<div className="bg-gray-200 absolute h-full w-full top-0 left-0 animate__animated animate__fadeIn animate__infinite" />
-							</>
-						)}
+				<div className="flex items-center justify-between mt-3 w-full lg:absolute bottom-3 lg:max-w-[93%]">
+					<div className="flex gap-2 items-center text-xsm relative overflow-hidden rounded-full">
+						{loading && <div className="bg-gray-300 absolute w-8 h-8 top-0 left-0" />}
 						{!loading && (
 							<img
 								src={course?.mentor.user.avatar || "/assets/images/avatar.png"}
 								alt={course?.mentor.user.name}
-								className="w-full h-full rounded-full"
+								className="rounded-full w-8 h-8"
 								loading="lazy"
 							/>
 						)}
-
-						<h1 className={loading ? "p-0.5 px-5 bg-gray-200" : ""}>
-							{!loading && course?.mentor.user.name}
-						</h1>
+						{loading && <span className="p-1 px-20 absolute bg-gray-300 w-full h-1" />}
+						<h1>{!loading && course?.mentor.user.name}</h1>
 					</div>
+					{loading && <span className="p-0.5 px-10 bg-gray-300 -ml-20 relative -left-12" />}
 					{loading && <span className="bg-gray-300 p-3 px-6" />}
 					{!loading && !owner ? (
 						<PrimaryButton
