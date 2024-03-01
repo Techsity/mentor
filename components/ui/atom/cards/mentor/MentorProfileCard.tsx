@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import { FOLLOW_MENTOR } from "../../../../../services/graphql/mutations/mentors";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSelector } from "react-redux";
+import classNames from "classnames";
 import { currentUser, isLoggedIn } from "../../../../../redux/reducers/authSlice";
 
 type MentorProfileCardProps = {
@@ -117,8 +118,13 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 									</p>
 								)}
 								{!loading && !followLoading ? (
-									<button onClick={handleFollow} className="text-[#70C5A1] text-sm hover:underline">
-										{followingMentor ? "Following" : "+ Follow"}
+									<button
+										onClick={handleFollow}
+										className={classNames(
+											"text-sm hover:underline",
+											followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
+										)}>
+										{followingMentor ? "Unfollow" : "+ Follow"}
 									</button>
 								) : (
 									followLoading && <ActivityIndicator className="border-[.1em]" size={10} />

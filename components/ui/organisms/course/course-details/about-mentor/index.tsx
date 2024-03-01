@@ -1,9 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useId, useState } from "react";
 import { formatFollowersCount } from "../../../../../../utils";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
+import { useMutation } from "@apollo/client";
+import router, { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { currentUser, isLoggedIn } from "../../../../../../redux/reducers/authSlice";
+import { FOLLOW_MENTOR } from "../../../../../../services/graphql/mutations/mentors";
+import { navigateToAuthPage } from "../../../../../../utils/auth";
+import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
+import classNames from "classnames";
 
 const CoursePageAboutMentor = (mentor: IMentor) => {
+	const toastId = useId();
+
+	const user = useSelector(currentUser);
+	const auth = useSelector(isLoggedIn);
+	const hasFollowedMentor = !true;
+	const [followingMentor, setFollowingMentor] = useState<boolean>(hasFollowedMentor || false);
+	const [followMentorMutation, { loading }] = useMutation(FOLLOW_MENTOR);
+
+	const handleFollow = async () => {
+		if (!auth || !user) toast.error("Unauthenticated! Please login", { theme: "light", toastId });
+		else if (mentor)
+			await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
+				.then(() => setFollowingMentor((p) => !p))
+				.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
+	};
+
 	return (
 		<div className="px-5 sm:px-10 lg:px-20 mt-10 py-3">
 			<h1 className="text-xl font-semibold">About Mentor</h1>
@@ -28,15 +53,27 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 									<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
 								</svg>
 							) : null}
-							<p className="flex items-center">{formatFollowersCount(mentor.followers.length)} followers</p>
-							<p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p>
+							<p className="flex items-center">
+								{formatFollowersCount(mentor.followers.length)} followers
+							</p>
+							{/* <p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p> */}
+							{!loading ? (
+								<button
+									onClick={handleFollow}
+									className={classNames(
+										"flex items-center justify-center",
+										"text-sm hover:underline",
+										followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
+									)}>
+									{followingMentor ? "Unfollow" : "+ Follow"}
+								</button>
+							) : (
+								<ActivityIndicator className="border-[.1em]" size={10} />
+							)}
 						</div>
 						<p className="">{mentor.role} </p>
 						<p className="flex gap-1 items-center">
-							{/* {formatFollowersCount(mentor.courses.length)}{" "} */}
-							{formatFollowersCount(mentor.courses.length)} Courses | {formatFollowersCount(31)} Sessions
-							{/* |{" "} */}
-							{/* {formatFollowersCount(mentor.mentees.length)} Mentee */}|{" "}
+							{formatFollowersCount(mentor.courses.length)} Courses |{" "}
 							{formatFollowersCount(mentor.followers.length)} Followers
 						</p>
 					</div>

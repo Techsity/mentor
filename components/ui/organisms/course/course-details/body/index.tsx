@@ -16,7 +16,7 @@ const CourseDetailsBody = (course: ICourse) => {
 					<WhatToLearn {...course} />
 					<CourseRequirements {...course} />
 					<div className="my-8">
-						<ListReviews />
+						<ListReviews {...{ reviews: course.reviews }} />
 					</div>
 					<div className="">
 						<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">

@@ -6,15 +6,19 @@ import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import CoursePageAboutMentor from "../../../ui/organisms/course/course-details/about-mentor";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
-import courses from "../../../../data/courses";
 import { useRouter } from "next/router";
+import { ICourse } from "../../../../interfaces";
 
-const CourseDetailsPageTemplate = () => {
+type Props = { course: ICourse | null };
+
+const CourseDetailsPageTemplate = ({ course }: Props) => {
 	const router = useRouter();
-	const courseId = String(router.query.courseId);
-	// Todo: use useQuery to fetch course
-	const course = courses[0];
-	return (
+	// const course = courses[0];
+	return !course ? (
+		<div className="h-screen flex justify-center items-center">
+			<p className="text-black text-xl">Course not found</p>
+		</div>
+	) : (
 		<>
 			<div className="">
 				<CourseDetailsPageHero {...course} />

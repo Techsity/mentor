@@ -38,13 +38,13 @@ const MenteeDashboardHero = () => {
 	}, []);
 
 	return (
-		<div className="min-h-[75vh] md:px-20 px-10 pt-20 bg-[#0C202B] relative overflow-hidden">
+		<div className="md:h-[75vh] md:px-20 px-10 pt-20 bg-[#0C202B] relative overflow-hidden">
 			<div className="opacity-20 top-0 left-0 absolute w-full">
 				<img src="/assets/images/map3.png" alt="" className="animate__animated animate__fadeIn" />
 			</div>
 			<div className="flex justify-center lg:justify-between items-start sm:mt-28 relative z-30 text-white">
 				<div className="">
-					<h1 className="text-4xl" style={{ fontFamily: "Days One" }}>
+					<h1 className="md:text-4xl text-2xl px-3" style={{ fontFamily: "Days One" }}>
 						Start Learning from anywhere!
 					</h1>
 					<div className="my-6">
@@ -52,7 +52,7 @@ const MenteeDashboardHero = () => {
 					</div>
 					{!loading ? (
 						categories.length >= 1 && (
-							<>
+							<div className="text-sm mx-3">
 								<h1>Popular Categories</h1>
 								<div className="flex flex-wrap gap-3 items-center max-w-lg sm:max-w-xl my-4">
 									{categories
@@ -85,9 +85,9 @@ const MenteeDashboardHero = () => {
 												</button>
 											</div>
 										))
-										.slice(0, 8)}
+										.slice(0, 4)}
 								</div>
-							</>
+							</div>
 						)
 					) : (
 						<div className="flex justify-center items-center">
