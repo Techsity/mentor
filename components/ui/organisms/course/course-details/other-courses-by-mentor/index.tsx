@@ -24,7 +24,7 @@ const OtherCoursesByMentor = ({
 	}, [mentor, course]);
 
 	const mentorCourses = useMemo(() => {
-		return course ? getMentorCourses(course.mentor.user.name) : mentor && getMentorCourses(mentor.user.name);
+		return course ? course.mentor.courses : mentor && mentor.courses;
 	}, [mentor, course]);
 
 	return mentorState && mentorCourses && mentorCourses?.length > 0 ? (

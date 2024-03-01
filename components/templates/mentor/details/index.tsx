@@ -30,8 +30,6 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 								<MentorProjects projects={mentor?.projects} loading={loading} />
 							</div>
 						)}
-						{/* {!loading && mentor && mentor.reviews.length >= 1 && <ListReviews />} */}
-						{/* //Todo: Remove the one below and use the one above */}
 						{!loading && <ListReviews reviews={mentor?.reviews || []} />}
 						<div className="flex max-w-xl justify-between items-center mt-5">
 							<p className="text-[#F15E63] cursor-pointer hover:underline text-sm">! Report Mentor</p>

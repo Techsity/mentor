@@ -26,6 +26,9 @@ export const HOMEPAGE_MENTORS_LIST = gql`
 			language
 			mentor_verified
 			updated_at
+			followers {
+				name
+			}
 		}
 	}
 `;
@@ -35,61 +38,25 @@ export const GET_ALL_MENTORS = gql`
 		viewAllMentors {
 			id
 			role
+			about
 			user {
 				name
-				phone
 				avatar
 				country
 				is_online
-				is_active
-				isPremium
 				is_verified
-				is_admin
-			}
-			courses {
-				created_at
 			}
 			reviews {
 				type
-				content
-				# reviewed_by
-				reviewed_by {
-					name
-				}
 				ratings
 			}
-			about
-			work_experience {
-				company
-				job_role
-				description
-				from_year
-				to_year
-			}
-			projects {
-				company
-				job_role
-				description
-			}
 			exp_level
-			education_bg {
-				school
-				credential_type
-				course_of_study
-				from_year
-				to_year
-			}
 			hourly_rate
-			availability {
-				day
-				timeSlots {
-					startTime
-					endTime
-				}
-			}
 			language
 			mentor_verified
-			updated_at
+			followers {
+				name
+			}
 		}
 	}
 `;
@@ -153,7 +120,6 @@ export const VIEW_MENTOR_PROFILE = gql`
 				is_online
 				is_active
 				is_verified
-				is_admin
 			}
 			courses {
 				title
@@ -177,7 +143,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 					title
 					course_sections {
 						section_name
-						video_url
+						# video_url
 						notes
 					}
 				}
@@ -187,7 +153,6 @@ export const VIEW_MENTOR_PROFILE = gql`
 			reviews {
 				type
 				content
-				# reviewed_by
 				reviewed_by {
 					name
 				}
@@ -228,11 +193,10 @@ export const VIEW_MENTOR_PROFILE = gql`
 					endTime
 				}
 			}
-			# followers {
-			# 	name
-			# }
+			followers {
+				name
+			}
 			created_at
-			updated_at
 		}
 	}
 `;

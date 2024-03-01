@@ -106,6 +106,11 @@ export const VIEW_COURSE = gql`
 				}
 				courses {
 					...CourseDetails
+					mentor {
+						user {
+							...UserField
+						}
+					}
 				}
 				...MentorField
 			}

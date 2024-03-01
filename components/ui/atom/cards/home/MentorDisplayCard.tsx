@@ -3,7 +3,7 @@ import React from "react";
 import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
 import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { calculateRatingsInReviews } from "../../../../../utils";
+import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { useRouter } from "next/router";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
@@ -41,7 +41,10 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 								: 0 + " years"}{" "}
 							of experience
 						</p>
-						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">2 sessions</p>
+						{/* <p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">2 sessions</p> */}
+						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">
+							{formatFollowersCount(mentor.followers.length)} followers
+						</p>
 						<span className="flex gap-2 items-center text-sm text-[#B1B1B1]">
 							<svg width="16" height="16" viewBox="0 0 9 9" fill="none">
 								<path

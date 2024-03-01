@@ -38,6 +38,7 @@ export const formatDateDifference = (startDate: Date | string, endDate: Date | s
 };
 
 export function formatFollowersCount(number: number) {
+	if (isNaN(number)) return "NaN";
 	if (number < 1000) {
 		return number.toString();
 	} else if (number < 1000000) {

@@ -107,14 +107,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 									<span className="bg-zinc-200 h-1 w-5" />
 								) : (
 									<p className="text-sm">
-										{formatFollowersCount(
-											Number(
-												mentor?.followers && mentor?.followers.length >= 1
-													? mentor?.followers.length
-													: 0,
-											),
-										)}{" "}
-										followers
+										{formatFollowersCount(Number(mentor?.followers?.length))} followers
 									</p>
 								)}
 								{!loading && !followLoading ? (

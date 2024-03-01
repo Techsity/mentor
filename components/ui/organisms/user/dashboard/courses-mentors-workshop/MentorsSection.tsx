@@ -1,26 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useMemo, useState } from "react";
-import allMentors from "../../../../../../data/mentors";
+import React, { useMemo, useState } from "react";
 import { scrollUp } from "../../../../../../utils";
 import MentorProfileCard from "../../../../atom/cards/mentor/MentorProfileCard";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/mentors";
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
-	const { data, loading, error } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
 	const mentors = data?.viewAllMentors;
 
+	const mentorsOnline = mentors?.filter((mentor) => mentor.user.is_online);
+
 	const filteredMentors = useMemo(() => {
-		return tab === "all"
-			? mentors?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
-			: tab === "online" &&
-					mentors
-						?.filter((mentor) => mentor.user.is_online)
-						.map((mentor, index) => {
-							return <MentorProfileCard mentor={mentor} key={index} />;
-						});
+		refetch();
+		return tab === "all" ? (
+			mentors?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
+		) : tab === "online" && Number(mentorsOnline?.length) < 1 ? (
+			<div>No Mentors online at the moment. Check again later.</div>
+		) : (
+			mentorsOnline?.map((mentor, index) => {
+				return <MentorProfileCard mentor={mentor} key={index} />;
+			})
+		);
 	}, [mentors, tab, loading, data]);
 
 	const switchTab = (active: typeof tab) => {
