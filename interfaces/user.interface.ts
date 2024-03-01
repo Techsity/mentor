@@ -1,11 +1,15 @@
+import { ICourse } from "./index";
+
 export interface IUserPaymentCard {
 	card_number: string;
 	card_name: string;
 	bank: { name: string; logo?: string };
 }
 
-type Subscription = {
+export type Subscription = {
 	id: string;
+	course: ICourse;
+	course_id: string;
 	is_completed: boolean;
 	created_at?: string;
 	updated_at?: string;
@@ -27,7 +31,7 @@ export interface IUser {
 	isPremium: boolean;
 	created_at?: string;
 	updated_at?: string;
-	subscriptions?: Subscription[];
+	subscriptions: Subscription[];
 }
 
 export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };
