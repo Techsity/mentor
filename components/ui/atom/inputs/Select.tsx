@@ -57,6 +57,7 @@ export function Select<T>({
 				className="cursor-pointer capitalize text-[#70C5A1] font-normal text-xs w-full flex justify-between items-center">
 				<div className="grid gap-2 items-center justify-center">
 					{label ? <p className="">{label}</p> : <p className="text-xs text-black">{title}</p>}
+					{title && <p className="text-xs text-black">{title}</p>}
 				</div>
 				{showIcon && (
 					<span className="" onClick={toggleSelectDropdown}>

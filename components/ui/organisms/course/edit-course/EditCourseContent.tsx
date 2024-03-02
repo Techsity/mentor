@@ -1,21 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useId, useRef, useState } from "react";
 import { CourseSection, ICourseContent } from "../../../../../interfaces";
 import ContentEditComponent from "./ContentEditComponent";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
+import {
+	CourseContentUpload,
+	CourseSectionUpload,
+	newCourse,
+	setNewCourse,
+} from "../../../../../redux/reducers/coursesSlice";
+import { createReadStream } from "fs";
 
-type Props = { content?: ICourseContent[] };
+type Props = { content?: CourseContentUpload[] };
 
 const EditCourseContent = (props: Props) => {
+	const toastId = useId();
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
 
-	const emptyState: ICourseContent = { title: "", course_sections: [{ notes: "", section_name: "", video_url: "" }] };
+	const emptyState: CourseContentUpload = {
+		title: "",
+		course_sections: [{ notes: "", section_name: "", file: null }],
+	};
 	const ref = useRef<HTMLDivElement>(null);
-	const [state, setState] = useState<ICourseContent[]>(
+	const [state, setState] = useState<CourseContentUpload[]>(
 		newCourseData?.course_contents && newCourseData?.course_contents.length > 0
 			? newCourseData?.course_contents
 			: props.content
@@ -29,11 +39,11 @@ const EditCourseContent = (props: Props) => {
 	const handleChange =
 		(
 			index: number,
-			field: keyof Omit<ICourseContent, "course_sections"> | keyof CourseSection,
+			field: keyof Omit<CourseContentUpload, "course_sections"> | keyof CourseSectionUpload,
 			section_index?: number,
 		) =>
 		(e: ChangeEvent<HTMLInputElement>) => {
-			const { value } = e.target;
+			const { value, files } = e.target;
 			setState((prev) => {
 				const updatedState = [...prev];
 				if (field === "title") {
@@ -52,6 +62,32 @@ const EditCourseContent = (props: Props) => {
 								? {
 										...section,
 										section_name: value,
+								  }
+								: section,
+						),
+					};
+				} else if (field === "file" && section_index !== undefined) {
+					if (!files) {
+						toast.error("No file selected", { toastId, ...ToastDefaultOptions() });
+						return prev;
+					}
+					const file = files[0];
+					const metadata = {
+						name: file.name,
+						size: file.size,
+						type: file.type,
+						// stream: file.stream,
+					};
+					if (!updatedState[index].course_sections) {
+						updatedState[index].course_sections = [];
+					}
+					updatedState[index] = {
+						...updatedState[index],
+						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
+							sectionIndex === section_index
+								? {
+										...section,
+										file: metadata,
 								  }
 								: section,
 						),
@@ -93,9 +129,9 @@ const EditCourseContent = (props: Props) => {
 	const handleDuplicateLecture = (index: number, section_index: number) => {
 		if (state[index]) {
 			setState((prev) => {
-				const lectureToDuplicate: CourseSection = prev[index].course_sections[section_index];
+				const lectureToDuplicate: CourseSectionUpload = prev[index].course_sections[section_index];
 				const updated = [...prev];
-				const duplicatedLecture: CourseSection = {
+				const duplicatedLecture: CourseSectionUpload = {
 					...lectureToDuplicate,
 					section_name: lectureToDuplicate.section_name + " - Copy",
 				};
@@ -114,28 +150,29 @@ const EditCourseContent = (props: Props) => {
 	};
 
 	const handleDeleteLecture = (index: number, section_index: number) => {
-		if (state[index]) {
-			if (state[index].course_sections.length > 2) {
-				if (confirm("Are you sure you want to delete this lecture?")) {
-					setState((prev) => {
-						const updated = [...prev];
-						updated[index].course_sections = [
-							...updated[index].course_sections.slice(0, section_index),
-							...updated[index].course_sections.slice(section_index + 1),
-						];
-						// dispatch(setNewCourse({ ...newCourseData, course_contents: updated }));
+		setState((prevState) => {
+			return prevState.map((item, idx) => {
+				if (idx === index && item.course_sections.length > 2) {
+					if (confirm("Are you sure you want to delete this lecture?")) {
+						const updated = {
+							...item,
+							course_sections: [
+								...item.course_sections.slice(0, section_index),
+								...item.course_sections.slice(section_index + 1),
+							],
+						};
+						dispatch(setNewCourse({ ...newCourseData, course_contents: [updated] }));
 						return updated;
-					});
-				}
-			} else {
-				toast.error("Each lecture must have at least, 2 outlines.", ToastDefaultOptions({ id: "error" }));
-			}
-		}
-	};
-	const handleAddNewOutline = () => {
-		setState((prev) => {
-			return [...prev, emptyState];
+					}
+				} else if (idx === index && item.course_sections.length <= 2)
+					toast.error("Each lecture must have at least 2 outlines.", ToastDefaultOptions({ id: "error" }));
+				return item;
+			});
 		});
+	};
+
+	const handleAddNewOutline = () => {
+		setState((prev) => [...prev, emptyState]);
 	};
 
 	// useEffect(() => {

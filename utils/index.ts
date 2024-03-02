@@ -212,3 +212,12 @@ export const formatTime = (timeInSeconds: number) => {
 	const seconds = Math.floor(timeInSeconds % 60);
 	return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
+
+export const readFileAsBlob = (file: File) => {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = (error) => reject(error);
+		reader.readAsArrayBuffer(file);
+	});
+};

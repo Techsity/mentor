@@ -50,52 +50,37 @@ const ProfileComponents = ({ activetab }: { activetab: ProfileTabLinkType }) => 
 					))}
 			</div>
 
-			{
-				activetab === "overview" && isMentor ? (
-					<div className="animate__animated animate__fadeIn">
-						<MentorProfileOverview />
-					</div>
-				) : activetab === "courses" && isMentor ? (
-					isEditCourse && !isContentPage ? (
-						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
-						<EditCourseTemplate isCourse handleSave={() => {}} />
-					) : // </div>
-					isEditCourse && isContentPage ? (
-						// <div className="lg:overflow-hidden h-full lg:max-h-screen lg:overflow-y-scroll hide-scroll-bar">
-						<EditCourseContent />
-					) : (
-						// </div>
-						<MentorProfileCourses />
-					)
-				) : activetab === "my-courses" ? (
-					<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-						{myCourses.map((course, i) => (
-							<CourseInProgressDisplayCard {...{ course }} key={i} />
-						))}
-					</div>
-				) : activetab === "my-workshop" ? (
-					<RegitsteredWorkshops />
-				) : activetab === "mentorship" ? (
-					<RegisteredMentorships />
-				) : activetab === "wishlists" ? (
-					<div className="md:px-2 px-5">
-						<WishLists />
-					</div>
-				) : activetab === "payment-methods" ? (
-					<PaymentMethods />
+			{activetab === "overview" && isMentor ? (
+				<div className="animate__animated animate__fadeIn">
+					<MentorProfileOverview />
+				</div>
+			) : activetab === "courses" && isMentor ? (
+				isEditCourse && !isContentPage ? (
+					<EditCourseTemplate isCourse handleSave={() => {}} />
+				) : isEditCourse && isContentPage ? (
+					<EditCourseContent />
 				) : (
-					activetab === "settings" && <ProfileSettings />
+					<MentorProfileCourses />
 				)
-				// : (
-				// 	<>
-				// 		<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-				// 			{myCourses.map((course, i) => (
-				// 				<CourseInProgressDisplayCard {...{ course }} key={i} />
-				// 			))}
-				// 		</div>
-				// 	</>
-				// )
-			}
+			) : activetab === "my-courses" ? (
+				<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
+					{myCourses.map((course, i) => (
+						<CourseInProgressDisplayCard {...{ course }} key={i} />
+					))}
+				</div>
+			) : activetab === "my-workshop" ? (
+				<RegitsteredWorkshops />
+			) : activetab === "mentorship" ? (
+				<RegisteredMentorships />
+			) : activetab === "wishlists" ? (
+				<div className="md:px-2 px-5">
+					<WishLists />
+				</div>
+			) : activetab === "payment-methods" ? (
+				<PaymentMethods />
+			) : (
+				activetab === "settings" && <ProfileSettings />
+			)}
 		</>
 	);
 };

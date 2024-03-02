@@ -1,16 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useEffect, useMemo, useState } from "react";
-import protectedPageWrapper from "../../../../pages/protectedPageWrapper";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
-import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
-import { formatAmount, scrollToTop } from "../../../../utils";
+import React, { useMemo } from "react";
 import { StarRatingIcon } from "../../../ui/atom/icons/svgs";
 import EditCourseForm from "../../../ui/atom/forms/course/EditCourseForm";
 import AddCourseContent from "../../../ui/organisms/course/edit-course/AddCourseContent";
 import { ICourse, IWorkshop, ProfileTabLinkType } from "../../../../interfaces";
-import courses, { courseCategories, courseContents, courseTypes } from "../../../../data/courses";
+import { courseTypes } from "../../../../data/courses";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import workshops from "../../../../data/workshops";
 import AddWorkShopSchedule from "../../../ui/organisms/workshop/edit-workshop/AddWorkShopSchedule";
 import { useRouter } from "next/router";
 import StatsDisplay from "../../../ui/organisms/course/edit-course/StatsDisplay";

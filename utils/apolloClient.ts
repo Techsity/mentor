@@ -13,13 +13,13 @@ const client = (args?: { authToken?: string; ssr?: boolean }) => {
 		// const token = typeof window !== "undefined" && localStorage.getItem(AUTH_TOKEN_KEY);
 		const token = authToken ? authToken : typeof window !== "undefined" && (getCookie(AUTH_TOKEN_KEY) as string);
 		// If there's no token, return the original headers
-		if (!token) {
-			return { headers };
-		}
+		if (!token) return { headers, "apollo-require-preflight": "true" };
+
 		return {
 			headers: {
 				...headers,
 				authorization: `Bearer ${token}`,
+				"apollo-require-preflight": "true",
 			},
 		};
 	});

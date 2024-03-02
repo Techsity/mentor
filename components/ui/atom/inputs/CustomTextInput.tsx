@@ -9,7 +9,9 @@ import React, {
 import classNames from "classnames";
 interface ICustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	containerProps?: HTMLAttributes<HTMLDivElement>;
+	leftIcon?: JSX.Element | null;
 	rightIcon?: JSX.Element | null;
+	leftIconClass?: string;
 	rightIconClass?: string;
 	rightButton?: JSX.Element | null;
 	children?: ReactNode;
@@ -20,7 +22,17 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 	props: ICustomTextInputProps,
 	ref?: ForwardedRef<HTMLInputElement>,
 ) {
-	const { containerProps, rightIcon, rightButton, children, rightIconClass, type, ...inputProps } = props;
+	const {
+		containerProps,
+		rightIcon,
+		leftIcon,
+		rightButton,
+		children,
+		leftIconClass,
+		rightIconClass,
+		type,
+		...inputProps
+	} = props;
 
 	return (
 		<div
@@ -29,6 +41,11 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				containerProps?.className,
 			)}
 			{...containerProps}>
+			{leftIcon ? (
+				<div className={classNames(leftIconClass ? leftIconClass : "absolute top-[30%] left-5")}>
+					{leftIcon}
+				</div>
+			) : null}
 			<input
 				ref={ref}
 				{...inputProps}
@@ -39,12 +56,12 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 					"p-4 h-full focus:ring-0 outline-none",
 					type === "number" &&
 						"[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
-					rightIcon ? "w-[93%]" : "w-full flex-grow",
+					rightIcon ? "w-[93%]" : leftIcon ? "w-[93%]" : "w-full flex-grow",
 					inputProps?.className,
 				)}
 			/>
 			{rightButton ? rightButton : null}
-			{rightIcon ? (
+			{leftIcon ? (
 				<div className={classNames(rightIconClass ? rightIconClass : "absolute top-[30%] right-5")}>
 					{rightIcon}
 				</div>

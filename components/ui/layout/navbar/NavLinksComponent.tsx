@@ -24,9 +24,7 @@ const NavLinksComponent = () => {
 			if (error) {
 				console.error({ error: error });
 				return [];
-			} else if (data && data.getAllCategories) {
-				return data.getAllCategories;
-			}
+			} else if (data && data.getAllCategories) return data.getAllCategories;
 			return [];
 		}
 	}, [data, loading, error]);
@@ -53,10 +51,7 @@ const NavLinksComponent = () => {
 								setActiveSublink(null);
 								setActiveDropdown(null);
 							}}>
-							<div
-								onClick={() => {
-									router.push(link, link, { scroll: false });
-								}}>
+							<div onClick={() => router.push(link, link, { scroll: false })}>
 								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
 							</div>
 							<span

@@ -25,11 +25,8 @@ const ContentEditPageContainer = () => {
 	}, [router]);
 
 	const navigateBack = () => {
-		if (window && window.history.length > 1) {
-			router.back();
-		} else {
-			router.push("/profile/courses/new");
-		}
+		if (window && window.history.length > 1) router.back();
+		else router.push("/profile/courses/new");
 	};
 
 	return (
@@ -47,7 +44,7 @@ const ContentEditPageContainer = () => {
 					</div>
 				)}
 			</div>
-			{isNewItemPage ? <EditCourseContent /> : <>null</>}
+			{isNewItemPage ? <EditCourseContent /> : <>Loading...</>}
 		</ProfileLayout>
 	);
 };

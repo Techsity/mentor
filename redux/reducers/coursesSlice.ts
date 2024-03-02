@@ -1,14 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICourse, ICourseCategory } from "../../interfaces";
 import { RootState } from "../store";
-import { courseTypes } from "../../data/courses";
 
-const isClient = typeof window !== "undefined" && window.localStorage;
+export type CourseSectionUpload = {
+	section_name: string;
+	notes: string;
+	file: any;
+};
 
-export const newCourseInitialState: Omit<ICourse, "mentor"> = {
+export type CourseContentUpload = {
+	title: string;
+	course_sections: CourseSectionUpload[];
+};
+
+type NewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "category" | "course_contents"> & {
+	// files: any[];
+	category: string;
+	course_contents: CourseContentUpload[];
+};
+
+export const newCourseInitialState: NewCourseData = {
 	title: "",
 	description: "",
-	course_type: courseTypes[0].name,
 	course_images: "",
 	course_level: "ALL_LEVELS",
 	duration: 0,
@@ -19,24 +32,14 @@ export const newCourseInitialState: Omit<ICourse, "mentor"> = {
 	imgUrl: "",
 	requirements: [],
 	course_contents: [],
-	category: {
-		title: "",
-		course_type: {
-			description: "",
-			type: "",
-		},
-		description: "",
-		created_at: "",
-		updated_at: "",
-	},
-	reviews: [],
+	category: "",
 	what_to_learn: [],
 };
 
 const initialState: {
 	userWishlistedCourses: ICourse[];
 	courseCategories: ICourseCategory[];
-	newCourse: Omit<ICourse, "mentor"> | null;
+	newCourse: NewCourseData | null;
 } = {
 	userWishlistedCourses: [],
 	courseCategories: [],
@@ -48,19 +51,13 @@ const coursesSlice = createSlice({
 	initialState,
 	reducers: {
 		setWishlist: (state, action: { payload: ICourse[] }) => {
-			if (action.payload) {
-				state.userWishlistedCourses = action.payload;
-				// // Save to local storage too, to persist state
-				// if (isClient) {
-				// 	window.localStorage.setItem("userWishlistedCourses", JSON.stringify(action.payload));
-				// }
-			}
+			if (action.payload) state.userWishlistedCourses = action.payload;
 		},
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
-		setNewCourse: (state, action: { payload: Partial<Omit<ICourse, "mentor">> | null }) => {
-			state.newCourse = action.payload as Omit<ICourse, "mentor">;
+		setNewCourse: (state, action: { payload: Partial<NewCourseData> | null }) => {
+			state.newCourse = { ...state.newCourse, ...(action.payload as NewCourseData) };
 		},
 	},
 });

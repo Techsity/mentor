@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, FC, useMemo, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { ICourse, IWorkshop, ICourseCategory, COURSE_LEVEL } from "../../../../../interfaces";
 import { PrimaryButton } from "../../buttons";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
-import { courseLevels, courseTypes } from "../../../../../data/courses";
+import { courseLevels } from "../../../../../data/courses";
 import { Select } from "../../inputs/Select";
 import CustomTextArea from "../../inputs/CustomTextArea";
 
@@ -28,8 +28,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
 
-	const [formState, setFormState] = useState<StateType>((newCourseData as StateType) || state);
-
+	const [formState, setFormState] = useState<StateType>((newCourseData as any) || state);
 	const [hasPrice, setHasPrice] = useState<boolean>(formState.price && formState.price !== 0 ? true : false);
 
 	const handleChange =
@@ -47,9 +46,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 			if (error) {
 				console.error({ error: error });
 				return [];
-			} else if (data && data.getAllCategories) {
-				return data.getAllCategories;
-			}
+			} else if (data && data.getAllCategories) return data.getAllCategories;
 			return [];
 		}
 	}, [data, loading]);
@@ -63,7 +60,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 			className="grid-cols-4 grid items-start gap-3">
 			{/* Course Details Input - start */}
 			<>
-				<div className="sm:col-span-2 col-span-4 relative">
+				<div className="col-span-4 relative">
 					<label htmlFor="title" className="text-[#70C5A1] font-normal text-xs absolute top-3 left-4">
 						Name
 					</label>
@@ -85,27 +82,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 							data={courseLevels.map((item) => item.split("_").join(" "))}
 							title={formState?.course_level ? formState?.course_level?.split("_").join(" ") : ""}
 							handleSelected={(item: COURSE_LEVEL) => {
+								const selected = item.split(" ").join("_").toUpperCase();
 								setFormState((prev) => {
-									return { ...prev, course_level: item };
+									return { ...prev, course_level: selected as COURSE_LEVEL };
 								});
-								dispatch(setNewCourse({ ...newCourseData, course_level: item }));
+								dispatch(setNewCourse({ ...newCourseData, course_level: selected as COURSE_LEVEL }));
 							}}
 							label="Level"
-						/>
-					</div>
-				</div>
-				<div className="sm:col-span-2 col-span-4 relative border border-[#bebebe] w-full h-full">
-					<div className="flex items-center justify-center p-3">
-						<Select<string>
-							data={courseTypes.map((item) => item.name)}
-							title={formState.course_type || ""}
-							handleSelected={(item: string) => {
-								setFormState((prev) => {
-									return { ...prev, course_type: item };
-								});
-								dispatch(setNewCourse({ ...newCourseData, course_type: item }));
-							}}
-							label={`Type of ${isCourse ? "Course" : "Workshop"}`}
 						/>
 					</div>
 				</div>
@@ -118,7 +101,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								setFormState((prev) => {
 									return { ...prev, category: item };
 								});
-								dispatch(setNewCourse({ ...newCourseData, category: item }));
+								dispatch(setNewCourse({ ...newCourseData, category: String(item.id) }));
 							}}
 							displayProperty="title"
 							label="Category"
@@ -293,18 +276,13 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					<div
 						onClick={() => {
 							if (formState.price && hasPrice) {
-								if (
-									confirm(
-										`Are you sure you want to turn off price for this ${
-											isCourse ? "course" : isWorkshop && "workshop"
-										}?`,
-									)
-								) {
-									setHasPrice(!hasPrice);
-								}
-							} else {
-								setHasPrice(!hasPrice);
-							}
+								const turnOff = confirm(
+									`Are you sure you want to turn off price for this ${
+										isCourse ? "course" : isWorkshop && "workshop"
+									}?`,
+								);
+								if (turnOff) setHasPrice(false);
+							} else setHasPrice((p) => !p);
 						}}
 						className="bg-[#F3F3F3] p-1 rounded-full px-4 relative cursor-pointer">
 						<div className="bg-transparent rounded-full p-2" />
@@ -319,8 +297,9 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					<CustomTextInput
 						id={isCourse ? "course-price" : isWorkshop ? "workshop-price" : ""}
 						containerProps={{
-							className: "mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm",
+							className: "mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm relative",
 						}}
+						className="pl-9"
 						type="number"
 						value={formState.price !== 0 ? formState.price : ""}
 						onChange={(e) => {
@@ -332,6 +311,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								}),
 							);
 						}}
+						leftIcon={<p className="font-semibold text-lg -mt-1">$</p>}
 					/>
 				) : null}
 			</div>
