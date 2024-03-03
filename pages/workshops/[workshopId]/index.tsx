@@ -1,7 +1,5 @@
 import React from "react";
 import WorkShopDetailsPageTemplate from "../../../components/templates/workshop/details";
-import { useRouter } from "next/router";
-import WorkshopRegistrationPageTemplate from "../../../components/templates/workshop/registration";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { IWorkshop } from "../../../interfaces";
 import workshops from "../../../data/workshops";
@@ -12,13 +10,7 @@ type WorkshopPageDetailsProps = {
 };
 
 const WorkShopDetailsPage = ({ workshop }: WorkshopPageDetailsProps) => {
-	const router = useRouter();
-	const pageKey = Object.keys(router.query)[0] as string;
-	return pageKey === "register" ? (
-		<WorkshopRegistrationPageTemplate />
-	) : (
-		<WorkShopDetailsPageTemplate workshop={workshop} />
-	);
+	return <WorkShopDetailsPageTemplate workshop={workshop} />;
 };
 
 export const getServerSideProps = async (

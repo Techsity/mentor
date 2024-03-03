@@ -56,7 +56,7 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 								</svg>
 							) : null}
 						</h1>
-						<p className="">{workshop.mentor.role} </p>
+						<p className="">{workshop.mentor.role.split("_").join(" ")} </p>
 						<p className="flex gap-1 items-center">
 							{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
 							{/* 20 Courses | {formatFollowersCount(workshop.mentor.sessions)} Sessions |{" "} */}

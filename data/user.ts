@@ -4,7 +4,7 @@ import { IUser } from "../interfaces/user.interface";
 import countries from "./countries";
 import mentors from "./mentors";
 
-export const dummyUsers = [
+export const dummyUsers: IUser[] = [
 	{
 		email: "user@mail.offline",
 		name: "Test User Offline",
@@ -18,6 +18,7 @@ export const dummyUsers = [
 		is_mentor: true,
 		phone: "123-456-3390",
 		isPremium: false,
+		subscriptions: [],
 	},
 	{
 		id: "93e14672-3bb0-4419-a754-6e752b4bbfb9",
@@ -33,6 +34,7 @@ export const dummyUsers = [
 		is_mentor: true,
 		phone: "123-456-7890",
 		isPremium: false,
+		subscriptions: [],
 	},
 	{
 		id: "93e14672-3bb0-4419-a754-6e752b4bbfb7",
@@ -48,6 +50,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: true,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -65,6 +68,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: true,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -82,6 +86,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -99,6 +104,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -116,6 +122,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -133,6 +140,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -150,6 +158,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},
@@ -167,6 +176,7 @@ export const dummyUsers = [
 		payment_cards: [],
 		is_mentor: false,
 		isPremium: true,
+		subscriptions: [],
 		created_at: new Date().toDateString(),
 		updated_at: new Date().toDateString(),
 	},

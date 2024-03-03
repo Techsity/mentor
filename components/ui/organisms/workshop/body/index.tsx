@@ -16,13 +16,11 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 					<WhatToLearnInWorkshop {...workshop} />
 					<WorkshopRequirements {...workshop} />
 					<div className="my-8">
-						<ListReviews />
+						<ListReviews reviews={workshop.reviews} />
 					</div>
 					<div className="">
 						<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
-							<p className="text-[#F15E63] cursor-pointer hover:underline">
-								! Report Mentor
-							</p>
+							<p className="text-[#F15E63] cursor-pointer hover:underline">! Report Mentor</p>
 							<Socials />
 						</div>
 					</div>

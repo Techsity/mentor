@@ -20,7 +20,7 @@ const useWishlist = () => {
 			(wishlistedCourse) => slugify(wishlistedCourse.title) !== slugify(course.title),
 		);
 		dispatch(setWishlist(updatedWishlist));
-		toast.info("Course has been removed from wishlist!", ToastDefaultOptions());
+		toast.info("Course removed from wishlist!", ToastDefaultOptions());
 	};
 
 	return { wishlist, addToWishlist, removeFromWishlist };

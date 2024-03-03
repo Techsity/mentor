@@ -12,7 +12,7 @@ import courses from "../../../../data/courses";
 const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop | undefined }) => {
 	return !workshop ? (
 		<>
-			<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
+			<h1 className="text-lg text-[#d31119] tracking-tight">Workshop not found.</h1>
 		</>
 	) : (
 		<>
@@ -30,7 +30,7 @@ const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop | undef
 					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
 				</div>
 			</div>
-			{/* <div className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-50 md:flex hidden"> */}
+			{/* <div className="bg-[#FFB100] absolut e p-3 rounded-bl cursor-pointer right-0 z-50 md:flex hidden"> */}
 			<div className="bg-[#FFB100] absolute p-3 rounded-bl cursor-pointer right-0 z-50" onClick={scrollToTop}>
 				<ChevronUpOutline color="green" height="30px" width="30px" />
 			</div>

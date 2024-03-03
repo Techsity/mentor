@@ -26,11 +26,11 @@ const WorkshopContents = ({
 				<div
 					className={`p-2 px-4 border border-[#70C5A1] bg-[#70C5A1] text-white select-none cursor-default duration-300 relative z-10`}>
 					<div className="group relative w-full h-full">
-						<h1 className="grid items-center gap-2">
+						<h1 className="grid items-center gap-2 text-sm">
 							{content.title}{" "}
 							<span className="flex items-center gap-10">
-								<span className={`text-white text-sm`}>{new Date(content.date).toDateString()}</span>
-								<span className={`text-white text-sm`}>1:00pm - 2:15PM</span>
+								<span className={`text-white`}>{new Date(content.date).toDateString()}</span>
+								<span className={`text-white`}>1:00pm - 2:15PM</span>
 							</span>
 						</h1>
 					</div>
@@ -41,22 +41,22 @@ const WorkshopContents = ({
 	return (
 		<div
 			className={classNames(
-				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] sm:p-8 p-4 min-h-[5dvh] h-auto text-black xl:-mt-28 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
+				"lg:max-w-[38%] 2xl:max-w-[34%] w-full bg-[#fff] sm:p-8 p-4 h-full text-black xl:-mt-28 border-2 border-[#70C5A1] lg:sticky top-24 overflow-y-auto animate__animated animate__fadeIn",
 				className,
 			)}>
 			<div className="flex items-center justify-between">
-				<h1 className="font-semibold text-xl">Workshop Schedule</h1>
+				<h1 className="font-semibold">Workshop Schedule</h1>
 				{workshop.price !== 0 ? (
-					<div className="p-2 px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
+					<div className="p-2 text-sm px-8 border border-[#FFB100] text-[#FFB100] duration-300 select-none cursor-default">
 						${workshop.price.toLocaleString()}
 					</div>
 				) : (
-					<div className="p-2 px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
+					<div className="p-2 text-sm px-8 border border-[#70C5A1] text-[#70C5A1] duration-300 select-none cursor-default">
 						Free
 					</div>
 				)}
 			</div>
-			<div className="mt-6 grid gap-4 overflow-hidden">
+			<div className="grid gap-4 overflow-hidden relative mt-5">
 				{workshop.contents.map((content, index) => (
 					<WorkshopContentItem content={content} key={index} />
 				))}
@@ -71,7 +71,7 @@ const WorkshopContents = ({
 								router.push(`/workshops/${slugify(workshop.title)}?register`);
 							}, 1000);
 						}}
-						className="p-4 text-lg flex justify-center items-center my-6"
+						className="p-2 text-lg flex justify-center items-center mt-6 text-sm"
 					/>
 				) : null}
 			</div>

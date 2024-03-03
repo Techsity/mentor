@@ -71,7 +71,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 								<ActivityIndicator className="border-[.1em]" size={10} />
 							)}
 						</div>
-						<p className="">{mentor.role} </p>
+						<p className="">{mentor.role.split("_").join(" ")} </p>
 						<p className="flex gap-1 items-center">
 							{formatFollowersCount(mentor.courses.length)} Courses |{" "}
 							{formatFollowersCount(mentor.followers.length)} Followers
