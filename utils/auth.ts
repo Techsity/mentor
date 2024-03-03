@@ -5,6 +5,7 @@ import { logOut } from "../redux/reducers/authSlice";
 import { store } from "../redux/store";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { setNewCourse } from "../redux/reducers/coursesSlice";
 
 export const currentUserRole = (): "mentee" | "mentor" => {
 	return "mentee";

@@ -159,3 +159,12 @@ export const VIEW_COURSE = gql`
 		created_at
 	}
 `;
+
+export const CREATE_COURSE = gql`
+	mutation CreateCourse($createCourseInput: CreateCourseInput!, $files: [Upload!]!) {
+		createCourse(createCourseInput: $createCourseInput, files: $files) {
+			title
+			id
+		}
+	}
+`;

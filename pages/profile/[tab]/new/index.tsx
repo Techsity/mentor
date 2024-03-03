@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useId, useMemo, useState } from "react";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
@@ -8,14 +8,19 @@ import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../redux/reducers/coursesSlice";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../constants";
+import { useVideoUploadContext } from "../../../../context/media-upload.context";
 
 const EditPageContainer = () => {
 	const router = useRouter();
+	const toastId = useId();
 	const tab = router.query.tab as ProfileTabLinkType;
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
+	const { files } = useVideoUploadContext();
 
 	const isCourse = useMemo(() => {
 		return Boolean(tab === "courses");
@@ -32,8 +37,29 @@ const EditPageContainer = () => {
 		);
 	}, [router]);
 
-	const handleNewCourseSubmit = async () => {
+	const saveNewCourse = async () => {
+		const course_contents = newCourseData?.course_contents;
 		console.log({ newCourseData });
+		try {
+			console.log({ files });
+			// if (course_contents)
+			// 	for (const section of course_contents) {
+			// 		for (const { file } of section.course_sections) {
+			// 			console.log({ blobUrl: file.blobUrl });
+			// 			const blob = await fetch(file.blobUrl).then((res) => res.blob());
+			// 			files.push(blob);
+			// 			console.log({ filename: file.name, blob });
+			// 			console.log({ files });
+			// 		}
+			// 	}
+		} catch (err) {
+			console.error({ err });
+			ToastDefaultOptions;
+			toast.error("Something went wrong. Try re-uploading the files in your course contents", {
+				toastId,
+				...ToastDefaultOptions(),
+			});
+		}
 	};
 
 	return (
@@ -43,7 +69,7 @@ const EditPageContainer = () => {
 				{isMentor && tab === "courses" && isNewItemPage ? (
 					<div className="flex items-center gap-3 lg:pr-8">
 						<PrimaryButton
-							onClick={handleNewCourseSubmit}
+							onClick={saveNewCourse}
 							title="Save"
 							className="bg-[#FFB100] text-[#000] p-2 px-4"
 						/>

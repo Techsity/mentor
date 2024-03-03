@@ -72,30 +72,28 @@ const EditCourseContent = (props: Props) => {
 						return prev;
 					}
 					const file = files[0];
+					// const blobUrl = URL.createObjectURL(file);
 					const metadata = {
 						name: file.name,
 						size: file.size,
 						type: file.type,
-						// stream: file.stream,
 					};
-					if (!updatedState[index].course_sections) {
-						updatedState[index].course_sections = [];
-					}
-					updatedState[index] = {
-						...updatedState[index],
-						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
-							sectionIndex === section_index
-								? {
-										...section,
-										file: metadata,
-								  }
-								: section,
-						),
-					};
+					if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
+					console.log({ files: [file] });
+					console.log({ file: JSON.stringify(file) });
+					// updatedState[index] = {
+					// 	...updatedState[index],
+					// 	course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
+					// 		sectionIndex === section_index
+					// 			? {
+					// 					...section,
+					// 					file: { ...metadata, blob: JSON.stringify(file) },
+					// 			  }
+					// 			: section,
+					// 	),
+					// };
 				} else if (field === "notes" && section_index !== undefined) {
-					if (!updatedState[index].course_sections) {
-						updatedState[index].course_sections = [];
-					}
+					if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
 					updatedState[index] = {
 						...updatedState[index],
 						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
@@ -142,8 +140,7 @@ const EditCourseContent = (props: Props) => {
 					...updated[index],
 					course_sections: newCourseSections,
 				};
-
-				// dispatch(setNewCourse({ ...newCourseData, course_contents: updated }));
+				dispatch(setNewCourse({ ...newCourseData, course_contents: updated }));
 				return updated;
 			});
 		}
