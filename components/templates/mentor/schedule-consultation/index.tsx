@@ -66,9 +66,9 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 						</div>
 					))}
 					<div className="my-5">
-						<button onClick={addSchedule} className="text-[#70C5A1] text-sm">
+						{/* <button onClick={addSchedule} className="text-[#70C5A1] text-sm">
 							+ Add New date and Time
-						</button>
+						</button> */}
 						<div className="mt-5">
 							<PrimaryButton title="Proceed" className="p-3 px-8" />
 						</div>

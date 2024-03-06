@@ -8,13 +8,14 @@ import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/me
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
-	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
+	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS, {
+		refetchWritePolicy: "overwrite",
+	});
 	const mentors = data?.viewAllMentors;
 
 	const mentorsOnline = mentors?.filter((mentor) => mentor.user.is_online);
 
 	const filteredMentors = useMemo(() => {
-		refetch();
 		return tab === "all" ? (
 			mentors?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
 		) : tab === "online" && Number(mentorsOnline?.length) < 1 ? (
@@ -24,12 +25,14 @@ const MentorsSection = () => {
 				return <MentorProfileCard mentor={mentor} key={index} />;
 			})
 		);
-	}, [mentors, tab, loading, data]);
+	}, [mentors, tab, loading, data, refetch]);
 
 	const switchTab = (active: typeof tab) => {
-		if (tab !== active)
+		if (tab !== active) {
+			refetch();
 			if (tab === "all") setTab("online");
 			else setTab("all");
+		}
 		scrollUp(-800);
 	};
 
@@ -73,7 +76,7 @@ const MentorsSection = () => {
 			<div className="grid xs:gap-3 gap-5 lg:px-20 sm:px-10 px-auto md:p-10 bg-[#FDFDFD] md:border border-[#D0D0D0] overflow-hidden md:mx-10 mx-5 my-5">
 				{loading
 					? Array.from({ length: 3 }).map((_, ind) => {
-							return <MentorProfileCard mentor={null} loading key={ind} />;
+							return <MentorProfileCard mentor={null} loading key={ind} onFollow={() => refetch()} />;
 					  })
 					: filteredMentors}
 			</div>

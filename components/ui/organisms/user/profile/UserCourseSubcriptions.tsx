@@ -6,6 +6,7 @@ import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProg
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
 import { Subscription } from "../../../../../interfaces/user.interface";
+import { formatGqlError, logoutUser } from "../../../../../utils/auth";
 
 const UserCourseSubcriptions = () => {
 	const user = useSelector(currentUser);
@@ -26,6 +27,8 @@ const UserCourseSubcriptions = () => {
 
 	if (!loading && error) {
 		console.error(JSON.stringify(error));
+		const errMsg = formatGqlError(error);
+		if (errMsg == "Unauthorized") logoutUser();
 		return (
 			<div className="">
 				<p className="break-words max-w-md text-red-500">

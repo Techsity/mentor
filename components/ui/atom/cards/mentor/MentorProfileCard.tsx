@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
@@ -21,19 +21,20 @@ type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
 	detailsPage?: boolean;
 	loading?: boolean;
+	onFollow?: () => void;
 };
 interface IconType {
 	[key: string]: React.ElementType;
 }
 
-const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: MentorProfileCardProps) => {
+const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFollow }: MentorProfileCardProps) => {
 	const toastId = useId();
 	const router = useRouter();
 	const user = useSelector(currentUser);
 	const auth = useSelector(isLoggedIn);
-	const hasFollowedMentor = !true;
-	const [followingMentor, setFollowingMentor] = useState<boolean>(hasFollowedMentor || false);
-	const [followMentorMutation, { loading: followLoading }] = useMutation(FOLLOW_MENTOR);
+	const [followMentorMutation, { loading: followLoading, data }] = useMutation(FOLLOW_MENTOR);
+	const [followersCount, setFollowersCount] = useState<number>(0);
+	const [followingMentor, setFollowingMentor] = useState<boolean>(false);
 
 	const userCountry: string = mentor
 		? String(
@@ -46,7 +47,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 	const IconComp: any = IconComponent[country] || <></>;
 
 	// router.push(`/mentors/${mentor?.user.name}`)
-	const handleFollow = () => {
+	const handleFollow = async () => {
 		if (!auth || !user) {
 			toast.error("You're not logged in!", { theme: "light", toastId });
 			setTimeout(function () {
@@ -54,14 +55,26 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 			}, 1000);
 			return;
 		}
-		setTimeout(async () => {
-			if (!loading && mentor)
-				await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
-					.then(() => setFollowingMentor((p) => !p))
-					.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
-		}, 1000);
+
+		if (!loading && mentor)
+			await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
+				.then(() => {
+					setFollowingMentor((p) => !p);
+					if (!followingMentor) setFollowersCount((p) => (p += 1));
+					else setFollowersCount((p) => (p -= 1));
+					if (onFollow) onFollow();
+				})
+				.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
 	};
 	const links = ["www.linkedin.com/example_link", "www.example.com"];
+
+	useEffect(() => {
+		if (mentor) {
+			setFollowersCount(mentor.followers.length);
+			setFollowingMentor(Boolean(mentor?.followers.find((follower) => String(follower.id) === String(user?.id))));
+		}
+	}, [mentor, loading]);
+
 	return (
 		<div className="relative w-full md:h-56 p-[1.5px] flex items-center justify-center overflow-hidden group">
 			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full" />
@@ -106,9 +119,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor }: Men
 								{loading ? (
 									<span className="bg-zinc-200 h-1 w-5" />
 								) : (
-									<p className="text-sm">
-										{formatFollowersCount(Number(mentor?.followers?.length))} followers
-									</p>
+									<p className="text-sm">{formatFollowersCount(followersCount)} followers</p>
 								)}
 								{!loading && !followLoading ? (
 									<button

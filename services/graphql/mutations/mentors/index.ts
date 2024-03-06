@@ -27,7 +27,7 @@ export const HOMEPAGE_MENTORS_LIST = gql`
 			mentor_verified
 			updated_at
 			followers {
-				name
+				id
 			}
 		}
 	}
@@ -55,7 +55,7 @@ export const GET_ALL_MENTORS = gql`
 			language
 			mentor_verified
 			followers {
-				name
+				id
 			}
 		}
 	}
@@ -153,7 +153,6 @@ export const VIEW_MENTOR_PROFILE = gql`
 						notes
 					}
 				}
-				
 			}
 			reviews {
 				type
@@ -199,7 +198,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 				}
 			}
 			followers {
-				name
+				id
 			}
 		}
 	}
