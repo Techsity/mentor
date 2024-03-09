@@ -76,7 +76,7 @@ export const FETCH_USER_SUBSCRIPTIONS = gql`
 		}
 		role
 		followers {
-			name
+			id
 		}
 	}
 	fragment ReviewField on ReviewDto {

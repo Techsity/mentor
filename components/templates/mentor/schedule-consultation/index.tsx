@@ -10,7 +10,7 @@ interface ScheduleItem {
 	time: string;
 }
 
-const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading: boolean }) => {
+const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
 	const emptyState: ScheduleItem = {
 		id: (new Date().getMilliseconds() * Math.random() * 2).toString(),
 		date: "",

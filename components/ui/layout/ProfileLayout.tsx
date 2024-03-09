@@ -56,9 +56,8 @@ const ProfileLayout = ({ children }: Props) => {
 		if (!tab) setActivetab(tabLinks[0]);
 	}, [tab, router]);
 
-	// Todo: make the video upload wrapper only available to mentor-users
 	return (
-		<VideoUploadProvider>
+		<>
 			<div className="flex lg:grid grid-cols-6 xl:flex flex-col xl:flex-row item-start w-full h-full min-w-screen">
 				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
 					<div className="w-full overflow-hidden hide-scroll-bar">
@@ -108,7 +107,7 @@ const ProfileLayout = ({ children }: Props) => {
 					<p className="font-[300] text-sm tracking-wide">www.techsity.io</p>
 				</div>
 			</div>
-		</VideoUploadProvider>
+		</>
 	);
 };
 

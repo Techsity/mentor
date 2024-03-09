@@ -135,7 +135,7 @@ export const VIEW_COURSE = gql`
 		created_at
 		updated_at
 		followers {
-			name
+			id
 		}
 	}
 

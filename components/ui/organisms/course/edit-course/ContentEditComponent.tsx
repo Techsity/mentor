@@ -34,7 +34,6 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	handleAddNewOutline,
 }) => {
 	const fileUploadInputRef = createRef<HTMLInputElement>();
-	const { uploadResource, files: saved } = useVideoUploadContext();
 	const handleUpload = (index: number, section_index: number) => async (e: ChangeEvent<HTMLInputElement>) => {
 		const { files } = e.target;
 		if (files) {
@@ -44,8 +43,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				filename: file.name,
 				...file,
 			};
-			uploadResource({ file, metadata });
-			console.log({ name: file.name, blob, saved });
+			console.log({ name: file.name, blob });
 			// const reader = new FileReader();
 			// reader.onload = async (e) => {
 			// 	const blobUrl = URL.createObjectURL(file);
