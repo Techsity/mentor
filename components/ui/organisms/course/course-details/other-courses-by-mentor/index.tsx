@@ -29,7 +29,7 @@ const OtherCoursesByMentor = ({
 
 	return mentorState && mentorCourses && mentorCourses?.length > 0 ? (
 		<div className="px-5 sm:px-10 lg:pl-20 mt-10 py-3">
-			<h1 className="text-xl font-semibold">{mentorProfile ? "Courses by Mentor" : "Other Courses by Mentor"}</h1>
+			<h1 className="text-xl font-semibold capitalize">{!mentorProfile && "other "}courses by this mentor</h1>
 			<div className="flex flex-row items-center overflow-x-scroll hide-scroll-bar py-10 relative">
 				<div className="flex flex-nowrap flex-row gap-4 snap-x snap-mandatory">
 					{mentorCourses

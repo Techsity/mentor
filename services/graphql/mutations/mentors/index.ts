@@ -7,12 +7,7 @@ export const HOMEPAGE_MENTORS_LIST = gql`
 			id
 			role
 			user {
-				name
-				avatar
-				country
-				is_online
-				is_active
-				is_verified
+				...MentorUserField
 			}
 			exp_level
 			hourly_rate
@@ -40,11 +35,7 @@ export const GET_ALL_MENTORS = gql`
 			role
 			about
 			user {
-				name
-				avatar
-				country
-				is_online
-				is_verified
+				...MentorUserField
 			}
 			reviews {
 				type
@@ -58,6 +49,15 @@ export const GET_ALL_MENTORS = gql`
 				id
 			}
 		}
+	}
+
+	fragment MentorUserField on UserDTO {
+		name
+		avatar
+		country
+		is_online
+		is_active
+		is_verified
 	}
 `;
 
@@ -114,45 +114,10 @@ export const VIEW_MENTOR_PROFILE = gql`
 			language
 			mentor_verified
 			user {
-				name
-				avatar
-				country
-				is_online
-				is_active
-				is_verified
+				...MentorUserField
 			}
 			courses {
-				mentor {
-					user {
-						name
-						avatar
-					}
-				}
-				title
-				course_level
-				description
-				category {
-					title
-					description
-					course_type {
-						type
-						description
-					}
-					created_at
-					updated_at
-				}
-				what_to_learn
-				requirements
-				price
-				course_images
-				course_contents {
-					title
-					course_sections {
-						section_name
-						# video_url
-						notes
-					}
-				}
+				...CourseFields
 			}
 			reviews {
 				type
@@ -201,6 +166,48 @@ export const VIEW_MENTOR_PROFILE = gql`
 				id
 			}
 		}
+	}
+	fragment CourseFields on CourseDto {
+		id
+		mentor {
+			user {
+				name
+				avatar
+			}
+		}
+		title
+		course_level
+		description
+		category {
+			title
+			description
+			course_type {
+				type
+				description
+			}
+			created_at
+			updated_at
+		}
+		what_to_learn
+		requirements
+		price
+		course_images
+		course_contents {
+			title
+			course_sections {
+				section_name
+				# video_url
+				notes
+			}
+		}
+	}
+	fragment MentorUserField on UserDTO {
+		name
+		avatar
+		country
+		is_online
+		is_active
+		is_verified
 	}
 `;
 

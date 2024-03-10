@@ -16,6 +16,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 	const navigateToCourse = () => {
 		if (!loading && course) router.push(`/courses/${slugify(course?.id as string)}`);
 	};
+
 	return (
 		<>
 			<div className="animate__animated animate__fadeIn animate__faster inline-block snap-start">

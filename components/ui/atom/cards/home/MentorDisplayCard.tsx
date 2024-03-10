@@ -10,7 +10,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();
 	const ratings = mentor.reviews ? calculateRatingsInReviews(mentor.reviews) : 0;
 	const overallExperience = calculateOverallExperience(mentor.work_experience);
-
+	const followers = formatFollowersCount(mentor.followers.length);
 	return (
 		<div className="inline-block px-3 animate__animated animate__fadeIn snap-start group mx-auto">
 			<div className="bg-white relative w-[310px] md:w-[285px] lg:w-[300px] h-auto rounded tracking-tight duration-300 group hover:shadow-lg overflow-hidden cursor-default">
@@ -43,7 +43,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 						</p>
 						{/* <p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">2 sessions</p> */}
 						<p className="sm:text-sm text-[#B1B1B1] sm:max-w-[15em]">
-							{formatFollowersCount(mentor.followers.length)} followers
+							{parseInt(followers) === 1 ? followers + " follower" : followers + " followers"}
 						</p>
 						<span className="flex gap-1 items-center text-sm text-[#B1B1B1]">
 							<svg width="16" height="16" viewBox="0 0 9 9" fill="none">
