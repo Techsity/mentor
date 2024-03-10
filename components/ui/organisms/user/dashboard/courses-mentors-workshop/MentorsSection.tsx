@@ -45,7 +45,7 @@ const MentorsSection = () => {
 
 	return (
 		<>
-			<div className="sticky h-20 top-[4em] z-10 bg-[#FDFDFD] flex justify-center items-center">
+			<div className="sticky h-20 top-[4em] z-30 bg-[#FDFDFD] flex justify-center items-center">
 				<div className="flex items-center gap-10 animate__animated animate__fadeInUp relative z-30">
 					<button
 						onClick={() => switchTab("all")}
