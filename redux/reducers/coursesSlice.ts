@@ -2,10 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ICourse, ICourseCategory } from "../../interfaces";
 import { RootState } from "../store";
 
+export type CourseSectionUploadFile = {
+	name: string;
+	type: string;
+	blobUrl: string;
+};
+
 export type CourseSectionUpload = {
 	section_name: string;
 	notes: string;
-	file: any;
+	file: CourseSectionUploadFile | null;
 };
 
 export type CourseContentUpload = {
@@ -16,6 +22,7 @@ export type CourseContentUpload = {
 type NewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "category" | "course_contents"> & {
 	// files: any[];
 	category: string;
+	files: File[];
 	course_contents: CourseContentUpload[];
 };
 
@@ -34,6 +41,7 @@ export const newCourseInitialState: NewCourseData = {
 	course_contents: [],
 	category: "",
 	what_to_learn: [],
+	files: [],
 };
 
 const initialState: {

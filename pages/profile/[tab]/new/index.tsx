@@ -1,4 +1,4 @@
-import React, { useId, useMemo, useState } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../redux/reducers/coursesSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../constants";
-import { useVideoUploadContext } from "../../../../context/media-upload.context";
 
 const EditPageContainer = () => {
 	const router = useRouter();
@@ -20,7 +19,7 @@ const EditPageContainer = () => {
 	const isMentor = user?.mentor;
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
-	const { files } = useVideoUploadContext();
+	const course_contents = newCourseData?.course_contents;
 
 	const isCourse = useMemo(() => {
 		return Boolean(tab === "courses");
@@ -38,20 +37,21 @@ const EditPageContainer = () => {
 	}, [router]);
 
 	const saveNewCourse = async () => {
-		const course_contents = newCourseData?.course_contents;
-		console.log({ newCourseData });
 		try {
+			const files: any[] = [];
+			if (course_contents)
+				for (const section of course_contents) {
+					for (const { file } of section.course_sections) {
+						if (file) {
+							console.log({ blobUrl: file.blobUrl });
+							const blob = await fetch(file.blobUrl).then((res) => res.blob());
+							files.push(blob);
+							console.log({ filename: file.name, blob });
+							console.log({ files });
+						}
+					}
+				}
 			console.log({ files });
-			// if (course_contents)
-			// 	for (const section of course_contents) {
-			// 		for (const { file } of section.course_sections) {
-			// 			console.log({ blobUrl: file.blobUrl });
-			// 			const blob = await fetch(file.blobUrl).then((res) => res.blob());
-			// 			files.push(blob);
-			// 			console.log({ filename: file.name, blob });
-			// 			console.log({ files });
-			// 		}
-			// 	}
 		} catch (err) {
 			console.error({ err });
 			ToastDefaultOptions;
@@ -61,6 +61,24 @@ const EditPageContainer = () => {
 			});
 		}
 	};
+	const handleFileInvalidations = () => {
+		if (course_contents)
+			for (const { course_sections } of course_contents) {
+				for (let { file } of course_sections) {
+					file = null;
+				}
+			}
+		console.log({ course_contents });
+	};
+
+	useEffect(() => {
+		// window.addEventListener("load", () => handleFileInvalidations);
+		window.addEventListener("beforeunload", () => handleFileInvalidations);
+		return () => {
+			window.removeEventListener("beforeunload", () => handleFileInvalidations);
+			// window.removeEventListener("load", () => handleFileInvalidations);
+		};
+	}, []);
 
 	return (
 		<ProfileLayout>

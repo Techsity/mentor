@@ -1,25 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, useRef, ChangeEvent, lazy, createRef } from "react";
+import { FC, ForwardedRef, useRef, ChangeEvent, lazy, createRef, useState, useEffect } from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
-import { CourseContentUpload, CourseSectionUpload } from "../../../../../redux/reducers/coursesSlice";
+import {
+	CourseContentUpload,
+	CourseSectionUpload,
+	newCourse,
+	setNewCourse,
+} from "../../../../../redux/reducers/coursesSlice";
 import { useVideoUploadContext } from "../../../../../context/media-upload.context";
-
-interface ContentEditComponentProps extends CourseContentUpload {
-	handleChange: (
-		index: number,
-		field: keyof Omit<CourseContentUpload, "course_sections"> | keyof CourseSectionUpload,
-		section_index?: number,
-	) => (e: ChangeEvent<HTMLInputElement>) => void;
-	handleAddNewLecture: () => void;
-	handleAddNewOutline: () => void;
-	handleDuplicateLecture: (index: number, section_index: number) => void;
-	handleDeleteLecture: (index: number, section_index: number) => void;
-	index: number;
-	contentLength: number;
-	contentContainerRef: ForwardedRef<HTMLDivElement>;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { convertToBase64 } from "../../../../../utils";
 
 const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	handleChange,
@@ -33,31 +25,29 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	contentLength,
 	handleAddNewOutline,
 }) => {
+	const dispatch = useDispatch();
+	const newCourseData = useSelector(newCourse);
+	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 	const fileUploadInputRef = createRef<HTMLInputElement>();
 	const handleUpload = (index: number, section_index: number) => async (e: ChangeEvent<HTMLInputElement>) => {
 		const { files } = e.target;
 		if (files) {
 			const file = files[0];
-			const blob = new Blob([file], { type: file.type });
-			const metadata = {
-				filename: file.name,
-				...file,
-			};
-			console.log({ name: file.name, blob });
-			// const reader = new FileReader();
-			// reader.onload = async (e) => {
-			// 	const blobUrl = URL.createObjectURL(file);
-			// 	const blob = await fetch(blobUrl).then((res) => res.blob());
-			// 	console.log({ blobUrl, blob });
-			// 	handleChange(index, "file", section_index);
-			// };
+			setUploadedFiles((p) => p.concat(file));
+			const fileBase64 = await convertToBase64(file);
+			console.log({ fileBase64 });
 		}
 	};
 
+	useEffect(() => {
+		dispatch(setNewCourse({ ...newCourseData, files: [] }));
+		console.log({ files: newCourseData?.files });
+	}, [uploadedFiles]);
+
 	return (
 		<>
-			<p className="text-yellow-500 text-xs">
-				Note: try not to reload the page after uploading your files to maintain the upload quality of the file.
+			<p className="text-yellow-600 text-xs">
+				Note: try not to reload the page after uploading your files to avoid re-uploading the files.
 			</p>
 			<div className="animate__animated animate__fadeIn scroll-mt-44">
 				<div className="relative max-w-2xl">
@@ -113,6 +103,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 															}}
 														/>
 													</div>
+
 													<input
 														type="file"
 														name=""
@@ -123,8 +114,8 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 														accept="video/*"
 														max={1}
 														min={1}
-														onChange={(e) => handleChange(index, "file", section_index)(e)}
-														// onChange={handleUpload(index, section_index)}
+														// onChange={(e) => handleChange(index, "file", section_index)(e)}
+														onChange={handleUpload(index, section_index)}
 													/>
 													<img
 														src={"/assets/images/mockups/course_one.png"}
@@ -173,3 +164,18 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 };
 
 export default ContentEditComponent;
+
+interface ContentEditComponentProps extends CourseContentUpload {
+	handleChange: (
+		index: number,
+		field: keyof Omit<CourseContentUpload, "course_sections"> | keyof CourseSectionUpload,
+		section_index?: number,
+	) => (e: ChangeEvent<HTMLInputElement>) => void;
+	handleAddNewLecture: () => void;
+	handleAddNewOutline: () => void;
+	handleDuplicateLecture: (index: number, section_index: number) => void;
+	handleDeleteLecture: (index: number, section_index: number) => void;
+	index: number;
+	contentLength: number;
+	contentContainerRef: ForwardedRef<HTMLDivElement>;
+}

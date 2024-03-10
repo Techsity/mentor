@@ -9,24 +9,22 @@ import sessionStorage from "redux-persist/lib/storage/session";
 
 const persistConfig = { storage, key: "root", version: 1, blacklist: ["auth"] };
 
-const userPersistConfig = {
+const authPersistConfig = {
 	key: "auth",
 	storage: sessionStorage,
 	version: 1,
 };
 
 const rootReducer = combineReducers({
-	auth: persistReducer(userPersistConfig, authReducer),
+	auth: persistReducer(authPersistConfig, authReducer),
 	// auth: authReducer,
-	onboarding: onboardingReducer,
-	workshop: workshopReducer,
+	onboarding: persistReducer(persistConfig, onboardingReducer),
+	workshop: persistReducer(persistConfig, workshopReducer),
 	courses: coursesReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-	reducer: persistedReducer,
+	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: { ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE] },

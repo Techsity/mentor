@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	CourseContentUpload,
 	CourseSectionUpload,
+	CourseSectionUploadFile,
 	newCourse,
 	setNewCourse,
 } from "../../../../../redux/reducers/coursesSlice";
 import { createReadStream } from "fs";
 
-type Props = { content?: CourseContentUpload[] };
+type Props = { content?: CourseContentUpload[]; handleUpload?: (files: File[]) => void };
 
 const EditCourseContent = (props: Props) => {
 	const toastId = useId();
@@ -68,30 +69,30 @@ const EditCourseContent = (props: Props) => {
 					};
 				} else if (field === "file" && section_index !== undefined) {
 					if (!files) {
-						toast.error("No file selected", { toastId, ...ToastDefaultOptions() });
+						toast.error("No files selected", { toastId, ...ToastDefaultOptions() });
 						return prev;
 					}
 					const file = files[0];
-					// const blobUrl = URL.createObjectURL(file);
-					const metadata = {
+					const blobUrl = URL.createObjectURL(file);
+					const metadata: CourseSectionUploadFile = {
 						name: file.name,
-						size: file.size,
+						// size: file.size,
 						type: file.type,
+						blobUrl,
 					};
 					if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
-					console.log({ files: [file] });
-					console.log({ file: JSON.stringify(file) });
-					// updatedState[index] = {
-					// 	...updatedState[index],
-					// 	course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
-					// 		sectionIndex === section_index
-					// 			? {
-					// 					...section,
-					// 					file: { ...metadata, blob: JSON.stringify(file) },
-					// 			  }
-					// 			: section,
-					// 	),
-					// };
+					console.log({ file, blobUrl });
+					updatedState[index] = {
+						...updatedState[index],
+						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
+							sectionIndex === section_index
+								? {
+										...section,
+										file: { ...metadata, blobUrl: JSON.stringify(file) },
+								  }
+								: section,
+						),
+					};
 				} else if (field === "notes" && section_index !== undefined) {
 					if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
 					updatedState[index] = {
