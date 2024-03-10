@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { formatFollowersCount } from "../../../../../../utils";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
 import { useMutation } from "@apollo/client";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { currentUser, isLoggedIn } from "../../../../../../redux/reducers/authSlice";
@@ -18,16 +18,34 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 	const user = useSelector(currentUser);
 	const auth = useSelector(isLoggedIn);
 	const hasFollowedMentor = !true;
-	const [followingMentor, setFollowingMentor] = useState<boolean>(hasFollowedMentor || false);
-	const [followMentorMutation, { loading }] = useMutation(FOLLOW_MENTOR);
+	const [followMentorMutation, { loading: followLoading, data }] = useMutation(FOLLOW_MENTOR);
+	const [followersCount, setFollowersCount] = useState<number>(0);
+	const [followingMentor, setFollowingMentor] = useState<boolean>(false);
 
 	const handleFollow = async () => {
-		if (!auth || !user) toast.error("Unauthenticated! Please login", { theme: "light", toastId });
-		else if (mentor)
+		if (!auth || !user) {
+			toast.error("You're not logged in!", { theme: "light", toastId });
+			navigateToAuthPage(router, `/mentors/${mentor?.id}`);
+			return;
+		}
+
+		if (mentor)
 			await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
-				.then(() => setFollowingMentor((p) => !p))
+				.then(() => {
+					setFollowingMentor((p) => !p);
+					if (!followingMentor) setFollowersCount((p) => (p += 1));
+					else setFollowersCount((p) => (p -= 1));
+					// if (onFollow) onFollow();
+				})
 				.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
 	};
+
+	useEffect(() => {
+		if (mentor) {
+			setFollowersCount(mentor.followers.length);
+			setFollowingMentor(Boolean(mentor?.followers.find((follower) => String(follower.id) === String(user?.id))));
+		}
+	}, [mentor]);
 
 	return (
 		<div className="px-5 sm:px-10 lg:px-20 mt-10 py-3">
@@ -54,10 +72,10 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 								</svg>
 							) : null}
 							<p className="flex items-center">
-								{formatFollowersCount(mentor.followers.length)} followers
+								{formatFollowersCount(followersCount)} followers
 							</p>
 							{/* <p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p> */}
-							{!loading ? (
+							{!followLoading ? (
 								<button
 									onClick={handleFollow}
 									className={classNames(
@@ -74,7 +92,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 						<p className="">{mentor.role.split("_").join(" ")} </p>
 						<p className="flex gap-1 items-center">
 							{formatFollowersCount(mentor.courses.length)} Courses |{" "}
-							{formatFollowersCount(mentor.followers.length)} Followers
+							{formatFollowersCount(followersCount)} Followers
 						</p>
 					</div>
 				</div>

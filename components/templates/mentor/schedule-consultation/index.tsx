@@ -18,19 +18,18 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 	};
 	const [scheduleList, setScheduleList] = useState<ScheduleItem[]>([emptyState]);
 
-	const addSchedule = () => {
-		if (scheduleList.length < 4) setScheduleList([...scheduleList, emptyState]);
-	};
+	// const addSchedule = () => {
+	// 	if (scheduleList.length < 4) setScheduleList([...scheduleList, emptyState]);
+	// };
+
 	const handleDeleteSchedule = (schedule: ScheduleItem, index: number) => {
 		if (index !== 0)
 			if (scheduleList.length > 1)
 				setScheduleList((prevScheduleList) => prevScheduleList.filter(({ id }) => schedule.id !== id));
 	};
 	return (
-		<div className="min-h-screen pt-20 h-full lg:px-20 sm:px-12 px-6">
-			<div className="animate__animated animate__slideInDown animate__fast">
-				<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
-			</div>
+		<div className="pt-10 h-full lg:px-20 sm:px-12 px-6">
+			<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
 			<div className="flex lg:flex-row flex-col justify-between gap-5 py-6 w-full md:mt-10 items-start">
 				<div className="bg-[#06310B] p-4 md:p-8 md:px-10 text-white overflow-hidden flex-grow lg:w-auto w-full animate__animated animate__slideInUp">
 					<div className="">
@@ -65,13 +64,11 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 							)}
 						</div>
 					))}
-					<div className="my-5">
+					<div className="">
 						{/* <button onClick={addSchedule} className="text-[#70C5A1] text-sm">
 							+ Add New date and Time
 						</button> */}
-						<div className="mt-5">
-							<PrimaryButton title="Proceed" className="p-3 px-8" />
-						</div>
+						<PrimaryButton title="Proceed" className="p-3 px-8" />
 					</div>
 				</div>
 			</div>

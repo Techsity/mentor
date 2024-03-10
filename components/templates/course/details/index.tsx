@@ -12,8 +12,7 @@ import { ICourse } from "../../../../interfaces";
 type Props = { course: ICourse | null };
 
 const CourseDetailsPageTemplate = ({ course }: Props) => {
-	const router = useRouter();
-	// const course = courses[0];
+	
 	return !course ? (
 		<div className="h-screen flex justify-center items-center">
 			<p className="text-black text-xl">Course not found</p>

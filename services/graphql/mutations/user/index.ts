@@ -75,9 +75,9 @@ export const FETCH_USER_SUBSCRIPTIONS = gql`
 			is_verified
 		}
 		role
-		followers {
-			id
-		}
+		# followers {
+		# 	id
+		# }
 	}
 	fragment ReviewField on ReviewDto {
 		type

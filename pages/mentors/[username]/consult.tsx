@@ -1,5 +1,3 @@
-import { useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import ScheduleConsultationTemplate from "../../../components/templates/mentor/schedule-consultation";
 import { IMentor } from "../../../interfaces/mentor.interface";
@@ -16,11 +14,10 @@ type MentorDetailsProps = { mentor: IMentor; error?: string };
 const MentorConsultationPage = (props: MentorDetailsProps) => {
 	const { mentor, error } = props;
 
-	console.log({ mentor });
 	useEffect(() => {
 		scrollTo({ top: -6000, behavior: "smooth" });
 	}, []);
-
+	// if (error)
 	if (!mentor && error) {
 		console.error({ errorFetchingMentor: JSON.stringify(error) });
 		return (

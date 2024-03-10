@@ -76,7 +76,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 	}, [mentor, loading]);
 
 	return (
-		<div className="relative w-full md:h-56 p-[1.5px] flex items-center justify-center overflow-hidden group">
+		<div className="relative w-full h-auto p-[1.5px] flex items-center justify-center overflow-hidden group">
 			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full" />
 			{/* <div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" /> */}
 			<div className="z-20 xl:min-h-56 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">

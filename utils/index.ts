@@ -1,6 +1,7 @@
 import { ICourseContent, IReview } from "../interfaces";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { IMentorExperience } from "../interfaces/mentor.interface";
 
 export const scrollToTop = () => {
 	window.scrollTo({
@@ -204,6 +205,23 @@ export const calculateRatingsInReviews = (reviews: IReview[]): string => {
 		  ).toFixed(1)
 		: "";
 };
+
+function calculateExperienceInYears(fromDate: Date, toDate: Date) {
+	const from: any = new Date(fromDate);
+	const to: any = new Date(toDate);
+	const diffTime = Math.abs(to - from);
+	const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365);
+	return diffYears;
+}
+
+// Function to calculate the overall years of experience
+export function calculateOverallExperience(jobExperiences: IMentorExperience[]) {
+	let totalYears = 0;
+	jobExperiences.forEach((job) => {
+		totalYears += calculateExperienceInYears(new Date(job.from_year), new Date(job.to_year));
+	});
+	return totalYears;
+}
 
 // Format time in HH:MM:SS
 export const formatTime = (timeInSeconds: number) => {

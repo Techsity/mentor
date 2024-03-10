@@ -25,14 +25,14 @@ const MeetOurMentors = () => {
 					<div className="text-red-500">Something went wrong while loading mentors</div>
 				) : (
 					<>
-						<div className="flex justify-center mt-6">
+						<div className="flex justify-center mt-6 min-h-[50dvh]">
 							{/* <div className="py-6 flex sm:flex-row gap-5 flex-col items-center"> */}
 							{mentors && mentors.length >= 1 && (
-								<div className="max-w-[90dvw] mx-auto relative min-h-[50dvh]">
+								<div className="max-w-[90dvw] mx-auto relative">
 									<div className="flex overflow-x-scroll pb-10 hide-scroll-bar gap-2 relative mx-auto">
 										{mentors
 											.map((mentor, index) => <MentorDisplayCard mentor={mentor} key={index} />)
-											.slice(0, 5)}
+											.slice(0, 6)}
 									</div>
 								</div>
 							)}
