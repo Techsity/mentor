@@ -217,9 +217,10 @@ function calculateExperienceInYears(fromDate: Date, toDate: Date) {
 // Function to calculate the overall years of experience
 export function calculateOverallExperience(jobExperiences: IMentorExperience[]) {
 	let totalYears = 0;
-	jobExperiences.forEach((job) => {
-		totalYears += calculateExperienceInYears(new Date(job.from_year), new Date(job.to_year));
-	});
+	if (jobExperiences && jobExperiences.length >= 1)
+		jobExperiences.forEach((job) => {
+			totalYears += calculateExperienceInYears(new Date(job.from_year), new Date(job.to_year));
+		});
 	return totalYears;
 }
 

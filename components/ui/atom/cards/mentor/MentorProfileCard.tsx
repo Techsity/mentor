@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import React, { useEffect, useId, useMemo, useState } from "react";
-import { calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
+import { calculateOverallExperience, calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
-import { IMentor } from "../../../../../interfaces/mentor.interface";
+import { IMentor, IMentorExperience } from "../../../../../interfaces/mentor.interface";
 import { IReview } from "../../../../../interfaces";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { toast } from "react-toastify";
@@ -67,6 +67,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 				.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
 	};
 	const links = ["www.linkedin.com/example_link", "www.example.com"];
+	const overallExperience = calculateOverallExperience(mentor?.work_experience as IMentorExperience[]);
 
 	useEffect(() => {
 		if (mentor) {
@@ -168,10 +169,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 						<div className="mt-2 text-xs flex gap-3 sm:items-center text-[#b1b1b1] whitespace-nowrap">
 							{!loading ? (
 								<p className="">
-									{mentor && mentor?.work_experience?.length <= 1
-										? "<1"
-										: mentor?.work_experience?.length}{" "}
-									Year of Experience
+									{mentor && overallExperience <= 1 ? "<1" : overallExperience} Year of Experience
 								</p>
 							) : (
 								<span className="bg-zinc-200 h-1 w-40 animate__animated animate__fadeIn animate__infinite animate__slow" />

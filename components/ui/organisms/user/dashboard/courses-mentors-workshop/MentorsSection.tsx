@@ -8,9 +8,7 @@ import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/me
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
-	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS, {
-		refetchWritePolicy: "overwrite",
-	});
+	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
 	const mentors = data?.viewAllMentors;
 
 	const mentorsOnline = mentors?.filter((mentor) => mentor.user.is_online);
