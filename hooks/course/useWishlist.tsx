@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { setWishlist, wishlistedCourses } from "../../redux/reducers/coursesSlice";
+import { setWishlist, wishlistedCourses } from "../../redux/reducers/userSlice";
 import { ICourse } from "../../interfaces";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../constants";

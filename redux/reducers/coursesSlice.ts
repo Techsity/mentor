@@ -45,11 +45,9 @@ export const newCourseInitialState: NewCourseData = {
 };
 
 const initialState: {
-	userWishlistedCourses: ICourse[];
 	courseCategories: ICourseCategory[];
 	newCourse: NewCourseData | null;
 } = {
-	userWishlistedCourses: [],
 	courseCategories: [],
 	newCourse: newCourseInitialState,
 };
@@ -58,9 +56,6 @@ const coursesSlice = createSlice({
 	name: "courses",
 	initialState,
 	reducers: {
-		setWishlist: (state, action: { payload: ICourse[] }) => {
-			if (action.payload) state.userWishlistedCourses = action.payload;
-		},
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
@@ -70,9 +65,8 @@ const coursesSlice = createSlice({
 	},
 });
 
-export const { setWishlist, setCourseCategories, setNewCourse } = coursesSlice.actions;
+export const { setCourseCategories, setNewCourse } = coursesSlice.actions;
 
-export const wishlistedCourses = (state: RootState) => state.courses.userWishlistedCourses;
 export const courseCategories = (state: RootState) => state.courses.courseCategories;
 export const newCourse = (state: RootState) => state.courses.newCourse;
 

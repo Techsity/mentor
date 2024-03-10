@@ -2,14 +2,17 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/authSlice";
 import onboardingReducer from "./reducers/onboardingSlice";
 import workshopReducer from "./reducers/workshopSlice";
+import userReducer from "./reducers/userSlice";
 import coursesReducer from "./reducers/coursesSlice";
 import { FLUSH, PAUSE, persistReducer, persistStore, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
+import { PersistConfig } from "redux-persist/es/types";
 
-const persistConfig = { storage, key: "root", version: 1, blacklist: ["auth"] };
+const persistConfig: PersistConfig<any> = { storage, key: "root", version: 1, blacklist: ["auth"] };
+// serialize: true
 
-const authPersistConfig = {
+const authPersistConfig: PersistConfig<any> = {
 	key: "auth",
 	storage: sessionStorage,
 	version: 1,
@@ -17,9 +20,9 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
 	auth: persistReducer(authPersistConfig, authReducer),
-	// auth: authReducer,
-	onboarding: persistReducer(persistConfig, onboardingReducer),
-	workshop: persistReducer(persistConfig, workshopReducer),
+	onboarding: persistReducer(persistConfig, onboardingReducer) as typeof onboardingReducer,
+	workshop: persistReducer(persistConfig, workshopReducer) as typeof workshopReducer,
+	user: persistReducer(persistConfig, userReducer) as typeof userReducer,
 	courses: coursesReducer,
 });
 
