@@ -74,7 +74,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			console.log({ filteredFromCoursesctions: course_sections });
 			return course_sections;
 		}
-	}, [newCourseData, course_sections]);
+	}, [newCourseData, course_sections, state]);
 
 	const openUploadModal = (section_index: number) => {
 		const indexedFile = filtered[section_index];
