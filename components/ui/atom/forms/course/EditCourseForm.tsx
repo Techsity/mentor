@@ -101,7 +101,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								setFormState((prev) => {
 									return { ...prev, category: item };
 								});
-								dispatch(setNewCourse({ ...newCourseData, category: String(item.id) }));
+								dispatch(setNewCourse({ ...newCourseData, category: item }));
 							}}
 							displayProperty="title"
 							label="Category"

@@ -21,9 +21,8 @@ export type CourseContentUpload = {
 	course_sections: CourseSectionUpload[];
 };
 
-export type INewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "category" | "course_contents"> & {
+export type INewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "course_contents"> & {
 	// files: any[];
-	category: string;
 	course_contents: CourseContentUpload[];
 };
 
@@ -40,7 +39,7 @@ export const newCourseInitialState: INewCourseData = {
 	imgUrl: "",
 	requirements: [],
 	course_contents: [],
-	category: "",
+	category: { course_type: { description: "", type: "" }, description: "", title: "", id: "" },
 	what_to_learn: [],
 };
 

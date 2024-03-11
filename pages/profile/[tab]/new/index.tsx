@@ -38,6 +38,15 @@ const EditPageContainer = () => {
 
 	const saveNewCourse = async () => {
 		try {
+			if (!newCourseData?.title)
+				return toast.error("Title is required", { ...ToastDefaultOptions({ id: "error" }) });
+			if (!newCourseData?.description)
+				return toast.error("Description is required", { ...ToastDefaultOptions({ id: "error" }) });
+			if (!newCourseData?.category)
+				return toast.error("Select a category", { ...ToastDefaultOptions({ id: "error" }) });
+			if (!newCourseData?.description)
+				return toast.error("Description is required", { ...ToastDefaultOptions({ id: "error" }) });
+
 			const files: any[] = [];
 			if (course_contents)
 				for (const section of course_contents) {
@@ -45,7 +54,7 @@ const EditPageContainer = () => {
 						if (file) files.push(file);
 					}
 				}
-			console.log({ files });
+			console.log({ files, cat: newCourseData?.category });
 		} catch (err) {
 			console.error({ err });
 			ToastDefaultOptions;
