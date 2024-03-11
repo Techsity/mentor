@@ -86,7 +86,7 @@ const VideoUploadModal = (props: Props) => {
 	}, [modalContent]);
 
 	return (
-		<div className="bg-white relative p-5 rounded-lg h-[60vh] w-[90vw] overflow-hidden space-y-4">
+		<div className="bg-white relative p-5 rounded-lg h-[60vh] w-[90vw] lg:w-[80vw] xl:w-[65vw] overflow-hidden space-y-4">
 			<div className="flex md:flex-row flex-col items-start gap-2 w-full">
 				<div className="flex flex-col w-full items-start justify-start bg-grey-lighter">
 					<label className="w-full flex items-center p-4 gap-2 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:text-[#094B10]">

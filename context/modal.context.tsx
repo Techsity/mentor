@@ -65,7 +65,7 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate 
 		if (closeOnBackgroundClick) closeModal();
 	};
 	return (
-		<div className="flex justify-center items-center m-auto">
+		<div className="flex justify-center items-center m-auto h-full w-full">
 			<div
 				onClick={handleBackgroundClick}
 				className="fixed top-0 left-0 z-40 bg-black/50 backdrop-blur-sm h-screen w-screen"
@@ -74,7 +74,7 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate 
 				<div
 					className={classNames(
 						animate ? "animate__animated animate__bounceIn animate__fast" : "",
-						"relative",
+						"relative w-auto h-auto",
 					)}>
 					<div className="w-full flex items-end justify-end">
 						<div className="text-3xl text-black cursor-pointer" onClick={closeModal}>
