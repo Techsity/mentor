@@ -70,7 +70,8 @@ const VideoUploadModal = (props: Props) => {
 				else onVideoUpload(fileMetaData);
 				closeModal();
 			} else {
-				toast.error("No files selected.", { toastId, ...ToastDefaultOptions() });
+				// toast.error("No files selected.", { toastId, ...ToastDefaultOptions() });
+				closeModal();
 				setLoading(false);
 			}
 		}

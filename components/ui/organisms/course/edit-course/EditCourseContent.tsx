@@ -87,12 +87,10 @@ const EditCourseContent = (props: Props) => {
 	const handleAddNewLecture = (index: number) => {
 		setState((prev) => {
 			const updated = [...prev];
-			if (updated[index].course_sections.length >= 1) {
-				updated[index] = {
-					...updated[index],
-					course_sections: [...updated[index].course_sections, emptyState.course_sections[0]],
-				};
-			}
+			updated[index] = {
+				...updated[index],
+				course_sections: updated[index].course_sections.concat(emptyState.course_sections[0]),
+			};
 			dispatch(setNewCourse({ ...newCourseData, course_contents: updated }));
 			return updated;
 		});
@@ -120,45 +118,37 @@ const EditCourseContent = (props: Props) => {
 		});
 	};
 
-	const handleDeleteLecture = (index: number, section_index: number) => {
-		setState((prev) => {
-			const updatedState = [...prev];
-			updatedState.map((item, idx) => {
-				if (idx === index && item.course_sections.length > 1) {
-					if (confirm("Are you sure you want to delete this lecture?")) {
-						const updatedSections = [
-							...item.course_sections.slice(0, section_index),
-							...item.course_sections.slice(section_index + 1),
-						];
-						return {
-							...item,
-							course_sections: updatedSections,
-						};
-					}
-				} else
-					toast.error("Each lecture must have at least 1 outline.", {
-						toastId,
-						...ToastDefaultOptions({ id: "error" }),
-					});
-				return item;
-			});
-			dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
-			return updatedState;
-		});
-	};
-
 	const handleAddNewOutline = () => {
 		setState((prev) => {
 			const updated = [...prev, emptyState];
-
 			dispatch(setNewCourse({ ...newCourseData, course_contents: updated }));
 			return updated;
 		});
 	};
 
-	useEffect(() => {
-		// if (newCourseData) setState(newCourseData?.course_contents);
-	}, [newCourseData?.course_contents]);
+	const handleDeleteLecture = (contentIndex: number, sectionIndex: number) => {
+		setState((prevState) => {
+			const updatedState = [...prevState];
+			// if (contentIndex >= 0 && contentIndex < updatedState.length) {
+			const updatedSections = [...updatedState[contentIndex].course_sections];
+			if (sectionIndex >= 0 && updatedSections.length > 1) {
+				if (confirm("This action is not reversible. Do you want to delete this course")) {
+					updatedSections.splice(sectionIndex, 1);
+					updatedState[contentIndex] = {
+						...updatedState[contentIndex],
+						course_sections: updatedSections,
+					};
+					dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+					return updatedState;
+				}
+			} else
+				toast.error("Each lecture must have at least 1 outline.", {
+					toastId,
+					...ToastDefaultOptions({ id: "error" }),
+				});
+			return updatedState;
+		});
+	};
 
 	return (
 		<div className="grid gap-4 max-w-4xl">

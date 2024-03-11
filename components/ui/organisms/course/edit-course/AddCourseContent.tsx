@@ -38,7 +38,10 @@ const AddCourseContent: FC<Props> = ({ state }) => {
 					return (
 						<div key={index} className="flex bg-[#70C5A1] p-3 items-center justify-between text-white">
 							<div className="">
-								<p className="text-sm">{content.title}</p>
+								<p className="text-sm">
+									{content.title} - [{content.course_sections.length}{" "}
+									{content.course_sections.length == 1 ? "outline" : "outlines"}]
+								</p>
 								{/* <span className="text-xs">{55}</span> */}
 							</div>
 							<div

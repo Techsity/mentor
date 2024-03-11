@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, ChangeEvent, useCallback, useState, useEffect } from "react";
+import { FC, ForwardedRef, ChangeEvent, useCallback, useState, useEffect, useMemo } from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
@@ -42,39 +42,48 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 
 	const handleVideoUpload = (file: CourseSectionUploadFile, section_index: number, posterImage?: string) => {
 		setState((prevState) => {
-			const updatedState = prevState.map((content, index) => {
-				if (index === section_index) {
-					const updatedSection = {
-						...content,
-						course_sections: content.course_sections.map((section, secIndex) => {
-							if (secIndex === section_index) {
-								return {
-									...section,
-									file: file,
-									posterImage: String(posterImage),
-								};
-							}
-							return section;
-						}),
-					};
-					return updatedSection;
-				}
-				return content;
-			});
-			console.log({ updatedState });
-			dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+			const updatedState = [...prevState];
+			// if (index >= 0 && index < updatedState.length) {
+			const updatedSections = [...updatedState[index].course_sections];
+			if (section_index >= 0 && section_index < updatedSections.length) {
+				updatedSections[section_index] = {
+					...updatedSections[section_index],
+					file,
+					posterImage: String(posterImage) || updatedSections[section_index].posterImage,
+				};
+				updatedState[index] = {
+					...updatedState[index],
+					course_sections: updatedSections,
+				};
+				dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+				return updatedState;
+			} else console.error("Invalid section index");
 			return updatedState;
 		});
 		if (posterImage) URL.revokeObjectURL(posterImage);
 	};
 
+	const filtered = useMemo(() => {
+		if (newCourseData?.course_contents[index]) {
+			console.log({ filteredFromRedux: newCourseData?.course_contents[index].course_sections });
+			return newCourseData?.course_contents[index].course_sections;
+		} else if (state[index]) {
+			console.log({ filteredFromState: newCourseData?.course_contents[index].course_sections });
+			return state[index].course_sections;
+		} else {
+			console.log({ filteredFromCoursesctions: course_sections });
+			return course_sections;
+		}
+	}, [newCourseData, course_sections]);
+
 	const openUploadModal = (section_index: number) => {
-		const fileIndex = course_sections[section_index];
-		if (fileIndex)
+		const indexedFile = filtered[section_index];
+		console.log({ indexedFile, course_sections, section_index });
+		if (indexedFile)
 			openModal(
 				<VideoUploadModal
-					fileMetaData={fileIndex.file as CourseSectionUploadFile}
-					poster={fileIndex.posterImage}
+					fileMetaData={indexedFile.file as CourseSectionUploadFile}
+					poster={indexedFile.posterImage}
 					includePosterUpload
 					onVideoUpload={(file, poster) => handleVideoUpload(file, section_index, poster)}
 				/>,
@@ -89,14 +98,13 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				modalConfig,
 			);
 	};
-	
 
 	return (
 		<>
 			<div className="animate__animated animate__fadeIn scroll-mt-44">
 				<div className="relative max-w-2xl">
 					<label htmlFor="title" className="text-sm text-[#bebebe]">
-						Content Title
+						Lecture Title
 					</label>
 					<CustomTextInput
 						id="title"
@@ -109,10 +117,10 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				</div>
 				<div className="">
 					<div className="mt-4 flex justify-start items-center max-w-2xl">
-						<h1 className="text-sm text-[#bebebe]">Course Contents</h1>
+						<h1 className="text-sm text-[#bebebe]">Lecture Content</h1>
 					</div>
 					<div className="">
-						{course_sections.map((lecture, section_index) => {
+						{filtered.map((lecture, section_index) => {
 							return (
 								<div
 									ref={contentContainerRef}
