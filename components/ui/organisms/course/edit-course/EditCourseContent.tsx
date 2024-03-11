@@ -59,8 +59,10 @@ const EditCourseContent = (props: Props) => {
 						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
 							sectionIndex === section_index
 								? {
-										...section,
+										file: section.file,
 										section_name: value,
+										notes: section.notes,
+										posterImage: section.posterImage,
 								  }
 								: section,
 						),
@@ -72,8 +74,10 @@ const EditCourseContent = (props: Props) => {
 						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
 							sectionIndex === section_index
 								? {
-										...section,
+										file: section.file,
+										section_name: section.section_name,
 										notes: value,
+										posterImage: section.posterImage,
 								  }
 								: section,
 						),

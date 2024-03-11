@@ -25,7 +25,6 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	course_sections,
 	contentLength,
 	handleAddNewOutline,
-	// onFileUpload,
 }) => {
 	const modalConfig = {
 		closeOnBackgroundClick: false,
@@ -47,9 +46,10 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			const updatedSections = [...updatedState[index].course_sections];
 			if (section_index >= 0 && section_index < updatedSections.length) {
 				updatedSections[section_index] = {
-					...updatedSections[section_index],
+					section_name: updatedSections[section_index].section_name,
 					file,
 					posterImage: String(posterImage) || updatedSections[section_index].posterImage,
+					notes: updatedSections[section_index].notes,
 				};
 				updatedState[index] = {
 					...updatedState[index],
@@ -68,10 +68,10 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			console.log({ filteredFromRedux: newCourseData?.course_contents[index].course_sections });
 			return newCourseData?.course_contents[index].course_sections;
 		} else if (state[index]) {
-			console.log({ filteredFromState: newCourseData?.course_contents[index].course_sections });
+			console.log({ filteredFromState: state[index].course_sections });
 			return state[index].course_sections;
 		} else {
-			console.log({ filteredFromCoursesctions: course_sections });
+			console.log({ filteredFromCourseSections: course_sections });
 			return course_sections;
 		}
 	}, [newCourseData, course_sections, state]);
