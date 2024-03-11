@@ -43,11 +43,11 @@ const EditPageContainer = () => {
 				for (const section of course_contents) {
 					for (const { file } of section.course_sections) {
 						if (file) {
-							console.log({ blobUrl: file.blobUrl });
-							const blob = await fetch(file.blobUrl).then((res) => res.blob());
-							files.push(blob);
-							console.log({ filename: file.name, blob });
-							console.log({ files });
+							// console.log({ blobUrl: file.base64 });
+							// const blob = await fetch(file.base64).then((res) => res.blob());
+							// files.push(blob);
+							// console.log({ filename: file.name, blob });
+							// console.log({ files });
 						}
 					}
 				}

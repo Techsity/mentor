@@ -26,6 +26,15 @@ export const HOMEPAGE_MENTORS_LIST = gql`
 			}
 		}
 	}
+
+	fragment MentorUserField on UserDTO {
+		name
+		avatar
+		country
+		is_online
+		is_active
+		is_verified
+	}
 `;
 
 export const GET_ALL_MENTORS = gql`

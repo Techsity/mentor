@@ -1,17 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, useRef, ChangeEvent, lazy, createRef, useState, useEffect } from "react";
+import { FC, ForwardedRef, useRef, ChangeEvent, lazy, createRef, useState, useEffect, useId } from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
 import {
 	CourseContentUpload,
 	CourseSectionUpload,
+	CourseSectionUploadFile,
 	newCourse,
 	setNewCourse,
 } from "../../../../../redux/reducers/coursesSlice";
 import { useVideoUploadContext } from "../../../../../context/media-upload.context";
 import { useDispatch, useSelector } from "react-redux";
 import { convertToBase64 } from "../../../../../utils";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../constants";
+import { useModal } from "../../../../../context/modal.context";
+import VideoUploadModal from "../../../atom/modals/VideoUploadModal";
 
 const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	handleChange,
@@ -24,25 +29,73 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	course_sections,
 	contentLength,
 	handleAddNewOutline,
+	// onFileUpload,
 }) => {
+	const toastId = useId();
 	const dispatch = useDispatch();
+	const { openModal } = useModal();
 	const newCourseData = useSelector(newCourse);
-	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-	const fileUploadInputRef = createRef<HTMLInputElement>();
-	const handleUpload = (index: number, section_index: number) => async (e: ChangeEvent<HTMLInputElement>) => {
-		const { files } = e.target;
-		if (files) {
-			const file = files[0];
-			setUploadedFiles((p) => p.concat(file));
-			const fileBase64 = await convertToBase64(file);
-			console.log({ fileBase64 });
-		}
-	};
 
-	useEffect(() => {
-		dispatch(setNewCourse({ ...newCourseData, files: [] }));
-		console.log({ files: newCourseData?.files });
-	}, [uploadedFiles]);
+	const emptyState: CourseContentUpload = {
+		title: "",
+		course_sections: [{ notes: "", section_name: "", file: null, posterImage: "" }],
+	};
+	const [state, setState] = useState<CourseContentUpload[]>(
+		newCourseData?.course_contents && newCourseData?.course_contents.length > 0
+			? newCourseData?.course_contents
+			: [emptyState],
+	);
+
+	// const handleUpload = (index: number, section_index: number) => async (e: ChangeEvent<HTMLInputElement>) => {
+	// 	const { files } = e.target;
+
+	// 	if (!files) {
+	// 		toast.error("No files selected", { toastId, ...ToastDefaultOptions() });
+	// 		return;
+	// 	}
+	// 	const file = files[0];
+	// 	// onFileUpload(file);
+
+	// 	// setState((prev) => {
+	// 	// 	const updatedState = [...prev];
+	// 	// 	const metadata: CourseSectionUploadFile = {
+	// 	// 		name: file.name,
+	// 	// 		size: file.size,
+	// 	// 		type: file.type,
+	// 	// 		base64,
+	// 	// 	};
+	// 	// 	if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
+	// 	// 	updatedState[index] = {
+	// 	// 		...updatedState[index],
+	// 	// 		course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
+	// 	// 			sectionIndex === section_index
+	// 	// 				? {
+	// 	// 						...section,
+	// 	// 						file: { ...metadata },
+	// 	// 				  }
+	// 	// 				: section,
+	// 	// 		),
+	// 	// 	};
+	// 	// 	console.log({ file, base64, updatedState });
+
+	// 	// 	return updatedState;
+	// 	// });
+
+	// 	//
+
+	// 	//
+
+	// 	// dispatch(setNewCourse({ ...newCourseData, files: [] }));
+	// };
+	const handleVideoUpload = (file: File, posterImage?: string) => {
+		console.log({ file, posterImage });
+	};
+	const openUploadModal = () => {
+		openModal(<VideoUploadModal includePosterUpload onVideoUpload={handleVideoUpload} />, {
+			closeOnBackgroundClick: true,
+			animate: false,
+		});
+	};
 
 	return (
 		<>
@@ -97,26 +150,9 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 																"Upload Content Video"
 															}
 															className="p-1 text-sm px-5 bg-zinc-100/40 text-white absolute"
-															onClick={() => {
-																if (fileUploadInputRef.current)
-																	fileUploadInputRef.current.click();
-															}}
+															onClick={openUploadModal}
 														/>
 													</div>
-
-													<input
-														type="file"
-														name=""
-														hidden
-														id=""
-														multiple={false}
-														ref={fileUploadInputRef}
-														accept="video/*"
-														max={1}
-														min={1}
-														// onChange={(e) => handleChange(index, "file", section_index)(e)}
-														onChange={handleUpload(index, section_index)}
-													/>
 													<img
 														src={"/assets/images/mockups/course_one.png"}
 														alt={lecture.section_name}
@@ -178,4 +214,5 @@ interface ContentEditComponentProps extends CourseContentUpload {
 	index: number;
 	contentLength: number;
 	contentContainerRef: ForwardedRef<HTMLDivElement>;
+	// onFileUpload: (file: File) => void;
 }

@@ -13,6 +13,7 @@ import {
 	setNewCourse,
 } from "../../../../../redux/reducers/coursesSlice";
 import { createReadStream } from "fs";
+import { convertToBase64 } from "../../../../../utils";
 
 type Props = { content?: CourseContentUpload[]; handleUpload?: (files: File[]) => void };
 
@@ -23,7 +24,7 @@ const EditCourseContent = (props: Props) => {
 
 	const emptyState: CourseContentUpload = {
 		title: "",
-		course_sections: [{ notes: "", section_name: "", file: null }],
+		course_sections: [{ notes: "", section_name: "", file: null, posterImage: "" }],
 	};
 	const ref = useRef<HTMLDivElement>(null);
 	const [state, setState] = useState<CourseContentUpload[]>(
@@ -45,6 +46,7 @@ const EditCourseContent = (props: Props) => {
 		) =>
 		(e: ChangeEvent<HTMLInputElement>) => {
 			const { value, files } = e.target;
+
 			setState((prev) => {
 				const updatedState = [...prev];
 				if (field === "title") {
@@ -73,15 +75,22 @@ const EditCourseContent = (props: Props) => {
 						return prev;
 					}
 					const file = files[0];
-					const blobUrl = URL.createObjectURL(file);
+					let base64 = "";
+					convertToBase64(file)
+						.then((res) => (base64 = res))
+						.catch((err) => {
+							console.error("error converting file to base64: ", err);
+							return prev;
+						});
 					const metadata: CourseSectionUploadFile = {
 						name: file.name,
-						// size: file.size,
+						size: file.size,
 						type: file.type,
-						blobUrl,
+						base64,
 					};
 					if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
-					console.log({ file, blobUrl });
+
+					console.log({ file });
 					updatedState[index] = {
 						...updatedState[index],
 						course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
@@ -108,6 +117,7 @@ const EditCourseContent = (props: Props) => {
 					};
 				}
 				dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+				console.log({ updatedState, newCourseData: newCourseData?.course_contents });
 				return updatedState;
 			});
 		};
@@ -173,16 +183,13 @@ const EditCourseContent = (props: Props) => {
 		setState((prev) => [...prev, emptyState]);
 	};
 
-	// useEffect(() => {
-	// 	dispatch(setNewCourse({ ...newCourseData, course_contents: [emptyState] }));
-	// }, []);
-
 	return (
 		<div className="grid gap-4 max-w-4xl">
 			{state.map((cont, index) => {
 				return (
 					<ContentEditComponent
-						{...cont}
+						course_sections={cont.course_sections}
+						title={cont.title}
 						handleChange={handleChange}
 						handleAddNewLecture={() => handleAddNewLecture(index)}
 						handleDuplicateLecture={handleDuplicateLecture}
