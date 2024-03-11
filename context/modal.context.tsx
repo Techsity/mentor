@@ -76,10 +76,10 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate 
 						animate ? "animate__animated animate__bounceIn animate__fast" : "",
 						"relative",
 					)}>
-					<div
-						className="text-3xl text-black cursor-pointer flex items-end justify-end w-full"
-						onClick={closeModal}>
-						&times;
+					<div className="w-full flex items-end justify-end">
+						<div className="text-3xl text-black cursor-pointer" onClick={closeModal}>
+							&times;
+						</div>
 					</div>
 					{children}
 				</div>

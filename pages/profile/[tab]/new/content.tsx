@@ -33,6 +33,7 @@ const ContentEditPageContainer = () => {
 		<ProfileLayout>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">Add {isCourse ? "course" : isWorkshop && "workshop"} contents</h1>
+
 				{isNewItemPage && (
 					<div className="flex items-center gap-3 lg:pr-8">
 						<PrimaryButton
@@ -44,6 +45,9 @@ const ContentEditPageContainer = () => {
 					</div>
 				)}
 			</div>
+			<p className="text-yellow-600 text-[13px] my-2">
+				Note: Make sure you save your progress before reloading the page to avoid losing data.
+			</p>
 			{isNewItemPage ? <EditCourseContent /> : <>Loading...</>}
 		</ProfileLayout>
 	);

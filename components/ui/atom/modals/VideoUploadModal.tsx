@@ -1,20 +1,26 @@
-import React, { ChangeEvent, RefObject, createRef, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, RefObject, createRef, useCallback, useEffect, useId, useState } from "react";
 import { CourseSectionUploadFile } from "../../../../redux/reducers/coursesSlice";
 import { useModal } from "../../../../context/modal.context";
 import { PrimaryButton } from "../buttons";
+import { convertToBase64 } from "../../../../utils";
+import ActivityIndicator from "../loader/ActivityIndicator";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../constants";
 
 type Props = {
-	file?: File;
-	onVideoUpload: (file: File, posterImage?: string) => void;
+	fileMetaData?: CourseSectionUploadFile;
+	onVideoUpload: (file: CourseSectionUploadFile, posterImage?: string) => void;
 	includePosterUpload?: boolean;
 	poster?: string;
 };
 
 const VideoUploadModal = (props: Props) => {
-	const { onVideoUpload, includePosterUpload, file, poster } = props;
+	const toastId = useId();
+	const { onVideoUpload, includePosterUpload, fileMetaData, poster } = props;
 	const { modalContent, closeModal } = useModal();
 	const [videoMetaData, setVideoMetaData] = useState<Pick<CourseSectionUploadFile, "name" | "type"> | null>(null);
 	const [posterImage, setPosterImage] = useState<string>(poster || "");
+	const [loading, setLoading] = useState<boolean>(false);
 	const videoUploadInputRef = createRef<HTMLInputElement>();
 	const posterUploadInputRef = createRef<HTMLInputElement>();
 
@@ -40,18 +46,37 @@ const VideoUploadModal = (props: Props) => {
 	};
 
 	const onSubmit = () => {
+		setLoading(true);
+		// tryc
 		if (videoUploadInputRef.current && videoUploadInputRef.current.files) {
 			const file = videoUploadInputRef.current.files[0];
-			console.log({ file });
-			if (includePosterUpload) onVideoUpload(file, posterImage);
-			else onVideoUpload(file);
+			if (file)
+				convertToBase64(file)
+					.then((base64) => {
+						setLoading(false);
+						const metadata = { base64, name: file.name, type: file.type, size: file.size };
+						if (includePosterUpload) onVideoUpload(metadata, posterImage);
+						else onVideoUpload(metadata);
+						closeModal();
+					})
+					.catch((err) => {
+						setLoading(false);
+						console.error("error converting video to base64: ", err);
+					});
+			else if (fileMetaData?.base64) {
+				if (includePosterUpload) onVideoUpload(fileMetaData, posterImage);
+				else onVideoUpload(fileMetaData);
+				closeModal();
+			} else {
+				toast.error("No files selected.", { toastId, ...ToastDefaultOptions() });
+				setLoading(false);
+			}
 		}
-		closeModal();
 	};
 
 	useEffect(() => {
-		if (file) setVideoMetaData({ name: file.name, type: file.type });
-	}, [file]);
+		if (fileMetaData) setVideoMetaData({ name: fileMetaData.name, type: fileMetaData.type });
+	}, [fileMetaData]);
 
 	useEffect(() => {
 		if (!modalContent && includePosterUpload && posterImage) resetPosterImage();
@@ -124,7 +149,13 @@ const VideoUploadModal = (props: Props) => {
 					{/* {includePosterUpload &&} */}
 				</div>
 			</div>
-			<PrimaryButton title="Continue" onClick={onSubmit} className="flex justify-center p-1.5 px-3 rounded" />
+			<PrimaryButton
+				title={loading ? "" : "Continue"}
+				disabled={loading}
+				icon={loading ? <ActivityIndicator size={25} /> : null}
+				onClick={onSubmit}
+				className="flex justify-center p-1.5 px-3 rounded"
+			/>
 		</div>
 	);
 };

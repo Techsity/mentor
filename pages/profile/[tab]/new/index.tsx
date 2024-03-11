@@ -42,13 +42,7 @@ const EditPageContainer = () => {
 			if (course_contents)
 				for (const section of course_contents) {
 					for (const { file } of section.course_sections) {
-						if (file) {
-							// console.log({ blobUrl: file.base64 });
-							// const blob = await fetch(file.base64).then((res) => res.blob());
-							// files.push(blob);
-							// console.log({ filename: file.name, blob });
-							// console.log({ files });
-						}
+						if (file) files.push(file);
 					}
 				}
 			console.log({ files });
@@ -61,27 +55,12 @@ const EditPageContainer = () => {
 			});
 		}
 	};
-	const handleFileInvalidations = () => {
-		if (course_contents)
-			for (const { course_sections } of course_contents) {
-				for (let { file } of course_sections) {
-					file = null;
-				}
-			}
-		console.log({ course_contents });
-	};
-
-	useEffect(() => {
-		// window.addEventListener("load", () => handleFileInvalidations);
-		window.addEventListener("beforeunload", () => handleFileInvalidations);
-		return () => {
-			window.removeEventListener("beforeunload", () => handleFileInvalidations);
-			// window.removeEventListener("load", () => handleFileInvalidations);
-		};
-	}, []);
 
 	return (
 		<ProfileLayout>
+			<p className="text-yellow-600 text-[13px] my-2">
+				Note: Make sure you save your progress before reloading the page to avoid losing data.
+			</p>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">{isCourse ? "Add new course" : isWorkshop && "Add new Workshop"}</h1>
 				{isMentor && tab === "courses" && isNewItemPage ? (

@@ -1,5 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, useRef, ChangeEvent, lazy, createRef, useState, useEffect, useId } from "react";
+import {
+	FC,
+	ForwardedRef,
+	useRef,
+	ChangeEvent,
+	lazy,
+	createRef,
+	useState,
+	useEffect,
+	useId,
+	MouseEvent,
+	useMemo,
+} from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
@@ -31,11 +43,13 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	handleAddNewOutline,
 	// onFileUpload,
 }) => {
-	const toastId = useId();
+	const modalConfig = {
+		closeOnBackgroundClick: false,
+		animate: false,
+	};
 	const dispatch = useDispatch();
 	const { openModal } = useModal();
 	const newCourseData = useSelector(newCourse);
-
 	const emptyState: CourseContentUpload = {
 		title: "",
 		course_sections: [{ notes: "", section_name: "", file: null, posterImage: "" }],
@@ -46,62 +60,55 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			: [emptyState],
 	);
 
-	// const handleUpload = (index: number, section_index: number) => async (e: ChangeEvent<HTMLInputElement>) => {
-	// 	const { files } = e.target;
-
-	// 	if (!files) {
-	// 		toast.error("No files selected", { toastId, ...ToastDefaultOptions() });
-	// 		return;
-	// 	}
-	// 	const file = files[0];
-	// 	// onFileUpload(file);
-
-	// 	// setState((prev) => {
-	// 	// 	const updatedState = [...prev];
-	// 	// 	const metadata: CourseSectionUploadFile = {
-	// 	// 		name: file.name,
-	// 	// 		size: file.size,
-	// 	// 		type: file.type,
-	// 	// 		base64,
-	// 	// 	};
-	// 	// 	if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
-	// 	// 	updatedState[index] = {
-	// 	// 		...updatedState[index],
-	// 	// 		course_sections: updatedState[index].course_sections.map((section, sectionIndex) =>
-	// 	// 			sectionIndex === section_index
-	// 	// 				? {
-	// 	// 						...section,
-	// 	// 						file: { ...metadata },
-	// 	// 				  }
-	// 	// 				: section,
-	// 	// 		),
-	// 	// 	};
-	// 	// 	console.log({ file, base64, updatedState });
-
-	// 	// 	return updatedState;
-	// 	// });
-
-	// 	//
-
-	// 	//
-
-	// 	// dispatch(setNewCourse({ ...newCourseData, files: [] }));
-	// };
-	const handleVideoUpload = (file: File, posterImage?: string) => {
-		console.log({ file, posterImage });
+	const handleVideoUpload = (file: CourseSectionUploadFile, section_index: number, posterImage?: string) => {
+		if (file) {
+			setState((prev) => {
+				const updatedState = [...prev];
+				if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
+				updatedState[index] = {
+					...updatedState[index],
+					course_sections: updatedState[index].course_sections.map((section, sectionIndex) => {
+						return sectionIndex === section_index
+							? {
+									...section,
+									file,
+									posterImage: String(posterImage),
+							  }
+							: section;
+					}),
+				};
+				// console.log({ updatedState, posterImage });
+				dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+				return updatedState;
+			});
+		}
+		if (posterImage) URL.revokeObjectURL(posterImage);
 	};
-	const openUploadModal = () => {
-		openModal(<VideoUploadModal includePosterUpload onVideoUpload={handleVideoUpload} />, {
-			closeOnBackgroundClick: true,
-			animate: false,
-		});
+
+	const openUploadModal = (section_index: number) => {
+		const fileIndex = state[index].course_sections[section_index];
+		if (fileIndex)
+			openModal(
+				<VideoUploadModal
+					fileMetaData={fileIndex.file as CourseSectionUploadFile}
+					poster={fileIndex.posterImage}
+					includePosterUpload
+					onVideoUpload={(file, poster) => handleVideoUpload(file, section_index, poster)}
+				/>,
+				modalConfig,
+			);
+		else
+			openModal(
+				<VideoUploadModal
+					includePosterUpload
+					onVideoUpload={(file, poster) => handleVideoUpload(file, section_index, poster)}
+				/>,
+				modalConfig,
+			);
 	};
 
 	return (
 		<>
-			<p className="text-yellow-600 text-xs">
-				Note: try not to reload the page after uploading your files to avoid re-uploading the files.
-			</p>
 			<div className="animate__animated animate__fadeIn scroll-mt-44">
 				<div className="relative max-w-2xl">
 					<label htmlFor="title" className="text-sm text-[#bebebe]">
@@ -122,6 +129,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 					</div>
 					<div className="">
 						{course_sections.map((lecture, section_index) => {
+							// if (lecture.file !== null) lecture.file.name = buttonText;
 							return (
 								<div
 									ref={contentContainerRef}
@@ -143,18 +151,35 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 													<div className="absolute h-full w-full bg-black/50 flex justify-center items-center">
 														<PrimaryButton
 															title={
+																(state[index] &&
+																	state[index].course_sections[section_index] &&
+																	state[index].course_sections[section_index].file !==
+																		null &&
+																	`${
+																		state[index].course_sections[
+																			section_index
+																		].file?.name.slice(0, 25) + "---"
+																	}.${
+																		state[index].course_sections[
+																			section_index
+																		].file?.type.split("/")[1]
+																	}`) ||
 																(lecture.file !== null &&
 																	`${
-																		String(lecture.file.name).slice(0, 10) + "---"
+																		String(lecture.file.name).slice(0, 25) + "---"
 																	}.${lecture.file.type.split("/")[1]}`) ||
 																"Upload Content Video"
 															}
 															className="p-1 text-sm px-5 bg-zinc-100/40 text-white absolute"
-															onClick={openUploadModal}
+															onClick={() => openUploadModal(section_index)}
 														/>
 													</div>
 													<img
-														src={"/assets/images/mockups/course_one.png"}
+														src={
+															lecture.posterImage
+															//  ||
+															// "/assets/images/mockups/course_one.png"
+														}
 														alt={lecture.section_name}
 														className="h-full w-full object-cover"
 													/>
