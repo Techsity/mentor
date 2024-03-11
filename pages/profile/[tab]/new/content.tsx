@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import protectedPageWrapper from "../../../protectedPageWrapper";
+import { CourseContentUploadProvider } from "../../../../context/course-content-upload.context";
 
 const ContentEditPageContainer = () => {
 	const router = useRouter();
@@ -47,7 +48,9 @@ const ContentEditPageContainer = () => {
 			<p className="text-yellow-600 text-[13px] my-2">
 				Note: Make sure you save your progress before reloading the page to avoid losing data.
 			</p>
-			{isNewItemPage ? <EditCourseContent /> : <>Loading...</>}
+			<CourseContentUploadProvider>
+				{isNewItemPage ? <EditCourseContent /> : <>Loading...</>}
+			</CourseContentUploadProvider>
 		</ProfileLayout>
 	);
 };

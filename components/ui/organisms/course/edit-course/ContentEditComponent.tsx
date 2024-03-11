@@ -1,68 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, ForwardedRef, ChangeEvent, useCallback, useState, useEffect, useMemo } from "react";
+import { FC, ForwardedRef, useMemo } from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
-import {
-	CourseContentUpload,
-	CourseSectionUpload,
-	CourseSectionUploadFile,
-	newCourse,
-	setNewCourse,
-} from "../../../../../redux/reducers/coursesSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { CourseContentUpload, CourseSectionUploadFile } from "../../../../../redux/reducers/coursesSlice";
 import { useModal } from "../../../../../context/modal.context";
 import VideoUploadModal from "../../../atom/modals/VideoUploadModal";
+import { useCourseContentUploadContext } from "../../../../../context/course-content-upload.context";
 
 const ContentEditComponent: FC<ContentEditComponentProps> = ({
-	handleChange,
-	handleAddNewLecture,
-	handleDuplicateLecture,
-	handleDeleteLecture,
 	contentContainerRef,
 	index,
 	title,
 	course_sections,
 	contentLength,
-	handleAddNewOutline,
 }) => {
 	const modalConfig = {
 		closeOnBackgroundClick: false,
 		animate: false,
 	};
-	const dispatch = useDispatch();
 	const { openModal } = useModal();
-	const newCourseData = useSelector(newCourse);
-	const defaultState: CourseContentUpload = {
-		title: title || "",
-		course_sections: course_sections || [{ notes: "", section_name: "", file: null, posterImage: "" }],
-	};
-	const [state, setState] = useState<CourseContentUpload[]>(newCourseData?.course_contents || [defaultState]);
 
-	const handleVideoUpload = (file: CourseSectionUploadFile, section_index: number, posterImage?: string) => {
-		setState((prevState) => {
-			const updatedState = [...prevState];
-			// if (index >= 0 && index < updatedState.length) {
-			if (!updatedState[index]) updatedState[index] = defaultState;
-			const updatedSections = [...updatedState[index].course_sections];
-			if (section_index >= 0 && section_index < updatedSections.length) {
-				updatedSections[section_index] = {
-					section_name: updatedSections[section_index].section_name,
-					file,
-					posterImage: String(posterImage) || updatedSections[section_index].posterImage,
-					notes: updatedSections[section_index].notes,
-				};
-				updatedState[index] = {
-					...updatedState[index],
-					course_sections: updatedSections,
-				};
-				dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
-				return updatedState;
-			} else console.error("Invalid section index");
-			return updatedState;
-		});
-		if (posterImage) URL.revokeObjectURL(posterImage);
-	};
+	const {
+		handleAddNewLecture,
+		newCourseData,
+		handleAddNewOutline,
+		state,
+		handleChange,
+		handleDeleteLecture,
+		handleDuplicateLecture,
+		handleVideoUpload,
+	} = useCourseContentUploadContext();
 
 	const filtered = useMemo(() => {
 		if (newCourseData?.course_contents[index]) {
@@ -86,7 +54,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 					fileMetaData={indexedFile.file as CourseSectionUploadFile}
 					poster={indexedFile.posterImage}
 					includePosterUpload
-					onVideoUpload={(file, poster) => handleVideoUpload(file, section_index, poster)}
+					onVideoUpload={(file, poster) => handleVideoUpload(index, file, section_index, poster)}
 				/>,
 				modalConfig,
 			);
@@ -94,7 +62,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 			openModal(
 				<VideoUploadModal
 					includePosterUpload
-					onVideoUpload={(file, poster) => handleVideoUpload(file, section_index, poster)}
+					onVideoUpload={(file, poster) => handleVideoUpload(index, file, section_index, poster)}
 				/>,
 				modalConfig,
 			);
@@ -190,7 +158,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 									</div>
 									{/* <div className="bg-[#70C5A1] h-1/2 w-auto sticky right-2 top-40 grid gap-5 p-1 py-5"> */}
 									<div className="bg-[#70C5A1] h-1/2 w-auto right-2 top-40 grid gap-5 p-1 py-5">
-										<AddNewLectureButton handleAddNewLecture={handleAddNewLecture} />
+										<AddNewLectureButton handleAddNewLecture={() => handleAddNewLecture(index)} />
 										<DuplicateLectureButton
 											handleDuplicateLecture={() => handleDuplicateLecture(index, section_index)}
 										/>
@@ -218,15 +186,6 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 export default ContentEditComponent;
 
 interface ContentEditComponentProps extends CourseContentUpload {
-	handleChange: (
-		index: number,
-		field: keyof Omit<CourseContentUpload, "course_sections"> | keyof CourseSectionUpload,
-		section_index?: number,
-	) => (e: ChangeEvent<HTMLInputElement>) => void;
-	handleAddNewLecture: () => void;
-	handleAddNewOutline: () => void;
-	handleDuplicateLecture: (index: number, section_index: number) => void;
-	handleDeleteLecture: (index: number, section_index: number) => void;
 	index: number;
 	contentLength: number;
 	contentContainerRef: ForwardedRef<HTMLDivElement>;

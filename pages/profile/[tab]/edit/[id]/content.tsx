@@ -5,6 +5,7 @@ import ProfileLayout from "../../../../../components/ui/layout/ProfileLayout";
 import { PrimaryButton } from "../../../../../components/ui/atom/buttons";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { CourseContentUploadProvider } from "../../../../../context/course-content-upload.context";
 
 const ContentEditPageContainer = () => {
 	const router = useRouter();
@@ -32,7 +33,9 @@ const ContentEditPageContainer = () => {
 					</div>
 				)}
 			</div>
-			{isCourseContentPage ? <EditCourseContent /> : <>null</>}
+			<CourseContentUploadProvider>
+				{isCourseContentPage ? <EditCourseContent /> : <>null</>}
+			</CourseContentUploadProvider>
 		</ProfileLayout>
 	);
 };

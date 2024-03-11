@@ -21,13 +21,13 @@ export type CourseContentUpload = {
 	course_sections: CourseSectionUpload[];
 };
 
-type NewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "category" | "course_contents"> & {
+export type INewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "category" | "course_contents"> & {
 	// files: any[];
 	category: string;
 	course_contents: CourseContentUpload[];
 };
 
-export const newCourseInitialState: NewCourseData = {
+export const newCourseInitialState: INewCourseData = {
 	title: "",
 	description: "",
 	course_images: "",
@@ -46,7 +46,7 @@ export const newCourseInitialState: NewCourseData = {
 
 const initialState: {
 	courseCategories: ICourseCategory[];
-	newCourse: NewCourseData | null;
+	newCourse: INewCourseData | null;
 } = {
 	courseCategories: [],
 	newCourse: newCourseInitialState,
@@ -59,8 +59,8 @@ const coursesSlice = createSlice({
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
-		setNewCourse: (state, action: { payload: Partial<NewCourseData> | null }) => {
-			state.newCourse = { ...state.newCourse, ...(action.payload as NewCourseData) };
+		setNewCourse: (state, action: { payload: Partial<INewCourseData> | null }) => {
+			state.newCourse = { ...state.newCourse, ...(action.payload as INewCourseData) };
 		},
 	},
 });
