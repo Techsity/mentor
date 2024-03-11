@@ -43,7 +43,7 @@ const UserCourseSubcriptions = () => {
 		<div className="animate__animated animate__fadeIn">
 			<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
 				{!loading && myCourses.length < 1 && (
-					<p className="text-sm">You haven't subscribed to any course yet</p>
+					<p className="text-sm">You haven&apos;t subscribed to any course yet</p>
 				)}
 				{loading && myCourses.length < 1
 					? Array.from({ length: 4 }).map((_, i) => (
