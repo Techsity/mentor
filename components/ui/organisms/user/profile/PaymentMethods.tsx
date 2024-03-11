@@ -3,7 +3,6 @@ import PaymentCard from "../../../atom/common/user/PaymentCard";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
 import AddPaymentMethodForm from "../../../atom/forms/profile/AddPaymentMethodForm";
-import { scrollUp } from "../../../../../utils";
 
 const PaymentMethods = () => {
 	const user = useSelector(currentUser);

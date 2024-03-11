@@ -54,7 +54,7 @@ export const { setCredentials, logOut, updateUserProfile, setResetPasswordState,
 	authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
-export const currentUser = (state: RootState) => state.auth.user;
+export const currentUser = (state: RootState) => state.auth.user as IAuthState["user"];
 export const resetPasswordState = (state: RootState) => state.auth.resetPasswordState;
 
 export default authSlice.reducer;

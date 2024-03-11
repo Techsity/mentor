@@ -43,6 +43,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 		setState((prevState) => {
 			const updatedState = [...prevState];
 			// if (index >= 0 && index < updatedState.length) {
+			if (!updatedState[index]) updatedState[index] = defaultState;
 			const updatedSections = [...updatedState[index].course_sections];
 			if (section_index >= 0 && section_index < updatedSections.length) {
 				updatedSections[section_index] = {
@@ -65,16 +66,16 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 
 	const filtered = useMemo(() => {
 		if (newCourseData?.course_contents[index]) {
-			console.log({ filteredFromRedux: newCourseData?.course_contents[index].course_sections });
+			console.log({ index, filteredFromRedux: newCourseData?.course_contents[index].course_sections });
 			return newCourseData?.course_contents[index].course_sections;
 		} else if (state[index]) {
-			console.log({ filteredFromState: state[index].course_sections });
+			console.log({ index, filteredFromState: state[index].course_sections });
 			return state[index].course_sections;
 		} else {
-			console.log({ filteredFromCourseSections: course_sections });
+			console.log({ index, filteredFromCourseSections: course_sections });
 			return course_sections;
 		}
-	}, [newCourseData, course_sections, state]);
+	}, [newCourseData, state]);
 
 	const openUploadModal = (section_index: number) => {
 		const indexedFile = filtered[section_index];
