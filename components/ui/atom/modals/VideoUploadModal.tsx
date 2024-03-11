@@ -21,6 +21,7 @@ const VideoUploadModal = (props: Props) => {
 	const [videoMetaData, setVideoMetaData] = useState<Pick<CourseSectionUploadFile, "name" | "type"> | null>(null);
 	const [posterImage, setPosterImage] = useState<string>(poster || "");
 	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
 	const videoUploadInputRef = createRef<HTMLInputElement>();
 	const posterUploadInputRef = createRef<HTMLInputElement>();
 
@@ -47,9 +48,9 @@ const VideoUploadModal = (props: Props) => {
 
 	const onSubmit = () => {
 		setLoading(true);
-		// tryc
+		setError("");
 		if (videoUploadInputRef.current && videoUploadInputRef.current.files) {
-			const file = videoUploadInputRef.current.files[0];
+			let file = videoUploadInputRef.current.files[0];
 			if (file)
 				convertToBase64(file)
 					.then((base64) => {
@@ -60,6 +61,7 @@ const VideoUploadModal = (props: Props) => {
 						closeModal();
 					})
 					.catch((err) => {
+						setError("Something went wrong. Please try again");
 						setLoading(false);
 						console.error("error converting video to base64: ", err);
 					});
@@ -113,6 +115,7 @@ const VideoUploadModal = (props: Props) => {
 							.{videoMetaData.type.split("/")[1]}
 						</p>
 					)}
+					{error && <p className="text-sm text-red-500">{error}</p>}
 				</div>
 
 				<div className="flex w-full items-center justify-start bg-grey-lighter">

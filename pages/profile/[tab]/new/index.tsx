@@ -58,11 +58,9 @@ const EditPageContainer = () => {
 
 	return (
 		<ProfileLayout>
-			<p className="text-yellow-600 text-[13px] my-2">
-				Note: Make sure you save your progress before reloading the page to avoid losing data.
-			</p>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">{isCourse ? "Add new course" : isWorkshop && "Add new Workshop"}</h1>
+
 				{isMentor && tab === "courses" && isNewItemPage ? (
 					<div className="flex items-center gap-3 lg:pr-8">
 						<PrimaryButton
@@ -88,6 +86,9 @@ const EditPageContainer = () => {
 					</div>
 				)}
 			</div>
+			<p className="text-yellow-600 text-[13px] my-2">
+				Note: Make sure you save your progress before reloading the page to avoid losing data.
+			</p>
 			{isCourse ? (
 				<WorkshopAndCourseEditTemplate
 					handleSave={(state) => {

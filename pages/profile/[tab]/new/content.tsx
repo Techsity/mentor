@@ -19,8 +19,8 @@ const ContentEditPageContainer = () => {
 
 	const isNewItemPage = useMemo(() => {
 		return (
-			Boolean(tab === "courses" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new") ||
-			Boolean(tab === "workshop" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new")
+			Boolean(isCourse && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new") ||
+			Boolean(isWorkshop && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new")
 		);
 	}, [router]);
 
@@ -33,7 +33,6 @@ const ContentEditPageContainer = () => {
 		<ProfileLayout>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">Add {isCourse ? "course" : isWorkshop && "workshop"} contents</h1>
-
 				{isNewItemPage && (
 					<div className="flex items-center gap-3 lg:pr-8">
 						<PrimaryButton

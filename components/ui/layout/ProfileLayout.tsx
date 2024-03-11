@@ -6,7 +6,6 @@ import { ProfileTabLinkType } from "../../../interfaces";
 import { currentUser } from "../../../redux/reducers/authSlice";
 import EditProfileCard from "../atom/cards/profile/EditProfileCard";
 import { PrimaryButton } from "../atom/buttons";
-import { VideoUploadProvider } from "../../../context/media-upload.context";
 
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 

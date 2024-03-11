@@ -21,7 +21,8 @@ export const formatGqlError = (error: any): string => {
 export const setCookie = (key: string, value: string) => {
 	if (process.browser) {
 		Cookies.set(key, value, {
-			expires: 1 / 24,
+			// expires: 1 / 24,
+			expires: 1,
 			// sameSite: "strict",
 			// path: "/auth?login",
 		});
@@ -29,9 +30,7 @@ export const setCookie = (key: string, value: string) => {
 };
 
 export const removeCookie = (key: string) => {
-	if (process.browser) {
-		Cookies.remove(key);
-	}
+	if (process.browser) Cookies.remove(key);
 };
 
 export const getCookie = (name: string) => {

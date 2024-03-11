@@ -1,17 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-	FC,
-	ForwardedRef,
-	useRef,
-	ChangeEvent,
-	lazy,
-	createRef,
-	useState,
-	useEffect,
-	useId,
-	MouseEvent,
-	useMemo,
-} from "react";
+import { FC, ForwardedRef, ChangeEvent, useCallback, useState, useEffect } from "react";
 import { PrimaryButton } from "../../../atom/buttons";
 import CustomTextInput from "../../../atom/inputs/CustomTextInput";
 import { AddNewLectureButton, DuplicateLectureButton, DeleteLectureButton } from "./ActionButtons";
@@ -22,11 +10,7 @@ import {
 	newCourse,
 	setNewCourse,
 } from "../../../../../redux/reducers/coursesSlice";
-import { useVideoUploadContext } from "../../../../../context/media-upload.context";
 import { useDispatch, useSelector } from "react-redux";
-import { convertToBase64 } from "../../../../../utils";
-import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../../constants";
 import { useModal } from "../../../../../context/modal.context";
 import VideoUploadModal from "../../../atom/modals/VideoUploadModal";
 
@@ -50,43 +34,42 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 	const dispatch = useDispatch();
 	const { openModal } = useModal();
 	const newCourseData = useSelector(newCourse);
-	const emptyState: CourseContentUpload = {
-		title: "",
-		course_sections: [{ notes: "", section_name: "", file: null, posterImage: "" }],
+	const defaultState: CourseContentUpload = {
+		title: title || "",
+		course_sections: course_sections || [{ notes: "", section_name: "", file: null, posterImage: "" }],
 	};
-	const [state, setState] = useState<CourseContentUpload[]>(
-		newCourseData?.course_contents && newCourseData?.course_contents.length > 0
-			? newCourseData?.course_contents
-			: [emptyState],
-	);
+	const [state, setState] = useState<CourseContentUpload[]>(newCourseData?.course_contents || [defaultState]);
 
 	const handleVideoUpload = (file: CourseSectionUploadFile, section_index: number, posterImage?: string) => {
-		if (file) {
-			setState((prev) => {
-				const updatedState = [...prev];
-				if (!updatedState[index].course_sections) updatedState[index].course_sections = [];
-				updatedState[index] = {
-					...updatedState[index],
-					course_sections: updatedState[index].course_sections.map((section, sectionIndex) => {
-						return sectionIndex === section_index
-							? {
+		setState((prevState) => {
+			const updatedState = prevState.map((content, index) => {
+				if (index === section_index) {
+					const updatedSection = {
+						...content,
+						course_sections: content.course_sections.map((section, secIndex) => {
+							if (secIndex === section_index) {
+								return {
 									...section,
-									file,
+									file: file,
 									posterImage: String(posterImage),
-							  }
-							: section;
-					}),
-				};
-				// console.log({ updatedState, posterImage });
-				dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
-				return updatedState;
+								};
+							}
+							return section;
+						}),
+					};
+					return updatedSection;
+				}
+				return content;
 			});
-		}
+			console.log({ updatedState });
+			dispatch(setNewCourse({ ...newCourseData, course_contents: updatedState }));
+			return updatedState;
+		});
 		if (posterImage) URL.revokeObjectURL(posterImage);
 	};
 
 	const openUploadModal = (section_index: number) => {
-		const fileIndex = state[index].course_sections[section_index];
+		const fileIndex = course_sections[section_index];
 		if (fileIndex)
 			openModal(
 				<VideoUploadModal
@@ -106,6 +89,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 				modalConfig,
 			);
 	};
+	
 
 	return (
 		<>
@@ -129,7 +113,6 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 					</div>
 					<div className="">
 						{course_sections.map((lecture, section_index) => {
-							// if (lecture.file !== null) lecture.file.name = buttonText;
 							return (
 								<div
 									ref={contentContainerRef}
@@ -151,18 +134,17 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 													<div className="absolute h-full w-full bg-black/50 flex justify-center items-center">
 														<PrimaryButton
 															title={
-																(state[index] &&
-																	state[index].course_sections[section_index] &&
-																	state[index].course_sections[section_index].file !==
-																		null &&
+																(course_sections[section_index] &&
+																	course_sections[section_index].file !== null &&
 																	`${
-																		state[index].course_sections[
-																			section_index
-																		].file?.name.slice(0, 25) + "---"
+																		course_sections[section_index].file?.name.slice(
+																			0,
+																			25,
+																		) + "---"
 																	}.${
-																		state[index].course_sections[
-																			section_index
-																		].file?.type.split("/")[1]
+																		course_sections[section_index].file?.type.split(
+																			"/",
+																		)[1]
 																	}`) ||
 																(lecture.file !== null &&
 																	`${
@@ -180,8 +162,8 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 															//  ||
 															// "/assets/images/mockups/course_one.png"
 														}
-														alt={lecture.section_name}
-														className="h-full w-full object-cover"
+														alt={"poster-image"}
+														className="h-full w-full object-cover text-xs"
 													/>
 												</div>
 												<CustomTextInput
