@@ -232,14 +232,6 @@ export const formatTime = (timeInSeconds: number) => {
 	return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
 
-// export const convertToBase64 = (file: File) =>
-// 	new Promise((resolve, reject) => {
-// 		const reader = new FileReader();
-// 		reader.readAsDataURL(file);
-// 		reader.onload = () => resolve(reader.result);
-// 		reader.onerror = reject;
-// 	});
-
 export const convertToBase64 = (file: File): Promise<string> => {
 	return new Promise<string>((resolve, reject) => {
 		const reader = new FileReader();

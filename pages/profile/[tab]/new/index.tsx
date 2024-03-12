@@ -2,7 +2,7 @@ import React, { useEffect, useId, useMemo, useState } from "react";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
-import { ProfileTabLinkType } from "../../../../interfaces";
+import { ICourse, ProfileTabLinkType } from "../../../../interfaces";
 import WorkshopAndCourseEditTemplate from "../../../../components/templates/course/edit";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import { currentUser } from "../../../../redux/reducers/authSlice";
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../redux/reducers/coursesSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../constants";
+import { useMutation } from "@apollo/client";
+import { CREATE_COURSE } from "../../../../services/graphql/mutations/courses";
+import { CreateCourseVariables } from "../../../../interfaces/graphql.interface";
 
 const EditPageContainer = () => {
 	const router = useRouter();
@@ -20,6 +23,7 @@ const EditPageContainer = () => {
 	const dispatch = useDispatch();
 	const newCourseData = useSelector(newCourse);
 	const course_contents = newCourseData?.course_contents;
+	const [uploadCourse] = useMutation<ICourse, CreateCourseVariables>(CREATE_COURSE);
 
 	const isCourse = useMemo(() => {
 		return Boolean(tab === "courses");
@@ -38,11 +42,12 @@ const EditPageContainer = () => {
 
 	const saveNewCourse = async () => {
 		try {
+			console.log("Loading....");
 			if (!newCourseData?.title)
 				return toast.error("Title is required", { ...ToastDefaultOptions({ id: "error" }) });
 			if (!newCourseData?.description)
 				return toast.error("Description is required", { ...ToastDefaultOptions({ id: "error" }) });
-			if (!newCourseData?.category)
+			if (!newCourseData?.category.id)
 				return toast.error("Select a category", { ...ToastDefaultOptions({ id: "error" }) });
 			if (!newCourseData?.description)
 				return toast.error("Description is required", { ...ToastDefaultOptions({ id: "error" }) });
@@ -51,10 +56,44 @@ const EditPageContainer = () => {
 			if (course_contents)
 				for (const section of course_contents) {
 					for (const { file } of section.course_sections) {
-						if (file) files.push(file);
+						if (file) {
+							// const { base64, type } = file;
+							// const body = Buffer.from(base64.replace(/^data:video\/\w+;base64,/, ""), "base64");
+							// const videoURL = URL.createObjectURL(new Blob([body], { type }));
+							// console.log({ videoURL });
+							// console.log({ base64, body });
+							// files.push(base64);
+						}
 					}
 				}
-			console.log({ files, cat: newCourseData?.category });
+			// const res = await uploadCourse({
+			// 	variables: {
+			// 		createCourseInput: {
+			// 			category: newCourseData.category.id,
+			// 			course_contents: newCourseData.course_contents.map((content) => {
+			// 				return {
+			// 					title: content.title,
+			// 					course_sections: content.course_sections.map((section) => {
+			// 						return {
+			// 							section_name: section.section_name,
+			// 							notes: section.notes,
+			// 						};
+			// 					}),
+			// 				};
+			// 			}),
+			// 			course_images: "null",
+			// 			course_level: newCourseData.course_level,
+			// 			description: newCourseData.description,
+			// 			price: newCourseData.price,
+			// 			requirements: newCourseData.requirements,
+			// 			title: newCourseData.title,
+			// 			what_to_learn: newCourseData.what_to_learn,
+			// 		},
+			// 		files: ["file 1", "file 2"],
+			// 	},
+			// });
+			// console.log({ res });
+			// Todo: mutation here
 		} catch (err) {
 			console.error({ err });
 			ToastDefaultOptions;
@@ -69,7 +108,6 @@ const EditPageContainer = () => {
 		<ProfileLayout>
 			<div className="flex justify-between items-center mb-3 animate__animated animate__fadeIn sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4">
 				<h1 className="capitalize">{isCourse ? "Add new course" : isWorkshop && "Add new Workshop"}</h1>
-
 				{isMentor && tab === "courses" && isNewItemPage ? (
 					<div className="flex items-center gap-3 lg:pr-8">
 						<PrimaryButton
