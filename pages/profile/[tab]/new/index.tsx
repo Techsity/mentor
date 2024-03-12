@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useMemo, useState } from "react";
+import React, { useId, useMemo } from "react";
 import protectedPageWrapper from "../../../protectedPageWrapper";
 import { useRouter } from "next/router";
 import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";

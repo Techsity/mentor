@@ -90,8 +90,14 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 							);
 							window.location.href = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
 						} else if (is_mentor) {
-							const { data, loading, error } = await getMentorProfile();
-							if (!loading)
+							const { data, loading, error } = await getMentorProfile({
+								context: {
+									headers: {
+										Authorization: `Bearer ${authToken}`,
+									},
+								},
+							});
+							if (!loading) {
 								if (data?.getMentorProfile) {
 									const mentorProfile: IMentor = data.getMentorProfile;
 									dispatch(
@@ -117,11 +123,13 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 									const next = router.query.next as string;
 									if (next) router.replace(decodeURIComponent(next));
 									else router.replace(`/profile`);
-								} else if (error) {
+								}
+								if (error) {
 									// Todo: Error handling if mentor profile is not found
 									setLoading(false);
-									console.log(error);
+									console.log("error getting mentor profile: ", error);
 								}
+							}
 						} else {
 							dispatch(
 								setCredentials({

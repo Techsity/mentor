@@ -90,3 +90,23 @@ export const FETCH_USER_SUBSCRIPTIONS = gql`
 		ratings
 	}
 `;
+
+export const VIEW_ALL_NOTIFICATIONS = gql`
+	query ViewAllNotifications {
+		viewAllNotifications {
+			id
+			title
+			body
+			resourceId
+			resourceType
+			read
+			userId
+			created_at
+		}
+	}
+`;
+export const MARK_NOTIFICATION_AS_READ = gql`
+	mutation ReadNotification($notificationId: String!) {
+		readNotification(notificationId: $notificationId)
+	}
+`;

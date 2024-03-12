@@ -15,6 +15,16 @@ export type Subscription = {
 	updated_at?: string;
 };
 
+export interface Notification {
+	id: string;
+	title: string;
+	body: string;
+	resourceId: string;
+	resourceType: string;
+	read: boolean;
+	created_at: Date;
+}
+
 export interface IUser {
 	id?: string;
 	email: string;
@@ -32,6 +42,7 @@ export interface IUser {
 	created_at?: string;
 	updated_at?: string;
 	subscriptions: Subscription[];
+	notifications: Notification[];
 }
 
 export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };

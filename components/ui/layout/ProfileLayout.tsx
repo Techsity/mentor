@@ -7,6 +7,7 @@ import { currentUser } from "../../../redux/reducers/authSlice";
 import EditProfileCard from "../atom/cards/profile/EditProfileCard";
 import { PrimaryButton } from "../atom/buttons";
 
+
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 
 const ProfileLayout = ({ children }: Props) => {

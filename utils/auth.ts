@@ -94,8 +94,8 @@ export const logoutUser = (next?: Function) => {
 
 export const authenticate = async (accessToken: string, next?: Function) => {
 	setCookie(AUTH_TOKEN_KEY, accessToken);
-	setLocalStorage(AUTH_TOKEN_KEY, accessToken);
-	next && next();
+	// setLocalStorage(AUTH_TOKEN_KEY, accessToken);
+	next && (await next());
 };
 
 export const navigateToAuthPage = (router: NextRouter, link: string) => {

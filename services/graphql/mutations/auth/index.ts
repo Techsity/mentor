@@ -59,6 +59,15 @@ export const GET_USER_PROFILE = gql`
 				created_at
 				updated_at
 			}
+			notifications {
+				id
+				title
+				resourceId
+				resourceType
+				body
+				created_at
+				read
+			}
 			is_online
 			is_active
 			is_verified
