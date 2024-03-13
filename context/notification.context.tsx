@@ -2,16 +2,16 @@ import { ReactNode, createContext, useContext, useEffect, useMemo, useState } fr
 import { IUser, Notification } from "../interfaces/user.interface";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { MARK_NOTIFICATION_AS_READ, VIEW_ALL_NOTIFICATIONS } from "../services/graphql/mutations/user";
-import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { currentUser } from "../redux/reducers/authSlice";
 import { useSocketContext } from "./socket-io.context";
 import EVENTS from "../constants/events.constant";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 interface INotificationsContext {
 	isOpen: boolean;
-	newerNotifications?: Notification[];
-	olderNotifications?: Notification[];
 	notifications?: Notification[];
 	markRead: (id: string) => void;
 	loading: boolean;
@@ -35,8 +35,10 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 	const user = useSelector(currentUser);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [notifications, setNotifications] = useState<Notification[]>([]);
-	let unreadNotifications = useMemo(() => notifications.filter((n) => !n.read), [notifications, user]);
-	const [notificationsCount, setNotificationsCount] = useState<number>(unreadNotifications.length || 0);
+	const unreadNotifications = useMemo(() => {
+		return notifications.filter((n) => !n.read);
+	}, [notifications, user]);
+	// const [notificationsCount, setNotificationsCount] = useState<number>(unreadNotifications.length || 0);
 	const [fetchNotifications, { loading: fetchLoading, refetch, data }] = useLazyQuery<
 		{ viewAllNotifications: Notification[] },
 		any
@@ -52,14 +54,22 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 	const loading = useMemo(() => readLoading || fetchLoading, [fetchLoading, readLoading]);
 
 	const markRead = async (id: string) => {
-		await markAsRead({ variables: { notificationId: id } }).then(() => {
-			setNotifications((prev) => {
-				const updated = [...prev];
-				const notificationToBeRead = updated.find((n) => n.id === id);
-				if (notificationToBeRead) notificationToBeRead.read = true;
-				return updated;
-			});
-		});
+		const notification = notifications.find((n) => n.id === id);
+		if (notification && !notification.read) {
+			console.log(`Notification ${id} marked as read`);
+			await markAsRead({ variables: { notificationId: id } })
+				.then(() => {
+					refetch();
+					// setNotifications((prev) => {
+					// 	refetch();
+					// 	const updated = [...prev];
+					// 	const notificationToBeRead = updated.find((n) => n.id === id);
+					// 	if (notificationToBeRead) notificationToBeRead.read = true;
+					// 	return updated;
+					// });
+				})
+				.catch((err) => console.error("Error marking notification as read: ", err));
+		}
 	};
 
 	const openPanel = () => {
@@ -77,11 +87,16 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 		if (user) setNotifications(user.notifications);
 	}, []);
 
-	// socket listening to latest notifications events
+	// socket listening to latest notifications events and update notifications
 	useEffect(() => {
 		client.on(EVENTS.NEW_NOTIFICATION, (data: Notification) => {
-			console.log({ data });
-			setNotifications((p) => p.concat(data));
+			setNotifications((p) => {
+				const updatedNotifications = [...p];
+				const exists = updatedNotifications.some((n) => n.id === data.id);
+				if (exists) return updatedNotifications;
+				updatedNotifications.concat(data);
+				return updatedNotifications;
+			});
 			refetch();
 		});
 	}, [client]);
@@ -94,15 +109,6 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 		if (data) setNotifications(data.viewAllNotifications);
 	}, [data]);
 
-	const now = dayjs();
-	const anHourAgo = now.subtract(1, "hour");
-	const newerNotifications = notifications?.filter((notification) =>
-		dayjs(new Date(notification.created_at)).isAfter(anHourAgo),
-	);
-	const olderNotifications = notifications?.filter((notification) =>
-		dayjs(new Date(notification.created_at)).isBefore(anHourAgo),
-	);
-
 	return (
 		<NotificationsContext.Provider
 			value={{
@@ -112,9 +118,10 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 				closePanel,
 				loading,
 				markRead,
-				olderNotifications,
-				newerNotifications,
-				notificationsCount,
+				notificationsCount: unreadNotifications.length,
+				notifications: notifications.slice().sort((a, b) => {
+					return dayjs(b.created_at).unix() - dayjs(a.created_at).unix();
+				}),
 			}}>
 			{children}
 		</NotificationsContext.Provider>

@@ -1,34 +1,70 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { Notification } from "../../../../../interfaces/user.interface";
 import { useNotificationContext } from "../../../../../context/notification.context";
+import classNames from "classnames";
+import { PrimaryButton } from "../../buttons";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const NotificationCard = () => {
-	const { newerNotifications, notifications, olderNotifications, closePanel, markRead, loading } =
-		useNotificationContext();
-	// &&
+	const { notifications, closePanel, markRead, loading } = useNotificationContext();
+	// and sign &&
+
+	const now = new Date();
+	const anHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+
+	const unreadNotifications = (notifications || []).filter(
+		(notification) => !notification.read && new Date(notification.created_at) > anHourAgo,
+	);
+
+	const newerNotifications = (notifications || []).filter(
+		(notification) => !notification.read && new Date(notification.created_at) < anHourAgo,
+	);
+
+	const olderNotifications = (notifications || []).filter(
+		(notification) =>
+			!unreadNotifications.includes(notification) &&
+			!newerNotifications.includes(notification) &&
+			new Date(notification.created_at) < anHourAgo,
+	);
 
 	return (
-		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-5 py-8 right-0 md:w-[35vw] md:right-12 top-24 w-full lg:w-[30vw] overflow-y-scroll overflow-hidden h-[60vh]">
-			<div className="w-full grid gap-3">
-				{newerNotifications && newerNotifications?.length >= 1 ? (
-					<div className="grid gap-1 w-full">
-						<h1 className="font-semibold text-[#70C5A1] text-sm">Newer Notifications</h1>
+		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
+			<div className="w-full divide-y">
+				{unreadNotifications.length >= 1 && (
+					<div className="grid gap-1 p-3 pb-3 w-full">
+						<h1 className="font-semibold text-[#70C5A1] text-sm">Unread</h1>
 						<div className="w-full">
-							{notifications?.map((notification, index) => {
-								return <NotificationItem {...{ notification, closePanel, markRead }} key={index} />;
-							})}
+							{unreadNotifications.map((notification, index) => (
+								<NotificationItem {...{ notification, closePanel, markRead }} key={index} />
+							))}
 						</div>
 					</div>
-				) : (
+				)}
+				{newerNotifications.length >= 1 && (
+					<div className="grid gap-1 p-3 pb-3 w-full">
+						<h1 className="font-semibold text-[#70C5A1] text-sm">Newer Notifications</h1>
+						<div className="w-full">
+							{newerNotifications.map((notification, index) => (
+								<NotificationItem {...{ notification, closePanel, markRead }} key={index} />
+							))}
+						</div>
+					</div>
+				)}
+				{unreadNotifications.length < 1 && newerNotifications.length < 1 && (
 					<p className="text-sm">No newer notifications. You're all caught up! 🎉</p>
 				)}
 				{olderNotifications && olderNotifications.length >= 1 && (
-					<div className="grid gap-1 w-full">
+					<div className="grid gap-1 p-3 pt-3 w-full">
 						<h1 className="font-semibold text-[#70C5A1] text-sm">Older Notifications</h1>
 						<div className="w-full">
-							{olderNotifications?.map((notification, index) => {
-								return <NotificationItem {...{ notification, closePanel, markRead }} key={index} />;
-							})}
+							{olderNotifications
+								?.filter((n) => n.read)
+								.map((notification, index) => {
+									return <NotificationItem {...{ notification, closePanel, markRead }} key={index} />;
+								})}
 						</div>
 					</div>
 				)}
@@ -41,17 +77,27 @@ const NotificationItem: FC<{ notification: Notification; closePanel: () => void;
 	closePanel,
 	markRead,
 }) => {
+	const link = `/${notification.resourceType.toLowerCase()}/${notification.resourceId}`;
+	const router = useRouter();
 	const handleClick = () => {
-		console.log(notification.id);
+		markRead(notification.id);
 		closePanel();
+		router.push(link);
 	};
 	return (
-		<div className="flex items-start w-full" onClick={handleClick}>
-			<div className="flex-grow grid gap-1">
-				<h1 className="">{}title</h1>
-				<p className="">{}body</p>
+		<div
+			className={classNames(
+				"flex items-start gap-4 p-2 px-3 cursor-default",
+				!notification.read ? "bg-[#70C5A1]/10" : "",
+			)}>
+			<div className="flex-grow grid gap-1 tracking-tight">
+				<h1 className="text-sm font-medium">{notification.title}</h1>
+				<p className="text-sm text-[#A3A6A7] w-full">{notification.body}</p>
+				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
 			</div>
-			<div className="max-w-sm w-full"></div>
+			<div className="max-w-sm">
+				<PrimaryButton title="View" className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
+			</div>
 		</div>
 	);
 };
