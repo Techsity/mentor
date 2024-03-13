@@ -18,7 +18,7 @@ interface INotificationsContext {
 	toggleVisibility: () => void;
 	openPanel: () => void;
 	closePanel: () => void;
-	newNotification: boolean;
+	notificationsCount: number;
 }
 
 const NotificationsContext = createContext<INotificationsContext>({
@@ -28,17 +28,19 @@ const NotificationsContext = createContext<INotificationsContext>({
 	openPanel: () => {},
 	closePanel: () => {},
 	loading: false,
-	newNotification: false,
+	notificationsCount: 0,
 });
 
 export const NotificationsContextProvider = ({ children }: { children?: ReactNode }) => {
 	const user = useSelector(currentUser);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [notifications, setNotifications] = useState<Notification[]>([]);
-	const [newNotifications, setNewNotifications] = useState<Notification[]>(notifications);
-	const [fetchNotifications, { loading: fetchLoading }] = useLazyQuery<{ viewAllNotifications: Notification[] }, any>(
-		VIEW_ALL_NOTIFICATIONS,
-	);
+	let unreadNotifications = useMemo(() => notifications.filter((n) => !n.read), [notifications, user]);
+	const [notificationsCount, setNotificationsCount] = useState<number>(unreadNotifications.length || 0);
+	const [fetchNotifications, { loading: fetchLoading, refetch, data }] = useLazyQuery<
+		{ viewAllNotifications: Notification[] },
+		any
+	>(VIEW_ALL_NOTIFICATIONS);
 
 	const { client } = useSocketContext();
 
@@ -70,37 +72,36 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 		setIsOpen(() => false);
 	};
 
-	client.on(EVENTS.NEW_NOTIFICATION, (data: any) => {
-		console.log({ data });
-	});
+	// set notifications on initial load
+	useEffect(() => {
+		if (user) setNotifications(user.notifications);
+	}, []);
 
-	// Todo: implement socket to listen to latest notifications
-	// fetch new notifications on panel toggle
-	// useEffect(() => {
-	// 	if (isOpen) {
-	// 		fetchNotifications().then(({ data }) => {
-	// 			console.log({ data });
-	// 			if (data) setNewNotifications(data.viewAllNotifications);
-	// 		});
-	// 	}
-	// }, [isOpen]);
+	// socket listening to latest notifications events
+	useEffect(() => {
+		client.on(EVENTS.NEW_NOTIFICATION, (data: Notification) => {
+			console.log({ data });
+			setNotifications((p) => p.concat(data));
+			refetch();
+		});
+	}, [client]);
 
-	const newNotification = Boolean(newNotifications.length > notifications.length);
+	useEffect(() => {
+		if (isOpen) refetch();
+	}, [isOpen]);
+
+	useEffect(() => {
+		if (data) setNotifications(data.viewAllNotifications);
+	}, [data]);
 
 	const now = dayjs();
 	const anHourAgo = now.subtract(1, "hour");
-
 	const newerNotifications = notifications?.filter((notification) =>
 		dayjs(new Date(notification.created_at)).isAfter(anHourAgo),
 	);
-
 	const olderNotifications = notifications?.filter((notification) =>
 		dayjs(new Date(notification.created_at)).isBefore(anHourAgo),
 	);
-
-	useEffect(() => {
-		if (user) if (user.notifications) setNotifications(user.notifications);
-	}, [user]);
 
 	return (
 		<NotificationsContext.Provider
@@ -113,7 +114,7 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 				markRead,
 				olderNotifications,
 				newerNotifications,
-				newNotification,
+				notificationsCount,
 			}}>
 			{children}
 		</NotificationsContext.Provider>

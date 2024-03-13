@@ -21,7 +21,7 @@ const Navbar = () => {
 	const excludedPaths: string[] = ["auth", "onboarding", "admin", "new", "content", "edit"];
 
 	const hideNavSections: boolean = excludedPaths.some((path) => router.asPath.includes(path));
-	const { toggleVisibility, isOpen: showNotificationPanel, newNotification } = useNotificationContext();
+	const { toggleVisibility, isOpen: showNotificationPanel, notificationsCount } = useNotificationContext();
 
 	return (
 		<nav className="sticky h-20 top-0 w-full z-40 items-center bg-white shadow flex 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__fadeIn">
@@ -61,7 +61,7 @@ const Navbar = () => {
 									showNotificationPanel ? "bg-[#70C5A1]" : " bg-white hover:bg-[#70C5A1]",
 								)}>
 								<div className="relative">
-									{newNotification && (
+									{notificationsCount > 0 && (
 										<>
 											<div className="absolute rounded-full p-[4px] bg-red-500 animate-ping -right-0" />
 											<div className="absolute rounded-full p-[4px] bg-red-500 -right-0" />

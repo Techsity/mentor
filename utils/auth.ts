@@ -2,7 +2,7 @@ import { NextRouter } from "next/router";
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
 import { logOut } from "../redux/reducers/authSlice";
-import { store } from "../redux/store";
+import { persistor, store } from "../redux/store";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { setNewCourse } from "../redux/reducers/coursesSlice";
@@ -88,6 +88,9 @@ export const logoutUser = (next?: Function) => {
 	store.dispatch(logOut());
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
+	// sessionStorage.clear();
+	sessionStorage.removeItem("persist:auth");
+	persistor.persist();
 	// removeLocalStorage("persist:root");
 	next && next();
 };

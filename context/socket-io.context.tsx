@@ -13,28 +13,20 @@ const SocketContext = createContext<ISocketContext>({ client: {} as Socket, conn
 export const SocketContextProvider = ({ children }: any) => {
 	const [connected, setConnected] = useState<boolean>(false);
 	const user = useSelector(currentUser);
-	const userId = useMemo(() => user?.id, [user]);
 
-	// const client = io(String(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL), {
-	// 	query: { userId },
-	// 	transports: ["websocket"],
-	// 	autoConnect: true,
-	// 	reconnectionAttempts: 1,
-	// 	reconnection: true,
-	// 	reconnectionDelay: 5000,
-	// 	closeOnBeforeunload: true,
-	// });
+	const socketUrl = `${String(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL)}`;
 
 	const client = useMemo(() => {
-		const socket = io(String(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL), {
-			query: { userId },
+		const socket = io(socketUrl, {
+			query: { userId: user?.id },
 			transports: ["websocket"],
 			autoConnect: true,
 			reconnection: true,
 			reconnectionAttempts: Infinity,
-			reconnectionDelay: 1000,
 			closeOnBeforeunload: true,
+			multiplex: true,
 		});
+		console.log("connecting to socket:", socketUrl);
 
 		socket.on("connect", () => {
 			console.log("connected to socket: ", socket.id);
@@ -49,7 +41,7 @@ export const SocketContextProvider = ({ children }: any) => {
 
 	useEffect(() => {
 		const errorHandler = (error: Error) => {
-			console.error("Socket connection error:", error);
+			console.error("Socket connection error:", error.message);
 		};
 		client.on("connect_error", errorHandler);
 		client.on("connect_timeout", errorHandler);
@@ -61,6 +53,13 @@ export const SocketContextProvider = ({ children }: any) => {
 			client.off("error", errorHandler);
 		};
 	}, [client]);
+
+	useEffect(() => {
+		if (!user) {
+			client.disconnect();
+			client.close();
+		} else if (user) client.connect();
+	}, [user, client]);
 
 	return <SocketContext.Provider {...{ value: { client, connected } }}>{children}</SocketContext.Provider>;
 };

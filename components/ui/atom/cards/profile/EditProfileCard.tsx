@@ -10,6 +10,8 @@ import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/mutations/au
 import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
 import ActivityIndicator from "../../loader/ActivityIndicator";
+import { useSocketContext } from "../../../../../context/socket-io.context";
+import EVENTS from "../../../../../constants/events.constant";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const EditProfileCard = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const user = useSelector(currentUser);
 	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
+	const { client } = useSocketContext();
 
 	const handleSwitchProfile = async () => {
 		setLoading(true);
@@ -43,6 +46,13 @@ const EditProfileCard = () => {
 			}
 		} else router.push("/mentor/onboarding");
 	};
+
+	const handleLogout = () => {
+		logoutUser(() => {
+			client.disconnect();
+		});
+	};
+
 	return (
 		<div>
 			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
@@ -60,7 +70,7 @@ const EditProfileCard = () => {
 							<p className="text-[#70C5A1]">{user?.mentor ? "Mentor" : "User"}</p>
 						</div>
 					</div>
-					<div className="cursor-pointer" onClick={() => logoutUser()}>
+					<div className="cursor-pointer" onClick={handleLogout}>
 						<PowerOutline color="#d31119" />
 					</div>
 				</div>

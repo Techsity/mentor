@@ -26,8 +26,7 @@ const authSlice = createSlice({
 			// console.log("Logging out...");
 			state.isLoggedIn = false;
 			state.user = null;
-			state.resetPasswordState = null; 
-			return state;
+			state.resetPasswordState = null;
 		},
 		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
 			if (action.payload) {
