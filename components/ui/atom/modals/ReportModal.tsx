@@ -76,7 +76,7 @@ const ReportModal = ({ mentorId }: any) => {
 							className="flex items-center gap-1 cursor-pointer"
 							onClick={() => setSelectedCategory(slugify(c))}
 							key={i}>
-							<input type="radio" checked={slugify(selectedCategory) === slugify(c)} />
+							<input readOnly type="radio" checked={slugify(selectedCategory) === slugify(c)} />
 							{c}
 						</li>
 					))}
