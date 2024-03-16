@@ -18,6 +18,7 @@ export const dummyUsers: IUser[] = [
 		avatar: "/assets/images/avatar.png",
 		is_mentor: true,
 		phone: "123-456-3390",
+
 		isPremium: false,
 		subscriptions: [],
 	},
