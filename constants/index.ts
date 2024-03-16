@@ -21,7 +21,6 @@ export const ToastDefaultOptions = (props?: ICustomToastProps): ToastOptions => 
 		autoClose: 5000,
 		closeOnClick: true,
 		draggable: true,
-		position: "top-right",
 		hideProgressBar: true,
 		theme: "light",
 		toastId: id,
