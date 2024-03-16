@@ -6,8 +6,23 @@ import AboutWorkshop from "./AboutWorkshop";
 import WhatToLearnInWorkshop from "./WhatToLearnInWorkshop";
 import WorkshopRequirements from "./WorkshopRequirements";
 import WorkshopContents from "./WorkshopContents";
+import { useModal } from "../../../../../context/modal.context";
+import ReportModal from "../../../atom/modals/ReportModal";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { isLoggedIn, currentUser } from "../../../../../redux/reducers/authSlice";
+import { navigateToAuthPage } from "../../../../../utils/auth";
 
 const WorkShopDetailsBody = (workshop: IWorkshop) => {
+	const router = useRouter();
+	const auth = useSelector(isLoggedIn);
+	const user = useSelector(currentUser);
+	const { openModal } = useModal();
+
+	const handleOpenModal = () => {
+		if (!auth || !user) navigateToAuthPage(router, router.pathname);
+		else openModal(<ReportModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false });
+	};
 	return (
 		<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
 			<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
@@ -20,7 +35,9 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 					</div>
 					<div className="">
 						<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
-							<p className="text-[#F15E63] cursor-pointer hover:underline">! Report Mentor</p>
+							<p onClick={handleOpenModal} className="text-[#F15E63] cursor-pointer hover:underline">
+								Report Mentor
+							</p>
 							<Socials />
 						</div>
 					</div>

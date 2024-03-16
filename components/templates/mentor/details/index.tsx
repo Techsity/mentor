@@ -7,10 +7,24 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import ListReviews from "../../../ui/atom/common/course/ListReviews";
 import Socials from "../../../ui/atom/common/course/Socials";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
+import { useModal } from "../../../../context/modal.context";
+import ReportModal from "../../../ui/atom/modals/ReportModal";
+import { useSelector } from "react-redux";
+import { currentUser, isLoggedIn } from "../../../../redux/reducers/authSlice";
+import { useRouter } from "next/router";
+import { navigateToAuthPage } from "../../../../utils/auth";
 
 const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefined; loading?: boolean }) => {
-	// const coursesByMentor = getMentorCourses(mentor?.user.name);
+	const router = useRouter();
+	const auth = useSelector(isLoggedIn);
+	const user = useSelector(currentUser);
 	const coursesByMentor = mentor?.courses;
+	const { openModal } = useModal();
+
+	const handleOpenModal = () => {
+		if (!auth || !user) navigateToAuthPage(router, router.pathname);
+		else openModal(<ReportModal mentorId={mentor?.id} />, { closeOnBackgroundClick: false });
+	};
 
 	return (
 		<>
@@ -28,7 +42,11 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 						</div>
 						<ListReviews reviews={mentor?.reviews || []} />
 						<div className="flex max-w-xl justify-between items-center mt-5">
-							<p className="text-[#F15E63] cursor-pointer hover:underline text-sm">! Report Mentor</p>
+							<p
+								onClick={handleOpenModal}
+								className="text-[#F15E63] cursor-pointer hover:underline text-sm">
+								Report Mentor
+							</p>
 							<Socials />
 						</div>
 					</div>

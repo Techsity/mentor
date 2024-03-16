@@ -225,3 +225,13 @@ export const FOLLOW_MENTOR = gql`
 		toggleFollowMentor(mentorId: $mentorId, follow: $follow)
 	}
 `;
+
+export const REPORT_MENTOR = gql`
+	mutation ReportMentor($input: ReportMentorInput!) {
+		reportMentor(input: $input) {
+			content
+			id
+			created_at
+		}
+	}
+`;

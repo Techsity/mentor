@@ -77,7 +77,7 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate 
 						"relative w-auto h-auto",
 					)}>
 					<div className="w-full flex items-end justify-end">
-						<div className="text-3xl text-black cursor-pointer" onClick={closeModal}>
+						<div className="text-3xl text-red-600 cursor-pointer" onClick={closeModal}>
 							&times;
 						</div>
 					</div>

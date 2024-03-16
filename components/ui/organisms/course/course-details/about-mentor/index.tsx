@@ -48,7 +48,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 	}, [mentor]);
 
 	return (
-		<div className="px-5 sm:px-10 lg:px-20 mt-10 py-3">
+		<div className="px-6 sm:px-12 mt-10 py-3">
 			<h1 className="text-xl font-semibold">About Mentor</h1>
 			<div className="mt-8">
 				<div className="my-2 sm:my-4 flex items-center gap-2">
@@ -71,9 +71,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 									<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
 								</svg>
 							) : null}
-							<p className="flex items-center">
-								{formatFollowersCount(followersCount)} followers
-							</p>
+							<p className="flex items-center">{formatFollowersCount(followersCount)} followers</p>
 							{/* <p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p> */}
 							{!followLoading ? (
 								<button

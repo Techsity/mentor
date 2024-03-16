@@ -12,23 +12,9 @@ const NotificationCard = () => {
 	const { notifications, closePanel, markRead, loading } = useNotificationContext();
 	// and sign &&
 
-	const now = new Date();
-	const anHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+	const unreadNotifications = (notifications as Notification[]).filter((notification) => !notification.read);
 
-	const unreadNotifications = (notifications || []).filter(
-		(notification) => !notification.read && new Date(notification.created_at) > anHourAgo,
-	);
-
-	const newerNotifications = (notifications || []).filter(
-		(notification) => !notification.read && new Date(notification.created_at) < anHourAgo,
-	);
-
-	const olderNotifications = (notifications || []).filter(
-		(notification) =>
-			!unreadNotifications.includes(notification) &&
-			!newerNotifications.includes(notification) &&
-			new Date(notification.created_at) < anHourAgo,
-	);
+	const olderNotifications = (notifications as Notification[]).filter((notification) => notification.read);
 
 	return (
 		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
@@ -43,22 +29,12 @@ const NotificationCard = () => {
 						</div>
 					</div>
 				)}
-				{newerNotifications.length >= 1 && (
-					<div className="grid gap-1 p-3 pb-3 w-full">
-						<h1 className="font-semibold text-[#70C5A1] text-sm">Newer Notifications</h1>
-						<div className="w-full">
-							{newerNotifications.map((notification, index) => (
-								<NotificationItem {...{ notification, closePanel, markRead }} key={index} />
-							))}
-						</div>
-					</div>
-				)}
-				{unreadNotifications.length < 1 && newerNotifications.length < 1 && (
+				{unreadNotifications.length < 1 && (
 					<p className="text-sm">No newer notifications. You're all caught up! 🎉</p>
 				)}
 				{olderNotifications && olderNotifications.length >= 1 && (
 					<div className="grid gap-1 p-3 pt-3 w-full">
-						<h1 className="font-semibold text-[#70C5A1] text-sm">Older Notifications</h1>
+						<h1 className="font-semibold text-[#70C5A1] text-sm">Previous Notifications</h1>
 						<div className="w-full">
 							{olderNotifications
 								?.filter((n) => n.read)

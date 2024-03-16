@@ -21,7 +21,7 @@ const CourseDetailsPageHero = (course: ICourse) => {
 					</h1>
 					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
 						<p className="">{course.course_level.split("_").join(" ")}</p>
-						<p className="">{course.duration} hours</p>
+						<p className="">{course.duration || 40} hours</p>
 						<p className="">{course.reviews && course.reviews.length} reviews</p>
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{calculateRatingsInReviews(course.reviews)}
