@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MentorDetailsTemplate from "../../../components/templates/mentor/details";
 import { IMentor } from "../../../interfaces/mentor.interface";
-import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/mutations/mentors";
+import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/queries/mentor";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import client from "../../../utils/apolloClient";
 import { formatGqlError } from "../../../utils/auth";

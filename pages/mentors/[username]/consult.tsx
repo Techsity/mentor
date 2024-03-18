@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ScheduleConsultationTemplate from "../../../components/templates/mentor/schedule-consultation";
 import { IMentor } from "../../../interfaces/mentor.interface";
-import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/mutations/mentors";
+import { VIEW_MENTOR_PROFILE } from "../../../services/graphql/queries/mentor";
 import protectedPageWrapper from "../../protectedPageWrapper";
 import NewsLetterForm from "../../../components/ui/atom/forms/NewsLetterForm";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";

@@ -39,7 +39,7 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 						return <DisplayCourseCard loading={loading} course={null} key={indx} />;
 					})
 				) : !loading && !error && allCourses.length < 1 ? (
-					<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this category</h1>
+					<h1 className="text-[#d31119] tracking-tight">No courses under this category</h1>
 				) : (
 					allCourses
 						.map((course, indx) => {
@@ -47,7 +47,7 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 						})
 						.slice(0, limit)
 				)}
-				{!loading && error && <h1 className="text-lg text-[#d31119] tracking-tight">Network Error.</h1>}
+				{!loading && error && <h1 className="text-[#d31119] tracking-tight">Network Error.</h1>}
 			</div>
 			{/* {!loading && !error && allCourses.length >= THRESHOLD && ( */}
 			<div className="max-w-xs mx-auto py-4">

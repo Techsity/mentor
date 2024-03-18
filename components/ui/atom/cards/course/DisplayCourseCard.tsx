@@ -7,9 +7,9 @@ import { calculateRatingsInReviews, formatFollowersCount, slugify } from "../../
 import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 
-const DisplayCourseCard = ({ course,  }: { course: ICourse | null; loading?: boolean }) => {
+const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
 	const router = useRouter();
-	const loading=true
+
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 	const hasBeenAdded = wishlist.find(
 		(wishlistedCourse) => slugify(wishlistedCourse?.title as string) === slugify(course?.title as string),
@@ -63,7 +63,7 @@ const DisplayCourseCard = ({ course,  }: { course: ICourse | null; loading?: boo
 													: "/assets/images/mockups/course_one.png"
 											}
 											className="w-full h-full object-cover bg-zinc-200"
-											alt={course?.title}
+											alt={course?.title || ""}
 											loading="lazy"
 										/>
 									</div>
@@ -72,18 +72,14 @@ const DisplayCourseCard = ({ course,  }: { course: ICourse | null; loading?: boo
 									<div className="z-10 h-[250px] w-full bg-zinc-100 animate__animated animate__fadeOut animate__infinite" />
 								)}
 							</div>
-
-							<h1
-								className={
-									!loading
-										? "px-5 p-2 font-medium tracking-tight"
-										: "mx-5 px-5 h-2 bg-zinc-200 sm:w-3/5"
-								}>
-								{!loading && String(course?.title).length > 25
-									? !loading && course?.title.slice(0, 25) + "..."
-									: !loading && course?.title}
-							</h1>
-
+							{loading && <span className="mx-5 px-5 h-2 bg-zinc-200 sm:w-3/5" />}
+							{!loading && (
+								<h1 className={"px-5 p-2 font-medium tracking-tight"}>
+									{String(course?.title).length > 25
+										? course?.title.slice(0, 25) + "..."
+										: course?.title}
+								</h1>
+							)}
 							<div className="flex items-center gap-1 justify-between px-5 text-xs w-full">
 								<span className={!loading ? "font-normal" : "px-5 bg-zinc-200 h-1.5 capitalize"}>
 									{!loading && course && course?.course_level.split("_").join(" ")}
@@ -126,7 +122,7 @@ const DisplayCourseCard = ({ course,  }: { course: ICourse | null; loading?: boo
 										: "mt-3 mx-5 h-1.5 w-5/6 bg-zinc-200"
 								}>
 								{
-									String(course?.description)
+									!loading && String(course?.description)
 									// > 30
 									// 	? !loading && course?.description.slice(0, 30) + "..."
 									// 	: !loading && course?.description
