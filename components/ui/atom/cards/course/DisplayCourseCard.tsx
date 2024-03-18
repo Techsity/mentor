@@ -7,8 +7,9 @@ import { calculateRatingsInReviews, formatFollowersCount, slugify } from "../../
 import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 
-const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
+const DisplayCourseCard = ({ course,  }: { course: ICourse | null; loading?: boolean }) => {
 	const router = useRouter();
+	const loading=true
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 	const hasBeenAdded = wishlist.find(
 		(wishlistedCourse) => slugify(wishlistedCourse?.title as string) === slugify(course?.title as string),

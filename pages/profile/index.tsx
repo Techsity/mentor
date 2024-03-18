@@ -8,7 +8,7 @@ import { ICourse, ProfileTabLinkType } from "../../interfaces";
 import { currentUser } from "../../redux/reducers/authSlice";
 import courses from "../../data/courses";
 import { useQuery } from "@apollo/client";
-import { FETCH_USER_SUBSCRIPTIONS } from "../../services/graphql/mutations/user";
+import { FETCH_COURSE_SUBSCRIPTIONS } from "../../services/graphql/mutations/user";
 import { Subscription } from "../../interfaces/user.interface";
 import UserCourseSubcriptions from "../../components/ui/organisms/user/profile/UserCourseSubcriptions";
 

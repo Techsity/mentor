@@ -2,7 +2,7 @@ import React from "react";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import MentorDisplayCard from "../../../atom/cards/home/MentorDisplayCard";
 import { useQuery } from "@apollo/client";
-import { HOMEPAGE_MENTORS_LIST } from "../../../../../services/graphql/mutations/mentors";
+import { HOMEPAGE_MENTORS_LIST } from "../../../../../services/graphql/queries/mentor";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { useRouter } from "next/router";
 

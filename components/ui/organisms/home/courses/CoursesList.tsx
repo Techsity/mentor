@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 import { ICourse } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
-import { ALL_COURSES } from "../../../../../services/graphql/mutations/courses";
+import { ALL_COURSES } from "../../../../../services/graphql/queries/course";
 import { PrimaryButton } from "../../../atom/buttons";
 
 type AllCoursesArgs = {
@@ -29,7 +29,7 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 		// Todo
 	};
 
-	if (error) console.log(error);
+	if (error) console.error(error);
 
 	return (
 		<>

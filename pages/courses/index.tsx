@@ -11,12 +11,6 @@ const AllCoursesPage = () => {
 	return <AllCoursesPageTemplate />;
 };
 
-// export const getServerSideProps = async (
-// 	ctx: GetServerSidePropsContext,
-// ): Promise<GetServerSidePropsResult<CourseTypeSearchPageProps>> => {
-// 	const courseType = ctx.query?.type as CourseType;
-// 	const category = (ctx.query?.category as string) || null;
-// 	if (!courseType) return { props: { category, courseType: "technical" } };
-// 	return { props: { category, courseType } };
-// };
+
+
 export default AllCoursesPage;

@@ -39,7 +39,8 @@ const ReportModal = ({ mentorId }: any) => {
 
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const { value } = e.target;
-		if (value.length < CONTENT_THRESHOLD + 1) setContent(value);
+		// if (value.length < CONTENT_THRESHOLD + 1)
+		setContent(value);
 		setLimitReached(value.length >= CONTENT_THRESHOLD + 1);
 	};
 
@@ -63,14 +64,22 @@ const ReportModal = ({ mentorId }: any) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="bg-white h-auto w-[85vw] md:w-[65vw] rounded p-5 inline-block">
-			<h1 className="text-[16px] font-medium">Report Mentor</h1>
+		<form
+			onSubmit={handleSubmit}
+			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
+			<h1 className="font-medium text-center">Report Mentor</h1>
+			<span className="flex items-center justify-between mt-5">
+				<p className="text-[16px]">Reason</p>
+				<label htmlFor="" className="text-xs italic text-gray-600">
+					Max length: {CONTENT_THRESHOLD} words
+				</label>
+			</span>
 			<CustomTextArea
 				onChange={handleChange}
-				containerProps={{ className: `text-sm my-4 ${limitReached ? "border-red-500" : ""}` }}
+				containerProps={{ className: `text-sm mb-4 ${limitReached ? "border-red-500" : ""}` }}
 			/>
-			<div className="flex justify-between items-center">
-				<ul className="flex items-center gap-2 text-sm my-2">
+			<div className="flex flex-col lg:flex-row justify-between lg:items-center">
+				<ul className="flex items-center gap-2 text-sm my-2 flex-wrap">
 					{reportCategories.map((c, i) => (
 						<li
 							className="flex items-center gap-1 cursor-pointer"
@@ -81,8 +90,8 @@ const ReportModal = ({ mentorId }: any) => {
 						</li>
 					))}
 				</ul>
-				<span className={classNames("text-sm", limitReached && "text-red-500")}>
-					{limitReached && "Limit is "} {!limitReached ? content.length : CONTENT_THRESHOLD} words
+				<span className={classNames("order-first lg:order-last text-sm", limitReached && "text-red-500")}>
+					{!limitReached && "Remaining"} {CONTENT_THRESHOLD - content.length} words
 				</span>
 			</div>
 			<PrimaryButton

@@ -7,7 +7,7 @@ import { ExtendedCourseWorkshopType } from "../../../../templates/course/edit";
 import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../../redux/reducers/coursesSlice";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
+import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/queries/course";
 import { courseLevels } from "../../../../../data/courses";
 import { Select } from "../../inputs/Select";
 import CustomTextArea from "../../inputs/CustomTextArea";

@@ -7,13 +7,13 @@ import { ICourseCategory } from "../../../../../../interfaces";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../../../../../../services/graphql/mutations/courses";
+import { GET_ALL_CATEGORIES } from "../../../../../../services/graphql/queries/course";
+import { slugify } from "../../../../../../utils";
 
 type PropState = { categories: ICourseCategory[]; loading: boolean };
 
 const MenteeDashboardHero = () => {
 	const router = useRouter();
-	const courseType = router.query.type;
 	const [state, setState] = React.useState<PropState>({ categories: [], loading: true });
 	const { categories, loading } = state;
 	// Todo: implement a search query global caching system
@@ -64,7 +64,7 @@ const MenteeDashboardHero = () => {
 														{
 															pathname: router.pathname,
 															query: {
-																category: category.title.toLowerCase().trim(),
+																category: slugify(category.title),
 															},
 														},
 														undefined,

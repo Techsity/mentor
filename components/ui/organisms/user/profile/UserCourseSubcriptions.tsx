@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { ICourse } from "../../../../../interfaces";
-import { FETCH_USER_SUBSCRIPTIONS } from "../../../../../services/graphql/mutations/user";
+import { FETCH_COURSE_SUBSCRIPTIONS } from "../../../../../services/graphql/mutations/user";
 import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProgressDisplayCard";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
@@ -11,7 +11,7 @@ import { formatGqlError, logoutUser } from "../../../../../utils/auth";
 const UserCourseSubcriptions = () => {
 	const user = useSelector(currentUser);
 	const { data, loading, error } = useQuery<{ viewSubscribedCourses: Subscription[] }, { userId: string }>(
-		FETCH_USER_SUBSCRIPTIONS,
+		FETCH_COURSE_SUBSCRIPTIONS,
 		{
 			variables: { userId: String(user?.id) },
 		},

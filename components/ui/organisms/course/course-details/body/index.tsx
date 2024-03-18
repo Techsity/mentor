@@ -21,7 +21,7 @@ const CourseDetailsBody = (course: ICourse) => {
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={course.mentor.id} />, { closeOnBackgroundClick: false });
+		else openModal(<ReportModal mentorId={course.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 
 	return (

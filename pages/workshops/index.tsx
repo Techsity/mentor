@@ -16,4 +16,8 @@ const AllWorkshopsPage = () => {
 	);
 };
 
+export const getServerSideProps = async () => {
+	// FETCH_ALL_WORKSHOPS
+};
+
 export default AllWorkshopsPage;

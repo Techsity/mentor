@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../../redux/reducers/authSlice";
 import { IUser } from "../../../interfaces/user.interface";
 import { useLazyQuery } from "@apollo/client";
-import { GET_USER_PROFILE } from "../../../services/graphql/mutations/auth";
+import { GET_USER_PROFILE } from "../../../services/graphql/queries/user";
 import client from "../../../utils/apolloClient";
 
 type AuthWrapperProps = { children?: ReactNode };
