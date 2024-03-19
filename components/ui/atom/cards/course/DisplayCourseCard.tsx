@@ -157,7 +157,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								</div>
 							)
 						) : (
-							<span className="text-white text-sm bg-[#033] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
+							<span className="text-white text-sm bg-[#ccc] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
 						)}
 					</div>
 				</div>
