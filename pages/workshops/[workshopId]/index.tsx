@@ -10,14 +10,14 @@ import ResponseMessages from "../../../constants/response-codes";
 import { formatGqlError } from "../../../utils/auth";
 
 type WorkshopPageDetailsProps = {
-	workshop: IWorkshop | undefined;
+	workshop: IWorkshop | null;
 	error?: string;
 };
 
 const WorkShopDetailsPage = ({ workshop, error }: WorkshopPageDetailsProps) => {
 	if (!workshop) {
 		console.error({ error });
-		return <div className="text-center text-red-500">{error || "Something went wrong"}</div>;
+		return <div className="h-screen text-center flex items-center justify-center text-red-500">{error || "Something went wrong"}</div>;
 	}
 	return <WorkShopDetailsPageTemplate workshop={workshop} />;
 };
@@ -32,17 +32,18 @@ export const getServerSideProps = async (
 		const query = client({ ssr: true }).query;
 		const {
 			data: { viewWorkshop: workshop },
+			error,
 		} = await query<{ viewWorkshop: IWorkshop }, { workshopId: string }>({
 			query: VIEW_WORKSHOP_DETAILS,
 			variables: { workshopId },
 		});
-		return { props: { workshop, error: "" } };
+		return { props: { workshop } };
 	} catch (error) {
 		console.error(error);
 		const errorMsg = formatGqlError(error);
 		if (errorMsg == ResponseMessages.MENTOR_PROFILE_NOT_FOUND)
-			return { props: { workshop: undefined, error: errorMsg } };
-		return { props: { workshop: undefined, error: "Something went wrong. Please refresh page and try again." } };
+			return { props: { workshop: null, error: errorMsg } };
+		return { props: { workshop: null, error: "Something went wrong. Please refresh page and try again." } };
 	}
 };
 

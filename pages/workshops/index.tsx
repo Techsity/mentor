@@ -14,10 +14,13 @@ type ResponseType = {
 };
 
 const AllWorkshopsPage = ({ workshops, error }: ResponseType) => {
-	console.log({ workshops });
 	if (error) {
 		console.error({ error });
-		return <p className="">{error || "Something went wrong"}</p>;
+		return (
+			<p className="h-screen flex justify-center items-center text-sm text-red-500">
+				{error || "Something went wrong"}
+			</p>
+		);
 	}
 	return (
 		<>

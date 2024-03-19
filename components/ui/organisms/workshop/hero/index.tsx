@@ -1,9 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { ICourse, IWorkshop } from "../../../../../interfaces";
-import { formatFollowersCount } from "../../../../../utils";
+import { IWorkshop } from "../../../../../interfaces";
+import { formatDateDifference, formatFollowersCount } from "../../../../../utils";
 
 const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
+	const workshopDuration = formatDateDifference(
+		workshop.contents[workshop.contents.length - 1].date,
+		workshop.scheduled_date,
+	);
 	return (
 		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
 			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 sm:gap-10">
@@ -22,7 +26,7 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 							{workshop.tag === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />}
 							{workshop.tag}
 						</p>
-						<p className="">{workshop.duration.toFixed(1)} hours</p>
+						<p className="">{workshopDuration}</p>
 						<p className="">{formatFollowersCount(workshop.participants)} participants</p>
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{/* {workshop.rating} */} 4.5

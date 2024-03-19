@@ -106,6 +106,26 @@ export const VIEW_WORKSHOP_DETAILS = gql`
 		user {
 			name
 			avatar
+			country
 		}
+		role
+		followers {
+			id
+		}
+		courses {
+			...CourseDetails
+		}
+	}
+
+	fragment CourseDetails on CourseDto {
+		id
+		title
+		course_level
+		description
+		what_to_learn
+		requirements
+		price
+		course_images
+		created_at
 	}
 `;

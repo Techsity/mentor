@@ -235,7 +235,7 @@ export const VIEW_ALL_NOTIFICATIONS = gql`
 			title
 			body
 			resourceId
-			subscriptionType
+			resourceType
 			read
 			userId
 			created_at

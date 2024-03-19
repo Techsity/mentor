@@ -71,15 +71,13 @@ const ReportModal = ({ mentorId }: any) => {
 			onSubmit={handleSubmit}
 			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
 			<h1 className="font-medium text-center">Report Mentor</h1>
+			<span className="text-sm text-gray-400">
+				Please tell us why you are reporting Your help allows us to take the correct action on the reported
+				content.
+			</span>
 			<span className="flex items-center justify-between mt-5">
-				<p className="text-[16px]">Reason</p>
-				<span className="text-sm text-gray-400">
-					Please tell us why you are reporting Your help allows us to take the correct action on the reported
-					content.
-				</span>
-				<label htmlFor="" className="text-xs italic text-gray-600">
-					Max length: {CONTENT_THRESHOLD} words
-				</label>
+				{/* <p className="text-[16px]">Reason</p> */}
+				<span className="text-xs italic text-gray-600">Max length: {CONTENT_THRESHOLD} words</span>
 			</span>
 			<CustomTextArea
 				onChange={handleChange}
@@ -107,7 +105,7 @@ const ReportModal = ({ mentorId }: any) => {
 			<PrimaryButton
 				title={!loading ? "Submit" : ""}
 				type="submit"
-				disabled={loading || limitReached}
+				disabled={loading || limitReached || content.length < 1 || content == "" || !content}
 				icon={loading ? <ActivityIndicator /> : <></>}
 				className="p-1.5 px-4 rounded mt-3 flex justify-center"
 			/>

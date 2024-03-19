@@ -143,7 +143,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								)}
 							</div>
 							<h1 className={loading ? "px-10 h-2 bg-zinc-200" : ""}>
-								{!loading && course?.mentor.user.name}
+								{!loading && course?.mentor.user.name.split(" ")[0]}
 							</h1>
 						</div>
 						{!loading ? (

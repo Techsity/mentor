@@ -9,12 +9,8 @@ import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import { IWorkshop } from "../../../../interfaces";
 import courses from "../../../../data/courses";
 
-const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop | undefined }) => {
-	return !workshop ? (
-		<>
-			<h1 className="text-lg text-[#d31119] tracking-tight">Workshop not found.</h1>
-		</>
-	) : (
+const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop }) => {
+	return (
 		<>
 			<div className="">
 				<WorkshopDetailsPageHero {...workshop} />

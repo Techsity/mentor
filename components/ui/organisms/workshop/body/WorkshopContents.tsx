@@ -21,6 +21,15 @@ const WorkshopContents = ({
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const WorkshopContentItem = ({ content }: { content: IWorkshopContent }) => {
+		// Determine whether it's AM or PM based on the time
+		const parseMeridan = (time: string) => parseInt(time.split(":")[0], 10);
+		const startTimeMeridan =
+			parseMeridan(content.startTime) == 0 ? "AM" : parseMeridan(content.startTime) >= 12 ? "PM" : "AM";
+		const endTimeMeridan =
+			parseMeridan(content.endTime) == 0 ? "AM" : parseMeridan(content.endTime) >= 12 ? "PM" : "AM";
+		content.startTime = parseInt(content.startTime.split(":")[0], 10) == 0 ? "12:00" : content.startTime;
+		content.endTime = parseInt(content.endTime.split(":")[0], 10) == 0 ? "12:00" : content.endTime;
+
 		return (
 			<>
 				<div
@@ -28,9 +37,12 @@ const WorkshopContents = ({
 					<div className="group relative w-full h-full">
 						<h1 className="grid items-center gap-2 text-sm">
 							{content.title}{" "}
-							<span className="flex items-center gap-10">
+							<span className="flex items-center justify-between">
 								<span className={`text-white`}>{new Date(content.date).toDateString()}</span>
-								<span className={`text-white`}>1:00pm - 2:15PM</span>
+								<span className={`text-white`}>
+									{content.startTime.split(":").slice(0, 2).join(":") + startTimeMeridan} -{" "}
+									{content.endTime.split(":").slice(0, 2).join(":") + endTimeMeridan}
+								</span>
 							</span>
 						</h1>
 					</div>
@@ -68,7 +80,7 @@ const WorkshopContents = ({
 							dispatch(setWorkshopToRegister(workshop));
 							setLoading(true);
 							setTimeout(function () {
-								router.push(`/workshops/${slugify(workshop.title)}?register`);
+								router.push(`/workshops/${workshop.id}/register`);
 							}, 1000);
 						}}
 						className="p-2 text-lg flex justify-center items-center mt-6 text-sm"
