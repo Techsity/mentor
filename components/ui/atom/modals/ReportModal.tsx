@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useId, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useId, useState } from "react";
 import { useModal } from "../../../../context/modal.context";
 import { useMutation } from "@apollo/client";
 import { REPORT_MENTOR } from "../../../../services/graphql/mutations/mentors";
@@ -22,11 +22,8 @@ const ReportModal = ({ mentorId }: any) => {
 	const CONTENT_THRESHOLD = 200;
 	const toastId = useId();
 	const { closeModal } = useModal();
-	if (!mentorId) {
-		closeModal();
-		return;
-	}
-	const reportCategories = ["Sexual Harrasment", "Scam", "Bot", "Personal"]; // Todo: use JSON file
+
+	const reportCategories = ["Harrasment", "Scam", "Bot", "Personal", ""]; // Todo: use JSON file
 	const [content, setContent] = useState<string>("");
 	const [selectedCategory, setSelectedCategory] = useState<string>(reportCategories[0] || "");
 	const [reportMentor, { loading }] = useMutation<any, ReportInput>(REPORT_MENTOR);
@@ -62,6 +59,12 @@ const ReportModal = ({ mentorId }: any) => {
 			}
 		}
 	};
+	useEffect(() => {
+		if (!mentorId) {
+			closeModal();
+			return;
+		}
+	}, [mentorId]);
 
 	return (
 		<form
@@ -70,13 +73,20 @@ const ReportModal = ({ mentorId }: any) => {
 			<h1 className="font-medium text-center">Report Mentor</h1>
 			<span className="flex items-center justify-between mt-5">
 				<p className="text-[16px]">Reason</p>
+				<span className="text-sm text-gray-400">
+					Please tell us why you are reporting Your help allows us to take the correct action on the reported
+					content.
+				</span>
 				<label htmlFor="" className="text-xs italic text-gray-600">
 					Max length: {CONTENT_THRESHOLD} words
 				</label>
 			</span>
 			<CustomTextArea
 				onChange={handleChange}
-				containerProps={{ className: `text-sm mb-4 ${limitReached ? "border-red-500" : ""}` }}
+				placeholder="Textbox: Please provide more details"
+				containerProps={{
+					className: `placeholder:text-gray-300 text-sm mb-4 ${limitReached ? "border-red-500" : ""}`,
+				}}
 			/>
 			<div className="flex flex-col lg:flex-row justify-between lg:items-center">
 				<ul className="flex items-center gap-2 text-sm my-2 flex-wrap">

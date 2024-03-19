@@ -21,8 +21,10 @@ const CourseInProgressDisplayCard: FC<{
 	const router = useRouter();
 
 	const ratings = course !== null && calculateRatingsInReviews(course.reviews);
+	// Todo: remove hard-coded duration
+	const duration = 40;
 	return (
-		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[360px] overflow-hidden">
+		<div className="flex flex-col items-start bg-white duration-300 shadow cursor-default relative h-auto md:h-[340px] overflow-hidden">
 			<div className="absolute animate__animated animate__fadeIn animate__faster w-full z-10 text-white p-2">
 				<div className="justify-between flex items-center w-full">
 					{!loading && (
@@ -76,7 +78,7 @@ const CourseInProgressDisplayCard: FC<{
 					) : (
 						<>
 							<span className="font-normal">{course?.course_level.split("_").join(" ")}</span>
-							<span className="font-normal">{course?.duration} hours</span>
+							<span className="font-normal">{course?.duration || duration} hours</span>
 							<span className="font-normal">
 								{formatFollowersCount(Number(course?.reviews.length))} students
 							</span>

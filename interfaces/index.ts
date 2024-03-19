@@ -301,19 +301,21 @@ export interface IBlogPost {
 export interface IWorkshopContent {
 	title: string;
 	date: string;
+	startTime: string;
+	endTime: string;
 }
 export interface IWorkshop {
 	id?: string;
 	title: string;
 	tag: "Live" | "Upcoming" | "Recordings" | "Completed";
 	description: string;
-	startDate: string;
-	endDate: string;
+	scheduled_date: string;
 	duration: number;
 	participants: number;
 	price: number;
 	mentor: IMentor;
 	available: boolean;
+	isSubscribed: boolean;
 	imgUrl?: string;
 	what_to_learn: string[];
 	requirements: string[];

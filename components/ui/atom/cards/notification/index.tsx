@@ -30,7 +30,7 @@ const NotificationCard = () => {
 					</div>
 				)}
 				{unreadNotifications.length < 1 && (
-					<p className="text-sm">No newer notifications. You're all caught up! 🎉</p>
+					<p className="text-sm">No newer notifications. You&apos;re all caught up! 🎉</p>
 				)}
 				{olderNotifications && olderNotifications.length >= 1 && (
 					<div className="grid gap-1 p-3 pt-3 w-full">

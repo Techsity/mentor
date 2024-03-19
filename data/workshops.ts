@@ -12,11 +12,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -37,8 +58,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[0],
 		price: 6900,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("December 04, 2023 12:00:00").toDateString(),
+		scheduled_date: new Date("December 04, 2023 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
@@ -48,11 +68,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -73,8 +114,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[1],
 		price: 20000,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
+		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
@@ -84,11 +124,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -109,8 +170,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[2],
 		price: 5000,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("February 01, 2024 12:00:00").toDateString(),
+		scheduled_date: new Date("February 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
@@ -120,11 +180,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -145,8 +226,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[0],
 		price: 45000,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
+		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
@@ -156,11 +236,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -181,8 +282,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[1],
 		price: 0,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
+		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 	{
 		title: "Design Secrets",
@@ -192,11 +292,32 @@ const workshops: IWorkshop[] = [
 		description:
 			"This event is basically for all designer who has been struggling with getting inspiration, i want to show you the secrets behind all my designs. How i went from getting 10 rejection rejections in 1 project to 0 rejection in 10 Projects.",
 		participants: 2000,
+		isSubscribed: false,
 		contents: [
-			{ date: new Date().toDateString(), title: "Introduction to Design" },
-			{ date: new Date().toDateString(), title: "Design Secrets 1" },
-			{ date: new Date().toDateString(), title: "Design Secrets 2" },
-			{ date: new Date().toDateString(), title: "Pricing as a Designer" },
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Introduction to Design",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 1",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Design Secrets 2",
+			},
+			{
+				startTime: "00:00",
+				endTime: "12:00",
+				date: new Date().toDateString(),
+				title: "Pricing as a Designer",
+			},
 		],
 		duration: 4,
 		requirements: [
@@ -217,8 +338,7 @@ const workshops: IWorkshop[] = [
 		],
 		mentor: mentors[1],
 		price: 6900,
-		startDate: new Date("December 01, 2023 12:00:00").toDateString(),
-		endDate: new Date("January 01, 2024 12:00:00").toDateString(),
+		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
 	},
 ];
 export default workshops;

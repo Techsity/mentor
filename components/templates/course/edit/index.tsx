@@ -58,8 +58,8 @@ const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 	requirements: [],
 	what_to_learn: [],
 	price: 0,
-	startDate: "",
-	endDate: "",
+	isSubscribed: false,
+	scheduled_date: "",
 };
 
 const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state }: Props) => {

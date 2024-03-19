@@ -157,42 +157,15 @@ export const FETCH_WORKSHOP_SUBSCRIPTION_BY_ID = gql`
 `;
 
 export const FETCH_COURSE_SUBSCRIPTIONS = gql`
-	query ViewSubscribedCourses {
-		viewSubscribedCourses {
+	query ViewSubscriptions {
+		viewSubscriptions(subscriptionType: "course") {
 			id
-			course {
-				id
-				title
-				course_level
-				description
-				category {
-					title
-				}
-				course_type {
-					type
-				}
-				what_to_learn
-				requirements
-				price
-				course_images
-				course_contents {
-					title
-					course_sections {
-						section_name
-						# video_url
-						notes
-					}
-				}
-				mentor {
-					...MentorField
-				}
-				reviews {
-					...ReviewField
-				}
-				created_at
-			}
+			type
 			is_completed
 			created_at
+			course {
+				...CourseDetails
+			}
 		}
 	}
 
@@ -219,6 +192,39 @@ export const FETCH_COURSE_SUBSCRIPTIONS = gql`
 			country
 		}
 		ratings
+	}
+	fragment CourseDetails on CourseDto {
+		id
+		title
+		description
+		what_to_learn
+		requirements
+		price
+		mentor {
+			...MentorField
+		}
+		course_contents {
+			title
+			course_sections {
+				section_name
+				notes
+				video_url
+			}
+		}
+		course_images
+		course_level
+		course_type {
+			id
+			type
+		}
+		category {
+			id
+			slug
+		}
+		reviews {
+			...ReviewField
+		}
+		created_at
 	}
 `;
 
