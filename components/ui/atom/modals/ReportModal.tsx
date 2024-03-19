@@ -97,7 +97,9 @@ const ReportModal = ({ mentorId }: any) => {
 				}}
 			/>
 			<div className="flex flex-col lg:flex-row justify-between lg:items-center text-xs">
-				<span className="italic text-gray-600">Max length: {CONTENT_THRESHOLD} words</span>
+				<span className={classNames("italic text-gray-600", limitReached && "text-red-500")}>
+					Max length: {CONTENT_THRESHOLD} words
+				</span>
 				<span className={classNames("", limitReached && "text-red-500")}>
 					{!limitReached && "Remaining"} {CONTENT_THRESHOLD - content.length} words
 				</span>
@@ -105,7 +107,7 @@ const ReportModal = ({ mentorId }: any) => {
 			<PrimaryButton
 				title={!loading ? "Submit" : ""}
 				type="submit"
-				disabled={loading || limitReached || content.length < 1 || content == "" || !content}
+				disabled={loading || limitReached || content.trim().length < 1 || content == "" || !content}
 				icon={loading ? <ActivityIndicator /> : <></>}
 				className="p-1.5 px-4 rounded mt-3 flex justify-center"
 			/>
