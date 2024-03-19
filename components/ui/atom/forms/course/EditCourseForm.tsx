@@ -319,7 +319,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 				<h1 className="text-sm">{isCourse ? "Course" : isWorkshop && "Workshop"} Thumbnail</h1>
 				<div className="mt-3 h-32 sm:h-20 w-full object-cover relative flex justify-center items-center">
 					<img
-						src={formState.imgUrl || "/assets/images/mockups/course_one.png"}
+						src={formState.thumbnail || "/assets/images/mockups/course_one.png"}
 						alt={formState.title}
 						className="h-full w-full"
 						loading="eager"

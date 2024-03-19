@@ -30,7 +30,7 @@ const courseInitialState: Omit<ICourse, "mentor"> = {
 	rating: 0,
 	price: 0,
 	available: false,
-	imgUrl: "",
+	thumbnail: "",
 	requirements: [],
 	course_contents: [],
 	category: {

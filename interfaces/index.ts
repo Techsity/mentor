@@ -273,7 +273,7 @@ export interface ICourse {
 	price: number;
 	mentor: IMentor;
 	available: boolean;
-	imgUrl?: string;
+	thumbnail?: string;
 	requirements: string[];
 	course_contents: ICourseContent[];
 	category: ICourseCategory;
@@ -310,13 +310,15 @@ export interface IWorkshop {
 	tag: "Live" | "Upcoming" | "Recordings" | "Completed";
 	description: string;
 	scheduled_date: string;
+	level?:COURSE_LEVEL
+	category: ICourseCategory;
 	duration: number;
 	participants: number;
 	price: number;
 	mentor: IMentor;
 	available: boolean;
 	isSubscribed: boolean;
-	imgUrl?: string;
+	thumbnail?: string;
 	what_to_learn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];

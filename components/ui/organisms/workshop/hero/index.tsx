@@ -8,11 +8,12 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 		workshop.contents[workshop.contents.length - 1].date,
 		workshop.scheduled_date,
 	);
+	const mentorFollowers = formatFollowersCount(workshop.mentor.followers.length);
 	return (
 		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
 			<div className="flex-grow overflow-hidden animate__animated animate__slideInLeft inline-flex flex-col gap-5 sm:gap-10">
 				<span className="flex gap-1 cursor-default text-sm items-center whitespace-nowrap flex-wrap">
-					Workshop / Design/ Graphics Design /
+					Workshop / {workshop.category.title} /
 					<span className="text-[#CEFFEA]">
 						{workshop.title.length > 50 ? workshop.title.slice(0, 50) + "..." : workshop.title}
 					</span>
@@ -22,12 +23,12 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 						{workshop.title}
 					</h1>
 					<div className="flex items-center max-w-sm justify-between gap-4 font-[300] text-sm 2xl:text-xl 2xl:max-w-lg">
-						<p className="flex items-center gap-2">
-							{workshop.tag === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />}
-							{workshop.tag}
+						<p className="flex items-center gap-2 capitalize">
+							{/* {workshop.tag === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />} */}
+							{workshop?.level?.split("_").join(" ")}
 						</p>
-						<p className="">{workshopDuration}</p>
-						<p className="">{formatFollowersCount(workshop.participants)} participants</p>
+						<p className="">Duration: {workshopDuration}</p>
+						{/* <p className="">{formatFollowersCount(workshop.participants)} participants</p> */}
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{/* {workshop.rating} */} 4.5
 							<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
@@ -64,14 +65,16 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 						<p className="flex gap-1 items-center">
 							{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
 							{/* 20 Courses | {formatFollowersCount(workshop.mentor.sessions)} Sessions |{" "} */}
-							{formatFollowersCount(workshop.mentor.followers.length)} Followers
+							{Number(mentorFollowers) === 1
+								? mentorFollowers + " follower"
+								: mentorFollowers + " followers"}
 						</p>
 					</div>
 				</div>
 			</div>
 			<div className="w-auto h-auto lg:max-w-lg 2xl:max-w-2xl sm:max-w-md overflow-hidden">
 				<img
-					src={workshop.imgUrl || "/assets/images/thumbnails/tmb_2.png"}
+					src={workshop.thumbnail || "/assets/images/thumbnails/tmb_2.png"}
 					alt={workshop.title}
 					className="w-full h-full rounded-lg animate__animated animate__slideInRight"
 				/>

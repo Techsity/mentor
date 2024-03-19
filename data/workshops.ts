@@ -1,5 +1,5 @@
 import { IWorkshop } from "../interfaces";
-import courses from "./courses";
+import courses, { courseCategories } from "./courses";
 import mentors from "./mentors";
 import reviews from "./reviews";
 
@@ -59,6 +59,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[0],
 		price: 6900,
 		scheduled_date: new Date("December 04, 2023 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 	{
 		title: "Design Secrets",
@@ -115,6 +116,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[1],
 		price: 20000,
 		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 	{
 		title: "Design Secrets",
@@ -171,6 +173,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[2],
 		price: 5000,
 		scheduled_date: new Date("February 01, 2024 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 	{
 		title: "Design Secrets",
@@ -227,6 +230,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[0],
 		price: 45000,
 		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 	{
 		title: "Design Secrets",
@@ -283,6 +287,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[1],
 		price: 0,
 		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 	{
 		title: "Design Secrets",
@@ -339,6 +344,7 @@ const workshops: IWorkshop[] = [
 		mentor: mentors[1],
 		price: 6900,
 		scheduled_date: new Date("January 01, 2024 12:00:00").toDateString(),
+		category: courseCategories[0],
 	},
 ];
 export default workshops;

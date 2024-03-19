@@ -29,19 +29,6 @@ export const ALL_COURSES = gql`
 		user {
 			...UserFields
 		}
-		about
-		role
-		skills {
-			skill_name
-			years_of_exp
-		}
-		# work_experience {
-		# 	...WorkExperience
-		# }
-		# projects {
-		# 	...Project
-		# }
-		# Fetch the needed fields
 	}
 
 	fragment UserFields on UserDTO {
@@ -64,6 +51,7 @@ export const ALL_COURSES = gql`
 	# 	to_year
 	# }
 `;
+
 export const GET_ALL_CATEGORIES = gql`
 	query GetAllCategories($courseType: String) {
 		getAllCategories(courseType: $courseType) {

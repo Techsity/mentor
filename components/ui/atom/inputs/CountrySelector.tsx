@@ -176,7 +176,7 @@ interface ICountryListItemProps {
 
 const CountryListItem = ({ country, handleSelect }: ICountryListItemProps) => {
 	return (
-		<li onClick={() => handleSelect(country)} className="hover:bg-zinc-300 cursor-pointer p-5">
+		<li onClick={() => handleSelect(country)} className="hover:bg-zinc-300 cursor-pointer p-3 text-sm">
 			{country.label}
 		</li>
 	);

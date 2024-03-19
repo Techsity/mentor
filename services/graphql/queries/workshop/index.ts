@@ -80,6 +80,7 @@ export const VIEW_WORKSHOP_DETAILS = gql`
 		category {
 			id
 			slug
+			title
 		}
 		contents {
 			title
@@ -125,6 +126,12 @@ export const VIEW_WORKSHOP_DETAILS = gql`
 		what_to_learn
 		requirements
 		price
+		mentor {
+			user {
+				name
+				avatar
+			}
+		}
 		course_images
 		created_at
 	}

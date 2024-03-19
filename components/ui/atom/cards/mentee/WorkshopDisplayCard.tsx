@@ -51,7 +51,7 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 				<div className="relative bg-zinc-100 h-full w-full min-h-[200px]">
 					<div className="bg-black w-full h-full bg-opacity-50 hidden group-hover:block animate__animated animate__fast animate__fadeIn absolute" />
 					<img
-						src={workshop.imgUrl || "/assets/images/mockups/course_one.png"}
+						src={workshop.thumbnail || "/assets/images/mockups/course_one.png"}
 						className="w-full h-full"
 						alt=""
 						loading="lazy"
@@ -59,12 +59,12 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 				</div>
 				<h1 className="px-5 font-medium tracking-tight flex items-center justify-between">
 					{workshop.title}
-					{workshop.tag === "Live" && (
+					{/* {workshop.tag === "Live" && (
 						<span className="flex gap-2 items-center">
 							<span className="bg-[#d31119] p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 							Live
 						</span>
-					)}
+					)} */}
 					<div className="flex items-center gap-2 text-[#094B10] text-sm ml-8">
 						{calculateRatingsInReviews(workshop.reviews)}
 						<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
@@ -76,9 +76,10 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 						</svg>
 					</div>
 				</h1>
-				<div className="flex items-center justify-between px-5 text-xs mt-2">
-					<span className="">Starting {dayjs(workshop.scheduled_date).fromNow()}</span>
+				<div className="flex items-center justify-between flex-wrap px-5 text-xs mt-2">
 					<span className="capitalize">Duration: {workshopDuration}</span>
+					<p className="capitalize font-medium">{workshop?.level?.split("_").join(" ")}</p>
+					<span className="">Starting {dayjs(workshop.scheduled_date).fromNow()}</span>
 					{/* <span className="">{formatFollowersCount(workshop.participants)} students</span> */}
 				</div>
 				<p className="text-xs px-5 break-words py-3">
