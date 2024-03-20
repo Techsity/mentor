@@ -109,7 +109,7 @@ export const VIEW_COURSE = gql`
 				reviewed_by {
 					...UserField
 				}
-				ratings
+				rating
 			}
 		}
 	}

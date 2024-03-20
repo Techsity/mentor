@@ -3,11 +3,11 @@ import { formatAmount } from "../../../../../utils";
 import { StarRatingIcon } from "../../../atom/icons/svgs";
 
 type StatsProps = {
-	stats?: { totalStudent?: number | 0; totalWatchHour?: number | 0; totalRatings: number | 0 } | null;
+	stats?: { totalStudent?: number | 0; totalWatchHour?: number | 0; totalRating: number | 0 } | null;
 };
 
 const StatsDisplay: FC<StatsProps> = ({ stats }) => {
-	const { totalStudent, totalWatchHour, totalRatings } = stats || {};
+	const { totalStudent, totalWatchHour, totalRating } = stats || {};
 	return (
 		<>
 			{stats ? (
@@ -21,9 +21,9 @@ const StatsDisplay: FC<StatsProps> = ({ stats }) => {
 						<span className="">{formatAmount(totalWatchHour as number)}hrs</span>
 					</div>
 					<div className="bg-[#70C5A1] p-3 px-5 items-center flex justify-between text-white">
-						<span className="text-sm">Total Total Ratings</span>
+						<span className="text-sm">Total Total Rating</span>
 						<span className="flex items-center gap-1">
-							{totalRatings as number}
+							{totalRating as number}
 							<StarRatingIcon className="-mt-1" opacity={1} color="#fff" height={15} width={15} />
 						</span>
 					</div>

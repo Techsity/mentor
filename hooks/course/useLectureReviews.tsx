@@ -1,45 +1,75 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useId, useState } from "react";
 import { IUser } from "../../interfaces/user.interface";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../redux/reducers/authSlice";
-import reviewsData from "../../data/reviews";
-import { IReview } from "../../interfaces";
+import { ICourse, IReview } from "../../interfaces";
+import { useMutation } from "@apollo/client";
+import { SUBMIT_REVIEW } from "../../services/graphql/mutations/user";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../constants";
+import { formatGqlError } from "../../utils/auth";
 
-const useLectureReviews = () => {
+type CreateReviewInputType = {
+	content: string;
+	rating: number;
+};
+
+const useLectureReviews = (course: ICourse) => {
+	const toastId = useId();
 	const user = useSelector(currentUser);
 	const emptyReview: IReview = {
 		content: "",
-		ratings: 4.5,
+		rating: 1,
 		reviewed_by: user as IUser,
 		type: "",
 	};
-	const [loading, setLoading] = useState<boolean>(false);
-	const [reviews, setReviews] = useState<IReview[]>(reviewsData);
+	// const [loading, setLoading] = useState<boolean>(false);
+	const [reviews, setReviews] = useState<IReview[]>(course.reviews || []);
 	const [newReview, setNewReview] = useState<IReview>(emptyReview);
+	const [submitReview, { loading }] = useMutation<
+		{ createReview: IReview },
+		{ args: { createReviewInput: CreateReviewInputType; courseId: string } }
+	>(SUBMIT_REVIEW);
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+	const handleChange = (name: keyof Pick<IReview, "content" | "rating">) => (e: ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		if (name == "rating" && parseInt(value) > 5) {
+			console.log({ value });
+			return;
+		}
 		setNewReview((prevReview) => ({
 			...prevReview,
-			content: e.target.value,
+			[name]: value,
 		}));
-
-	const addNewReview = () => {
+	};
+	const addNewReview = async () => {
 		if (newReview?.content) {
-			setLoading(true);
-			setTimeout(function () {
-				setReviews((prev) => {
-					return [...prev, newReview];
+			try {
+				const { data } = await submitReview({
+					variables: {
+						args: {
+							createReviewInput: { content: newReview.content, rating: newReview.rating },
+							courseId: String(course.id),
+						},
+					},
 				});
-				setLoading(false);
-				setNewReview(emptyReview);
-			}, 1000);
-			// Api AddReview Endpoint Logic
+				if (data?.createReview.rating) {
+					setReviews((prev) => {
+						return [...prev, newReview];
+					});
+					setNewReview(emptyReview);
+				}
+			} catch (error) {
+				console.error({ error });
+				const errMsg = formatGqlError(error);
+				toast.error(errMsg || "Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
+			}
 		}
 	};
 	// const memoizedReviews = useMemo(() => reviews.reverse(), [reviews]);
 	return {
 		loading,
-		setLoading,
+		// setLoading,
 		newReview,
 		setNewReview,
 		reviews,

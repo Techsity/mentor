@@ -6,12 +6,13 @@ import { PrimaryButton } from "../../../../atom/buttons";
 import LectureReviewCard from "../../../../atom/cards/course/in-progress/LectureReviewCard";
 import CustomTextInput from "../../../../atom/inputs/CustomTextInput";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";
+import classNames from "classnames";
 
 type videoNavType = "about-course" | "review" | "lecture-notes";
 
-const CourseOverviewTab = ({ course }: { course?: ICourse }) => {
+const CourseOverviewTab = ({ course }: { course: ICourse }) => {
 	const [active, setActive] = useState<videoNavType>("about-course");
-	const { loading, newReview, addNewReview, handleChange, reviews } = useLectureReviews();
+	const { loading, newReview, addNewReview, setNewReview, handleChange, reviews } = useLectureReviews(course);
 
 	const Nav = () => {
 		return (
@@ -51,23 +52,43 @@ const CourseOverviewTab = ({ course }: { course?: ICourse }) => {
 					<CourseOverview overview={String(course?.description)} />
 				) : active === "review" ? (
 					<section className="animate__animated animate__fadeIn">
-						<CustomTextInput
-							placeholder="Leave a Review..."
-							className="placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE]"
-							containerprops={{
-								className: "border border-[#70C5A1] bg-transparent duration-300 min-h-[40px] my-4",
-							}}
-							value={newReview !== null ? newReview?.content : ""}
-							onChange={handleChange}
-							rightButton={
-								<PrimaryButton
-									onClick={addNewReview}
-									title={!loading ? "Send" : ""}
-									className="h-full p-2 flex items-center justify-center text-center px-6 w-full"
-									icon={loading ? <ActivityIndicator /> : null}
-								/>
-							}
-						/>
+						<div className="flex w-full flex-col gap-4">
+							<CustomTextInput
+								placeholder="Leave a Review..."
+								className="placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE]"
+								containerprops={{
+									className:
+										"w-full border border-[#70C5A1] bg-transparent duration-300 min-h-[40px] relative",
+								}}
+								value={newReview !== null ? newReview.content : ""}
+								onChange={handleChange("content")}
+							/>
+							<div className="flex gap-3 items-center">
+								{Array.from({ length: 5 }).map((_, index) => {
+									return (
+										<span
+											onClick={() => {
+												setNewReview((p) => {
+													return { ...p, rating: index };
+												});
+											}}
+											className={classNames(
+												"text-3xl text-[#FFB100] cursor-pointer",
+												newReview.rating >= index ? "animate__animated animate__fadeIn" : "",
+											)}
+											key={index}>
+											{newReview.rating >= index ? "★" : "☆"}
+										</span>
+									);
+								})}
+							</div>
+							<PrimaryButton
+								onClick={addNewReview}
+								title={!loading ? "Send" : ""}
+								className="h-full p-2 flex items-center justify-center text-center px-6 w-full"
+								icon={loading ? <ActivityIndicator /> : null}
+							/>
+						</div>
 						{reviews.map((review, i) => <LectureReviewCard key={i} {...review} />).reverse()}
 					</section>
 				) : active === "lecture-notes" ? (

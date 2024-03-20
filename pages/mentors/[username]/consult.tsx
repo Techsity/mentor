@@ -56,10 +56,6 @@ export const getServerSideProps = async (
 			query: VIEW_MENTOR_PROFILE,
 			variables: { viewMentorId: username },
 		});
-		// if (error) {
-		// 	console.error(error);
-		// 	return { props: { mentor, error: "" } };
-		// }
 		return { props: { mentor, error: "" } };
 	} catch (error) {
 		console.error(error);

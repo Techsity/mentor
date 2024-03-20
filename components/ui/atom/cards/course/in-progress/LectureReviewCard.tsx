@@ -8,7 +8,7 @@ const LectureReviewCard = (review: IReview) => {
 			<p className="flex-grow w-full text-sm tracking-tight font-[300] lg:max-w-lg break-words">
 				{review.content}
 			</p>
-			<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] w-[25%]">
+			<div className="lg:border-l-2 lg:px-5 border-[#A3A6A7] w-[15%]">
 				<div className="flex lg:flex-col items-center lg:items-start gap-3">
 					<img
 						src={(review.reviewed_by && review.reviewed_by.avatar) || "/assets/images/avatar.png"}
@@ -16,10 +16,7 @@ const LectureReviewCard = (review: IReview) => {
 						alt="review"
 						className="w-10 h-10 rounded-full"
 					/>
-					<p className="text-sm">
-						{review.reviewed_by &&
-							review.reviewed_by.name.split(" ")[0] + " " + review.reviewed_by.name.split(" ")[1]}
-					</p>
+					<p className="text-sm">{review.reviewed_by && review.reviewed_by.name.split(" ")[0]}</p>
 				</div>
 			</div>
 		</div>

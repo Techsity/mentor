@@ -37,8 +37,8 @@ export const GET_USER_PROFILE = gql`
 `;
 
 export const FETCH_COURSE_SUBSCRIPTION_BY_ID = gql`
-	query ViewSubscription($resourceId: String!, $subscriptionType: SubscriptionType!) {
-		viewSubscription(resourceId: $resourceId, subscriptionType: $subscriptionType) {
+	query ViewSubscription($courseId: String!, $subscriptionType: SubscriptionType!) {
+		viewSubscription(resourceId: $courseId, subscriptionType: $subscriptionType) {
 			id
 			created_at
 			type
@@ -78,7 +78,7 @@ export const FETCH_COURSE_SUBSCRIPTION_BY_ID = gql`
 		}
 		reviews {
 			content
-			ratings
+			rating
 			reviewed_by {
 				avatar
 				name
@@ -93,6 +93,13 @@ export const FETCH_COURSE_SUBSCRIPTION_BY_ID = gql`
 		user {
 			name
 			avatar
+		}
+		role
+		courses {
+			created_at
+		}
+		followers {
+			id
 		}
 	}
 `;
@@ -139,7 +146,7 @@ export const FETCH_WORKSHOP_SUBSCRIPTION_BY_ID = gql`
 		level
 		reviews {
 			content
-			ratings
+			rating
 			reviewed_by {
 				avatar
 				name
@@ -192,7 +199,7 @@ export const FETCH_COURSE_SUBSCRIPTIONS = gql`
 			avatar
 			country
 		}
-		ratings
+		rating
 	}
 	fragment CourseDetails on CourseDto {
 		id
@@ -263,7 +270,7 @@ export const FETCH_WORKSHOP_SUBSCRIPTIONS = gql`
 			avatar
 			country
 		}
-		ratings
+		rating
 	}
 
 	fragment WorkshopDetails on WorkshopDto {

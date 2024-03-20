@@ -18,7 +18,7 @@ type ReportInput = {
 	};
 };
 
-const ReportModal = ({ mentorId }: any) => {
+const ReportMentorModal = ({ mentorId }: any) => {
 	const CONTENT_THRESHOLD = 200;
 	const toastId = useId();
 	const { closeModal } = useModal();
@@ -115,4 +115,4 @@ const ReportModal = ({ mentorId }: any) => {
 	);
 };
 
-export default ReportModal;
+export default ReportMentorModal;

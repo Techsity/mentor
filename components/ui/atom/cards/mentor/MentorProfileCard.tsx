@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import React, { useEffect, useId, useMemo, useState } from "react";
-import { calculateOverallExperience, calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
+import { calculateOverallExperience, calculateRatingInReviews, formatFollowersCount } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
@@ -186,7 +186,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 											fillOpacity="0.65"
 										/>
 									</svg>
-									{calculateRatingsInReviews(mentor?.reviews as IReview[])}
+									{calculateRatingInReviews(mentor?.reviews as IReview[])}
 								</p>
 							) : (
 								<span className="bg-zinc-200 h-1 w-20" />

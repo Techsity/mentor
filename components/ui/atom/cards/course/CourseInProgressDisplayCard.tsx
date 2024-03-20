@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { FC } from "react";
 import { ICourse } from "../../../../../interfaces";
-import { calculateRatingsInReviews, formatFollowersCount, slugify } from "../../../../../utils";
+import { calculateRatingInReviews, formatFollowersCount, slugify } from "../../../../../utils";
 import Link from "next/link";
 import { ArrowForwardSharp, Play } from "react-ionicons";
 import { StarRatingIcon } from "../../icons/svgs";
@@ -20,7 +20,7 @@ const CourseInProgressDisplayCard: FC<{
 	const watched = false;
 	const router = useRouter();
 
-	const ratings = course !== null && calculateRatingsInReviews(course.reviews);
+	const rating = course !== null && calculateRatingInReviews(course.reviews);
 	// Todo: remove hard-coded duration
 	const duration = 40;
 	return (
@@ -83,7 +83,7 @@ const CourseInProgressDisplayCard: FC<{
 								{formatFollowersCount(Number(course?.reviews.length))} students
 							</span>
 							<div className={"flex items-center gap-2 text-[#094B10]"}>
-								{ratings}
+								{rating}
 								<StarRatingIcon />
 							</div>
 						</>

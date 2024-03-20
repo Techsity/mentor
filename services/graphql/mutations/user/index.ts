@@ -31,3 +31,12 @@ export const MARK_NOTIFICATION_AS_READ = gql`
 		readNotification(notificationId: $notificationId)
 	}
 `;
+
+export const SUBMIT_REVIEW = gql`
+	mutation CreateReview($args: CreateReviewArgs!) {
+		createReview(args: $args) {
+			content
+			rating
+		}
+	}
+`;

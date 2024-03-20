@@ -36,7 +36,7 @@ export const FETCH_ALL_WORKSHOPS = gql`
 		level
 		reviews {
 			content
-			ratings
+			rating
 			reviewed_by {
 				avatar
 				name
@@ -92,7 +92,7 @@ export const VIEW_WORKSHOP_DETAILS = gql`
 		level
 		reviews {
 			content
-			ratings
+			rating
 			reviewed_by {
 				avatar
 				name

@@ -7,11 +7,11 @@ import WhatToLearn from "./WhatToLearn";
 import AboutCourse from "./AboutCourse";
 import CourseContents from "./CourseContents";
 import { useModal } from "../../../../../../context/modal.context";
-import ReportModal from "../../../../atom/modals/ReportModal";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { isLoggedIn, currentUser } from "../../../../../../redux/reducers/authSlice";
 import { navigateToAuthPage } from "../../../../../../utils/auth";
+import ReportMentorModal from "../../../../atom/modals/ReportMentorModal";
 
 const CourseDetailsBody = (course: ICourse) => {
 	const router = useRouter();
@@ -21,7 +21,7 @@ const CourseDetailsBody = (course: ICourse) => {
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={course.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
+		else openModal(<ReportMentorModal mentorId={course.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 
 	return (

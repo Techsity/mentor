@@ -41,11 +41,11 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				containerprops?.className,
 			)}
 			{...containerprops}>
-			{leftIcon ? (
+			{leftIcon && (
 				<div className={classNames(leftIconClass ? leftIconClass : "absolute top-[30%] left-5")}>
 					{leftIcon}
 				</div>
-			) : null}
+			)}
 			<input
 				ref={ref}
 				{...inputProps}
@@ -61,11 +61,11 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 				)}
 			/>
 			{rightButton ? rightButton : null}
-			{leftIcon ? (
+			{rightIcon && (
 				<div className={classNames(rightIconClass ? rightIconClass : "absolute top-[30%] right-5")}>
 					{rightIcon}
 				</div>
-			) : null}
+			)}
 			{children ? <div>{children}</div> : null}
 		</div>
 	);

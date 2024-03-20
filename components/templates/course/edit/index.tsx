@@ -124,7 +124,7 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 								<h1 className="text-sm mb-3">Reviews</h1>
 								{isCourse
 									? courseState.reviews
-											.map(({ content, ratings, reviewed_by, type }, id) => {
+											.map(({ content, rating, reviewed_by, type }, id) => {
 												return (
 													<div key={id} className="border border-[#70C5A1] p-4 my-4">
 														<p className="my-4 text-xs">{content}</p>
@@ -146,7 +146,7 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 																	height={20}
 																	width={20}
 																/>
-																<p className="text-sm">{ratings.toFixed(1)}</p>
+																<p className="text-sm">{rating.toFixed(1)}</p>
 															</div>
 														</div>
 													</div>
@@ -155,7 +155,7 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 											.slice(0, 4)
 									: isWorkshop &&
 									  workshopState.reviews
-											.map(({ content, ratings, reviewed_by, type }, id) => {
+											.map(({ content, rating, reviewed_by, type }, id) => {
 												return (
 													<div key={id} className="border border-[#70C5A1] p-4 my-4">
 														<p className="my-4 text-xs">{content}</p>
@@ -177,7 +177,7 @@ const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state
 																	height={20}
 																	width={20}
 																/>
-																<p className="text-sm">{ratings.toFixed(1)}</p>
+																<p className="text-sm">{rating.toFixed(1)}</p>
 															</div>
 														</div>
 													</div>

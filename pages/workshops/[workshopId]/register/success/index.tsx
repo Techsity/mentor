@@ -6,7 +6,7 @@ import Confetti from "react-dom-confetti";
 import confettiConfig from "../../../../../utils/confetti.config";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkshopToRegister, workshopToRegister } from "../../../../../redux/reducers/workshopSlice";
-import { calculateRatingsInReviews, formatDateDifference } from "../../../../../utils";
+import { calculateRatingInReviews, formatDateDifference } from "../../../../../utils";
 
 const WorkshopSubscriptionSuccess = () => {
 	const router = useRouter();
@@ -61,7 +61,7 @@ const WorkshopSubscriptionSuccess = () => {
 									fill="#FFB100"
 								/>
 							</svg>
-							{calculateRatingsInReviews(workshop.reviews)}
+							{calculateRatingInReviews(workshop.reviews)}
 						</div>
 					</div>
 				</div>

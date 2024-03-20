@@ -8,7 +8,7 @@ import ListReviews from "../../../ui/atom/common/course/ListReviews";
 import Socials from "../../../ui/atom/common/course/Socials";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
 import { useModal } from "../../../../context/modal.context";
-import ReportModal from "../../../ui/atom/modals/ReportModal";
+import ReportMentorModal from "../../../ui/atom/modals/ReportMentorModal";
 import { useSelector } from "react-redux";
 import { currentUser, isLoggedIn } from "../../../../redux/reducers/authSlice";
 import { useRouter } from "next/router";
@@ -23,7 +23,7 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={mentor?.id} />, { closeOnBackgroundClick: false, animate: true });
+		else openModal(<ReportMentorModal mentorId={mentor?.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 
 	return (

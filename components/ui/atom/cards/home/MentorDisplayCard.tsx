@@ -3,12 +3,12 @@ import React from "react";
 import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
 import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { calculateOverallExperience, calculateRatingsInReviews, formatFollowersCount } from "../../../../../utils";
+import { calculateOverallExperience, calculateRatingInReviews, formatFollowersCount } from "../../../../../utils";
 import { useRouter } from "next/router";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();
-	const ratings = mentor.reviews ? calculateRatingsInReviews(mentor.reviews) : 0;
+	const rating = mentor.reviews ? calculateRatingInReviews(mentor.reviews) : 0;
 	const overallExperience = calculateOverallExperience(mentor.work_experience);
 	const followers = formatFollowersCount(mentor.followers.length);
 	return (
@@ -53,7 +53,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 									fillOpacity="0.5"
 								/>
 							</svg>
-							{Number(ratings).toFixed(1)}
+							{Number(rating).toFixed(1)}
 						</span>
 						<div className="md:hidden py-5">
 							<div

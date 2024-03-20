@@ -192,10 +192,10 @@ export function formatAmount(amount: number, options?: { withFraction?: boolean 
 	return "";
 }
 
-export const calculateRatingsInReviews = (reviews: IReview[]): string => {
+export const calculateRatingInReviews = (reviews: IReview[]): string => {
 	return reviews
 		? parseInt(
-				formatFollowersCount(reviews.reduce((sum, review) => sum + review.ratings, 0) / reviews.length || 0),
+				formatFollowersCount(reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length || 0),
 		  ).toFixed(1)
 		: "";
 };

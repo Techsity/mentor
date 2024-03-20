@@ -3,7 +3,7 @@ import React from "react";
 import { ICourse } from "../../../../../interfaces";
 import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 import Link from "next/link";
-import { calculateRatingsInReviews, formatFollowersCount, slugify } from "../../../../../utils";
+import { calculateRatingInReviews, formatFollowersCount, slugify } from "../../../../../utils";
 import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 
@@ -100,7 +100,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								{!loading ? (
 									<div className="flex items-center gap-2 text-[#094B10] ml-3 text-[13px]">
 										{(
-											parseInt(calculateRatingsInReviews((course as ICourse).reviews)) || 0
+											parseInt(calculateRatingInReviews((course as ICourse).reviews)) || 0
 										).toFixed(1)}
 										<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
 											<path

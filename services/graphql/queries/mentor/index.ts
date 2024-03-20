@@ -124,7 +124,7 @@ export const GET_ALL_MENTORS = gql`
 			}
 			reviews {
 				type
-				ratings
+				rating
 			}
 			exp_level
 			hourly_rate
@@ -168,7 +168,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 				reviewed_by {
 					name
 				}
-				ratings
+				rating
 			}
 			skills {
 				skill_name

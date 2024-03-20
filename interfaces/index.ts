@@ -340,4 +340,4 @@ export type ProfileTabLinkType =
 
 export type CourseType = "technical" | "vocational" | "educational";
 
-export type IReview = { content: string; ratings: number; reviewed_by: IUser; type: string };
+export type IReview = { content: string; rating: number; reviewed_by: IUser; type: string };

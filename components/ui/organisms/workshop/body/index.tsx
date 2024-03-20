@@ -7,7 +7,7 @@ import WhatToLearnInWorkshop from "./WhatToLearnInWorkshop";
 import WorkshopRequirements from "./WorkshopRequirements";
 import WorkshopContents from "./WorkshopContents";
 import { useModal } from "../../../../../context/modal.context";
-import ReportModal from "../../../atom/modals/ReportModal";
+import ReportMentorModal from "../../../atom/modals/ReportMentorModal";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { isLoggedIn, currentUser } from "../../../../../redux/reducers/authSlice";
@@ -21,7 +21,7 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
+		else openModal(<ReportMentorModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 	return (
 		<div className="min-h-[50vh] h-full sm:px-12 px-6">
