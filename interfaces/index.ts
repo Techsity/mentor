@@ -311,7 +311,7 @@ export interface IWorkshop {
 	description: string;
 	scheduled_date: string;
 	level?:COURSE_LEVEL
-	category: ICourseCategory;
+	category?: ICourseCategory;
 	duration: number;
 	participants: number;
 	price: number;
