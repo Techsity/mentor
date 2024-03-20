@@ -180,7 +180,7 @@ const ProfileSettings = () => {
 							}}
 						/>
 					</div>
-					<div className="flex flex-col gap-2 sm:col-span-2 2xl:col-span-3 col-span-1">
+					{/* <div className="flex flex-col gap-2 sm:col-span-2 2xl:col-span-3 col-span-1">
 						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="oldPassword">
 							Change Password
 						</label>
@@ -219,7 +219,7 @@ const ProfileSettings = () => {
 								}}
 							/>
 						</div>
-					</div>
+					</div> */}
 				</div>
 				<div className="flex justify-start items-start flex-col gap-3">
 					<PrimaryButton
