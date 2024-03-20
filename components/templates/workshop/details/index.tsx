@@ -7,21 +7,16 @@ import { ChevronUpOutline } from "react-ionicons";
 import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import { IWorkshop } from "../../../../interfaces";
-import courses from "../../../../data/courses";
 
-const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop | undefined }) => {
-	return !workshop ? (
-		<>
-			<h1 className="text-lg text-[#d31119] tracking-tight">Workshop not found.</h1>
-		</>
-	) : (
+const WorkShopDetailsPageTemplate = ({ workshop }: { workshop: IWorkshop }) => {
+	return (
 		<>
 			<div className="">
 				<WorkshopDetailsPageHero {...workshop} />
 				<WorkShopDetailsBody {...workshop} />
 			</div>
 			<CoursePageAboutMentor {...workshop.mentor} />
-			<OtherCoursesByMentor mentor={{ ...workshop.mentor, courses }} />
+			<OtherCoursesByMentor mentor={{ ...workshop.mentor, courses: workshop.mentor.courses }} />
 			<div className="mt-28">
 				<h1 className="text-center mt-20" style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter

@@ -6,7 +6,7 @@ import Link from "next/link";
 import CoursesList from "./CoursesList";
 import { CourseType, ICourseCategory } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/mutations/courses";
+import { GET_ALL_CATEGORIES } from "../../../../../services/graphql/queries/course";
 import { slugify } from "../../../../../utils";
 
 type ActiveCourseType = { name: CourseType; categories: ICourseCategory[] };

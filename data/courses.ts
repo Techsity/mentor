@@ -167,7 +167,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: ["No prior programming experience required"],
 		course_contents: courseContents[0],
 		category: courseCategories[0],
@@ -192,7 +192,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: [
 			"Mobile Phone",
 			"Data and good network area",
@@ -226,7 +226,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: [
 			"Mobile Phone",
 			"Data and good network area",

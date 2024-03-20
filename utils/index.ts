@@ -1,4 +1,4 @@
-import { ICourseContent, IReview } from "../interfaces";
+import { ICourseContent, IReview, IWorkshopContent } from "../interfaces";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { IMentorExperience } from "../interfaces/mentor.interface";
@@ -127,24 +127,18 @@ export const scrollUp = (height?: number) => {
 };
 
 export const calculateTax = (price: number, taxRate: number) => {
-	if (!price || !taxRate) {
-		return null;
-	}
+	if (!price || !taxRate) return null;
 	const taxAmount = ((price * taxRate) / 100.0).toFixed(2);
 	return taxAmount;
 };
 
 export function capitalizeSentence(sentence: string) {
-	if (sentence.length === 0) {
-		return sentence;
-	} else {
+	if (sentence.length === 0) return sentence;
+	else {
 		const words = sentence.split(" ");
 		const capitalizedWords = words.map((word) => {
-			if (word.length === 0) {
-				return word;
-			} else {
-				return word[0].toUpperCase() + word.slice(1);
-			}
+			if (word.length === 0) return word;
+			else return word[0].toUpperCase() + word.slice(1);
 		});
 		return capitalizedWords.join(" ");
 	}

@@ -1,38 +1,41 @@
 import React from "react";
-import WorkShopDetailsPageTemplate from "../../../components/templates/workshop/details";
+import WorkshopRegistrationPageTemplate from "../../../../components/templates/workshop/registration";
+import protectedPageWrapper from "../../../protectedPageWrapper";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import { IWorkshop } from "../../../interfaces";
-import workshops from "../../../data/workshops";
-import { slugify } from "../../../utils";
-import client from "../../../utils/apolloClient";
-import { VIEW_WORKSHOP_DETAILS } from "../../../services/graphql/queries/workshop";
-import ResponseMessages from "../../../constants/response-codes";
-import { formatGqlError } from "../../../utils/auth";
+import ResponseMessages from "../../../../constants/response-codes";
+import { IWorkshop } from "../../../../interfaces";
+import { VIEW_WORKSHOP_DETAILS } from "../../../../services/graphql/queries/workshop";
+import client from "../../../../utils/apolloClient";
+import { formatGqlError } from "../../../../utils/auth";
 
 type WorkshopPageDetailsProps = {
 	workshop: IWorkshop | null;
 	error?: string;
 };
 
-const WorkShopDetailsPage = ({ workshop, error }: WorkshopPageDetailsProps) => {
+const WorkshopRegistrationPage = ({ workshop, error }: WorkshopPageDetailsProps) => {
 	if (!workshop) {
 		console.error({ error });
-		return <div className="h-screen text-center flex items-center justify-center text-red-500">{error || "Something went wrong"}</div>;
+		return (
+			<div className="h-screen text-center flex items-center justify-center text-red-500">
+				{error || "Something went wrong"}
+			</div>
+		);
 	}
-	return <WorkShopDetailsPageTemplate workshop={workshop} />;
+	return <WorkshopRegistrationPageTemplate {...{ workshop }} />;
 };
+
+export default protectedPageWrapper(WorkshopRegistrationPage);
 
 export const getServerSideProps = async (
 	ctx: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<WorkshopPageDetailsProps>> => {
 	const workshopId = ctx.query.workshopId as string;
 	if (!workshopId) return { notFound: true };
-	// query to fetch workshop based on the "workshopId"
 	try {
 		const query = client({ ssr: true }).query;
 		const {
 			data: { viewWorkshop: workshop },
-			error,
 		} = await query<{ viewWorkshop: IWorkshop }, { workshopId: string }>({
 			query: VIEW_WORKSHOP_DETAILS,
 			variables: { workshopId },
@@ -46,5 +49,3 @@ export const getServerSideProps = async (
 		return { props: { workshop: null, error: "Something went wrong. Please refresh page and try again." } };
 	}
 };
-
-export default WorkShopDetailsPage;

@@ -21,7 +21,7 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false });
+		else openModal(<ReportModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 	return (
 		<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">

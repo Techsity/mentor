@@ -1,43 +1,23 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { IWorkshop, IWorkshopContent } from "../../../../../interfaces";
-import { calculateTotalDuration, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../../atom/buttons";
 import classNames from "classnames";
-import { useDispatch } from "react-redux";
-import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 import { useRouter } from "next/router";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { useDispatch } from "react-redux";
+import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 
-const WorkshopContents = ({
-	workshop,
-	className,
-	preview = false,
-}: {
+type WorkshopContentType = {
 	workshop: IWorkshop;
 	className?: string;
 	preview?: boolean;
-}) => {
-	const dispatch = useDispatch();
+};
+
+const WorkshopContents = ({ workshop, className, preview = false }: WorkshopContentType) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
-	const WorkshopContentItem = ({ content }: { content: IWorkshopContent }) => {
-		return (
-			<>
-				<div
-					className={`p-2 px-4 border border-[#70C5A1] bg-[#70C5A1] text-white select-none cursor-default duration-300 relative z-10`}>
-					<div className="group relative w-full h-full">
-						<h1 className="grid items-center gap-2 text-sm">
-							{content.title}{" "}
-							<span className="flex items-center gap-10">
-								<span className={`text-white`}>{new Date(content.date).toDateString()}</span>
-								<span className={`text-white`}>1:00pm - 2:15PM</span>
-							</span>
-						</h1>
-					</div>
-				</div>
-			</>
-		);
-	};
+	const dispatch = useDispatch();
+
 	return (
 		<div
 			className={classNames(
@@ -65,17 +45,48 @@ const WorkshopContents = ({
 						title={!loading ? "Register for Workshop" : ""}
 						icon={loading ? <ActivityIndicator /> : null}
 						onClick={() => {
-							dispatch(setWorkshopToRegister(workshop));
 							setLoading(true);
-							setTimeout(function () {
-								router.push(`/workshops/${slugify(workshop.title)}?register`);
-							}, 1000);
+							dispatch(setWorkshopToRegister(workshop));
+							router.push(`/workshops/${workshop.id}/register`);
 						}}
 						className="p-2 text-lg flex justify-center items-center mt-6 text-sm"
 					/>
 				) : null}
 			</div>
 		</div>
+	);
+};
+
+const WorkshopContentItem = ({ content }: { content: IWorkshopContent }) => {
+	// Determine whether it's AM or PM based on the time
+	const parseMeridan = (time: string) => parseInt(time.split(":")[0], 10);
+
+	const startTimeMeridan =
+		parseMeridan(content.startTime) === 0 ? "AM" : parseMeridan(content.startTime) >= 12 ? "PM" : "AM";
+	const endTimeMeridan =
+		parseMeridan(content.endTime) === 0 ? "AM" : parseMeridan(content.endTime) >= 12 ? "PM" : "AM";
+
+	const startTime = parseInt(content.startTime.split(":")[0], 10) === 0 ? "12:00" : content.startTime;
+	const endTime = parseInt(content.endTime.split(":")[0], 10) === 0 ? "12:00" : content.endTime;
+
+	return (
+		<>
+			<div
+				className={`p-2 px-4 border border-[#70C5A1] bg-[#70C5A1] text-white select-none cursor-default duration-300 relative z-10`}>
+				<div className="group relative w-full h-full">
+					<h1 className="grid items-center gap-2 text-sm">
+						{content.title}{" "}
+						<span className="flex items-center justify-between">
+							<span className={`text-white`}>{new Date(content.date).toDateString()}</span>
+							<span className={`text-white`}>
+								{startTime.split(":").slice(0, 2).join(":") + startTimeMeridan} -{" "}
+								{endTime.split(":").slice(0, 2).join(":") + endTimeMeridan}
+							</span>
+						</span>
+					</h1>
+				</div>
+			</div>
+		</>
 	);
 };
 

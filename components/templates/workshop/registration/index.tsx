@@ -1,31 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import protectedPageWrapper from "../../../../pages/protectedPageWrapper";
 import WorkshopContents from "../../../ui/organisms/workshop/body/WorkshopContents";
-import { useSelector } from "react-redux";
-import { workshopToRegister } from "../../../../redux/reducers/workshopSlice";
-import { useRouter } from "next/router";
 import { formatFollowersCount } from "../../../../utils";
 import FreePurchaseForm from "../../../ui/atom/forms/purchase-form/FreePurchaseForm";
-import WorkshopRegisterHeader from "../../../ui/organisms/workshop/register/Header";
 import PaidPurchaseForm from "../../../ui/atom/forms/purchase-form/PaidPurchaseForm";
 import CartSummary from "../../../ui/atom/cards/purchase/CartSummary";
+import { IWorkshop } from "../../../../interfaces";
+import WorkshopDetailsPageHero from "../../../ui/organisms/workshop/hero";
 
-const WorkshopRegistrationPageTemplate = () => {
-	const workshop = useSelector(workshopToRegister);
-	const router = useRouter();
-	if (!workshop) {
-		router.back();
-		return;
-	}
-
+const WorkshopRegistrationPageTemplate = ({ workshop }: { workshop: IWorkshop }) => {
+	// const workshop = useSelector(workshopToRegister) as IWorkshop;
 	return workshop.price === 0 ? (
 		<>
-			<WorkshopRegisterHeader {...workshop} />
+			{/* <WorkshopRegisterHeader {...workshop} /> */}
+			<WorkshopDetailsPageHero {...workshop} />
 			<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
 				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full sm:mt-10 items-start">
 					<div className="flex-grow w-full">
-						<FreePurchaseForm reason="workshop" />
+						<FreePurchaseForm resourceId={String(workshop.id)} reason="workshop" />
 					</div>
 					<WorkshopContents workshop={workshop} />
 				</div>
@@ -68,15 +60,7 @@ const WorkshopRegistrationPageTemplate = () => {
 							</h1>
 							<p className="">{workshop.mentor.role} </p>
 							<p className="flex gap-1 items-center">
-								{/* {formatFollowersCount(workshop.mentor.courses.length)}{" "} */}
-								20 Courses | {/* {formatFollowersCount(workshop.mentor.sessions)}{" "} */}
-								{/* Sessions | */}
-								{formatFollowersCount(workshop.mentor.followers.length)} Followers
-								{/* |{" "} */}
-								{/* {formatFollowersCount(
-									workshop.mentor.subscribers,
-								)}{" "}
-								Subscribers */}
+								20 Courses | {formatFollowersCount(workshop.mentor.followers.length)} Followers
 							</p>
 						</div>
 					</div>
@@ -86,4 +70,4 @@ const WorkshopRegistrationPageTemplate = () => {
 	);
 };
 
-export default protectedPageWrapper(WorkshopRegistrationPageTemplate);
+export default WorkshopRegistrationPageTemplate;

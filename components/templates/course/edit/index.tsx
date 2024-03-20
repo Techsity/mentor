@@ -30,7 +30,7 @@ const courseInitialState: Omit<ICourse, "mentor"> = {
 	rating: 0,
 	price: 0,
 	available: false,
-	imgUrl: "",
+	thumbnail: "",
 	requirements: [],
 	course_contents: [],
 	category: {
@@ -58,8 +58,8 @@ const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 	requirements: [],
 	what_to_learn: [],
 	price: 0,
-	startDate: "",
-	endDate: "",
+	isSubscribed: false,
+	scheduled_date: "",
 };
 
 const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state }: Props) => {

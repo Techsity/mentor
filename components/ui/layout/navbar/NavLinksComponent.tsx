@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../../../../services/graphql/mutations/courses";
+import { GET_ALL_CATEGORIES } from "../../../../services/graphql/queries/course";
 
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);

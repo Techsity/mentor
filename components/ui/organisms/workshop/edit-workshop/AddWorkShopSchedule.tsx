@@ -7,7 +7,9 @@ type Props = {
 };
 
 const AddWorkShopSchedule = ({ state }: Props) => {
-	const initialWorkshopContentState: IWorkshopContent[] = [{ date: new Date().toDateString(), title: "" }];
+	const initialWorkshopContentState: IWorkshopContent[] = [
+		{ date: new Date().toDateString(), title: "", endTime: "", startTime: "" },
+	];
 
 	const [workshopContentState, setWorkshopState] = useState<IWorkshopContent[]>(
 		state.contents || initialWorkshopContentState,

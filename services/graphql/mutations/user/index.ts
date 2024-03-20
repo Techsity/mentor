@@ -18,6 +18,7 @@ export const UPDATE_USER_PROFILE = gql`
 			subsciptions {
 				id
 				is_completed
+				type
 				created_at
 				updated_at
 			}
@@ -25,86 +26,6 @@ export const UPDATE_USER_PROFILE = gql`
 	}
 `;
 
-export const FETCH_USER_SUBSCRIPTIONS = gql`
-	query ViewSubscribedCourses {
-		viewSubscribedCourses {
-			id
-			course {
-				id
-				title
-				course_level
-				description
-				category {
-					title
-				}
-				course_type {
-					type
-				}
-				what_to_learn
-				requirements
-				price
-				course_images
-				course_contents {
-					title
-					course_sections {
-						section_name
-						# video_url
-						notes
-					}
-				}
-				mentor {
-					...MentorField
-				}
-				reviews {
-					...ReviewField
-				}
-				created_at
-			}
-			is_completed
-			created_at
-		}
-	}
-
-	fragment MentorField on MentorDTO {
-		id
-		user {
-			name
-			avatar
-			country
-			is_online
-			is_verified
-		}
-		role
-		# followers {
-		# 	id
-		# }
-	}
-	fragment ReviewField on ReviewDto {
-		type
-		content
-		reviewed_by {
-			name
-			avatar
-			country
-		}
-		ratings
-	}
-`;
-
-export const VIEW_ALL_NOTIFICATIONS = gql`
-	query ViewAllNotifications {
-		viewAllNotifications {
-			id
-			title
-			body
-			resourceId
-			resourceType
-			read
-			userId
-			created_at
-		}
-	}
-`;
 export const MARK_NOTIFICATION_AS_READ = gql`
 	mutation ReadNotification($notificationId: String!) {
 		readNotification(notificationId: $notificationId)

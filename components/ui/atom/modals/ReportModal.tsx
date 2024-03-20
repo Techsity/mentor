@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useId, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useId, useState } from "react";
 import { useModal } from "../../../../context/modal.context";
 import { useMutation } from "@apollo/client";
 import { REPORT_MENTOR } from "../../../../services/graphql/mutations/mentors";
@@ -22,11 +22,8 @@ const ReportModal = ({ mentorId }: any) => {
 	const CONTENT_THRESHOLD = 200;
 	const toastId = useId();
 	const { closeModal } = useModal();
-	if (!mentorId) {
-		closeModal();
-		return;
-	}
-	const reportCategories = ["Sexual Harrasment", "Scam", "Bot", "Personal"]; // Todo: use JSON file
+
+	const reportCategories = ["Harrasment", "Scam", "Bot", "Personal", ""]; // Todo: use JSON file
 	const [content, setContent] = useState<string>("");
 	const [selectedCategory, setSelectedCategory] = useState<string>(reportCategories[0] || "");
 	const [reportMentor, { loading }] = useMutation<any, ReportInput>(REPORT_MENTOR);
@@ -39,7 +36,8 @@ const ReportModal = ({ mentorId }: any) => {
 
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const { value } = e.target;
-		if (value.length < CONTENT_THRESHOLD + 1) setContent(value);
+		// if (value.length < CONTENT_THRESHOLD + 1)
+		setContent(value);
 		setLimitReached(value.length >= CONTENT_THRESHOLD + 1);
 	};
 
@@ -61,34 +59,55 @@ const ReportModal = ({ mentorId }: any) => {
 			}
 		}
 	};
+	useEffect(() => {
+		if (!mentorId) {
+			closeModal();
+			return;
+		}
+	}, [mentorId]);
 
 	return (
-		<form onSubmit={handleSubmit} className="bg-white h-auto w-[85vw] md:w-[65vw] rounded p-5 inline-block">
-			<h1 className="text-[16px] font-medium">Report Mentor</h1>
+		<form
+			onSubmit={handleSubmit}
+			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
+			<h1 className="font-medium">Report Mentor</h1>
+			<span className="flex flex-col items-start my-5">
+				<span className="text-sm text-gray-400">
+					Tell us why you are reporting. This helps us to take the correct action on the reported content.
+				</span>
+				<ul className="flex items-center gap-2 text-sm my-2 flex-wrap">
+					{reportCategories
+						.filter((c) => c !== "")
+						.map((c, i) => (
+							<li
+								className="flex items-center gap-1 cursor-pointer"
+								onClick={() => setSelectedCategory(slugify(c))}
+								key={i}>
+								<input readOnly type="radio" checked={slugify(selectedCategory) === slugify(c)} />
+								{c}
+							</li>
+						))}
+				</ul>
+			</span>
 			<CustomTextArea
 				onChange={handleChange}
-				containerProps={{ className: `text-sm my-4 ${limitReached ? "border-red-500" : ""}` }}
+				placeholder="Please provide more details"
+				containerProps={{
+					className: `placeholder:text-gray-300 text-sm mb-4 ${limitReached ? "border-red-500" : ""}`,
+				}}
 			/>
-			<div className="flex justify-between items-center">
-				<ul className="flex items-center gap-2 text-sm my-2">
-					{reportCategories.map((c, i) => (
-						<li
-							className="flex items-center gap-1 cursor-pointer"
-							onClick={() => setSelectedCategory(slugify(c))}
-							key={i}>
-							<input readOnly type="radio" checked={slugify(selectedCategory) === slugify(c)} />
-							{c}
-						</li>
-					))}
-				</ul>
-				<span className={classNames("text-sm", limitReached && "text-red-500")}>
-					{limitReached && "Limit is "} {!limitReached ? content.length : CONTENT_THRESHOLD} words
+			<div className="flex flex-col lg:flex-row justify-between lg:items-center text-xs">
+				<span className={classNames("italic text-gray-600", limitReached && "text-red-500")}>
+					Max length: {CONTENT_THRESHOLD} words
+				</span>
+				<span className={classNames("", limitReached && "text-red-500")}>
+					{!limitReached && "Remaining"} {CONTENT_THRESHOLD - content.length} words
 				</span>
 			</div>
 			<PrimaryButton
 				title={!loading ? "Submit" : ""}
 				type="submit"
-				disabled={loading || limitReached}
+				disabled={loading || limitReached || content.trim().length < 1 || content == "" || !content}
 				icon={loading ? <ActivityIndicator /> : <></>}
 				className="p-1.5 px-4 rounded mt-3 flex justify-center"
 			/>

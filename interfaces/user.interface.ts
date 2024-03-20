@@ -10,6 +10,7 @@ export type Subscription = {
 	id: string;
 	course: ICourse;
 	course_id: string;
+	workshop_id: string;
 	is_completed: boolean;
 	created_at?: string;
 	updated_at?: string;
@@ -37,6 +38,7 @@ export interface IUser {
 	is_verified: boolean;
 	is_admin: boolean;
 	payment_cards?: IUserPaymentCard[];
+	allow_push_notifications: boolean;
 	is_mentor: boolean;
 	isPremium: boolean;
 	created_at?: string;

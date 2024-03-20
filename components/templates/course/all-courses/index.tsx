@@ -4,7 +4,6 @@ import BecomeMentor from "../../../ui/organisms/home/become-a-mentor";
 import MenteeDashboardHero from "../../../ui/organisms/user/dashboard/hero";
 import CoursesSection from "../../../ui/organisms/user/dashboard/courses-mentors-workshop/CoursesSection";
 import { useRouter } from "next/router";
-import LoadMoreCourses from "../../../ui/organisms/course/loadmore-course/LoadMoreCourses";
 
 const AllCoursesPageTemplate = () => {
   return (

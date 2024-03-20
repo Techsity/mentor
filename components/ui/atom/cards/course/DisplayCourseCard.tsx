@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 
 const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
 	const router = useRouter();
+
 	const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
 	const hasBeenAdded = wishlist.find(
 		(wishlistedCourse) => slugify(wishlistedCourse?.title as string) === slugify(course?.title as string),
@@ -62,7 +63,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 													: "/assets/images/mockups/course_one.png"
 											}
 											className="w-full h-full object-cover bg-zinc-200"
-											alt={course?.title}
+											alt={course?.title || ""}
 											loading="lazy"
 										/>
 									</div>
@@ -71,18 +72,14 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									<div className="z-10 h-[250px] w-full bg-zinc-100 animate__animated animate__fadeOut animate__infinite" />
 								)}
 							</div>
-
-							<h1
-								className={
-									!loading
-										? "px-5 p-2 font-medium tracking-tight"
-										: "mx-5 px-5 h-2 bg-zinc-200 sm:w-3/5"
-								}>
-								{!loading && String(course?.title).length > 25
-									? !loading && course?.title.slice(0, 25) + "..."
-									: !loading && course?.title}
-							</h1>
-
+							{loading && <span className="mx-5 px-5 h-2 bg-zinc-200 sm:w-3/5" />}
+							{!loading && (
+								<h1 className={"px-5 p-2 font-medium tracking-tight"}>
+									{String(course?.title).length > 25
+										? course?.title.slice(0, 25) + "..."
+										: course?.title}
+								</h1>
+							)}
 							<div className="flex items-center gap-1 justify-between px-5 text-xs w-full">
 								<span className={!loading ? "font-normal" : "px-5 bg-zinc-200 h-1.5 capitalize"}>
 									{!loading && course && course?.course_level.split("_").join(" ")}
@@ -125,7 +122,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 										: "mt-3 mx-5 h-1.5 w-5/6 bg-zinc-200"
 								}>
 								{
-									String(course?.description)
+									!loading && String(course?.description)
 									// > 30
 									// 	? !loading && course?.description.slice(0, 30) + "..."
 									// 	: !loading && course?.description
@@ -146,7 +143,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								)}
 							</div>
 							<h1 className={loading ? "px-10 h-2 bg-zinc-200" : ""}>
-								{!loading && course?.mentor.user.name}
+								{!loading && course?.mentor.user.name.split(" ")[0]}
 							</h1>
 						</div>
 						{!loading ? (
@@ -160,7 +157,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								</div>
 							)
 						) : (
-							<span className="text-white text-sm bg-[#033] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
+							<span className="text-white text-sm bg-[#ccc] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
 						)}
 					</div>
 				</div>

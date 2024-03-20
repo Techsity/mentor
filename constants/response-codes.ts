@@ -10,5 +10,6 @@ const ResponseMessages = {
 	USER_VERIFIED: "User verified successfully",
 	FORGOT_PASSWORD_EMAIL_SENT: "To reset password, please check your email for otp!",
 	MENTOR_PROFILE_NOT_FOUND: "Mentor profile not found",
+	ALREADY_SUBSCRIBED: "Already subscribed",
 };
 export default ResponseMessages;

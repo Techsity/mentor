@@ -23,7 +23,7 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportModal mentorId={mentor?.id} />, { closeOnBackgroundClick: false });
+		else openModal(<ReportModal mentorId={mentor?.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 
 	return (

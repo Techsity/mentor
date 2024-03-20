@@ -6,12 +6,11 @@ import { PrimaryButton } from "../../buttons";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/mutations/auth";
+import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/queries/mentor";
 import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSocketContext } from "../../../../../context/socket-io.context";
-import EVENTS from "../../../../../constants/events.constant";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();

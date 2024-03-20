@@ -8,12 +8,13 @@ import { toast } from "react-toastify";
 import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
 import { setCredentials } from "../../redux/reducers/authSlice";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { GET_MENTOR_PROFILE, LOGIN_USER } from "../../services/graphql/mutations/auth";
+import { GET_MENTOR_PROFILE } from "../../services/graphql/queries/mentor";
 import { IUser } from "../../interfaces/user.interface";
 import { authenticate, formatGqlError } from "../../utils/auth";
 import ResponseMessages from "../../constants/response-codes";
 import mentors from "../../data/mentors";
 import { IMentor } from "../../interfaces/mentor.interface";
+import { LOGIN_USER } from "../../services/graphql/mutations/auth";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;

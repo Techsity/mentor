@@ -8,7 +8,7 @@ import VideoComponent from "../../../ui/organisms/course/course-in-progress/vide
 import CourseOverviewTabComponent from "../../../ui/organisms/course/course-in-progress/overview-tab";
 import courses from "../../../../data/courses";
 import { useRouter } from "next/router";
-import { VIEW_COURSE } from "../../../../services/graphql/mutations/courses";
+import { VIEW_COURSE } from "../../../../services/graphql/queries/course";
 import { useQuery } from "@apollo/client";
 import { ICourse } from "../../../../interfaces";
 

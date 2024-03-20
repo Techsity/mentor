@@ -1,11 +1,9 @@
-import React, { ChangeEvent, RefObject, createRef, useCallback, useEffect, useId, useState } from "react";
+import React, { ChangeEvent, createRef, useEffect, useState } from "react";
 import { CourseSectionUploadFile } from "../../../../redux/reducers/coursesSlice";
 import { useModal } from "../../../../context/modal.context";
 import { PrimaryButton } from "../buttons";
 import { convertToBase64 } from "../../../../utils";
 import ActivityIndicator from "../loader/ActivityIndicator";
-import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../constants";
 
 type Props = {
 	fileMetaData?: CourseSectionUploadFile;
@@ -15,7 +13,6 @@ type Props = {
 };
 
 const VideoUploadModal = (props: Props) => {
-	const toastId = useId();
 	const { onVideoUpload, includePosterUpload, fileMetaData, poster } = props;
 	const { modalContent, closeModal } = useModal();
 	const [videoMetaData, setVideoMetaData] = useState<Pick<CourseSectionUploadFile, "name" | "type"> | null>(null);
@@ -25,21 +22,20 @@ const VideoUploadModal = (props: Props) => {
 	const videoUploadInputRef = createRef<HTMLInputElement>();
 	const posterUploadInputRef = createRef<HTMLInputElement>();
 
-	const handleChange = (type: "video" | "image") =>
-		useCallback((e: ChangeEvent<HTMLInputElement>) => {
-			const { files } = e.target;
-			if (files) {
-				const file = files[0];
-				if (type == "video") {
-					setVideoMetaData({ name: file.name, type: file.type });
-				} else if (type == "image") {
-					if (includePosterUpload) {
-						const blobUrl = URL.createObjectURL(file);
-						setPosterImage(blobUrl);
-					}
+	const handleChange = (type: "video" | "image") => (e: ChangeEvent<HTMLInputElement>) => {
+		const { files } = e.target;
+		if (files) {
+			const file = files[0];
+			if (type == "video") {
+				setVideoMetaData({ name: file.name, type: file.type });
+			} else if (type == "image") {
+				if (includePosterUpload) {
+					const blobUrl = URL.createObjectURL(file);
+					setPosterImage(blobUrl);
 				}
 			}
-		}, []);
+		}
+	};
 
 	const resetPosterImage = () => {
 		URL.revokeObjectURL(posterImage);

@@ -2,7 +2,7 @@ import React from "react";
 import PurchaseCourseTemplate from "../../../components/templates/course/purchase";
 import { ICourse } from "../../../interfaces";
 import client from "../../../utils/apolloClient";
-import { VIEW_COURSE } from "../../../services/graphql/mutations/courses";
+import { VIEW_COURSE } from "../../../services/graphql/queries/course";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
 type Props = { course: ICourse | null; error?: string };

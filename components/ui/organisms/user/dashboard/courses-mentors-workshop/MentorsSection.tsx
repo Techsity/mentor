@@ -4,7 +4,7 @@ import { scrollUp } from "../../../../../../utils";
 import MentorProfileCard from "../../../../atom/cards/mentor/MentorProfileCard";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_MENTORS } from "../../../../../../services/graphql/mutations/mentors";
+import { GET_ALL_MENTORS } from "../../../../../../services/graphql/queries/mentor";
 
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");

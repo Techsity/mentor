@@ -1,13 +1,14 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { IUser, Notification } from "../interfaces/user.interface";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { MARK_NOTIFICATION_AS_READ, VIEW_ALL_NOTIFICATIONS } from "../services/graphql/mutations/user";
+import { MARK_NOTIFICATION_AS_READ } from "../services/graphql/mutations/user";
 import { useSelector } from "react-redux";
 import { currentUser } from "../redux/reducers/authSlice";
 import { useSocketContext } from "./socket-io.context";
 import EVENTS from "../constants/events.constant";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { VIEW_ALL_NOTIFICATIONS } from "../services/graphql/queries/user";
 dayjs.extend(relativeTime);
 
 interface INotificationsContext {
