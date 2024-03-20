@@ -49,7 +49,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 										hideProgressBar
 										closeOnClick
 										draggable
-										position="top-center"
+										position="top-right"
 									/>
 									<Component {...pageProps} />
 								</LayoutContainer>
