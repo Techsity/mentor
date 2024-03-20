@@ -21,6 +21,8 @@
 
 * {
 	scroll-behavior: smooth !important;
+	font-family: "Poppins", sans-serif;
+
 }
 .cursor-not-allowed {
 	cursor: not-allowed;
@@ -36,7 +38,6 @@
 }
 
 body {
-	font-family: "Poppins", sans-serif;
 	overflow-x: hidden !important;
 }
 
