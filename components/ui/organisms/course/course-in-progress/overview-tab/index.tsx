@@ -69,7 +69,7 @@ const CourseOverviewTab = ({ course }: { course: ICourse }) => {
 										<span
 											onClick={() => {
 												setNewReview((p) => {
-													return { ...p, rating: index };
+													return { ...p, rating: index + 1 };
 												});
 											}}
 											className={classNames(
@@ -77,7 +77,7 @@ const CourseOverviewTab = ({ course }: { course: ICourse }) => {
 												newReview.rating >= index ? "animate__animated animate__fadeIn" : "",
 											)}
 											key={index}>
-											{newReview.rating >= index ? "★" : "☆"}
+											{newReview.rating >= index + 1 ? "★" : "☆"}
 										</span>
 									);
 								})}

@@ -4,14 +4,21 @@ import ActivityIndicator from "../../../components/ui/atom/loader/ActivityIndica
 import { useRouter } from "next/router";
 import Confetti from "react-dom-confetti";
 import confettiConfig from "../../../utils/confetti.config";
+import { useDispatch } from "react-redux";
+import { onboardingUserState, setOnboardingUser } from "../../../redux/reducers/onboardingSlice";
+import { useSelector } from "react-redux";
 
 const OnboardingCongratulations = () => {
+	const onboardngUsr = useSelector(onboardingUserState);
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [celebrate, setCelebrate] = useState<boolean>(false);
 
 	useEffect(() => {
-		setCelebrate(true);
+		if (onboardngUsr) {
+			if (onboardngUsr.email) setCelebrate(true);
+		} else router.replace("/auth");
 	}, []);
 	return (
 		<>
@@ -28,9 +35,8 @@ const OnboardingCongratulations = () => {
 						<PrimaryButton
 							onClick={() => {
 								setLoading(true);
-								setTimeout(function () {
-									router.replace("/dashboard");
-								}, 2000);
+								dispatch(setOnboardingUser(null));
+								router.replace("/profile");
 							}}
 							disabled={loading}
 							title={!loading ? "Continue" : ""}

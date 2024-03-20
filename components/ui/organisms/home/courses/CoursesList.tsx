@@ -4,6 +4,7 @@ import { ICourse } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
 import { ALL_COURSES } from "../../../../../services/graphql/queries/course";
 import { PrimaryButton } from "../../../atom/buttons";
+import { calculateRatingInReviews } from "../../../../../utils";
 
 type AllCoursesArgs = {
 	take: number;
@@ -42,6 +43,11 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 					<h1 className="text-[#d31119] tracking-tight">No courses under this category</h1>
 				) : (
 					allCourses
+						.sort(
+							(a, b) =>
+								Number(calculateRatingInReviews(b.reviews)) -
+								Number(calculateRatingInReviews(a.reviews)),
+						)
 						.map((course, indx) => {
 							return <DisplayCourseCard loading={loading} course={course} key={indx} />;
 						})

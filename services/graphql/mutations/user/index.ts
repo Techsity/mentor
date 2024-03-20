@@ -15,8 +15,10 @@ export const UPDATE_USER_PROFILE = gql`
 			is_admin
 			created_at
 			updated_at
-			subsciptions {
+			subscriptions {
 				id
+				course_id
+				workshop_id
 				is_completed
 				type
 				created_at

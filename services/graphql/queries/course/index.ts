@@ -22,6 +22,15 @@ export const ALL_COURSES = gql`
 				type
 				description
 			}
+			reviews {
+				type
+				content
+				reviewed_by {
+					avatar
+					name
+				}
+				rating
+			}
 		}
 	}
 	# Use fragment to avoid deeply nested queries (N+1 query issues)

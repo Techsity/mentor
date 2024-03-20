@@ -35,6 +35,10 @@ const RegitsteredWorkshops = () => {
 
 	return (
 		<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-3 items-center animate__animated animate__fadeIn">
+			{loading && <span className="text-sm">Loading...</span>}
+			{!loading && regitsteredWorkshops.length < 1 && (
+				<p className="text-sm">You haven&apos;t subscribed to any workshop yet</p>
+			)}
 			{regitsteredWorkshops.map((workshop, i) => (
 				<WorkshopDisplayCard profile workshop={workshop} key={i} />
 			))}
