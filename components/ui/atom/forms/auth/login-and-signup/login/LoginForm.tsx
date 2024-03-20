@@ -18,7 +18,7 @@ const LoginForm = () => {
 				type="email"
 				onChange={handleChange("email")}
 				className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
-				containerProps={{
+				containerprops={{
 					className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
 				}}
 			/>
@@ -29,7 +29,7 @@ const LoginForm = () => {
 				type={!showPassword ? "password" : "text"}
 				onChange={handleChange("password")}
 				className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
-				containerProps={{
+				containerprops={{
 					className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 				}}
 				rightIcon={

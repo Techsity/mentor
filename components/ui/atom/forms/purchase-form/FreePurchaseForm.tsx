@@ -83,7 +83,7 @@ const FreePurchaseForm = (props: { reason: "course" | "workshop"; resourceId: st
 					placeholder="Name"
 					className="text-sm"
 					value={state?.fullName}
-					containerProps={{ className: "border border-[#094B10]" }}
+					containerprops={{ className: "border border-[#094B10]" }}
 				/>
 			</div>
 			<div className="">

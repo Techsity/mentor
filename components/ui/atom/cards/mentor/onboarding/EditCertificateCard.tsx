@@ -98,7 +98,7 @@ const EditCertificateCard = ({
 								organization: e.target.value,
 							})
 						}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>
@@ -116,7 +116,7 @@ const EditCertificateCard = ({
 						className="text-black select-none"
 						value={certificate.title}
 						placeholder="Type of Certificate"
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 						onChange={(e) =>
@@ -140,7 +140,7 @@ const EditCertificateCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="Year"
 						value={certificate.year}
-						containerProps={{
+						containerprops={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly

@@ -66,7 +66,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					</label>
 					<CustomTextInput
 						id="title"
-						containerProps={{
+						containerprops={{
 							className: "border border-[#bebebe] pt-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						value={formState.title}
@@ -114,7 +114,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 					</label>
 					<CustomTextArea
 						id={isCourse ? "about-course" : isWorkshop ? "about-workshop" : ""}
-						containerProps={{
+						containerprops={{
 							className: "border border-[#bebebe] pt-8 pb-3 placeholder:text-[#A3A6A7] text-sm",
 						}}
 						value={formState.description}
@@ -147,7 +147,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 													? "workshop-what_to_learn"
 													: ""
 											}
-											containerProps={{
+											containerprops={{
 												className: "text-sm",
 											}}
 											value={value}
@@ -173,7 +173,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								<p className="text-sm text-[#B1B1B1]">{1}.</p>
 								<CustomTextInput
 									id={isCourse ? "course-what_to_learn" : isWorkshop ? "workshop-what_to_learn" : ""}
-									containerProps={{
+									containerprops={{
 										className: "text-sm",
 									}}
 									value={formState.what_to_learn[0]}
@@ -216,7 +216,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 													? "workshop-requirements"
 													: ""
 											}
-											containerProps={{
+											containerprops={{
 												className: "text-sm",
 											}}
 											value={value}
@@ -242,7 +242,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 								<p className="text-sm text-[#B1B1B1]">{1}.</p>
 								<CustomTextInput
 									id={isCourse ? "course-requirements" : isWorkshop ? "workshop-requirements" : ""}
-									containerProps={{
+									containerprops={{
 										className: "text-sm",
 									}}
 									value={formState.requirements[0]}
@@ -296,7 +296,7 @@ const EditCourseForm: FC<Props> = ({ handleSave, state, isCourse, isWorkshop }) 
 				{hasPrice ? (
 					<CustomTextInput
 						id={isCourse ? "course-price" : isWorkshop ? "workshop-price" : ""}
-						containerProps={{
+						containerprops={{
 							className: "mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm relative",
 						}}
 						className="pl-9"

@@ -35,7 +35,7 @@ const ForgotPasswordForm = ({
 					})
 				}
 				disabled={state.loading}
-				containerProps={{
+				containerprops={{
 					className: `border ${
 						error ? "border-[#d31119]" : "border-[#094B10]"
 					} duration-300 min-h-[45px] min-w-[30vw]`,

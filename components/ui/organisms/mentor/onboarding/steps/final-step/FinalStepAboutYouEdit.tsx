@@ -45,7 +45,7 @@ const FinalStepAboutYouEdit = () => {
 						name="job_title"
 						id="job_title"
 						className="bg-transparent"
-						containerProps={{
+						containerprops={{
 							className: "bg-transparent border-transparent w-full",
 						}}
 						autoCorrect="none"
@@ -85,7 +85,7 @@ const FinalStepAboutYouEdit = () => {
 						ref={bioInputRef}
 						value={onboardingMentor.bio}
 						className="resize-none h-[160px] bg-transparent px-0"
-						containerProps={{
+						containerprops={{
 							className: "bg-transparent border-transparent w-full",
 						}}
 						onChange={(e) =>

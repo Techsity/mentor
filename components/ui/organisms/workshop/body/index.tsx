@@ -24,7 +24,7 @@ const WorkShopDetailsBody = (workshop: IWorkshop) => {
 		else openModal(<ReportModal mentorId={workshop.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
 	};
 	return (
-		<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
+		<div className="min-h-[50vh] h-full sm:px-12 px-6">
 			<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full mt-10 items-start">
 				<div className="flex-grow w-full xl:min-h-screen overflow-hidden">
 					<AboutWorkshop {...workshop} />

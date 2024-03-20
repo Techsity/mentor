@@ -9,13 +9,12 @@ import { Subscription } from "../../../../../interfaces/user.interface";
 import { formatGqlError, logoutUser } from "../../../../../utils/auth";
 
 const UserCourseSubcriptions = () => {
-	const user = useSelector(currentUser);
 	const { data, loading, error } = useQuery<{ viewSubscriptions: Subscription[] }, any>(FETCH_COURSE_SUBSCRIPTIONS);
 	const [myCourses, setMyCourses] = useState<ICourse[]>([]);
 
 	useEffect(() => {
 		if (!loading && data) {
-			const courses = data?.viewSubscriptions.map((sub) => sub.course);
+			const courses = data?.viewSubscriptions.map((sub) => sub.course as unknown as ICourse);
 			setMyCourses(courses);
 		}
 	}, [data, loading, error]);

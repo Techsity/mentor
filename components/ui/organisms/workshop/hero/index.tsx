@@ -4,10 +4,6 @@ import { IWorkshop } from "../../../../../interfaces";
 import { calculateRatingsInReviews, formatDateDifference, formatFollowersCount } from "../../../../../utils";
 
 const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
-	const workshopDuration = formatDateDifference(
-		workshop.contents[workshop.contents.length - 1].date,
-		workshop.scheduled_date,
-	);
 	const mentorFollowers = formatFollowersCount(workshop.mentor.followers.length);
 	return (
 		<div className="bg-[#0C202B] w-full pb-20 min-h-[60vh] pt-20 text-white flex md:flex-row flex-col gap-5 justify-between px-6 sm:px-12 xl:px-24 relative">
@@ -27,7 +23,7 @@ const WorkshopDetailsPageHero = (workshop: IWorkshop) => {
 							{/* {workshop.tag === "Live" && <span className="bg-[#d31119] p-1 rounded-full" />} */}
 							{workshop?.level?.split("_").join(" ")}
 						</p>
-						<p className="">Duration: {workshopDuration}</p>
+						<p className="">{workshop.contents.length} sessions</p>
 						{/* <p className="">{formatFollowersCount(workshop.participants)} participants</p> */}
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							{/* {workshop.rating} */} {calculateRatingsInReviews(workshop.reviews)}

@@ -54,7 +54,7 @@ const CourseOverviewTab = ({ course }: { course?: ICourse }) => {
 						<CustomTextInput
 							placeholder="Leave a Review..."
 							className="placeholder:italic placeholder:text-sm font-[300] placeholder:text[#BEBEBE]"
-							containerProps={{
+							containerprops={{
 								className: "border border-[#70C5A1] bg-transparent duration-300 min-h-[40px] my-4",
 							}}
 							value={newReview !== null ? newReview?.content : ""}

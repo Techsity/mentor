@@ -124,7 +124,7 @@ const EditProjectCard = ({
 						value={project.company}
 						className="text-black"
 						onChange={handleChange("company")}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>
@@ -141,7 +141,7 @@ const EditProjectCard = ({
 						className="text-black select-none"
 						value={project.description}
 						placeholder="Project Description"
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 						onChange={handleChange("description")}
@@ -158,7 +158,7 @@ const EditProjectCard = ({
 						value={project.job_role}
 						className="text-black select-none"
 						placeholder="Role"
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 						onChange={handleChange("job_role")}

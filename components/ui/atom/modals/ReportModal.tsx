@@ -92,7 +92,7 @@ const ReportModal = ({ mentorId }: any) => {
 			<CustomTextArea
 				onChange={handleChange}
 				placeholder="Please provide more details"
-				containerProps={{
+				containerprops={{
 					className: `placeholder:text-gray-300 text-sm mb-4 ${limitReached ? "border-red-500" : ""}`,
 				}}
 			/>

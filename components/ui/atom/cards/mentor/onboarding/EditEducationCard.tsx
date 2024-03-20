@@ -133,7 +133,7 @@ const EditEducationCard = ({
 							});
 						}}
 						value={education.school}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>
@@ -151,7 +151,7 @@ const EditEducationCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
 						value={education.from_year}
-						containerProps={{
+						containerprops={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
@@ -189,7 +189,7 @@ const EditEducationCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
 						value={education.to_year}
-						containerProps={{
+						containerprops={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
@@ -227,7 +227,7 @@ const EditEducationCard = ({
 						type="text"
 						placeholder="Degree"
 						className="text-black"
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 						value={education.credential_type}
@@ -258,7 +258,7 @@ const EditEducationCard = ({
 								course_of_study: e.target.value,
 							})
 						}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>

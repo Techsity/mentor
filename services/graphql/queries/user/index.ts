@@ -11,6 +11,7 @@ export const GET_USER_PROFILE = gql`
 			country
 			subscriptions {
 				id
+				workshop_id
 				course_id
 				is_completed
 				created_at
@@ -221,6 +222,77 @@ export const FETCH_COURSE_SUBSCRIPTIONS = gql`
 			id
 			slug
 		}
+		reviews {
+			...ReviewField
+		}
+		created_at
+	}
+`;
+
+export const FETCH_WORKSHOP_SUBSCRIPTIONS = gql`
+	query ViewSubscriptions {
+		viewSubscriptions(subscriptionType: "workshop") {
+			id
+			type
+			is_completed
+			created_at
+			workshop {
+				...WorkshopDetails
+			}
+		}
+	}
+
+	fragment MentorField on MentorDTO {
+		id
+		user {
+			name
+			avatar
+			country
+			is_online
+			is_verified
+		}
+		role
+		# followers {
+		# 	id
+		# }
+	}
+	fragment ReviewField on ReviewDto {
+		content
+		reviewed_by {
+			name
+			avatar
+			country
+		}
+		ratings
+	}
+
+	fragment WorkshopDetails on WorkshopDto {
+		id
+		title
+		scheduled_date
+		description
+		price
+		requirements
+		what_to_learn
+		mentor {
+			...MentorField
+		}
+		type {
+			id
+			type
+		}
+		category {
+			id
+			slug
+		}
+		contents {
+			title
+			date
+			startTime
+			endTime
+		}
+		thumbnail
+		level
 		reviews {
 			...ReviewField
 		}

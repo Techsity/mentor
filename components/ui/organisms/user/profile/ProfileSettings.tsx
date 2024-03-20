@@ -116,7 +116,7 @@ const ProfileSettings = () => {
 							name=""
 							className="p-2 border"
 							placeholder=""
-							containerProps={{
+							containerprops={{
 								className: "border-[#094B10] border",
 							}}
 						/>
@@ -133,7 +133,7 @@ const ProfileSettings = () => {
 							placeholder=""
 							disabled
 							readOnly
-							containerProps={{
+							containerprops={{
 								className: "border-[#094B10] border",
 							}}
 						/>
@@ -175,7 +175,7 @@ const ProfileSettings = () => {
 							required={true}
 							title="Please enter a valid phone number"
 							className="p-2 border"
-							containerProps={{
+							containerprops={{
 								className: "border-[#094B10] border",
 							}}
 						/>
@@ -192,7 +192,7 @@ const ProfileSettings = () => {
 								type="password"
 								readOnly
 								disabled
-								containerProps={{
+								containerprops={{
 									className: "border-[#094B10] border",
 								}}
 							/>
@@ -203,7 +203,7 @@ const ProfileSettings = () => {
 								type="password"
 								readOnly
 								disabled
-								containerProps={{
+								containerprops={{
 									className: "border-[#094B10] border",
 								}}
 							/>
@@ -214,7 +214,7 @@ const ProfileSettings = () => {
 								type="password"
 								readOnly
 								disabled
-								containerProps={{
+								containerprops={{
 									className: "border-[#094B10] border",
 								}}
 							/>

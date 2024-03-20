@@ -165,7 +165,7 @@ const StepTwoMentorOnboarding = () => {
 						}
 						value={onboardingMentor.yearsOfExp}
 						className="bg-white"
-						containerProps={{
+						containerprops={{
 							className: "border border-[#00D569]",
 						}}
 					/>

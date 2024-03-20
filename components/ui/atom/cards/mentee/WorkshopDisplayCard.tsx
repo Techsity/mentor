@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IWorkshop } from "../../../../../interfaces";
 import Link from "next/link";
-import { calculateRatingsInReviews, formatDateDifference, formatFollowersCount, slugify } from "../../../../../utils";
+import { calculateRatingsInReviews, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { useRouter } from "next/router";
@@ -14,19 +14,11 @@ import "dayjs/plugin/relativeTime";
 const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: WorkshopDisplayCardProps) => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
-	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (user) setIsSubscribed(user.subscriptions.some((sub) => sub.workshop_id === workshop.id));
-	}, [user, workshop]);
+	const isLive = new Date(workshop.scheduled_date) <= new Date();
 
-	const workshopDuration = formatDateDifference(
-		workshop.contents[workshop.contents.length - 1].date,
-		workshop.scheduled_date,
-	);
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
-			isSubscribed: {String(isSubscribed)}
 			<div className="select-none absolute top-[13%] animate__animated animate__fadeIn animate__faster items-center justify-center z-10 text-white w-full group-hover:flex flex-col sm:hidden p-6">
 				{!profile && (
 					<Link href={`/workshops/${workshop.id}`} prefetch={false}>
@@ -59,12 +51,6 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 				</div>
 				<h1 className="px-5 font-medium tracking-tight flex items-center justify-between">
 					{workshop.title}
-					{/* {workshop.tag === "Live" && (
-						<span className="flex gap-2 items-center">
-							<span className="bg-[#d31119] p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
-							Live
-						</span>
-					)} */}
 					<div className="flex items-center gap-2 text-[#094B10] text-sm ml-8">
 						{calculateRatingsInReviews(workshop.reviews)}
 						<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
@@ -77,10 +63,9 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 					</div>
 				</h1>
 				<div className="flex items-center justify-between flex-wrap px-5 text-xs mt-2">
-					<span className="capitalize">Duration: {workshopDuration}</span>
+					<span className="">{workshop.contents.length} sessions</span>
 					<p className="capitalize font-medium">{workshop?.level?.split("_").join(" ")}</p>
-					<span className="">Starting {dayjs(workshop.scheduled_date).fromNow()}</span>
-					{/* <span className="">{formatFollowersCount(workshop.participants)} students</span> */}
+					<span className="">starts {dayjs(workshop.scheduled_date).fromNow()}</span>
 				</div>
 				<p className="text-xs px-5 break-words py-3">
 					{workshop.description.length > 40
@@ -116,10 +101,19 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 								className="p-1.5 px-4 text-sm"
 							/>
 						</div>
+					) : profile ? (
+						<div className="flex justify-end items-center">
+							<PrimaryButton
+								disabled={!isLive}
+								onClick={() => (isLive ? router.push(`/profile/workshop/live?id=${workshop.id}`) : {})}
+								title="Join"
+								className="p-1.5 px-4 text-sm"
+							/>
+						</div>
 					) : (
 						<div className="flex justify-end items-center">
 							<PrimaryButton
-								link={`/workshops/${slugify(workshop.title)}`}
+								link={`/workshops/${workshop.id}`}
 								title="View"
 								className="p-1.5 px-4 text-sm"
 							/>

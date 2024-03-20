@@ -9,7 +9,7 @@ import React, {
 import classNames from "classnames";
 
 interface ICustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-	containerProps?: HTMLAttributes<HTMLDivElement>;
+	containerprops?: HTMLAttributes<HTMLDivElement>;
 	rightIcon?: JSX.Element | null;
 	rightButton?: JSX.Element | null;
 	children?: ReactNode;
@@ -20,12 +20,12 @@ const CustomTextArea = forwardRef(function CustomTextArea(
 	ref?: ForwardedRef<HTMLTextAreaElement>,
 ) {
 	const { rightIcon, rightButton, children, className, ...inputProps } = props;
-	const { className: containerPropsClassName, ...rest } = props?.containerProps || {};
+	const { className: containerpropsClassName, ...rest } = props?.containerprops || {};
 	return (
 		<div
 			className={classNames(
 				"relative border-[#70C5A1] border overflow-hidden flex items-center w-full",
-				containerPropsClassName,
+				containerpropsClassName,
 			)}
 			{...rest}>
 			<textarea

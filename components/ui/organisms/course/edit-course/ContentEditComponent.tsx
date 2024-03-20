@@ -77,7 +77,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 					</label>
 					<CustomTextInput
 						id="title"
-						containerProps={{
+						containerprops={{
 							className: "border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm mt-3",
 						}}
 						onChange={handleChange(index, "title")}
@@ -100,7 +100,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 											<div className="grid gap-4">
 												<CustomTextInput
 													id="lecture_name"
-													containerProps={{
+													containerprops={{
 														className:
 															"border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm mt-3",
 													}}
@@ -145,7 +145,7 @@ const ContentEditComponent: FC<ContentEditComponentProps> = ({
 												</div>
 												<CustomTextInput
 													id="lecture_note"
-													containerProps={{
+													containerprops={{
 														className:
 															"border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm mt-3",
 													}}

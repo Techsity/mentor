@@ -8,7 +8,8 @@ export interface IUserPaymentCard {
 
 export type Subscription = {
 	id: string;
-	course: ICourse;
+	course: ICourse | null;
+	workshop: ICourse | null;
 	course_id: string;
 	workshop_id: string;
 	is_completed: boolean;

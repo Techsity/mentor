@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import classNames from "classnames";
 interface ICustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-	containerProps?: HTMLAttributes<HTMLDivElement>;
+	containerprops?: HTMLAttributes<HTMLDivElement>;
 	leftIcon?: JSX.Element | null;
 	rightIcon?: JSX.Element | null;
 	leftIconClass?: string;
@@ -23,7 +23,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 	ref?: ForwardedRef<HTMLInputElement>,
 ) {
 	const {
-		containerProps,
+		containerprops,
 		rightIcon,
 		leftIcon,
 		rightButton,
@@ -38,9 +38,9 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 		<div
 			className={classNames(
 				"relative border-[#70C5A1] border overflow-hidden flex items-center w-full gap-4 flex-row",
-				containerProps?.className,
+				containerprops?.className,
 			)}
-			{...containerProps}>
+			{...containerprops}>
 			{leftIcon ? (
 				<div className={classNames(leftIconClass ? leftIconClass : "absolute top-[30%] left-5")}>
 					{leftIcon}

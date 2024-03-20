@@ -33,9 +33,9 @@ export const validatePassword = (password: string, rule: "8" | "number" | "capit
 	return regex.test(password);
 };
 
-export const formatDateDifference = (startDate: Date | string, endDate: Date | string): number | string => {
+export const formatDateDifference = (startDate: Date | string, endDate: Date | string) => {
 	dayjs.extend(relativeTime);
-	return dayjs(startDate).to(endDate, true);
+	return dayjs(dayjs(startDate)).to(dayjs(endDate), true);
 };
 
 export function formatFollowersCount(number: number) {

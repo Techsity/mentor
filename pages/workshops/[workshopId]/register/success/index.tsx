@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Confetti from "react-dom-confetti";
 import confettiConfig from "../../../../../utils/confetti.config";
 import { useDispatch, useSelector } from "react-redux";
-import { onboardingUserState, setOnboardingUser } from "../../../../../redux/reducers/onboardingSlice";
 import { setWorkshopToRegister, workshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 import { calculateRatingsInReviews, formatDateDifference } from "../../../../../utils";
 
@@ -40,10 +39,7 @@ const WorkshopSubscriptionSuccess = () => {
 			if (done) dispatch(setWorkshopToRegister(null));
 		});
 	};
-	const workshopDuration = formatDateDifference(
-		workshop.contents[workshop.contents.length - 1].date,
-		workshop.scheduled_date,
-	);
+
 	return (
 		<>
 			<div className="flex flex-col lg:flex-row justify-between gap-5 lg:items-center md:min-h-[80vh] px-10 md:px-20">
@@ -57,7 +53,7 @@ const WorkshopSubscriptionSuccess = () => {
 					</h1>
 					<div className="flex sm:items-center sm:flex-row flex-col justify-between text-sm sm:w-[65%] sm:mx-auto text-white">
 						<p className="capitalize">{String(workshop?.level).split("_").join(" ")}</p>
-						<p className="capitalize">Duration: {workshopDuration}</p>
+						<p className="capitalize">{workshop.contents.length} sessions</p>
 						<div className="flex items-center gap-2 text-[13px] 2xl:text-xl">
 							<svg width="13" height="13" viewBox="0 0 9 9" fill="none">
 								<path
@@ -71,7 +67,9 @@ const WorkshopSubscriptionSuccess = () => {
 				</div>
 				<div className="flex sm:items-center md:items-start sm:gap-5 md:gap-0 flex-col md:flex-col sm:flex-row sm:order-last order-first sm:pt-auto pt-6">
 					<div className="lg:max-w-lg">
-						<h1 className="text-3xl sm:text-4xl text-[#00D569] break-words" style={{ fontFamily: "Days One" }}>
+						<h1
+							className="text-3xl sm:text-4xl text-[#00D569] break-words"
+							style={{ fontFamily: "Days One" }}>
 							Congratulations!
 						</h1>
 						<div

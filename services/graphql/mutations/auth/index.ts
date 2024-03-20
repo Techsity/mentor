@@ -25,6 +25,7 @@ export const LOGIN_USER = gql`
 				subscriptions {
 					id
 					course_id
+					workshop_id
 					is_completed
 					created_at
 					updated_at

@@ -126,7 +126,7 @@ const Availability = () => {
 								type="text"
 								className="text-black select-none cursor-pointer"
 								placeholder="Start Time"
-								containerProps={{
+								containerprops={{
 									className: "border border-zinc-200",
 								}}
 								readOnly
@@ -164,7 +164,7 @@ const Availability = () => {
 								type="text"
 								className="text-black select-none cursor-pointer"
 								placeholder="End Time"
-								containerProps={{
+								containerprops={{
 									className: "border border-zinc-200",
 								}}
 								readOnly

@@ -38,7 +38,7 @@ const StepOneMentorOnboarding = () => {
 						name="job_title"
 						id="job_title"
 						className="bg-white"
-						containerProps={{
+						containerprops={{
 							className: "border border-[#00D569]",
 						}}
 					/>
@@ -69,7 +69,7 @@ const StepOneMentorOnboarding = () => {
 						}
 						value={onboardingMentor.bio}
 						className="bg-white"
-						containerProps={{
+						containerprops={{
 							className: "border border-[#00D569]",
 						}}
 					/>

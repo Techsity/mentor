@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IWorkshop, IWorkshopContent } from "../../../../../interfaces";
 import { PrimaryButton } from "../../../atom/buttons";
 import classNames from "classnames";
@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
 import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/authSlice";
 
 type WorkshopContentType = {
 	workshop: IWorkshop;
@@ -14,9 +16,16 @@ type WorkshopContentType = {
 };
 
 const WorkshopContents = ({ workshop, className, preview = false }: WorkshopContentType) => {
+	const user = useSelector(currentUser);
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const dispatch = useDispatch();
+	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+	const isLive = new Date(workshop.scheduled_date) <= new Date();
+
+	useEffect(() => {
+		if (user) setIsSubscribed(Boolean(user.subscriptions.find((sub) => sub.workshop_id === workshop.id)));
+	}, [user, workshop]);
 
 	return (
 		<div
@@ -40,18 +49,24 @@ const WorkshopContents = ({ workshop, className, preview = false }: WorkshopCont
 				{workshop.contents.map((content, index) => (
 					<WorkshopContentItem content={content} key={index} />
 				))}
-				{preview ? (
+				{/* {!isSubscribed && preview && ( */}
+				{preview && (
 					<PrimaryButton
-						title={!loading ? "Register for Workshop" : ""}
+						disabled={isSubscribed && !isLive}
+						title={
+							!loading ? (isSubscribed ? "Subscribed" : isLive ? "Join" : "Register for Workshop") : ""
+						}
 						icon={loading ? <ActivityIndicator /> : null}
 						onClick={() => {
-							setLoading(true);
-							dispatch(setWorkshopToRegister(workshop));
-							router.push(`/workshops/${workshop.id}/register`);
+							if (!isSubscribed) {
+								setLoading(true);
+								dispatch(setWorkshopToRegister(workshop));
+								router.push(`/workshops/${workshop.id}/register`);
+							}
 						}}
 						className="p-2 text-lg flex justify-center items-center mt-6 text-sm"
 					/>
-				) : null}
+				)}
 			</div>
 		</div>
 	);

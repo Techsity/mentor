@@ -113,7 +113,7 @@ const ResetNewPasswordTemplate = () => {
 						type={!showPassword ? "password" : "text"}
 						className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 						onChange={handleChange("newPassword")}
-						containerProps={{
+						containerprops={{
 							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 						}}
 						rightIcon={
@@ -128,7 +128,7 @@ const ResetNewPasswordTemplate = () => {
 						type={!showPassword ? "password" : "text"}
 						className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 						onChange={handleChange("confirmNewPassword")}
-						containerProps={{
+						containerprops={{
 							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 						}}
 						rightIcon={

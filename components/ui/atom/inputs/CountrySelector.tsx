@@ -109,7 +109,7 @@ const CountrySelector = ({
 					"bg-[#F6F9F8] border-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm",
 					classes?.input,
 				)}
-				containerProps={{ className: "border-transparent" }}
+				containerprops={{ className: "border-transparent" }}
 				placeholder={selectButtonPlaceholder}
 				type="text"
 				value={searchTerm}
