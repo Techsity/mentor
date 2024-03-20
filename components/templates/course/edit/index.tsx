@@ -18,6 +18,16 @@ type Props = {
 	handleSave: (state: Omit<ICourse, "mentor"> | Omit<IWorkshop, "mentor">) => void;
 	state?: ExtendedCourseWorkshopType;
 };
+const emptyCategory = {
+	title: "",
+	course_type: {
+		description: "",
+		type: "",
+	},
+	description: "",
+	created_at: "",
+	updated_at: "",
+};
 
 const courseInitialState: Omit<ICourse, "mentor"> = {
 	title: "",
@@ -33,19 +43,11 @@ const courseInitialState: Omit<ICourse, "mentor"> = {
 	thumbnail: "",
 	requirements: [],
 	course_contents: [],
-	category: {
-		title: "",
-		course_type: {
-			description: "",
-			type: "",
-		},
-		description: "",
-		created_at: "",
-		updated_at: "",
-	},
+	category: emptyCategory,
 	reviews: [],
 	what_to_learn: [],
 };
+
 const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 	title: "",
 	available: false,
@@ -60,6 +62,7 @@ const workshopInitialState: Omit<IWorkshop, "mentor"> = {
 	price: 0,
 	isSubscribed: false,
 	scheduled_date: "",
+	category: emptyCategory,
 };
 
 const WorkshopAndCourseEditTemplate = ({ isCourse, isWorkshop, handleSave, state }: Props) => {
