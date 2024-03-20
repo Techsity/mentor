@@ -16,18 +16,19 @@ const CartSummary = ({ price, reason = "course" }: { price: ICourse["price"]; re
 				</h1>
 				<div className="grid gap-5 w-full mt-3 max-w-sm capitalize">
 					<span className="capitalize flex items-center justify-between">
-						{reason} fee: ${price !== 0 ? <span className="">${price.toLocaleString()}</span> : 0}
+						{reason} fee{" "}
+						{price !== 0 ? <span className="">${price.toLocaleString()}</span> : <span>$0</span>}
 					</span>
 					<span className="flex items-center justify-between">
-						Payable Tax (VAT):{" "}
-						${price !== 0 ? <span className="">${tax ? tax.toLocaleString() : null}</span> : 0}
+						Payable Tax (VAT)
+						{price !== 0 ? <span className="">${tax ? tax.toLocaleString() : null}</span> : <span>$0</span>}
 					</span>
 					<span className="flex items-center justify-between pt-5 border-t-2 border-[#ccc]">
-						Total:{" "}
-						${price !== 0 ? (
+						Total
+						{price !== 0 ? (
 							<span className="">${tax ? (price + parseInt(tax)).toLocaleString() : null}</span>
 						) : (
-							0
+							<span>$0</span>
 						)}
 					</span>
 				</div>

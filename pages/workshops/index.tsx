@@ -25,7 +25,7 @@ const AllWorkshopsPage = ({ workshops, error }: ResponseType) => {
 	return (
 		<>
 			<h1 className="md:mx-10 m-6">All Workshops</h1>
-			<div className="my-6 grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 tracking-tight gap-6 overflow-hidden md:mx-10 mx-5 bg-[#FDFDFD] md:border border-[#D0D0D0] md:p-10 h-auto">
+			<div className="my-6 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 tracking-tight gap-6 overflow-hidden md:mx-10 mx-5 bg-[#FDFDFD] md:border border-[#D0D0D0] md:p-10 h-auto">
 				{workshops.map((workshop: IWorkshop, indx: number) => {
 					return <WorkshopDisplayCard workshop={workshop} key={indx} />;
 				})}

@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IWorkshop } from "../../../../../interfaces";
-import Link from "next/link";
 import { calculateRatingInReviews, slugify } from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { navigateToAuthPage } from "../../../../../utils/auth";
@@ -14,8 +13,12 @@ import "dayjs/plugin/relativeTime";
 const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: WorkshopDisplayCardProps) => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
-
+	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 	const isLive = new Date(workshop.scheduled_date) <= new Date();
+
+	useEffect(() => {
+		if (user) setIsSubscribed(Boolean(user.subscriptions.find((sub) => sub.workshop_id === workshop.id)));
+	}, [user, workshop]);
 
 	return (
 		<div className="animate__animated relative animate__fadeIn bg-white overflow-hidden group shadow h-full hover:shadow-lg cursor-default duration-300 pb-6">
@@ -84,42 +87,53 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 						<h1 className="text-xs">{workshop.mentor.user.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>
-					{!profile ? (
-						workshop.price === 0 ? (
-							<div className="text-white bg-[#094B10] select-none rounded px-8 p-2">Free</div>
-						) : (
-							<div className="text-black bg-[#FFB100] select-none rounded px-8 p-2">
-								${workshop.price.toLocaleString()}
+					{
+						!profile ? (
+							isSubscribed ? (
+								<div className="text-gray-500 text-sm bg-[#ccc] select-none rounded px-4 p-2 cursor-default">
+									Subscribed
+								</div>
+							) : workshop.price === 0 ? (
+								<div className="text-white text-sm bg-[#094B10] select-none rounded px-6 p-2">Free</div>
+							) : (
+								<div className="text-black bg-[#FFB100] select-none rounded px-6 text-sm p-2">
+									${workshop.price.toLocaleString()}
+								</div>
+							)
+						) : profile && owner ? (
+							<div className="flex justify-end items-center">
+								<PrimaryButton
+									onClick={() =>
+										navigateToAuthPage(router, `/profile/workshop/edit/${slugify(workshop.title)}`)
+									}
+									title="Edit"
+									className="p-1.5 px-4 text-sm"
+								/>
 							</div>
+						) : (
+							profile && (
+								<div className="flex justify-end items-center">
+									<PrimaryButton
+										disabled={!isLive}
+										onClick={() =>
+											isLive ? router.push(`/profile/workshop/live?id=${workshop.id}`) : {}
+										}
+										title="Join"
+										className="p-1.5 px-4 text-sm"
+									/>
+								</div>
+							)
 						)
-					) : profile && owner ? (
-						<div className="flex justify-end items-center">
-							<PrimaryButton
-								onClick={() =>
-									navigateToAuthPage(router, `/profile/workshop/edit/${slugify(workshop.title)}`)
-								}
-								title="Edit"
-								className="p-1.5 px-4 text-sm"
-							/>
-						</div>
-					) : profile ? (
-						<div className="flex justify-end items-center">
-							<PrimaryButton
-								disabled={!isLive}
-								onClick={() => (isLive ? router.push(`/profile/workshop/live?id=${workshop.id}`) : {})}
-								title="Join"
-								className="p-1.5 px-4 text-sm"
-							/>
-						</div>
-					) : (
-						<div className="flex justify-end items-center">
-							<PrimaryButton
-								link={`/workshops/${workshop.id}`}
-								title="View"
-								className="p-1.5 px-4 text-sm"
-							/>
-						</div>
-					)}
+						// : (
+						// 	<div className="flex justify-end items-center">
+						// 		<PrimaryButton
+						// 			link={`/workshops/${workshop.id}`}
+						// 			title="View"
+						// 			className="p-1.5 px-4 text-sm"
+						// 		/>
+						// 	</div>
+						// )
+					}
 				</div>
 			</div>
 		</div>

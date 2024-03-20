@@ -40,23 +40,21 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		SUBSCRIBE_TO_COURSE,
 	);
 
-	const handleSubmit = async () => {
+	const processFreeCourse = async () => {
 		try {
-			if (reason === "course") {
-				const { data } = await subscribeToCourse({ variables: { courseId: String(resource.id) } });
-				if (data?.subscribeToCourse.id) {
-					toast.success("Subscription successful.", { ...ToastDefaultOptions(), toastId });
-					dispatch(
-						updateUserProfile({
-							...user,
-							subscriptions: user?.subscriptions.concat(data?.subscribeToCourse),
-						}),
-					);
-					router.replace(`/courses/${resource.id}/learn`);
-				} else {
-					console.log({ error: data?.subscribeToCourse });
-					toast.error("Subscription failed", { ...ToastDefaultOptions(), toastId });
-				}
+			const { data } = await subscribeToCourse({ variables: { courseId: String(resource.id) } });
+			if (data?.subscribeToCourse.id) {
+				// toast.success("Subscription successful.", { ...ToastDefaultOptions(), toastId });
+				dispatch(
+					updateUserProfile({
+						...user,
+						subscriptions: user?.subscriptions.concat(data?.subscribeToCourse),
+					}),
+				);
+				router.replace(`/courses/${resource.id}/learn`);
+			} else {
+				console.log({ error: data?.subscribeToCourse });
+				toast.error("Subscription failed", { ...ToastDefaultOptions(), toastId });
 			}
 		} catch (error) {
 			console.error({ error });
@@ -65,7 +63,18 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 				toast.info(errMsg, { ...ToastDefaultOptions(), toastId });
 				if (reason === "course") router.replace(`/courses/${resource.id}/learn`);
 			} else
-				toast.error(errMsg || "Something went wrong. Please try again.", { ...ToastDefaultOptions(), toastId });
+				toast.error(errMsg || "Something went wrong. Please try again.", {
+					...ToastDefaultOptions(),
+					toastId,
+				});
+		}
+	};
+
+	const handleSubmit = async () => {
+		if (reason === "course") {
+			if (resource.price === 0) {
+				await processFreeCourse();
+			} else toast.info("Initializing payment gateway....", { ...ToastDefaultOptions(), toastId }); //Todo: implement proper logic for paid course
 		}
 	};
 

@@ -24,7 +24,8 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 		fetchPolicy: "cache-and-network",
 	});
 
-	const allCourses = data?.allCourses || [];
+	let allCourses: ICourse[] = [];
+	if (data?.allCourses) allCourses = [...data?.allCourses];
 
 	const fetchMore = () => {
 		// Todo
@@ -42,6 +43,7 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 				) : !loading && !error && allCourses.length < 1 ? (
 					<h1 className="text-[#d31119] tracking-tight">No courses under this category</h1>
 				) : (
+					!loading &&
 					allCourses.length >= 1 &&
 					allCourses
 						.sort(
