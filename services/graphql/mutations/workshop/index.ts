@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const SUBSCRIBE_TO_FREE_WORKSHOP = gql`
+export const SUBSCRIBE_TO_WORKSHOP = gql`
 	mutation SubscribeToWorkshop($workshopId: String!) {
 		subscribeToWorkshop(workshopId: $workshopId) {
 			id

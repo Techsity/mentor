@@ -11,7 +11,7 @@ const PurchaseCourseTemplate = (course: ICourse) => {
 		<>
 			<div className="md:flex justify-between item-start w-full h-full">
 				<div className="min-w-[50%] pb-10">
-					<PaidPurchaseForm reason="course" />
+					<PaidPurchaseForm resource={course} reason="course" />
 				</div>
 				<div className="flex-grow sticky h-[69dvh] top-20 bg-[#F6F9F8]">
 					<CartSummary price={course.price} />

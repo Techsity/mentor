@@ -17,7 +17,7 @@ const WorkshopRegistrationPageTemplate = ({ workshop }: { workshop: IWorkshop })
 			<div className="min-h-[50vh] h-full lg:px-20 sm:px-12 px-4">
 				<div className="flex flex-col lg:flex-row justify-between gap-8 py-6 w-full sm:mt-10 items-start">
 					<div className="flex-grow w-full">
-						<FreePurchaseForm resourceId={String(workshop.id)} reason="workshop" />
+						<FreePurchaseForm resource={workshop} reason="workshop" />
 					</div>
 					<WorkshopContents workshop={workshop} />
 				</div>
@@ -28,7 +28,7 @@ const WorkshopRegistrationPageTemplate = ({ workshop }: { workshop: IWorkshop })
 		<>
 			<div className="md:flex justify-between item-start w-full h-full min-h-[80dvh]">
 				<div className="min-w-[50%] pb-10">
-					<PaidPurchaseForm reason="workshop" />
+					<PaidPurchaseForm resource={workshop} reason="workshop" />
 				</div>
 				<div className="flex-grow sticky h-[69dvh] top-20 bg-[#F6F9F8]">
 					<CartSummary reason="workshop" price={workshop.price} />

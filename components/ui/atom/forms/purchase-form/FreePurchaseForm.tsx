@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
-import { SUBSCRIBE_TO_FREE_WORKSHOP } from "../../../../../services/graphql/mutations/workshop";
+import { SUBSCRIBE_TO_WORKSHOP } from "../../../../../services/graphql/mutations/workshop";
 import { Subscription } from "../../../../../interfaces/user.interface";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { toast } from "react-toastify";
@@ -14,22 +14,24 @@ import { ToastDefaultOptions } from "../../../../../constants";
 import { formatGqlError } from "../../../../../utils/auth";
 import ResponseMessages from "../../../../../constants/response-codes";
 import { useRouter } from "next/router";
+import { ICourse, IWorkshop } from "../../../../../interfaces";
 
 interface IFormState {
 	fullName: string;
 	country: string;
 	sendEmailNotififications: boolean;
 }
-const FreePurchaseForm = (props: { reason: "course" | "workshop"; resourceId: string }) => {
+const FreePurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const router = useRouter();
 	const toastId = useId();
-	const { reason, resourceId } = props;
+	const { reason, resource } = props;
+	const resourceId = String(resource.id);
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
 	const [subscribeToFreeWorkshop, { loading }] = useMutation<
 		{ subscribeToWorkshop: Subscription },
 		{ workshopId: string }
-	>(SUBSCRIBE_TO_FREE_WORKSHOP);
+	>(SUBSCRIBE_TO_WORKSHOP);
 
 	const initialState: IFormState = {
 		fullName: String(user?.name),

@@ -8,3 +8,15 @@ export const CREATE_COURSE = gql`
 		}
 	}
 `;
+
+export const SUBSCRIBE_TO_COURSE = gql`
+	mutation SubscribeToCourse($courseId: String!) {
+		subscribeToCourse(courseId: $courseId) {
+			id
+			course_id
+			is_completed
+			created_at
+			updated_at
+		}
+	}
+`;
