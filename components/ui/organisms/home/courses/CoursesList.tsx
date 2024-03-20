@@ -42,6 +42,7 @@ const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
 				) : !loading && !error && allCourses.length < 1 ? (
 					<h1 className="text-[#d31119] tracking-tight">No courses under this category</h1>
 				) : (
+					allCourses.length >= 1 &&
 					allCourses
 						.sort(
 							(a, b) =>
