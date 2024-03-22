@@ -37,7 +37,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 			query: VIEW_COURSE,
 			variables: { courseId: String(courseId) },
 		});
-		if (!course) return { props: { course: null } };
+		if (!course) return { props: { course: null, error: "Something went wrong" } };
 		return { props: { course } };
 	} catch (error) {
 		console.log(JSON.stringify(error));

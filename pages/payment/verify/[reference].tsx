@@ -126,7 +126,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 				props: { reference, subscription: null, access_code, error: err.split(" | ")[0] },
 			};
 		}
-		console.log({ error });
+		console.log({ error: JSON.stringify(error) });
 		return {
 			props: { reference: "", subscription: null, error: err || "Something went wrong" },
 		};

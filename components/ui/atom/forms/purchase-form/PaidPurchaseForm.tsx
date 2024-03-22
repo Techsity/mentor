@@ -73,10 +73,6 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 			});
 			console.log({ res: data?.initiatePayment });
 			if (data?.initiatePayment.authorization_url) {
-				toast.success("Redirecting to payment page...", {
-					...ToastDefaultOptions(),
-					toastId,
-				});
 				const authorizationUrl = data?.initiatePayment?.authorization_url;
 				router.replace(authorizationUrl);
 				// router.replace(`/payment/verify/${data?.initiatePayment.reference}`);
