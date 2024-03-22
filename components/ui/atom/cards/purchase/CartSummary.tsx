@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import { PrimaryButton } from "../../buttons";
-import ActivityIndicator from "../../loader/ActivityIndicator";
+import React from "react";
 import { calculateTax } from "../../../../../utils";
 import { ICourse } from "../../../../../interfaces";
 
 const CartSummary = ({ price, reason = "course" }: { price: ICourse["price"]; reason?: "workshop" | "course" }) => {
-	const [loading, setLoading] = useState<boolean>(false);
-	// Todo: calculate accurate tax
 	const tax = price !== 0 ? calculateTax(price, 7.5) : 0;
 	return (
 		<div className="lg:px-20 sm:px-12 p-4 h-full py-10 md:py-20 w-full text-sm">

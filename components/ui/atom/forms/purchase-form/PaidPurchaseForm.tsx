@@ -14,19 +14,8 @@ import { ToastDefaultOptions } from "../../../../../constants";
 import { toast } from "react-toastify";
 import ResponseMessages from "../../../../../constants/response-codes";
 import { formatGqlError } from "../../../../../utils/auth";
-
-interface PaymentMethod {
-	name?: string;
-	img?: string;
-	icon?: JSX.Element;
-}
-const paymentMethods: PaymentMethod[] = [
-	{
-		name: "Paystack",
-		img: "/assets/images/paystack-icon.png",
-	},
-	{ img: "/assets/images/flutterwave-icon.png" },
-];
+import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { calculateTax, slugify } from "../../../../../utils";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -34,11 +23,18 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { reason = "course", resource } = props;
-	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(paymentMethods[0]);
 	const [selectedCountry, setSelectedCountry] = useState<string | null>(user?.country || null);
 	const [subscribeToCourse, { loading }] = useMutation<{ subscribeToCourse: Subscription }, { courseId: string }>(
 		SUBSCRIBE_TO_COURSE,
 	);
+	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
+		{ initiatePayment: any },
+		{ amount: number; resourceType: string; resourceId: string }
+	>(INITIALIZE_PAYMENT);
+
+	const tax = resource.price !== 0 ? calculateTax(resource.price, 7.5) : 0;
+	const amount = resource.price + Number(tax);
 
 	const processFreeCourse = async () => {
 		try {
@@ -70,11 +66,40 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		}
 	};
 
+	const processPaidCourse = async () => {
+		try {
+			const { data } = await initializePayment({
+				variables: { amount, resourceId: String(resource.id), resourceType: reason },
+			});
+			console.log({ res: data?.initiatePayment });
+			if (data?.initiatePayment.authorization_url) {
+				toast.success("Redirecting to payment page...", {
+					...ToastDefaultOptions(),
+					toastId,
+				});
+				router.replace(data?.initiatePayment.authorization_url);
+			}
+		} catch (error) {
+			console.error({ error });
+			const errMsg = formatGqlError(error);
+			// if (errMsg === ResponseMessages.ALREADY_SUBSCRIBED) {
+			// 	toast.info(errMsg, { ...ToastDefaultOptions(), toastId });
+			// 	if (reason === "course") router.replace(`/courses/${resource.id}/learn`);
+			// } else
+			toast.error(errMsg || "Something went wrong. Please try again.", {
+				...ToastDefaultOptions(),
+				toastId,
+			});
+		}
+	};
+
 	const handleSubmit = async () => {
 		if (reason === "course") {
 			if (resource.price === 0) {
 				await processFreeCourse();
-			} else toast.info("Initializing payment gateway....", { ...ToastDefaultOptions(), toastId }); //Todo: implement proper logic for paid course
+			} else if (resource.price > 0) {
+				await processPaidCourse();
+			}
 		}
 	};
 
@@ -125,7 +150,9 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 												</span>
 												<span className="flex-grow ml-3">{method.name}</span>
 												<>
-													{selectedMethod && selectedMethod == method ? (
+													{selectedMethod &&
+													slugify(String(selectedMethod.name)) ==
+														slugify(String(method.name)) ? (
 														<svg width="23" height="23" viewBox="0 0 23 23" fill="none">
 															<path
 																fillRule="evenodd"
@@ -151,9 +178,11 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 							<div className="mt-4">
 								<PrimaryButton
 									onClick={handleSubmit}
-									icon={loading ? <ActivityIndicator /> : null}
-									title={loading ? "" : "Continue"}
-									disabled={loading}
+									icon={loading || initializePaymentLoading ? <ActivityIndicator /> : null}
+									title={loading || initializePaymentLoading ? "" : "Continue"}
+									disabled={
+										loading || initializePaymentLoading || (resource.price > 0 && !selectedMethod)
+									}
 									className={`flex p-4 w-full justify-center`}
 								/>
 							</div>
@@ -164,5 +193,18 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		</>
 	);
 };
+
+interface PaymentMethod {
+	name?: string;
+	img?: string;
+	icon?: JSX.Element;
+}
+const paymentMethods: PaymentMethod[] = [
+	{
+		name: "Paystack",
+		img: "/assets/images/paystack-icon.png",
+	},
+	// { img: "/assets/images/flutterwave-icon.png" },
+];
 
 export default PaidPurchaseForm;
