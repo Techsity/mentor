@@ -77,7 +77,14 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 					...ToastDefaultOptions(),
 					toastId,
 				});
-				router.replace(data?.initiatePayment.authorization_url);
+				const authorizationUrl = data?.initiatePayment?.authorization_url;
+				router.replace(authorizationUrl);
+				// router.replace(`/payment/verify/${data?.initiatePayment.reference}`);
+				// if (authorizationUrl) {
+				// 	const newWindow = window.open(authorizationUrl, "_blank");
+				// 	if (newWindow) newWindow.focus();
+				// 	else console.error("Failed to open new window");
+				// }
 			}
 		} catch (error) {
 			console.error({ error });
