@@ -10,20 +10,38 @@ import { Subscription } from "../../../interfaces/user.interface";
 import { checkAuthServerSide, formatGqlError } from "../../../utils/auth";
 import client from "../../../utils/apolloClient";
 import { VERIFY_PAYMENT } from "../../../services/graphql/mutations/payment";
+import { useRouter } from "next/router";
 
 type Props = {
 	reference: string;
 	subscription: Subscription | null;
 	error?: string;
+	access_code?: string;
 };
-const VerifyPaymentPage = ({ reference, error }: Props) => {
+const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Props) => {
 	const [celebrate, setCelebrate] = useState<boolean>(false);
-
+	const router = useRouter();
 	useEffect(() => {
 		if (reference && !error) setCelebrate(true);
 	}, []);
 
 	if (error) {
+		if (access_code) {
+			const retryPayment = () => router.replace(`https://checkout.paystack.com/${access_code}`);
+			return (
+				<div className="h-screen text-center flex flex-col items-center justify-center gap-4">
+					<p className="">This payment was cancelled. Do you try again?</p>
+					<PrimaryButton onClick={retryPayment} title="Continue" className="px-5 p-1.5 text-sm" />
+					<span
+						onClick={() => {
+							router.push("/profile");
+						}}
+						className="text-sm hover:underline cursor-pointer">
+						Go to my profile
+					</span>
+				</div>
+			);
+		}
 		console.error({ error });
 		return (
 			<div className="h-screen text-center flex items-center justify-center text-red-500">
@@ -102,6 +120,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 		return { props: { reference, subscription: null } };
 	} catch (error) {
 		const err = formatGqlError(error);
+		const access_code = err.split(" | ")[1];
+		if (access_code) {
+			return {
+				props: { reference, subscription: null, access_code, error: err.split(" | ")[0] },
+			};
+		}
 		console.log({ error });
 		return {
 			props: { reference: "", subscription: null, error: err || "Something went wrong" },

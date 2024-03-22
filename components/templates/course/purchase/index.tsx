@@ -22,4 +22,4 @@ const PurchaseCourseTemplate = (course: ICourse) => {
 	);
 };
 
-export default protectedPageWrapper(PurchaseCourseTemplate);
+export default PurchaseCourseTemplate;
