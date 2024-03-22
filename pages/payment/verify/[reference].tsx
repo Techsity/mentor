@@ -11,6 +11,7 @@ import { checkAuthServerSide, formatGqlError } from "../../../utils/auth";
 import client from "../../../utils/apolloClient";
 import { VERIFY_PAYMENT } from "../../../services/graphql/mutations/payment";
 import { useRouter } from "next/router";
+import ResponseMessages from "../../../constants/response-codes";
 
 type Props = {
 	reference: string;
@@ -44,8 +45,15 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 		}
 		console.error({ error });
 		return (
-			<div className="h-screen text-center flex items-center justify-center text-red-500">
+			<div className="h-screen text-center gap-3 flex flex-col items-center justify-center text-red-500">
 				{error || "Something went wrong"}
+				{error && error == ResponseMessages.TRANSACTION_COMPLETED && (
+					<PrimaryButton
+						onClick={() => router.push("/profile")}
+						title="Go to dashboard"
+						className="px-5 p-1.5 text-sm"
+					/>
+				)}
 			</div>
 		);
 	}
