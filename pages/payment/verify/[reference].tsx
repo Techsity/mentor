@@ -89,14 +89,14 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 					<div
 						className="my-5 text-[#094B10] break-words max-w-lg tracking-tight"
 						style={{ fontFamily: "Days One" }}>
-						You have successfully {}.
+						You have successfully {subscription?.course?.title}.
 					</div>
 				</div>
 				<PrimaryButton
 					// onClick={navigateToProfile}
 					// disabled={loading}
 					// title={!loading ? "Go to profile" : ""}
-					title={"Go to profile"}
+					title={"Start Course"}
 					// icon={
 					// 	loading ? (
 					// 		<div className="flex justify-center items-center">

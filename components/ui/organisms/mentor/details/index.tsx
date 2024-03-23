@@ -139,7 +139,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 		<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[65vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
 			<div className="w-full mb-24 lg:mb-0">
 				<div className="flex w-full items-center justify-between">
-					<h1 className="font-medium">My Availability</h1>
+					<h1 className="font-medium">Availability</h1>
 					{/* //Todo: dynamically get timezone per mentor */}
 					<p className="text-[#CEFFEA] font-[300] mt-2 text-xs">Lagos (GMT +1)</p>
 				</div>

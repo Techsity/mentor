@@ -60,3 +60,5 @@ export const networkLabels: { [key: number]: { message: string; color: string } 
 	5: { message: "Very Bad", color: "#d31119" },
 	6: { message: "No Connection", color: "#d31119" },
 };
+
+export const daysOfTheWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];

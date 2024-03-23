@@ -19,9 +19,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -75,9 +75,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -132,9 +132,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: false,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -188,9 +188,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -245,9 +245,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -302,9 +302,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },

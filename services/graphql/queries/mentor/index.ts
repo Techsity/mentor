@@ -203,6 +203,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 				timeSlots {
 					startTime
 					endTime
+					isOpen
 				}
 			}
 			followers {

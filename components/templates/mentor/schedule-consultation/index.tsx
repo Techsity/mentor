@@ -1,8 +1,11 @@
-import React, { ChangeEvent, useEffect, useId, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { CloseSharp } from "react-ionicons";
-import { IMentor } from "../../../../interfaces/mentor.interface";
+import { IMentor, IMentorAvailability, TimeSlot } from "../../../../interfaces/mentor.interface";
+import { daysOfTheWeek } from "../../../../constants";
+import { slugify } from "../../../../utils";
+import classNames from "classnames";
 
 interface ScheduleItem {
 	id: string;
@@ -68,6 +71,16 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 
 	const handleTimeChange = (name: "hour" | "minute") => (e: ChangeEvent<HTMLInputElement>) => {};
 
+	//
+	const [selectedSlot, setSelectedSlot] = useState<SelectedSlot | null>(null);
+	const currentDayOfTheWeek = new Date().getDay();
+	const mentorAvailableDay = mentor?.availability.find(
+		(date) => date.day.toLowerCase() === daysOfTheWeek[currentDayOfTheWeek].toLowerCase(),
+	);
+
+	const handleSelectTimeSlot = (slot: TimeSlot) => {
+		if (mentorAvailableDay?.day) setSelectedSlot({ date: mentorAvailableDay.day, time: slot });
+	};
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6">
 			<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
@@ -79,15 +92,19 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 							<p className="text-[#CEFFEA] font-[300] text-sm mt-2">Lagos (GMT +1)</p>
 						</div>
 						<div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
-							{mentor?.availability.map((date, ind) => {
+							{daysOfTheWeek.map((d, index) => {
+								const mentorIsAvailable = Boolean(
+									mentor?.availability.find((date) => date.day.toLowerCase() == d.toLowerCase()),
+								);
 								return (
 									<div
-										key={ind}
-										className="flex gap-6 text-sm sm:justify-start justify-between w-full items-center">
-										<h1 className="font-medium">{date.day}</h1>
-										<p className="font-[300]">
-											{date.timeSlots[0].startTime} - {date.timeSlots[0].endTime}
-										</p>
+										key={index}
+										className={classNames(
+											!mentorIsAvailable ? "text-gray-500" : "text-white",
+											"flex gap-6 text-sm sm:justify-start justify-between w-full items-center",
+										)}>
+										<h1 className="font-medium capitalize">{d}</h1>
+										<p className="font-[300]">{mentorIsAvailable ? "Available" : "Unavailable"}</p>
 									</div>
 								);
 							})}
@@ -95,86 +112,61 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 					</div>
 				</div>
 				<div className="grid gap-3 flex-grow w-full lg:w-[35%]">
-					<div className="text-[#06310B] flex md:flex-row flex-col sm:flex-nowrap flex-wrap items-start xl:items-center gap-4">
-						<div className="border border-[#70C5A1] overflow-hidden relative w-full flex items-center gap-2 justify-between pt-6 pb-3">
-							<label htmlFor={`${id}-date`} className="absolute top-0 left-3 text-sm text-[#094B10]">
-								Date
-							</label>
-							<input
-								ref={dayInputRef}
-								className="text-sm placeholder:text-[#094B10] text-[#094B10] w-1/3 text-center focus:ring-0 outline-none"
-								placeholder="DD"
-								type="text"
-								maxLength={2}
-								value={day}
-								onChange={handleDayChange}
-								style={{ fontFamily: "Days One" }}
-							/>
-							<p className="" style={{ fontFamily: "Days One" }}>
-								-
+					{mentorAvailableDay ? (
+						<>
+							<p className="">
+								Mentor&apos;s <span className="font-medium">{mentorAvailableDay.day}</span> schedule
 							</p>
-							<input
-								ref={monthInputRef}
-								className="text-sm placeholder:text-[#094B10] text-[#094B10] w-1/3 text-center focus:ring-0 outline-none"
-								placeholder="MM"
-								type="text"
-								maxLength={2}
-								value={month}
-								onChange={handleMonthChange}
-								style={{ fontFamily: "Days One" }}
-							/>
-							<p className="" style={{ fontFamily: "Days One" }}>
-								-
-							</p>
-							<input
-								ref={yearInputRef}
-								className="text-sm placeholder:text-[#094B10] text-[#094B10] w-1/3 text-center focus:ring-0 outline-none"
-								placeholder="YYYY"
-								type="text"
-								maxLength={4}
-								value={year}
-								style={{ fontFamily: "Days One" }}
-							/>
-						</div>
-						<div className="border border-[#70C5A1] overflow-hidden relative w-full flex items-center gap-3 justify-between pt-6 pb-3">
-							<label htmlFor={`${id}-time`} className="absolute top-0 left-3 text-sm text-[#094B10]">
-								Time
-							</label>
-							<input
-								ref={hourRef}
-								className="text-sm placeholder:text-[#094B10] text-[#094B10] w-1/3 text-center focus:ring-0 outline-none"
-								placeholder="HH"
-								type="text"
-								maxLength={2}
-								value={hour}
-								onChange={handleTimeChange("hour")}
-								style={{ fontFamily: "Days One" }}
-							/>
-							<p className="" style={{ fontFamily: "Days One" }}>
-								:
-							</p>
-							<input
-								ref={minuteRef}
-								className="text-sm placeholder:text-[#094B10] text-[#094B10] w-1/3 text-center focus:ring-0 outline-none"
-								placeholder="MM"
-								type="text"
-								maxLength={2}
-								value={minute}
-								style={{ fontFamily: "Days One" }}
-								onChange={handleTimeChange("minute")}
-							/>
-						</div>
-					</div>
-					<div className="">
-						{/* <button onClick={addSchedule} className="text-[#70C5A1] text-sm">
-							+ Add New date and Time
-						</button> */}
-						<PrimaryButton title="Proceed" className="p-2 px-8" />
-					</div>
+							<span className="italic text-sm text-[#9A9898]">
+								Select a time suitable to schedule a virtual meeting with this mentor:
+							</span>
+							<div className="flex flex-col gap-2">
+								{mentorAvailableDay.timeSlots.map((slot, i) => {
+									const hour = parseInt(slot.startTime.split(":")[0]);
+									const currentHr = new Date().getHours();
+									const isAM = slot.startTime.slice(-2).toUpperCase() === "AM";
+									const timePassed = !isAM ? currentHr >= hour + 12 : currentHr >= hour;
+									return (
+										<span
+											className={classNames(
+												timePassed || !slot.isOpen
+													? "grayscale cursor-disabled text-gray-300"
+													: "",
+												"flex items-center gap-2 cursor-pointer select-none",
+											)}
+											key={i}
+											onClick={() => {
+												if (!timePassed && slot.isOpen) handleSelectTimeSlot(slot);
+											}}>
+											<input
+												disabled={timePassed || !slot.isOpen}
+												type="radio"
+												checked={selectedSlot?.time == slot}
+											/>
+											{slot.startTime} - {slot.endTime}
+										</span>
+									);
+								})}
+							</div>
+
+							{selectedSlot && (
+								<div className="mt-4">
+									<PrimaryButton
+										title="Continue"
+										className="p-2 px-8 animate__animated animate__fadeIn rounded"
+									/>
+								</div>
+							)}
+						</>
+					) : (
+						<p className="text-sm text-red-600">Sorry, this mentor is unavailable today.</p>
+					)}
 				</div>
 			</div>
 		</div>
 	);
 };
+
+type SelectedSlot = { date: string; time: TimeSlot };
 
 export default ScheduleConsultationTemplate;
