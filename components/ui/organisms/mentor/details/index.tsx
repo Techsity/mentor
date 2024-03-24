@@ -5,6 +5,8 @@ import MentorExperienceCard from "../../../atom/cards/mentor/MentorExperienceCar
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { IMentor, IMentorExperience, IMentorProjectType } from "../../../../../interfaces/mentor.interface";
 import { useRouter } from "next/router";
+import { daysOfTheWeek } from "../../../../../constants";
+import classNames from "classnames";
 
 const Skills = ({ skills, loading }: { skills: IMentor["skills"] | undefined; loading?: boolean }) => (
 	<div className="grid gap-3">
@@ -144,7 +146,23 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 					<p className="text-[#CEFFEA] font-[300] mt-2 text-xs">Lagos (GMT +1)</p>
 				</div>
 				<div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-10">
-					{mentor.availability.map((date, index) => {
+					{daysOfTheWeek.map((d, index) => {
+						const mentorIsAvailable = Boolean(
+							mentor?.availability.find((date) => date.day.toLowerCase() == d.toLowerCase()),
+						);
+						return (
+							<div
+								key={index}
+								className={classNames(
+									!mentorIsAvailable ? "text-gray-500" : "text-white",
+									"flex gap-6 text-sm sm:justify-start justify-between w-full items-center",
+								)}>
+								<h1 className="font-medium capitalize">{d}</h1>
+								<p className="font-[300]">{mentorIsAvailable ? "Available" : "Unavailable"}</p>
+							</div>
+						);
+					})}
+					{/* {mentor.availability.map((date, index) => {
 						return (
 							<div className="animate__animated animate__fadeIn" key={index}>
 								<div className="flex justify-between w-full items-center text-sm">
@@ -157,7 +175,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 								</div>
 							</div>
 						);
-					})}
+					})} */}
 				</div>
 			</div>
 			<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">

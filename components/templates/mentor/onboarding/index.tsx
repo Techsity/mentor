@@ -12,22 +12,20 @@ const MentorOnboardingPageTemplate = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);``
 	const [agree, setAgree] = useState<boolean>(onboardingMentor?.agreedToTerms || false);
 
 	const handleNavigate = () => {
 		setLoading(true);
-		if (agree)
-			setTimeout(function () {
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						agreedToTerms: !onboardingMentor?.agreedToTerms || !agree,
-					}),
-				);
-				setLoading(false);
-			}, 3000);
-		else setLoading(false);
+		if (agree) {
+			dispatch(
+				setOnboardingMentor({
+					...onboardingMentor,
+					agreedToTerms: !onboardingMentor?.agreedToTerms || !agree,
+				}),
+			);
+			setLoading(false);
+		} else setLoading(false);
 	};
 
 	useEffect(() => {

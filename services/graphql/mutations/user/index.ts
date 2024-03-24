@@ -39,7 +39,18 @@ export const SUBMIT_REVIEW = gql`
 		createReview(args: $args) {
 			content
 			rating
+			reviewed_by {
+				...UserField
+			}
+			rating
 		}
+	}
+	fragment UserField on UserDTO {
+		name
+		avatar
+		country
+		is_online
+		is_verified
 	}
 `;
 

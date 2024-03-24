@@ -13,18 +13,28 @@ export const INITIALIZE_PAYMENT = gql`
 export const VERIFY_PAYMENT = gql`
 	mutation VerifyPayment($reference: String!) {
 		verifyPayment(reference: $reference) {
+			id
+			# workshop_id
+			# course_id
+			type
+			is_completed
 			course {
+				id
 				title
 				mentor {
 					...Mentor
 				}
+				course_level
 			}
 			workshop {
+				id
 				title
 				mentor {
 					...Mentor
 				}
+				level
 			}
+			created_at
 		}
 	}
 

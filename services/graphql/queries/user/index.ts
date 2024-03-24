@@ -82,7 +82,6 @@ export const FETCH_COURSE_SUBSCRIPTION_BY_ID = gql`
 			reviewed_by {
 				avatar
 				name
-				id
 			}
 		}
 		created_at

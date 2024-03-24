@@ -160,16 +160,16 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									Subscribed
 								</div>
 							) : course?.price === 0 ? (
-								<div className="text-white text-sm bg-[#094B10] select-none rounded px-6 p-2 cursor-pointer font-medium">
+								<div className="text-white text-sm bg-[#094B10] select-none rounded px-6 p-2 font-medium">
 									Free
 								</div>
 							) : (
-								<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-6  p-2 cursor-pointer">
+								<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-6 p-2">
 									${course?.price.toLocaleString()}
 								</div>
 							)
 						) : (
-							<span className="text-white text-sm bg-[#ccc] select-none rounded px-10 p-4 cursor-pointer font-medium relative overflow-" />
+							<span className="text-white text-sm bg-[#ccc] select-none rounded px-10 p-4 font-medium relative" />
 						)}
 					</div>
 				</div>

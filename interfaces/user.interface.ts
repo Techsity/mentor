@@ -1,4 +1,5 @@
-import { ICourse } from "./index";
+import { SubscriptionType } from "../services/enums";
+import { ICourse, IWorkshop } from "./index";
 
 export interface IUserPaymentCard {
 	card_number: string;
@@ -9,8 +10,9 @@ export interface IUserPaymentCard {
 export type Subscription = {
 	id: string;
 	course: ICourse | null;
-	workshop: ICourse | null;
+	workshop: IWorkshop | null;
 	course_id: string;
+	type: SubscriptionType;
 	workshop_id: string;
 	is_completed: boolean;
 	created_at?: string;

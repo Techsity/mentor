@@ -118,14 +118,16 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 								Mentor&apos;s <span className="font-medium">{mentorAvailableDay.day}</span> schedule
 							</p>
 							<span className="italic text-sm text-[#9A9898]">
-								Select a time suitable to schedule a virtual meeting with this mentor:
+								Select a time suitable to schedule a virtual meeting with this mentor;
 							</span>
 							<div className="flex flex-col gap-2">
 								{mentorAvailableDay.timeSlots.map((slot, i) => {
 									const hour = parseInt(slot.startTime.split(":")[0]);
 									const currentHr = new Date().getHours();
 									const isAM = slot.startTime.slice(-2).toUpperCase() === "AM";
-									const timePassed = !isAM ? currentHr >= hour + 12 : currentHr >= hour;
+									const timePassed = !isAM
+										? currentHr >= (hour == 12 ? 12 : hour + 12)
+										: currentHr >= hour;
 									return (
 										<span
 											className={classNames(
