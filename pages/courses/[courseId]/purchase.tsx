@@ -7,6 +7,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../redux/reducers/authSlice";
 import { useRouter } from "next/router";
+import protectedPageWrapper from "../../protectedPageWrapper";
 
 type Props = { course: ICourse | null; error?: string };
 
@@ -27,6 +28,8 @@ const PurchaseCourse = ({ course, error }: Props) => {
 	);
 };
 
+export default protectedPageWrapper(PurchaseCourse);
+
 export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
 	const courseId = ctx.query.courseId;
 	const query = client({ ssr: true }).query;
@@ -44,5 +47,3 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 		return { props: { course: null, error: "Something went wrong" } };
 	}
 };
-
-export default PurchaseCourse;

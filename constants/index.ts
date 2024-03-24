@@ -1,4 +1,5 @@
 import { ToastOptions } from "react-toastify";
+import { ISOCurrency } from "../interfaces";
 
 interface ToastId {
 	// pass all toast id here
@@ -62,3 +63,11 @@ export const networkLabels: { [key: number]: { message: string; color: string } 
 };
 
 export const daysOfTheWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+export const supportedCurrencies: { name: ISOCurrency; symbol: string }[] = [
+	{ name: "USD", symbol: "$" },
+	{ name: "NGN", symbol: "₦" },
+	{ name: "GHS", symbol: "₵" },
+	{ name: "ZAR", symbol: "R" },
+	{ name: "KES", symbol: "KSh" },
+];

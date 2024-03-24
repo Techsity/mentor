@@ -1,6 +1,8 @@
 import { IMentor, RefrencedMentorType } from "./mentor.interface";
 import { IUser } from "./user.interface";
 
+export type ISOCurrency = "NGN" | "USD" | "GHS" | "ZAR" | "KES";
+
 export type CountryCode =
 	| "AF"
 	| "AL"
@@ -310,7 +312,7 @@ export interface IWorkshop {
 	tag: "Live" | "Upcoming" | "Recordings" | "Completed";
 	description: string;
 	scheduled_date: string;
-	level?:COURSE_LEVEL
+	level?: COURSE_LEVEL;
 	category: ICourseCategory;
 	duration: number;
 	participants: number;
