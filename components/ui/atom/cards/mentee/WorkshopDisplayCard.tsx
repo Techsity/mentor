@@ -112,7 +112,14 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 							</div>
 						) : (
 							profile && (
-								<div className="flex justify-end items-center">
+								<div
+									title={
+										!isLive
+											? "Workshop will be live on " +
+											  new Date(workshop.scheduled_date).toDateString()
+											: ""
+									}
+									className="flex justify-end items-center">
 									<PrimaryButton
 										disabled={!isLive}
 										onClick={() =>

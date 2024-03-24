@@ -4,7 +4,6 @@ import WorkshopContents from "../../../ui/organisms/workshop/body/WorkshopConten
 import { formatFollowersCount } from "../../../../utils";
 import FreePurchaseForm from "../../../ui/atom/forms/purchase-form/FreePurchaseForm";
 import PaidPurchaseForm from "../../../ui/atom/forms/purchase-form/PaidPurchaseForm";
-import CartSummary from "../../../ui/atom/cards/purchase/CartSummary";
 import { IWorkshop } from "../../../../interfaces";
 import WorkshopDetailsPageHero from "../../../ui/organisms/workshop/hero";
 
