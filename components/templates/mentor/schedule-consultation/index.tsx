@@ -115,10 +115,11 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 					{mentorAvailableDay ? (
 						<>
 							<p className="">
-								Mentor&apos;s <span className="font-medium">{mentorAvailableDay.day}</span> schedule
+								{/* <span className="font-medium">{mentorAvailableDay.day}</span> */}
+								Mentor&apos;s schedule for today:
 							</p>
 							<span className="italic text-sm text-[#9A9898]">
-								Select a time suitable to schedule a virtual meeting with this mentor;
+								Select a suitable time to schedule a virtual meeting with this mentor;
 							</span>
 							<div className="flex flex-col gap-2">
 								{mentorAvailableDay.timeSlots.map((slot, i) => {
@@ -131,9 +132,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 									return (
 										<span
 											className={classNames(
-												timePassed || !slot.isOpen
-													? "grayscale cursor-disabled text-gray-300"
-													: "",
+												timePassed ? "grayscale cursor-disabled text-gray-300" : "",
 												"flex items-center gap-2 cursor-pointer select-none",
 											)}
 											key={i}

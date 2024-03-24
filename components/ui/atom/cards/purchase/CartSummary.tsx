@@ -17,7 +17,7 @@ const CartSummary = ({
 	return (
 		<div className="lg:px-20 sm:px-12 p-4 h-full py-10 md:py-20 w-full text-sm">
 			<div className="flex items-start flex-col w-full">
-				<h1 className="text-black font-thin text-2xl" style={{ fontFamily: "Days One" }}>
+				<h1 className="text-black font-thin text-xl md:text-2xl" style={{ fontFamily: "Days One" }}>
 					Cart Summary
 				</h1>
 				<div className="grid gap-5 w-full mt-3 max-w-sm capitalize">

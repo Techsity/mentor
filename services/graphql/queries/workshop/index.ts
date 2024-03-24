@@ -104,6 +104,7 @@ export const VIEW_WORKSHOP_DETAILS = gql`
 
 	fragment MentorDetails on MentorDTO {
 		id
+		mentor_verified
 		user {
 			name
 			avatar

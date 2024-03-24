@@ -1,8 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
@@ -108,9 +105,9 @@ const Availability = () => {
 	return (
 		<div className="">
 			<div className="grid gap-4">
-				<div className="text-sm hidden md:grid gap-1 grid-cols-8 items-center text-sm text-[#B1B1B1] font-semibold">
+				<div className="text-sm hidden md:grid gap-1 grid-cols-8 items-center text-[#B1B1B1] font-semibold">
 					<h1 className="col-span-2">Day</h1>
-					<h1 className="col-span-6">Time</h1>
+					<h1 className="col-span-6">Time slots</h1>
 				</div>
 				{days.map((day, id) => (
 					<div

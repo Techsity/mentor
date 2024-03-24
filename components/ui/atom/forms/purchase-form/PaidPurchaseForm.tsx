@@ -89,7 +89,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		}
 	};
 
-	const processPaidCourse = async () => {
+	const processPayment = async () => {
 		try {
 			const { data } = await initializePayment({
 				variables: {
@@ -120,18 +120,20 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const handleSubmit = async () => {
 		if (reason === "course") {
 			if (price === 0) await processFreeCourse();
-			else if (price > 0) await processPaidCourse();
+			else if (price > 0) await processPayment();
+		} else if (reason === "workshop") {
+			if (price > 0) await processPayment();
 		}
 	};
 
 	return (
 		<>
-			<div className="min-w-[50%] pb-10">
-				<div className="md:flex justify-between item-start w-full h-full">
+			<div className="min-w-[50%]">
+				<div className="flex flex-col md:flex-row justify-between item-start w-full h-full">
 					<div className="flex items-center lg:px-28 sm:px-12 px-6 md:py-20 py-5">
 						<div className="">
 							<h1
-								className="text-[#00D569] font-thin text-3xl capitalize"
+								className="text-[#00D569] font-thin text-xl md:text-2xl capitalize"
 								style={{ fontFamily: "Days One" }}>
 								{reason === "workshop" ? "Pay to Join" : "Buy this Course"}
 							</h1>
@@ -251,7 +253,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 							</div>
 						</div>
 					</div>
-					<div className="flex-grow sticky h-[69dvh] top-20 bg-[#F6F9F8]">
+					<div className="flex-grow md:sticky md:h-[75dvh] top-20 bg-[#F6F9F8] md:order-last order-first">
 						<CartSummary {...{ price, tax: Number(tax), reason, currrency: selectedCurrency.symbol }} />
 					</div>
 				</div>

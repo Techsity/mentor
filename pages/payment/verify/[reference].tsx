@@ -41,7 +41,7 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 		console.error({ error });
 		return (
 			<div className="h-screen text-center gap-3 flex flex-col items-center justify-center text-red-500">
-				{error || "Something went wrong"}
+				{error || "Something went wrong"}. Please try again.
 				{error && error == ResponseMessages.TRANSACTION_COMPLETED && (
 					<PrimaryButton
 						onClick={() => router.push("/profile")}

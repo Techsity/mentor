@@ -80,9 +80,9 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 		<div className="relative w-full h-auto p-[1.5px] flex items-center justify-center overflow-hidden group">
 			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full" />
 			{/* <div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" /> */}
-			<div className="z-20 xl:min-h-56 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
+			<div className="z-20 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
 				<div className="relative h-full md:w-[52%] w-full flex sm:flex-row flex-col items-start gap-2">
-					<div className="w-24 xs:w-28 lg:w-40 xl:w-48 h-24 lg:h-32 xl:h-40 rounded-full overflow-hidden">
+					<div className="w-[70px] xs:w-20 xs:h-24 lg:w-40 xl:w-32 h-[75px] lg:h-32 xl:h-28 rounded-full overflow-hidden">
 						{loading ? (
 							<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
 						) : (
@@ -148,7 +148,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								<p className="flex gap-2 items-center text-xs">
 									<GlobeIconSvg />
 									{!loading ? (
-										mentor?.language.join(" | ") || "English"
+										mentor?.language.filter((c) => c.length > 0).join(" | ") || "English"
 									) : (
 										<span className="bg-zinc-200 h-1 w-10 animate__animated animate__fadeIn animate__infinite animate__fast" />
 									)}
@@ -210,7 +210,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 						</div>
 					</div>
 				</div>
-				<div className="grid gap-1 md:pl-4 h-full md:w-[48%] xl:min-h-56">
+				<div className="grid gap-4 md:pl-4 h-full md:w-[48%]">
 					{loading ? <span className="bg-zinc-200 h-1 w-20" /> : <h1 className="">About Me</h1>}
 					{loading ? (
 						<span className="bg-zinc-200 h-1 w-20" />
