@@ -116,6 +116,9 @@ const Availability = () => {
 						<div className="col-span-2">
 							<h1 className="">{day}</h1>
 						</div>
+						{/* 
+						// Todo: use the TimeSelectorModal to set the startTime and endTime (45mins per session)
+						 */}
 						<div className="col-span-3 grid gap-1 relative">
 							<CustomTextInput
 								name="StartTime"
