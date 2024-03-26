@@ -30,6 +30,20 @@ export const LOGIN_USER = gql`
 					created_at
 					updated_at
 				}
+				appointments {
+					created_at
+					date
+					status
+				}
+				notifications {
+					id
+					title
+					resourceId
+					resourceType
+					body
+					created_at
+					read
+				}
 				email
 				is_active
 				is_admin

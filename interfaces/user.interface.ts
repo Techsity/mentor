@@ -1,5 +1,6 @@
 import { SubscriptionType } from "../services/enums";
 import { ICourse, IWorkshop } from "./index";
+import { IAppointment } from "./mentor.interface";
 
 export interface IUserPaymentCard {
 	card_number: string;
@@ -48,6 +49,7 @@ export interface IUser {
 	updated_at?: string;
 	subscriptions: Subscription[];
 	notifications: Notification[];
+	appointments: IAppointment[];
 }
 
 export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };

@@ -58,7 +58,6 @@ export const BOOK_MENTOR = gql`
 	mutation CreateAppointment($createAppointmentInput: CreateAppointmentInput!, $mentor: String!) {
 		createAppointment(createAppointmentInput: $createAppointmentInput, mentor: $mentor) {
 			date
-			time
 			status
 			created_at
 			updated_at

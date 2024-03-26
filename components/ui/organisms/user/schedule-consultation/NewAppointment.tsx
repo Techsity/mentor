@@ -1,0 +1,223 @@
+import { useMutation } from "@apollo/client";
+import classNames from "classnames";
+import React, { useId, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../constants";
+import { IAppointment, IMentor, TimeSlot } from "../../../../../interfaces/mentor.interface";
+import { updateUserProfile, currentUser } from "../../../../../redux/reducers/authSlice";
+import { BOOK_MENTOR } from "../../../../../services/graphql/mutations/user";
+import { formatGqlError } from "../../../../../utils/auth";
+import { PrimaryButton } from "../../../atom/buttons";
+import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+
+const NewAppointment = (mentor: IMentor) => {
+	const user = useSelector(currentUser);
+	const dispatch = useDispatch();
+	const toastId = useId();
+	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
+	const [selectedDay, setSelectedDay] = useState<string>("");
+
+	const [bookMentor, { loading: appointmentLoading }] = useMutation<
+		{ createAppointment: IAppointment },
+		{ createAppointmentInput: CreateAppointmentInput; mentor: string }
+	>(BOOK_MENTOR);
+
+	const currentDate = new Date();
+
+	const currentDayOfTheWeek = currentDate.getDay();
+
+	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
+
+	const handleSubmit = async () => {
+		if (selectedDayIndex === -1) {
+			console.error("Invalid selected day");
+			return;
+		}
+		const currentDayOfTheWeek = currentDate.getDay();
+		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
+		const hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
+		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
+
+		const daysToAdd =
+			selectedDayIndex >= currentDayOfTheWeek
+				? selectedDayIndex - currentDayOfTheWeek
+				: 7 - currentDayOfTheWeek + selectedDayIndex;
+
+		const date = new Date(currentDate);
+		date.setDate(date.getDate() + daysToAdd);
+		date.setHours(isAM ? hour : hour + 12, minutes, 0);
+
+		const time = date.getTime().toString();
+
+		try {
+			const { data } = await bookMentor({
+				variables: { createAppointmentInput: { date, time }, mentor: String(mentor?.id) },
+			});
+			const timezone = new Date().getTimezoneOffset();
+			console.log({ timezone });
+			if (data) {
+				dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
+				// const timezoneOffsetInMilliseconds = timezone * 60 * 1000;
+				// const newDate = new Date(data.createAppointment.date);
+				// const adjustedDate = new Date(newDate.getTime() + timezoneOffsetInMilliseconds);
+				// const formattedDate = adjustedDate.toLocaleString(undefined, { timeZone: "UTC" });
+				// console.log({ formattedDate, newDate });
+			}
+		} catch (error) {
+			console.error({ error: JSON.stringify(error) });
+			const errMsg = formatGqlError(error);
+			toast.error(errMsg || "Something went wrong. Please try again", { toastId, ...ToastDefaultOptions() });
+		}
+	};
+	return (
+		<>
+			<>
+				<span className="text-sm text-[#9A9898]">
+					Select a suitable {!selectedSlot.date ? "day" : "time"} to schedule a virtual meeting with this
+					mentor;
+				</span>
+				{selectedSlot.date && selectedSlot.time && (
+					<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
+						<div
+							className="text-sm border border-[#70C5A1] p-3 w-full capitalize text-center"
+							style={{ fontFamily: "Days One" }}>
+							{selectedSlot.date}
+						</div>
+						<div
+							className="text-sm border border-[#70C5A1] p-3 w-full text-center"
+							style={{ fontFamily: "Days One" }}>
+							{selectedSlot.time.startTime} - {selectedSlot.time.endTime}
+						</div>
+					</div>
+				)}
+				{!selectedSlot?.date && (
+					<div className="animate__animated animate__fadeIn">
+						<div className="grid xs:grid-cols-2 sm:grid-cols-3 gap-4 mt-3">
+							{mentor?.availability.map((slot, index) => {
+								return (
+									<span
+										onClick={() => setSelectedDay(slot.day)}
+										className={classNames("flex items-center gap-2 cursor-pointer")}
+										key={index}>
+										<input readOnly type="radio" checked={selectedDay == slot.day} />
+										{slot.day}
+									</span>
+								);
+							})}
+						</div>
+					</div>
+				)}
+				{/* selectedSlot.date !== "" && */}
+				{selectedSlot.date && selectedSlot.date !== "" && !selectedSlot.time && (
+					<div className="flex flex-col gap-2 mt-3 animate__animated animate__fadeIn">
+						{mentor?.availability
+							.find((d) => d.day == selectedSlot.date)
+							?.timeSlots.map((slot, i) => {
+								const hour = parseInt(slot.startTime.split(":")[0]);
+								const endMinutes = parseInt(slot.startTime.split(":")[1]);
+								const isAM = slot.startTime.slice(-2).toUpperCase() === "AM";
+								const startTime = new Date();
+
+								if (isAM && hour === 12) {
+									startTime.setDate(currentDate.getDate() + 1);
+									startTime.setHours(0, 0, 0);
+								} else startTime.setHours(isAM ? hour : hour + 12, endMinutes, 0);
+
+								// const slotExpired = isToday && currentDate >= startTime;
+								const isBooked = !slot.isOpen;
+
+								return (
+									<span
+										className={classNames(
+											isBooked ? "cursor-disabled text-gray-300" : "",
+											"flex items-center gap-2 cursor-pointer select-none",
+										)}
+										key={i}
+										onClick={() => {
+											if (!isBooked)
+												setSelectedSlot((p) => {
+													return { ...p, time: slot };
+												});
+										}}>
+										<input
+											readOnly
+											disabled={isBooked}
+											type="radio"
+											checked={selectedSlot?.time == slot}
+										/>
+										{slot.startTime} - {slot.endTime}
+										{isBooked && (
+											<span className="text-sm italic text-[#F6937B] grayscale-0">
+												session booked
+											</span>
+										)}
+									</span>
+								);
+							})}
+					</div>
+				)}
+			</>
+
+			<div className="flex gap-2 items-center justify-between sm:justify-start">
+				{selectedSlot.date && (
+					<PrimaryButton
+						onClick={() => {
+							if (selectedSlot.date && selectedSlot.time)
+								setSelectedSlot((p) => {
+									return { ...p, date: p.date, time: undefined };
+								});
+							else if (selectedSlot.date && !selectedSlot.time) {
+								setSelectedSlot({});
+							}
+						}}
+						title={"Back"}
+						className="text-sm mt-4 p-2 px-8 rounded bg-[#FFB100] text-[#06310B]"
+					/>
+				)}
+
+				{!selectedSlot.date && (
+					<PrimaryButton
+						disabled={
+							!selectedDay || selectedDay == ""
+							// ||
+							// (selectedDay && !selectedSlot.time ? true : false)
+						}
+						onClick={() => {
+							if (selectedDay && selectedDay !== "") setSelectedSlot({ date: selectedDay });
+						}}
+						title={"Continue"}
+						className="text-sm mt-4 p-2 px-8 rounded"
+					/>
+				)}
+
+				{selectedSlot && selectedSlot?.date && selectedSlot?.time && (
+					<div className="mt-4">
+						<PrimaryButton
+							onClick={handleSubmit}
+							disabled={appointmentLoading}
+							title={!appointmentLoading ? "Continue" : ""}
+							icon={appointmentLoading ? <ActivityIndicator /> : <></>}
+							className="text-sm p-2 px-8 animate__animated animate__fadeIn rounded"
+						/>
+					</div>
+				)}
+			</div>
+			<span className="text-[15px] mt-6">
+				Schedules are inconvenient for you?
+				<span className="text-[#06310B] cursor-pointer hover:underline font-medium">
+					{" "}
+					Schedule a private appointment
+				</span>
+			</span>
+		</>
+	);
+};
+
+export default NewAppointment;
+type SelectedSlot = { date: string; time: TimeSlot };
+
+type CreateAppointmentInput = {
+	date: Date;
+	time: string;
+};

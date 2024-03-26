@@ -26,6 +26,14 @@ export const GET_USER_PROFILE = gql`
 				created_at
 				read
 			}
+			appointments {
+				created_at
+				date
+				status
+				mentor {
+					id
+				}
+			}
 			is_online
 			is_active
 			is_verified
@@ -317,6 +325,22 @@ export const VIEW_ALL_NOTIFICATIONS = gql`
 			read
 			userId
 			created_at
+		}
+	}
+`;
+
+export const VIEW_APPOINTMENT = gql`
+	query ViewAppointment($appointmentId: String!) {
+		viewAppointment(appointmentId: $appointmentId) {
+			date
+			status
+			mentor {
+				id
+				user {
+					name
+					avatar
+				}
+			}
 		}
 	}
 `;

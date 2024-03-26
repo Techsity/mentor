@@ -94,3 +94,23 @@ export interface IMentorExperience {
 	from_year: string;
 	to_year: string;
 }
+
+export enum AppointmentStatus {
+	PENDING = "pending",
+	ACCEPTED = "accepted",
+	IN_PROGRESS = "in_progress",
+	DECLINED = "declined",
+	CANCELED = "canceled",
+	NO_SHOW = "no_show",
+	COMPLETED = "completed",
+	OVERDUE = "overdue",
+}
+
+export interface IAppointment {
+	id: string;
+	date: Date;
+	status: AppointmentStatus;
+	mentor: IMentor;
+	created_at: Date;
+	updated_at: Date;
+}
