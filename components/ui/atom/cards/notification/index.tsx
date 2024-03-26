@@ -53,12 +53,15 @@ const NotificationItem: FC<{ notification: Notification; closePanel: () => void;
 	closePanel,
 	markRead,
 }) => {
-	const link = `/${notification.resourceType.toLowerCase()}/${notification.resourceId}`;
 	const router = useRouter();
+
 	const handleClick = () => {
+		if (notification.resourceId && notification.resourceType) {
+			const link = `/${notification.resourceType.toLowerCase()}/${notification.resourceId}`;
+			router.push(link);
+		}
 		markRead(notification.id);
 		closePanel();
-		router.push(link);
 	};
 	return (
 		<div
@@ -71,9 +74,11 @@ const NotificationItem: FC<{ notification: Notification; closePanel: () => void;
 				<p className="text-sm text-[#A3A6A7] w-full">{notification.body}</p>
 				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
 			</div>
-			<div className="max-w-sm">
-				<PrimaryButton title="View" className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
-			</div>
+			{notification.resourceId && notification.resourceType && (
+				<div className="max-w-sm">
+					<PrimaryButton title="View" className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
+				</div>
+			)}
 		</div>
 	);
 };

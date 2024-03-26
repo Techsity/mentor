@@ -222,7 +222,7 @@ const NewAppointment = (mentor: IMentor) => {
 							<ActivityIndicator className="border-[#06310B] border-r-transparent" />
 						) : (
 							<select
-								readOnly
+								// readOnly
 								disabled={initializePaymentLoading || appointmentLoading || loading}
 								value={selectedCurrency.name}
 								id=""

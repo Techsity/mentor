@@ -30,6 +30,7 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 
 	const handleCancel = () => {
 		if (existingAppointment.status !== AppointmentStatus.CANCELED)
+			// Todo: popup reason modal
 			toast.success("Appointment cancelled", { ...ToastDefaultOptions({ id: "success" }) });
 	};
 

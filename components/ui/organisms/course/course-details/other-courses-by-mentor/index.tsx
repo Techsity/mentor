@@ -1,11 +1,7 @@
-import React, { useMemo, useState } from "react";
-import Link from "next/link";
-import { slugify } from "../../../../../../utils";
+import React, { useMemo } from "react";
 import DisplayCourseCard from "../../../../atom/cards/course/DisplayCourseCard";
 import { IMentor } from "../../../../../../interfaces/mentor.interface";
 import { ICourse } from "../../../../../../interfaces";
-import courses from "../../../../../../data/courses";
-import { getMentorCourses } from "../../../../../../services/api";
 import { useRouter } from "next/router";
 
 const OtherCoursesByMentor = ({
