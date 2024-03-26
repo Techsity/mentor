@@ -1,6 +1,6 @@
 import React from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
-import { IMentor } from "../../../../interfaces/mentor.interface";
+import { AppointmentStatus, IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
 import { daysOfTheWeek } from "../../../../constants";
 import classNames from "classnames";
 import { currentUser } from "../../../../redux/reducers/authSlice";
@@ -8,9 +8,18 @@ import { useSelector } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
 
-const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
+const ScheduleConsultationTemplate = ({
+	loading,
+	mentor,
+}: // existingAppointment,
+{
+	mentor?: IMentor;
+	loading?: boolean;
+	// existingAppointment?: IAppointment;
+}) => {
 	const user = useSelector(currentUser);
-	const existingAppointment = user?.appointments.find((a) => a.mentor.id == mentor?.id);
+
+	const appointment = user?.appointments ? user.appointments.find((a) => a.mentor.id == mentor?.id) : undefined;
 
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6">
@@ -41,8 +50,8 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 					</div>
 				</div>
 				<div className="grid gap-1 flex-grow w-full lg:w-[35%]">
-					{existingAppointment ? (
-						<ExistingAppointment {...existingAppointment} />
+					{appointment ? (
+						<ExistingAppointment {...appointment} />
 					) : (
 						<NewAppointment {...(mentor as IMentor)} />
 					)}

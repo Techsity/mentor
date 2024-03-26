@@ -31,6 +31,14 @@ export const LOGIN_USER = gql`
 					updated_at
 				}
 				appointments {
+					mentor {
+						id
+						role
+						user {
+							name
+							avatar
+						}
+					}
 					created_at
 					date
 					status

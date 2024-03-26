@@ -13,6 +13,7 @@ import { VERIFY_PAYMENT } from "../../../services/graphql/mutations/payment";
 import { useRouter } from "next/router";
 import ResponseMessages from "../../../constants/response-codes";
 import { SubscriptionType } from "../../../services/enums";
+import { IAppointment } from "../../../interfaces/mentor.interface";
 
 const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Props) => {
 	const [celebrate, setCelebrate] = useState<boolean>(false);
@@ -26,14 +27,10 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 			const retryPayment = () => router.replace(`https://checkout.paystack.com/${access_code}`);
 			return (
 				<div className="h-screen text-center flex flex-col items-center justify-center gap-4">
-					<p className="">This payment was cancelled. Do you try again?</p>
-					<PrimaryButton onClick={retryPayment} title="Continue" className="px-5 p-1.5 text-sm" />
-					<span
-						onClick={() => {
-							router.push("/profile");
-						}}
-						className="text-sm hover:underline cursor-pointer">
-						Go to my profile
+					<p className="">This payment was cancelled. Do you retry?</p>
+					<PrimaryButton onClick={retryPayment} title="Retry" className="px-5 p-1.5 text-sm" />
+					<span onClick={() => router.push("/profile")} className="text-sm hover:underline cursor-pointer">
+						Go to dashboard
 					</span>
 				</div>
 			);
@@ -61,11 +58,8 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 			: subscription?.workshop?.level;
 
 	const handlNavigate = () => {
-		if (subscription?.type === SubscriptionType.COURSE) {
-			router.replace(`/courses/${subscription.course?.id}/learn`);
-		} else {
-			router.replace("/profile");
-		}
+		if (subscription?.type === SubscriptionType.COURSE) router.replace(`/courses/${subscription.course?.id}/learn`);
+		else router.replace("/profile");
 	};
 
 	return (
@@ -129,8 +123,21 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 	// verify payment
 	try {
 		const mutation = client({ ssr: true, authToken }).mutate;
-		const { data } = await mutation({ mutation: VERIFY_PAYMENT, variables: { reference } });
-		return { props: { reference, subscription: data.verifyPayment } };
+		const { data } = await mutation<
+			{ verifyPayment: { subscription?: Subscription; appointment?: IAppointment } },
+			{ reference: string }
+		>({ mutation: VERIFY_PAYMENT, variables: { reference } });
+		const response = data?.verifyPayment;
+		if (response?.appointment) {
+			return {
+				redirect: { destination: `/mentors/${response.appointment.mentor.id}/consult`, permanent: true },
+				props: {
+					reference,
+					subscription: null,
+				},
+			};
+		}
+		return { props: { reference, subscription: response?.subscription as Subscription | null } };
 	} catch (error) {
 		const err = formatGqlError(error);
 		const access_code = err.split(" | ")[1];

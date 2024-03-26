@@ -1,28 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { IMentorshipSession } from "../../../../../interfaces/mentor.interface";
+import { AppointmentStatus, IAppointment } from "../../../../../interfaces/mentor.interface";
+import classNames from "classnames";
 
-const RegisteredMentorshipCard = (session: IMentorshipSession) => {
+const RegisteredMentorshipCard = (session: IAppointment) => {
 	const SessionIndicator = () => {
-		return session.pending ? (
-			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{new Date(session.date).toLocaleDateString()}</p>
-				<p className="">||</p>
-				<p className="">{new Date(session.date).toLocaleDateString()}</p>
-			</div>
-		) : session.upcoming ? (
-			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{new Date(session.date).toLocaleDateString()}</p>
-			</div>
-		) : session.concluded ? (
-			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">Get Recording</p>
-			</div>
-		) : (
-			<div className="h-12 bg-[#70C5A1] w-full text-white flex items-center gap-3 p-5 justify-start">
-				<p className="">{new Date(session.date).toLocaleDateString()}</p>
-				<p className="">||</p>
-				<p className="">{new Date(session.date).toLocaleDateString()}</p>
+		const formatTime = (hour: number, minutes: number) => {
+			const formattedHour = hour <= 12 ? hour : hour - 12;
+			const formattedMinutes = minutes.toString().padStart(2, "0");
+			return `${formattedHour}:${formattedMinutes}`;
+		};
+
+		const date = new Date(session.date);
+		const startHour = date.getHours();
+		const startMinutes = date.getMinutes();
+		const isAmStart = startHour < 12;
+
+		return (
+			<div
+				className={classNames(
+					"h-12  w-full text-white flex items-center gap-3 p-5 justify-start",
+					session.status === AppointmentStatus.PENDING
+						? "bg-yellow-500"
+						: session.status === AppointmentStatus.ACCEPTED
+						? "bg-[#70C5A1]"
+						: AppointmentStatus.OVERDUE && "bg-[#F6937B]",
+				)}>
+				<p className="text-sm">
+					{formatTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"}
+				</p>
 			</div>
 		);
 	};

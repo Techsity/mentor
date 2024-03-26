@@ -40,7 +40,14 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 
 	return (
 		<>
-			{existingAppointment.status == AppointmentStatus.PENDING ? (
+			{existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT ||
+			existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT.toUpperCase() ? (
+				<p className="italic text-sm text-[#9a9898] my-2">
+					Your request is being processed, but your payment has not been confirmed.
+					<br />
+					If you have made payments, you will recieve a notification when mentor accepts this request.
+				</p>
+			) : existingAppointment.status == AppointmentStatus.PENDING ? (
 				<p className="italic text-sm text-[#9a9898] my-2">
 					Your request is pending.
 					<br />

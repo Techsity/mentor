@@ -18,6 +18,7 @@ import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/pa
 import { calculateTax, slugify } from "../../../../../utils";
 import axios from "axios";
 import CartSummary from "../../cards/purchase/CartSummary";
+import { processExchangeRate } from "../../../../../services/api";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -38,21 +39,14 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
 	>(INITIALIZE_PAYMENT);
 
-	const processExchangeRate = async (curr: (typeof supportedCurrencies)[0]) => {
-		if (curr.name !== selectedCurrency.name && !priceLoading) {
+	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
+		if (currency.name !== selectedCurrency.name && !priceLoading) {
 			setPriceLoading(true);
-			try {
-				const { data } = await axios.get(`/api/exchange-rate/${curr.name}`);
-				if (data.rate) {
-					setSelectedCurrency(curr);
-					setPrice(resource.price * data.rate);
-				}
-			} catch (error) {
-				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
-				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
-			} finally {
+			await processExchangeRate(currency.name, (rate) => {
+				setSelectedCurrency(currency);
+				setPrice(resource.price * rate);
 				setPriceLoading(false);
-			}
+			});
 		}
 	};
 
@@ -167,7 +161,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 													{supportedCurrencies.map((currency) => {
 														return (
 															<option
-																onClick={() => processExchangeRate(currency)}
+																onClick={() => handleCurrencyExchange(currency)}
 																value={currency.name}
 																className="">
 																{currency.name}

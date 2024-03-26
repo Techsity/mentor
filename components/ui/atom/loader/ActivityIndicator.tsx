@@ -12,11 +12,9 @@ const ActivityIndicator = (props: IActivityIndicator) => {
 		<div
 			{...rest}
 			className={classNames(
-				"inline-block animate-spin rounded-full border-4 border-solid align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]",
+				"inline-block rounded-full border-4 border-solid align-[-0.125em] animate-[spin_2s_linear_infinite]",
 				className,
-				color
-					? `border-[${color}] border-r-transparent`
-					: `border-current border-r-transparent`,
+				color ? `border-[${color}] border-r-transparent` : `border-current border-r-transparent`,
 				!size ? `h-6 w-6` : ``,
 			)}
 			style={{ height: size, width: size, ...style }}

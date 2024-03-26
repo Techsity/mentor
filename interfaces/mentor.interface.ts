@@ -96,14 +96,16 @@ export interface IMentorExperience {
 }
 
 export enum AppointmentStatus {
-	PENDING = "PENDING",
-	ACCEPTED = "ACCEPTED",
-	IN_PROGRESS = "IN_PROGRESS",
-	DECLINED = "DECLINED",
-	CANCELED = "CANCELED",
-	NO_SHOW = "	NO_SHOW",
-	COMPLETED = "COMPLETED",
-	OVERDUE = "OVERDUE",
+	AWAITING_PAYMENT = "awaiting_payment",
+	PENDING = "pending",
+	ACCEPTED = "accepted",
+	IN_PROGRESS = "in_progress",
+	UPCOMING = "upcoming",
+	DECLINED = "declined",
+	CANCELED = "canceled",
+	NO_SHOW = "no_show",
+	COMPLETED = "completed",
+	OVERDUE = "overdue",
 }
 
 export interface IAppointment {

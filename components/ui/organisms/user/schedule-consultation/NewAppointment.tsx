@@ -3,20 +3,34 @@ import classNames from "classnames";
 import React, { useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../constants";
+import { daysOfTheWeek, supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
 import { IAppointment, IMentor, TimeSlot } from "../../../../../interfaces/mentor.interface";
 import { updateUserProfile, currentUser } from "../../../../../redux/reducers/authSlice";
 import { BOOK_MENTOR } from "../../../../../services/graphql/mutations/user";
 import { formatGqlError } from "../../../../../utils/auth";
 import { PrimaryButton } from "../../../atom/buttons";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { ISOCurrency } from "../../../../../interfaces";
+import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { SubscriptionType } from "../../../../../services/enums";
+import { processExchangeRate } from "../../../../../services/api";
+import { useRouter } from "next/router";
 
 const NewAppointment = (mentor: IMentor) => {
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const toastId = useId();
 	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
 	const [selectedDay, setSelectedDay] = useState<string>("");
+	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
+	const [amount, setAmount] = useState<number>(mentor.hourly_rate);
+	const [loading, setLoading] = useState<boolean>(false);
+
+	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
+		{ initiatePayment: any },
+		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
+	>(INITIALIZE_PAYMENT);
 
 	const [bookMentor, { loading: appointmentLoading }] = useMutation<
 		{ createAppointment: IAppointment },
@@ -24,8 +38,42 @@ const NewAppointment = (mentor: IMentor) => {
 	>(BOOK_MENTOR);
 
 	const currentDate = new Date();
-
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
+
+	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
+		if (currency.name !== selectedCurrency.name && !initializePaymentLoading && !appointmentLoading) {
+			setLoading(true);
+			await processExchangeRate(currency.name, (rate) => {
+				setLoading(false);
+				setSelectedCurrency(currency);
+				setAmount(mentor.hourly_rate * rate);
+			});
+		}
+	};
+
+	const processPayment = async (resourceId: string) => {
+		try {
+			const { data } = await initializePayment({
+				variables: {
+					amount,
+					resourceId,
+					resourceType: SubscriptionType.MENTORSHIP_APPOINTMENT,
+					currency: selectedCurrency.name,
+				},
+			});
+			if (data?.initiatePayment.authorization_url) {
+				const authorizationUrl = data?.initiatePayment?.authorization_url;
+				router.replace(authorizationUrl);
+			}
+		} catch (error) {
+			console.error({ error });
+			const errMsg = formatGqlError(error);
+			toast.error(errMsg || "Something went wrong. Please try again.", {
+				...ToastDefaultOptions(),
+				toastId,
+			});
+		}
+	};
 
 	const handleSubmit = async () => {
 		if (selectedDayIndex === -1) {
@@ -49,33 +97,33 @@ const NewAppointment = (mentor: IMentor) => {
 		const time = date.getTime().toString();
 
 		try {
-			const { data } = await bookMentor({
+			await bookMentor({
 				variables: { createAppointmentInput: { date, time }, mentor: String(mentor?.id) },
-			});
-			const timezone = new Date().getTimezoneOffset();
-			console.log({ timezone });
-			if (data) {
-                dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
-				toast.success("Appointment successful", { ...ToastDefaultOptions(), toastId });
-				// const timezoneOffsetInMilliseconds = timezone * 60 * 1000;
-				// const newDate = new Date(data.createAppointment.date);
-				// const adjustedDate = new Date(newDate.getTime() + timezoneOffsetInMilliseconds);
-				// const formattedDate = adjustedDate.toLocaleString(undefined, { timeZone: "UTC" });
-				// console.log({ formattedDate, newDate });
-			}
+			})
+				.then(async (data) => {
+					if (data.data) await processPayment(data.data.createAppointment.id);
+				})
+				.catch((err) => {
+					throw err;
+				});
+			// dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
+			// toast.success("Appointment successful", { ...ToastDefaultOptions(), toastId });
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
 			toast.error(errMsg || "Something went wrong. Please try again", { toastId, ...ToastDefaultOptions() });
 		}
 	};
+
 	return (
 		<>
 			<>
-				<span className="text-sm text-[#9A9898]">
-					Select a suitable {!selectedSlot.date ? "day" : "time"} to schedule a virtual meeting with this
-					mentor;
-				</span>
+				{!selectedSlot.date && !selectedSlot.time && (
+					<span className="text-sm text-[#9A9898]">
+						Select a suitable {!selectedSlot.date ? "day" : "time"} to schedule a virtual meeting with this
+						mentor;
+					</span>
+				)}
 				{selectedSlot.date && selectedSlot.time && (
 					<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 						<div
@@ -158,6 +206,43 @@ const NewAppointment = (mentor: IMentor) => {
 				)}
 			</>
 
+			{selectedSlot?.date && selectedSlot?.time && (
+				<div className="flex flex-col w-full mt-2">
+					<p className="text-sm my-2">
+						You will be redirected to make a payment of{" "}
+						<span className="font-medium">
+							{selectedCurrency.symbol}
+							{Number(amount.toFixed()).toLocaleString()}
+						</span>
+						/hr for this session;
+					</p>
+					<div className="grid mb-2 gap-2 sm:w-1/2 h-16">
+						<p className="font-medium text-sm">Select Currency</p>
+						{loading ? (
+							<ActivityIndicator className="border-[#06310B] border-r-transparent" />
+						) : (
+							<select
+								readOnly
+								disabled={initializePaymentLoading || appointmentLoading || loading}
+								value={selectedCurrency.name}
+								id=""
+								className="px-4 p-2">
+								{supportedCurrencies.map((currency) => {
+									return (
+										<option
+											onClick={() => handleCurrencyExchange(currency)}
+											value={currency.name}
+											className="">
+											{currency.name}
+										</option>
+									);
+								})}
+							</select>
+						)}
+					</div>
+				</div>
+			)}
+
 			<div className="flex gap-2 items-center justify-between sm:justify-start">
 				{selectedSlot.date && (
 					<PrimaryButton
@@ -194,9 +279,9 @@ const NewAppointment = (mentor: IMentor) => {
 					<div className="mt-4">
 						<PrimaryButton
 							onClick={handleSubmit}
-							disabled={appointmentLoading}
-							title={!appointmentLoading ? "Continue" : ""}
-							icon={appointmentLoading ? <ActivityIndicator /> : <></>}
+							disabled={loading || appointmentLoading || !selectedCurrency || initializePaymentLoading}
+							title={appointmentLoading || initializePaymentLoading ? "" : "Continue"}
+							icon={appointmentLoading || initializePaymentLoading ? <ActivityIndicator /> : <></>}
 							className="text-sm p-2 px-8 animate__animated animate__fadeIn rounded"
 						/>
 					</div>
@@ -213,10 +298,11 @@ const NewAppointment = (mentor: IMentor) => {
 	);
 };
 
-export default NewAppointment;
 type SelectedSlot = { date: string; time: TimeSlot };
 
 type CreateAppointmentInput = {
 	date: Date;
 	time: string;
 };
+
+export default NewAppointment;
