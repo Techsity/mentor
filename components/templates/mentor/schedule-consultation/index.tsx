@@ -46,6 +46,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 					) : (
 						<NewAppointment {...(mentor as IMentor)} />
 					)}
+					{/* <NewAppointment {...(mentor as IMentor)} /> */}
 				</div>
 			</div>
 		</div>

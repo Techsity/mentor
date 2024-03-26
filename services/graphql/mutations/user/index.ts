@@ -61,6 +61,14 @@ export const BOOK_MENTOR = gql`
 			status
 			created_at
 			updated_at
+			mentor {
+				id
+				user {
+					avatar
+					name
+				}
+				role
+			}
 		}
 	}
 `;

@@ -32,6 +32,11 @@ export const GET_USER_PROFILE = gql`
 				status
 				mentor {
 					id
+					user {
+						avatar
+						name
+					}
+					role
 				}
 			}
 			is_online

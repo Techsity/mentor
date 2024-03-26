@@ -25,8 +25,6 @@ const NewAppointment = (mentor: IMentor) => {
 
 	const currentDate = new Date();
 
-	const currentDayOfTheWeek = currentDate.getDay();
-
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
 
 	const handleSubmit = async () => {
@@ -57,7 +55,8 @@ const NewAppointment = (mentor: IMentor) => {
 			const timezone = new Date().getTimezoneOffset();
 			console.log({ timezone });
 			if (data) {
-				dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
+                dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
+				toast.success("Appointment successful", { ...ToastDefaultOptions(), toastId });
 				// const timezoneOffsetInMilliseconds = timezone * 60 * 1000;
 				// const newDate = new Date(data.createAppointment.date);
 				// const adjustedDate = new Date(newDate.getTime() + timezoneOffsetInMilliseconds);
