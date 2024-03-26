@@ -3,15 +3,24 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Progressbar from "../atom/loader/ProgressBar";
 import Sidebar from "./sidebar";
+import { ModalProvider } from "../../../context/modal.context";
+import { NotificationsContextProvider } from "../../../context/notification.context";
+import { SocketContextProvider } from "../../../context/socket-io.context";
 
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<Fragment>
-			<Progressbar />
-			<Sidebar />
-			<Navbar />
-			<div className="relative">{children}</div>
-			<Footer />
+			<ModalProvider>
+				<SocketContextProvider>
+					<NotificationsContextProvider>
+						<Progressbar />
+						<Sidebar />
+						<Navbar />
+						<div className="relative">{children}</div>
+						<Footer />
+					</NotificationsContextProvider>
+				</SocketContextProvider>
+			</ModalProvider>
 		</Fragment>
 	);
 };

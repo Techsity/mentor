@@ -1,27 +1,15 @@
 import React from "react";
 import { PrimaryButton } from "../../../../buttons";
 import ActivityIndicator from "../../../../loader/ActivityIndicator";
-import { ISignUpState } from "../../../../../../../interfaces/auth.interface";
 import useSignUpForm from "../../../../../../../hooks/forms/useSignUpForm";
 import SignupFormInputs from "./SignupFormInputs";
 import PasswordValidationComponent from "./PasswordValidationComponent";
-import { useRouter } from "next/router";
 
 const SignUpForm = () => {
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		loading,
-		handleError,
-		values,
-		handleCountrySelect,
-	} = useSignUpForm();
+	const { errors, handleChange, handleSubmit, loading, handleError, values, handleCountrySelect } = useSignUpForm();
 
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className="animate__animated animate__fadeIn grid gap-3">
+		<form onSubmit={handleSubmit} className="animate__animated animate__fadeIn grid gap-3">
 			<SignupFormInputs
 				errors={errors}
 				handleChange={handleChange}
@@ -30,7 +18,7 @@ const SignUpForm = () => {
 				handleCountrySelect={handleCountrySelect}
 				disabled={loading}
 			/>
-			<div className="flex lg:flex-row flex-col gap-8 justify-between mt-5 items-center w-full">
+			<div className="flex lg:flex-row flex-col gap-8 justify-between items-center w-full">
 				<PrimaryButton
 					type="submit"
 					disabled={loading}

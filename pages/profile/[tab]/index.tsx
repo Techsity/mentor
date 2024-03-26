@@ -1,13 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import protectedPageWrapper from "../../protectedPageWrapper";
-import ProfileLayout from "../../../components/ui/layout/profile/ProfileLayout";
+import ProfileLayout from "../../../components/ui/layout/ProfileLayout";
 import { useRouter } from "next/router";
 import { ProfileTabLinkType } from "../../../interfaces";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../redux/reducers/authSlice";
 import ProfileSettings from "../../../components/ui/organisms/user/profile/ProfileSettings";
-import CourseInProgressDisplayCard from "../../../components/ui/atom/cards/course/CourseInProgressDisplayCard";
-import courses from "../../../data/courses";
 import MentorProfileOverview from "../../../components/ui/organisms/user/mentor/MentorProfileOverview.tsx";
 import MentorProfileWorkshop from "../../../components/ui/organisms/user/mentor/workshop/MentorProfileWorkshop";
 import PaymentMethods from "../../../components/ui/organisms/user/profile/PaymentMethods";
@@ -15,13 +13,13 @@ import RegisteredMentorships from "../../../components/ui/organisms/user/profile
 import RegitsteredWorkshops from "../../../components/ui/organisms/user/profile/RegitsteredWorkshops";
 import WishLists from "../../../components/ui/organisms/user/profile/WishLists";
 import MentorProfileCourses from "../../../components/ui/organisms/user/mentor/courses/MentorProfileCourses";
+import UserCourseSubcriptions from "../../../components/ui/organisms/user/profile/UserCourseSubcriptions";
 
 const ProfileNavgationContainer = () => {
 	const router = useRouter();
 	const user = useSelector(currentUser);
 	const isMentor = user?.mentor;
 	const tab = router.query.tab as ProfileTabLinkType;
-	const myCourses = useMemo(() => courses, []);
 
 	return (
 		<ProfileLayout>
@@ -33,13 +31,7 @@ const ProfileNavgationContainer = () => {
 				) : tab === "courses" && isMentor ? (
 					<MentorProfileCourses />
 				) : tab === "my-courses" ? (
-					<div className="animate__animated animate__fadeIn">
-						<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-							{myCourses.map((course, i) => (
-								<CourseInProgressDisplayCard {...{ course }} key={i} />
-							))}
-						</div>
-					</div>
+					<UserCourseSubcriptions />
 				) : tab === "workshop" && isMentor ? (
 					<MentorProfileWorkshop />
 				) : tab === "my-workshop" ? (
@@ -55,7 +47,7 @@ const ProfileNavgationContainer = () => {
 				) : tab === "payment-methods" ? (
 					<PaymentMethods />
 				) : (
-					tab === "profile-settings" && <ProfileSettings />
+					tab === "settings" && <ProfileSettings />
 				)}
 			</div>
 		</ProfileLayout>

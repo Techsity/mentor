@@ -7,7 +7,7 @@ import { RootState } from "../store";
 const initialState: IAuthState = {
 	isLoggedIn: false,
 	user: null,
-	resetPasswordState: { email: "", otp: "" },
+	resetPasswordState: null,
 };
 
 const authSlice = createSlice({
@@ -23,28 +23,38 @@ const authSlice = createSlice({
 			if (action.payload.mentorProfile && state.user) state.user.mentor = action.payload.mentorProfile;
 		},
 		logOut: (state) => {
-			console.log("Logging out...");
+			// console.log("Logging out...");
 			state.isLoggedIn = false;
 			state.user = null;
-			return state;
+			state.resetPasswordState = null;
 		},
-		updateUser: (state, action: { payload: IUser | null }) => {
-			state.user = action.payload;
+		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
+			if (action.payload) {
+				state.isLoggedIn = true;
+				state.user = { ...state.user, ...action.payload } as IUser | null;
+			}
 		},
-		setResetPasswordState: (state, action: { payload: { email: string; otp: string } }) => {
-			state.resetPasswordState = action.payload;
+		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
+			if (state.user) state.user.mentor = action.payload as IMentor | null;
+		},
+		setResetPasswordState: (state, action: { payload: Partial<IAuthState["resetPasswordState"]> | null }) => {
+			state.resetPasswordState = action.payload as IAuthState["resetPasswordState"];
 			return state;
 		},
 		switchProfile: (state, action: { payload: { profile: IMentor | null } }) => {
-			if (state?.user) state.user.mentor = action.payload.profile;
+			if (state?.user) {
+				if (state.user.mentor) state.user.is_mentor = true;
+				state.user.mentor = action.payload.profile;
+			}
 		},
 	},
 });
 
-export const { setCredentials, logOut, updateUser, setResetPasswordState, switchProfile } = authSlice.actions;
+export const { setCredentials, logOut, updateUserProfile, setResetPasswordState, switchProfile, updateMentorProfile } =
+	authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
-export const currentUser = (state: RootState) => state.auth.user;
+export const currentUser = (state: RootState) => state.auth.user as IAuthState["user"];
 export const resetPasswordState = (state: RootState) => state.auth.resetPasswordState;
 
 export default authSlice.reducer;

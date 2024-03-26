@@ -1,6 +1,8 @@
 import { IMentor, RefrencedMentorType } from "./mentor.interface";
 import { IUser } from "./user.interface";
 
+export type ISOCurrency = "NGN" | "USD" | "GHS" | "ZAR" | "KES";
+
 export type CountryCode =
 	| "AF"
 	| "AL"
@@ -251,7 +253,7 @@ export interface ICourseCategory {
 	id?: string;
 	title: string;
 	description: string;
-	category_type: {
+	course_type: {
 		description: string;
 		type: string;
 	};
@@ -273,7 +275,7 @@ export interface ICourse {
 	price: number;
 	mentor: IMentor;
 	available: boolean;
-	imgUrl?: string;
+	thumbnail?: string;
 	requirements: string[];
 	course_contents: ICourseContent[];
 	category: ICourseCategory;
@@ -301,20 +303,24 @@ export interface IBlogPost {
 export interface IWorkshopContent {
 	title: string;
 	date: string;
+	startTime: string;
+	endTime: string;
 }
 export interface IWorkshop {
 	id?: string;
 	title: string;
 	tag: "Live" | "Upcoming" | "Recordings" | "Completed";
 	description: string;
-	startDate: string;
-	endDate: string;
+	scheduled_date: string;
+	level?: COURSE_LEVEL;
+	category: ICourseCategory;
 	duration: number;
 	participants: number;
 	price: number;
 	mentor: IMentor;
 	available: boolean;
-	imgUrl?: string;
+	isSubscribed: boolean;
+	thumbnail?: string;
 	what_to_learn: string[];
 	requirements: string[];
 	contents: IWorkshopContent[];
@@ -331,9 +337,9 @@ export type ProfileTabLinkType =
 	| "wishlists"
 	| "payment-methods"
 	| "payments"
-	| "profile-settings"
+	| "settings"
 	| "edit-course";
 
 export type CourseType = "technical" | "vocational" | "educational";
 
-export type IReview = { content: string; ratings: number; reviewed_by: IUser; type: string };
+export type IReview = { content: string; rating: number; reviewed_by: IUser; type: string };

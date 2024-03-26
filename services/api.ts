@@ -2,15 +2,17 @@ import request, { GraphQLClient } from "graphql-request";
 import courses from "../data/courses";
 import { ICourse, IWorkshop } from "../interfaces";
 import { slugify } from "../utils";
-import { ALL_COURSES } from "./graphql/mutations/courses";
+import { ALL_COURSES } from "./graphql/queries/course";
 import { DocumentNode } from "graphql";
 import { AUTH_TOKEN_KEY } from "../constants";
 import { getCookie } from "../utils/auth";
 import { InMemoryCache } from "@apollo/client";
-import { VIEW_MENTOR_PROFILE } from "./graphql/mutations/mentors";
+import { VIEW_MENTOR_PROFILE } from "./graphql/queries/mentor";
 import mentors from "../data/mentors";
 import workshops from "../data/workshops";
 import { IMentor } from "../interfaces/mentor.interface";
+import { dummyUsers } from "../data/user";
+import { IUser } from "../interfaces/user.interface";
 
 const apiEndpoint = "/api/graphql";
 
@@ -35,7 +37,7 @@ export const getMentorCourses = (username: string): ICourse[] => {
 	return mentorCourses;
 };
 export const getCourseById = (courseId: string): ICourse | null => {
-	const course = courses.find((course) => slugify(course.title) === courseId);
+	const course = courses.find((course) => slugify(course.title) === slugify(courseId));
 	// const course: ICourse = courses.find((course) => slugify(course.title) === courseId) as ICourse;
 	if (!course) return null;
 	return course;
@@ -88,6 +90,14 @@ export const fetchAllMentors = async (args?: { skip?: number; limit?: number }):
 	return new Promise<Partial<IMentor>[]>((resolve) => {
 		setTimeout(() => {
 			resolve(mentors.slice(skip, skip + limit));
+		}, 2000);
+	});
+};
+export const fetchAllUsers = async (args?: { skip?: number; limit?: number }): Promise<Partial<IUser>[]> => {
+	const { limit = 10, skip = 0 } = args || {};
+	return new Promise<Partial<IUser>[]>((resolve) => {
+		setTimeout(() => {
+			resolve(dummyUsers.slice(skip, skip + limit));
 		}, 2000);
 	});
 };

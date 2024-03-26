@@ -37,7 +37,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					className="text-black"
 					readOnly
 					value={experience.company}
-					containerProps={{
+					containerprops={{
 						className: "border border-zinc-200",
 					}}
 				/>
@@ -51,7 +51,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					className="text-black select-none"
 					placeholder="Start Date"
 					value={experience.from_year}
-					containerProps={{
+					containerprops={{
 						className: "border border-zinc-200",
 					}}
 					readOnly
@@ -66,7 +66,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					className="text-black select-none"
 					placeholder="End Date"
 					value={experience.to_year}
-					containerProps={{
+					containerprops={{
 						className: "border border-zinc-200",
 					}}
 					readOnly
@@ -84,7 +84,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					readOnly
 					value={experience.job_role}
 					className="text-black"
-					containerProps={{
+					containerprops={{
 						className: "border border-zinc-200",
 					}}
 				/>
@@ -101,7 +101,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					value={experience.description}
 					type="text"
 					className="text-black"
-					containerProps={{
+					containerprops={{
 						className: "border border-zinc-200",
 					}}
 				/>

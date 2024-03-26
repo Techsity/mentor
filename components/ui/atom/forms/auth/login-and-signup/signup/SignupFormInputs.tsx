@@ -25,7 +25,7 @@ const SignupFormInputs = ({
 	) => (e: FormEvent<HTMLInputElement>) => void;
 	errors: IFieldError[];
 }) => {
-	const defaultContainerProps = {
+	const defaultContainerprops = {
 		className:
 			"border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
 	};
@@ -46,8 +46,8 @@ const SignupFormInputs = ({
 				onChange={handleChange("fullName")}
 				required={true}
 				onInvalid={handleError("fullName")}
-				containerProps={{
-					...defaultContainerProps,
+				containerprops={{
+					...defaultContainerprops,
 					className: errors.find(
 						(error) => error?.field === "fullName",
 					)
@@ -65,8 +65,8 @@ const SignupFormInputs = ({
 				required={true}
 				onInvalid={handleError("email")}
 				title="Please enter valid email"
-				containerProps={{
-					...defaultContainerProps,
+				containerprops={{
+					...defaultContainerprops,
 					className: errors.find((error) => error?.field === "email")
 						? "border border-[red]"
 						: "border-[#094B10] border",
@@ -101,8 +101,8 @@ const SignupFormInputs = ({
 				required={true}
 				onInvalid={handleError("phone")}
 				title="Please enter a valid phone number"
-				containerProps={{
-					...defaultContainerProps,
+				containerprops={{
+					...defaultContainerprops,
 					className: errors.find((error) => error?.field === "phone")
 						? "border border-[red]"
 						: "border-[#094B10] border",
@@ -118,8 +118,8 @@ const SignupFormInputs = ({
 				onInvalid={handleError("password")}
 				onChange={handleChange("password")}
 				min={8}
-				containerProps={{
-					...defaultContainerProps,
+				containerprops={{
+					...defaultContainerprops,
 					className: errors.find(
 						(error) => error?.field === "password",
 					)
@@ -135,8 +135,8 @@ const SignupFormInputs = ({
 				required={true}
 				onInvalid={handleError("confirmPassword")}
 				onChange={handleChange("confirmPassword")}
-				containerProps={{
-					...defaultContainerProps,
+				containerprops={{
+					...defaultContainerprops,
 					className: errors.find(
 						(error) => error?.field === "confirmPassword",
 					)

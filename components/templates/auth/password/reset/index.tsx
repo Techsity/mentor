@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useId, useState } from "react";
 import { PrimaryButton } from "../../../../ui/atom/buttons";
 import ActivityIndicator from "../../../../ui/atom/loader/ActivityIndicator";
 import CustomTextInput from "../../../../ui/atom/inputs/CustomTextInput";
@@ -12,92 +12,94 @@ import ResponseMessages from "../../../../../constants/response-codes";
 import { FORGOT_PASSWORD, RESET_PASSWORD } from "../../../../../services/graphql/mutations/auth";
 import { formatGqlError } from "../../../../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../../redux/reducers/authSlice";
+import { resetPasswordState } from "../../../../../redux/reducers/authSlice";
+import { EyeSharp, EyeOffSharp } from "react-ionicons";
 
 type VerifyUserResponseType = {
 	data: { resetPassword: { message: keyof typeof ResponseMessages } };
 };
 const ResetNewPasswordTemplate = () => {
+	const toastId = useId();
 	const router = useRouter();
 	const dispatch = useDispatch();
-	// const otp = router.query.otp as string;
+	const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
 	const resetPasswordData = useSelector(resetPasswordState);
 	const otp = resetPasswordData && resetPasswordData.otp;
+	const [showPassword, setShowPassword] = useState<boolean>(false);
 
-	const [forgotPassword] = useMutation<
+	const [forgotPassword, { loading: forgotLoading }] = useMutation<
 		{ forgetPassword: { message: keyof typeof ResponseMessages } },
 		{ email: string }
-	>(FORGOT_PASSWORD);
+	>(FORGOT_PASSWORD, { variables: { email: String(resetPasswordData?.email) } });
 
-	const [resetPassword] = useMutation<VerifyUserResponseType, { resetData: { otp: string; password: string } }>(
-		RESET_PASSWORD,
-	);
+	const [resetPassword, { loading }] = useMutation<
+		{ resetPassword: { message: string } },
+		{ resetData: { otp: string; password: string } }
+	>(RESET_PASSWORD);
 
-	const [loading, setLoading] = useState<boolean>(false);
 	const [state, setState] = useState<IResetPasswordState>({
 		newPassword: "",
 		confirmNewPassword: "",
 	});
-	const [isInvalidOtp, setIsInvalidOtp] = useState<boolean>(false);
 
-	const handleSubmit = async (e: FormEvent) => {
-		setLoading(true);
-		e.preventDefault();
-		if (state.newPassword && state.confirmNewPassword)
-			if (state.newPassword === state.confirmNewPassword) {
-				//Verify Otp
-				resetPassword({ variables: { resetData: { otp: otp as string, password: state.newPassword } } })
-					.then((response) => {
-						console.log(response);
-						router.replace(`/auth/reset-password/${new Date().getTime()}?finish`);
-					})
-					.catch((error: any) => {
-						setLoading(false);
-						console.error(error);
-						const errorMessage = formatGqlError(error);
-						setIsInvalidOtp(true);
-						toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
-					});
-			} else {
-				toast.error("Passwords do not match", ToastDefaultOptions({ id: "error" }));
-				setLoading(false);
+	const resendForgotPasswordOTP = async () => {
+		await forgotPassword();
+		router.replace("/auth/verification/reset-password");
+	};
+
+	const handleVerifyOtp = async () => {
+		try {
+			const response = await resetPassword({
+				variables: { resetData: { otp: otp as string, password: state.newPassword } },
+			});
+			if (response) {
+				const data = response.data;
+				console.log({ response: response.data });
+				if (data && data.resetPassword.message) router.replace(`/auth/reset-password/finish`);
 			}
-		else {
-			toast.error("Please enter your passwords", ToastDefaultOptions({ id: "error" }));
-			setLoading(false);
+		} catch (error: any) {
+			console.error(JSON.stringify(error));
+			const errorMessage = formatGqlError(error);
+			if (errorMessage == ResponseMessages["statusCode: 10254"]) {
+				toast.error("Invalid OTP", ToastDefaultOptions({ id: "auth_form_pop" }));
+				resendForgotPasswordOTP();
+				return;
+			}
+			toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 		}
+	};
+
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+
+		if (!isValidPassword)
+			return toast.error("Ensure all password checks are passed", { toastId, ...ToastDefaultOptions() });
+
+		if (state.newPassword && state.confirmNewPassword)
+			if (state.newPassword === state.confirmNewPassword) handleVerifyOtp();
+			else return toast.error("Passwords do not match", ToastDefaultOptions({ id: "error" }));
+		else return toast.error("Please enter your passwords", ToastDefaultOptions({ id: "error" }));
 	};
 
 	const handleChange = (field: keyof IResetPasswordState) => (e: ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [field]: e.target.value });
-		setLoading(false);
 	};
 
-	const handleResendOtp = () => {
-		if (resetPasswordData && resetPasswordData?.email !== "")
-			forgotPassword({ variables: { email: resetPasswordData.email } })
-				.then((response) => {
-					if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
-						toast.info(
-							"An OTP has been sent to the email you provided.",
-							ToastDefaultOptions({ id: "info" }),
-						);
-						router.push(`/auth/verification/reset-password`);
-					}
-				})
-				.catch((error) => {
-					console.error(error);
-					const errorMessage = formatGqlError(error);
-					toast.error(errorMessage, ToastDefaultOptions({ id: "error" }));
-				});
-		else {
-			router.push(`/auth/forgot-password`);
-		}
-	};
+	useEffect(() => {
+		if (!resetPasswordData?.email) router.replace(`/auth?login`);
+	}, [resetPasswordData, router]);
+
+	if (!resetPasswordData?.email) {
+		return (
+			<div className="min-h-screen items-center flex justify-center">
+				<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+			</div>
+		);
+	}
 
 	return (
 		<div className="min-h-[80vh] flex sm:justify-center pt-20 sm:mt-24 md:px-24">
-			<ReusableParticles />
+			{/* <ReusableParticles /> */}
 			<form className="w-full sm:w-auto" onSubmit={handleSubmit}>
 				<h1
 					className="sm:text-3xl text-[20px] text-[#00D569] px-5 sm:px-auto"
@@ -108,32 +110,42 @@ const ResetNewPasswordTemplate = () => {
 					<CustomTextInput
 						required={true}
 						placeholder="New Password"
-						type="password"
+						type={!showPassword ? "password" : "text"}
 						className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 						onChange={handleChange("newPassword")}
-						containerProps={{
-							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
+						containerprops={{
+							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 						}}
+						rightIcon={
+							<div className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+								{!showPassword ? <EyeSharp color="#094B10" /> : <EyeOffSharp color="#094B10" />}
+							</div>
+						}
 					/>
 					<CustomTextInput
 						required={true}
 						placeholder="Confirm New Password"
-						type="password"
+						type={!showPassword ? "password" : "text"}
 						className="bg-transparent placeholder:font-[300] placeholder:text-[#A3A6A7] text-sm"
 						onChange={handleChange("confirmNewPassword")}
-						containerProps={{
-							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px]",
+						containerprops={{
+							className: "border border-[#094B10] bg-transparent duration-300 min-h-[45px] relative",
 						}}
+						rightIcon={
+							<div className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+								{!showPassword ? <EyeSharp color="#094B10" /> : <EyeOffSharp color="#094B10" />}
+							</div>
+						}
 					/>
 				</div>
 				<div className="px-5 sm:px-auto mt-6 grid gap-5">
 					<div className="sm:flex grid gap-5 mt-5 items-center">
 						<PrimaryButton
 							type="submit"
-							disabled={loading}
-							title={!loading ? "Continue" : ""}
+							disabled={loading || forgotLoading}
+							title={!loading || !forgotLoading ? "Continue" : ""}
 							icon={
-								loading ? (
+								loading || forgotLoading ? (
 									<div className="flex justify-center">
 										<ActivityIndicator />
 									</div>
@@ -141,15 +153,18 @@ const ResetNewPasswordTemplate = () => {
 							}
 							className="px-12 duration-300 p-3 text-center"
 						/>
-						{isInvalidOtp && (
+						{/* {isInvalidOtp && (
 							<div className={`flex flex-col items-center sm:items-start font-[300] cursor-pointer`}>
 								<button type="button" onClick={handleResendOtp} className={"font-medium"}>
 									Resend OTP
 								</button>
 							</div>
-						)}
+						)} */}
 					</div>
-					<PasswordValidationComponent password={state.newPassword} />
+					<PasswordValidationComponent
+						isValid={(checked) => setIsValidPassword(checked)}
+						password={state.newPassword}
+					/>
 				</div>
 			</form>
 		</div>

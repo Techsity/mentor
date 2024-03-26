@@ -1,15 +1,23 @@
 import React from "react";
 import CourseDetailsPageHero from "../../../ui/organisms/course/course-details/hero";
-import { ICourse } from "../../../../interfaces";
 import CourseDetailsBody from "../../../ui/organisms/course/course-details/body";
 import { ChevronUpOutline } from "react-ionicons";
 import { scrollToTop } from "../../../../utils";
 import NewsLetterForm from "../../../ui/atom/forms/NewsLetterForm";
 import CoursePageAboutMentor from "../../../ui/organisms/course/course-details/about-mentor";
 import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/other-courses-by-mentor";
+import { useRouter } from "next/router";
+import { ICourse } from "../../../../interfaces";
 
-const CourseDetailsPageTemplate = (course: ICourse) => {
-	return (
+type Props = { course: ICourse | null };
+
+const CourseDetailsPageTemplate = ({ course }: Props) => {
+	
+	return !course ? (
+		<div className="h-screen flex justify-center items-center">
+			<p className="text-black text-xl">Course not found</p>
+		</div>
+	) : (
 		<>
 			<div className="">
 				<CourseDetailsPageHero {...course} />

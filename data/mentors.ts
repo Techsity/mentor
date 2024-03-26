@@ -1,15 +1,13 @@
 import { MENTOR_ROLES } from "../constants/mentor";
 import { IMentor, IMentorExpLevel } from "../interfaces/mentor.interface";
-import { courseCategories, courseContents } from "./courses";
-import reviews from "./reviews";
 import { dummyUsers } from "./user";
 
 const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
-		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		followers: [],
+		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -21,9 +19,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -49,7 +47,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "93e14672-3bb0-4419-a754-6e752b4bbfb7",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[2],
 		work_experience: [
 			{
@@ -64,8 +62,8 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
-		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
+		followers: [],
+		role: MENTOR_ROLES.BACKEND_DEVELOPER,
 		hourly_rate: 320,
 		skills: [
 			{ skill_name: "Javascript", years_of_exp: 6 },
@@ -77,9 +75,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -106,7 +104,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[0],
 		work_experience: [
 			{
@@ -121,7 +119,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -134,9 +132,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: false,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -162,7 +160,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[3],
 		work_experience: [
 			{
@@ -177,7 +175,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -190,9 +188,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -219,7 +217,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[3],
 		work_experience: [
 			{
@@ -234,7 +232,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -247,9 +245,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -276,7 +274,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[1],
 		work_experience: [
 			{
@@ -291,7 +289,7 @@ const mentors: IMentor[] = [
 	{
 		about: "Experienced software engineer with a passion for teaching.",
 		courses: [],
-		followers: 20000,
+		followers: [],
 		role: MENTOR_ROLES["BACKEND_DEVELOPER"],
 		hourly_rate: 320,
 		skills: [
@@ -304,9 +302,9 @@ const mentors: IMentor[] = [
 		],
 		mentor_verified: true,
 		availability: [
-			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
-			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am" }] },
+			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
+			{ day: "Fri", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 		],
 		certifications: [
 			{ organization: "AWS", title: "Certified AWS Builder", year: "2021" },
@@ -333,7 +331,7 @@ const mentors: IMentor[] = [
 		language: ["English"],
 		projects: [],
 		reviews: [],
-		id: "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e",
+		id: "a39e7f31-2aa3-42d3-a74c-348ee5d91aa6",
 		user: dummyUsers[0],
 		work_experience: [
 			{

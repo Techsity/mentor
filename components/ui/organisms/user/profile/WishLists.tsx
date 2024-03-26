@@ -1,5 +1,5 @@
 import React from "react";
-import { wishlistedCourses as wishlist } from "../../../../../redux/reducers/coursesSlice";
+import { wishlistedCourses as wishlist } from "../../../../../redux/reducers/userSlice";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 import { useSelector } from "react-redux";
 
@@ -16,9 +16,7 @@ const WishLists = () => {
 					// .slice(0, isExtraLargeScreen ? 8 : isLargeScreen ? 6 : 8)
 					<div className="flex gap-1 items-center relative overflow-hidden">
 						<div className="text-black">Wishlist is empty </div>
-						<span className="animate-[spin_3s_ease-in-out_infinite] text-xl">
-							✨
-						</span>
+						<span className="animate-[spin_3s_ease-in-out_infinite] text-xl">✨</span>
 					</div>
 				)}
 			</div>

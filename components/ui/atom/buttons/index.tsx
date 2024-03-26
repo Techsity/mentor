@@ -17,7 +17,7 @@ export const PrimaryButton = (props: IPrimaryButton) => {
 			disabled={disabled}
 			onClick={props.link ? () => router.push(props?.link as string) : onClick}
 			className={classNames(
-				`bg-[#094B10] text-white hover:opacity-90 duration-300 select-none text-center flex gap-2 cursor-pointer select-none`,
+				`bg-[#094B10] text-white hover:opacity-90 duration-300 text-center flex gap-2 cursor-pointer select-none`,
 				className,
 				disabled ? "cursor-not-allowed bg-zinc-500 opacity-80" : "cursor-pointer",
 			)}

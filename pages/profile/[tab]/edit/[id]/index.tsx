@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import protectedPageWrapper from "../../../../protectedPageWrapper";
 import { useRouter } from "next/router";
-import ProfileLayout from "../../../../../components/ui/layout/profile/ProfileLayout";
+import ProfileLayout from "../../../../../components/ui/layout/ProfileLayout";
 import { ProfileTabLinkType } from "../../../../../interfaces";
 import WorkshopAndCourseEditTemplate from "../../../../../components/templates/course/edit";
 import { useSelector } from "react-redux";

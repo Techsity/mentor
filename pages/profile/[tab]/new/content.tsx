@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
 import EditCourseContent from "../../../../components/ui/organisms/course/edit-course/EditCourseContent";
 import { useRouter } from "next/router";
-import ProfileLayout from "../../../../components/ui/layout/profile/ProfileLayout";
+import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
 import protectedPageWrapper from "../../../protectedPageWrapper";
+import { CourseContentUploadProvider } from "../../../../context/course-content-upload.context";
 
 const ContentEditPageContainer = () => {
 	const router = useRouter();
@@ -19,17 +20,14 @@ const ContentEditPageContainer = () => {
 
 	const isNewItemPage = useMemo(() => {
 		return (
-			Boolean(tab === "courses" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new") ||
-			Boolean(tab === "workshop" && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new")
+			Boolean(isCourse && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new") ||
+			Boolean(isWorkshop && router.asPath.split("/")[router.asPath.split("/").length - 2] === "new")
 		);
 	}, [router]);
 
 	const navigateBack = () => {
-		if (window && window.history.length > 1) {
-			router.back();
-		} else {
-			router.push("/profile/courses/new");
-		}
+		if (window && window.history.length > 1) router.back();
+		else router.push("/profile/courses/new");
 	};
 
 	return (
@@ -47,7 +45,12 @@ const ContentEditPageContainer = () => {
 					</div>
 				)}
 			</div>
-			{isNewItemPage ? <EditCourseContent /> : <>null</>}
+			<p className="text-yellow-600 text-[13px] my-2">
+				Note: Make sure you save your progress before reloading the page to avoid losing data.
+			</p>
+			<CourseContentUploadProvider>
+				{isNewItemPage ? <EditCourseContent /> : <>Loading...</>}
+			</CourseContentUploadProvider>
 		</ProfileLayout>
 	);
 };

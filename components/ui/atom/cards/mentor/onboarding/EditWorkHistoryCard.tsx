@@ -127,7 +127,7 @@ const EditWorkHistoryCard = ({
 							});
 						}}
 						value={workExperience.company}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>
@@ -146,7 +146,7 @@ const EditWorkHistoryCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
 						value={workExperience.from_year}
-						containerProps={{
+						containerprops={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
@@ -185,7 +185,7 @@ const EditWorkHistoryCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
 						value={workExperience.to_year}
-						containerProps={{
+						containerprops={{
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
@@ -224,7 +224,7 @@ const EditWorkHistoryCard = ({
 						type="text"
 						placeholder="Your Role"
 						className="text-black"
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 						value={workExperience.job_role}
@@ -256,7 +256,7 @@ const EditWorkHistoryCard = ({
 								description: e.target.value,
 							})
 						}
-						containerProps={{
+						containerprops={{
 							className: "border border-zinc-200",
 						}}
 					/>

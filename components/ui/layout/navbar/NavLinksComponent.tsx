@@ -1,18 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
-import { courseTypes } from "../../../../data/courses";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../../../../services/graphql/mutations/courses";
-
-type MainCourseType = {
-	courseType: CourseType;
-	categories: ICourseCategory[];
-};
+import { useQuery } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../../../services/graphql/queries/course";
 
 const NavLinksComponent = () => {
 	const user = useSelector(currentUser);
@@ -30,9 +24,7 @@ const NavLinksComponent = () => {
 			if (error) {
 				console.error({ error: error });
 				return [];
-			} else if (data && data.getAllCategories) {
-				return data.getAllCategories;
-			}
+			} else if (data && data.getAllCategories) return data.getAllCategories;
 			return [];
 		}
 	}, [data, loading, error]);
@@ -40,7 +32,7 @@ const NavLinksComponent = () => {
 	const filteredCategories =
 		categories && categories.length > 0
 			? categories.filter(
-					(cat) => cat.category_type.type.toLowerCase().trim() === activeDropdown?.toLowerCase().trim(),
+					(cat) => cat.course_type.type.toLowerCase().trim() === activeDropdown?.toLowerCase().trim(),
 			  )
 			: [];
 
@@ -52,27 +44,29 @@ const NavLinksComponent = () => {
 						<li
 							key={index}
 							className="relative px-2 font-[300] text-sm select-none"
-							onMouseEnter={() => setActiveSublink(index)}
+							onMouseEnter={() => {
+								setActiveSublink(index);
+							}}
 							onMouseLeave={() => {
 								setActiveSublink(null);
 								setActiveDropdown(null);
 							}}>
-							<Link href={link} prefetch={false}>
+							<div onClick={() => router.push(link, link, { scroll: false })}>
 								<span className={`duration-500 relative z-10 cursor-pointer`}>{name}</span>
-							</Link>
+							</div>
 							<span
 								className={`absolute h-[2px] w-0 group-hover:left-0 right-0 -bottom-2 bg-[#094B10] duration-300 ${
 									router.asPath.includes(link) ? "w-full" : "hover:w-full"
 								}`}
 							/>
 							{activeSublink === index && sublinks && sublinks?.length > 0 ? (
-								<div className="absolute top-6 -left-6 pt-8 mx-auto">
-									<div className="mx-auto h-[80px] group duration-300 bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
+								<div className="absolute top-0 left-0 pt-10 mx-auto">
+									<div className="mx-auto h-[80px] duration-300 group bg-white border border-[#70C5A1] w-full items-center gap-3 flex justify-between divide-x animate__animated animate__fadeIn animate__fastest">
 										{sublinks?.map((sublink, i) => (
 											<div key={i}>
 												<div
 													onClick={() =>
-														router.push(sublink.link, undefined, { scroll: true })
+														router.push(sublink.link, sublink.link, { scroll: false })
 													}>
 													<div
 														className="mx-16 text-[#70C5A1] cursor-pointer flex flex-col justify-center items-center gap-2"
@@ -88,16 +82,16 @@ const NavLinksComponent = () => {
 														{filteredCategories.map(({ title }, dropdownIndex) => (
 															<div
 																key={dropdownIndex}
-																onClick={() =>
-																	router.push(
-																		`/courses?type=${sublink.dropdown.toLowerCase()}&category=${title.toLowerCase()}`,
-																	)
-																}>
+																onClick={() => {
+																	const url = `/courses?type=${activeDropdown}&category=${encodeURIComponent(
+																		title.toLowerCase(),
+																	)}`;
+																	router.push(url, url, { scroll: false });
+																}}>
 																<div
 																	key={i}
 																	onClick={() => {
 																		setActiveSublink(null);
-																		setActiveDropdown(null);
 																	}}
 																	className="px-6 relative text-sm cursor-pointer text-decoration hover:underline">
 																	{title}

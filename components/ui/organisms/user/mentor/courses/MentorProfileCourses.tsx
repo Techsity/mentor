@@ -2,6 +2,7 @@ import React, { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import courses from "../../../../../../data/courses";
 import CourseInProgressDisplayCard from "../../../../atom/cards/course/CourseInProgressDisplayCard";
 import MentorUploadedCourses from "./MentorUploadedCourses";
+import UserCourseSubcriptions from "../../profile/UserCourseSubcriptions";
 
 const MentorProfileCourses = () => {
 	const mentorCourses = useMemo(() => courses, []);
@@ -11,15 +12,7 @@ const MentorProfileCourses = () => {
 	return (
 		<>
 			<NavSection {...{ active, setActive }} />
-			{active === "registered" ? (
-				<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-					{mentorCourses.map((course, i) => (
-						<CourseInProgressDisplayCard {...{ course }} key={i} />
-					))}
-				</div>
-			) : (
-				active === "uploaded" && <MentorUploadedCourses />
-			)}
+			{active === "registered" ? <UserCourseSubcriptions /> : active === "uploaded" && <MentorUploadedCourses />}
 		</>
 	);
 };

@@ -6,10 +6,11 @@ import { PrimaryButton } from "../../buttons";
 import { useRouter } from "next/router";
 import { useLazyQuery } from "@apollo/client";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/mutations/auth";
+import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/queries/mentor";
 import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
 import ActivityIndicator from "../../loader/ActivityIndicator";
+import { useSocketContext } from "../../../../../context/socket-io.context";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
@@ -17,35 +18,40 @@ const EditProfileCard = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const user = useSelector(currentUser);
 	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
+	const { client } = useSocketContext();
 
 	const handleSwitchProfile = async () => {
 		setLoading(true);
-		if (user?.is_mentor) {
-			if (user?.mentor) {
+		if (user?.is_mentor || user?.mentor) {
+			if (user?.mentor || user?.mentor) {
 				setTimeout(function () {
 					setLoading(false);
 					dispatch(switchProfile({ profile: null }));
 					router.replace("/profile");
 				}, 1000);
 			} else {
-				await getMentorProfile()
-					.then((res) => {
+				try {
+					const res = await getMentorProfile();
+					const mentorProfile = res.data?.getMentorProfile;
+					if (mentorProfile) {
 						setLoading(false);
-						const mentorProfile = res.data?.getMentorProfile;
-						if (mentorProfile) {
-							dispatch(switchProfile({ profile: mentorProfile }));
-							router.replace("/profile");
-						}
-					})
-					.catch((err) => {
-						console.error(err);
-						setLoading(false);
-					});
+						dispatch(switchProfile({ profile: mentorProfile }));
+						router.replace("/profile");
+					}
+				} catch (err) {
+					console.error(err);
+					setLoading(false);
+				}
 			}
-		} else {
-			router.push("/mentor/onboarding");
-		}
+		} else router.push("/mentor/onboarding");
 	};
+
+	const handleLogout = () => {
+		logoutUser(() => {
+			client.disconnect();
+		});
+	};
+
 	return (
 		<div>
 			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
@@ -63,7 +69,7 @@ const EditProfileCard = () => {
 							<p className="text-[#70C5A1]">{user?.mentor ? "Mentor" : "User"}</p>
 						</div>
 					</div>
-					<div className="cursor-pointer" onClick={() => logoutUser()}>
+					<div className="cursor-pointer" onClick={handleLogout}>
 						<PowerOutline color="#d31119" />
 					</div>
 				</div>
@@ -81,13 +87,15 @@ const EditProfileCard = () => {
 						<span className="font-medium">{user?.country || "null"}</span>
 					</div>
 					<div className="flex items-center justify-start">
-						<PrimaryButton title="Edit Profile" className="p-3 px-6" link="/profile/profile-settings" />
+						<PrimaryButton title="Edit Profile" className="p-3 px-6" link="/profile/settings" />
 					</div>
 				</div>
 				<div className="">
 					<h1 className="text-sm text-zinc-500 mt-6">Overview</h1>
 					<div className="text-sm grid gap-3">
-						<span className="font-medium">6 Completed Courses</span>
+						<span className="font-medium">
+							{user && user.subscriptions.filter((sub) => sub.is_completed).length} Completed Courses
+						</span>
 						<span className="font-medium">5 Ongoing Courses</span>
 						<span className="font-medium">10 Attended Workshop</span>
 						<span className="font-medium">15 Registered Workshop</span>
@@ -98,7 +106,7 @@ const EditProfileCard = () => {
 						title={
 							loading
 								? ""
-								: user?.is_mentor
+								: user?.is_mentor || user?.mentor
 								? user?.mentor
 									? "Switch to Mentee Dashboard"
 									: "Switch to Mentor Profile"

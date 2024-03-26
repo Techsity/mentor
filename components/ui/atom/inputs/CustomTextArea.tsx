@@ -8,9 +8,8 @@ import React, {
 } from "react";
 import classNames from "classnames";
 
-interface ICustomTextAreaProps
-	extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-	containerProps?: HTMLAttributes<HTMLDivElement>;
+interface ICustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+	containerprops?: HTMLAttributes<HTMLDivElement>;
 	rightIcon?: JSX.Element | null;
 	rightButton?: JSX.Element | null;
 	children?: ReactNode;
@@ -20,16 +19,15 @@ const CustomTextArea = forwardRef(function CustomTextArea(
 	props: ICustomTextAreaProps,
 	ref?: ForwardedRef<HTMLTextAreaElement>,
 ) {
-	const { containerProps, rightIcon, rightButton, children, ...inputProps } =
-		props;
-
+	const { rightIcon, rightButton, children, className, ...inputProps } = props;
+	const { className: containerpropsClassName, ...rest } = props?.containerprops || {};
 	return (
 		<div
 			className={classNames(
 				"relative border-[#70C5A1] border overflow-hidden flex items-center w-full",
-				containerProps?.className,
+				containerpropsClassName,
 			)}
-			{...containerProps}>
+			{...rest}>
 			<textarea
 				ref={ref}
 				{...inputProps}
@@ -38,12 +36,10 @@ const CustomTextArea = forwardRef(function CustomTextArea(
 				className={classNames(
 					"p-3 h-full focus:ring-0 outline-none resize-none min-h-[80px]",
 					rightIcon ? "w-[93%]" : "w-full flex-grow",
-					inputProps?.className,
+					className,
 				)}></textarea>
 			{rightButton ? rightButton : null}
-			{rightIcon ? (
-				<div className="absolute top-[30%] right-5">{rightIcon}</div>
-			) : null}
+			{rightIcon ? <div className="absolute top-[30%] right-5">{rightIcon}</div> : null}
 			{children ? <div>{children}</div> : null}
 		</div>
 	);

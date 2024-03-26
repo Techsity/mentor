@@ -5,7 +5,8 @@ import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";
 
-const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
+const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>, props?: { adminCanView: boolean }) => {
+	const { adminCanView } = props || {};
 	const Page = (props: any) => {
 		const router = useRouter();
 		const auth = useSelector(isLoggedIn);
@@ -13,17 +14,23 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>) => {
 		const next = router.basePath.concat(router.asPath);
 
 		useEffect(() => {
-			if (!auth || !user) {
+			if (auth && user && user?.is_admin && !adminCanView)
+				setTimeout(function () {
+					window.location.href = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
+				}, 2000);
+			else if (!auth || !user) {
 				if (next) router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-			} else if (user.is_admin) {
-				router.replace("/admin");
+				else router.replace(`/auth?login`);
 			}
 		}, [auth, user, next, router]);
 
-		if (!auth || !user || user.is_admin) {
+		if (!auth || !user || (user.is_admin && !adminCanView)) {
 			return (
-				<div className="min-h-screen items-center flex justify-center">
+				<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2">
 					<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+					{user?.is_admin && (
+						<p className="text-sm text-center text-[#70C5A1]">Preparing your dashboard...</p>
+					)}
 				</div>
 			);
 		}

@@ -30,7 +30,7 @@ export type IMentorSkills = {
 	skill_name: string;
 	years_of_exp: number;
 };
-export type TimeSlot = { endTime: string; startTime: string };
+export type TimeSlot = { endTime: string; startTime: string; isOpen: boolean };
 
 export type IMentorAvailability = {
 	day: string;
@@ -64,7 +64,7 @@ export interface IMentor {
 	// courses: Omit<ICourse,"mentor">[];
 	mentor_verified: boolean;
 	role: string;
-	followers: number;
+	followers: Pick<IUser, "id">[];
 	skills: IMentorSkills[];
 	availability: IMentorAvailability[];
 	certifications: IMentorCertificate[];

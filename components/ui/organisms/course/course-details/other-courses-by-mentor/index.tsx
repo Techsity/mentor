@@ -24,13 +24,13 @@ const OtherCoursesByMentor = ({
 	}, [mentor, course]);
 
 	const mentorCourses = useMemo(() => {
-		return course ? getMentorCourses(course.mentor.user.name) : mentor && getMentorCourses(mentor.user.name);
+		return course ? course.mentor.courses.filter((c) => c.id !== course.id) : mentor && mentor.courses;
 	}, [mentor, course]);
 
 	return mentorState && mentorCourses && mentorCourses?.length > 0 ? (
-		<div className="px-5 sm:px-10 lg:pl-20 mt-10 py-3">
-			<h1 className="text-xl font-semibold">{mentorProfile ? "Courses by Mentor" : "Other Courses by Mentor"}</h1>
-			<div className="flex flex-row items-center overflow-x-scroll gap-3 hide-scroll-bar py-10 relative">
+		<div className="px-6 sm:px-12 mt-10 py-3">
+			<h1 className="text-xl font-semibold capitalize">{!mentorProfile && "other "}courses by this mentor</h1>
+			<div className="flex flex-row items-center overflow-x-scroll hide-scroll-bar py-10 relative">
 				<div className="flex flex-nowrap flex-row gap-4 snap-x snap-mandatory">
 					{mentorCourses
 						.map((course, index) => {
@@ -39,10 +39,10 @@ const OtherCoursesByMentor = ({
 						.slice(0, mentorProfile ? mentorCourses.length : 4)}
 				</div>
 				{!mentorProfile && (
-					<div className="sticky right-0 z-20 w-52 p-3 pr-0 xl:h-[500px] h-[60dvh] md:h-[485px] backdrop-blur-sm bg-white/30">
+					<div className="sticky right-0 z-20 w-40 p-3 pr-0 h-full backdrop-blur-sm bg-white/30">
 						<div
 							onClick={() => router.push(`/mentors/${mentorState.id}`)}
-							className="w-full h-full bg-[#70C5A1] p-5 md:p-10 flex flex-col items-center justify-center text-white cursor-pointer select-none">
+							className="w-full h-full bg-[#70C5A1] p-5 md:p-10 flex flex-col items-start justify-center text-white cursor-pointer select-none min-h-[50dvh]">
 							View Mentor&apos;s Profile
 							<svg width="83" height="15" viewBox="0 0 63 12" fill="none">
 								<path

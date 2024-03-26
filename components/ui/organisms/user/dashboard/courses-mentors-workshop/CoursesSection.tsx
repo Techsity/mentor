@@ -31,7 +31,7 @@ const CoursesSection = () => {
 					pathname: router.pathname,
 					query: {
 						...router.query,
-						type: type.name.toLowerCase().trim(),
+						type: slugify(type.name),
 						category: null,
 					},
 				},

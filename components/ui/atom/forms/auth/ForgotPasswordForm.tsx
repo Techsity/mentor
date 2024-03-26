@@ -17,14 +17,10 @@ const ForgotPasswordForm = ({
 
 	return (
 		<form className="" onSubmit={handleSubmit}>
-			<h1
-				className="text-3xl text-[#00D569]"
-				style={{ fontFamily: "Days One" }}>
+			<h1 className="text-3xl text-[#00D569]" style={{ fontFamily: "Days One" }}>
 				Oops! Sorry about that!
 			</h1>
-			<p className="my-5 sm:my-10">
-				Please enter the email linked to the account
-			</p>
+			<p className="my-5 sm:my-10">Please enter the email linked to the account</p>
 			<CustomTextInput
 				placeholder="Email"
 				type="email"
@@ -39,13 +35,13 @@ const ForgotPasswordForm = ({
 					})
 				}
 				disabled={state.loading}
-				containerProps={{
+				containerprops={{
 					className: `border ${
 						error ? "border-[#d31119]" : "border-[#094B10]"
 					} duration-300 min-h-[45px] min-w-[30vw]`,
 				}}
 			/>
-			<div className="sm:flex grid gap-5 items-center mt-10 w-full">
+			<div className="sm:flex grid gap-5 items-center mt-3 w-full">
 				<PrimaryButton
 					onClick={handleSubmit}
 					disabled={state.loading}
@@ -57,9 +53,9 @@ const ForgotPasswordForm = ({
 							</div>
 						) : null
 					}
-					className="px-12 duration-300 p-3 text-center"
+					className="flex justify-center items-center duration-300 p-3 text-center w-full"
 				/>
-				<div className="flex flex-col gap-2">
+				{/* <div className="flex flex-col gap-2">
 					<p className="">-you can still Login with-</p>
 					<svg
 						width="93"
@@ -92,7 +88,7 @@ const ForgotPasswordForm = ({
 							fill="#094B10"
 						/>
 					</svg>
-				</div>
+				</div> */}
 			</div>
 		</form>
 	);

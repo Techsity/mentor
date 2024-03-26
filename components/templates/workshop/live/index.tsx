@@ -1,24 +1,19 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import {
-	AgoraRTCReactError,
 	FetchArgs,
-	IAgoraRTCError,
-	IAgoraRTCRemoteUser,
 	useJoin,
+	useLocalMicrophoneTrack,
 	useNetworkQuality,
+	usePublish,
 	useRTCClient,
-	useRemoteUsers,
 } from "agora-rtc-react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import workshops from "../../../../data/workshops";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { client } from "../../../../hooks/agora";
-import CustomTextInput from "../../../ui/atom/inputs/CustomTextInput";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import ChannelEntrance from "../../../ui/organisms/workshop/live/ChannelEntrance";
 import { networkLabels } from "../../../../constants";
 
@@ -30,41 +25,46 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 });
 
 const LiveWorkshopTemplate = () => {
-	const router = useRouter();
 	const user = useSelector(currentUser);
 	const appId = String(process.env.NEXT_PUBLIC_AGORA_APP_ID);
 	const rtcClient = useRTCClient(client);
-
-	const [activeConnection, setActiveConnection] = useState<boolean>(!true);
+	const [activeConnection, setActiveConnection] = useState<boolean>(false);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 	const [channelName, setChannelName] = useState("");
 
-	const fetchArgs: FetchArgs = {
+	const fetchArgs = {
 		appid: appId,
 		channel: channelName,
-		token: String(process.env.NEXT_PUBLIC_CHANNEL_TOKEN),
-		// Todo:
-		// uid: user?.email.toLowerCase(),
+		token: null,
+		uid: user?.email.toLowerCase(),
 	};
+
 	const workshop = workshops[0];
 
 	const currentUserIsWorkshopOwner = useMemo(() => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
-	const { error, isLoading: isJoining } = useJoin(fetchArgs, activeConnection);
+	const { error, isLoading: isJoining } = useJoin(fetchArgs as FetchArgs, activeConnection);
 
 	const networkQuality = useNetworkQuality(client);
 
-	const endSession = () => {
+	const retry = 10000;
+
+	const endSession = async () => {
 		console.log("You Exited The Session");
 		setActiveConnection(false);
+		rtcClient.unpublish();
 		rtcClient.leave();
 		rtcClient.removeAllListeners();
 	};
 
-	const retry = 10000;
-
+	// !pageLoaded ? (
+	// 	<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2 fixed w-full">
+	// 		<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
+	// 		<p className="text-sm text-center text-[#70C5A1]">Preparing your classroom...</p>
+	// 	</div>
+	// ) :
 	return activeConnection && !error && !isJoining ? (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			<label style={{ color: networkLabels[networkQuality.uplinkNetworkQuality].color }}>

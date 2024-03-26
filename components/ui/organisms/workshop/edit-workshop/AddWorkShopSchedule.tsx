@@ -7,7 +7,9 @@ type Props = {
 };
 
 const AddWorkShopSchedule = ({ state }: Props) => {
-	const initialWorkshopContentState: IWorkshopContent[] = [{ date: new Date().toDateString(), title: "" }];
+	const initialWorkshopContentState: IWorkshopContent[] = [
+		{ date: new Date().toDateString(), title: "", endTime: "", startTime: "" },
+	];
 
 	const [workshopContentState, setWorkshopState] = useState<IWorkshopContent[]>(
 		state.contents || initialWorkshopContentState,
@@ -84,7 +86,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 					<div className="col-span-6">
 						<p className="text-[#bebebe]">Title</p>
 						<CustomTextInput
-							containerProps={{
+							containerprops={{
 								className:
 									"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 							}}
@@ -96,7 +98,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 					<div className="col-span-2">
 						<p className="text-[#bebebe]">Date</p>
 						<CustomTextInput
-							containerProps={{
+							containerprops={{
 								className:
 									"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 							}}
@@ -108,7 +110,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 					<div className="col-span-2">
 						<p className="text-[#bebebe]">Start time</p>
 						<CustomTextInput
-							containerProps={{
+							containerprops={{
 								className:
 									"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 							}}
@@ -118,7 +120,7 @@ const ContentCard: FC<ContentCardProps> = ({ content, index, state, updateState 
 					<div className="col-span-2">
 						<p className="text-[#bebebe]">End time</p>
 						<CustomTextInput
-							containerProps={{
+							containerprops={{
 								className:
 									"mt-3 border border-[#bebebe] placeholder:text-[#A3A6A7] text-sm animate__animated animate__fadeIn",
 							}}

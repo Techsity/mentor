@@ -9,5 +9,8 @@ const ResponseMessages = {
 		"Invalid OTP provided - Please confirm your credentials and check your number for the otp sent to you, or request for a new OTP.",
 	USER_VERIFIED: "User verified successfully",
 	FORGOT_PASSWORD_EMAIL_SENT: "To reset password, please check your email for otp!",
+	MENTOR_PROFILE_NOT_FOUND: "Mentor profile not found",
+	ALREADY_SUBSCRIBED: "Already subscribed",
+	TRANSACTION_COMPLETED: "Transaction is already completed",
 };
 export default ResponseMessages;

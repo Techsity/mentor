@@ -21,12 +21,7 @@ const HowToAttendWorkshop = () => {
 					strokeWidth="5"
 				/>
 			</svg>
-			<svg
-				width="121"
-				height="120"
-				viewBox="0 0 121 120"
-				fill="none"
-				className="absolute right-0 -bottom-12 animate__animated animate__headShake animate__infinite">
+			<svg width="121" height="120" viewBox="0 0 121 120" fill="none" className="absolute right-0 -bottom-12">
 				<path
 					d="M67.6505 1.48731L5.80354 38.5252C3.46028 39.9285 1.77045 42.2051 1.10579 44.8543C0.44113 47.5036 0.85609 50.3083 2.25938 52.6516L39.2972 114.499C40.7005 116.842 42.9772 118.532 45.6264 119.196C48.2756 119.861 51.0804 119.446 53.4236 118.043L71.0942 107.46L92.2838 112.777L97.6 91.5871L115.271 81.0048C120.13 78.0947 121.725 71.7378 118.815 66.8784L81.7769 5.03147C78.8668 0.172068 72.5099 -1.4228 67.6505 1.48731ZM109.979 72.1696L88.6423 84.9476L87.5968 89.1149L84.7969 100.275L73.5664 97.4572L69.4697 96.4294L48.1325 109.207L11.0947 47.3604L72.9416 10.3226L109.979 72.1696ZM66.7017 80.0811L75.537 74.79L80.8281 83.6253L71.9928 88.9164L66.7017 80.0811ZM49.9548 42.0944C54.8142 39.1843 61.1711 40.7792 64.0812 45.6386C69.3724 54.4739 55.458 61.3062 64.0561 75.6635L72.8914 70.3724C66.9389 60.4327 79.5304 51.3916 72.9165 40.3475C67.0698 30.5845 54.4267 27.4125 44.6637 33.2592C34.9007 39.1058 31.7287 51.749 37.5754 61.512L46.4107 56.2208C43.5006 51.3614 45.0954 45.0046 49.9548 42.0944Z"
 					fill="#70C5A1"
@@ -34,26 +29,16 @@ const HowToAttendWorkshop = () => {
 				/>
 			</svg>
 			<div className="">
-				<AnimationOnScroll
-					animateIn="animate__fadeInUp"
-					animateOnce={true}>
-					<h1
-						className="text-center text-xl md:text-3xl text-white"
-						style={{ fontFamily: "Days One" }}>
+				<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
+					<h1 className="text-center text-xl md:text-3xl text-white" style={{ fontFamily: "Days One" }}>
 						How to attend a workshop
 					</h1>
 				</AnimationOnScroll>
 				<div className="grid lg:grid-cols-4 sm:grid-cols-2 justify-between gap-6 px-5 lg:px-20 mt-10">
 					<div className="flex justify-start w-full md:overflow-hidden overflow-x-auto bg-white p-5">
-						<AnimationOnScroll
-							animateIn="animate__fadeInUp"
-							animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
-								<svg
-									width="72"
-									height="76"
-									viewBox="0 0 72 76"
-									fill="none">
+								<svg width="60" height="64" viewBox="0 0 72 76" fill="none">
 									<path
 										d="M35.9117 48.3799C41.6954 48.3799 46.384 43.6913 46.384 37.9076C46.384 32.1239 41.6954 27.4353 35.9117 27.4353C30.1281 27.4353 25.4395 32.1239 25.4395 37.9076C25.4395 43.6913 30.1281 48.3799 35.9117 48.3799Z"
 										stroke="#00D569"
@@ -69,24 +54,16 @@ const HowToAttendWorkshop = () => {
 									/>
 								</svg>
 
-								<h1
-									className="text-left text-lg mt-5 text-black"
-									style={{ fontFamily: "Days One" }}>
-									Navigate to <br /> Workshop
+								<h1 className="text-left mt-5 text-black" style={{ fontFamily: "Days One" }}>
+									Navigate to <br className="sm:flex hidden" /> Workshop
 								</h1>
 							</div>
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll
-							animateIn="animate__fadeInUp"
-							animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
-								<svg
-									width="66"
-									height="66"
-									viewBox="0 0 66 66"
-									fill="none">
+								<svg width="55" height="55" viewBox="0 0 66 66" fill="none">
 									<path
 										fillRule="evenodd"
 										clipRule="evenodd"
@@ -96,24 +73,16 @@ const HowToAttendWorkshop = () => {
 									/>
 								</svg>
 
-								<h1
-									className="text-left text-lg mt-5 text-black"
-									style={{ fontFamily: "Days One" }}>
+								<h1 className="text-left mt-5 text-black" style={{ fontFamily: "Days One" }}>
 									Search for the workshop that interests you
 								</h1>
 							</div>
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll
-							animateIn="animate__fadeInUp"
-							animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
-								<svg
-									width="95"
-									height="69"
-									viewBox="0 0 95 69"
-									fill="none">
+								<svg width="60" height="49" viewBox="0 0 95 69" fill="none">
 									<path
 										d="M60.4545 0C55.8735 0 51.4801 1.8174 48.2409 5.05241C45.0016 8.28741 43.1818 12.675 43.1818 17.25C43.1818 21.825 45.0016 26.2126 48.2409 29.4476C51.4801 32.6826 55.8735 34.5 60.4545 34.5C65.0356 34.5 69.4289 32.6826 72.6682 29.4476C75.9075 26.2126 77.7273 21.825 77.7273 17.25C77.7273 12.675 75.9075 8.28741 72.6682 5.05241C69.4289 1.8174 65.0356 0 60.4545 0ZM60.4545 8.19375C61.6454 8.19375 62.8246 8.428 63.9248 8.88312C65.025 9.33824 66.0247 10.0053 66.8667 10.8463C67.7088 11.6872 68.3767 12.6856 68.8325 13.7843C69.2882 14.8831 69.5227 16.0607 69.5227 17.25C69.5227 18.4393 69.2882 19.6169 68.8325 20.7157C68.3767 21.8144 67.7088 22.8128 66.8667 23.6537C66.0247 24.4947 65.025 25.1618 63.9248 25.6169C62.8246 26.072 61.6454 26.3063 60.4545 26.3063C59.2637 26.3063 58.0845 26.072 56.9843 25.6169C55.8841 25.1618 54.8844 24.4947 54.0424 23.6537C53.2003 22.8128 52.5324 21.8144 52.0766 20.7157C51.6209 19.6169 51.3864 18.4393 51.3864 17.25C51.3864 14.8481 52.3418 12.5446 54.0424 10.8463C55.743 9.14789 58.0495 8.19375 60.4545 8.19375ZM12.9545 12.9375V25.875H0V34.5H12.9545V47.4375H21.5909V34.5H34.5455V25.875H21.5909V12.9375H12.9545ZM60.4545 38.8125C48.925 38.8125 25.9091 44.5481 25.9091 56.0625V69H95V56.0625C95 44.5481 71.9841 38.8125 60.4545 38.8125ZM60.4545 47.0062C73.2795 47.0062 86.7955 53.3025 86.7955 56.0625V60.8063H34.1136V56.0625C34.1136 53.3025 47.5 47.0062 60.4545 47.0062Z"
 										fill="#00D569"
@@ -121,25 +90,16 @@ const HowToAttendWorkshop = () => {
 									/>
 								</svg>
 
-								<h1
-									className="text-left text-lg mt-5 text-black"
-									style={{ fontFamily: "Days One" }}>
-									Register for the workshop! and click notify
-									me daily
+								<h1 className="text-left mt-5 text-black" style={{ fontFamily: "Days One" }}>
+									Register for the workshop! and click notify me daily
 								</h1>
 							</div>
 						</AnimationOnScroll>
 					</div>
 					<div className="flex justify-start w-full overflow-hidden bg-white p-5">
-						<AnimationOnScroll
-							animateIn="animate__fadeInUp"
-							animateOnce={true}>
+						<AnimationOnScroll animateIn="animate__fadeInUp" animateOnce={true}>
 							<div className="">
-								<svg
-									width="78"
-									height="70"
-									viewBox="0 0 78 70"
-									fill="none">
+								<svg width="58" height="50" viewBox="0 0 78 70" fill="none">
 									<path
 										d="M29.25 48.6111L56.55 31.1111L29.25 13.6111L29.25 48.6111ZM23.4 70V62.2222H7.8C5.65501 62.2222 3.81811 61.46 2.28931 59.9356C0.760506 58.4111 -0.00259338 56.5807 6.62139e-06 54.4444L6.62139e-06 7.77778C6.62139e-06 5.63889 0.764407 3.80723 2.29321 2.28278C3.82201 0.758339 5.65761 -0.00258599 7.8 6.60253e-06L70.2 6.60253e-06C72.345 6.60253e-06 74.1819 0.762229 75.7107 2.28667C77.2395 3.81112 78.0026 5.64149 78 7.77778V54.4444C78 56.5833 77.2356 58.415 75.7068 59.9394C74.178 61.4639 72.3424 62.2248 70.2 62.2222L54.6 62.2222L54.6 70H23.4ZM7.8 54.4444L70.2 54.4444V7.77778L7.8 7.77778L7.8 54.4444Z"
 										fill="#00D569"
@@ -147,11 +107,8 @@ const HowToAttendWorkshop = () => {
 									/>
 								</svg>
 
-								<h1
-									className="text-left text-lg mt-5 text-black"
-									style={{ fontFamily: "Days One" }}>
-									Attend the workshop! Don&apos;t forget to
-									interact
+								<h1 className="text-left mt-5 text-black" style={{ fontFamily: "Days One" }}>
+									Attend the workshop! Don&apos;t forget to interact
 								</h1>
 							</div>
 						</AnimationOnScroll>

@@ -70,7 +70,7 @@ const TagsInput = ({
 							type={inputType || "text"}
 							className="appearance-none bg-white invalid:text-pink-800 invalid:focus:ring-pink-800 invalid:focus:border-pink-800 peer"
 							placeholder={placeholder || "Type something"}
-							containerProps={{
+							containerprops={{
 								className: "border border-[#00D569]",
 							}}
 						/>

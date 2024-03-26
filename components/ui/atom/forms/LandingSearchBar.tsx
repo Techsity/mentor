@@ -8,25 +8,24 @@ const LandingSearchBar = () => {
 	}
 
 	return (
-    <form
-      onSubmit={handleSearch}
-      className="bg-white px-5 w-auto border-2 p-2 rounded-full relative"
-    >
-      <input
-        type="search"
-        className="bg-transparent outline-none pr-5 focus:ring-0 w-full h-full font-normal text-xsm"
-        placeholder="Search for a course, event, or mentor"
-      />
-      <div className="absolute group right-2 top-2 duration-300 cursor-pointer">
-        <div className="group-hover:hidden flex">
-          <SearchSharp color={"#DFDFDF"} />
-        </div>
-        <div className="group-hover:flex hidden">
-          <SearchSharp color={"#111"} />
-        </div>
-      </div>
-    </form>
-  );
+		<form
+			onSubmit={handleSearch}
+			className="bg-white px-5 w-auto border-2 p-2 rounded-full relative focus-within:border-[#70C5A1] duration-300">
+			<input
+				type="search"
+				className="bg-transparent outline-none pr-5 w-full h-full font-normal text-xsm focus:ring-0"
+				placeholder="Search for a course, event, or mentor"
+			/>
+			<button type="submit" className="absolute group right-2 top-2 duration-300 cursor-pointer">
+				<div className="group-hover:hidden flex">
+					<SearchSharp color={"#DFDFDF"} />
+				</div>
+				<div className="group-hover:flex hidden">
+					<SearchSharp color={"#70C5A1"} />
+				</div>
+			</button>
+		</form>
+	);
 };
 
 export default LandingSearchBar;

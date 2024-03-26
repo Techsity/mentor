@@ -1,24 +1,32 @@
 import React from "react";
 import CourseDetailsPageTemplate from "../../../components/templates/course/details";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import { getCourseById } from "../../../services/api";
+import client from "../../../utils/apolloClient";
+import { VIEW_COURSE } from "../../../services/graphql/queries/course";
 import { ICourse } from "../../../interfaces";
-import PurchaseCourseTemplate from "../../../components/templates/course/purchase";
-import { useRouter } from "next/router";
 
-const CourseDetailsPage = ({ course }: { course: ICourse }) => {
-	const router = useRouter();
-	const pageKey = Object.keys(router.query)[0] as string;
-	return pageKey === "purchase" ? <PurchaseCourseTemplate {...course} /> : <CourseDetailsPageTemplate {...course} />;
+type Props = { course: ICourse | null; error?: string };
+
+const CourseDetailsPage = ({ course }: Props) => {
+	return <CourseDetailsPageTemplate {...{ course }} />;
 };
 
-export const getServerSideProps = async (
-	ctx: GetServerSidePropsContext,
-): Promise<GetServerSidePropsResult<{ course: ICourse | null }>> => {
-	const { courseId } = ctx.query;
-	const course = await getCourseById(courseId as string);
-	if (!course) return { notFound: true };
-	return { props: { course } };
+export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
+	const courseId = ctx.query.courseId;
+	const query = client({ ssr: true }).query;
+	try {
+		const {
+			data: { viewCourse: course },
+		} = await query<{ viewCourse: ICourse }, { courseId: string }>({
+			query: VIEW_COURSE,
+			variables: { courseId: String(courseId) },
+		});
+		if (!course) return { props: { course: null } };
+		return { props: { course } };
+	} catch (error) {
+		console.log(JSON.stringify(error));
+		return { props: { course: null, error: "Something went wrong" } };
+	}
 };
 
 export default CourseDetailsPage;

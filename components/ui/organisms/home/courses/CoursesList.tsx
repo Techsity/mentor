@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import DisplayCourseCard from "../../../atom/cards/course/DisplayCourseCard";
 import { ICourse } from "../../../../../interfaces";
 import { useQuery } from "@apollo/client";
-import { ALL_COURSES } from "../../../../../services/graphql/mutations/courses";
+import { ALL_COURSES } from "../../../../../services/graphql/queries/course";
+import { PrimaryButton } from "../../../atom/buttons";
+import { calculateRatingInReviews } from "../../../../../utils";
 
 type AllCoursesArgs = {
 	take: number;
@@ -10,42 +12,62 @@ type AllCoursesArgs = {
 	category?: string;
 	courseType?: string;
 };
-type CourseListProps = { activeCategory: string; activeCourseType: string; skip?: number; limit?: number };
+type CourseListProps = { activeCategory: string; activeCourseType: string };
 
-const CoursesList = ({ activeCategory, activeCourseType, limit = 10, skip = 0 }: CourseListProps) => {
+const CoursesList = ({ activeCategory, activeCourseType }: CourseListProps) => {
+	const THRESHOLD = 6;
+	const [limit, setLimit] = useState<number>(THRESHOLD);
+	const [skip, setSkip] = useState<number>(0);
+
 	const { data, loading, error } = useQuery<{ allCourses: ICourse[] }, AllCoursesArgs>(ALL_COURSES, {
-		variables: {
-			skip: skip as number,
-			take: limit as number,
-			category: activeCategory,
-			courseType: activeCourseType,
-		},
+		variables: { skip, take: limit + THRESHOLD, category: activeCategory, courseType: activeCourseType },
 		fetchPolicy: "cache-and-network",
 	});
 
-	const allCourses = data?.allCourses || [];
+	let allCourses: ICourse[] = [];
+	if (data?.allCourses) allCourses = [...data?.allCourses];
 
-	// useEffect(() => {
-	// 	refetch();
-	// }, [activeCategory, activeCourseType]);
+	const fetchMore = () => {
+		// Todo
+	};
 
-	if (error) console.log(error);
+	if (error) console.error(error);
 
 	return (
-		<div className="grid lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 items-start bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-auto sm:p-5">
-			{loading ? (
-				Array.from({ length: 3 }).map((_, indx) => {
-					return <DisplayCourseCard loading={loading} course={null} key={indx} />;
-				})
-			) : !loading && !error && allCourses.length < 1 ? (
-				<h1 className="text-lg text-[#d31119] tracking-tight">No courses under this section yet.</h1>
-			) : (
-				allCourses.map((course, indx) => {
-					return <DisplayCourseCard loading={loading} course={course} key={indx} />;
-				})
-			)}
-			{!loading && error && <h1 className="text-lg text-[#d31119] tracking-tight">Network Error.</h1>}
-		</div>
+		<>
+			<div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 bg-[#FDFDFD] tracking-tight gap-6 overflow-hidden h-full sm:p-5">
+				{loading ? (
+					Array.from({ length: limit }).map((_, indx) => {
+						return <DisplayCourseCard loading={loading} course={null} key={indx} />;
+					})
+				) : !loading && !error && allCourses.length < 1 ? (
+					<h1 className="text-[#d31119] tracking-tight">No courses under this category</h1>
+				) : (
+					!loading &&
+					allCourses.length >= 1 &&
+					allCourses
+						.sort(
+							(a, b) =>
+								Number(calculateRatingInReviews(b.reviews)) -
+								Number(calculateRatingInReviews(a.reviews)),
+						)
+						.map((course, indx) => {
+							return <DisplayCourseCard loading={loading} course={course} key={indx} />;
+						})
+						.slice(0, limit)
+				)}
+				{!loading && error && <h1 className="text-[#d31119] tracking-tight">Network Error.</h1>}
+			</div>
+			{/* {!loading && !error && allCourses.length >= THRESHOLD && ( */}
+			<div className="max-w-xs mx-auto py-4">
+				<PrimaryButton
+					title="See more"
+					className="w-full p-1 flex justify-center items-center rounded-lg"
+					onClick={fetchMore}
+				/>
+			</div>
+			{/* )} */}
+		</>
 	);
 };
 

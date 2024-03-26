@@ -1,8 +1,11 @@
+import { NextRouter } from "next/router";
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
 import { logOut } from "../redux/reducers/authSlice";
-import { store } from "../redux/store";
+import { persistor, store } from "../redux/store";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import { setNewCourse } from "../redux/reducers/coursesSlice";
 
 export const currentUserRole = (): "mentee" | "mentor" => {
 	return "mentee";
@@ -18,7 +21,8 @@ export const formatGqlError = (error: any): string => {
 export const setCookie = (key: string, value: string) => {
 	if (process.browser) {
 		Cookies.set(key, value, {
-			expires: 1 / 24,
+			// expires: 1 / 24,
+			expires: 1,
 			// sameSite: "strict",
 			// path: "/auth?login",
 		});
@@ -26,9 +30,7 @@ export const setCookie = (key: string, value: string) => {
 };
 
 export const removeCookie = (key: string) => {
-	if (process.browser) {
-		Cookies.remove(key);
-	}
+	if (process.browser) Cookies.remove(key);
 };
 
 export const getCookie = (name: string) => {
@@ -55,14 +57,19 @@ export const removeLocalStorage = (key: string) => {
 
 export const checkAuth = () => {
 	if (process.browser) {
-		const token = getCookie(AUTH_TOKEN_KEY);
-		if (token) {
-			return token;
-		} else {
+		const token = getCookie(AUTH_TOKEN_KEY) || localStorage.getItem(AUTH_TOKEN_KEY);
+		if (!token) return null;
+		const decodedToken: any = jwt.decode(token);
+		if (!decodedToken) {
+			console.error("Error decoding auth token");
 			return null;
 		}
+		if (decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
+			console.log("Auth Token has expired");
+			return null;
+		}
+		return token;
 	}
-	return null;
 };
 
 export const checkAuthServerSide = (req: any) => {
@@ -81,12 +88,21 @@ export const logoutUser = (next?: Function) => {
 	store.dispatch(logOut());
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
+	// sessionStorage.clear();
+	sessionStorage.removeItem("persist:auth");
+	persistor.persist();
 	// removeLocalStorage("persist:root");
 	next && next();
 };
 
 export const authenticate = async (accessToken: string, next?: Function) => {
 	setCookie(AUTH_TOKEN_KEY, accessToken);
-	setLocalStorage(AUTH_TOKEN_KEY, accessToken);
-	next && next();
+	// setLocalStorage(AUTH_TOKEN_KEY, accessToken);
+	next && (await next());
+};
+
+export const navigateToAuthPage = (router: NextRouter, link: string) => {
+	if (!store.getState().auth.isLoggedIn || !store.getState().auth.user)
+		router.push(`/auth?login&next=${encodeURIComponent(link)}`);
+	else router.push(link);
 };

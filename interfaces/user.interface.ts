@@ -1,7 +1,32 @@
+import { SubscriptionType } from "../services/enums";
+import { ICourse, IWorkshop } from "./index";
+
 export interface IUserPaymentCard {
 	card_number: string;
 	card_name: string;
 	bank: { name: string; logo?: string };
+}
+
+export type Subscription = {
+	id: string;
+	course: ICourse | null;
+	workshop: IWorkshop | null;
+	course_id: string;
+	type: SubscriptionType;
+	workshop_id: string;
+	is_completed: boolean;
+	created_at?: string;
+	updated_at?: string;
+};
+
+export interface Notification {
+	id: string;
+	title: string;
+	body: string;
+	resourceId: string;
+	resourceType: string;
+	read: boolean;
+	created_at: Date;
 }
 
 export interface IUser {
@@ -16,11 +41,16 @@ export interface IUser {
 	is_verified: boolean;
 	is_admin: boolean;
 	payment_cards?: IUserPaymentCard[];
+	allow_push_notifications: boolean;
 	is_mentor: boolean;
 	isPremium: boolean;
 	created_at?: string;
 	updated_at?: string;
+	subscriptions: Subscription[];
+	notifications: Notification[];
 }
+
+export type IUserOnboardingState = { fullName: string; phone: string; country: string; email: string };
 
 export interface IUserUpdate extends IUser {
 	payment_cards?: IUserPaymentCard[];

@@ -1,6 +1,6 @@
 import "animate.css";
 import "animate.css/animate.min.css";
-import { AppContext, AppInitialProps, AppProps } from "next/app";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import "nprogress/nprogress.css";
 import { ToastContainer } from "react-toastify";
@@ -17,19 +17,10 @@ import { store, persistor } from "../redux/store";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../utils/apolloClient";
 import { SidebarProvider } from "../context/sidebar.context";
-import { GET_MENTOR_PROFILE, GET_USER_PROFILE } from "../services/graphql/mutations/auth";
-import { IUser } from "../interfaces/user.interface";
-import { checkAuthServerSide, formatGqlError, logoutUser } from "../utils/auth";
-import AuthWrapper from "../components/templates/auth/AuthWrapper";
 import { PersistGate } from "redux-persist/integration/react";
-import jwt from "jsonwebtoken";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import AgoraClientProvider from "../hooks/agora";
+import AuthWrapper from "../components/ui/layout/AuthWrapper";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-	const { user, mentorProfile, logout } = pageProps;
 	// const [queryClient] = useState<QueryClient>(() => new QueryClient());
 	return (
 		<Provider store={store}>
@@ -39,7 +30,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 						<ReactQueryDevtools initialIsOpen={false} position="bottom" buttonPosition="bottom-right" />
 					)} */}
 				<ApolloProvider client={apolloClient()}>
-					<AuthWrapper {...{ user, mentorProfile, logout }}>
+					<AuthWrapper>
 						<ThemeProvider>
 							<Head>
 								<title>Mentör: Connect with experienced Mentors</title>
@@ -52,14 +43,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							<SidebarProvider>
 								<LayoutContainer>
 									<ToastContainer
-										limit={1}
+										limit={2}
 										autoClose={5000}
 										theme="dark"
 										hideProgressBar
 										closeOnClick
 										draggable
+										position="top-right"
 									/>
-										<Component {...pageProps} />
+									<Component {...pageProps} />
 								</LayoutContainer>
 							</SidebarProvider>
 						</ThemeProvider>
@@ -71,44 +63,34 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	);
 };
 
-MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
-	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-	if (ctx.req) {
-		const authToken = checkAuthServerSide(ctx.req) as string;
-		const decodedToken: any = jwt.decode(authToken);
-		// console.log(decodedToken);
-		if (decodedToken)
-			if (decodedToken.exp < Date.now() / 1000) {
-				console.log("Auth Token has expired");
-				// logoutUser();
-				return { pageProps: { ...pageProps, logout: true } };
-			} else {
-				console.log("Auth Token is still valid");
-				try {
-					const { data } = await apolloClient({ authToken, ssr: true }).query({
-						query: GET_USER_PROFILE,
-					});
-
-					const user: IUser | null = data?.userProfile || null;
-					if (user) {
-						const { data: mentorProfile } = await apolloClient({ authToken, ssr: true }).query({
-							query: GET_MENTOR_PROFILE,
-						});
-						if (mentorProfile) return { pageProps: { ...pageProps, user, mentorProfile } };
-						return { pageProps: { ...pageProps, user, mentorProfile: null } };
-					}
-				} catch (error: any) {
-					console.error(JSON.stringify(error));
-					const errorMessage = formatGqlError(error);
-				}
-			}
-		else {
-			console.error("Error decoding auth token");
-			// logoutUser();
-			return { pageProps: { ...pageProps, logout: true } };
-		}
-	}
-	return { pageProps: { ...pageProps } };
-};
+// MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
+// 	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+// 	if (!ctx.req) {
+// 		console.log({ context: ctx.req });
+// 		return { pageProps: { ...pageProps } };
+// 	}
+// 	const authToken = checkAuthServerSide(ctx.req) as string;
+// 	const decodedToken: any = jwt.decode(authToken);
+// 	if (!decodedToken) {
+// 		console.error("Error decoding auth token");
+// 		return { pageProps: { ...pageProps, logout: true } };
+// 	}
+// 	if (decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
+// 		console.log("Auth Token has expired");
+// 		return { pageProps: { ...pageProps, logout: true } };
+// 	}
+// 	console.log("Auth Token is still valid");
+// 	const { data, error } = await apolloClient({ authToken, ssr: true }).query({
+// 		query: GET_USER_PROFILE,
+// 	});
+// 	if (error) {
+// 		console.error(JSON.stringify(error));
+// 		const errorMessage = formatGqlError(error);
+// 		logoutUser();
+// 		return { pageProps: { ...pageProps, logout: true } };
+// 	}
+// 	const user: IUser | null = data?.userProfile || null;
+// 	return { pageProps: { ...pageProps, user } };
+// };
 
 export default MyApp;

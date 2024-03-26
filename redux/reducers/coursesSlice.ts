@@ -1,14 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICourse, ICourseCategory } from "../../interfaces";
 import { RootState } from "../store";
-import { courseTypes } from "../../data/courses";
 
-const isClient = typeof window !== "undefined" && window.localStorage;
+export type CourseSectionUploadFile = {
+	name: string;
+	type: string;
+	base64: string;
+	size?: number;
+};
 
-export const newCourseInitialState: Omit<ICourse, "mentor"> = {
+export type CourseSectionUpload = {
+	section_name: string;
+	notes: string;
+	file: CourseSectionUploadFile | null;
+	posterImage: string;
+};
+
+export type CourseContentUpload = {
+	title: string;
+	course_sections: CourseSectionUpload[];
+};
+
+export type INewCourseData = Omit<ICourse, "mentor" | "course_type" | "reviews" | "course_contents"> & {
+	// files: any[];
+	course_contents: CourseContentUpload[];
+};
+
+export const newCourseInitialState: INewCourseData = {
 	title: "",
 	description: "",
-	course_type: courseTypes[0].name,
 	course_images: "",
 	course_level: "ALL_LEVELS",
 	duration: 0,
@@ -16,29 +36,17 @@ export const newCourseInitialState: Omit<ICourse, "mentor"> = {
 	rating: 0,
 	price: 0,
 	available: false,
-	imgUrl: "",
+	thumbnail: "",
 	requirements: [],
 	course_contents: [],
-	category: {
-		title: "",
-		category_type: {
-			description: "",
-			type: "",
-		},
-		description: "",
-		created_at: "",
-		updated_at: "",
-	},
-	reviews: [],
+	category: { course_type: { description: "", type: "" }, description: "", title: "", id: "" },
 	what_to_learn: [],
 };
 
 const initialState: {
-	userWishlistedCourses: ICourse[];
 	courseCategories: ICourseCategory[];
-	newCourse: Omit<ICourse, "mentor"> | null;
+	newCourse: INewCourseData | null;
 } = {
-	userWishlistedCourses: [],
 	courseCategories: [],
 	newCourse: newCourseInitialState,
 };
@@ -47,27 +55,17 @@ const coursesSlice = createSlice({
 	name: "courses",
 	initialState,
 	reducers: {
-		setWishlist: (state, action: { payload: ICourse[] }) => {
-			if (action.payload) {
-				state.userWishlistedCourses = action.payload;
-				// // Save to local storage too, to persist state
-				// if (isClient) {
-				// 	window.localStorage.setItem("userWishlistedCourses", JSON.stringify(action.payload));
-				// }
-			}
-		},
 		setCourseCategories: (state, action: { payload: ICourseCategory[] }) => {
 			state.courseCategories = action.payload;
 		},
-		setNewCourse: (state, action: { payload: Partial<Omit<ICourse, "mentor">> | null }) => {
-			state.newCourse = action.payload as Omit<ICourse, "mentor">;
+		setNewCourse: (state, action: { payload: Partial<INewCourseData> | null }) => {
+			state.newCourse = { ...state.newCourse, ...(action.payload as INewCourseData) };
 		},
 	},
 });
 
-export const { setWishlist, setCourseCategories, setNewCourse } = coursesSlice.actions;
+export const { setCourseCategories, setNewCourse } = coursesSlice.actions;
 
-export const wishlistedCourses = (state: RootState) => state.courses.userWishlistedCourses;
 export const courseCategories = (state: RootState) => state.courses.courseCategories;
 export const newCourse = (state: RootState) => state.courses.newCourse;
 

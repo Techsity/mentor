@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BecomeMentorSvg } from "../../../ui/atom/icons/svgs";
 import { PrimaryButton } from "../../../ui/atom/buttons";
-import { useRouter } from "next/router";
 import MentorOnboardingSteps from "../../../ui/organisms/mentor/onboarding/steps";
 import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-	initialMentorOnboardingState,
-} from "../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../redux/reducers/onboardingSlice";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 
@@ -17,28 +12,23 @@ const MentorOnboardingPageTemplate = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);``
 	const [agree, setAgree] = useState<boolean>(onboardingMentor?.agreedToTerms || false);
 
 	const handleNavigate = () => {
 		setLoading(true);
 		if (agree) {
-			setTimeout(function () {
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						agreedToTerms: !onboardingMentor?.agreedToTerms || !agree,
-					}),
-				);
-				setLoading(false);
-			}, 3000);
-		} else {
+			dispatch(
+				setOnboardingMentor({
+					...onboardingMentor,
+					agreedToTerms: !onboardingMentor?.agreedToTerms || !agree,
+				}),
+			);
 			setLoading(false);
-		}
+		} else setLoading(false);
 	};
 
 	useEffect(() => {
-		if (!onboardingMentor) setOnboardingMentor({ ...initialMentorOnboardingState });
 		if (user) dispatch(setOnboardingMentor({ ...onboardingMentor, user }));
 	}, []);
 

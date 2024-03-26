@@ -106,7 +106,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Programming",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
@@ -116,7 +116,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Digital Marketing",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "vocational",
 		},
@@ -126,7 +126,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Python",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
@@ -136,7 +136,7 @@ export const courseCategories: ICourseCategory[] = [
 	{
 		title: "Data Science",
 		description: "Courses related to programming and software development.",
-		category_type: {
+		course_type: {
 			description: "Lorem Ipsum",
 			type: "technical",
 		},
@@ -155,6 +155,7 @@ export const courseLevels = ["all_levels", "beginner", "intermmediate", "advance
 
 const courses: ICourse[] = [
 	{
+		id: "5cbdbb0d-1ce4-4805-bc61-5c8f8a4e55d9",
 		title: "Introduction to Programming",
 		course_type: courseTypes[0].name,
 		description: "A beginner-friendly course to learn the basics of programming.",
@@ -166,7 +167,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: ["No prior programming experience required"],
 		course_contents: courseContents[0],
 		category: courseCategories[0],
@@ -179,6 +180,7 @@ const courses: ICourse[] = [
 		],
 	},
 	{
+		id: "5cbdbb0d-1ce4-4805-bc61-5c8f8a4e55d9",
 		title: "The Basics of Digital Marketing",
 		course_type: courseTypes[0].name,
 		description: "This Beginners Course Teaches You The Basics of Digital Marketing Fast.",
@@ -190,7 +192,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: [
 			"Mobile Phone",
 			"Data and good network area",
@@ -212,6 +214,7 @@ const courses: ICourse[] = [
 		],
 	},
 	{
+		id: "5cbdbb0d-1ce4-4805-bc61-5c8f8a4e55d9",
 		title: "The Basics of Digital Marketing",
 		course_type: courseTypes[0].name,
 		description: "This Beginners Course Teaches You The Basics of Digital Marketing.",
@@ -223,7 +226,7 @@ const courses: ICourse[] = [
 		price: 99.99,
 		mentor: mentors[1],
 		available: true,
-		imgUrl: "/assets/images/mockups/course_one.png",
+		thumbnail: "/assets/images/mockups/course_one.png",
 		requirements: [
 			"Mobile Phone",
 			"Data and good network area",

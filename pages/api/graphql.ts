@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { checkAuthServerSide } from "../../utils/auth";
+import { error } from "console";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const token = checkAuthServerSide(req) as string;
@@ -13,16 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			headers,
 			body: JSON.stringify(req.body),
 		});
+		const data = await response.json();
 
 		if (!response.ok) {
-			throw new Error(`Error from GraphQL API > ${response.statusText}`);
-			// res.status(response.status).json({ error: response.statusText });
-			// return;
+			console.log({ ...data });
+			return res.status(response.status).json({ message: response.statusText, error: { ...data } });
 		}
-		const data = await response.json();
 		res.status(response.status).json(data);
 	} catch (error) {
-		// console.error("Error forwarding GraphQL request > ", error);
+		console.error("Error forwarding GraphQL request > ", error);
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 }

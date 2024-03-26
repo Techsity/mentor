@@ -1,39 +1,79 @@
-import React from "react";
+import React, { FC, useMemo } from "react";
+import { Notification } from "../../../../../interfaces/user.interface";
+import { useNotificationContext } from "../../../../../context/notification.context";
+import classNames from "classnames";
+import { PrimaryButton } from "../../buttons";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const NotificationCard = () => {
-	const notifications = [
-		{
-			title: "",
-			message: "",
-			date: new Date("October 1, 2023 12:00:00"),
-			link: "",
-		},
-	];
-	const NotificationItem = () => {
-		return (
-			<div className="w-full grid gap-3">
-				<div className="grid gap-1">
-					<h1 className="font-semibold text-[#70C5A1]">Newer Notifications</h1>
-					<div className="">
-						<div className="">Notification Item</div>
-						<div className="">Notification Item</div>
+	const { notifications, closePanel, markRead, loading } = useNotificationContext();
+	// and sign &&
+
+	const unreadNotifications = (notifications as Notification[]).filter((notification) => !notification.read);
+
+	const olderNotifications = (notifications as Notification[]).filter((notification) => notification.read);
+
+	return (
+		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
+			<div className="w-full divide-y">
+				{unreadNotifications.length >= 1 && (
+					<div className="grid gap-1 p-3 pb-3 w-full">
+						<h1 className="font-semibold text-[#70C5A1] text-sm">Unread</h1>
+						<div className="w-full">
+							{unreadNotifications.map((notification, index) => (
+								<NotificationItem {...{ notification, closePanel, markRead }} key={index} />
+							))}
+						</div>
 					</div>
-				</div>
-				<div className="grid gap-1">
-					<h1 className="font-semibold text-[#70C5A1]">Newer Notifications</h1>
-					<div className="">
-						<div className="">Notification Item</div>
-						<div className="">Notification Item</div>
+				)}
+				{unreadNotifications.length < 1 && (
+					<p className="text-sm">No newer notifications. You&apos;re all caught up! 🎉</p>
+				)}
+				{olderNotifications && olderNotifications.length >= 1 && (
+					<div className="grid gap-1 p-3 pt-3 w-full">
+						<h1 className="font-semibold text-[#70C5A1] text-sm">Previous Notifications</h1>
+						<div className="w-full">
+							{olderNotifications
+								?.filter((n) => n.read)
+								.map((notification, index) => {
+									return <NotificationItem {...{ notification, closePanel, markRead }} key={index} />;
+								})}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
-		);
+		</div>
+	);
+};
+const NotificationItem: FC<{ notification: Notification; closePanel: () => void; markRead: (id: string) => void }> = ({
+	notification,
+	closePanel,
+	markRead,
+}) => {
+	const link = `/${notification.resourceType.toLowerCase()}/${notification.resourceId}`;
+	const router = useRouter();
+	const handleClick = () => {
+		markRead(notification.id);
+		closePanel();
+		router.push(link);
 	};
 	return (
-		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border border-[#70C5A1] p-5 py-8 right-0 md:w-[50vw] md:right-12 top-20 w-full lg:w-[40vw] xl:w-[30vw] overflow-y-scroll overflow-hidden h-[60vh]">
-			<NotificationItem />
-			<NotificationItem />
-			<NotificationItem />
+		<div
+			className={classNames(
+				"flex items-start gap-4 p-2 px-3 cursor-default",
+				!notification.read ? "bg-[#70C5A1]/10" : "",
+			)}>
+			<div className="flex-grow grid gap-1 tracking-tight">
+				<h1 className="text-sm font-medium">{notification.title}</h1>
+				<p className="text-sm text-[#A3A6A7] w-full">{notification.body}</p>
+				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
+			</div>
+			<div className="max-w-sm">
+				<PrimaryButton title="View" className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
+			</div>
 		</div>
 	);
 };

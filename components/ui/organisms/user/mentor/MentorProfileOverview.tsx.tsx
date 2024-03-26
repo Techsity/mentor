@@ -26,7 +26,7 @@ const MentorProfileOverview = () => {
 			<div className="">
 				<div className="text-white bg-[#70C5A1] p-6 md:max-w-[35%] xs:max-w-[40%]">
 					<div className="text-sm">Total Earnings on Mentor</div>
-					<p className="font-semibold text-3xl">₦{formatAmount(200000)}</p>
+					<p className="font-semibold text-3xl">${formatAmount(200000)}</p>
 				</div>
 			</div>
 
@@ -35,7 +35,7 @@ const MentorProfileOverview = () => {
 					return (
 						<div
 							key={index}
-							className="text-[#A3A6A7] bg-white p-6 border duration-300 hover:border-[#70C5A1] border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
+							className="text-[#A3A6A7] bg-white p-6 border hover:border-[#70C5A1] border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
 							<div className="text-sm text-[#D0D0D0]">{item.title}</div>
 							<p className="font-semibold text-3xl">{formatAmount(item.value)}</p>
 						</div>
@@ -47,7 +47,7 @@ const MentorProfileOverview = () => {
 					return (
 						<div
 							key={index}
-							className="text-[#A3A6A7] bg-white p-6 duration-300 hover:border-[#70C5A1] border border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
+							className="text-[#A3A6A7] bg-white p-6 hover:border-[#70C5A1] border border-[#EEEEEE] duration-300 hover:shadow-lg cursor-default">
 							<div className="text-sm text-[#D0D0D0]">{item.title}</div>
 							<p className="font-semibold text-3xl flex gap-1 items-center">
 								{formatAmount(item.value)}

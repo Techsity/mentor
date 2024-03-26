@@ -35,25 +35,20 @@ const ForgotPasswordTemplate = () => {
 		setState({ ...state, error: "", loading: true });
 		if (email) {
 			if (isEmail(email)) {
-				forgotPassword({ variables: { email: state.email } })
-					.then((response) => {
-						setState({ ...state, loading: false });
-
-						if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
-							dispatch(setResetPasswordState({ email, otp: "" }));
-							toast.info(
-								ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT,
-								ToastDefaultOptions({ id: "info" }),
-							);
-							router.push(`/auth/verification/reset-password`);
-						}
-					})
-					.catch((error) => {
-						console.error(error);
-						const errorMessage = formatGqlError(error);
-						setState({ ...state, loading: false });
-						toast.error(errorMessage, ToastDefaultOptions({ id: "forgot_password_pop" }));
-					});
+				try {
+					const response = await forgotPassword({ variables: { email: state.email } });
+					setState({ ...state, loading: false });
+					if (response.data?.forgetPassword.message === ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT) {
+						dispatch(setResetPasswordState({ email }));
+						toast.info(ResponseMessages.FORGOT_PASSWORD_EMAIL_SENT, ToastDefaultOptions({ id: "info" }));
+						router.push(`/auth/verification/reset-password`);
+					}
+				} catch (error) {
+					console.error({ error });
+					const errorMessage = formatGqlError(error);
+					setState({ ...state, loading: false });
+					toast.error(errorMessage, ToastDefaultOptions({ id: "forgot_password_pop" }));
+				}
 			} else {
 				setState({ ...state, loading: false });
 				setState({ ...state, error: "Invalid email" });

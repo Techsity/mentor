@@ -15,6 +15,4 @@ const LiveWorkshop = () => {
 	);
 };
 
-export default LiveWorkshop;
-// Todo:
-// export default protectedPageWrapper(LiveWorkshop);
+export default protectedPageWrapper(LiveWorkshop, { adminCanView: true });

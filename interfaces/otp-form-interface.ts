@@ -1,7 +1,6 @@
-import React, { CSSProperties, Dispatch, SetStateAction } from "react";
+import React, { CSSProperties, Dispatch, ForwardedRef, RefObject, SetStateAction } from "react";
 
-export interface OTPInputProps
-	extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface OTPInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	autoFocus?: boolean;
 	isNumberInput?: boolean;
 	disabled?: boolean;

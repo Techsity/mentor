@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IMentorOnboardingState } from "../../interfaces/mentor.interface";
-import { IUser } from "../../interfaces/user.interface";
+import { IUserOnboardingState } from "../../interfaces/user.interface";
 import { RootState } from "../store";
 
 export const initialMentorOnboardingState: IMentorOnboardingState = {
@@ -18,8 +18,12 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 	languages: [],
 	availability: [],
 };
-
-const initialUserOnboardingState: { user: IUser | null } = { user: null };
+export const initialUserOnboardingState: IUserOnboardingState = {
+	country: "",
+	email: "",
+	fullName: "",
+	phone: "",
+};
 
 const initialState = {
 	mentor: initialMentorOnboardingState,
@@ -30,21 +34,24 @@ const onboardingSlice = createSlice({
 	name: "onboarding",
 	initialState,
 	reducers: {
-		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState }) => {
-			state.mentor = action.payload;
+		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState | null }) => {
+			if (action.payload !== null) state.mentor = action.payload;
+			else state.mentor = initialMentorOnboardingState;
 			// action.payload.user = null;
 			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
-		setOnboardingUser: (state, action: {}) => {
-			//
+		setOnboardingUser: (state, action: { payload: IUserOnboardingState | null }) => {
+			if (action.payload !== null) state.user = action.payload;
+			else state.user = initialUserOnboardingState;
 		},
 	},
 });
 
-export const { setOnboardingMentor } = onboardingSlice.actions;
+export const { setOnboardingMentor, setOnboardingUser } = onboardingSlice.actions;
 
-export const mentorOnboardingTermsAgreed = (state: RootState) => state.onboarding.mentor.agreedToTerms;
+export const mentorOnboardingTermsAgreed = (state: RootState) => Boolean(state.onboarding.mentor.agreedToTerms);
 
 export const onboardingMentorState = (state: RootState) => state.onboarding.mentor;
+export const onboardingUserState = (state: RootState) => state.onboarding.user;
 
 export default onboardingSlice.reducer;

@@ -1,6 +1,6 @@
 [
 	{
-		"category_type": {
+		"course_type": {
 			"description": "Type 1 description",
 			"type": "technical"
 		},
@@ -10,7 +10,7 @@
 		"updated_at": "2023-01-02T14:30:00Z"
 	},
 	{
-		"category_type": {
+		"course_type": {
 			"description": "Type 2 description",
 			"type": "vocational"
 		},
@@ -20,7 +20,7 @@
 		"updated_at": "2023-01-02T14:30:00Z"
 	},
 	{
-		"category_type": {
+		"course_type": {
 			"description": "Type 3 description",
 			"type": "technical"
 		},
@@ -30,7 +30,7 @@
 		"updated_at": "2023-01-02T14:30:00Z"
 	},
 	{
-		"category_type": {
+		"course_type": {
 			"description": "Type 3 description",
 			"type": "educational"
 		},
