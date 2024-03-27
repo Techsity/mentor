@@ -14,6 +14,7 @@ const RegisteredMentorships = () => {
 	const cancelledSessions = user?.appointments.filter((session) => session.status === AppointmentStatus.CANCELED);
 	const declinedSessions = user?.appointments.filter((session) => session.status === AppointmentStatus.DECLINED);
 
+
 	return (
 		<div className="flex flex-col gap-12 overflow-hidden pb-10">
 			{pendingSessions && pendingSessions.length > 0 && (

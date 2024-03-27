@@ -69,6 +69,7 @@ export interface IMentor {
 	availability: IMentorAvailability[];
 	certifications: IMentorCertificate[];
 	education_bg: IMentorEducation[];
+	appointments: IAppointment[];
 	hourly_rate: number;
 	exp_level: IMentorExpLevel;
 	work_experience: IMentorExperience[];

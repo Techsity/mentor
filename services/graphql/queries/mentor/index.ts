@@ -29,6 +29,15 @@ export const GET_MENTOR_PROFILE = gql`
 			# 	created_at
 			# 	updated_at
 			# }
+			appointments {
+				created_at
+				date
+				status
+				user {
+					avatar
+					name
+				}
+			}
 			about
 			role
 			skills {

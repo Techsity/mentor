@@ -9,6 +9,7 @@ export const GET_USER_PROFILE = gql`
 			phone
 			avatar
 			country
+			is_mentor
 			subscriptions {
 				id
 				workshop_id

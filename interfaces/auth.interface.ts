@@ -1,7 +1,7 @@
 import { IMentor } from "./mentor.interface";
 import { IUser } from "./user.interface";
 
-interface IUserWithMentor extends IUser {
+export interface IUserWithMentor extends IUser {
 	mentor?: IMentor | null;
 }
 
