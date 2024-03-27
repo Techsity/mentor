@@ -59,15 +59,15 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 		if (notification && !notification.read) {
 			console.log(`Notification ${id} marked as read`);
 			await markAsRead({ variables: { notificationId: id } })
-				.then(() => {
+				.then(async () => {
 					refetch();
-					// setNotifications((prev) => {
-					// 	refetch();
-					// 	const updated = [...prev];
-					// 	const notificationToBeRead = updated.find((n) => n.id === id);
-					// 	if (notificationToBeRead) notificationToBeRead.read = true;
-					// 	return updated;
-					// });
+					setNotifications((prev) => {
+						refetch();
+						const updated = [...prev];
+						const notificationToBeRead = updated.find((n) => n.id === id);
+						if (notificationToBeRead) notificationToBeRead.read = true;
+						return updated;
+					});
 				})
 				.catch((err) => console.error("Error marking notification as read: ", err));
 		}

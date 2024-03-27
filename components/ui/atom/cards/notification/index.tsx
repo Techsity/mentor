@@ -9,7 +9,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const NotificationCard = () => {
-	const { notifications, closePanel, markRead, loading } = useNotificationContext();
+	const { notifications, closePanel, markRead } = useNotificationContext();
 	// and sign &&
 
 	const unreadNotifications = (notifications as Notification[]).filter((notification) => !notification.read);
@@ -20,7 +20,7 @@ const NotificationCard = () => {
 		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
 			<div className="w-full divide-y">
 				{unreadNotifications.length >= 1 && (
-					<div className="grid gap-1 p-3 pb-3 w-full">
+					<div className="grid gap-1 pb-3 w-full">
 						<h1 className="font-semibold text-[#70C5A1] text-sm">Unread</h1>
 						<div className="w-full">
 							{unreadNotifications.map((notification, index) => (
@@ -33,7 +33,7 @@ const NotificationCard = () => {
 					<p className="text-sm">No newer notifications. You&apos;re all caught up! 🎉</p>
 				)}
 				{olderNotifications && olderNotifications.length >= 1 && (
-					<div className="grid gap-1 p-3 pt-3 w-full">
+					<div className="grid gap-1 pt-3 w-full">
 						<h1 className="font-semibold text-[#70C5A1] text-sm">Previous Notifications</h1>
 						<div className="w-full">
 							{olderNotifications
@@ -59,26 +59,33 @@ const NotificationItem: FC<{ notification: Notification; closePanel: () => void;
 		if (notification.resourceId && notification.resourceType) {
 			const link = `/${notification.resourceType.toLowerCase()}/${notification.resourceId}`;
 			router.push(link);
+			closePanel();
 		}
 		markRead(notification.id);
-		closePanel();
 	};
 	return (
 		<div
 			className={classNames(
-				"flex items-start gap-4 p-2 px-3 cursor-default",
+				"flex items-end flex-col gap-4 p-2 px-3 border border-[#70C5A1]/20 cursor-default",
 				!notification.read ? "bg-[#70C5A1]/10" : "",
 			)}>
-			<div className="flex-grow grid gap-1 tracking-tight">
+			<div className="flex-grow grid gap-1 tracking-tight w-full">
 				<h1 className="text-sm font-medium">{notification.title}</h1>
-				<p className="text-sm text-[#A3A6A7] w-full">{notification.body}</p>
-				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
+				<p className="text-sm text-[#A3A6A7]">{notification.body}</p>
 			</div>
-			{notification.resourceId && notification.resourceType && (
-				<div className="max-w-sm">
-					<PrimaryButton title="View" className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
-				</div>
-			)}
+			<div className="flex items-center gap-4 justify-between w-full">
+				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
+				{!notification.resourceId && !notification.resourceType && !notification.read && (
+					<PrimaryButton
+						title={"Mark as read"}
+						className="p-1 px-3 text-sm rounded"
+						onClick={() => handleClick()}
+					/>
+				)}
+				{notification.resourceId && notification.resourceType && (
+					<PrimaryButton title={"View"} className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
+				)}
+			</div>
 		</div>
 	);
 };

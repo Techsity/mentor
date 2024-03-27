@@ -19,7 +19,9 @@ const ScheduleConsultationTemplate = ({
 }) => {
 	const user = useSelector(currentUser);
 
-	const appointment = user?.appointments ? user.appointments.find((a) => a.mentor.id == mentor?.id) : undefined;
+	const appointment = user?.appointments
+		? user.appointments.find((a) => a.mentor.id == mentor?.id && a.status !== AppointmentStatus.COMPLETED)
+		: undefined;
 
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6">

@@ -27,8 +27,12 @@ const RegisteredMentorshipCard = (session: IAppointment) => {
 						: AppointmentStatus.OVERDUE && "bg-[#F6937B]",
 				)}>
 				<p className="text-sm">
-					{formatTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"}
+					{date.toDateString()} - {formatTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"}
 				</p>
+				<div className="flex items-center">
+<div className=""></div>
+<div className=""></div>
+				</div>
 			</div>
 		);
 	};

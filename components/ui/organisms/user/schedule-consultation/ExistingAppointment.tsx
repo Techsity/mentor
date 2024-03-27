@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../interfaces/mentor.interface";
-import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../constants";
+import { ToastDefaultOptions } from "../../../../../constants";
 import { PrimaryButton } from "../../../atom/buttons";
 import { toast } from "react-toastify";
 
@@ -53,6 +53,12 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 					Your request is pending.
 					<br />
 					You will recieve a notification when mentor accepts this request.
+				</p>
+			) : existingAppointment.status == AppointmentStatus.ACCEPTED ? (
+				<p className="italic text-sm text-[#9a9898] my-2">
+					Your request has been accepted.
+					<br />
+					You will recieve a notification before the session starts.
 				</p>
 			) : (
 				existingAppointment.status == AppointmentStatus.OVERDUE && (
