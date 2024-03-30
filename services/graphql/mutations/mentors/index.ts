@@ -57,3 +57,13 @@ export const REPORT_MENTOR = gql`
 		}
 	}
 `;
+
+export const ACCEPT_MENTORSHIP_REQUEST = gql`
+	mutation AcceptAppointment($acceptAppointmentId: String!) {
+		acceptAppointment(id: $acceptAppointmentId) {
+			id
+			date
+			status
+		}
+	}
+`;

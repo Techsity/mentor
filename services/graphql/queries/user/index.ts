@@ -28,6 +28,7 @@ export const GET_USER_PROFILE = gql`
 				read
 			}
 			appointments {
+				id
 				created_at
 				date
 				status

@@ -21,8 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			return res.status(response.status).json({ message: response.statusText, error: { ...data } });
 		}
 		res.status(response.status).json(data);
-	} catch (error) {
+	} catch (error: any) {
 		console.error("Error forwarding GraphQL request > ", error);
-		res.status(500).json({ error: "Internal Server Error" });
+		if (error.cause.code == "ECONNREFUSED") res.status(503).json({ error: "Service Unavailable" });
+		else res.status(500).json({ error: "Internal Server Error" });
 	}
 }

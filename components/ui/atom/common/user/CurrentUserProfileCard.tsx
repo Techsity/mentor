@@ -11,6 +11,7 @@ const CurrentUserProfileCard = () => {
 	const navigate = () => {
 		user?.is_admin && adminUrl ? window.open(adminUrl, "_blank") : router.push("/profile");
 	};
+	const role = user?.is_mentor ? "Mentor" : "Mentee";
 
 	return (
 		<div onClick={navigate} className="relative group cursor-pointer h-full">
@@ -24,25 +25,15 @@ const CurrentUserProfileCard = () => {
 					/>
 				</div>
 				<div className="leading-none sm:inline-block hidden">
-					<h1 className="text-sm font-medium">
+					<h1 className="text-sm">
 						{/* {user?.name.split(" ")[0] +
 								" " +
 								user?.name.split(" ")[1]} */}
-						{user && user?.name.split(" ")[0]}
+						<span className="font-medium">{user && user?.name.split(" ")[0]}</span>
+						<p className="capitalize text-[#70C5A1] text-xs">{role}</p>
 					</h1>
 				</div>
 			</div>
-			{/* <div className="group-hover:inline-flex w-full border border-[#70C5A1] min-w-[20dvw] right-0 hidden absolute w-full sm:max-w-[25dvw] max-w-[100dvw] bg-white shadow-md h-auto max-h-[100vh] sm:max-h-[65vh] animate__animated animate__fadeIn animate__faster">
-				<div className="flex flex-col items-center w-full">
-					{links.map((link, i) => (
-						<Link href={link.path || "#"} key={i}>
-							<span className="p-4 px-10 flex w-full whitespace-nowrap text-sm hover:bg-zinc-200 duration-300 cursor-pointer">
-								{link.name}
-							</span>
-						</Link>
-					))}
-				</div>
-			</div> */}
 		</div>
 	);
 };

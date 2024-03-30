@@ -100,6 +100,7 @@ export enum AppointmentStatus {
 	PENDING = "PENDING",
 	AWAITING_PAYMENT = "AWAITING_PAYMENT",
 	ACCEPTED = "ACCEPTED",
+	UPCOMING = "UPCOMING",
 	IN_PROGRESS = "IN_PROGRESS",
 	DECLINED = "DECLINED",
 	CANCELED = "CANCELED",
@@ -112,6 +113,7 @@ export interface IAppointment {
 	id: string;
 	date: Date;
 	status: AppointmentStatus;
+	user: IUser;
 	mentor: IMentor;
 	created_at: Date;
 	updated_at: Date;
