@@ -29,13 +29,11 @@ const authSlice = createSlice({
 			state.resetPasswordState = null;
 		},
 		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
-			if (action.payload) {
-				state.isLoggedIn = true;
-				state.user = { ...state.user, ...action.payload } as IUser | null;
-			}
+			if (action.payload) state.user = { ...state.user, ...action.payload } as IUser | null;
 		},
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
-			if (state.user) state.user.mentor = action.payload as IMentor | null;
+			if (state.user)
+				if (action.payload) state.user.mentor = { ...state.user.mentor, ...action.payload } as IMentor | null;
 		},
 		setResetPasswordState: (state, action: { payload: Partial<IAuthState["resetPasswordState"]> | null }) => {
 			state.resetPasswordState = action.payload as IAuthState["resetPasswordState"];

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback } from "react";
 
 export interface ModalProps {
 	closeOnBackgroundClick?: boolean;
@@ -21,15 +21,13 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	const [modalContent, setModalContent] = useState<ReactNode | null>(null);
 	const [closeOnBackgroundClick, setCloseOnBackgroundClick] = useState<boolean>(true);
-	const [animate, setAnimate] = useState<boolean>(true);
+	const [animate, setAnimate] = useState<boolean>(false);
 
 	const openModal = (content: ReactNode, props?: ModalProps) => {
-		if (props && props.closeOnBackgroundClick !== undefined) {
-			setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
+		if (props) {
+			if (props.closeOnBackgroundClick !== undefined)
+				setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
 			setAnimate(Boolean(props.animate));
-		} else {
-			setCloseOnBackgroundClick(true);
-			setAnimate(true);
 		}
 		setModalContent(content);
 	};

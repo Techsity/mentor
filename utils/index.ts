@@ -239,3 +239,9 @@ export const convertToBase64 = (file: File): Promise<string> => {
 		reader.onerror = (error) => reject(error);
 	});
 };
+
+export const formatAppointmentTime = (hour: number, minutes: number) => {
+	const formattedHour = hour <= 12 ? hour : hour - 12;
+	const formattedMinutes = minutes.toString().padStart(2, "0");
+	return `${formattedHour}:${formattedMinutes}`;
+};

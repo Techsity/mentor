@@ -23,8 +23,10 @@ export const VERIFY_PAYMENT = gql`
 	}
 
 	fragment AppFields on AppointmentDTO {
+		id
 		date
 		status
+		paymentReference
 		mentor {
 			...Mentor
 		}

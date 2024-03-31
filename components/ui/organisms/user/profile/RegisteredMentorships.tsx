@@ -25,8 +25,8 @@ const RegisteredMentorships = () => {
 		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.COMPLETED);
 
 	const cancelledSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELED)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELED);
+		? user?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELLED_BY_USER)
+		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELLED_BY_USER);
 
 	const declinedSessions = !user?.is_mentor
 		? user?.appointments?.filter((session) => session.status === AppointmentStatus.DECLINED)
@@ -38,6 +38,12 @@ const RegisteredMentorships = () => {
 
 	return (
 		<div className="flex flex-col gap-12 overflow-hidden pb-10">
+			{user &&
+				(user?.appointments.length < 1 ? (
+					<p className="text-sm">Nothing here 💨</p>
+				) : (
+					user.mentor && user?.mentor?.appointments.length < 1 && <p className="text-sm">Nothing here 💨</p>
+				))}
 			{upcomingSessions && upcomingSessions.length > 0 && (
 				<ListSessions sessions={upcomingSessions} status={AppointmentStatus.UPCOMING} />
 			)}
@@ -51,7 +57,7 @@ const RegisteredMentorships = () => {
 				<ListSessions sessions={acceptedSessions} status={AppointmentStatus.ACCEPTED} />
 			)}
 			{cancelledSessions && cancelledSessions.length > 0 && (
-				<ListSessions sessions={cancelledSessions} status={AppointmentStatus.CANCELED} />
+				<ListSessions sessions={cancelledSessions} status={AppointmentStatus.CANCELLED_BY_USER} />
 			)}
 			{declinedSessions && declinedSessions.length > 0 && (
 				<ListSessions sessions={declinedSessions} status={AppointmentStatus.DECLINED} />

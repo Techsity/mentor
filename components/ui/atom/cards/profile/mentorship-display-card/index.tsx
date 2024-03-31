@@ -3,7 +3,7 @@ import React, { useId } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../../redux/reducers/authSlice";
+import { currentUser, updateMentorProfile } from "../../../../../../redux/reducers/authSlice";
 import { PrimaryButton } from "../../../buttons";
 import SessionIndicator from "./SessionIndicator";
 import { useMutation } from "@apollo/client";
@@ -18,18 +18,37 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 	const user = useSelector(currentUser);
 	const dispatch = useDispatch();
 	const [acceptRequest, { loading: acceptLoading }] = useMutation<
-		{ acceptAppointment: Partial<IAppointment> },
+		{ acceptAppointment: IAppointment },
 		{ acceptAppointmentId: string }
 	>(ACCEPT_MENTORSHIP_REQUEST);
 	const declineLoading = false;
 	// const [declineRequest, { loading: declineLoading }] = useMutation(ACCEPT_MENTORSHIP_REQUEST);
+
+	const updateLocalState = (data: IAppointment) => {
+		let mentorAppointments = user?.mentor?.appointments || [];
+
+		const index = mentorAppointments.findIndex((appointment) => appointment.id === data.id);
+		if (index !== -1) {
+			const updatedAppointment = {
+				...mentorAppointments[index],
+				status: AppointmentStatus.ACCEPTED,
+				date: data.date,
+			};
+			mentorAppointments = [
+				...mentorAppointments.slice(0, index),
+				updatedAppointment,
+				...mentorAppointments.slice(index + 1),
+			];
+			dispatch(updateMentorProfile({ appointments: mentorAppointments }));
+		}
+	};
 
 	const handleAcceptRequest = async () => {
 		if (user?.is_mentor) {
 			try {
 				const { data } = await acceptRequest({ variables: { acceptAppointmentId: session.id } });
 				console.log({ data: data?.acceptAppointment });
-				// Todo: find and update the status and date of the appointment in the mentor's redux state
+				if (data?.acceptAppointment) updateLocalState(data.acceptAppointment);
 			} catch (error) {
 				console.error({ error: JSON.stringify(error) });
 				const errMsg = formatGqlError(error);

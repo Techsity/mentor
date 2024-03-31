@@ -20,7 +20,13 @@ const ScheduleConsultationTemplate = ({
 	const user = useSelector(currentUser);
 
 	const appointment = user?.appointments
-		? user.appointments.find((a) => a.mentor.id == mentor?.id && a.status !== AppointmentStatus.COMPLETED)
+		? user.appointments.find(
+				(a) =>
+					a.mentor.id == mentor?.id &&
+					a.status !== AppointmentStatus.COMPLETED &&
+					a.status !== AppointmentStatus.CANCELLED_BY_USER &&
+					a.status !== AppointmentStatus.CANCELLED_BY_MENTOR,
+		  )
 		: undefined;
 
 	return (

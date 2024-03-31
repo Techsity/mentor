@@ -62,8 +62,13 @@ export const ACCEPT_MENTORSHIP_REQUEST = gql`
 	mutation AcceptAppointment($acceptAppointmentId: String!) {
 		acceptAppointment(id: $acceptAppointmentId) {
 			id
+			created_at
 			date
 			status
+			user {
+				name
+				avatar
+			}
 		}
 	}
 `;

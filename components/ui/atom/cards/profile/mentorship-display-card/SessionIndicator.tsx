@@ -1,14 +1,9 @@
 import React, { FC } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
+import { formatAppointmentTime } from "../../../../../../utils";
 
 const SessionIndicator: FC<{ session: IAppointment }> = ({ session }) => {
-	const formatTime = (hour: number, minutes: number) => {
-		const formattedHour = hour <= 12 ? hour : hour - 12;
-		const formattedMinutes = minutes.toString().padStart(2, "0");
-		return `${formattedHour}:${formattedMinutes}`;
-	};
-
 	const date = new Date(session.date);
 	const startHour = date.getHours();
 	const startMinutes = date.getMinutes();
@@ -27,8 +22,8 @@ const SessionIndicator: FC<{ session: IAppointment }> = ({ session }) => {
 			<p className="text-sm">
 				{date.toDateString()}
 				<hr className="border-white w-full" />
-				{formatTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"} - {formatTime(endHour, endMinutes)}{" "}
-				{isAmEnd ? "AM" : "PM"}
+				{formatAppointmentTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"} -{" "}
+				{formatAppointmentTime(endHour, endMinutes)} {isAmEnd ? "AM" : "PM"}
 			</p>
 		</div>
 	);

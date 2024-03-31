@@ -103,14 +103,17 @@ export enum AppointmentStatus {
 	UPCOMING = "UPCOMING",
 	IN_PROGRESS = "IN_PROGRESS",
 	DECLINED = "DECLINED",
-	CANCELED = "CANCELED",
+	CANCELLED_BY_USER = "CANCELLED_BY_USER",
+	CANCELLED_BY_MENTOR = "CANCELLED_BY_MENTOR",
 	NO_SHOW = "	NO_SHOW",
 	COMPLETED = "COMPLETED",
 	OVERDUE = "OVERDUE",
+	PENDING_RESCHEDULE_APPROVAL = "PNDING_RESCHEDULE_APPROVAL",
 }
 
 export interface IAppointment {
 	id: string;
+	paymentReference?: string;
 	date: Date;
 	status: AppointmentStatus;
 	user: IUser;

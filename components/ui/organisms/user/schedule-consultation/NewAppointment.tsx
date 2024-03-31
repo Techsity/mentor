@@ -17,8 +17,6 @@ import { processExchangeRate } from "../../../../../services/api";
 import { useRouter } from "next/router";
 
 const NewAppointment = (mentor: IMentor) => {
-	const user = useSelector(currentUser);
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const toastId = useId();
 	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
@@ -32,7 +30,7 @@ const NewAppointment = (mentor: IMentor) => {
 		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
 	>(INITIALIZE_PAYMENT);
 
-	const [bookMentor, { loading: appointmentLoading }] = useMutation<
+	const [createAppointment, { loading: appointmentLoading }] = useMutation<
 		{ createAppointment: IAppointment },
 		{ createAppointmentInput: CreateAppointmentInput; mentor: string }
 	>(BOOK_MENTOR);
@@ -97,7 +95,7 @@ const NewAppointment = (mentor: IMentor) => {
 		const time = date.getTime().toString();
 
 		try {
-			await bookMentor({
+			await createAppointment({
 				variables: { createAppointmentInput: { date, time }, mentor: String(mentor?.id) },
 			})
 				.then(async (data) => {
@@ -106,8 +104,6 @@ const NewAppointment = (mentor: IMentor) => {
 				.catch((err) => {
 					throw err;
 				});
-			// dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
-			// toast.success("Appointment successful", { ...ToastDefaultOptions(), toastId });
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
@@ -140,7 +136,7 @@ const NewAppointment = (mentor: IMentor) => {
 				)}
 				{!selectedSlot?.date && (
 					<div className="animate__animated animate__fadeIn">
-						<div className="grid xs:grid-cols-2 sm:grid-cols-3 gap-4 mt-3">
+						<div className="grid xs:grid-cols-2 sm:grid-cols-3 gap-4 mt-3 text-sm">
 							{mentor?.availability.map((slot, index) => {
 								return (
 									<span
@@ -298,9 +294,9 @@ const NewAppointment = (mentor: IMentor) => {
 	);
 };
 
-type SelectedSlot = { date: string; time: TimeSlot };
+export type SelectedSlot = { date: string; time: TimeSlot };
 
-type CreateAppointmentInput = {
+export type CreateAppointmentInput = {
 	date: Date;
 	time: string;
 };

@@ -264,3 +264,19 @@ export const VIEW_MENTOR_PROFILE = gql`
 		is_verified
 	}
 `;
+
+export const VIEW_MENTOR_AVAILABILITY = gql`
+	query ViewMentor($viewMentorId: String!) {
+		viewMentor(id: $viewMentorId) {
+			id
+			availability {
+				day
+				timeSlots {
+					startTime
+					endTime
+					isOpen
+				}
+			}
+		}
+	}
+`;

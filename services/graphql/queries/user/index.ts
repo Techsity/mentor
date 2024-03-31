@@ -32,6 +32,7 @@ export const GET_USER_PROFILE = gql`
 				created_at
 				date
 				status
+				paymentReference
 				mentor {
 					id
 					user {

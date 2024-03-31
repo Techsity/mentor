@@ -1,13 +1,32 @@
 import React, { useId } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../interfaces/mentor.interface";
-import { ToastDefaultOptions } from "../../../../../constants";
+import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../constants";
 import { PrimaryButton } from "../../../atom/buttons";
 import { toast } from "react-toastify";
+import { useMutation } from "@apollo/client";
+import { VERIFY_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { useSelector, useDispatch } from "react-redux";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { formatGqlError } from "../../../../../utils/auth";
+import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { useModal } from "../../../../../context/modal.context";
+import ReasonModal from "../../../atom/modals/ReasonModal";
+import AppointmentRescheduleModal from "../../../atom/modals/AppointmentRescheduleModal";
 
 const ExistingAppointment = (existingAppointment: IAppointment) => {
+	const dispatch = useDispatch();
+	const user = useSelector(currentUser);
+	const [confirmPayment, { loading: confirmLoading }] = useMutation<
+		{ verifyPayment: { appointment: IAppointment } },
+		{ reference: string }
+	>(VERIFY_PAYMENT, {
+		variables: { reference: String(existingAppointment.paymentReference) },
+	});
+
 	const toastId = useId();
 	const date = new Date(existingAppointment.date);
-	const daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	const { openModal } = useModal();
+
 	const dayIndex = date.getDay();
 	const day = daysOfTheWeek[dayIndex];
 	const startHour = date.getHours();
@@ -28,17 +47,62 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 		return `${formattedHour}:${formattedMinutes}`;
 	};
 
-	const handleCancel = () => {
-		if (existingAppointment.status !== AppointmentStatus.CANCELED)
+	const handleCancel = async () => {
+		if (
+			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_USER &&
+			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_MENTOR
+		) {
 			// Todo: popup reason modal
-			toast.success("Appointment cancelled", { ...ToastDefaultOptions({ id: "success" }) });
+			// toast.success("Appointment cancelled", { ...ToastDefaultOptions({ id: "success" }) });
+			openModal(<ReasonModal {...existingAppointment} />, { animate: false, closeOnBackgroundClick: false });
+		}
 	};
 
 	const handleReminder = async () => {
-		if (existingAppointment.status == AppointmentStatus.OVERDUE)
+		if (existingAppointment.status == AppointmentStatus.OVERDUE) {
 			toast.success("Reminder sent", { ...ToastDefaultOptions(), toastId });
+		}
 	};
 
+	const handleReschedule = async () => {
+		if (
+			existingAppointment.status == AppointmentStatus.PENDING ||
+			existingAppointment.status == AppointmentStatus.ACCEPTED
+		) {
+			openModal(<AppointmentRescheduleModal {...existingAppointment} />, {
+				animate: false,
+				closeOnBackgroundClick: false,
+			});
+		}
+	};
+
+	const handleConfirmPayment = async () => {
+		if (existingAppointment.status == AppointmentStatus["AWAITING_PAYMENT"])
+			try {
+				const { data } = await confirmPayment();
+				const response = data?.verifyPayment;
+				if (response?.appointment) updateLocalState(response.appointment);
+			} catch (error) {
+				console.error({ error });
+				const errMsg = formatGqlError(error);
+				toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
+			}
+	};
+
+	const updateLocalState = (data: IAppointment) => {
+		let appointments = user?.appointments || [];
+
+		const index = appointments.findIndex((appointment) => appointment.id === data.id);
+		if (index !== -1) {
+			const updatedAppointment = {
+				...appointments[index],
+				status: AppointmentStatus.ACCEPTED,
+				date: data.date,
+			};
+			appointments = [...appointments.slice(0, index), updatedAppointment, ...appointments.slice(index + 1)];
+			dispatch(updateUserProfile({ appointments }));
+		}
+	};
 	return (
 		<>
 			{existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT ||
@@ -83,14 +147,36 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 				</div>
 			</div>
 
-			<div className="flex my-2 gap-4 items-center">
+			<div className="flex sm:flex-row flex-col my-2 gap-4 sm:items-center">
 				<PrimaryButton
 					onClick={handleCancel}
+					disabled={confirmLoading}
 					title="Cancel appointment"
-					className="text-sm bg-[#F6937B] p-2 px-5"
+					className="text-sm flex justify-center items-center bg-[#F6937B] p-2 px-5"
 				/>
-				{existingAppointment.status === AppointmentStatus.OVERDUE && (
-					<PrimaryButton onClick={handleReminder} title="Send reminder" className="text-sm p-2 px-5" />
+				{existingAppointment.status === AppointmentStatus.AWAITING_PAYMENT ? (
+					<PrimaryButton
+						onClick={handleConfirmPayment}
+						title={!confirmLoading ? "Confirm Payment" : ""}
+						disabled={confirmLoading}
+						icon={confirmLoading ? <ActivityIndicator /> : <></>}
+						className="text-sm flex justify-center items-center p-2 px-5"
+					/>
+				) : existingAppointment.status === AppointmentStatus.PENDING ||
+				  existingAppointment.status === AppointmentStatus.ACCEPTED ? (
+					<PrimaryButton
+						onClick={handleReschedule}
+						title="Reschedule"
+						className="text-sm flex justify-center items-center p-2 px-5"
+					/>
+				) : (
+					existingAppointment.status === AppointmentStatus.OVERDUE && (
+						<PrimaryButton
+							onClick={handleReminder}
+							title="Send reminder"
+							className="text-sm flex justify-center items-center p-2 px-5"
+						/>
+					)
 				)}
 			</div>
 		</>
