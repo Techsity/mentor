@@ -12,10 +12,13 @@ import { useDispatch } from "react-redux";
 import { formatGqlError } from "../../../../../../utils/auth";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../constants";
+import Avatar from "../../../common/user/Avatar";
+import { useRouter } from "next/router";
 
 const MentorshipDisplayCard = (session: IAppointment) => {
 	const toastId = useId();
 	const user = useSelector(currentUser);
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const [acceptRequest, { loading: acceptLoading }] = useMutation<
 		{ acceptAppointment: IAppointment },
@@ -74,7 +77,14 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 			console.error({ error: JSON.stringify(error) });
 		}
 	};
-
+	const navigateToMentorProfile = () => {
+		if (
+			session.status !== AppointmentStatus.CANCELLED_BY_MENTOR &&
+			session.status !== AppointmentStatus.CANCELLED_BY_USER &&
+			session.status !== AppointmentStatus.DECLINED
+		)
+			if (session.mentor) router.push(`/mentors/${session.mentor.id}/consult`);
+	};
 	return (
 		<div className="overflow-hidden rounded">
 			<div
@@ -84,18 +94,13 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 					session.status == AppointmentStatus.DECLINED && "grayscale",
 				)}>
 				<SessionIndicator {...{ session }} />
-				<div className="flex items-center gap-3 p-2">
-					<div className="">
-						<img
-							src={
-								(session.user && session.user.avatar) ||
-								(session.mentor && session.mentor.user.avatar) ||
-								"/assets/images/avatar.png"
-							}
-							alt={(session.user && session.user.name) || (session.mentor && session.mentor.user.name)}
-							className="text-sm rounded-full h-14 w-14 select-none"
-						/>
-					</div>
+				<div
+					className={classNames("flex items-center gap-3 p-2", session.mentor && "cursor-pointer")}
+					onClick={navigateToMentorProfile}>
+					<Avatar
+						className="h-14 w-14 select-none"
+						user={(session.user && session.user) || (session.mentor && session.mentor.user)}
+					/>
 					<div className="">
 						<h1 className="font-medium text-black">
 							{(session.user && session.user.name) || (session.mentor && session.mentor.user.name)}

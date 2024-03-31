@@ -16,6 +16,7 @@ import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 import { currentUser, isLoggedIn } from "../../../../../redux/reducers/authSlice";
+import Avatar from "../../common/user/Avatar";
 
 type MentorProfileCardProps = {
 	mentor: IMentor | null | undefined;
@@ -45,7 +46,6 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 	const country: string = userCountry.charAt(0) + userCountry.charAt(1).toLowerCase();
 	const IconComponent: IconType = FlagIcons;
 	const IconComp: any = IconComponent[country] || <></>;
-
 	// router.push(`/mentors/${mentor?.user.name}`)
 	const handleFollow = async () => {
 		if (!auth || !user) {
@@ -82,16 +82,11 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 			{/* <div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" /> */}
 			<div className="z-20 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
 				<div className="relative h-full md:w-[52%] w-full flex sm:flex-row flex-col items-start gap-2">
-					<div className="w-[70px] xs:w-20 xs:h-24 lg:w-40 xl:w-32 h-[75px] lg:h-32 xl:h-28 rounded-full overflow-hidden">
+					<div className="w-[75px] xs:w-20 xs:h-24 lg:w-40 xl:w-32 h-[75px] lg:h-32 xl:h-28 rounded-full overflow-hidden">
 						{loading ? (
 							<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
 						) : (
-							<img
-								src={mentor?.user.avatar || "/assets/images/avatar.png"}
-								alt=""
-								className="w-full h-full rounded-full"
-								loading="lazy"
-							/>
+							<Avatar className="w-full text-2xl h-full" user={mentor?.user} />
 						)}
 					</div>
 					<div className="w-full">

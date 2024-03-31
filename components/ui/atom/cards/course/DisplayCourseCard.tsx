@@ -8,6 +8,7 @@ import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
+import Avatar from "../../common/user/Avatar";
 
 const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {
 	const router = useRouter();
@@ -140,16 +141,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 					</div>
 					<div className="flex items-center justify-between mt-3 px-5 w-full h-auto">
 						<div className="flex gap-2 items-center text-sm relative">
-							<div className="h-10 w-10 rounded-full overflow-hidden bg-zinc-200 relative">
-								{!loading && (
-									<img
-										src={course?.mentor.user.avatar || "/assets/images/avatar.png"}
-										alt={course?.mentor.user.name}
-										className="w-full h-full rounded-full"
-										loading="lazy"
-									/>
-								)}
-							</div>
+							{!loading && <Avatar user={course?.mentor.user} />}
 							<h1 className={loading ? "px-10 h-2 bg-zinc-200" : ""}>
 								{!loading && course?.mentor.user.name.split(" ")[0]}
 							</h1>

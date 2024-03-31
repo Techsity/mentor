@@ -33,6 +33,7 @@ export type IMentorSkills = {
 export type TimeSlot = { endTime: string; startTime: string; isOpen: boolean };
 
 export type IMentorAvailability = {
+	id?: string;
 	day: string;
 	timeSlots: TimeSlot[];
 };
@@ -108,7 +109,8 @@ export enum AppointmentStatus {
 	NO_SHOW = "	NO_SHOW",
 	COMPLETED = "COMPLETED",
 	OVERDUE = "OVERDUE",
-	PENDING_RESCHEDULE_APPROVAL = "PNDING_RESCHEDULE_APPROVAL",
+	RESCHEDULED_BY_USER = "RESCHEDULED_BY_USER",
+	RESCHEDULED_BY_MENTOR = "RESCHEDULED_BY_MENTOR",
 }
 
 export interface IAppointment {

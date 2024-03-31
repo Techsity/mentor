@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
 import dayjs from "dayjs";
 import "dayjs/plugin/relativeTime";
+import Avatar from "../../common/user/Avatar";
 
 const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: WorkshopDisplayCardProps) => {
 	const user = useSelector(currentUser);
@@ -78,12 +79,7 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 				</p>
 				<div className="flex items-center justify-between px-5">
 					<div className="flex gap-2 items-center text-sm relative">
-						<img
-							src={workshop?.mentor.user.avatar || "/assets/images/avatar.png"}
-							alt={workshop?.mentor.user.name}
-							className="w-10 rounded-full"
-							loading="lazy"
-						/>
+						<Avatar user={workshop.mentor.user} />
 						<h1 className="text-xs">{workshop.mentor.user.name}</h1>
 						{/* <div className="absolute w-ful left-0"></div> */}
 					</div>

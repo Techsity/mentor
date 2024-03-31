@@ -4,31 +4,6 @@ export const GET_MENTOR_PROFILE = gql`
 	query GetMentorProfile {
 		getMentorProfile {
 			id
-			# courses {
-			# 	title
-			# 	course_level
-			# 	description
-			# 	category {
-			# 		title
-			# 		description
-			# 		created_at
-			# 		updated_at
-			# 	}
-			# 	what_to_learn
-			# 	requirements
-			# 	price
-			# 	course_images
-			# 	course_contents {
-			# 		title
-			# 		course_sections {
-			# 			section_name
-			# 			video_url
-			# 			notes
-			# 		}
-			# 	}
-			# 	created_at
-			# 	updated_at
-			# }
 			appointments {
 				id
 				created_at
@@ -49,8 +24,6 @@ export const GET_MENTOR_PROFILE = gql`
 				company
 				job_role
 				description
-				# from_year
-				# to_year
 			}
 			projects {
 				company
@@ -62,16 +35,14 @@ export const GET_MENTOR_PROFILE = gql`
 				school
 				credential_type
 				course_of_study
-				# from_year
-				# to_year
 			}
 			certifications {
 				organization
 				title
-				# year
 			}
 			hourly_rate
 			availability {
+				id
 				day
 				timeSlots {
 					startTime
@@ -96,14 +67,10 @@ export const HOMEPAGE_MENTORS_LIST = gql`
 				...MentorUserField
 			}
 			exp_level
-			hourly_rate
 			availability {
 				day
-				timeSlots {
-					startTime
-					endTime
-				}
 			}
+			hourly_rate
 			language
 			mentor_verified
 			updated_at
@@ -209,6 +176,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 				year
 			}
 			availability {
+				id
 				day
 				timeSlots {
 					startTime
@@ -270,6 +238,7 @@ export const VIEW_MENTOR_AVAILABILITY = gql`
 		viewMentor(id: $viewMentorId) {
 			id
 			availability {
+				id
 				day
 				timeSlots {
 					startTime

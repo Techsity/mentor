@@ -6,6 +6,7 @@ import FreePurchaseForm from "../../../ui/atom/forms/purchase-form/FreePurchaseF
 import PaidPurchaseForm from "../../../ui/atom/forms/purchase-form/PaidPurchaseForm";
 import { IWorkshop } from "../../../../interfaces";
 import WorkshopDetailsPageHero from "../../../ui/organisms/workshop/hero";
+import Avatar from "../../../ui/atom/common/user/Avatar";
 
 const WorkshopRegistrationPageTemplate = ({ workshop }: { workshop: IWorkshop }) => {
 	// const workshop = useSelector(workshopToRegister) as IWorkshop;
@@ -30,11 +31,7 @@ const WorkshopRegistrationPageTemplate = ({ workshop }: { workshop: IWorkshop })
 					<p className="">Payment to:</p>
 					<div className="my-2 sm:my-4 flex items-center gap-2">
 						<div className="flex gap-1.5 items-center">
-							<img
-								src={workshop.mentor.user.avatar || "/assets/images/avatar.png"}
-								className="rounded-full w-12"
-								alt={workshop.mentor.user.name}
-							/>
+							<Avatar user={workshop.mentor.user} />
 						</div>
 						<div className="max-w-sm font-[300] text-sm">
 							<h1 className="font-semibold text-lg flex item-center gap-2">

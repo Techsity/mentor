@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/authSlice";
 import { useRouter } from "next/router";
+import Avatar from "./Avatar";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);
@@ -16,14 +17,7 @@ const CurrentUserProfileCard = () => {
 	return (
 		<div onClick={navigate} className="relative group cursor-pointer h-full">
 			<div className="flex items-center gap-3">
-				<div className="rounded-full object-cover w-9 h-9 relative">
-					<img
-						src={user?.avatar || "/assets/images/avatar.png"}
-						alt={""}
-						className="w-full h-full bg-zinc-300 rounded-full"
-						loading="lazy"
-					/>
-				</div>
+				<Avatar user={user} />
 				<div className="leading-none sm:inline-block hidden">
 					<h1 className="text-sm">
 						{/* {user?.name.split(" ")[0] +

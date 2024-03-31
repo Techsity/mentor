@@ -1,13 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useId, useMemo, useState } from "react";
+import React, { FormEvent, useEffect, useId, useMemo, useState } from "react";
 import { useModal } from "../../../../context/modal.context";
 import { useMutation, useQuery } from "@apollo/client";
-import { REPORT_MENTOR } from "../../../../services/graphql/mutations/mentors";
 import { formatGqlError } from "../../../../utils/auth";
 import { toast } from "react-toastify";
-import { daysOfTheWeek, supportedCurrencies, ToastDefaultOptions } from "../../../../constants";
-import { formatAppointmentTime, slugify } from "../../../../utils";
+import { daysOfTheWeek, ToastDefaultOptions } from "../../../../constants";
 import { PrimaryButton } from "../buttons";
-import CustomTextArea from "../inputs/CustomTextArea";
 import classNames from "classnames";
 import ActivityIndicator from "../loader/ActivityIndicator";
 import { IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
@@ -15,6 +12,7 @@ import { VIEW_MENTOR_AVAILABILITY } from "../../../../services/graphql/queries/m
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../redux/reducers/authSlice";
 import { SelectedSlot } from "../../organisms/user/schedule-consultation/NewAppointment";
+import { RESCHEDULE_APPOINTMENT } from "../../../../services/graphql/mutations/user";
 
 const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	const { mentor } = appointment;
@@ -23,6 +21,11 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	const { data, loading: availabilityLoading } = useQuery<{ viewMentor: IMentor }, any>(VIEW_MENTOR_AVAILABILITY, {
 		variables: { viewMentorId: mentor.id },
 	});
+	const [reschduleAppointment, { loading }] = useMutation<
+		{ rescheduleAppointment: IAppointment },
+		{ appointmentId: string; input: RescheduleInput }
+	>(RESCHEDULE_APPOINTMENT);
+
 	const user = useSelector(currentUser);
 	const { closeModal } = useModal();
 	const toastId = useId();
@@ -37,10 +40,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
 
-	const datesAreEqual = useMemo(
-		() => compareTimes(newSchedule, currentAppointmentDate),
-		[newSchedule, currentAppointmentDate],
-	);
+	const datesAreEqual = compareTimes(newSchedule, currentAppointmentDate);
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
@@ -49,13 +49,18 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 				console.error("Invalid selected day");
 				return;
 			}
-
-		// const time = newSchedule.getTime().toString();
-
 		try {
-			// Logic
-			// dispatch(updateUserProfile({ appointments: user?.appointments.concat(data.createAppointment) }));
-			// toast.success("Appointment successful", { ...ToastDefaultOptions(), toastId });
+			// Api Logic
+			const res = await reschduleAppointment({
+				variables: {
+					appointmentId: appointment.id,
+					input: {
+						date: newSchedule,
+						time: newSchedule.getTime().toString(),
+					},
+				},
+			});
+			console.log({ res });
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
@@ -70,7 +75,13 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 		const currentHour = currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours();
 
 		const daysToAdd =
-			currentDayOfTheWeek >= selectedDayIndex && currentHour >= hour ? selectedDayIndex + 7 : selectedDayIndex;
+			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
+				? selectedDayIndex + 7
+				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
+				? currentDayOfTheWeek - selectedDayIndex
+				: currentDayOfTheWeek >= selectedDayIndex
+				? 7 - selectedDayIndex - currentDayOfTheWeek
+				: selectedDayIndex;
 
 		const date = new Date(currentDate);
 		date.setDate(date.getDate() + daysToAdd);
@@ -110,7 +121,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 						</span>
 					)}
 
-					{selectedSlot.date && selectedSlot.time && !datesAreEqual && (
+					{selectedSlot.date && selectedSlot.time && (
 						<div className="flex sm:flex-row flex-col sm:items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 							<p className="text-sm sm:w-[20%]">New Schedule</p>
 							<div
@@ -120,7 +131,11 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 							</div>
 						</div>
 					)}
-
+					{datesAreEqual && (
+						<p className="italic text-sm text-red-500 flex items-end justify-end my-2">
+							The schedules are the same
+						</p>
+					)}
 					{!selectedSlot?.date && (
 						<div className="animate__animated animate__fadeIn">
 							<div className="grid xs:grid-cols-2 sm:grid-cols-3 gap-4 mt-3 text-sm">
@@ -200,6 +215,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 								});
 							else if (selectedSlot.date && !selectedSlot.time) setSelectedSlot({});
 						}}
+						disabled={loading}
 						type="button"
 						title={"Back"}
 						className="text-sm p-1.5 px-8 rounded bg-[#FFB100] text-[#06310B]"
@@ -218,20 +234,18 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 					/>
 				)}
 
-				{selectedSlot &&
-					selectedSlot?.date &&
-					selectedSlot?.time &&
-					newSchedule.getDate() !== currentAppointmentDate.getDate() && (
-						<div className="">
-							<PrimaryButton
-								onClick={handleSubmit}
-								disabled={availabilityLoading}
-								title="Reschedule"
-								type="submit"
-								className="capitalize p-1.5 px-4 rounded text-sm flex justify-center"
-							/>
-						</div>
-					)}
+				{selectedSlot && selectedSlot?.date && selectedSlot?.time && (
+					<div className="">
+						<PrimaryButton
+							onClick={handleSubmit}
+							disabled={availabilityLoading || loading || datesAreEqual}
+							title={!loading ? "Reschedule" : ""}
+							icon={loading ? <ActivityIndicator /> : <></>}
+							type="submit"
+							className="capitalize p-1.5 px-4 rounded text-sm flex justify-center"
+						/>
+					</div>
+				)}
 			</div>
 		</form>
 	);
@@ -241,9 +255,13 @@ export default AppointmentRescheduleModal;
 
 function compareTimes(date1: Date, date2: Date) {
 	return (
-		date1.getUTCHours() === date2.getUTCHours() &&
-		date1.getUTCMinutes() === date2.getUTCMinutes() &&
-		date1.getUTCSeconds() === date2.getUTCSeconds() &&
-		Math.round(date1.getUTCMilliseconds() / 1000) === Math.round(date2.getUTCMilliseconds() / 1000)
+		date1.getDate() == date2.getDate() &&
+		date1.getHours() == date2.getHours() &&
+		date1.getMinutes() === date2.getMinutes()
 	);
 }
+
+type RescheduleInput = {
+	date: Date;
+	time: string;
+};

@@ -11,6 +11,7 @@ import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSocketContext } from "../../../../../context/socket-io.context";
+import Avatar from "../../common/user/Avatar";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
@@ -58,11 +59,7 @@ const EditProfileCard = () => {
 			<div className="my-6 grid xl:grid-cols-1 sm:grid-cols-2 gap-6">
 				<div className="flex items-center w-full justify-between">
 					<div className="flex items-center gap-1">
-						<img
-							src={user?.avatar || "/assets/images/avatar.png"}
-							alt=""
-							className="rounded-full w-12 h-12"
-						/>
+						<Avatar user={user} />
 						<div className="text-sm">
 							<p className="font-medium">{user?.name}</p>
 							{/* <p>{user?.role}</p> */}

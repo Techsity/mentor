@@ -8,6 +8,7 @@ import { StarRatingIcon } from "../../icons/svgs";
 import { PrimaryButton } from "../../buttons";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { useRouter } from "next/router";
+import Avatar from "../../common/user/Avatar";
 
 const CourseInProgressDisplayCard: FC<{
 	course: ICourse | null;
@@ -97,14 +98,7 @@ const CourseInProgressDisplayCard: FC<{
 				<div className="flex items-center justify-between mt-3 w-full lg:absolute bottom-3 lg:max-w-[93%]">
 					<div className="flex gap-2 items-center text-xsm relative overflow-hidden rounded-full">
 						{loading && <div className="bg-gray-300 absolute w-8 h-8 top-0 left-0" />}
-						{!loading && (
-							<img
-								src={course?.mentor.user.avatar || "/assets/images/avatar.png"}
-								alt={course?.mentor.user.name}
-								className="rounded-full w-8 h-8"
-								loading="lazy"
-							/>
-						)}
+						{!loading && <Avatar user={course?.mentor.user} />}
 						{loading && <span className="p-1 px-20 absolute bg-gray-300 w-full h-1" />}
 						<h1>{!loading && course?.mentor.user.name}</h1>
 					</div>

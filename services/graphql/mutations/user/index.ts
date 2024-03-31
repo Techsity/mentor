@@ -73,3 +73,27 @@ export const BOOK_MENTOR = gql`
 		}
 	}
 `;
+
+export const RESCHEDULE_APPOINTMENT = gql`
+	mutation RescheduleAppointment($appointmentId: String!, $input: CreateAppointmentInput!) {
+		rescheduleAppointment(appointmentId: $appointmentId, input: $input) {
+			id
+			paymentReference
+			date
+			status
+			created_at
+			updated_at
+			mentor {
+				id
+				user {
+					name
+					avatar
+				}
+			}
+			user {
+				name
+				avatar
+			}
+		}
+	}
+`;

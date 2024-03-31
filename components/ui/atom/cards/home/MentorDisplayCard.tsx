@@ -5,6 +5,7 @@ import Link from "next/link";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateOverallExperience, calculateRatingInReviews, formatFollowersCount } from "../../../../../utils";
 import { useRouter } from "next/router";
+import Avatar from "../../common/user/Avatar";
 
 const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 	const router = useRouter();
@@ -18,12 +19,7 @@ const MentorDisplayCard = ({ mentor }: { mentor: IMentor }) => {
 				<div className="flex justify-center sm:p-0 sm:pl-5 w-full mx-auto">
 					<div className="grid py-6 sm:py-10 sm:px-5 gap-2">
 						<div className="flex sm:justify-center w-full">
-							<img
-								src={mentor.user.avatar || "/assets/images/avatar.png"}
-								className="w-24 rounded-full"
-								alt={mentor.user.name}
-								loading="lazy"
-							/>
+							<Avatar className="w-20 h-20 text-[20px]" user={mentor.user} />
 						</div>
 						<h1 className="text-xl mt-6 font-medium capitalize">
 							{mentor.user.name.split(" ").length > 1
