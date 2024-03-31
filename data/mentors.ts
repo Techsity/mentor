@@ -18,6 +18,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: true,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
@@ -74,6 +75,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: true,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
@@ -131,6 +133,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: false,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
@@ -187,6 +190,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: true,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
@@ -244,6 +248,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: true,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
@@ -301,6 +306,7 @@ const mentors: IMentor[] = [
 			{ skill_name: "HTML", years_of_exp: 6 },
 		],
 		mentor_verified: true,
+		appointments: [],
 		availability: [
 			{ day: "Mon", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
 			{ day: "Tue", timeSlots: [{ endTime: "12pm", startTime: "9am", isOpen: true }] },
