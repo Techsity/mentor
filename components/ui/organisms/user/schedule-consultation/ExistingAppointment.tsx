@@ -52,22 +52,15 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_USER &&
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_MENTOR
 		) {
-			// Todo: popup reason modal
-			// toast.success("Appointment cancelled", { ...ToastDefaultOptions({ id: "success" }) });
 			openModal(<ReasonModal {...existingAppointment} />, { animate: false, closeOnBackgroundClick: false });
-		}
-	};
-
-	const handleReminder = async () => {
-		if (existingAppointment.status == AppointmentStatus.OVERDUE) {
-			toast.success("Reminder sent", { ...ToastDefaultOptions(), toastId });
 		}
 	};
 
 	const handleReschedule = async () => {
 		if (
 			existingAppointment.status == AppointmentStatus.PENDING ||
-			existingAppointment.status == AppointmentStatus.ACCEPTED
+			existingAppointment.status == AppointmentStatus.ACCEPTED ||
+			existingAppointment.status == AppointmentStatus.RESCHEDULED_BY_USER
 		) {
 			openModal(<AppointmentRescheduleModal {...existingAppointment} />, {
 				animate: false,
@@ -105,14 +98,14 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 	};
 	return (
 		<>
-			{existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT ||
-			existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT.toUpperCase() ? (
+			{existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT ? (
 				<p className="italic text-sm text-[#9a9898] my-2">
 					Your request is being processed, but your payment has not been confirmed.
 					<br />
 					If you have made payments, you will recieve a notification when mentor accepts this request.
 				</p>
-			) : existingAppointment.status == AppointmentStatus.PENDING ? (
+			) : existingAppointment.status == AppointmentStatus.PENDING ||
+			  existingAppointment.status == AppointmentStatus.RESCHEDULED_BY_USER ? (
 				<p className="italic text-sm text-[#9a9898] my-2">
 					Your request is pending.
 					<br />
@@ -162,18 +155,14 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 						icon={confirmLoading ? <ActivityIndicator /> : <></>}
 						className="text-sm flex justify-center items-center p-2 px-5"
 					/>
-				) : existingAppointment.status === AppointmentStatus.PENDING ||
-				  existingAppointment.status === AppointmentStatus.ACCEPTED ? (
-					<PrimaryButton
-						onClick={handleReschedule}
-						title="Reschedule"
-						className="text-sm flex justify-center items-center p-2 px-5"
-					/>
 				) : (
-					existingAppointment.status === AppointmentStatus.OVERDUE && (
+					(existingAppointment.status === AppointmentStatus.PENDING ||
+						existingAppointment.status === AppointmentStatus.ACCEPTED ||
+						existingAppointment.status == AppointmentStatus.RESCHEDULED_BY_USER ||
+						existingAppointment.status == AppointmentStatus.OVERDUE) && (
 						<PrimaryButton
-							onClick={handleReminder}
-							title="Send reminder"
+							onClick={handleReschedule}
+							title="Reschedule"
 							className="text-sm flex justify-center items-center p-2 px-5"
 						/>
 					)

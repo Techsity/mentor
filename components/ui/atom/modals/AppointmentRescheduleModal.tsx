@@ -9,8 +9,8 @@ import classNames from "classnames";
 import ActivityIndicator from "../loader/ActivityIndicator";
 import { IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
 import { VIEW_MENTOR_AVAILABILITY } from "../../../../services/graphql/queries/mentor";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { currentUser, updateUserProfile } from "../../../../redux/reducers/authSlice";
 import { SelectedSlot } from "../../organisms/user/schedule-consultation/NewAppointment";
 import { RESCHEDULE_APPOINTMENT } from "../../../../services/graphql/mutations/user";
 
@@ -18,7 +18,11 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	const { mentor } = appointment;
 	const currentAppointmentDate = new Date(appointment.date);
 
-	const { data, loading: availabilityLoading } = useQuery<{ viewMentor: IMentor }, any>(VIEW_MENTOR_AVAILABILITY, {
+	const {
+		data,
+		loading: availabilityLoading,
+		refetch,
+	} = useQuery<{ viewMentor: IMentor }, any>(VIEW_MENTOR_AVAILABILITY, {
 		variables: { viewMentorId: mentor.id },
 	});
 	const [reschduleAppointment, { loading }] = useMutation<
@@ -27,6 +31,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	>(RESCHEDULE_APPOINTMENT);
 
 	const user = useSelector(currentUser);
+	const dispatch = useDispatch();
 	const { closeModal } = useModal();
 	const toastId = useId();
 	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
@@ -51,7 +56,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 			}
 		try {
 			// Api Logic
-			const res = await reschduleAppointment({
+			const { data } = await reschduleAppointment({
 				variables: {
 					appointmentId: appointment.id,
 					input: {
@@ -60,7 +65,28 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 					},
 				},
 			});
-			console.log({ res });
+			if (data?.rescheduleAppointment) {
+				if (user) {
+					let appointments;
+					if (user.is_mentor && user.mentor) appointments = user.mentor.appointments;
+					else appointments = user.appointments;
+
+					const appointmentToUpdateIndex = appointments.findIndex(
+						(a) => a.id === data.rescheduleAppointment.id,
+					);
+					if (appointmentToUpdateIndex !== -1) {
+						let updatedAppointments: IAppointment[] = [
+							...user.appointments.slice(0, appointmentToUpdateIndex),
+							data.rescheduleAppointment,
+							...user.appointments.slice(appointmentToUpdateIndex + 1),
+						];
+						dispatch(updateUserProfile({ appointments: updatedAppointments }));
+						toast.success("Appointment updated", { ...ToastDefaultOptions(), toastId });
+						refetch();
+						closeModal();
+					} else toast.error("appointmentToUpdateIndex not found", { ...ToastDefaultOptions(), toastId });
+				}
+			}
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
@@ -76,12 +102,8 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 
 		const daysToAdd =
 			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
-				? selectedDayIndex + 7
-				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
-				? currentDayOfTheWeek - selectedDayIndex
-				: currentDayOfTheWeek >= selectedDayIndex
-				? 7 - selectedDayIndex - currentDayOfTheWeek
-				: selectedDayIndex;
+				? 7
+				: selectedDayIndex - currentDayOfTheWeek;
 
 		const date = new Date(currentDate);
 		date.setDate(date.getDate() + daysToAdd);
@@ -104,7 +126,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 			<div className="my-2 flex sm:flex-row flex-col sm:items-center justify-between gap-1 sm:gap-3 animate__animated animate__fadeIn text-[#094B10]">
 				<p className="text-sm sm:w-[20%]">Current Schedule</p>
 				<div
-					className="sm:w-[80%] text-xs border border-[#70C5A1] p-2 capitalize text-center flex-grow"
+					className="sm:w-[80%] text-xs border border-[#70C5A1] p-2 capitalize sm:text-center flex-grow"
 					style={{ fontFamily: "Days One" }}>
 					{currentAppointmentDate?.toString()}
 				</div>
@@ -125,7 +147,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 						<div className="flex sm:flex-row flex-col sm:items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 							<p className="text-sm sm:w-[20%]">New Schedule</p>
 							<div
-								className="sm:w-[80%] text-xs border border-[#70C5A1] p-2 capitalize text-center flex-grow"
+								className="sm:w-[80%] text-xs border border-[#70C5A1] p-2 capitalize sm:text-center flex-grow"
 								style={{ fontFamily: "Days One" }}>
 								{newSchedule.toString()}
 							</div>
