@@ -33,13 +33,13 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
 			variables: { createLoginInput: { email, password } },
 		});
 		if (data) {
-			const userData: IUser = data.loginUser.user;
+			const userData = data.loginUser.user;
 			const authToken = data.loginUser.access_token;
 			const is_mentor = data.loginUser.is_mentor;
 			const is_admin = data.loginUser.user.is_admin;
 			authenticate(authToken);
 			let mentorProfile;
-			if (is_mentor) mentorProfile = await fetchMentorProfile({ dispatch });
+			if (is_mentor) mentorProfile = await fetchMentorProfile({ user: userData, dispatch });
 			dispatch(
 				setCredentials({
 					isLoggedIn: true,
@@ -70,7 +70,7 @@ export const fetchUserProfile = createAsyncThunk("user/fetchUserProfile", async 
 			query: GET_USER_PROFILE,
 		});
 		dispatch(updateUserProfile({ ...data.userProfile }));
-		await fetchMentorProfile({ dispatch });
+		await fetchMentorProfile({ user: data.userProfile, dispatch });
 		return { success: true };
 	} catch (error) {
 		console.error("Error fetching user profile:", error);
@@ -78,17 +78,19 @@ export const fetchUserProfile = createAsyncThunk("user/fetchUserProfile", async 
 	}
 });
 
-const fetchMentorProfile = async ({ dispatch }: { dispatch: Dispatch<any> }) => {
+const fetchMentorProfile = async ({ dispatch, user }: { dispatch: Dispatch<any>; user: IUser }) => {
 	const getMentorProfile = createAsyncThunk("mentor/getMentorProfile", async () => {
 		const {
 			data: { getMentorProfile },
 		} = await client().query({ query: GET_MENTOR_PROFILE });
 		return { success: true, data: getMentorProfile };
 	});
-	const { payload } = await dispatch(getMentorProfile() as any);
-	if (payload) {
-		const { data: mentorProfile } = payload;
-		dispatch(updateMentorProfile({ ...mentorProfile }));
-		return mentorProfile;
+	if (user.is_mentor) {
+		const { payload } = await dispatch(getMentorProfile() as any);
+		if (payload) {
+			const { data: mentorProfile } = payload;
+			dispatch(updateMentorProfile({ ...mentorProfile }));
+			return mentorProfile;
+		}
 	}
 };
