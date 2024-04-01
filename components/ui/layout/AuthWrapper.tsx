@@ -2,13 +2,17 @@ import React, { ReactNode, useEffect } from "react";
 import jwt from "jsonwebtoken";
 import { getCookie, logoutUser } from "../../../utils/auth";
 import { AUTH_TOKEN_KEY } from "../../../constants";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../../redux/reducers/auth/apiAuthSlice";
 
 type AuthWrapperProps = { children?: ReactNode };
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
 	const authToken = getCookie(AUTH_TOKEN_KEY);
+	const dispatch = useDispatch();
 
-	const checkAuthValidity = async () => {
+	const checkAuthValidity = async (): Promise<any> => {
+		if (document && document.hidden) await dispatch(fetchUserProfile() as any);
 		const decodedToken: any = jwt.decode(String(authToken));
 		if (!authToken || !decodedToken || decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
 			logoutUser();
@@ -17,7 +21,7 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
 	};
 
 	useEffect(() => {
-		checkAuthValidity();
+		// checkAuthValidity();
 		document.addEventListener("visibilitychange", checkAuthValidity);
 		document.addEventListener("cookiechange", checkAuthValidity);
 		return () => {

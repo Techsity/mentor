@@ -39,7 +39,7 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
 			const is_admin = data.loginUser.user.is_admin;
 			authenticate(authToken);
 			let mentorProfile;
-			if (is_mentor) mentorProfile = await fetchMentorProfile({ user: userData, dispatch });
+			if (is_mentor) mentorProfile = await fetchMentorProfile({ user: { ...userData, is_mentor }, dispatch });
 			dispatch(
 				setCredentials({
 					isLoggedIn: true,
