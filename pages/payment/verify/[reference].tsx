@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import ResponseMessages from "../../../constants/response-codes";
 import { SubscriptionType } from "../../../services/enums";
 import { IAppointment } from "../../../interfaces/mentor.interface";
+import { PAYSTACK_CHECKOUT_URL } from "../../../constants";
 
 const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Props) => {
 	const [celebrate, setCelebrate] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 
 	if (error) {
 		if (access_code) {
-			const retryPayment = () => router.replace(`https://checkout.paystack.com/${access_code}`);
+			const retryPayment = () => router.replace(PAYSTACK_CHECKOUT_URL + access_code);
 			return (
 				<div className="h-screen text-center flex flex-col items-center justify-center gap-4">
 					<p className="">This payment was cancelled. Do you retry?</p>

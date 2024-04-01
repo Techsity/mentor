@@ -3,7 +3,7 @@ import workshops from "../../../../../../data/workshops";
 import RegitsteredWorkshops from "../../profile/RegitsteredWorkshops";
 import WorkshopDisplayCard from "../../../../atom/cards/mentee/WorkshopDisplayCard";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../../redux/reducers/auth/authSlice";
 
 const MentorProfileWorkshop = () => {
 	const mentorWorkshops = useMemo(() => workshops, []);

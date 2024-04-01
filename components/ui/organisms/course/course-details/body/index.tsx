@@ -9,7 +9,7 @@ import CourseContents from "./CourseContents";
 import { useModal } from "../../../../../../context/modal.context";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { isLoggedIn, currentUser } from "../../../../../../redux/reducers/authSlice";
+import { isLoggedIn, currentUser } from "../../../../../../redux/reducers/auth/authSlice";
 import { navigateToAuthPage } from "../../../../../../utils/auth";
 import ReportMentorModal from "../../../../atom/modals/ReportMentorModal";
 

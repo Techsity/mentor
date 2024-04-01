@@ -1,11 +1,11 @@
 import { useMutation } from "@apollo/client";
 import classNames from "classnames";
-import React, { useId, useState } from "react";
+import React, { useId, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { daysOfTheWeek, supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
 import { IAppointment, IMentor, TimeSlot } from "../../../../../interfaces/mentor.interface";
-import { updateUserProfile, currentUser } from "../../../../../redux/reducers/authSlice";
+import { updateUserProfile, currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { BOOK_MENTOR } from "../../../../../services/graphql/mutations/user";
 import { formatGqlError } from "../../../../../utils/auth";
 import { PrimaryButton } from "../../../atom/buttons";
@@ -73,25 +73,32 @@ const NewAppointment = (mentor: IMentor) => {
 		}
 	};
 
+	const date = useMemo(() => {
+		const currentDayOfTheWeek = currentDate.getDay();
+		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
+		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
+		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;
+		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
+		const currentHour = currentDate.getHours();
+
+		const daysToAdd =
+			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
+				? 7
+				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
+				? 0
+				: selectedDayIndex - currentDayOfTheWeek;
+
+		const scheduledDate = new Date(currentDate);
+		scheduledDate.setDate(scheduledDate.getDate() + daysToAdd);
+		scheduledDate.setHours(hour, minutes, 0);
+		return scheduledDate;
+	}, [selectedSlot, selectedDay]);
+
 	const handleSubmit = async () => {
 		if (selectedDayIndex === -1) {
 			console.error("Invalid selected day");
 			return;
 		}
-		const currentDayOfTheWeek = currentDate.getDay();
-		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
-		const hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
-		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
-
-		const daysToAdd =
-			selectedDayIndex >= currentDayOfTheWeek
-				? selectedDayIndex - currentDayOfTheWeek
-				: 7 - currentDayOfTheWeek + selectedDayIndex;
-
-		const date = new Date(currentDate);
-		date.setDate(date.getDate() + daysToAdd);
-		date.setHours(isAM ? hour : hour + 12, minutes, 0);
-
 		const time = date.getTime().toString();
 
 		try {
@@ -123,12 +130,13 @@ const NewAppointment = (mentor: IMentor) => {
 				{selectedSlot.date && selectedSlot.time && (
 					<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 						<div
-							className="text-sm border border-[#70C5A1] p-3 w-full capitalize text-center"
+							className="text-sm border border-[#70C5A1] p-3 w-full text-center"
 							style={{ fontFamily: "Days One" }}>
-							{selectedSlot.date}
+							{/* {selectedSlot.time.startTime} - {selectedSlot.time.endTime} */}
+							{date.toDateString()}
 						</div>
 						<div
-							className="text-sm border border-[#70C5A1] p-3 w-full text-center"
+							className="text-sm flex items-center border border-[#70C5A1] p-3 w-full capitalize text-center"
 							style={{ fontFamily: "Days One" }}>
 							{selectedSlot.time.startTime} - {selectedSlot.time.endTime}
 						</div>

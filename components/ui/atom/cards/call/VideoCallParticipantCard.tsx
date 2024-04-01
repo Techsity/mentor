@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { MicMuted, SpeakingIcon } from "../../icons/svgs/call";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { IAgoraRTCRemoteUser, RemoteUser, useRTCClient } from "agora-rtc-react";
 
 import dynamic from "next/dynamic";

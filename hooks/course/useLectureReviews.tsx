@@ -1,7 +1,7 @@
 import { ChangeEvent, useId, useState } from "react";
 import { IUser } from "../../interfaces/user.interface";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../redux/reducers/authSlice";
+import { currentUser } from "../../redux/reducers/auth/authSlice";
 import { ICourse, IReview } from "../../interfaces";
 import { useMutation } from "@apollo/client";
 import { SUBMIT_REVIEW } from "../../services/graphql/mutations/user";

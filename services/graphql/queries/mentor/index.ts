@@ -49,6 +49,17 @@ export const GET_MENTOR_PROFILE = gql`
 					endTime
 				}
 			}
+			appointments {
+				id
+				date
+				status
+				created_at
+				updated_at
+				user {
+					avatar
+					name
+				}
+			}
 			language
 			mentor_verified
 			created_at

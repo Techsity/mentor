@@ -2,7 +2,7 @@
 import React, { useEffect, useId, useMemo, useState } from "react";
 import CountrySelectorComp from "../../inputs/CountrySelector";
 import { useSelector, useDispatch } from "react-redux";
-import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { ICourse, ISOCurrency, IWorkshop } from "../../../../../interfaces";
 import { PrimaryButton } from "../../buttons";
 import ActivityIndicator from "../../loader/ActivityIndicator";

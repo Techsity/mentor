@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import router from "next/router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { currentUser, isLoggedIn } from "../../../../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../../../../redux/reducers/auth/authSlice";
 import { FOLLOW_MENTOR } from "../../../../../../services/graphql/mutations/mentors";
 import { navigateToAuthPage } from "../../../../../../utils/auth";
 import ActivityIndicator from "../../../../atom/loader/ActivityIndicator";

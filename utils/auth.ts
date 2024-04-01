@@ -1,7 +1,7 @@
 import { NextRouter } from "next/router";
 import { AUTH_TOKEN_KEY } from "../constants";
 import ResponseMessages from "../constants/response-codes";
-import { logOut } from "../redux/reducers/authSlice";
+import { logOut } from "../redux/reducers/auth/authSlice";
 import { persistor, store } from "../redux/store";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -32,15 +32,12 @@ export const setCookie = (key: string, value: string) => {
 export const removeCookie = (key: string) => {
 	if (process.browser) Cookies.remove(key);
 };
-
 export const getCookie = (name: string) => {
-	const cookies = document.cookie.split("; ");
-	for (let i = 0; i < cookies.length; i++) {
-		const cookie = cookies[i].split("=");
-		const cookieValue = decodeURIComponent(cookie[1]);
-		if (cookie[0] === name) return cookieValue;
-	}
-	return null;
+	const cookieValue = document.cookie
+		.split("; ")
+		.find((row) => row.startsWith(name))
+		?.split("=")[1];
+	return cookieValue ? decodeURIComponent(cookieValue) : null;
 };
 
 export const setLocalStorage = (key: string, value: string) => {

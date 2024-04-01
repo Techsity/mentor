@@ -10,7 +10,7 @@ import ActivityIndicator from "../loader/ActivityIndicator";
 import { IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
 import { VIEW_MENTOR_AVAILABILITY } from "../../../../services/graphql/queries/mentor";
 import { useSelector, useDispatch } from "react-redux";
-import { currentUser, updateUserProfile } from "../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../redux/reducers/auth/authSlice";
 import { SelectedSlot } from "../../organisms/user/schedule-consultation/NewAppointment";
 import { RESCHEDULE_APPOINTMENT } from "../../../../services/graphql/mutations/user";
 
@@ -96,18 +96,19 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 
 	useEffect(() => {
 		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
-		const hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
+		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
+		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;
 		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
-		const currentHour = currentDate.getHours() > 12 ? currentDate.getHours() - 12 : currentDate.getHours();
-
+		const currentHour = currentDate.getHours();
 		const daysToAdd =
 			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
 				? 7
+				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
+				? 0
 				: selectedDayIndex - currentDayOfTheWeek;
-
 		const date = new Date(currentDate);
 		date.setDate(date.getDate() + daysToAdd);
-		date.setHours(isAM ? hour : hour + 12, minutes, 0);
+		date.setHours(hour, minutes, 0);
 		setNewSchedule(date);
 	}, [selectedSlot, selectedDayIndex]);
 
@@ -123,6 +124,9 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 			onSubmit={handleSubmit}
 			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
 			<h1 className="font-medium">Reschedule Appoinment</h1>
+			<span className="text-sm text-gray-500 font-medium">
+				Note: If an appointment gets rescheduled up to 5 times, it automatically gets cancelled.
+			</span>
 			<div className="my-2 flex sm:flex-row flex-col sm:items-center justify-between gap-1 sm:gap-3 animate__animated animate__fadeIn text-[#094B10]">
 				<p className="text-sm sm:w-[20%]">Current Schedule</p>
 				<div
@@ -136,13 +140,11 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 				<ActivityIndicator />
 			) : (
 				<>
-					{!selectedSlot.date && !selectedSlot.time && (
+					{datesAreEqual && (
 						<span className="text-sm text-[#9A9898]">
-							Select a suitable {!selectedSlot.date ? "day" : "time"} to schedule a virtual meeting with
-							this mentor:
+							Select a suitable {!selectedSlot.date ? "day" : "time"}:
 						</span>
 					)}
-
 					{selectedSlot.date && selectedSlot.time && (
 						<div className="flex sm:flex-row flex-col sm:items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 							<p className="text-sm sm:w-[20%]">New Schedule</p>

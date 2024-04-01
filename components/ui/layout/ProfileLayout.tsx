@@ -3,16 +3,18 @@ import ProfileNavCard from "../atom/cards/profile/ProfileNavCard";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { ProfileTabLinkType } from "../../../interfaces";
-import { currentUser } from "../../../redux/reducers/authSlice";
+import { currentUser } from "../../../redux/reducers/auth/authSlice";
 import EditProfileCard from "../atom/cards/profile/EditProfileCard";
 import { PrimaryButton } from "../atom/buttons";
-
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../../redux/reducers/auth/apiAuthSlice";
 
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 
 const ProfileLayout = ({ children }: Props) => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const isMentor = user?.mentor;
 
 	const { tab, id } = router.query as { id: string | undefined; tab: ProfileTabLinkType };

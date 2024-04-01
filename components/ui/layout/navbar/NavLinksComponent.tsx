@@ -3,7 +3,7 @@ import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { CourseType, ICourseCategory } from "../../../../interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../../../services/graphql/queries/course";

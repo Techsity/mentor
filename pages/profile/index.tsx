@@ -4,7 +4,7 @@ import ProfileLayout from "../../components/ui/layout/ProfileLayout";
 import { useSelector } from "react-redux";
 import MentorProfileOverview from "../../components/ui/organisms/user/mentor/MentorProfileOverview.tsx";
 import { ProfileTabLinkType } from "../../interfaces";
-import { currentUser } from "../../redux/reducers/authSlice";
+import { currentUser } from "../../redux/reducers/auth/authSlice";
 import UserCourseSubcriptions from "../../components/ui/organisms/user/profile/UserCourseSubcriptions";
 
 const UserProfilePage = () => {

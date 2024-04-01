@@ -1,19 +1,21 @@
 import React, { useId } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../interfaces/mentor.interface";
-import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../constants";
+import { daysOfTheWeek, PAYSTACK_CHECKOUT_URL, ToastDefaultOptions } from "../../../../../constants";
 import { PrimaryButton } from "../../../atom/buttons";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
 import { VERIFY_PAYMENT } from "../../../../../services/graphql/mutations/payment";
 import { useSelector, useDispatch } from "react-redux";
-import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { formatGqlError } from "../../../../../utils/auth";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { useModal } from "../../../../../context/modal.context";
 import ReasonModal from "../../../atom/modals/ReasonModal";
 import AppointmentRescheduleModal from "../../../atom/modals/AppointmentRescheduleModal";
+import { useRouter } from "next/router";
 
 const ExistingAppointment = (existingAppointment: IAppointment) => {
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 	const [confirmPayment, { loading: confirmLoading }] = useMutation<
@@ -70,7 +72,7 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 	};
 
 	const handleConfirmPayment = async () => {
-		if (existingAppointment.status == AppointmentStatus["AWAITING_PAYMENT"])
+		if (existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT)
 			try {
 				const { data } = await confirmPayment();
 				const response = data?.verifyPayment;
@@ -78,7 +80,9 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			} catch (error) {
 				console.error({ error });
 				const errMsg = formatGqlError(error);
-				toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
+				const [err, access_code] = errMsg.split(" | ");
+				if (access_code) router.replace(PAYSTACK_CHECKOUT_URL + access_code);
+				else toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
 			}
 	};
 
@@ -128,12 +132,12 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 
 			<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10]">
 				<div
-					className="text-sm border border-[#70C5A1] p-3 w-full capitalize text-center"
+					className="text-sm border border-[#70C5A1] p-3 w-full text-center"
 					style={{ fontFamily: "Days One" }}>
-					{day}
+					{date.toDateString()}
 				</div>
 				<div
-					className="text-sm border border-[#70C5A1] p-3 w-full text-center"
+					className="text-sm border border-[#70C5A1] p-3 w-full capitalize text-center"
 					style={{ fontFamily: "Days One" }}>
 					{formatTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"} - {formatTime(endHour, endMinutes)}{" "}
 					{isAmEnd ? "AM" : "PM"}

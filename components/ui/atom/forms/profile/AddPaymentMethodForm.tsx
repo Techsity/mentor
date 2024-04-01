@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import { PrimaryButton } from "../../buttons";
 import ActivityIndicator from "../../loader/ActivityIndicator";
-import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { IUserPaymentCard } from "../../../../../interfaces/user.interface";

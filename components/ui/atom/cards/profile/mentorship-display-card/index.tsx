@@ -3,7 +3,7 @@ import React, { useId } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { currentUser, updateMentorProfile } from "../../../../../../redux/reducers/authSlice";
+import { currentUser, updateMentorProfile } from "../../../../../../redux/reducers/auth/authSlice";
 import { PrimaryButton } from "../../../buttons";
 import SessionIndicator from "./SessionIndicator";
 import { useMutation } from "@apollo/client";
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../constants";
 import Avatar from "../../../common/user/Avatar";
 import { useRouter } from "next/router";
+import { fetchUserProfile } from "../../../../../../redux/reducers/auth/apiAuthSlice";
 
 const MentorshipDisplayCard = (session: IAppointment) => {
 	const toastId = useId();
@@ -62,6 +63,8 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 
 	const handleCancelRequest = async () => {
 		console.log("request cancelled");
+		dispatch(fetchUserProfile() as any);
+
 		//
 	};
 

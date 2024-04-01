@@ -7,7 +7,7 @@ import { calculateRatingInReviews, formatFollowersCount, slugify } from "../../.
 import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import Avatar from "../../common/user/Avatar";
 
 const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null; loading?: boolean }) => {

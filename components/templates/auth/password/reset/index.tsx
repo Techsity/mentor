@@ -12,7 +12,7 @@ import ResponseMessages from "../../../../../constants/response-codes";
 import { FORGOT_PASSWORD, RESET_PASSWORD } from "../../../../../services/graphql/mutations/auth";
 import { formatGqlError } from "../../../../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { resetPasswordState } from "../../../../../redux/reducers/authSlice";
+import { resetPasswordState } from "../../../../../redux/reducers/auth/authSlice";
 import { EyeSharp, EyeOffSharp } from "react-ionicons";
 
 type VerifyUserResponseType = {

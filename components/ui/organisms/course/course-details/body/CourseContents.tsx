@@ -5,7 +5,7 @@ import { PrimaryButton } from "../../../../atom/buttons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../../redux/reducers/auth/authSlice";
 
 const CourseContents = ({
 	course,

@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import OtpTemplate from "../../../../components/templates/auth/verification/OtpTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/authSlice";
+import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/auth/authSlice";
 import ActivityIndicator from "../../../../components/ui/atom/loader/ActivityIndicator";
 import { useMutation } from "@apollo/client";
 import { REQUEST_OTP } from "../../../../services/graphql/mutations/auth";

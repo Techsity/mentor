@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { currentUser, isLoggedIn } from "../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../redux/reducers/auth/authSlice";
 import { NextPage } from "next";
 import ActivityIndicator from "../components/ui/atom/loader/ActivityIndicator";
 import { useEffect } from "react";
@@ -34,7 +34,6 @@ const protectedPageWrapper = (PageComponent: NextPage<any> | React.FC<any>, prop
 				</div>
 			);
 		}
-
 		return <PageComponent {...props} />;
 	};
 

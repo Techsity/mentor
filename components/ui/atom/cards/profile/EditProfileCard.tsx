@@ -1,49 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser, switchProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateMentorProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { PrimaryButton } from "../../buttons";
 import { useRouter } from "next/router";
-import { useLazyQuery } from "@apollo/client";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
-import { GET_MENTOR_PROFILE } from "../../../../../services/graphql/queries/mentor";
 import { PowerOutline } from "react-ionicons";
 import { logoutUser } from "../../../../../utils/auth";
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSocketContext } from "../../../../../context/socket-io.context";
 import Avatar from "../../common/user/Avatar";
+import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const user = useSelector(currentUser);
-	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
 	const { client } = useSocketContext();
 
-	const handleSwitchProfile = async () => {
+	const handleProfileSwitch = async () => {
 		setLoading(true);
+		console.log({ is_mentor: user?.is_mentor });
 		if (user?.is_mentor || user?.mentor) {
-			if (user?.mentor || user?.mentor) {
-				setTimeout(function () {
-					setLoading(false);
-					dispatch(switchProfile({ profile: null }));
-					router.replace("/profile");
-				}, 1000);
-			} else {
-				try {
-					const res = await getMentorProfile();
-					const mentorProfile = res.data?.getMentorProfile;
-					if (mentorProfile) {
-						setLoading(false);
-						dispatch(switchProfile({ profile: mentorProfile }));
-						router.replace("/profile");
-					}
-				} catch (err) {
-					console.error(err);
-					setLoading(false);
-				}
-			}
+			if (user.mentor) dispatch(updateMentorProfile(null));
+			else await dispatch(fetchUserProfile() as any);
+			setLoading(false);
+			router.replace("/profile");
 		} else router.push("/mentor/onboarding");
 	};
 
@@ -52,6 +35,8 @@ const EditProfileCard = () => {
 			client.disconnect();
 		});
 	};
+
+	const role = user?.mentor ? "Mentor" : "Mentee";
 
 	return (
 		<div>
@@ -63,7 +48,7 @@ const EditProfileCard = () => {
 						<div className="text-sm">
 							<p className="font-medium">{user?.name}</p>
 							{/* <p>{user?.role}</p> */}
-							<p className="text-[#70C5A1]">{user?.mentor ? "Mentor" : "User"}</p>
+							<p className="text-[#70C5A1]">{role}</p>
 						</div>
 					</div>
 					<div className="cursor-pointer" onClick={handleLogout}>
@@ -112,7 +97,7 @@ const EditProfileCard = () => {
 						icon={loading ? <ActivityIndicator /> : null}
 						className="p-2 px-4 bg-[#FFB100] font-medium text-sm"
 						style={{ color: "black" }}
-						onClick={handleSwitchProfile}
+						onClick={handleProfileSwitch}
 						disabled={loading}
 					/>
 				</div>

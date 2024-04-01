@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { link } from "fs";
 import { ProfileTabLinkType } from "../../../../../interfaces";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
+import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
 
 const ProfileNavCard = ({
 	activetab,
@@ -20,7 +21,6 @@ const ProfileNavCard = ({
 	const router = useRouter();
 	const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 	const tab = router.query.tab as ProfileTabLinkType;
-
 	const activeLink = useMemo(() => tab, [router, tab, user]);
 
 	useEffect(() => {

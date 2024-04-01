@@ -8,7 +8,7 @@ import * as FlagIcons from "react-country-flags-select";
 import countries from "../../../../../data/countries";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { toast } from "react-toastify";
-import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../../../services/graphql/mutations/user";
 

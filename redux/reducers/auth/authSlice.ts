@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAuthState } from "../../interfaces/auth.interface";
-import { IMentor } from "../../interfaces/mentor.interface";
-import { IUser } from "../../interfaces/user.interface";
-import { RootState } from "../store";
+import { IAuthState } from "../../../interfaces/auth.interface";
+import { IMentor } from "../../../interfaces/mentor.interface";
+import { IUser } from "../../../interfaces/user.interface";
+import { RootState } from "../../store";
 
 const initialState: IAuthState = {
 	isLoggedIn: false,
@@ -32,23 +32,19 @@ const authSlice = createSlice({
 			if (action.payload) state.user = { ...state.user, ...action.payload } as IUser | null;
 		},
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
-			if (state.user)
-				if (action.payload) state.user.mentor = { ...state.user.mentor, ...action.payload } as IMentor | null;
+			if (state.user) {
+				if (action.payload === null) state.user.mentor = null;
+				else state.user.mentor = { ...state.user.mentor, ...action.payload } as IMentor | null;
+			}
 		},
 		setResetPasswordState: (state, action: { payload: Partial<IAuthState["resetPasswordState"]> | null }) => {
 			state.resetPasswordState = action.payload as IAuthState["resetPasswordState"];
 			return state;
 		},
-		switchProfile: (state, action: { payload: { profile: IMentor | null } }) => {
-			if (state?.user) {
-				if (state.user.mentor) state.user.is_mentor = true;
-				state.user.mentor = action.payload.profile;
-			}
-		},
 	},
 });
 
-export const { setCredentials, logOut, updateUserProfile, setResetPasswordState, switchProfile, updateMentorProfile } =
+export const { setCredentials, logOut, updateUserProfile, setResetPasswordState, updateMentorProfile } =
 	authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;

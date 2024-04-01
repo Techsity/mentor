@@ -32,7 +32,7 @@ import { formatGqlError } from "../../../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import { switchProfile } from "../../../../../../../redux/reducers/authSlice";
+import { switchProfile } from "../../../../../../../redux/reducers/auth/authSlice";
 
 const FinalMentorOnboardingStep = () => {
 	const dispatch = useDispatch();

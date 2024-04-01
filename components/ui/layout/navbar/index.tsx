@@ -6,7 +6,7 @@ import { MenuSharp } from "react-ionicons";
 import { useSidebar } from "../../../../context/sidebar.context";
 import NavLinksComponent from "./NavLinksComponent";
 import { useSelector } from "react-redux";
-import { currentUser, isLoggedIn } from "../../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../../redux/reducers/auth/authSlice";
 import CurrentUserProfileCard from "../../atom/common/user/CurrentUserProfileCard";
 import NotificationCard from "../../atom/cards/notification";
 import { useNotificationContext } from "../../../../context/notification.context";

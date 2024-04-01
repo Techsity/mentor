@@ -3,7 +3,7 @@ import { IUser, Notification } from "../interfaces/user.interface";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { MARK_NOTIFICATION_AS_READ } from "../services/graphql/mutations/user";
 import { useSelector } from "react-redux";
-import { currentUser } from "../redux/reducers/authSlice";
+import { currentUser } from "../redux/reducers/auth/authSlice";
 import { useSocketContext } from "./socket-io.context";
 import EVENTS from "../constants/events.constant";
 import dayjs from "dayjs";

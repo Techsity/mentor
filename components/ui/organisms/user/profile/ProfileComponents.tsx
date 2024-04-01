@@ -13,7 +13,7 @@ import { PrimaryButton } from "../../../atom/buttons";
 import { useRouter } from "next/router";
 import EditCourseTemplate from "../../../../templates/course/edit";
 import EditCourseContent from "../../course/edit-course/EditCourseContent";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import MentorProfileCourses from "../mentor/courses/MentorProfileCourses";
 
 const ProfileComponents = ({ activetab }: { activetab: ProfileTabLinkType }) => {

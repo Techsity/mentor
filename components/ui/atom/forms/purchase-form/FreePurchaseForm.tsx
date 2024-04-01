@@ -3,7 +3,7 @@ import CustomTextInput from "../../inputs/CustomTextInput";
 import { PrimaryButton } from "../../buttons";
 import CountrySelectorComp from "../../inputs/CountrySelector";
 import { useSelector } from "react-redux";
-import { currentUser, updateUserProfile } from "../../../../../redux/reducers/authSlice";
+import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@apollo/client";
 import { SUBSCRIBE_TO_WORKSHOP } from "../../../../../services/graphql/mutations/workshop";

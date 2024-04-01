@@ -3,47 +3,35 @@ import MentorshipDisplayCard from "../../../atom/cards/profile/mentorship-displa
 import mentors from "../../../../../data/mentors";
 import { AppointmentStatus, IAppointment, IMentorshipSession } from "../../../../../interfaces/mentor.interface";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 
 const RegisteredMentorships = () => {
 	const user = useSelector(currentUser);
 
-	const upcomingSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.UPCOMING)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.UPCOMING);
+	const appointments = user?.is_mentor ? user?.mentor?.appointments : user?.appointments || [];
 
-	const pendingSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.PENDING)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.PENDING);
+	const upcomingSessions = appointments?.filter((session) => session.status === AppointmentStatus.UPCOMING);
 
-	const acceptedSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.ACCEPTED)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.ACCEPTED);
+	const pendingSessions = appointments?.filter(
+		(session) =>
+			session.status === AppointmentStatus.PENDING ||
+			session.status === AppointmentStatus.RESCHEDULED_BY_MENTOR ||
+			session.status === AppointmentStatus.RESCHEDULED_BY_USER,
+	);
 
-	const concludedSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.COMPLETED)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.COMPLETED);
-
-	const cancelledSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELLED_BY_USER)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.CANCELLED_BY_USER);
-
-	const declinedSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.DECLINED)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.DECLINED);
-
-	const overdueSessions = !user?.is_mentor
-		? user?.appointments?.filter((session) => session.status === AppointmentStatus.OVERDUE)
-		: user?.mentor?.appointments?.filter((session) => session.status === AppointmentStatus.OVERDUE);
+	const acceptedSessions = appointments?.filter((session) => session.status === AppointmentStatus.ACCEPTED);
+	const concludedSessions = appointments?.filter((session) => session.status === AppointmentStatus.COMPLETED);
+	const cancelledSessions = appointments?.filter(
+		(session) =>
+			session.status === AppointmentStatus.CANCELLED_BY_USER ||
+			session.status === AppointmentStatus.CANCELLED_BY_MENTOR,
+	);
+	const declinedSessions = appointments?.filter((session) => session.status === AppointmentStatus.DECLINED);
+	const overdueSessions = appointments?.filter((session) => session.status === AppointmentStatus.OVERDUE);
 
 	return (
 		<div className="flex flex-col gap-12 overflow-hidden pb-10">
-			{user &&
-				(user?.appointments.length < 1 ? (
-					<p className="text-sm">Nothing here 💨</p>
-				) : (
-					user.mentor && user?.mentor?.appointments.length < 1 && <p className="text-sm">Nothing here 💨</p>
-				))}
+			{user && appointments && appointments.length < 1 && <p className="text-sm">Nothing here 💨</p>}
 			{upcomingSessions && upcomingSessions.length > 0 && (
 				<ListSessions sessions={upcomingSessions} status={AppointmentStatus.UPCOMING} />
 			)}

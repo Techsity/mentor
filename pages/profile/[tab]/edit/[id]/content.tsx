@@ -4,7 +4,7 @@ import router, { useRouter } from "next/router";
 import ProfileLayout from "../../../../../components/ui/layout/ProfileLayout";
 import { PrimaryButton } from "../../../../../components/ui/atom/buttons";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { CourseContentUploadProvider } from "../../../../../context/course-content-upload.context";
 
 const ContentEditPageContainer = () => {

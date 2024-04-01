@@ -5,7 +5,7 @@ import ProfileLayout from "../../../../components/ui/layout/ProfileLayout";
 import { ICourse, ProfileTabLinkType } from "../../../../interfaces";
 import WorkshopAndCourseEditTemplate from "../../../../components/templates/course/edit";
 import { PrimaryButton } from "../../../../components/ui/atom/buttons";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { newCourse, setNewCourse } from "../../../../redux/reducers/coursesSlice";
 import { toast } from "react-toastify";

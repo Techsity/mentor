@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
 
@@ -12,7 +12,7 @@ const CurrentUserProfileCard = () => {
 	const navigate = () => {
 		user?.is_admin && adminUrl ? window.open(adminUrl, "_blank") : router.push("/profile");
 	};
-	const role = user?.is_mentor ? "Mentor" : "Mentee";
+	const role = user?.mentor ? "Mentor" : "Mentee";
 
 	return (
 		<div onClick={navigate} className="relative group cursor-pointer h-full">

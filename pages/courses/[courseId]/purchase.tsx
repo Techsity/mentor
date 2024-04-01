@@ -5,7 +5,7 @@ import client from "../../../utils/apolloClient";
 import { VIEW_COURSE } from "../../../services/graphql/queries/course";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../redux/reducers/authSlice";
+import { currentUser } from "../../../redux/reducers/auth/authSlice";
 import { useRouter } from "next/router";
 import protectedPageWrapper from "../../protectedPageWrapper";
 

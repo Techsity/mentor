@@ -63,34 +63,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	);
 };
 
-// MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
-// 	const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-// 	if (!ctx.req) {
-// 		console.log({ context: ctx.req });
-// 		return { pageProps: { ...pageProps } };
-// 	}
-// 	const authToken = checkAuthServerSide(ctx.req) as string;
-// 	const decodedToken: any = jwt.decode(authToken);
-// 	if (!decodedToken) {
-// 		console.error("Error decoding auth token");
-// 		return { pageProps: { ...pageProps, logout: true } };
-// 	}
-// 	if (decodedToken.exp < parseInt((Date.now() / 1000).toFixed(0))) {
-// 		console.log("Auth Token has expired");
-// 		return { pageProps: { ...pageProps, logout: true } };
-// 	}
-// 	console.log("Auth Token is still valid");
-// 	const { data, error } = await apolloClient({ authToken, ssr: true }).query({
-// 		query: GET_USER_PROFILE,
-// 	});
-// 	if (error) {
-// 		console.error(JSON.stringify(error));
-// 		const errorMessage = formatGqlError(error);
-// 		logoutUser();
-// 		return { pageProps: { ...pageProps, logout: true } };
-// 	}
-// 	const user: IUser | null = data?.userProfile || null;
-// 	return { pageProps: { ...pageProps, user } };
-// };
-
 export default MyApp;

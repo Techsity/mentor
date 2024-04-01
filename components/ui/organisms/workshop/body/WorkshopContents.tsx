@@ -7,7 +7,7 @@ import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
 import { setWorkshopToRegister } from "../../../../../redux/reducers/workshopSlice";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 
 type WorkshopContentType = {
 	workshop: IWorkshop;

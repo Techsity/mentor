@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSidebar } from "../../../../context/sidebar.context";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { currentUser, isLoggedIn } from "../../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../../redux/reducers/auth/authSlice";
 import navLinks, { NavLinkSubLink } from "../../../../data/navlinks";
 
 const Sidebar = () => {

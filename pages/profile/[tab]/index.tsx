@@ -4,7 +4,7 @@ import ProfileLayout from "../../../components/ui/layout/ProfileLayout";
 import { useRouter } from "next/router";
 import { ProfileTabLinkType } from "../../../interfaces";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../redux/reducers/authSlice";
+import { currentUser } from "../../../redux/reducers/auth/authSlice";
 import ProfileSettings from "../../../components/ui/organisms/user/profile/ProfileSettings";
 import MentorProfileOverview from "../../../components/ui/organisms/user/mentor/MentorProfileOverview.tsx";
 import MentorProfileWorkshop from "../../../components/ui/organisms/user/mentor/workshop/MentorProfileWorkshop";

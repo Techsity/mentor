@@ -6,7 +6,7 @@ import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 import { useDispatch } from "react-redux";
 import { setOnboardingMentor, onboardingMentorState } from "../../../../redux/reducers/onboardingSlice";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 
 const MentorOnboardingPageTemplate = () => {
 	const dispatch = useDispatch();

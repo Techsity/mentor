@@ -10,7 +10,7 @@ import { useModal } from "../../../../../context/modal.context";
 import ReportMentorModal from "../../../atom/modals/ReportMentorModal";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { isLoggedIn, currentUser } from "../../../../../redux/reducers/authSlice";
+import { isLoggedIn, currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 
 const WorkShopDetailsBody = (workshop: IWorkshop) => {

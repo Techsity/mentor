@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../buttons";
 import { navigateToAuthPage } from "../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import dayjs from "dayjs";
 import "dayjs/plugin/relativeTime";
 import Avatar from "../../common/user/Avatar";

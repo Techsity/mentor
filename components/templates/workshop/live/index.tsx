@@ -10,7 +10,7 @@ import {
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import workshops from "../../../../data/workshops";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { IWorkshop } from "../../../../interfaces";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { client } from "../../../../hooks/agora";

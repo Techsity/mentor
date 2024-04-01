@@ -1,27 +1,17 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { ILoginState } from "../../interfaces/auth.interface";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { testUser } from "../../data/user";
 import { isEmail } from "../../utils";
 import { toast } from "react-toastify";
-import { AUTH_TOKEN_KEY, ToastDefaultOptions } from "../../constants";
-import { setCredentials } from "../../redux/reducers/authSlice";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { ToastDefaultOptions } from "../../constants";
+import { useLazyQuery } from "@apollo/client";
 import { GET_MENTOR_PROFILE } from "../../services/graphql/queries/mentor";
 import { IUser } from "../../interfaces/user.interface";
-import { authenticate, formatGqlError } from "../../utils/auth";
-import ResponseMessages from "../../constants/response-codes";
-import mentors from "../../data/mentors";
 import { IMentor } from "../../interfaces/mentor.interface";
-import { LOGIN_USER } from "../../services/graphql/mutations/auth";
-
-type ICreateLoginInput = {
-	createLoginInput: ILoginState;
-};
-type LoginResponse = {
-	loginUser: { user: IUser & { is_admin: boolean }; access_token: string; is_mentor: boolean };
-};
+import { loginUser } from "../../redux/reducers/auth/apiAuthSlice";
+import { formatGqlError } from "../../utils/auth";
+import ResponseMessages from "../../constants/response-codes";
 
 const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const router = useRouter();
@@ -35,7 +25,6 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 	const [state, setState] = useState<ILoginState>(initialValues || initial);
 
 	const [error, setError] = useState<string[]>([]);
-	const [loginUser] = useMutation<LoginResponse, ICreateLoginInput>(LOGIN_USER);
 	const [getMentorProfile] = useLazyQuery<{ getMentorProfile: IMentor }, any>(GET_MENTOR_PROFILE);
 
 	const handleChange = (field: keyof ILoginState) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,120 +50,21 @@ const useLoginForm = (props?: { initialValues: ILoginState }) => {
 		}
 		// Perform login api call here
 		try {
-			const response = await loginUser({
-				variables: {
-					createLoginInput: {
-						email: state.email,
-						password: state.password,
-					},
-				},
-			});
-			if (response.data) {
-				const userData: IUser = response.data.loginUser.user;
-				const authToken = response.data.loginUser.access_token;
-				const is_mentor = response.data.loginUser.is_mentor;
-				const is_admin = response.data.loginUser.user.is_admin;
-				if (response.data.loginUser.user) {
-					// setLoading(false);
-					authenticate(authToken, async () => {
-						if (is_admin) {
-							dispatch(
-								setCredentials({
-									isLoggedIn: true,
-									user: {
-										...userData,
-										is_mentor: true,
-										is_admin: true,
-										is_online: true,
-									},
-								}),
-							);
-							window.location.href = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
-						} else if (is_mentor) {
-							const { data, loading, error } = await getMentorProfile({
-								context: {
-									headers: {
-										Authorization: `Bearer ${authToken}`,
-									},
-								},
-							});
-							if (!loading) {
-								if (data?.getMentorProfile) {
-									const mentorProfile: IMentor = data.getMentorProfile;
-									dispatch(
-										setCredentials({
-											isLoggedIn: true,
-											user: {
-												...userData,
-												is_mentor: true,
-												is_online: true,
-												is_admin: false,
-												// Temporary
-												payment_cards: [
-													{
-														bank: { name: "GTbank via Paystack" },
-														card_name: "John Doe Ipsum",
-														card_number: "5399 8878 9887 99099",
-													},
-												],
-											},
-											mentorProfile,
-										}),
-									);
-									const next = router.query.next as string;
-									if (next) router.replace(decodeURIComponent(next));
-									else router.replace(`/profile`);
-								}
-								if (error) {
-									// Todo: Error handling if mentor profile is not found
-									setLoading(false);
-									console.log("error getting mentor profile: ", error);
-								}
-							}
-						} else {
-							dispatch(
-								setCredentials({
-									isLoggedIn: true,
-									user: {
-										...userData,
-										is_mentor: false,
-										is_online: true,
-										// Temporary
-										payment_cards: [
-											{
-												bank: { name: "GTbank via Paystack" },
-												card_name: "John Doe Ipsum",
-												card_number: "5399 8878 9887 99099",
-											},
-										],
-									},
-								}),
-							);
-							const next = router.query.next as string;
-							if (next) router.replace(decodeURIComponent(next));
-							else router.replace(`/profile`);
-						}
-					});
-				}
-			} else {
-				setLoading(false);
-				console.log({ response: response });
+			const { payload } = await dispatch(loginUser({ email: state.email, password: state.password }) as any);
+			const { success, is_mentor, is_admin, error } = payload;
+			if (!success && error && error === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
+				toast.info(
+					"An OTP has been sent to your phone number/email",
+					ToastDefaultOptions({ id: "auth_form_pop" }),
+				);
+				// Todo: request for otp mutation here, before redirecting
+				router.push("/auth/verification/signup");
 			}
-		} catch (error: any) {
-			console.error(JSON.stringify(error));
+		} catch (error) {
+			console.error({ error });
+			toast.error("Something went wrong", { ...ToastDefaultOptions({ id: "error" }) });
+		} finally {
 			setLoading(false);
-			const errorMessage = formatGqlError(error);
-			// If account is not active, redirect to otp screen
-			if (errorMessage === ResponseMessages.ACCOUNT_NOT_ACTIVE) {
-				toast.error(errorMessage + "\nRedirecting...", ToastDefaultOptions({ id: "auth_form_pop" }));
-				setTimeout(function () {
-					toast.dismiss("auth_form_pop");
-					// Todo: request for otp mutation here, before redirecting
-					router.push("/auth/verification/signup");
-				}, 2000);
-				return;
-			}
-			toast.error(errorMessage, ToastDefaultOptions({ id: "auth_form_pop" }));
 		}
 	};
 	return { loading, handleSubmit, currentState: state, error, handleChange };

@@ -15,7 +15,7 @@ import { FOLLOW_MENTOR } from "../../../../../services/graphql/mutations/mentors
 import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
-import { currentUser, isLoggedIn } from "../../../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../../../redux/reducers/auth/authSlice";
 import Avatar from "../../common/user/Avatar";
 
 type MentorProfileCardProps = {

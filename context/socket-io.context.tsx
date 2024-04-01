@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Socket, io } from "socket.io-client";
-import { currentUser } from "../redux/reducers/authSlice";
+import { currentUser } from "../redux/reducers/auth/authSlice";
 
 interface ISocketContext {
 	client: Socket;

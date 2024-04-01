@@ -10,7 +10,7 @@ import { FORGOT_PASSWORD } from "../../../../services/graphql/mutations/auth";
 import ResponseMessages from "../../../../constants/response-codes";
 import { formatGqlError } from "../../../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/authSlice";
+import { resetPasswordState, setResetPasswordState } from "../../../../redux/reducers/auth/authSlice";
 
 const ForgotPasswordTemplate = () => {
 	const router = useRouter();

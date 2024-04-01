@@ -71,3 +71,5 @@ export const supportedCurrencies: { name: ISOCurrency; symbol: string }[] = [
 	{ name: "ZAR", symbol: "R" },
 	{ name: "KES", symbol: "KSh" },
 ];
+
+export const PAYSTACK_CHECKOUT_URL = "https://checkout.paystack.com/";

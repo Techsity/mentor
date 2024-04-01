@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { MicMuted, RecIcon, ShareScreenIcon, SpeakingIcon } from "../../../atom/icons/svgs/call";
 import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { IWorkshop } from "../../../../../interfaces";
 import dynamic from "next/dynamic";
 import { useLocalMicrophoneTrack, useLocalCameraTrack, usePublish, useRemoteUsers, RemoteUser } from "agora-rtc-react";

@@ -10,7 +10,7 @@ import OtherCoursesByMentor from "../../../ui/organisms/course/course-details/ot
 import { useModal } from "../../../../context/modal.context";
 import ReportMentorModal from "../../../ui/atom/modals/ReportMentorModal";
 import { useSelector } from "react-redux";
-import { currentUser, isLoggedIn } from "../../../../redux/reducers/authSlice";
+import { currentUser, isLoggedIn } from "../../../../redux/reducers/auth/authSlice";
 import { useRouter } from "next/router";
 import { navigateToAuthPage } from "../../../../utils/auth";
 

@@ -3,7 +3,7 @@ import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import { AppointmentStatus, IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
 import { daysOfTheWeek } from "../../../../constants";
 import classNames from "classnames";
-import { currentUser } from "../../../../redux/reducers/authSlice";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { useSelector } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
