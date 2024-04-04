@@ -68,7 +68,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 	};
 	const links = ["www.linkedin.com/example_link", "www.example.com"];
 	const overallExperience = calculateOverallExperience(mentor?.work_experience as IMentorExperience[]);
-
+	const mentorNameLength = mentor?.user.name.split(" ").length;
 	useEffect(() => {
 		if (mentor) {
 			setFollowersCount(mentor.followers.length);
@@ -81,8 +81,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 			<div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full" />
 			{/* <div className="absolute bg-gradient-to-r from-[#70C5A1] via-[white] to-[#70C5A1] w-[110%] h-full group-hover:animate-[spin_8s_infinite]" /> */}
 			<div className="z-20 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
-				<div className="relative h-full md:w-[52%] w-full flex sm:flex-row flex-col items-start gap-2">
-					<div className="w-[75px] xs:w-20 xs:h-24 lg:w-40 xl:w-32 h-[75px] lg:h-32 xl:h-28 rounded-full overflow-hidden">
+				<div className="relative h-full md:w-[52%] w-full flex md:flex-row flex-col items-start gap-2">
+					<div className="w-[75px] h-[75px] xs:w-20 xs:h-20 sm:w-16 md:w-20 sm:h-16 lg:w-40 lg:h-28 xl:w-[100px] xl:h-[89px] rounded-full overflow-hidden">
 						{loading ? (
 							<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
 						) : (
@@ -90,12 +90,14 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 						)}
 					</div>
 					<div className="w-full">
-						<div className="flex xs:flex-row flex-col items-start xs:items-center gap-2 md:flex-wrap">
+						<div className="flex xl:flex-row flex-col items-start xl:items-center gap-2">
 							{loading ? (
 								<span className="bg-zinc-200 h-1 w-20" />
 							) : (
 								<h1 className="text-lg text-[#094B10] font-semibold flex items-center gap-2">
-									{mentor?.user.name}
+									{mentorNameLength && mentorNameLength >= 3
+										? mentor?.user.name.split(" ")[0] + " " + mentor?.user.name.split(" ")[1]
+										: mentor?.user.name}
 									{mentor?.mentor_verified && (
 										<svg
 											width="16"
@@ -117,7 +119,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								) : (
 									<p className="text-sm">{formatFollowersCount(followersCount)} followers</p>
 								)}
-								{!loading && !followLoading ? (
+								{~loading && !followLoading ? (
 									<button
 										onClick={handleFollow}
 										className={classNames(

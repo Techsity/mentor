@@ -3,7 +3,15 @@ import { IUser } from "../../../../../interfaces/user.interface";
 import { IUserWithMentor } from "../../../../../interfaces/auth.interface";
 import classNames from "classnames";
 
-const Avatar = ({ user, className }: { user?: IUser | IUserWithMentor | null; className?: string }) => {
+const Avatar = ({
+	user,
+	className,
+	useName = false,
+}: {
+	user?: IUser | IUserWithMentor | null;
+	className?: string;
+	useName?: boolean;
+}) => {
 	const colors = ["bg-red-400", "bg-blue-400", "bg-green-400", "bg-yellow-400", "bg-purple-400"];
 
 	const getRandomColor = () => {
@@ -20,7 +28,7 @@ const Avatar = ({ user, className }: { user?: IUser | IUserWithMentor | null; cl
 		<div className={classNames("rounded-full object-cover relative", className ? className : "w-9 h-9")}>
 			<img src={user?.avatar} alt={""} className="w-full h-full bg-zinc-300 rounded-full" loading="lazy" />
 		</div>
-	) : (
+	) : useName ? (
 		<p
 			className={classNames(
 				"select-none rounded-full object-cover relative text-black flex justify-center items-center font-semibold uppercase",
@@ -29,6 +37,15 @@ const Avatar = ({ user, className }: { user?: IUser | IUserWithMentor | null; cl
 			)}>
 			{user?.name.charAt(0)}
 		</p>
+	) : (
+		<div className={classNames("rounded-full object-cover relative", className ? className : "w-9 h-9")}>
+			<img
+				src={"/assets/images/avatar.png"}
+				alt={""}
+				className="w-full h-full bg-zinc-300 rounded-full"
+				loading="lazy"
+			/>
+		</div>
 	);
 };
 

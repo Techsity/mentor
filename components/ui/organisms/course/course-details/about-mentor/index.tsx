@@ -17,7 +17,6 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 
 	const user = useSelector(currentUser);
 	const auth = useSelector(isLoggedIn);
-	const hasFollowedMentor = !true;
 	const [followMentorMutation, { loading: followLoading, data }] = useMutation(FOLLOW_MENTOR);
 	const [followersCount, setFollowersCount] = useState<number>(0);
 	const [followingMentor, setFollowingMentor] = useState<boolean>(false);
@@ -59,39 +58,45 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 							alt={mentor.user.name}
 						/>
 					</div>
-					<div className="grid items-center max-w-sm font-[300] text-sm gap-1">
-						<div className="flex item-center gap-2">
-							<h1 className="font-semibold text-lg text-[#094B10]">{mentor.user.name}</h1>
-							{mentor.mentor_verified ? (
-								<svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="mt-1.5">
-									<path
-										d="M6.29757 11L4 8.60232L5.04704 7.50965L6.29757 8.81853L9.95296 5L11 6.09266L6.29757 11Z"
-										fill="#0CF27E"
-									/>
-									<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
-								</svg>
-							) : null}
-							<p className="flex items-center">{formatFollowersCount(followersCount)} followers</p>
-							{/* <p className="flex gap-2 items-center text-[#70C5A1] select-none cursor-pointer">+follow</p> */}
-							{!followLoading ? (
-								<button
-									onClick={handleFollow}
-									className={classNames(
-										"flex items-center justify-center",
-										"text-sm hover:underline",
-										followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
-									)}>
-									{followingMentor ? "Unfollow" : "+ Follow"}
-								</button>
-							) : (
-								<ActivityIndicator className="border-[.1em]" size={10} />
-							)}
+					<div className="grid items-start max-w-lg font-[300] text-sm gap-1">
+						<div className="">
+							<h1 className="font-semibold text-lg text-[#094B10] flex items-start gap-2 relative">
+								{mentor.user.name}
+								{mentor.mentor_verified && (
+									<svg
+										width="15"
+										height="15"
+										viewBox="0 0 15 15"
+										fill="none"
+										className="absolute -right-6 top-1">
+										<path
+											d="M6.29757 11L4 8.60232L5.04704 7.50965L6.29757 8.81853L9.95296 5L11 6.09266L6.29757 11Z"
+											fill="#0CF27E"
+										/>
+										<rect x="0.5" y="0.5" width="14" height="14" rx="7" stroke="#70C5A1" />
+									</svg>
+								)}
+							</h1>
 						</div>
 						<p className="">{mentor.role.split("_").join(" ")} </p>
 						<p className="flex gap-1 items-center">
 							{formatFollowersCount(mentor.courses.length)} Courses |{" "}
 							{formatFollowersCount(followersCount)} Followers
 						</p>
+						<div className="flex items-start justify-start py-3">
+							{!followLoading ? (
+								<span
+									onClick={handleFollow}
+									className={classNames(
+										"text-sm cursor-pointer",
+										followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
+									)}>
+									{followingMentor ? "Unfollow" : "+ Follow"}
+								</span>
+							) : (
+								<ActivityIndicator className="border-[.1em]" size={10} />
+							)}
+						</div>
 					</div>
 				</div>
 				<div className="text-[#9A9898] text-sm max-w-2xl">{mentor.about}</div>

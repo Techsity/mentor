@@ -17,7 +17,7 @@ const CurrentUserProfileCard = () => {
 	return (
 		<div onClick={navigate} className="relative group cursor-pointer h-full">
 			<div className="flex items-center gap-3">
-				<Avatar user={user} />
+				<Avatar user={user} useName />
 				<div className="leading-none sm:inline-block hidden">
 					<h1 className="text-sm">
 						{/* {user?.name.split(" ")[0] +

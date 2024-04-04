@@ -158,9 +158,10 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 													value={selectedCurrency.name}
 													id=""
 													className="px-4 p-2">
-													{supportedCurrencies.map((currency) => {
+													{supportedCurrencies.map((currency, i) => {
 														return (
 															<option
+																key={i}
 																onClick={() => handleCurrencyExchange(currency)}
 																value={currency.name}
 																className="">

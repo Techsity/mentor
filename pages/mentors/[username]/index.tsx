@@ -32,21 +32,23 @@ export const getServerSideProps = async (
 	ctx: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<Partial<MentorDetailsProps>>> => {
 	const username = String(ctx.query.username);
+
 	try {
 		const query = client({ ssr: true }).query;
 		const {
 			data: { viewMentor: mentor },
+			error,
 		} = await query<{ viewMentor: IMentor }, { viewMentorId: string }>({
 			query: VIEW_MENTOR_PROFILE,
 			variables: { viewMentorId: username },
 		});
-		// if (error) {
-		// 	console.error(error);
-		// 	return { props: { mentor, error: "" } };
-		// }
-		return { props: { mentor, error: "" } };
+		if (error) {
+			console.error(error);
+			return { props: { mentor, error: formatGqlError(error) } };
+		}
+		return { props: { mentor } };
 	} catch (error) {
-		console.error(error);
+		console.error({ error });
 		const errorMsg = formatGqlError(error);
 		if (errorMsg == ResponseMessages.MENTOR_PROFILE_NOT_FOUND) return { props: { error: errorMsg } };
 		return { props: { error: "Something went wrong. Please refresh page and try again." } };

@@ -59,7 +59,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 						</div>
 					)}
 					{/* Wishlist Feature - End*/}
-					<div className="h-[85%] cursor-pointer" onClick={navigateToCourse}>
+					<div onClick={navigateToCourse} className="h-[85%] cursor-pointer">
 						<div className="flex flex-col items-start gap-4 h-full w-full">
 							<div className="relative h-[200px] w-full bg-zinc-200 overflow-hidden">
 								{!loading && (
