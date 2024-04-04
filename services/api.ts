@@ -36,12 +36,7 @@ export const fetchCourses = async (variables?: {
 	});
 };
 
-export const processExchangeRate = async (curr: ISOCurrency, next: (rate: number) => void) => {
-	try {
-		const { data } = await axios.get(`/api/exchange-rate/${curr}`);
-		if (data.rate) next(data.rate);
-	} catch (error) {
-		console.error("error while processing exchange: ", { error: JSON.stringify(error) });
-		toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions({ id: "error" }) });
-	}
+export const processExchangeRate = async (curr: ISOCurrency) => {
+	const { data } = await axios.get(`/api/exchange-rate/${curr}`);
+	return data.rate;
 };

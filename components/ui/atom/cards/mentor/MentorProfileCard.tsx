@@ -119,7 +119,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								) : (
 									<p className="text-sm">{formatFollowersCount(followersCount)} followers</p>
 								)}
-								{~loading && !followLoading ? (
+								{!loading && !followLoading ? (
 									<button
 										onClick={handleFollow}
 										className={classNames(

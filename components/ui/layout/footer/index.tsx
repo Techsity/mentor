@@ -11,7 +11,7 @@ import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 const Footer = () => {
 	const router = useRouter();
 	const user = useSelector(currentUser);
-	const excludedPaths: string[] = ["purchase", "register", "profile", "admin"];
+	const excludedPaths: string[] = ["purchase", "register", "profile", "admin", "success", "learn"];
 	const hideFooter: boolean = excludedPaths.some((path) => router.asPath.includes(path));
 
 	return hideFooter ? (

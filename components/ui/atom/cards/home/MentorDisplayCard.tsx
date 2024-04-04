@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { HeartOutline, ArrowForwardSharp, StarSharp } from "react-ionicons";
-import Link from "next/link";
+import { ArrowForwardSharp } from "react-ionicons";
 import { IMentor } from "../../../../../interfaces/mentor.interface";
 import { calculateOverallExperience, calculateRatingInReviews, formatFollowersCount } from "../../../../../utils";
 import { useRouter } from "next/router";

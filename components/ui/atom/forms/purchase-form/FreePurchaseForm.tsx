@@ -55,10 +55,7 @@ const FreePurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 							subscriptions: user?.subscriptions.concat(data?.subscribeToWorkshop),
 						}),
 					);
-					router.replace(
-						`/workshops/${resourceId}/register/success`,
-						// `/workshops/${resourceId}/register/congrats`,
-					);
+					router.replace(`/success/${reason}/${resourceId}`);
 				}
 			}
 		} catch (error) {

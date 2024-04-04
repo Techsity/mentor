@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { ArrowForwardSharp, HeartOutline, HeartSharp } from "react-ionicons";
 import Link from "next/link";
-import { calculateRatingInReviews, formatFollowersCount, slugify } from "../../../../../utils";
+import { calculateRatingInReviews, formatAmount, formatFollowersCount, slugify } from "../../../../../utils";
 import useWishlist from "../../../../../hooks/course/useWishlist";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -123,27 +123,25 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									<span className={"px-5 bg-zinc-200 h-1.5"} />
 								)}
 							</div>
-							{/* Note: Change to short summary - should not be more than 15 words. No need to split */}
 							<p
 								className={
 									!loading
 										? "text-[13px] px-5 font-normal w-full"
 										: "mt-3 mx-5 h-1.5 w-5/6 bg-zinc-200"
 								}>
-								{
-									!loading && String(course?.description)
-									// > 30
-									// 	? !loading && course?.description.slice(0, 30) + "..."
-									// 	: !loading && course?.description
-								}
+								{!loading && String(course?.description)}
 							</p>
 						</div>
 					</div>
 					<div className="flex items-center justify-between mt-3 px-5 w-full h-auto">
 						<div className="flex gap-2 items-center text-sm relative">
 							{!loading && <Avatar user={course?.mentor.user} />}
-							<h1 className={loading ? "px-10 h-2 bg-zinc-200" : ""}>
-								{!loading && course?.mentor.user.name.split(" ")[0]}
+							<h1 className={loading ? "px-10 h-2 bg-zinc-200" : "text-xs whitespace-nowrap"}>
+								{!loading && course?.mentor && course?.mentor.user.name.split(" ").length >= 2
+									? course?.mentor.user.name.split(" ")[0] +
+									  " " +
+									  course?.mentor.user.name.split(" ")[1]
+									: course?.mentor && course?.mentor.user.name}
 							</h1>
 						</div>
 						{!loading ? (
@@ -152,12 +150,12 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 									Subscribed
 								</div>
 							) : course?.price === 0 ? (
-								<div className="text-white text-sm bg-[#094B10] select-none rounded px-6 p-2 font-medium">
+								<div className="text-white text-sm bg-[#094B10] select-none rounded px-4 p-2 font-medium">
 									Free
 								</div>
 							) : (
-								<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-6 p-2">
-									${course?.price.toLocaleString()}
+								<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-3 p-1.5">
+									${formatAmount(Number(course?.price) * 3090)}
 								</div>
 							)
 						) : (

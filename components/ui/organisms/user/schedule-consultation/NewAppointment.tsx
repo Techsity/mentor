@@ -42,12 +42,19 @@ const NewAppointment = (mentor: IMentor) => {
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
 		if (currency.name !== selectedCurrency.name && !initializePaymentLoading && !appointmentLoading) {
-			setLoading(true);
-			await processExchangeRate(currency.name, (rate) => {
+			try {
+				setLoading(true);
+				const rate = await processExchangeRate(currency.name);
+				if (rate) {
+					setSelectedCurrency(currency);
+					setAmount(mentor.hourly_rate * rate);
+				}
+			} catch (error) {
+				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
+				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
+			} finally {
 				setLoading(false);
-				setSelectedCurrency(currency);
-				setAmount(mentor.hourly_rate * rate);
-			});
+			}
 		}
 	};
 
@@ -87,6 +94,8 @@ const NewAppointment = (mentor: IMentor) => {
 
 		const daysToAdd =
 			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
+				? 7
+				: currentDayOfTheWeek >= selectedDayIndex
 				? 7
 				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
 				? 0

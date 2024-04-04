@@ -19,6 +19,7 @@ import { calculateTax, slugify } from "../../../../../utils";
 import axios from "axios";
 import CartSummary from "../../cards/purchase/CartSummary";
 import { processExchangeRate } from "../../../../../services/api";
+import { SubscriptionType } from "../../../../../services/enums";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -40,13 +41,20 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	>(INITIALIZE_PAYMENT);
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
-		if (currency.name !== selectedCurrency.name && !priceLoading) {
-			setPriceLoading(true);
-			await processExchangeRate(currency.name, (rate) => {
-				setSelectedCurrency(currency);
-				setPrice(resource.price * rate);
+		if (currency.name !== selectedCurrency.name && !initializePaymentLoading) {
+			try {
+				setPriceLoading(true);
+				const rate = await processExchangeRate(currency.name);
+				if (rate) {
+					setSelectedCurrency(currency);
+					setPrice(resource.price * rate);
+				}
+			} catch (error) {
+				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
+				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
+			} finally {
 				setPriceLoading(false);
-			});
+			}
 		}
 	};
 
@@ -57,14 +65,13 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		try {
 			const { data } = await subscribeToCourse({ variables: { courseId: String(resource.id) } });
 			if (data?.subscribeToCourse.id) {
-				// toast.success("Subscription successful.", { ...ToastDefaultOptions(), toastId });
 				dispatch(
 					updateUserProfile({
 						...user,
 						subscriptions: user?.subscriptions.concat(data?.subscribeToCourse),
 					}),
 				);
-				router.replace(`/courses/${resource.id}/learn`);
+				router.replace(`/success/${SubscriptionType.COURSE}/${resource.id}`);
 			} else {
 				console.log({ error: data?.subscribeToCourse });
 				toast.error("Subscription failed", { ...ToastDefaultOptions(), toastId });

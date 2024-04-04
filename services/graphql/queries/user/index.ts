@@ -352,3 +352,74 @@ export const VIEW_APPOINTMENT = gql`
 		}
 	}
 `;
+
+export const VIEW_NEW_SUBSCRIPTION = gql`
+	query ViewSubscription($resourceId: String!, $subscriptionType: SubscriptionType!) {
+		viewSubscription(resourceId: $resourceId, subscriptionType: $subscriptionType) {
+			id
+			type
+			workshop {
+				...WorkshopDetails
+			}
+			course {
+				...CourseDetails
+			}
+		}
+	}
+
+	fragment WorkshopDetails on WorkshopDto {
+		id
+		title
+		scheduled_date
+		description
+		price
+		requirements
+		what_to_learn
+		mentor {
+			...MentorDetails
+		}
+		type {
+			type
+		}
+		category {
+			title
+		}
+		thumbnail
+		level
+		reviews {
+			content
+			rating
+		}
+	}
+
+	fragment CourseDetails on CourseDto {
+		id
+		title
+		description
+		what_to_learn
+		requirements
+		price
+		mentor {
+			...MentorDetails
+		}
+		course_images
+		course_level
+		course_type {
+			type
+		}
+		category {
+			title
+		}
+		reviews {
+			content
+			rating
+		}
+	}
+
+	fragment MentorDetails on MentorDTO {
+		user {
+			name
+			avatar
+		}
+	}
+`;
