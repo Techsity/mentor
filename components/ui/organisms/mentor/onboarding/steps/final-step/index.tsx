@@ -32,7 +32,7 @@ import { formatGqlError } from "../../../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import { switchProfile } from "../../../../../../../redux/reducers/auth/authSlice";
+import { updateMentorProfile, updateUserProfile } from "../../../../../../../redux/reducers/auth/authSlice";
 
 const FinalMentorOnboardingStep = () => {
 	const dispatch = useDispatch();
@@ -67,7 +67,8 @@ const FinalMentorOnboardingStep = () => {
 			console.log(response.data?.createMentorProfile);
 			if (response.data?.createMentorProfile) {
 				setLoading(false);
-				dispatch(switchProfile({ profile: response.data?.createMentorProfile }));
+				dispatch(updateUserProfile({ is_mentor: true }));
+				dispatch(updateMentorProfile({ ...response.data?.createMentorProfile }));
 				router.replace("/profile").then((done) => {
 					if (done) dispatch(setOnboardingMentor(initialMentorOnboardingState));
 				});
