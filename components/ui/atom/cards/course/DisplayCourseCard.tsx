@@ -146,11 +146,11 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 						</div>
 						{!loading ? (
 							isSubscribed ? (
-								<div className="text-gray-600 text-sm bg-[#ccc] select-none rounded px-4 p-2 cursor-default font-medium">
+								<div className="text-gray-600 text-xs bg-[#ccc] select-none rounded px-2 p-1.5 cursor-default font-medium">
 									Subscribed
 								</div>
 							) : course?.price === 0 ? (
-								<div className="text-white text-sm bg-[#094B10] select-none rounded px-4 p-2 font-medium">
+								<div className="text-white text-sm bg-[#094B10] select-none rounded px-4 p-1.5 font-medium">
 									Free
 								</div>
 							) : (
@@ -159,7 +159,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								</div>
 							)
 						) : (
-							<span className="text-white text-sm bg-[#ccc] select-none rounded px-10 p-4 font-medium relative" />
+							<span className="text-white bg-[#ccc] select-none rounded px-10 p-2 font-medium relative" />
 						)}
 					</div>
 				</div>

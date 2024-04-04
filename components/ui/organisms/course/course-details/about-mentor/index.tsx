@@ -83,7 +83,7 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 							{formatFollowersCount(mentor.courses.length)} Courses |{" "}
 							{formatFollowersCount(followersCount)} Followers
 						</p>
-						<div className="flex items-start justify-start py-3">
+						<div className="flex items-start justify-start select-none">
 							{!followLoading ? (
 								<span
 									onClick={handleFollow}
@@ -94,7 +94,9 @@ const CoursePageAboutMentor = (mentor: IMentor) => {
 									{followingMentor ? "Unfollow" : "+ Follow"}
 								</span>
 							) : (
-								<ActivityIndicator className="border-[.1em]" size={10} />
+								<div className="">
+									<ActivityIndicator className="border-[.1em]" size={10} />
+								</div>
 							)}
 						</div>
 					</div>
