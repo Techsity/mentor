@@ -14,10 +14,6 @@ type MentorDetailsProps = { mentor: IMentor; error?: string };
 const MentorConsultationPage = (props: MentorDetailsProps) => {
 	const { mentor, error } = props;
 
-	useEffect(() => {
-		scrollTo({ top: -6000, behavior: "smooth" });
-	}, []);
-	// if (error)
 	if (!mentor && error) {
 		console.error({ errorFetchingMentor: JSON.stringify(error) });
 		return (

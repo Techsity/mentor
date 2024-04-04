@@ -1,38 +1,33 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
-import { AppointmentStatus, IAppointment, IMentor } from "../../../../interfaces/mentor.interface";
+import { AppointmentStatus, IMentor } from "../../../../interfaces/mentor.interface";
 import { daysOfTheWeek } from "../../../../constants";
 import classNames from "classnames";
 import { currentUser } from "../../../../redux/reducers/auth/authSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
+import { fetchUserProfile } from "../../../../redux/reducers/auth/apiAuthSlice";
 
-const ScheduleConsultationTemplate = ({
-	loading,
-	mentor,
-}: // existingAppointment,
-{
-	mentor?: IMentor;
-	loading?: boolean;
-	// existingAppointment?: IAppointment;
-}) => {
+const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
+	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
+	const availability = useMemo(() => mentor?.availability, [mentor]);
 
-	const appointment = user?.appointments
-		? user.appointments.find(
-				(a) =>
-					a.mentor.id == mentor?.id &&
-					a.status !== AppointmentStatus.COMPLETED &&
-					a.status !== AppointmentStatus.CANCELLED_BY_USER &&
-					a.status !== AppointmentStatus.CANCELLED_BY_MENTOR,
-		  )
-		: undefined;
+	const appointment = useMemo(() => {
+		return user?.appointments.find(
+			(a) =>
+				a.mentor.id == mentor?.id &&
+				a.status !== AppointmentStatus.COMPLETED &&
+				a.status !== AppointmentStatus.CANCELLED_BY_USER &&
+				a.status !== AppointmentStatus.CANCELLED_BY_MENTOR,
+		);
+	}, [availability]);
 
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6">
 			<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
-			<div className="flex lg:flex-row flex-col justify-between gap-5 py-6 w-full md:mt-5 items-start animate__animated animate__fadeInUp overflow-hidden">
+			<div className="flex lg:flex-row flex-col justify-between gap-5 py-6 w-full md:mt-5 items-start animate__animated animate__fadeInUp overflow-hidden min-h-60">
 				<div className="bg-[#06310B] p-4 md:p-8 md:px-10 text-white lg:w-[45%] w-full">
 					<div className="flex justify-between items-center">
 						<h1 className="font-medium">Availability</h1>
@@ -41,7 +36,7 @@ const ScheduleConsultationTemplate = ({
 					<div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
 						{daysOfTheWeek.map((d, index) => {
 							const mentorIsAvailable = Boolean(
-								mentor?.availability.find((date) => date.day.toLowerCase() == d.toLowerCase()),
+								availability?.find((date) => date.day.toLowerCase() == d.toLowerCase()),
 							);
 							return (
 								<div

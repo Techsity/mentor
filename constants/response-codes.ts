@@ -1,6 +1,7 @@
 const ResponseMessages = {
 	"statusCode: 12005": "Invalid Credentials",
-	ACCOUNT_NOT_ACTIVE: "Your account is not active.",
+	ACCOUNT_NOT_ACTIVE: "Kindly verify your email.",
+	DEACTIVATED_ACCOUNT: "Your account is deactivated",
 	"statusCode: 12003": "Invalid Credentials",
 	"statusCode: 13404": "Your account has already been verified.",
 	"statusCode: 12904": "User with email does not exist.",

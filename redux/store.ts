@@ -20,9 +20,9 @@ const authPersistConfig: PersistConfig<any> = {
 
 const rootReducer = combineReducers({
 	auth: persistReducer(authPersistConfig, authReducer),
-	onboarding: persistReducer(persistConfig, onboardingReducer) as typeof onboardingReducer,
-	workshop: persistReducer(persistConfig, workshopReducer) as typeof workshopReducer,
-	user: persistReducer(persistConfig, userReducer) as typeof userReducer,
+	onboarding: onboardingReducer,
+	workshop: workshopReducer,
+	user: userReducer,
 	courses: coursesReducer,
 });
 

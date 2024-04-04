@@ -15,6 +15,7 @@ import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/pa
 import { SubscriptionType } from "../../../../../services/enums";
 import { processExchangeRate } from "../../../../../services/api";
 import { useRouter } from "next/router";
+import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
 
 const NewAppointment = (mentor: IMentor) => {
 	const router = useRouter();
@@ -24,6 +25,7 @@ const NewAppointment = (mentor: IMentor) => {
 	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
 	const [amount, setAmount] = useState<number>(mentor.hourly_rate);
 	const [loading, setLoading] = useState<boolean>(false);
+	const dispatch = useDispatch();
 
 	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
 		{ initiatePayment: any },
@@ -61,7 +63,9 @@ const NewAppointment = (mentor: IMentor) => {
 			});
 			if (data?.initiatePayment.authorization_url) {
 				const authorizationUrl = data?.initiatePayment?.authorization_url;
-				router.replace(authorizationUrl);
+				router.replace(authorizationUrl).then((done) => {
+					if (done) dispatch(fetchUserProfile() as any);
+				});
 			}
 		} catch (error) {
 			console.error({ error });
@@ -130,13 +134,12 @@ const NewAppointment = (mentor: IMentor) => {
 				{selectedSlot.date && selectedSlot.time && (
 					<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
 						<div
-							className="text-sm border border-[#70C5A1] p-3 w-full text-center"
+							className="text-sm border border-[#70C5A1] p-3 w-full text-center capitalize"
 							style={{ fontFamily: "Days One" }}>
-							{/* {selectedSlot.time.startTime} - {selectedSlot.time.endTime} */}
 							{date.toDateString()}
 						</div>
 						<div
-							className="text-sm flex items-center border border-[#70C5A1] p-3 w-full capitalize text-center"
+							className="text-sm flex items-center justify-center border border-[#70C5A1] p-3 w-full text-center"
 							style={{ fontFamily: "Days One" }}>
 							{selectedSlot.time.startTime} - {selectedSlot.time.endTime}
 						</div>

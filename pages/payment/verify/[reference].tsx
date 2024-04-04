@@ -15,6 +15,8 @@ import ResponseMessages from "../../../constants/response-codes";
 import { SubscriptionType } from "../../../services/enums";
 import { IAppointment } from "../../../interfaces/mentor.interface";
 import { PAYSTACK_CHECKOUT_URL } from "../../../constants";
+import { store } from "../../../redux/store";
+import { fetchUserProfile } from "../../../redux/reducers/auth/apiAuthSlice";
 
 const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Props) => {
 	const [celebrate, setCelebrate] = useState<boolean>(false);

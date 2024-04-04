@@ -36,7 +36,7 @@ const UserCourseSubcriptions = () => {
 	return (
 		<div className="animate__animated animate__fadeIn">
 			<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-4 items-center animate__animated animate__fadeIn">
-				{loading && <span className="text-sm">Loading...</span>}
+				{/* {loading && <span className="text-sm">Loading...</span>} */}
 				{!loading && myCourses.length < 1 && (
 					<p className="text-sm">You haven&apos;t subscribed to any course yet</p>
 				)}
@@ -44,7 +44,9 @@ const UserCourseSubcriptions = () => {
 					? Array.from({ length: 4 }).map((_, i) => (
 							<CourseInProgressDisplayCard {...{ course: null, loading }} key={i} />
 					  ))
-					: myCourses.map((course, i) => <CourseInProgressDisplayCard {...{ course }} key={i} />)}
+					: myCourses.map((course, i) => (
+							<CourseInProgressDisplayCard loading={false} {...{ course }} key={i} />
+					  ))}
 			</div>
 		</div>
 	);

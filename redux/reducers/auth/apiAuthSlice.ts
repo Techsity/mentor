@@ -4,7 +4,7 @@ import client from "../../../utils/apolloClient";
 import { ILoginState } from "../../../interfaces/auth.interface";
 import { IUser } from "../../../interfaces/user.interface";
 import { toast } from "react-toastify";
-import { authenticate, formatGqlError } from "../../../utils/auth";
+import { authenticate, formatGqlError, logoutUser } from "../../../utils/auth";
 import { ToastDefaultOptions } from "../../../constants";
 import { setCredentials, updateMentorProfile, updateUserProfile } from "./authSlice";
 import { GET_MENTOR_PROFILE } from "../../../services/graphql/queries/mentor";
@@ -64,19 +64,29 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
 	}
 });
 
-export const fetchUserProfile = createAsyncThunk("user/fetchUserProfile", async ({}, { dispatch }) => {
-	try {
-		const { data } = await client().query<{ userProfile: IUser }, any>({
-			query: GET_USER_PROFILE,
-		});
-		dispatch(updateUserProfile({ ...data.userProfile }));
-		await fetchMentorProfile({ user: data.userProfile, dispatch });
-		return { success: true };
-	} catch (error) {
-		console.error("Error fetching user profile:", error);
-		throw error;
-	}
-});
+export const fetchUserProfile = createAsyncThunk(
+	"user/fetchUserProfile",
+	async (args: { ssr?: boolean; token?: string } | undefined, { dispatch }) => {
+		const { ssr, token } = args || {};
+		try {
+			const { data } = await client({ authToken: token, ssr }).query<{ userProfile: IUser }, any>({
+				query: GET_USER_PROFILE,
+			});
+			if (data.userProfile) {
+				dispatch(updateUserProfile({ ...data.userProfile }));
+				await fetchMentorProfile({ user: data.userProfile, dispatch });
+				return { success: true };
+			}
+		} catch (error) {
+			// console.error("Error fetching user profile:", error);
+			const errMsg = formatGqlError(error);
+			if (errMsg === ResponseMessages.DEACTIVATED_ACCOUNT) {
+				logoutUser();
+			}
+			toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions({ id: "error" }) });
+		}
+	},
+);
 
 const fetchMentorProfile = async ({ dispatch, user }: { dispatch: Dispatch<any>; user: IUser }) => {
 	const getMentorProfile = createAsyncThunk("mentor/getMentorProfile", async () => {

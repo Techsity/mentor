@@ -14,7 +14,7 @@ const CourseInProgressDisplayCard: FC<{
 	course: ICourse | null;
 	owner?: boolean;
 	loading?: boolean;
-}> = ({ course, owner, loading }) => {
+}> = ({ course, owner, loading = false }) => {
 	const watchedTime = 1050;
 	const totalTime = 2300;
 	const percentageWatched = parseInt(((watchedTime / totalTime) * 100).toFixed(0));
