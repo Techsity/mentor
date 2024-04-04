@@ -86,7 +86,7 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 	// set notifications on initial load
 	useEffect(() => {
 		if (user) setNotifications(user.notifications);
-	}, []);
+	}, [user]);
 
 	// socket listening to latest notifications events and update notifications
 	useEffect(() => {

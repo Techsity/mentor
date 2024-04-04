@@ -29,12 +29,12 @@ const Navbar = () => {
 				<MentorLogoDark />
 				<span className="absolute -right-5 -top-3 text-[#70C5A1] text-xs">Beta</span>
 			</div>
-			{!hideNavSections ? (
+			{!hideNavSections && (
 				<div className="ml-6 xl:grid hidden flex-grow relative max-w-lg">
 					<LandingSearchBar />
 				</div>
-			) : null}
-			{!hideNavSections ? <NavLinksComponent /> : null}
+			)}
+			{!hideNavSections && <NavLinksComponent />}
 			<div className="flex items-center gap-3 sm:gap-6 select-none">
 				{!user && !auth ? (
 					<div className="hidden sm:flex items-center gap-6 pl-10 2xl:pl-40">

@@ -6,7 +6,7 @@ import { IUser } from "../../../interfaces/user.interface";
 import { toast } from "react-toastify";
 import { authenticate, formatGqlError, logoutUser } from "../../../utils/auth";
 import { ToastDefaultOptions } from "../../../constants";
-import { setCredentials, updateMentorProfile, updateUserProfile } from "./authSlice";
+import { setCredentials, updateLoginStatus, updateMentorProfile, updateUserProfile } from "./authSlice";
 import { GET_MENTOR_PROFILE } from "../../../services/graphql/queries/mentor";
 import ResponseMessages from "../../../constants/response-codes";
 import { GET_USER_PROFILE } from "../../../services/graphql/queries/user";
@@ -69,21 +69,27 @@ export const fetchUserProfile = createAsyncThunk(
 	async (args: { ssr?: boolean; token?: string } | undefined, { dispatch }) => {
 		const { ssr, token } = args || {};
 		try {
-			const { data } = await client({ authToken: token, ssr }).query<{ userProfile: IUser }, any>({
+			const { data, error } = await client({ authToken: token, ssr }).query<{ userProfile: IUser }, any>({
 				query: GET_USER_PROFILE,
 			});
 			if (data.userProfile) {
 				dispatch(updateUserProfile({ ...data.userProfile }));
+				dispatch(updateLoginStatus(true));
 				await fetchMentorProfile({ user: data.userProfile, dispatch });
 				return { success: true };
 			}
+			if (error) {
+				dispatch(setCredentials({ isLoggedIn: false, user: null }));
+				return { success: false };
+			}
 		} catch (error) {
-			// console.error("Error fetching user profile:", error);
+			console.error("Error fetching user profile:", error);
 			const errMsg = formatGqlError(error);
 			if (errMsg === ResponseMessages.DEACTIVATED_ACCOUNT) {
 				logoutUser();
+				toast.error(errMsg, { ...ToastDefaultOptions({ id: "error" }) });
 			}
-			toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions({ id: "error" }) });
+			return;
 		}
 	},
 );

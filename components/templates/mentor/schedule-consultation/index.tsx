@@ -7,10 +7,8 @@ import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
-import { fetchUserProfile } from "../../../../redux/reducers/auth/apiAuthSlice";
 
 const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
-	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 	const availability = useMemo(() => mentor?.availability, [mentor]);
 
@@ -22,7 +20,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 				a.status !== AppointmentStatus.CANCELLED_BY_USER &&
 				a.status !== AppointmentStatus.CANCELLED_BY_MENTOR,
 		);
-	}, [availability]);
+	}, [availability, user]);
 
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6">

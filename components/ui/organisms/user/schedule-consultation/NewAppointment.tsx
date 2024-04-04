@@ -96,7 +96,7 @@ const NewAppointment = (mentor: IMentor) => {
 			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
 				? 7
 				: currentDayOfTheWeek >= selectedDayIndex
-				? 7
+				? selectedDayIndex - currentDayOfTheWeek + 7
 				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
 				? 0
 				: selectedDayIndex - currentDayOfTheWeek;

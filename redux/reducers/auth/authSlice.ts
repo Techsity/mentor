@@ -31,6 +31,9 @@ const authSlice = createSlice({
 		updateUserProfile: (state, action: { payload: Partial<IUser> | null }) => {
 			if (action.payload) state.user = { ...state.user, ...action.payload } as IUser | null;
 		},
+		updateLoginStatus: (state, action: { payload: boolean }) => {
+			state.isLoggedIn = action.payload;
+		},
 		updateMentorProfile: (state, action: { payload: Partial<IMentor> | null }) => {
 			if (state.user) {
 				if (action.payload === null) state.user.mentor = null;
@@ -44,8 +47,14 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setCredentials, logOut, updateUserProfile, setResetPasswordState, updateMentorProfile } =
-	authSlice.actions;
+export const {
+	setCredentials,
+	logOut,
+	updateLoginStatus,
+	updateUserProfile,
+	setResetPasswordState,
+	updateMentorProfile,
+} = authSlice.actions;
 
 export const isLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const currentUser = (state: RootState) => state.auth.user as IAuthState["user"];
