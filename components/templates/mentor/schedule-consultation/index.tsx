@@ -4,7 +4,7 @@ import { AppointmentStatus, IMentor } from "../../../../interfaces/mentor.interf
 import { daysOfTheWeek } from "../../../../constants";
 import classNames from "classnames";
 import { currentUser } from "../../../../redux/reducers/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
 

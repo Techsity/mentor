@@ -76,14 +76,10 @@ const NotificationItem: FC<{ notification: Notification; closePanel: () => void;
 			<div className="flex items-center gap-4 justify-between w-full">
 				<p className="text-xs">{dayjs(notification.created_at).fromNow()}</p>
 				{!notification.resourceId && !notification.resourceType && !notification.read && (
-					<PrimaryButton
-						title={"Mark as read"}
-						className="p-1 px-3 text-sm rounded"
-						onClick={() => handleClick()}
-					/>
+					<PrimaryButton title={"Mark as read"} className="p-1 px-3 text-sm" onClick={() => handleClick()} />
 				)}
 				{notification.resourceId && notification.resourceType && (
-					<PrimaryButton title={"View"} className="p-1 px-3 text-sm rounded" onClick={() => handleClick()} />
+					<PrimaryButton title={"View"} className="p-1 px-3 text-sm" onClick={() => handleClick()} />
 				)}
 			</div>
 		</div>

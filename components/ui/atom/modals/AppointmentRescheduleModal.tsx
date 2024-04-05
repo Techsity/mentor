@@ -36,7 +36,6 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	const toastId = useId();
 	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
 	const [selectedDay, setSelectedDay] = useState<string>("");
-	const [newSchedule, setNewSchedule] = useState<Date>(currentAppointmentDate);
 
 	const currentDate = new Date();
 	const currentDayOfTheWeek = currentDate.getDay();
@@ -45,7 +44,29 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
 
-	const datesAreEqual = compareTimes(newSchedule, currentAppointmentDate);
+	const date = useMemo(() => {
+		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
+		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
+		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;
+		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
+		const currentHour = currentDate.getHours();
+
+		const daysToAdd =
+			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
+				? 7
+				: currentDayOfTheWeek >= selectedDayIndex
+				? selectedDayIndex - currentDayOfTheWeek + 7
+				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
+				? 0
+				: selectedDayIndex - currentDayOfTheWeek;
+
+		const scheduledDate = new Date(currentDate);
+		scheduledDate.setDate(scheduledDate.getDate() + daysToAdd);
+		scheduledDate.setHours(hour, minutes, 0);
+		return scheduledDate;
+	}, [selectedSlot, selectedDay]);
+
+	const datesAreEqual = date ? compareTimes(date, currentAppointmentDate) : false;
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
@@ -55,13 +76,12 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 				return;
 			}
 		try {
-			// Api Logic
 			const { data } = await reschduleAppointment({
 				variables: {
 					appointmentId: appointment.id,
 					input: {
-						date: newSchedule,
-						time: newSchedule.getTime().toString(),
+						date,
+						time: date.getTime().toString(),
 					},
 				},
 			});
@@ -93,24 +113,6 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 			toast.error(errMsg || "Something went wrong. Please try again", { toastId, ...ToastDefaultOptions() });
 		}
 	};
-
-	useEffect(() => {
-		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
-		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
-		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;
-		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
-		const currentHour = currentDate.getHours();
-		const daysToAdd =
-			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
-				? 7
-				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
-				? 0
-				: selectedDayIndex - currentDayOfTheWeek;
-		const date = new Date(currentDate);
-		date.setDate(date.getDate() + daysToAdd);
-		date.setHours(hour, minutes, 0);
-		setNewSchedule(date);
-	}, [selectedSlot, selectedDayIndex]);
 
 	useEffect(() => {
 		if (!appointment) {
@@ -151,7 +153,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 							<div
 								className="sm:w-[80%] text-xs border border-[#70C5A1] p-2 capitalize sm:text-center flex-grow"
 								style={{ fontFamily: "Days One" }}>
-								{newSchedule.toString()}
+								{date.toString()}
 							</div>
 						</div>
 					)}

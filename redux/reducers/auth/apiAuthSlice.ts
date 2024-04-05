@@ -1,7 +1,7 @@
 import { createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { LOGIN_USER } from "../../../services/graphql/mutations/auth";
 import client from "../../../utils/apolloClient";
-import { ILoginState } from "../../../interfaces/auth.interface";
+import { IAuthState, ILoginState } from "../../../interfaces/auth.interface";
 import { IUser } from "../../../interfaces/user.interface";
 import { toast } from "react-toastify";
 import { authenticate, formatGqlError, logoutUser } from "../../../utils/auth";
@@ -10,6 +10,9 @@ import { setCredentials, updateLoginStatus, updateMentorProfile, updateUserProfi
 import { GET_MENTOR_PROFILE } from "../../../services/graphql/queries/mentor";
 import ResponseMessages from "../../../constants/response-codes";
 import { GET_USER_PROFILE } from "../../../services/graphql/queries/user";
+import { store } from "../../store";
+import { IMentor } from "../../../interfaces/mentor.interface";
+import { setCurrentProfile } from "../userSlice";
 
 type ICreateLoginInput = {
 	createLoginInput: ILoginState;
@@ -38,8 +41,11 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
 			const is_mentor = data.loginUser.is_mentor;
 			const is_admin = data.loginUser.user.is_admin;
 			authenticate(authToken);
-			let mentorProfile;
-			if (is_mentor) mentorProfile = await fetchMentorProfile({ user: { ...userData, is_mentor }, dispatch });
+			let mentorProfile: IMentor | null | undefined = null;
+			if (is_mentor) {
+				mentorProfile = await fetchMentorProfile({ user: { ...userData, is_mentor }, dispatch });
+				dispatch(setCurrentProfile("mentor"));
+			} else dispatch(setCurrentProfile("mentee"));
 			dispatch(
 				setCredentials({
 					isLoggedIn: true,
@@ -75,7 +81,8 @@ export const fetchUserProfile = createAsyncThunk(
 			if (data.userProfile) {
 				dispatch(updateUserProfile({ ...data.userProfile }));
 				dispatch(updateLoginStatus(true));
-				await fetchMentorProfile({ user: data.userProfile, dispatch });
+				if (store.getState().user.currentProfile === "mentor")
+					await fetchMentorProfile({ user: data.userProfile, dispatch });
 				return { success: true };
 			}
 			if (error) {

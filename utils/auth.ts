@@ -6,6 +6,7 @@ import { persistor, store } from "../redux/store";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { setNewCourse } from "../redux/reducers/coursesSlice";
+import { setCurrentProfile } from "../redux/reducers/userSlice";
 
 export const currentUserRole = (): "mentee" | "mentor" => {
 	return "mentee";
@@ -83,6 +84,7 @@ export const checkAuthServerSide = (req: any) => {
 
 export const logoutUser = (next?: Function) => {
 	store.dispatch(logOut());
+	store.dispatch(setCurrentProfile("mentee"));
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
 	// sessionStorage.clear();

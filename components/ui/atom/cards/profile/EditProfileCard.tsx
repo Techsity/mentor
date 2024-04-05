@@ -11,20 +11,26 @@ import ActivityIndicator from "../../loader/ActivityIndicator";
 import { useSocketContext } from "../../../../../context/socket-io.context";
 import Avatar from "../../common/user/Avatar";
 import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
+import { activeProfile, setCurrentProfile } from "../../../../../redux/reducers/userSlice";
 
 const EditProfileCard = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const user = useSelector(currentUser);
+	const role = useSelector(activeProfile);
 	const { client } = useSocketContext();
 
 	const handleProfileSwitch = async () => {
 		setLoading(true);
-		console.log({ is_mentor: user?.is_mentor });
 		if (user?.is_mentor || user?.mentor) {
-			if (user.mentor) dispatch(updateMentorProfile(null));
-			else await dispatch(fetchUserProfile() as any);
+			if (role === "mentor") {
+				dispatch(updateMentorProfile(null));
+				dispatch(setCurrentProfile("mentee"));
+			} else if (role === "mentee") {
+				dispatch(setCurrentProfile("mentor"));
+				await dispatch(fetchUserProfile() as any);
+			}
 			setLoading(false);
 			router.replace("/profile");
 		} else router.push("/mentor/onboarding");
@@ -36,8 +42,6 @@ const EditProfileCard = () => {
 		});
 	};
 
-	const role = user?.mentor ? "Mentor" : "Mentee";
-
 	return (
 		<div>
 			<h1 className="text-sm text-zinc-500 mt-5">My profile</h1>
@@ -48,7 +52,7 @@ const EditProfileCard = () => {
 						<div className="text-sm">
 							<p className="font-medium">{user?.name}</p>
 							{/* <p>{user?.role}</p> */}
-							<p className="text-[#70C5A1]">{role}</p>
+							<p className="text-[#70C5A1] capitalize">{role}</p>
 						</div>
 					</div>
 					<div className="cursor-pointer" onClick={handleLogout}>
@@ -90,7 +94,7 @@ const EditProfileCard = () => {
 								? ""
 								: user?.is_mentor || user?.mentor
 								? user?.mentor
-									? "Switch to Mentee Dashboard"
+									? "Switch to Mentee Profile"
 									: "Switch to Mentor Profile"
 								: "Get mentor profile"
 						}

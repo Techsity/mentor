@@ -55,21 +55,21 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 	const loading = useMemo(() => readLoading || fetchLoading, [fetchLoading, readLoading]);
 
 	const markRead = async (id: string) => {
-		const notification = notifications.find((n) => n.id === id);
-		if (notification && !notification.read) {
+		const notificationIndex = notifications.findIndex((n) => n.id === id);
+		if (notificationIndex !== -1 && !notifications[notificationIndex].read) {
 			console.log(`Notification ${id} marked as read`);
-			await markAsRead({ variables: { notificationId: id } })
-				.then(async () => {
-					refetch();
-					setNotifications((prev) => {
-						refetch();
-						const updated = [...prev];
-						const notificationToBeRead = updated.find((n) => n.id === id);
-						if (notificationToBeRead) notificationToBeRead.read = true;
-						return updated;
-					});
-				})
-				.catch((err) => console.error("Error marking notification as read: ", err));
+			try {
+				await markAsRead({ variables: { notificationId: id } });
+				refetch();
+				const updatedNotifications = [...notifications];
+				updatedNotifications[notificationIndex] = {
+					...updatedNotifications[notificationIndex],
+					read: true,
+				};
+				setNotifications(updatedNotifications);
+			} catch (err) {
+				console.error("Error marking notification as read: ", err);
+			}
 		}
 	};
 
@@ -102,9 +102,9 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 		});
 	}, [client]);
 
-	useEffect(() => {
-		if (isOpen) refetch();
-	}, [isOpen]);
+	// useEffect(() => {
+	// 	if (isOpen) refetch();
+	// }, [isOpen]);
 
 	useEffect(() => {
 		if (data) setNotifications(data.viewAllNotifications);

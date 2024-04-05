@@ -14,10 +14,7 @@ const NavLinksComponent = () => {
 	const [activeDropdown, setActiveDropdown] = useState<NavLinkSubLink["dropdown"] | null>(null);
 	const [activeSublink, setActiveSublink] = useState<number | null>(null);
 
-	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES, {
-		fetchPolicy: "cache-and-network",
-		ssr: false,
-	});
+	const { data, loading, error } = useQuery<{ getAllCategories: ICourseCategory[] }, any>(GET_ALL_CATEGORIES);
 
 	const categories = useMemo(() => {
 		if (!loading) {
@@ -120,21 +117,12 @@ const NavLinksComponent = () => {
 				})}
 			</ul>
 			<div className="">
-				{!user ? (
+				{(!user?.is_mentor || !user) && (
 					<div
 						onClick={() => router.push("/mentor/onboarding")}
 						className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
 						Become a Mentor
 					</div>
-				) : (
-					user &&
-					!user?.is_mentor && (
-						<div
-							onClick={() => router.push("/mentor/onboarding")}
-							className="whitespace-nowrap border-[#094B10] select-none cursor-pointer font-[500] border-l-[.15em] border-r-[.15em] p-4 border-opacity-65 hover:text-white hover:bg-[#094B10] hover:rounded duration-300 h-5 flex items-center justify-center">
-							Become a Mentor
-						</div>
-					)
 				)}
 			</div>
 		</div>

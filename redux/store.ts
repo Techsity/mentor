@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
 	auth: persistReducer(authPersistConfig, authReducer),
 	onboarding: onboardingReducer,
 	workshop: workshopReducer,
-	user: userReducer,
+	user: persistReducer(persistConfig, userReducer),
 	courses: coursesReducer,
 });
 

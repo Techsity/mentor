@@ -38,6 +38,7 @@ const NewAppointment = (mentor: IMentor) => {
 	>(BOOK_MENTOR);
 
 	const currentDate = new Date();
+	const currentDayOfTheWeek = currentDate.getDay();
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
@@ -85,7 +86,6 @@ const NewAppointment = (mentor: IMentor) => {
 	};
 
 	const date = useMemo(() => {
-		const currentDayOfTheWeek = currentDate.getDay();
 		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
 		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
 		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;

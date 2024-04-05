@@ -4,15 +4,17 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
+import { activeProfile } from "../../../../../redux/reducers/userSlice";
 
 const CurrentUserProfileCard = () => {
 	const user = useSelector(currentUser);
 	const router = useRouter();
+	const role = useSelector(activeProfile);
 	const adminUrl = String(process.env.NEXT_PUBLIC_MENTOR_ADMIN_URL);
+
 	const navigate = () => {
 		user?.is_admin && adminUrl ? window.open(adminUrl, "_blank") : router.push("/profile");
 	};
-	const role = user?.mentor ? "Mentor" : "Mentee";
 
 	return (
 		<div onClick={navigate} className="relative group cursor-pointer h-full">
@@ -23,7 +25,7 @@ const CurrentUserProfileCard = () => {
 						{/* {user?.name.split(" ")[0] +
 								" " +
 								user?.name.split(" ")[1]} */}
-						<span className="font-medium">{user && user?.name.split(" ")[0]}</span>
+						<span className="font-medium capitalize">{user && user?.name.split(" ")[0]}</span>
 						<p className="capitalize text-[#70C5A1] text-xs">{role}</p>
 					</h1>
 				</div>

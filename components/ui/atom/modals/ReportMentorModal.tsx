@@ -101,7 +101,7 @@ const ReportMentorModal = ({ mentorId }: any) => {
 					Max length: {CONTENT_THRESHOLD} words
 				</span>
 				<span className={classNames("", limitReached && "text-red-500")}>
-					{!limitReached && "Remaining"} {CONTENT_THRESHOLD - content.length} words
+					{!limitReached && "Remaining"} {content.length} words
 				</span>
 			</div>
 			<PrimaryButton

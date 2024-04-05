@@ -2,8 +2,11 @@ import React, { FC } from "react";
 import { AppointmentStatus, IAppointment } from "../../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
 import { formatAppointmentTime } from "../../../../../../utils";
+import { currentUser } from "../../../../../../redux/reducers/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const SessionIndicator: FC<{ session: IAppointment }> = ({ session }) => {
+	const user = useSelector(currentUser);
 	const date = new Date(session.date);
 	const startHour = date.getHours();
 	const startMinutes = date.getMinutes();
@@ -16,7 +19,7 @@ const SessionIndicator: FC<{ session: IAppointment }> = ({ session }) => {
 	return (
 		<div
 			className={classNames(
-				"h-12  w-full text-white flex items-center gap-3 p-5 justify-start",
+				"h-12  w-full text-white flex items-center gap-3 p-5 justify-between",
 				session.status === AppointmentStatus.DECLINED ? "bg-[#cccccc] grayscale" : "bg-[#70C5A1]",
 			)}>
 			<div className="text-sm">
@@ -25,6 +28,12 @@ const SessionIndicator: FC<{ session: IAppointment }> = ({ session }) => {
 				{formatAppointmentTime(startHour, startMinutes)} {isAmStart ? "AM" : "PM"} -{" "}
 				{formatAppointmentTime(endHour, endMinutes)} {isAmEnd ? "AM" : "PM"}
 			</div>
+			{(session.status === AppointmentStatus.RESCHEDULED_BY_USER ||
+				session.status === AppointmentStatus.RESCHEDULED_BY_MENTOR) && (
+				<span className="text-xs text-gray-600 capitalize">
+					{session.status.split("_").join(" ").toLowerCase()}
+				</span>
+			)}
 		</div>
 	);
 };
