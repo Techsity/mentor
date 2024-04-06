@@ -32,12 +32,13 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
 		};
 	}, [authToken]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		console.log("profile refetched");
-	// 		await dispatch(fetchUserProfile() as any);
-	// 	})();
-	// }, [router]);
+	// Todo: fix
+	useEffect(() => {
+		(async () => {
+			console.log("profile refetched");
+			await dispatch(fetchUserProfile() as any);
+		})();
+	}, [router]);
 
 	return <>{children}</>;
 };

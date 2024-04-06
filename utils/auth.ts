@@ -88,7 +88,7 @@ export const logoutUser = (next?: Function) => {
 	removeCookie(AUTH_TOKEN_KEY);
 	removeLocalStorage(AUTH_TOKEN_KEY);
 	// sessionStorage.clear();
-	sessionStorage.removeItem("persist:auth");
+	// sessionStorage.removeItem("persist:auth");
 	persistor.persist();
 	// removeLocalStorage("persist:root");
 	next && next();

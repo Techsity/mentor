@@ -18,7 +18,7 @@ const Navbar = () => {
 	const auth = useSelector(isLoggedIn);
 	const { toggleSidebar } = useSidebar();
 
-	const excludedPaths: string[] = ["auth", "onboarding", "admin", "new", "content", "edit"];
+	const excludedPaths: string[] = ["auth", "onboarding", "admin", "new", "content", "edit", "session"];
 
 	const hideNavSections: boolean = excludedPaths.some((path) => router.asPath.includes(path));
 	const { toggleVisibility, isOpen: showNotificationPanel, notificationsCount } = useNotificationContext();

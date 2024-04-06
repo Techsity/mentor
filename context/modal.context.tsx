@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useRouter } from "next/router";
 import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback } from "react";
 
 export interface ModalProps {
@@ -19,6 +20,7 @@ interface ModalProviderProps {
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+	const router = useRouter();
 	const [modalContent, setModalContent] = useState<ReactNode | null>(null);
 	const [closeOnBackgroundClick, setCloseOnBackgroundClick] = useState<boolean>(true);
 	const [animate, setAnimate] = useState<boolean>(false);
@@ -47,6 +49,13 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 			document.body.style.overflow = "auto";
 		};
 	}, [modalContent]);
+
+	useEffect(() => {
+		router.events.on("routeChangeStart", closeModal);
+		return () => {
+			router.events.off("routeChangeStart", closeModal);
+		};
+	}, [router]);
 
 	return (
 		<ModalContext.Provider value={{ modalContent, openModal, closeModal }}>

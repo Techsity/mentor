@@ -11,14 +11,25 @@ import CustomTextArea from "../inputs/CustomTextArea";
 import classNames from "classnames";
 import ActivityIndicator from "../loader/ActivityIndicator";
 import { IAppointment } from "../../../../interfaces/mentor.interface";
+import { CANCEL_APPOINTMENT } from "../../../../services/graphql/mutations/user";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../../../redux/reducers/auth/apiAuthSlice";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 
-const ReasonModal = (appointment: IAppointment) => {
+const CancelAppointmentModal = (appointment: IAppointment) => {
+	const user = useSelector(currentUser);
 	const CONTENT_THRESHOLD = 200;
 	const toastId = useId();
 	const { closeModal } = useModal();
+	const dispatch = useDispatch();
 
 	const [content, setContent] = useState<string>("");
 	const [limitReached, setLimitReached] = useState<boolean>(false);
+	const [cancelAppointment, { loading }] = useMutation<
+		{ cancelAppointment: IAppointment },
+		{ appointmentId: string; reason: string }
+	>(CANCEL_APPOINTMENT);
 
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const { value } = e.target;
@@ -32,7 +43,16 @@ const ReasonModal = (appointment: IAppointment) => {
 			if (!content || content == "")
 				return toast.error("Report content cannot be empty", { ...ToastDefaultOptions(), toastId });
 			try {
-				// Api
+				await cancelAppointment({
+					variables: { appointmentId: appointment.id, reason: content.trim() },
+				})
+					.then(async () => {
+						await dispatch(fetchUserProfile() as any);
+						closeModal();
+					})
+					.catch((e) => {
+						throw e;
+					});
 			} catch (error) {
 				console.error({ error });
 				const errMsg = formatGqlError(error);
@@ -40,11 +60,9 @@ const ReasonModal = (appointment: IAppointment) => {
 			}
 		}
 	};
+
 	useEffect(() => {
-		if (!appointment) {
-			closeModal();
-			return;
-		}
+		if (!appointment) closeModal();
 	}, [appointment]);
 
 	return (
@@ -56,9 +74,11 @@ const ReasonModal = (appointment: IAppointment) => {
 				<span className="text-sm text-gray-400">
 					Tell us why you are cancelling this appointment. This helps us to take the correct action.
 				</span>
-				<span className="text-sm text-gray-500 font-medium">
-					Note: The refund process may take up-to 5 business days.
-				</span>
+				{!user?.is_mentor && (
+					<span className="text-sm text-gray-500 font-medium">
+						Note: The refund process may take up-to 5 business days.
+					</span>
+				)}
 			</span>
 			<CustomTextArea
 				onChange={handleChange}
@@ -76,15 +96,15 @@ const ReasonModal = (appointment: IAppointment) => {
 				</span>
 			</div>
 			<PrimaryButton
-				// title={!loading ? "Submit" : ""}
-				title="Submit"
+				title={!loading ? "Submit" : ""}
+				// title="Submit"
 				type="submit"
-				disabled={limitReached || content.trim().length < 1 || content == "" || !content}
-				// icon={loading ? <ActivityIndicator /> : <></>}
+				disabled={loading || limitReached || content.trim().length < 1 || content == "" || !content}
+				icon={loading ? <ActivityIndicator /> : <></>}
 				className="p-1.5 px-4 rounded mt-3 flex justify-center"
 			/>
 		</form>
 	);
 };
 
-export default ReasonModal;
+export default CancelAppointmentModal;

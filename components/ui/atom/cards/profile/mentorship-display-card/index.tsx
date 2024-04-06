@@ -16,7 +16,7 @@ import Avatar from "../../../common/user/Avatar";
 import { useRouter } from "next/router";
 import { fetchUserProfile } from "../../../../../../redux/reducers/auth/apiAuthSlice";
 import { useModal } from "../../../../../../context/modal.context";
-import ReasonModal from "../../../modals/ReasonModal";
+import CancelAppointmentModal from "../../../modals/CancelAppointmentModal";
 
 const MentorshipDisplayCard = (session: IAppointment) => {
 	const toastId = useId();
@@ -74,7 +74,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 			session.status !== AppointmentStatus.CANCELLED_BY_USER &&
 			session.status !== AppointmentStatus.CANCELLED_BY_MENTOR
 		) {
-			openModal(<ReasonModal {...session} />, { animate: false, closeOnBackgroundClick: false });
+			openModal(<CancelAppointmentModal {...session} />, { animate: false, closeOnBackgroundClick: false });
 		} else {
 			console.log("Request cannot be processed");
 		}
@@ -93,26 +93,35 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 		}
 	};
 
+	const isValid =
+		session.status !== AppointmentStatus.DECLINED &&
+		session.status !== AppointmentStatus.CANCELLED_BY_USER &&
+		session.status !== AppointmentStatus.CANCELLED_BY_MENTOR;
+
 	const navigateToMentorProfile = () => {
-		if (
-			session.status !== AppointmentStatus.CANCELLED_BY_MENTOR &&
-			session.status !== AppointmentStatus.CANCELLED_BY_USER &&
-			session.status !== AppointmentStatus.DECLINED
-		)
-			if (session.mentor) router.push(`/mentors/${session.mentor.id}/consult`);
+		if (isValid) if (session.mentor && !user?.is_mentor) router.push(`/mentors/${session.mentor.id}/consult`);
+	};
+
+	const checkRefundStatus = async () => {
+		console.log("checkRefundStatus");
 	};
 
 	return (
 		<div className="overflow-hidden rounded">
 			<div
 				className={classNames(
-					"relative flex flex-col border border-[#70C5A1] border-t-transparent bg-white gap-3 h-[150px] cursor-default select-none duration-300",
-					session.status !== AppointmentStatus.DECLINED && "border-b-transparent",
+					"relative flex flex-col border border-t-transparent bg-white gap-3 h-[150px] cursor-default select-none duration-300",
+					isValid ? "border-[#70C5A1]" : "border-zinc-300",
+					isValid && "border-b-transparent",
 					session.status == AppointmentStatus.DECLINED && "grayscale",
 				)}>
 				<SessionIndicator {...{ session }} />
 				<div
-					className={classNames("flex items-center gap-3", session.mentor && "cursor-pointer")}
+					className={classNames(
+						"flex items-center gap-3 p-2",
+						!isValid && "grayscale",
+						session.mentor && !user?.is_mentor && isValid && "cursor-pointer",
+					)}
 					onClick={navigateToMentorProfile}>
 					<Avatar
 						className="h-14 w-14 select-none"
@@ -128,7 +137,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 			</div>
 
 			{/* CTA Buttons For User */}
-			{!user?.is_mentor && session.status !== AppointmentStatus.DECLINED && (
+			{!user?.is_mentor && isValid && (
 				<div className="flex justify-between items-center">
 					<PrimaryButton
 						title="cancel"
@@ -138,8 +147,20 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 					/>
 				</div>
 			)}
+			{!user?.is_mentor &&
+				(session.status === AppointmentStatus.CANCELLED_BY_USER ||
+					session.status === AppointmentStatus.CANCELLED_BY_MENTOR) && (
+					<div className="flex justify-between items-center">
+						<PrimaryButton
+							title="check refund status"
+							onClick={checkRefundStatus}
+							disabled={acceptLoading || declineLoading}
+							className="w-full p-2 capitalize flex items-center justify-center text-sm"
+						/>
+					</div>
+				)}
 			{/* CTA Buttons For Mentor */}
-			{user?.is_mentor && session.status !== AppointmentStatus.DECLINED && (
+			{user?.is_mentor && isValid && (
 				<div className="flex justify-between items-center">
 					<PrimaryButton
 						title={

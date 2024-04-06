@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MentorshipDisplayCard from "../../../atom/cards/profile/mentorship-display-card";
 import mentors from "../../../../../data/mentors";
 import { AppointmentStatus, IAppointment, IMentorshipSession } from "../../../../../interfaces/mentor.interface";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
+import { activeProfile } from "../../../../../redux/reducers/userSlice";
 
 const RegisteredMentorships = () => {
 	const user = useSelector(currentUser);
+	const currentProfile = useSelector(activeProfile);
 
-	const appointments = user?.is_mentor ? user?.mentor?.appointments : user?.appointments || [];
+	const appointments = useMemo(
+		() => (user?.is_mentor && currentProfile === "mentor" ? user?.mentor?.appointments : user?.appointments || []),
+		[user, currentProfile],
+	);
 
 	const upcomingSessions = appointments?.filter((session) => session.status === AppointmentStatus.UPCOMING);
 
@@ -26,6 +31,11 @@ const RegisteredMentorships = () => {
 			session.status === AppointmentStatus.CANCELLED_BY_USER ||
 			session.status === AppointmentStatus.CANCELLED_BY_MENTOR,
 	);
+	// const cancelledSessions = appointments?.filter((session) =>
+	// 	!user?.is_mentor
+	// 		? session.status === AppointmentStatus.CANCELLED_BY_USER
+	// 		: session.status === AppointmentStatus.CANCELLED_BY_MENTOR,
+	// );
 	const declinedSessions = appointments?.filter((session) => session.status === AppointmentStatus.DECLINED);
 	const overdueSessions = appointments?.filter((session) => session.status === AppointmentStatus.OVERDUE);
 
@@ -61,12 +71,15 @@ const ListSessions = ({ sessions, status }: { sessions: IAppointment[]; status: 
 	const user = useSelector(currentUser);
 	return (
 		<div className="">
-			<h1 className="text-[#A3A6A7] font-medium mb-2 text-[14px] capitalize">
+			<h1 className="text-[#A3A6A7] font-medium mb-2 text-[14px] capitalize flex items-center gap-1">
 				{status === AppointmentStatus.PENDING && user?.is_mentor
 					? "Waiting for approval"
 					: status === AppointmentStatus.ACCEPTED
 					? "scheduled sessions"
+					: status === AppointmentStatus.CANCELLED_BY_MENTOR || status === AppointmentStatus.CANCELLED_BY_USER
+					? "Cancelled sessions"
 					: status.toLowerCase() + " sessions"}
+				<span className="text-xs">({sessions.length})</span>
 			</h1>
 			<div className="grid gap-5 sm:grid-cols-2 2xl:grid-cols-3 items-center">
 				{sessions.map((session, i) => (

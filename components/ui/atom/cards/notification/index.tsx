@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useRef } from "react";
 import { Notification } from "../../../../../interfaces/user.interface";
 import { useNotificationContext } from "../../../../../context/notification.context";
 import classNames from "classnames";
@@ -9,15 +9,36 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const NotificationCard = () => {
+	const router = useRouter();
 	const { notifications, closePanel, markRead } = useNotificationContext();
 	// and sign &&
+	const cardRef = useRef<HTMLDivElement>(null);
 
 	const unreadNotifications = (notifications as Notification[]).filter((notification) => !notification.read);
-
 	const olderNotifications = (notifications as Notification[]).filter((notification) => notification.read);
 
+	useEffect(() => {
+		const handleClickOutside = (event: any) => {
+			if (cardRef.current && !cardRef.current.contains(event.target)) closePanel();
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [closePanel]);
+
+	useEffect(() => {
+		router.events.on("routeChangeStart", closePanel);
+		return () => {
+			router.events.off("routeChangeStart", closePanel);
+		};
+	}, [router]);
+
 	return (
-		<div className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
+		<div
+			ref={cardRef}
+			className="animate__animated animate__bounceInRight animate__faster absolute bg-white border-2 border-[#70C5A1] p-2 pt-4 pb-6 right-0 md:w-[40vw] md:right-12 top-24 w-full lg:w-[35vw] overflow-y-scroll overflow-hidden h-[60vh]">
 			<div className="w-full divide-y">
 				{unreadNotifications.length >= 1 && (
 					<div className="grid gap-1 pb-3 w-full">
@@ -48,6 +69,7 @@ const NotificationCard = () => {
 		</div>
 	);
 };
+
 const NotificationItem: FC<{ notification: Notification; closePanel: () => void; markRead: (id: string) => void }> = ({
 	notification,
 	closePanel,

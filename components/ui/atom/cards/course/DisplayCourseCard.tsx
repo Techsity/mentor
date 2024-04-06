@@ -155,7 +155,7 @@ const DisplayCourseCard = ({ course, loading = false }: { course: ICourse | null
 								</div>
 							) : (
 								<div className="text-black text-sm font-medium bg-[#FFB100] select-none rounded px-3 p-1.5">
-									${formatAmount(Number(course?.price) * 3090)}
+									${formatAmount(Number(course?.price))}
 								</div>
 							)
 						) : (

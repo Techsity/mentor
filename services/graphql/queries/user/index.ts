@@ -340,6 +340,7 @@ export const VIEW_ALL_NOTIFICATIONS = gql`
 export const VIEW_APPOINTMENT = gql`
 	query ViewAppointment($appointmentId: String!) {
 		viewAppointment(appointmentId: $appointmentId) {
+			id
 			date
 			status
 			mentor {
@@ -348,6 +349,10 @@ export const VIEW_APPOINTMENT = gql`
 					name
 					avatar
 				}
+			}
+			user {
+				name
+				avatar
 			}
 		}
 	}

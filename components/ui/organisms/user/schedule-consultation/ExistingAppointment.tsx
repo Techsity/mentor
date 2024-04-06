@@ -10,8 +10,8 @@ import { currentUser, updateUserProfile } from "../../../../../redux/reducers/au
 import { formatGqlError } from "../../../../../utils/auth";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { useModal } from "../../../../../context/modal.context";
-import ReasonModal from "../../../atom/modals/ReasonModal";
-import AppointmentRescheduleModal from "../../../atom/modals/AppointmentRescheduleModal";
+import CancelAppointmentModal from "../../../atom/modals/CancelAppointmentModal";
+import RescheduleAppointmentModal from "../../../atom/modals/RescheduleAppointmentModal";
 import { useRouter } from "next/router";
 
 const ExistingAppointment = (existingAppointment: IAppointment) => {
@@ -54,7 +54,7 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_USER &&
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_MENTOR
 		) {
-			openModal(<ReasonModal {...existingAppointment} />, { animate: false, closeOnBackgroundClick: false });
+			openModal(<CancelAppointmentModal {...existingAppointment} />, { animate: false, closeOnBackgroundClick: false });
 		}
 	};
 
@@ -64,7 +64,7 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			existingAppointment.status == AppointmentStatus.ACCEPTED ||
 			existingAppointment.status == AppointmentStatus.RESCHEDULED_BY_USER
 		) {
-			openModal(<AppointmentRescheduleModal {...existingAppointment} />, {
+			openModal(<RescheduleAppointmentModal {...existingAppointment} />, {
 				animate: false,
 				closeOnBackgroundClick: false,
 			});

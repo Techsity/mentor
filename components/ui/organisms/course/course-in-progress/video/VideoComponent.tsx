@@ -71,7 +71,7 @@ const VideoComponent = ({ course, loading }: { course?: ICourse; loading?: boole
 									onContextMenu={(e) => e.preventDefault()} //Disable right click
 								/>
 							</div>
-							<div className="absolute bottom-0 left-0 transform bg-black/10 backdrop-blur-sm p-2 w-full gap-2 hidden group-hover:grid animate__animated animate__fadeIn animate__fastest z-20">
+							<div className="absolute bottom-0 left-0 transform bg-black/10 backdrop-blur-sm p-2 w-full gap-2 sm:hidden sm:group-hover:grid animate__animated animate__fadeIn animate__fastest z-20">
 								<div className="w-full h-1 bg-white rounded-md relative">
 									<div
 										className="h-full bg-[#FF0000] rounded-md absolute"

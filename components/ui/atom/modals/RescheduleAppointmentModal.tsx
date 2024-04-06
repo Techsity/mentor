@@ -14,7 +14,7 @@ import { currentUser, updateUserProfile } from "../../../../redux/reducers/auth/
 import { SelectedSlot } from "../../organisms/user/schedule-consultation/NewAppointment";
 import { RESCHEDULE_APPOINTMENT } from "../../../../services/graphql/mutations/user";
 
-const AppointmentRescheduleModal = (appointment: IAppointment) => {
+const RescheduleAppointmentModal = (appointment: IAppointment) => {
 	const { mentor } = appointment;
 	const currentAppointmentDate = new Date(appointment.date);
 
@@ -277,7 +277,7 @@ const AppointmentRescheduleModal = (appointment: IAppointment) => {
 	);
 };
 
-export default AppointmentRescheduleModal;
+export default RescheduleAppointmentModal;
 
 function compareTimes(date1: Date, date2: Date) {
 	return (

@@ -97,3 +97,27 @@ export const RESCHEDULE_APPOINTMENT = gql`
 		}
 	}
 `;
+
+export const CANCEL_APPOINTMENT = gql`
+	mutation CancelAppointment($appointmentId: String!, $reason: String!) {
+		cancelAppointment(appointmentId: $appointmentId, reason: $reason) {
+			id
+			paymentReference
+			date
+			status
+			created_at
+			updated_at
+			mentor {
+				id
+				user {
+					name
+					avatar
+				}
+			}
+			user {
+				name
+				avatar
+			}
+		}
+	}
+`;

@@ -1,31 +1,36 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { Socket, io } from "socket.io-client";
+import { Manager, Socket, io } from "socket.io-client";
 import { currentUser } from "../redux/reducers/auth/authSlice";
 
 interface ISocketContext {
 	client: Socket;
+	manager: Manager;
 	connected: boolean;
 }
 
-const SocketContext = createContext<ISocketContext>({ client: {} as Socket, connected: false });
+const SocketContext = createContext<ISocketContext>({ client: {} as Socket, connected: false, manager: {} as Manager });
+export const socketUrl = `${String(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL)}`;
 
 export const SocketContextProvider = ({ children }: any) => {
 	const [connected, setConnected] = useState<boolean>(false);
 	const user = useSelector(currentUser);
 
-	const socketUrl = `${String(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL)}`;
+	const manager = new Manager(socketUrl, {
+		// reconnectionDelayMax: 10000,
+		transports: ["websocket"],
+		autoConnect: true,
+		reconnection: true,
+		reconnectionAttempts: Infinity,
+		closeOnBeforeunload: true,
+		multiplex: true,
+	});
 
 	const client = useMemo(() => {
-		const socket = io(socketUrl, {
-			query: { userId: user?.id },
-			transports: ["websocket"],
-			autoConnect: true,
-			reconnection: true,
-			reconnectionAttempts: Infinity,
-			closeOnBeforeunload: true,
-			multiplex: true,
+		const socket = manager.socket("/", {
+			auth: { userId: String(user?.id) },
 		});
+
 		console.log("connecting to socket:", socketUrl);
 
 		socket.on("connect", () => {
@@ -37,7 +42,7 @@ export const SocketContextProvider = ({ children }: any) => {
 			setConnected(false);
 		});
 		return socket;
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		const errorHandler = (error: Error) => {
@@ -58,10 +63,11 @@ export const SocketContextProvider = ({ children }: any) => {
 		if (!user) {
 			client.disconnect();
 			client.close();
-		} else if (user) client.connect();
+		}
+		// else if (user) client.connect();
 	}, [user, client]);
 
-	return <SocketContext.Provider {...{ value: { client, connected } }}>{children}</SocketContext.Provider>;
+	return <SocketContext.Provider {...{ value: { client, connected, manager } }}>{children}</SocketContext.Provider>;
 };
 
 export const useSocketContext = () => {
