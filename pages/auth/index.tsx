@@ -14,7 +14,7 @@ const AuthPage = () => {
 	useEffect(() => {
 		if (auth || user) {
 			if (next) router.replace(decodeURIComponent(next));
-			// router.replace("/dashboard");
+			router.replace("/profile");
 		}
 	}, [auth, user, next, router]);
 

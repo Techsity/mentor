@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ICourse } from "../../../../../interfaces";
 import { FETCH_COURSE_SUBSCRIPTIONS } from "../../../../../services/graphql/queries/user";
 import CourseInProgressDisplayCard from "../../../atom/cards/course/CourseInProgressDisplayCard";
-import { useSelector } from "react-redux";
-import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { Subscription } from "../../../../../interfaces/user.interface";
 import { formatGqlError, logoutUser } from "../../../../../utils/auth";
 

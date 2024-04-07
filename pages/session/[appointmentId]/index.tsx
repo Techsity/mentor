@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { GetServerSidePropsResult, GetServerSidePropsContext } from "next";
 import MentorshipSessionCallTemplate from "../../../components/templates/user/session";
 import { IAppointment } from "../../../interfaces/mentor.interface";
 import { checkAuthServerSide, formatGqlError, logoutUser } from "../../../utils/auth";
 import client from "../../../utils/apolloClient";
 import { VIEW_APPOINTMENT } from "../../../services/graphql/queries/user";
-import TestCallMedia from "../../../components/ui/organisms/workshop/live/TestCallMedia";
+import TestCallMedia, { MediaPermission } from "../../../components/ui/organisms/workshop/live/TestCallMedia";
 import useMentorshipSession from "../../../hooks/useMentorshipSession";
 
 type Props = {
@@ -14,16 +14,40 @@ type Props = {
 };
 
 const MentorshipSessionCall = ({ appointment, error }: Props) => {
-	const { connected, errorMessage } = useMentorshipSession(String(appointment?.id));
+	const {
+		handleAllowJoinSession,
+		connected,
+		errorMessage,
+		handleConnection,
+		loading,
+		localStreamRef,
+		setStream,
+		stream,
+		client,
+		newJoinRequest,
+	} = useMentorshipSession(appointment as IAppointment);
+
+	const handleJoin = (permission: MediaPermission) => {
+		// Check and update permissions
+		handleConnection();
+	};
 
 	if (!appointment || error) {
 		return <div className="">{error || "Something went wrong"}</div>;
 	}
 
 	return !connected && !errorMessage ? (
-		<TestCallMedia />
+		<TestCallMedia {...{ loading, localStreamRef, onPermissionSet: handleJoin, setStream, stream }} />
 	) : connected ? (
-		<MentorshipSessionCallTemplate {...{ appointment }} />
+		<MentorshipSessionCallTemplate
+			{...{
+				appointment,
+				stream,
+				socket: client,
+				newJoinRequest,
+				handleNewJoinRequest: handleAllowJoinSession,
+			}}
+		/>
 	) : (
 		<span>{errorMessage || "Something went wrong"}</span>
 	);
@@ -36,7 +60,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promis
 	const authToken = checkAuthServerSide(ctx.req);
 	if (!authToken) {
 		logoutUser();
-		return { props: { appointment: null } };
+		return {
+			props: { appointment: null },
+			redirect: { permanent: true, destination: "/auth?login" },
+		};
 	}
 	const appointmentId = ctx.query.appointmentId as string;
 	const query = client({ ssr: true, authToken }).query;
