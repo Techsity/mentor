@@ -20,15 +20,21 @@ import { currentUser } from "../redux/reducers/auth/authSlice";
 import { useSocketContext, socketUrl } from "./socket-io.context";
 import Peer from "simple-peer";
 import { Socket } from "socket.io-client";
+import { useRouter } from "next/router";
 
 interface IMentorshipSessionContext {
 	connected: boolean;
 	client: Socket;
 	errorMessage: string;
 	loading: boolean;
+	muted: { audio: boolean; video: boolean };
+	setMuted: Dispatch<SetStateAction<{ audio: boolean; video: boolean }>>;
 	MAX_PARTICIPANTS: number;
 	handleConnection: () => void;
 	handleEndSession: () => void;
+	handleToggleAudio: () => void;
+	handleToggleVideo: () => void;
+	handleShareScreen: (arg: boolean) => void;
 	handleAllowJoinSession: (action: "allow" | "ignore") => void;
 	stream: MediaStream | null;
 	setStream: Dispatch<SetStateAction<MediaStream | null>>;
@@ -51,6 +57,9 @@ const initialContext: IMentorshipSessionContext = {
 	currentSession: {} as CurrentSession,
 	errorMessage: "",
 	handleAllowJoinSession: () => {},
+	handleToggleAudio: () => {},
+	handleToggleVideo: () => {},
+	handleShareScreen: () => {},
 	handleEndSession: () => {},
 	handleConnection: () => {},
 	is_mentor: false,
@@ -61,6 +70,11 @@ const initialContext: IMentorshipSessionContext = {
 	setStream: () => {},
 	remoteStream: null,
 	setRemoteStream: () => {},
+	muted: {
+		audio: true,
+		video: true,
+	},
+	setMuted: () => {},
 };
 
 const MentorshipSessionContext = createContext<IMentorshipSessionContext>(initialContext);
@@ -72,6 +86,7 @@ const MentorshipSessionProvider = ({
 	children?: ReactNode;
 	appointment: IAppointment | null;
 }) => {
+	const router = useRouter();
 	const toastId = useId();
 	const MAX_PARTICIPANTS = 2;
 	const user = useSelector(currentUser);
@@ -85,9 +100,13 @@ const MentorshipSessionProvider = ({
 	const [currentSession, setCurrentSession] = useState<CurrentSession>(initialSessionState);
 	const [peers, setPeers] = useState<{ user: MentorshipSessionUser; peer: Instance }[]>([]);
 	const [newJoinRequest, setNewJoinRequest] = useState<MentorshipSessionUser | null>(null);
+	const [muted, setMuted] = useState<{ audio: boolean; video: boolean }>({
+		audio: true,
+		video: true,
+	});
+
 	// const sessionKey = pseudoRandomBytes;
 	const sessionKey = "sessionKey-sessionKey";
-
 	const sessionId = appointment?.id;
 
 	const is_mentor = useMemo(() => {
@@ -271,19 +290,89 @@ const MentorshipSessionProvider = ({
 	const handleEndSession = () => {
 		const peerIndex = peers.findIndex((p) => p.user.id == user?.id);
 		console.log({ peerIndex });
+		stream?.getTracks().forEach((track) => track.stop());
+		if (peerIndex >= 0) {
+			peers[peerIndex].peer.removeAllListeners();
+			peers[peerIndex].peer.destroy();
+			setConnected(false);
+			// connectionRef.current.destroy();
+			setStream(null);
+			setRemoteStream(null);
+		}
+		router.replace("/profile");
+	};
 
-		// if (client) {
-		// 	console.log({ client: client.id });
-		// }
-		// setConnected(false);
-		// // connectionRef.current.destroy();
-		// setStream(null);
-		// setRemoteStream(null);
+	const audioStream = stream?.getAudioTracks()[0];
+	const videoStream = stream?.getVideoTracks()[0];
+
+	const handleToggleAudio = async () => {
+		const newAudioState = !muted.audio;
+		setMuted((prevState) => ({ ...prevState, audio: newAudioState }));
+		if (audioStream) {
+			audioStream.enabled = newAudioState;
+			if (newAudioState) {
+				audioStream.stop();
+				const updatedStream = new MediaStream([...stream?.getTracks(), ...stream?.getAudioTracks()]);
+				setStream(updatedStream);
+			} else if (!newAudioState) {
+				const newStream = await navigator.mediaDevices.getUserMedia({
+					audio: { echoCancellation: true },
+					video: !muted.video ? { echoCancellation: true, height: 800, width: 800 } : false,
+					preferCurrentTab: true,
+				});
+				setStream(newStream);
+			}
+		}
+	};
+
+	const handleToggleVideo = async () => {
+		const newVideoState = !muted.video;
+		setMuted((prevState) => ({ ...prevState, video: newVideoState }));
+		if (videoStream) {
+			videoStream.enabled = newVideoState;
+			if (!newVideoState) {
+				videoStream.stop();
+				const updatedStream = new MediaStream([...stream?.getTracks(), ...stream?.getVideoTracks()]);
+				setStream(updatedStream);
+			} else if (newVideoState) {
+				const newStream = await navigator.mediaDevices.getUserMedia({
+					audio: !muted.audio ? { echoCancellation: true } : false,
+					video: { echoCancellation: true, height: 800, width: 800 },
+					preferCurrentTab: true,
+				});
+				setStream(newStream);
+			}
+		}
+	};
+
+	useEffect(() => {
+		console.log({ muted });
+	}, [muted]);
+
+	const handleShareScreen = async (startSharing: boolean) => {
+		try {
+			if (stream)
+				if (startSharing) {
+					const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+					const updatedStream = new MediaStream([...stream?.getTracks(), ...screenStream.getTracks()]);
+					setStream(updatedStream);
+				} else {
+					const updatedStream = new MediaStream(
+						stream?.getTracks().filter((track) => track.kind !== "video"),
+					);
+					setStream(updatedStream);
+				}
+		} catch (error: any) {
+			console.error("Error sharing screen:", error.message);
+			// Handle error accordingly, such as displaying an error message to the user
+		}
 	};
 
 	return (
 		<MentorshipSessionContext.Provider
 			value={{
+				muted,
+				setMuted,
 				appointment: appointment as IAppointment,
 				client,
 				handleEndSession,
@@ -302,6 +391,9 @@ const MentorshipSessionProvider = ({
 				setRemoteStream,
 				setStream,
 				stream,
+				handleToggleAudio,
+				handleToggleVideo,
+				handleShareScreen,
 			}}>
 			{children}
 		</MentorshipSessionContext.Provider>

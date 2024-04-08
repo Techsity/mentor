@@ -6,54 +6,11 @@ import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { useMentorshipSessionContext } from "../../../../../context/mentorship-session.context";
 
 const TestCallMedia = () => {
-	const { setStream, stream, loading, handleConnection } = useMentorshipSessionContext();
+	const { setStream, stream, loading, handleConnection, muted, handleToggleAudio, handleToggleVideo, setMuted } =
+		useMentorshipSessionContext();
 	const [mediaPermissions, setMediaPermissions] = useState<MediaPermission>({ audio: false, video: false });
 	const [permissionsDenied, setPermissionsDenied] = useState<boolean>(true);
 	const localStreamRef = useRef<HTMLVideoElement>(null);
-
-	const toggleAudio = async () => {
-		// try {
-		// 	if (mediaPermissions.audio) {
-		// 		stream?.getAudioTracks().forEach((track) => track.stop());
-		// 		// setMediaPermissions({ ...mediaPermissions, audio: false });
-		// 	} else {
-		// 		const updatedStream = await navigator.mediaDevices.getUserMedia({
-		// 			audio: true,
-		// 			video: mediaPermissions.video,
-		// 		});
-		// 		setStream(updatedStream);
-		// 	}
-		// 	setMediaPermissions({ ...mediaPermissions, audio: !mediaPermissions.audio });
-		// 	setPermissionsDenied(false);
-		// } catch (err: any) {
-		// 	// console.log({ err: err.toString() });
-		// 	console.error("Error toggling audio:", err);
-		// 	setMediaPermissions({ ...mediaPermissions, audio: false });
-		// 	setPermissionsDenied(true);
-		// }
-	};
-
-	const toggleVideo = async () => {
-		// try {
-		// 	if (mediaPermissions.video) {
-		// 		stream?.getVideoTracks().forEach((track) => track.stop());
-		// 		setMediaPermissions({ ...mediaPermissions, video: false });
-		// 		if (localStreamRef.current) localStreamRef.current.srcObject = null;
-		// 	} else {
-		// 		const updatedStream = await navigator.mediaDevices.getUserMedia({
-		// 			audio: mediaPermissions.audio,
-		// 			video: true,
-		// 		});
-		// 		setStream(updatedStream);
-		// 		if (localStreamRef.current) localStreamRef.current.srcObject = updatedStream;
-		// 	}
-		// 	setMediaPermissions({ ...mediaPermissions, video: true });
-		// 	setPermissionsDenied(false);
-		// } catch (err) {
-		// 	console.error("Error toggling video:", err);
-		// 	setPermissionsDenied(true);
-		// }
-	};
 
 	const handleJoin = () => {
 		// Confirm media permissions
@@ -63,10 +20,15 @@ const TestCallMedia = () => {
 
 	useEffect(() => {
 		navigator.mediaDevices
-			.getUserMedia({ audio: true, video: true, preferCurrentTab: true })
+			.getUserMedia({
+				audio: { echoCancellation: true },
+				video: { echoCancellation: true, height: 800, width: 800 },
+				preferCurrentTab: true,
+			})
 			.then((currentStream) => {
 				setStream(currentStream);
 				setMediaPermissions({ audio: true, video: true });
+				setMuted({ audio: false, video: false });
 				setPermissionsDenied(false);
 			})
 			.catch((err: any) => {
@@ -94,7 +56,7 @@ const TestCallMedia = () => {
 							<p className="text-white text-center z-10 relative">Allow video and audio permissions</p>
 						</div>
 					) : (
-						!mediaPermissions.video && (
+						!muted.video && (
 							<div className="bg-black absolute top-0 left-0 w-full h-full flex justify-center items-center">
 								<p className="text-white text-center z-10 relative">Camera is off</p>
 							</div>
@@ -103,7 +65,7 @@ const TestCallMedia = () => {
 					<div className="h-full w-full">
 						{/* {mediaPermissions.video && ( */}
 						<video
-							className="w-full h-full scale-x-[-1]"
+							className="w-full h-full scale-x-[-1] object-cover"
 							muted
 							playsInline
 							disablePictureInPicture
@@ -117,18 +79,24 @@ const TestCallMedia = () => {
 					<div className="absolute w-full md:max-w-sm mx-auto bottom-0 md:bottom-2">
 						<Controls
 							{...{
-								allowAudio: mediaPermissions.audio,
-								allowVideo: mediaPermissions.video,
-								toggleAudio,
-								toggleVideo,
+								allowAudio: !muted.audio,
+								allowVideo: muted.video,
+								toggleAudio: handleToggleAudio,
+								toggleVideo: handleToggleVideo,
 							}}
 						/>
 					</div>
 				</div>
 				<div className="col-span-12 md:col-span-5 flex flex-col gap-2 items-center justify-center">
-					<p className="font-medium" style={{ fontFamily: "Days One" }}>
-						Ready to join session?
-					</p>
+					{!loading ? (
+						<p className="font-medium" style={{ fontFamily: "Days One" }}>
+							Ready to join session?
+						</p>
+					) : (
+						<p className="font-medium" style={{ fontFamily: "Days One" }}>
+							Please wait...
+						</p>
+					)}
 					<PrimaryButton
 						title={!loading ? "Join" : ""}
 						onClick={handleJoin}
