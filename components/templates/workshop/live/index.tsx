@@ -2,6 +2,7 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import {
 	FetchArgs,
 	useJoin,
+	useLocalCameraTrack,
 	useLocalMicrophoneTrack,
 	useNetworkQuality,
 	usePublish,
@@ -16,6 +17,7 @@ import { PrimaryButton } from "../../../ui/atom/buttons";
 import { client } from "../../../../hooks/agora";
 import ChannelEntrance from "../../../ui/organisms/workshop/live/ChannelEntrance";
 import { networkLabels } from "../../../../constants";
+import { useRouter } from "next/router";
 
 const LiveWorkshopParticipants = dynamic(() => import("../../../ui/organisms/workshop/live/AllParticipants"), {
 	ssr: false,
@@ -26,11 +28,25 @@ const ConferenceCallComponent = dynamic(() => import("../../../ui/organisms/work
 
 const LiveWorkshopTemplate = () => {
 	const user = useSelector(currentUser);
+	const router = useRouter();
+	const workshop = workshops[0];
+	const currentUserIsWorkshopOwner = useMemo(() => {
+		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
+	}, [user, workshop]);
 	const appId = String(process.env.NEXT_PUBLIC_AGORA_APP_ID);
 	const rtcClient = useRTCClient(client);
 	const [activeConnection, setActiveConnection] = useState<boolean>(false);
 	const [showParticipants, setShowParticipants] = useState<boolean>(false);
 	const [channelName, setChannelName] = useState("");
+	const [micOn, setMicOn] = useState<boolean>(false);
+	const [cameraOn, setCameraOn] = useState<boolean>(false);
+
+	const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn, { ANS: true, AEC: true });
+	const { localCameraTrack } = useLocalCameraTrack(currentUserIsWorkshopOwner && cameraOn, {
+		optimizationMode: "motion",
+		facingMode: "environment",
+	});
+	usePublish(currentUserIsWorkshopOwner ? [localMicrophoneTrack, localCameraTrack] : [localMicrophoneTrack]);
 
 	const fetchArgs = {
 		appid: appId,
@@ -39,17 +55,8 @@ const LiveWorkshopTemplate = () => {
 		uid: user?.email.toLowerCase(),
 	};
 
-	const workshop = workshops[0];
-
-	const currentUserIsWorkshopOwner = useMemo(() => {
-		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
-	}, [user, workshop]);
-
 	const { error, isLoading: isJoining } = useJoin(fetchArgs as FetchArgs, activeConnection);
-
 	const networkQuality = useNetworkQuality(client);
-
-	const retry = 10000;
 
 	const endSession = async () => {
 		console.log("You Exited The Session");
@@ -57,14 +64,23 @@ const LiveWorkshopTemplate = () => {
 		rtcClient.unpublish();
 		rtcClient.leave();
 		rtcClient.removeAllListeners();
+		router.reload();
 	};
 
-	// !pageLoaded ? (
-	// 	<div className="min-h-screen items-center flex sm:flex-row flex-col justify-center gap-2 fixed w-full">
-	// 		<ActivityIndicator size={60} color="#70C5A1" style={{ borderWidth: 8 }} />
-	// 		<p className="text-sm text-center text-[#70C5A1]">Preparing your classroom...</p>
-	// 	</div>
-	// ) :
+	const toggleMute = () => {
+		const newAudioState = !micOn;
+		setMicOn(newAudioState);
+		localMicrophoneTrack?.setEnabled(newAudioState);
+		if (!newAudioState) localMicrophoneTrack?.stop();
+	};
+
+	const handleToggleCamera = () => {
+		const newVideoState = !cameraOn;
+		setCameraOn(newVideoState);
+		localCameraTrack?.setEnabled(newVideoState);
+		if (!newVideoState) localCameraTrack?.stop();
+	};
+
 	return activeConnection && !error && !isJoining ? (
 		<div className="mx-auto py-6 max-w-[92dvw] w-full min-h-[100dvh] overflow-hidden">
 			<label style={{ color: networkLabels[networkQuality.uplinkNetworkQuality].color }}>
@@ -126,14 +142,29 @@ const LiveWorkshopTemplate = () => {
 							</div>
 							{/* Participants */}
 							<LiveWorkshopParticipants
-								isWorkshopOwner={currentUserIsWorkshopOwner}
-								workshop={workshop}
+								{...{
+									micOn,
+									workshop,
+									localMicrophoneTrack,
+									toggleMute,
+									isWorkshopOwner: currentUserIsWorkshopOwner,
+								}}
 							/>
 						</div>
 					</div>
 				</div>
 				{/* Conference Call Component */}
-				<ConferenceCallComponent workshop={workshop} isWorkshopOwner={currentUserIsWorkshopOwner} />
+				<ConferenceCallComponent
+					{...{
+						micOn,
+						cameraOn,
+						workshop,
+						localMicrophoneTrack,
+						localCameraTrack,
+						toggleMute,
+						handleToggleCamera,
+					}}
+				/>
 			</div>
 			{/* Chat Section */}
 			<div className="mt-5">
@@ -151,9 +182,9 @@ const LiveWorkshopTemplate = () => {
 				const timeout = setTimeout(function () {
 					setActiveConnection(false);
 					clearTimeout(timeout);
-				}, retry);
+				}, 10000);
 			}}
-			retry={retry}
+			retry={10000}
 			loading={isJoining}
 		/>
 	);

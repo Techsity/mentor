@@ -1,64 +1,58 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useId, useMemo, useState } from "react";
 import { MicMuted, RecIcon, ShareScreenIcon, SpeakingIcon } from "../../../atom/icons/svgs/call";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { IWorkshop } from "../../../../../interfaces";
 import dynamic from "next/dynamic";
-import { useLocalMicrophoneTrack, useLocalCameraTrack, usePublish, useRemoteUsers, RemoteUser } from "agora-rtc-react";
+import { useRemoteUsers, RemoteUser, IMicrophoneAudioTrack, ICameraVideoTrack, useCurrentUID } from "agora-rtc-react";
+import { VideocamOffOutline, VideocamOutline } from "react-ionicons";
+import { client } from "../../../../../hooks/agora";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../constants";
 
 const LocalUser = dynamic(() => import("agora-rtc-react").then(({ LocalUser }) => LocalUser), {
 	ssr: false,
 });
 
 const ConferenceCallComponent = ({
-	// isWorkshopOwner ,
 	workshop,
-}: {
-	isWorkshopOwner: boolean;
-	workshop: IWorkshop;
-}) => {
+	micOn,
+	cameraOn,
+	localMicrophoneTrack,
+	localCameraTrack,
+	toggleMute,
+	handleToggleCamera,
+}: Props) => {
 	const user = useSelector(currentUser);
-	const [micOn, setMicOn] = useState<boolean>(false);
-	const [cameraOn, setCamera] = useState<boolean>(true);
-	const { localMicrophoneTrack } = useLocalMicrophoneTrack();
-	const { localCameraTrack } = useLocalCameraTrack(true, { optimizationMode: "motion" });
-	const [hostIsJoining, setHostIsJoining] = useState<boolean>(false);
-	usePublish([localMicrophoneTrack, localCameraTrack]);
+	const toastId = useId();
+
+	const isWorkshopOwner = useMemo(() => {
+		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
+	}, [user, workshop]);
+
+	const mentorEmail = workshop.mentor.user.email;
+	const currentUID = useCurrentUID();
 	const participants = useRemoteUsers();
 
-	const toggleMute = () => {
-		setMicOn((a) => !a);
-		localMicrophoneTrack?.setEnabled(false);
-	};
-	//! Temp
-	const userEmail = "josh@dev.ts";
-	// const workshopHost = participants.find((participant) => participant.uid === workshop.mentor.user.email);
-	const workshopHost = participants.find((participant) => participant.uid === userEmail);
-	const isWorkshopOwner = user?.email === userEmail;
+	const workshopHost = participants.find((participant) => participant.uid === mentorEmail);
 
-	let timeout: NodeJS.Timeout;
+	useEffect(() => {
+		console.log({ track: workshopHost?.videoTrack?.getMediaStreamTrack().enabled, workshopHost });
+	}, [workshopHost]);
 
-	// useEffect(() => {
-	// 	if (!hostIsJoining) {
-	// 		setHostIsJoining(true);
-	// 		timeout = setTimeout(function () {
-	// 			setHostIsJoining(false);
-	// 		}, 1000);
-	// 	}
-	// 	return () => {
-	// 		clearTimeout(timeout);
-	// 	};
-	// }, [workshopHost]);
+	useEffect(() => {
+		client.on("user-joined", ({ uid }) => {
+			if (uid !== currentUID) toast.info(`${String(uid).slice(0, 9)}... joined`, { toastId, ...ToastDefaultOptions() });
+		});
+	}, []);
 
 	return (
 		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group">
 			<div className="left-0 bg-zinc-200 w-auto h-auto md:w-full md:h-full">
 				{/* Video */}
 				<div className="h-full w-full">
-					{/* {!callHost?.username && ( */}
 					<div className="flex flex-col justify-center items-center w-full h-full">
-						{/* {owner && isWorkshopOwner ? ( */}
-						{isWorkshopOwner ? (
+						{isWorkshopOwner && (
 							<LocalUser
 								audioTrack={localMicrophoneTrack}
 								videoTrack={localCameraTrack}
@@ -68,41 +62,40 @@ const ConferenceCallComponent = ({
 								playVideo={cameraOn}
 								height={100}
 								width={100}
-								muted={micOn}
 							/>
-						) : (
-							participants.length >= 1 &&
-							workshopHost &&
-							!hostIsJoining && (
-								<RemoteUser
-									user={workshopHost}
-									playAudio={true}
-									playVideo={true}
-									height={100}
-									width={100}
-								/>
-							)
 						)}
-						{!workshopHost && !isWorkshopOwner && !hostIsJoining ? (
-							<p>Host is yet to join</p>
-						) : (
-							hostIsJoining && !isWorkshopOwner && <p>Host is joining...</p>
+						{!isWorkshopOwner && workshopHost && (
+							<RemoteUser user={workshopHost} playAudio playVideo height={100} width={100} />
 						)}
+						{!workshopHost && <p>Host is yet to join</p>}
 					</div>
-					{/* )} */}
 				</div>
 			</div>
 			{/* Controls */}
 			{isWorkshopOwner && (
-				<CallControls isMuted={Boolean(localMicrophoneTrack?.enabled)} handleMute={toggleMute} />
+				<CallControls
+					isMuted={!micOn}
+					handleMute={toggleMute}
+					{...{ handleToggleCamera: handleToggleCamera, cameraOn }}
+				/>
 			)}
 		</div>
 	);
 };
-const CallControls = ({ handleMute, isMuted }: { handleMute: any; isMuted: boolean }) => {
+const CallControls = ({
+	handleMute,
+	isMuted,
+	handleToggleCamera,
+	cameraOn,
+}: {
+	handleMute: () => void;
+	isMuted: boolean;
+	cameraOn: boolean;
+	handleToggleCamera: () => void;
+}) => {
 	return (
-		<div className="group-hover:flex hidden sm:flex absolute z-10 bottom-0 text-white left-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-md items-center justify-center sm:justify-between gap-3 select-none">
-			<div className="flex gap-6 text-sm items-center">
+		<div className="group-hover:flex hidden sm:flex absolute z-20 bottom-0 text-white left-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-md border-t border-white/10 items-center justify-center sm:justify-between gap-3 select-none">
+			<div className="flex gap-6 text-sm items-center justify-between w-full">
 				<span className="flex gap-2 items-center">
 					<span className="bg-red-600 p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 					Live
@@ -111,6 +104,11 @@ const CallControls = ({ handleMute, isMuted }: { handleMute: any; isMuted: boole
 				<div className="flex gap-1 items-center cursor-pointer">
 					<p className="">Share Screen</p>
 					<ShareScreenIcon />
+				</div>
+
+				<div onClick={handleToggleCamera} className="flex gap-1 items-center cursor-pointer">
+					<p className="">Camera</p>
+					{!cameraOn ? <VideocamOffOutline color="#fff" /> : <VideocamOutline color="#fff" />}
 				</div>
 
 				<div onClick={handleMute} className="flex gap-1 items-center cursor-pointer">
@@ -126,4 +124,14 @@ const CallControls = ({ handleMute, isMuted }: { handleMute: any; isMuted: boole
 		</div>
 	);
 };
+type Props = {
+	micOn: boolean;
+	cameraOn: boolean;
+	workshop: IWorkshop;
+	localMicrophoneTrack: IMicrophoneAudioTrack | null;
+	localCameraTrack: ICameraVideoTrack | null;
+	toggleMute: () => void;
+	handleToggleCamera: () => void;
+};
+
 export default ConferenceCallComponent;
