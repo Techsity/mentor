@@ -4,7 +4,14 @@ import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { IWorkshop } from "../../../../../interfaces";
 import dynamic from "next/dynamic";
-import { useRemoteUsers, RemoteUser, IMicrophoneAudioTrack, ICameraVideoTrack, useCurrentUID } from "agora-rtc-react";
+import {
+	useRemoteUsers,
+	RemoteUser,
+	IAgoraRTCRemoteUser,
+	IMicrophoneAudioTrack,
+	ICameraVideoTrack,
+	useCurrentUID,
+} from "agora-rtc-react";
 import { VideocamOffOutline, VideocamOutline } from "react-ionicons";
 import { client } from "../../../../../hooks/agora";
 import { toast } from "react-toastify";
@@ -35,16 +42,6 @@ const ConferenceCallComponent = ({
 	const participants = useRemoteUsers();
 
 	const workshopHost = participants.find((participant) => participant.uid === mentorEmail);
-
-	useEffect(() => {
-		console.log({ track: workshopHost?.videoTrack?.getMediaStreamTrack().enabled, workshopHost });
-	}, [workshopHost]);
-
-	useEffect(() => {
-		client.on("user-joined", ({ uid }) => {
-			if (uid !== currentUID) toast.info(`${String(uid).slice(0, 9)}... joined`, { toastId, ...ToastDefaultOptions() });
-		});
-	}, []);
 
 	return (
 		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VideoCallParticipantCard from "../../../atom/cards/call/VideoCallParticipantCard";
 import { IWorkshop } from "../../../../../interfaces";
 import {
@@ -9,11 +9,13 @@ import {
 	useLocalMicrophoneTrack,
 	IMicrophoneAudioTrack,
 	LocalUser,
+	IAgoraRTCRemoteUser,
 } from "agora-rtc-react";
 import { MicMuted, SpeakingIcon } from "../../../atom/icons/svgs/call";
 import Avatar from "../../../atom/common/user/Avatar";
 import { useSelector } from "react-redux";
 import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
+import { client } from "../../../../../hooks/agora";
 
 const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop, micOn, localMicrophoneTrack, toggleMute }: Props) => {
 	const user = useSelector(currentUser);
@@ -21,6 +23,13 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop, micOn, localMicro
 	const participants = useRemoteUsers();
 	const { audioTracks } = useRemoteAudioTracks(participants);
 	audioTracks.map((a) => a.play());
+
+	// useEffect(() => {
+	// 	client.on("user-joined", ({ uid }) => {
+	// 		if (uid !== currentUID)
+	// 			toast.info(`${String(uid).slice(0, 9)}... joined`, { toastId, ...ToastDefaultOptions() });
+	// 	});
+	// }, []);
 
 	return (
 		<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full">
@@ -31,7 +40,7 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop, micOn, localMicro
 						<div className="h-full w-full bg-white border border-[#70C5A1] p-2 flex flex-col gap-4 overflow-hidden">
 							<div className="flex justify-between items-center">
 								<p className="text-sm">You</p>
-								<div className="" title={micOn ? "Unmute" : "Mute"}>
+								<div className="" title={!micOn ? "Unmute" : "Mute"}>
 									{!micOn ? (
 										<MicMuted size={15} onClick={toggleMute} className="cursor-pointer" />
 									) : (
