@@ -16,6 +16,7 @@ import { VideocamOffOutline, VideocamOutline } from "react-ionicons";
 import { client } from "../../../../../hooks/agora";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../constants";
+import Avatar from "../../../atom/common/user/Avatar";
 
 const LocalUser = dynamic(() => import("agora-rtc-react").then(({ LocalUser }) => LocalUser), {
 	ssr: false,
@@ -31,24 +32,34 @@ const ConferenceCallComponent = ({
 	handleToggleCamera,
 }: Props) => {
 	const user = useSelector(currentUser);
-	const toastId = useId();
+
+	const [hostVideoActive, setHostVideoActive] = useState(false);
 
 	const isWorkshopOwner = useMemo(() => {
 		return Boolean(user && user?.mentor?.id === workshop.mentor.id);
 	}, [user, workshop]);
 
 	const mentorEmail = workshop.mentor.user.email;
-	const currentUID = useCurrentUID();
 	const participants = useRemoteUsers();
 
 	const workshopHost = participants.find((participant) => participant.uid === mentorEmail);
 
+	useEffect(() => {
+		client.on("user-info-updated", (uid, msg) => {
+			console.log({ uid, msg });
+			if (workshopHost?.uid === uid) {
+				if (msg === "mute-video") setHostVideoActive(false);
+				else if (msg === "unmute-video") setHostVideoActive(true);
+			}
+		});
+	}, []);
+
 	return (
-		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group">
+		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group z-10">
 			<div className="left-0 bg-zinc-200 w-auto h-auto md:w-full md:h-full">
 				{/* Video */}
 				<div className="h-full w-full">
-					<div className="flex flex-col justify-center items-center w-full h-full">
+					<div className="flex flex-col justify-center items-center w-full h-full object-contain">
 						{isWorkshopOwner && (
 							<LocalUser
 								audioTrack={localMicrophoneTrack}
@@ -61,21 +72,26 @@ const ConferenceCallComponent = ({
 								width={100}
 							/>
 						)}
-						{!isWorkshopOwner && workshopHost && (
+						{!isWorkshopOwner &&workshopHost && (
 							<RemoteUser user={workshopHost} playAudio playVideo height={100} width={100} />
 						)}
-						{!workshopHost && <p>Host is yet to join</p>}
+						{!isWorkshopOwner && !workshopHost && <p>Host is yet to join</p>}
+						{/* {!hostVideoActive && (
+							<div className="absolute">
+								<Avatar user={workshop.mentor.user} useName className="w-32 h-32" />
+							</div>
+						)} */}
 					</div>
 				</div>
 			</div>
 			{/* Controls */}
-			{isWorkshopOwner && (
+			<div className="absolute z-40 bottom-0 w-full">
 				<CallControls
 					isMuted={!micOn}
 					handleMute={toggleMute}
-					{...{ handleToggleCamera: handleToggleCamera, cameraOn }}
+					{...{ handleToggleCamera: handleToggleCamera, cameraOn, isWorkshopOwner }}
 				/>
-			)}
+			</div>
 		</div>
 	);
 };
@@ -84,39 +100,45 @@ const CallControls = ({
 	isMuted,
 	handleToggleCamera,
 	cameraOn,
+	isWorkshopOwner,
 }: {
 	handleMute: () => void;
 	isMuted: boolean;
 	cameraOn: boolean;
 	handleToggleCamera: () => void;
+	isWorkshopOwner: boolean;
 }) => {
 	return (
-		<div className="group-hover:flex hidden sm:flex absolute z-20 bottom-0 text-white left-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-md border-t border-white/10 items-center justify-center sm:justify-between gap-3 select-none">
+		<div className="flex text-white w-full p-4 bg-black/60 backdrop-blur-md border-t border-white/10 items-center justify-center sm:justify-between gap-3 select-none">
 			<div className="flex gap-6 text-sm items-center justify-between w-full">
 				<span className="flex gap-2 items-center">
 					<span className="bg-red-600 p-1 rounded-full animate__animated animate__fadeIn animate__infinite animate__slow" />
 					Live
 				</span>
 
-				<div className="flex gap-1 items-center cursor-pointer">
-					<p className="">Share Screen</p>
-					<ShareScreenIcon />
-				</div>
+				{isWorkshopOwner && (
+					<>
+						<div className="flex gap-1 items-center cursor-pointer">
+							<p className="">Share Screen</p>
+							<ShareScreenIcon />
+						</div>
 
-				<div onClick={handleToggleCamera} className="flex gap-1 items-center cursor-pointer">
-					<p className="">Camera</p>
-					{!cameraOn ? <VideocamOffOutline color="#fff" /> : <VideocamOutline color="#fff" />}
-				</div>
+						<div onClick={handleToggleCamera} className="flex gap-1 items-center cursor-pointer">
+							<p className="">Camera</p>
+							{!cameraOn ? <VideocamOffOutline color="#fff" /> : <VideocamOutline color="#fff" />}
+						</div>
 
-				<div onClick={handleMute} className="flex gap-1 items-center cursor-pointer">
-					<p className="">{!isMuted ? "Mute" : "Unmute"}</p>
-					{!isMuted ? <MicMuted size={15} /> : <SpeakingIcon size={15} />}
-				</div>
+						<div onClick={handleMute} className="flex gap-1 items-center cursor-pointer">
+							<p className="">{!isMuted ? "Mute" : "Unmute"}</p>
+							{!isMuted ? <MicMuted size={15} /> : <SpeakingIcon size={15} />}
+						</div>
 
-				<div className="hidden sm:flex gap-1 items-center cursor-pointer">
-					<p className="">Record Session</p>
-					<RecIcon />
-				</div>
+						<div className="hidden sm:flex gap-1 items-center cursor-pointer">
+							<p className="">Record Session</p>
+							<RecIcon />
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

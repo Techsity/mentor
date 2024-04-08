@@ -32,7 +32,7 @@ const LiveWorkshopParticipants = ({ isWorkshopOwner, workshop, micOn, localMicro
 	// }, []);
 
 	return (
-		<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full">
+		<div className="overflow-hidden overflow-y-auto hide-scroll-bar bg-white w-full h-full pt-4">
 			<div className="flex-grow w-full bg-white py-0 p-6">
 				<h1 className="text-[#bebebe] text-sm text-left mb-5">All Participants</h1>
 				<div className="grid sm:grid-cols-2 gap-3 h-full w-full bg-white">
