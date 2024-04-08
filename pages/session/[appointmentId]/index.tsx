@@ -1,12 +1,13 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { GetServerSidePropsResult, GetServerSidePropsContext } from "next";
 import MentorshipSessionCallTemplate from "../../../components/templates/user/session";
 import { IAppointment } from "../../../interfaces/mentor.interface";
 import { checkAuthServerSide, formatGqlError, logoutUser } from "../../../utils/auth";
 import client from "../../../utils/apolloClient";
 import { VIEW_APPOINTMENT } from "../../../services/graphql/queries/user";
-import TestCallMedia, { MediaPermission } from "../../../components/ui/organisms/workshop/live/TestCallMedia";
-import useMentorshipSession from "../../../hooks/useMentorshipSession";
+import TestCallMedia from "../../../components/ui/organisms/workshop/live/TestCallMedia";
+
+import MentorshipSessionProvider, { useMentorshipSessionContext } from "../../../context/mentorship-session.context";
 
 type Props = {
 	appointment: IAppointment | null;
@@ -14,42 +15,14 @@ type Props = {
 };
 
 const MentorshipSessionCall = ({ appointment, error }: Props) => {
-	const {
-		handleAllowJoinSession,
-		connected,
-		errorMessage,
-		handleConnection,
-		loading,
-		localStreamRef,
-		setStream,
-		stream,
-		client,
-		newJoinRequest,
-	} = useMentorshipSession(appointment as IAppointment);
-
-	const handleJoin = (permission: MediaPermission) => {
-		// Check and update permissions
-		handleConnection();
-	};
-
 	if (!appointment || error) {
 		return <div className="">{error || "Something went wrong"}</div>;
 	}
 
-	return !connected && !errorMessage ? (
-		<TestCallMedia {...{ loading, localStreamRef, onPermissionSet: handleJoin, setStream, stream }} />
-	) : connected ? (
-		<MentorshipSessionCallTemplate
-			{...{
-				appointment,
-				stream,
-				socket: client,
-				newJoinRequest,
-				handleNewJoinRequest: handleAllowJoinSession,
-			}}
-		/>
-	) : (
-		<span>{errorMessage || "Something went wrong"}</span>
+	return (
+		<MentorshipSessionProvider appointment={appointment as IAppointment}>
+			<MentorshipSessionCallTemplate />
+		</MentorshipSessionProvider>
 	);
 };
 

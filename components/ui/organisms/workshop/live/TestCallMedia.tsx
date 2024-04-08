@@ -3,11 +3,13 @@ import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState
 import { VideocamOff, MicOff, EllipsisVertical, MicSharp, Videocam } from "react-ionicons";
 import { PrimaryButton } from "../../../atom/buttons";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
+import { useMentorshipSessionContext } from "../../../../../context/mentorship-session.context";
 
-const TestCallMedia = (props: TestCallMediaProps) => {
-	const { localStreamRef, onPermissionSet, setStream, stream, loading } = props;
+const TestCallMedia = () => {
+	const { setStream, stream, loading, handleConnection } = useMentorshipSessionContext();
 	const [mediaPermissions, setMediaPermissions] = useState<MediaPermission>({ audio: false, video: false });
 	const [permissionsDenied, setPermissionsDenied] = useState<boolean>(true);
+	const localStreamRef = useRef<HTMLVideoElement>(null);
 
 	const toggleAudio = async () => {
 		// try {
@@ -54,7 +56,9 @@ const TestCallMedia = (props: TestCallMediaProps) => {
 	};
 
 	const handleJoin = () => {
-		onPermissionSet(mediaPermissions);
+		// Confirm media permissions
+		// mediaPermissions.
+		handleConnection();
 	};
 
 	useEffect(() => {
@@ -62,7 +66,6 @@ const TestCallMedia = (props: TestCallMediaProps) => {
 			.getUserMedia({ audio: true, video: true, preferCurrentTab: true })
 			.then((currentStream) => {
 				setStream(currentStream);
-				if (localStreamRef.current) localStreamRef.current.srcObject = currentStream;
 				setMediaPermissions({ audio: true, video: true });
 				setPermissionsDenied(false);
 			})
@@ -77,6 +80,10 @@ const TestCallMedia = (props: TestCallMediaProps) => {
 			// setPermissionsDenied(true);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (stream) if (localStreamRef.current) localStreamRef.current.srcObject = stream;
+	}, [stream]);
 
 	return (
 		<div className="w-screen h-screen fixed top-0 left-0 pt-[10vh] md:pt-[20vh]">
@@ -98,6 +105,7 @@ const TestCallMedia = (props: TestCallMediaProps) => {
 						<video
 							className="w-full h-full scale-x-[-1]"
 							muted
+							playsInline
 							disablePictureInPicture
 							controlsList="nodownload"
 							autoPlay
@@ -177,14 +185,6 @@ const Controls = ({
 export type MediaPermission = {
 	audio: boolean;
 	video: boolean;
-};
-
-export type TestCallMediaProps = {
-	onPermissionSet: (mediaPermissions: MediaPermission) => void;
-	localStreamRef: RefObject<HTMLVideoElement>;
-	stream: MediaStream | null;
-	setStream: Dispatch<SetStateAction<MediaStream | null>>;
-	loading: boolean;
 };
 
 export default TestCallMedia;
