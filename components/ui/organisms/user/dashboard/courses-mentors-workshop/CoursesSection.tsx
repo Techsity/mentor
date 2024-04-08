@@ -73,7 +73,7 @@ const CoursesSection = () => {
 			) : null}
 
 			<div className=" overflow-hidden md:mx-10 mx-5 md:border border-[#D0D0D0] md:p-5 h-auto">
-				<CoursesList activeCategory={courseQuery.category || ""} activeCourseType={courseQuery.type || ""} />
+				<CoursesList loadMore activeCategory={courseQuery.category || ""} activeCourseType={courseQuery.type || ""} />
 			</div>
 		</>
 	);
