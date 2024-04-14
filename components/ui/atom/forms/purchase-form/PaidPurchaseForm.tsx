@@ -14,12 +14,14 @@ import { supportedCurrencies, ToastDefaultOptions } from "../../../../../constan
 import { toast } from "react-toastify";
 import ResponseMessages from "../../../../../constants/response-codes";
 import { formatGqlError } from "../../../../../utils/auth";
-import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { InitializePaymentInput, INITIATE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
 import { calculateTax, slugify } from "../../../../../utils";
 import axios from "axios";
 import CartSummary from "../../cards/purchase/CartSummary";
 import { processExchangeRate } from "../../../../../services/api";
 import { SubscriptionType } from "../../../../../services/enums";
+import { useModal } from "../../../../../context/modal.context";
+import PaymentModal from "../../modals/PaymentModal";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -27,21 +29,18 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { reason = "course", resource } = props;
-	const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(paymentMethods[0]);
+	// const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(paymentMethods[0]);
 	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
 	const [price, setPrice] = useState<number>(resource.price);
 	const [priceLoading, setPriceLoading] = useState<boolean>(false);
+	const { closeModal, openModal } = useModal();
 
 	const [subscribeToCourse, { loading }] = useMutation<{ subscribeToCourse: Subscription }, { courseId: string }>(
 		SUBSCRIBE_TO_COURSE,
 	);
-	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
-		{ initiatePayment: any },
-		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
-	>(INITIALIZE_PAYMENT);
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
-		if (currency.name !== selectedCurrency.name && !initializePaymentLoading) {
+		if (currency.name !== selectedCurrency.name) {
 			try {
 				setPriceLoading(true);
 				const rate = await processExchangeRate(currency.name);
@@ -92,18 +91,19 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 
 	const processPayment = async () => {
 		try {
-			const { data } = await initializePayment({
-				variables: {
-					amount,
-					resourceId: String(resource.id),
-					resourceType: reason,
-					currency: selectedCurrency.name,
+			openModal(
+				<PaymentModal
+					amount={amount}
+					selectedCurrency={selectedCurrency}
+					resourceId={String(resource.id)}
+					resourceType={reason.toUpperCase()}
+				/>,
+				{
+					animate: !false,
+					closeOnBackgroundClick: false,
+					containerClassName: "flex justify-center items-center fixed h-auto w-auto top-10",
 				},
-			});
-			if (data?.initiatePayment.authorization_url) {
-				const authorizationUrl = data?.initiatePayment?.authorization_url;
-				router.replace(authorizationUrl);
-			}
+			);
 		} catch (error) {
 			console.error({ error });
 			const errMsg = formatGqlError(error);
@@ -161,7 +161,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 												<p className="font-medium">Select Currency</p>
 												<select
 													name=""
-													disabled={initializePaymentLoading || priceLoading}
+													disabled={priceLoading}
 													value={selectedCurrency.name}
 													id=""
 													className="px-4 p-2">
@@ -178,7 +178,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 													})}
 												</select>
 											</div>
-											<p className="font-medium">Payment Method</p>
+											{/* <p className="font-medium">Payment Method</p>
 											<div className="grid gap-3">
 												{paymentMethods.map((method, i) => (
 													<span
@@ -228,26 +228,15 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 														</>
 													</span>
 												))}
-											</div>
+											</div> */}
 										</div>
 									)}
 									<div className="mt-4">
 										<PrimaryButton
 											onClick={handleSubmit}
-											icon={
-												priceLoading || loading || initializePaymentLoading ? (
-													<ActivityIndicator />
-												) : null
-											}
-											title={
-												priceLoading || loading || initializePaymentLoading ? "" : "Continue"
-											}
-											disabled={
-												priceLoading ||
-												loading ||
-												initializePaymentLoading ||
-												(price > 0 && !selectedMethod)
-											}
+											icon={priceLoading || loading ? <ActivityIndicator /> : null}
+											title={priceLoading || loading ? "" : "Continue"}
+											disabled={priceLoading || loading}
 											className={`flex p-4 w-full justify-center`}
 										/>
 									</div>

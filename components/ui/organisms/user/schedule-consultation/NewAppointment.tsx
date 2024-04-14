@@ -11,7 +11,7 @@ import { formatGqlError } from "../../../../../utils/auth";
 import { PrimaryButton } from "../../../atom/buttons";
 import ActivityIndicator from "../../../atom/loader/ActivityIndicator";
 import { ISOCurrency } from "../../../../../interfaces";
-import { INITIALIZE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { INITIATE_PAYMENT } from "../../../../../services/graphql/mutations/payment";
 import { SubscriptionType } from "../../../../../services/enums";
 import { processExchangeRate } from "../../../../../services/api";
 import { useRouter } from "next/router";
@@ -30,7 +30,7 @@ const NewAppointment = (mentor: IMentor) => {
 	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
 		{ initiatePayment: any },
 		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
-	>(INITIALIZE_PAYMENT);
+	>(INITIATE_PAYMENT);
 
 	const [createAppointment, { loading: appointmentLoading }] = useMutation<
 		{ createAppointment: IAppointment },

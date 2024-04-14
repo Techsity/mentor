@@ -1,9 +1,19 @@
 import gql from "graphql-tag";
 
-export const INITIALIZE_PAYMENT = gql`
-	mutation InitiatePayment($amount: Float!, $resourceType: String!, $resourceId: String!, $currency: ISOCurrency!) {
-		initiatePayment(amount: $amount, resourceType: $resourceType, resourceId: $resourceId, currency: $currency) {
-			authorization_url
+export type InitializePaymentInput = {
+	accountNumber: string;
+	amount: number;
+	bankCode: string;
+	currency: string;
+	birthday: string;
+	resourceId: string;
+	resourceType: string;
+};
+
+export const INITIATE_PAYMENT = gql`
+	mutation InitiatePayment($input: InitializePaymentInput!) {
+		initiatePayment(input: $input) {
+			display_text
 			reference
 			status
 		}

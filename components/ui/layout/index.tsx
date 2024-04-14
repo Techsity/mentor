@@ -10,8 +10,8 @@ import { SocketContextProvider } from "../../../context/socket-io.context";
 const LayoutContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<Fragment>
-			<ModalProvider>
-				<SocketContextProvider>
+			<SocketContextProvider>
+				<ModalProvider>
 					<NotificationsContextProvider>
 						<Progressbar />
 						<Sidebar />
@@ -19,8 +19,8 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 						<div className="relative">{children}</div>
 						<Footer />
 					</NotificationsContextProvider>
-				</SocketContextProvider>
-			</ModalProvider>
+				</ModalProvider>
+			</SocketContextProvider>
 		</Fragment>
 	);
 };

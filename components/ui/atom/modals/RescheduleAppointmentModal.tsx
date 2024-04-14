@@ -124,7 +124,7 @@ const RescheduleAppointmentModal = (appointment: IAppointment) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
+			className="bg-white h-auto w-[95vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
 			<h1 className="font-medium">Reschedule Appoinment</h1>
 			<span className="text-sm text-gray-500 font-medium">
 				Note: If an appointment gets rescheduled up to 5 times, it automatically gets cancelled.

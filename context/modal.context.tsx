@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback, useMemo } from "react";
 
 export interface ModalProps {
 	closeOnBackgroundClick?: boolean;
 	animate?: boolean;
+	containerClassName?: string;
 }
 
 interface ModalContextType {
@@ -24,12 +25,14 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	const [modalContent, setModalContent] = useState<ReactNode | null>(null);
 	const [closeOnBackgroundClick, setCloseOnBackgroundClick] = useState<boolean>(true);
 	const [animate, setAnimate] = useState<boolean>(false);
+	const [containerClassName, setContainerClassName] = useState<string>("");
 
 	const openModal = (content: ReactNode, props?: ModalProps) => {
 		if (props) {
 			if (props.closeOnBackgroundClick !== undefined)
 				setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
 			setAnimate(Boolean(props.animate));
+			setContainerClassName(String(props.containerClassName));
 		}
 		setModalContent(content);
 	};
@@ -61,26 +64,32 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		<ModalContext.Provider value={{ modalContent, openModal, closeModal }}>
 			{children}
 			{modalContent && (
-				<ModalContainer {...{ closeModal, closeOnBackgroundClick, animate }}>{modalContent}</ModalContainer>
+				<ModalContainer {...{ closeModal, closeOnBackgroundClick, animate, className: containerClassName }}>
+					{modalContent}
+				</ModalContainer>
 			)}
 		</ModalContext.Provider>
 	);
 };
 
-const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate }: any) => {
+const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate, className }: any) => {
 	const handleBackgroundClick = () => {
 		if (closeOnBackgroundClick) closeModal();
 	};
+
 	return (
-		<div className="flex justify-center items-center m-auto h-full w-full">
+		<div className="flex justify-center items-center m-auto h-screen w-screen relative z-50">
 			<div
 				onClick={handleBackgroundClick}
-				className="fixed top-0 left-0 z-40 bg-black/50 backdrop-blur-sm h-screen w-screen"
+				className="fixed top-0 left-0 bg-black/50 backdrop-blur-sm h-screen w-screen overflow-hidden"
 			/>
-			<div className="flex justify-center items-center z-50 fixed h-auto w-auto top-28">
+			<div
+				className={classNames(
+					className ? className : "flex justify-center items-center fixed h-auto w-auto top-28",
+				)}>
 				<div
 					className={classNames(
-						animate ? "animate__animated animate__bounceIn animate__fast" : "",
+						animate ? "animate__animated animate__fadeIn animate__fast" : "",
 						"relative w-auto h-auto",
 					)}>
 					<div className="w-full flex items-end justify-end">

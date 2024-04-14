@@ -69,7 +69,7 @@ const ReportMentorModal = ({ mentorId }: any) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="bg-white h-auto w-[85vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
+			className="bg-white h-auto w-[95vw] sm:w-[65vw] lg:w-[70vw] md:w-[75vw] rounded p-5 inline-block">
 			<h1 className="font-medium">Report Mentor</h1>
 			<span className="flex flex-col items-start my-5">
 				<span className="text-sm text-gray-400">

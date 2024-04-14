@@ -72,15 +72,17 @@ const ConferenceCallComponent = ({
 								width={100}
 							/>
 						)}
-						{!isWorkshopOwner &&workshopHost && (
+						{!isWorkshopOwner && workshopHost ? (
 							<RemoteUser user={workshopHost} playAudio playVideo height={100} width={100} />
+						) : (
+							<p>Host is yet to join</p>
 						)}
-						{!isWorkshopOwner && !workshopHost && <p>Host is yet to join</p>}
-						{/* {!hostVideoActive && (
+						{/* {!isWorkshopOwner && !workshopHost &&} */}
+						{(workshopHost || isWorkshopOwner) && !hostVideoActive && (
 							<div className="absolute">
 								<Avatar user={workshop.mentor.user} useName className="w-32 h-32" />
 							</div>
-						)} */}
+						)}
 					</div>
 				</div>
 			</div>

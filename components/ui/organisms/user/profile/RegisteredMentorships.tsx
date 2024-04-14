@@ -9,9 +9,9 @@ import { activeProfile } from "../../../../../redux/reducers/userSlice";
 const RegisteredMentorships = () => {
 	const user = useSelector(currentUser);
 	const currentProfile = useSelector(activeProfile);
-
+	const is_mentor = Boolean(user?.is_mentor && currentProfile === "mentor");
 	const appointments = useMemo(
-		() => (user?.is_mentor && currentProfile === "mentor" ? user?.mentor?.appointments : user?.appointments || []),
+		() => (is_mentor ? user?.mentor?.appointments : user?.appointments || []),
 		[user, currentProfile],
 	);
 
@@ -24,6 +24,9 @@ const RegisteredMentorships = () => {
 			session.status === AppointmentStatus.RESCHEDULED_BY_USER,
 	);
 
+	const awaitingPayments = appointments?.filter(
+		(session) => !is_mentor && session.status === AppointmentStatus.AWAITING_PAYMENT,
+	);
 	const acceptedSessions = appointments?.filter((session) => session.status === AppointmentStatus.ACCEPTED);
 	const concludedSessions = appointments?.filter((session) => session.status === AppointmentStatus.COMPLETED);
 	const cancelledSessions = appointments?.filter(
@@ -31,11 +34,6 @@ const RegisteredMentorships = () => {
 			session.status === AppointmentStatus.CANCELLED_BY_USER ||
 			session.status === AppointmentStatus.CANCELLED_BY_MENTOR,
 	);
-	// const cancelledSessions = appointments?.filter((session) =>
-	// 	!user?.is_mentor
-	// 		? session.status === AppointmentStatus.CANCELLED_BY_USER
-	// 		: session.status === AppointmentStatus.CANCELLED_BY_MENTOR,
-	// );
 	const declinedSessions = appointments?.filter((session) => session.status === AppointmentStatus.DECLINED);
 	const overdueSessions = appointments?.filter((session) => session.status === AppointmentStatus.OVERDUE);
 
@@ -45,6 +43,10 @@ const RegisteredMentorships = () => {
 			{upcomingSessions && upcomingSessions.length > 0 && (
 				<ListSessions sessions={upcomingSessions} status={AppointmentStatus.UPCOMING} />
 			)}
+			{awaitingPayments && awaitingPayments.length > 0 && (
+				<ListSessions sessions={awaitingPayments} status={AppointmentStatus.AWAITING_PAYMENT} />
+			)}
+
 			{pendingSessions && pendingSessions.length > 0 && (
 				<ListSessions sessions={pendingSessions} status={AppointmentStatus.PENDING} />
 			)}
@@ -76,6 +78,8 @@ const ListSessions = ({ sessions, status }: { sessions: IAppointment[]; status: 
 					? "Waiting for approval"
 					: status === AppointmentStatus.ACCEPTED
 					? "scheduled sessions"
+					: status === AppointmentStatus.AWAITING_PAYMENT
+					? "Waiting for payment confirmation"
 					: status === AppointmentStatus.CANCELLED_BY_MENTOR || status === AppointmentStatus.CANCELLED_BY_USER
 					? "Cancelled sessions"
 					: status.toLowerCase() + " sessions"}
