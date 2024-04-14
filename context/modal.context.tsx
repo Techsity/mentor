@@ -18,6 +18,14 @@ interface ModalProviderProps {
 	children: ReactNode;
 }
 
+interface ModalContainerProps {
+	children: ReactNode;
+	closeModal: () => void;
+	closeOnBackgroundClick: boolean;
+	animate: boolean;
+	className?: string;
+}
+
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
@@ -31,8 +39,9 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		if (props) {
 			if (props.closeOnBackgroundClick !== undefined)
 				setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
+			if (props.containerClassName && props.containerClassName !== undefined)
+				setContainerClassName(String(props.containerClassName));
 			setAnimate(Boolean(props.animate));
-			setContainerClassName(String(props.containerClassName));
 		}
 		setModalContent(content);
 	};
@@ -72,7 +81,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	);
 };
 
-const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate, className }: any) => {
+const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate, className }: ModalContainerProps) => {
 	const handleBackgroundClick = () => {
 		if (closeOnBackgroundClick) closeModal();
 	};
@@ -85,7 +94,9 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate,
 			/>
 			<div
 				className={classNames(
-					className ? className : "flex justify-center items-center fixed h-auto w-auto top-28",
+					className && className !== ""
+						? className
+						: "flex justify-center items-center fixed h-auto w-auto top-28",
 				)}>
 				<div
 					className={classNames(
