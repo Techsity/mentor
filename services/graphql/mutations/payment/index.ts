@@ -33,3 +33,14 @@ export const VERIFY_PAYMENT = gql`
 		}
 	}
 `;
+
+export const CONFIRM_PAYMENT = gql`
+	mutation ConfirmPendingTransaction($resourceId: String!, $resourceType: SubscriptionType!) {
+		confirmPendingTransaction(resourceId: $resourceId, resourceType: $resourceType) {
+			amount
+			resourceId
+			resourceType
+			currency
+		}
+	}
+`;

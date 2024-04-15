@@ -1,4 +1,5 @@
-import { ICourse, IReview } from "./index";
+import { SubscriptionType } from "../services/enums";
+import { ICourse, IReview, ISOCurrency } from "./index";
 import { IUser } from "./user.interface";
 
 export interface IMentorEducation {
@@ -122,4 +123,22 @@ export interface IAppointment {
 	mentor: IMentor;
 	created_at: Date;
 	updated_at: Date;
+}
+
+export interface Payment {
+	id: string;
+	reference: string;
+	amount: number;
+	user: IUser;
+	user_id: string;
+	resourceId: string;
+	resourceType: SubscriptionType;
+	currency: ISOCurrency;
+	accountNumber: string;
+	accountName: string;
+	bankCode: string;
+	attempts: number;
+	// channel: PAYMENT_CHANNELS;
+	// status: PaymentStatus;
+	created_at: Date;
 }

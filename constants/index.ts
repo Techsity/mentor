@@ -73,3 +73,5 @@ export const supportedCurrencies: { name: ISOCurrency; symbol: string }[] = [
 ];
 
 export const PAYSTACK_CHECKOUT_URL = "https://checkout.paystack.com/";
+
+export const PAYMENT_MODAL_CONTAINER_CLASS = "flex justify-center items-center fixed h-auto w-auto top-10";

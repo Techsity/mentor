@@ -13,5 +13,7 @@ const ResponseMessages = {
 	MENTOR_PROFILE_NOT_FOUND: "Mentor profile not found",
 	ALREADY_SUBSCRIBED: "Already subscribed",
 	TRANSACTION_COMPLETED: "Transaction is already completed",
+	PENDING_MENTORSHIP_APPOINTMENT: "You already have an appointment with this mentor",
+	NO_PAYMENT_FOUND: "No payment record found",
 };
 export default ResponseMessages;

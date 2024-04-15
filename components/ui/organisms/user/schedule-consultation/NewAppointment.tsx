@@ -3,7 +3,12 @@ import classNames from "classnames";
 import React, { useId, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { daysOfTheWeek, supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
+import {
+	daysOfTheWeek,
+	PAYMENT_MODAL_CONTAINER_CLASS,
+	supportedCurrencies,
+	ToastDefaultOptions,
+} from "../../../../../constants";
 import { IAppointment, IMentor, TimeSlot } from "../../../../../interfaces/mentor.interface";
 import { updateUserProfile, currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { BOOK_MENTOR } from "../../../../../services/graphql/mutations/user";
@@ -16,21 +21,21 @@ import { SubscriptionType } from "../../../../../services/enums";
 import { processExchangeRate } from "../../../../../services/api";
 import { useRouter } from "next/router";
 import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
+import { useModal } from "../../../../../context/modal.context";
+import PaymentModal from "../../../atom/modals/payment-modal";
+import ResponseMessages from "../../../../../constants/response-codes";
 
-const NewAppointment = (mentor: IMentor) => {
+const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => void }) => {
 	const router = useRouter();
 	const toastId = useId();
 	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
 	const [selectedDay, setSelectedDay] = useState<string>("");
 	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
 	const [amount, setAmount] = useState<number>(mentor.hourly_rate);
-	const [loading, setLoading] = useState<boolean>(false);
-	const dispatch = useDispatch();
+	const [initLoading, setInitLoading] = useState<boolean>(false);
+	const { closeModal, openModal } = useModal();
 
-	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
-		{ initiatePayment: any },
-		{ amount: number; resourceType: string; resourceId: string; currency: ISOCurrency }
-	>(INITIATE_PAYMENT);
+	const dispatch = useDispatch();
 
 	const [createAppointment, { loading: appointmentLoading }] = useMutation<
 		{ createAppointment: IAppointment },
@@ -41,10 +46,15 @@ const NewAppointment = (mentor: IMentor) => {
 	const currentDayOfTheWeek = currentDate.getDay();
 	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
 
+	const refreshData = () => {
+		dispatch(fetchUserProfile() as any);
+		if (refetch) refetch();
+	};
+
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
-		if (currency.name !== selectedCurrency.name && !initializePaymentLoading && !appointmentLoading) {
+		if (currency.name !== selectedCurrency.name && !appointmentLoading) {
 			try {
-				setLoading(true);
+				setInitLoading(true);
 				const rate = await processExchangeRate(currency.name);
 				if (rate) {
 					setSelectedCurrency(currency);
@@ -54,27 +64,27 @@ const NewAppointment = (mentor: IMentor) => {
 				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
 				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
 			} finally {
-				setLoading(false);
+				setInitLoading(false);
 			}
 		}
 	};
 
 	const processPayment = async (resourceId: string) => {
 		try {
-			const { data } = await initializePayment({
-				variables: {
-					amount,
-					resourceId,
-					resourceType: SubscriptionType.MENTORSHIP_APPOINTMENT,
-					currency: selectedCurrency.name,
-				},
-			});
-			if (data?.initiatePayment.authorization_url) {
-				const authorizationUrl = data?.initiatePayment?.authorization_url;
-				router.replace(authorizationUrl).then((done) => {
-					if (done) dispatch(fetchUserProfile() as any);
-				});
-			}
+			openModal(
+				<PaymentModal
+					amount={amount}
+					next={() => {
+						console.log("Done");
+						refreshData();
+						closeModal();
+					}}
+					{...{ resourceId }}
+					resourceType={SubscriptionType.MENTORSHIP_APPOINTMENT}
+					selectedCurrency={selectedCurrency}
+				/>,
+				{ closeOnBackgroundClick: false, containerClassName: PAYMENT_MODAL_CONTAINER_CLASS },
+			);
 		} catch (error) {
 			console.error({ error });
 			const errMsg = formatGqlError(error);
@@ -83,6 +93,9 @@ const NewAppointment = (mentor: IMentor) => {
 				toastId,
 			});
 		}
+		// finally {
+		// 	refreshData();
+		// }
 	};
 
 	const date = useMemo(() => {
@@ -113,13 +126,12 @@ const NewAppointment = (mentor: IMentor) => {
 			return;
 		}
 		const time = date.getTime().toString();
-
 		try {
 			await createAppointment({
 				variables: { createAppointmentInput: { date, time }, mentor: String(mentor?.id) },
 			})
 				.then(async (data) => {
-					if (data.data) await processPayment(data.data.createAppointment.id);
+					if (data.data) processPayment(data.data.createAppointment.id);
 				})
 				.catch((err) => {
 					throw err;
@@ -127,9 +139,18 @@ const NewAppointment = (mentor: IMentor) => {
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
+			// console.log({ errMsg });
+			// if (errMsg.includes(ResponseMessages.PENDING_MENTORSHIP_APPOINTMENT)) {
+			// 	if (errMsg.split("-")[1]) processPayment(errMsg.split("-")[1]);
+			// } else {
 			toast.error(errMsg || "Something went wrong. Please try again", { toastId, ...ToastDefaultOptions() });
+			// }
+		} finally {
+			refreshData();
 		}
 	};
+	const loading = appointmentLoading || initLoading;
+	const btnDisabled = loading || appointmentLoading || !selectedCurrency;
 
 	return (
 		<>
@@ -239,7 +260,7 @@ const NewAppointment = (mentor: IMentor) => {
 						) : (
 							<select
 								// readOnly
-								disabled={initializePaymentLoading || appointmentLoading || loading}
+								disabled={loading}
 								value={selectedCurrency.name}
 								id=""
 								className="px-4 p-2">
@@ -296,9 +317,9 @@ const NewAppointment = (mentor: IMentor) => {
 					<div className="mt-4">
 						<PrimaryButton
 							onClick={handleSubmit}
-							disabled={loading || appointmentLoading || !selectedCurrency || initializePaymentLoading}
-							title={appointmentLoading || initializePaymentLoading ? "" : "Continue"}
-							icon={appointmentLoading || initializePaymentLoading ? <ActivityIndicator /> : <></>}
+							disabled={btnDisabled}
+							title={loading && !initLoading ? "" : "Continue"}
+							icon={loading && !initLoading ? <ActivityIndicator /> : <></>}
 							className="text-sm p-2 px-8 animate__animated animate__fadeIn rounded"
 						/>
 					</div>

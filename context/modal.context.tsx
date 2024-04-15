@@ -11,7 +11,7 @@ export interface ModalProps {
 interface ModalContextType {
 	modalContent: ReactNode | null;
 	openModal: (content: ReactNode, props?: ModalProps) => void;
-	closeModal: () => void;
+	closeModal: (next?: () => void) => void;
 }
 
 interface ModalProviderProps {
@@ -46,8 +46,9 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		setModalContent(content);
 	};
 
-	const closeModal = () => {
+	const closeModal = (next?: () => void) => {
 		setModalContent(null);
+		if (next) next();
 	};
 
 	const stopPageScrolling = () => {
@@ -104,7 +105,7 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate,
 						"relative w-auto h-auto",
 					)}>
 					<div className="w-full flex items-end justify-end">
-						<div className="text-3xl text-red-600 cursor-pointer" onClick={closeModal}>
+						<div className="text-3xl text-red-600 cursor-pointer" onClick={() => closeModal()}>
 							&times;
 						</div>
 					</div>

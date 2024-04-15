@@ -1,10 +1,16 @@
 import React, { useId } from "react";
-import { AppointmentStatus, IAppointment } from "../../../../../interfaces/mentor.interface";
-import { daysOfTheWeek, PAYSTACK_CHECKOUT_URL, ToastDefaultOptions } from "../../../../../constants";
+import { AppointmentStatus, IAppointment, Payment } from "../../../../../interfaces/mentor.interface";
+import {
+	daysOfTheWeek,
+	PAYMENT_MODAL_CONTAINER_CLASS,
+	PAYSTACK_CHECKOUT_URL,
+	supportedCurrencies,
+	ToastDefaultOptions,
+} from "../../../../../constants";
 import { PrimaryButton } from "../../../atom/buttons";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/client";
-import { VERIFY_PAYMENT } from "../../../../../services/graphql/mutations/payment";
+import { CONFIRM_PAYMENT, VERIFY_PAYMENT } from "../../../../../services/graphql/mutations/payment";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { formatGqlError } from "../../../../../utils/auth";
@@ -13,22 +19,40 @@ import { useModal } from "../../../../../context/modal.context";
 import CancelAppointmentModal from "../../../atom/modals/CancelAppointmentModal";
 import RescheduleAppointmentModal from "../../../atom/modals/RescheduleAppointmentModal";
 import { useRouter } from "next/router";
+import PaymentModal from "../../../atom/modals/payment-modal";
+import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlice";
+import { SubscriptionType } from "../../../../../services/enums";
+import ResponseMessages from "../../../../../constants/response-codes";
+import { CANCEL_APPOINTMENT } from "../../../../../services/graphql/mutations/user";
 
-const ExistingAppointment = (existingAppointment: IAppointment) => {
+const ExistingAppointment = ({
+	existingAppointment,
+	refetch,
+}: {
+	existingAppointment: IAppointment;
+	refetch?: () => void;
+}) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
+	const { closeModal, openModal } = useModal();
 	const [confirmPayment, { loading: confirmLoading }] = useMutation<
-		{ verifyPayment: { appointment: IAppointment } },
-		{ reference: string }
-	>(VERIFY_PAYMENT, {
-		variables: { reference: String(existingAppointment.paymentReference) },
+		{ confirmPendingTransaction: Payment },
+		{ resourceId: string; resourceType: string }
+	>(CONFIRM_PAYMENT, {
+		variables: {
+			resourceId: existingAppointment.id,
+			resourceType: SubscriptionType.MENTORSHIP_APPOINTMENT.toUpperCase(),
+		},
 	});
+	const [cancelAppointment, { loading: cancelLoading }] = useMutation<
+		{ cancelAppointment: IAppointment },
+		{ appointmentId: string; reason: string }
+	>(CANCEL_APPOINTMENT, { variables: { appointmentId: existingAppointment.id, reason: "Payment failed" } });
 
 	const toastId = useId();
 	const date = new Date(existingAppointment.date);
-	const { openModal } = useModal();
-
+	const loading = cancelLoading || confirmLoading;
 	const dayIndex = date.getDay();
 	const day = daysOfTheWeek[dayIndex];
 	const startHour = date.getHours();
@@ -49,12 +73,20 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 		return `${formattedHour}:${formattedMinutes}`;
 	};
 
+	const refreshData = () => {
+		dispatch(fetchUserProfile() as any);
+		if (refetch) refetch();
+	};
+
 	const handleCancel = async () => {
 		if (
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_USER &&
 			existingAppointment.status !== AppointmentStatus.CANCELLED_BY_MENTOR
 		) {
-			openModal(<CancelAppointmentModal {...existingAppointment} />, { animate: false, closeOnBackgroundClick: false });
+			openModal(<CancelAppointmentModal {...existingAppointment} />, {
+				animate: false,
+				closeOnBackgroundClick: false,
+			});
 		}
 	};
 
@@ -75,14 +107,41 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 		if (existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT)
 			try {
 				const { data } = await confirmPayment();
-				const response = data?.verifyPayment;
-				if (response?.appointment) updateLocalState(response.appointment);
+				const response = data?.confirmPendingTransaction;
+				if (response)
+					openModal(
+						<PaymentModal
+							amount={Number(response?.amount)}
+							next={() => {
+								console.log("Done");
+								refreshData();
+								closeModal();
+							}}
+							{...{ resourceId: response.resourceId }}
+							resourceType={response.resourceType}
+							selectedCurrency={supportedCurrencies.find((c) => c.name === response?.currency)}
+						/>,
+						{
+							animate: true,
+							closeOnBackgroundClick: false,
+							containerClassName: PAYMENT_MODAL_CONTAINER_CLASS,
+						},
+					);
 			} catch (error) {
 				console.error({ error });
 				const errMsg = formatGqlError(error);
-				const [err, access_code] = errMsg.split(" | ");
-				if (access_code) router.replace(PAYSTACK_CHECKOUT_URL + access_code);
-				else toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
+				if (errMsg.includes(ResponseMessages.NO_PAYMENT_FOUND)) {
+					await cancelAppointment()
+						.then(() => {
+							refreshData();
+						})
+						.catch(() => {
+							console.error({ error });
+							const errMsg = formatGqlError(error);
+							toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
+						});
+				}
+				toast.error(errMsg || "Something went wrong", { ...ToastDefaultOptions(), toastId });
 			}
 	};
 
@@ -100,6 +159,7 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			dispatch(updateUserProfile({ appointments }));
 		}
 	};
+
 	return (
 		<>
 			{existingAppointment.status == AppointmentStatus.AWAITING_PAYMENT ? (
@@ -145,18 +205,20 @@ const ExistingAppointment = (existingAppointment: IAppointment) => {
 			</div>
 
 			<div className="flex sm:flex-row flex-col my-2 gap-4 sm:items-center">
-				<PrimaryButton
-					onClick={handleCancel}
-					disabled={confirmLoading}
-					title="Cancel appointment"
-					className="text-sm flex justify-center items-center bg-[#F6937B] p-2 px-5"
-				/>
+				{existingAppointment.status !== AppointmentStatus.AWAITING_PAYMENT && (
+					<PrimaryButton
+						onClick={handleCancel}
+						disabled={loading}
+						title="Cancel appointment"
+						className="text-sm flex justify-center items-center bg-[#F6937B] p-2 px-5"
+					/>
+				)}
 				{existingAppointment.status === AppointmentStatus.AWAITING_PAYMENT ? (
 					<PrimaryButton
 						onClick={handleConfirmPayment}
-						title={!confirmLoading ? "Confirm Payment" : ""}
-						disabled={confirmLoading}
-						icon={confirmLoading ? <ActivityIndicator /> : <></>}
+						title={!loading ? "Confirm Payment" : ""}
+						disabled={loading}
+						icon={loading ? <ActivityIndicator /> : <></>}
 						className="text-sm flex justify-center items-center p-2 px-5"
 					/>
 				) : (

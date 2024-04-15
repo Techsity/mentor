@@ -10,7 +10,7 @@ import { useMutation } from "@apollo/client";
 import { SUBSCRIBE_TO_COURSE } from "../../../../../services/graphql/mutations/courses";
 import { Subscription } from "../../../../../interfaces/user.interface";
 import { useRouter } from "next/router";
-import { supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
+import { PAYMENT_MODAL_CONTAINER_CLASS, supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
 import { toast } from "react-toastify";
 import ResponseMessages from "../../../../../constants/response-codes";
 import { formatGqlError } from "../../../../../utils/auth";
@@ -121,7 +121,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 				{
 					animate: true,
 					closeOnBackgroundClick: false,
-					containerClassName: "flex justify-center items-center fixed h-auto w-auto top-10",
+					containerClassName: PAYMENT_MODAL_CONTAINER_CLASS,
 				},
 			);
 		} catch (error) {

@@ -41,7 +41,7 @@ const PaymentModal = ({
 
 	const [input, setInput] = useState<Partial<InitializePaymentInput>>({
 		resourceId,
-		resourceType,
+		resourceType: resourceType.toUpperCase(),
 		accountNumber: "0000000000",
 		birthday: "1998-04-14",
 		bankCode: "057",
@@ -122,15 +122,21 @@ const PaymentModal = ({
 					<div className="flex justify-center items-center">
 						<div className="h-auto bg-white relative">
 							<p className="text-xl text-[#083619] font-semibold">Payment Details</p>
-							<span className="text-sm text-gray-500 font-medium">
+							<span className="text-sm text-gray-500 font-medium italic">
 								Note: Closing this modal will invalidate payment. Also try not reload or refresh this
 								page!
 							</span>
-							<div className="text-sm flex justify-between mt-5 font-medium">
-								<p>Total</p>
-								<p>
-									{currency.symbol} {Number(amount.toFixed(2)).toLocaleString()}
-								</p>
+
+							<div className="text-sm sm:flex justify-between items-center font-medium mt-5">
+								<h1 className="text-sm text-gray-600">
+									Payment for a {resourceType.toLowerCase().split("_").join(" ")}
+								</h1>
+								<div className="flex gap-2">
+									<p>Total:</p>
+									<p>
+										{currency.symbol} {Number(amount.toFixed(2)).toLocaleString()}
+									</p>
+								</div>
 							</div>
 							<hr className="mt-5" />
 							<p className="text-md font-semibold mt-5">Card Information</p>

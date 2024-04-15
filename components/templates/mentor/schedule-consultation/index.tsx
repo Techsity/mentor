@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import { AppointmentStatus, IMentor } from "../../../../interfaces/mentor.interface";
 import { daysOfTheWeek } from "../../../../constants";
@@ -7,10 +7,21 @@ import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { useSelector } from "react-redux";
 import NewAppointment from "../../../ui/organisms/user/schedule-consultation/NewAppointment";
 import ExistingAppointment from "../../../ui/organisms/user/schedule-consultation/ExistingAppointment";
+import { useLazyQuery } from "@apollo/client";
+import { VIEW_MENTOR_PROFILE } from "../../../../services/graphql/queries/mentor";
 
 const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
 	const user = useSelector(currentUser);
 	const availability = useMemo(() => mentor?.availability, [mentor]);
+
+	const [viewMentorProfile, { data, refetch }] = useLazyQuery<{ viewMentor: IMentor }, { viewMentorId: string }>(
+		VIEW_MENTOR_PROFILE,
+		{ variables: { viewMentorId: String(mentor?.id) } },
+	);
+
+	useEffect(() => {
+		if (data) mentor = data.viewMentor;
+	}, [viewMentorProfile, refetch]);
 
 	const appointment = useMemo(() => {
 		return user?.appointments.find(
@@ -52,11 +63,10 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 				</div>
 				<div className="grid gap-1 flex-grow w-full lg:w-[35%]">
 					{appointment ? (
-						<ExistingAppointment {...appointment} />
+						<ExistingAppointment existingAppointment={appointment} refetch={refetch} />
 					) : (
-						<NewAppointment {...(mentor as IMentor)} />
+						<NewAppointment mentor={mentor as IMentor} refetch={refetch} />
 					)}
-					{/* <NewAppointment {...(mentor as IMentor)} /> */}
 				</div>
 			</div>
 		</div>
