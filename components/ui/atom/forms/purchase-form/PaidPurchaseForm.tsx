@@ -30,7 +30,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { reason = "course", resource } = props;
-	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
+	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0] | null>(null);
 	const [price, setPrice] = useState<number>(resource.price);
 	const [priceLoading, setPriceLoading] = useState<boolean>(false);
 	const { closeModal, openModal } = useModal();
@@ -49,22 +49,28 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const loading = priceLoading || courseLoading || workshopLoading;
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
-		if (currency.name !== selectedCurrency.name) {
-			try {
-				setPriceLoading(true);
-				const rate = await processExchangeRate(currency.name);
-				if (rate) {
-					setSelectedCurrency(currency);
-					setPrice(resource.price * rate);
-				}
-			} catch (error) {
-				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
-				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
-			} finally {
-				setPriceLoading(false);
+		try {
+			setPriceLoading(true);
+			const rate = await processExchangeRate(currency.name);
+			if (rate) {
+				setSelectedCurrency(currency);
+				setPrice(resource.price * rate);
 			}
+		} catch (error) {
+			console.error("error while processing exchange: ", { error: JSON.stringify(error) });
+			toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
+		} finally {
+			setPriceLoading(false);
 		}
 	};
+
+	const currency = useMemo(() => {
+		if (selectedCurrency !== null && selectedCurrency.name !== currency?.name) {
+			handleCurrencyExchange(selectedCurrency);
+			console.log({ selectedCurrency });
+		}
+		return selectedCurrency;
+	}, [selectedCurrency]);
 
 	// const tax = useMemo(() => (price !== 0 ? calculateTax(price, 0.0825) : 0), [price]);
 	const tax = useMemo(() => calculateTax(price, 0.0825), [price]);
@@ -114,7 +120,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 						handleSubscription();
 						closeModal();
 					}}
-					selectedCurrency={selectedCurrency}
+					selectedCurrency={selectedCurrency || supportedCurrencies[0]}
 					resourceId={String(resource.id)}
 					resourceType={reason.toUpperCase()}
 				/>,
@@ -183,15 +189,16 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 												<select
 													name=""
 													disabled={priceLoading}
-													value={selectedCurrency.name}
-													id=""
-													className="px-4 p-2">
+													onChange={({ target: { value } }) => {
+														const currency = JSON.parse(value);
+														setSelectedCurrency(currency);
+													}}
+													className="px-4 p-2 border border-[#094B10]">
 													{supportedCurrencies.map((currency, i) => {
 														return (
 															<option
 																key={i}
-																onClick={() => handleCurrencyExchange(currency)}
-																value={currency.name}
+																value={JSON.stringify(currency)}
 																className="">
 																{currency.name}
 															</option>
@@ -277,7 +284,14 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 						</div>
 					</div>
 					<div className="flex-grow md:sticky md:h-[75dvh] top-20 bg-[#F6F9F8] md:order-last order-first">
-						<CartSummary {...{ price, tax: Number(tax), reason, currrency: selectedCurrency.symbol }} />
+						<CartSummary
+							{...{
+								price,
+								tax: Number(tax),
+								reason,
+								currrency: (selectedCurrency || supportedCurrencies[0]).symbol,
+							}}
+						/>
 					</div>
 				</div>
 			</div>
