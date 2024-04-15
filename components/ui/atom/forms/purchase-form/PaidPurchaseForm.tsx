@@ -186,7 +186,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 															const currency = JSON.parse(value);
 															handleCurrencyExchange(currency);
 														}}
-														className="appearance-none w-full px-4 p-2">
+														className="appearance-none w-full px-4 p-2 outline-none focus:ring-0">
 														{supportedCurrencies.map((currency, i) => {
 															return (
 																<option

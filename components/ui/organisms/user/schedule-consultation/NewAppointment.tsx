@@ -267,7 +267,7 @@ const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => 
 										const currency = JSON.parse(value);
 										handleCurrencyExchange(currency);
 									}}
-									className="appearance-none w-full px-4 p-2">
+									className="appearance-none w-full px-4 p-2 outline-none focus:ring-0">
 									{supportedCurrencies.map((currency, i) => {
 										return (
 											<option key={i} value={JSON.stringify(currency)} className="">
