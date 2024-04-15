@@ -8,14 +8,16 @@ import EditProfileCard from "../atom/cards/profile/EditProfileCard";
 import { PrimaryButton } from "../atom/buttons";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../redux/reducers/auth/apiAuthSlice";
+import { activeProfile } from "../../../redux/reducers/userSlice";
 
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 
 const ProfileLayout = ({ children }: Props) => {
 	const user = useSelector(currentUser);
+	const profile = useSelector(activeProfile);
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const isMentor = user?.mentor;
+	const isMentor = user?.mentor && profile === "mentor";
 
 	const { tab, id } = router.query as { id: string | undefined; tab: ProfileTabLinkType };
 

@@ -21,8 +21,8 @@ const PaymentModal = ({
 	resourceType,
 	selectedCurrency,
 	amount,
-	callbackUrl,
-}: { selectedCurrency?: (typeof supportedCurrencies)[0]; callbackUrl: string } & Pick<
+	next,
+}: { selectedCurrency?: (typeof supportedCurrencies)[0]; next: () => void } & Pick<
 	InitializePaymentInput,
 	"resourceId" | "resourceType" | "amount"
 >) => {
@@ -68,6 +68,7 @@ const PaymentModal = ({
 				reset();
 				clearTimeout(timeout);
 			}, 5000); // to avoid stalled requests
+			if (res?.initiatePayment.status === "success") paymentSuccessful();
 			if (res?.initiatePayment) {
 				setReference(res.initiatePayment.reference);
 				clearTimeout(timeout);
@@ -84,8 +85,9 @@ const PaymentModal = ({
 	};
 
 	const paymentSuccessful = () => {
+		// router.replace(callbackUrl);
+		next();
 		closeModal();
-		router.replace(callbackUrl);
 	};
 
 	useEffect(() => {

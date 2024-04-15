@@ -22,6 +22,7 @@ import { processExchangeRate } from "../../../../../services/api";
 import { SubscriptionType } from "../../../../../services/enums";
 import { useModal } from "../../../../../context/modal.context";
 import PaymentModal from "../../modals/payment-modal";
+import { SUBSCRIBE_TO_WORKSHOP } from "../../../../../services/graphql/mutations/workshop";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -29,15 +30,23 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { reason = "course", resource } = props;
-	// const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(paymentMethods[0]);
 	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
 	const [price, setPrice] = useState<number>(resource.price);
 	const [priceLoading, setPriceLoading] = useState<boolean>(false);
 	const { closeModal, openModal } = useModal();
+	const [toConfirmPayment, setToConfirmPayment] = useState<boolean>(false);
 
-	const [subscribeToCourse, { loading }] = useMutation<{ subscribeToCourse: Subscription }, { courseId: string }>(
-		SUBSCRIBE_TO_COURSE,
-	);
+	const [subscribeToCourse, { loading: courseLoading }] = useMutation<
+		{ subscribeToCourse: Subscription },
+		{ courseId: string }
+	>(SUBSCRIBE_TO_COURSE, { variables: { courseId: String(resource.id) } });
+
+	const [subscribeToWorkshop, { loading: workshopLoading }] = useMutation<
+		{ subscribeToWorkshop: Subscription },
+		{ workshopId: string }
+	>(SUBSCRIBE_TO_WORKSHOP, { variables: { workshopId: String(resource.id) } });
+
+	const loading = priceLoading || courseLoading || workshopLoading;
 
 	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
 		if (currency.name !== selectedCurrency.name) {
@@ -57,22 +66,29 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		}
 	};
 
-	const tax = useMemo(() => (price !== 0 ? calculateTax(price, 0.0825) : 0), [price]);
+	// const tax = useMemo(() => (price !== 0 ? calculateTax(price, 0.0825) : 0), [price]);
+	const tax = useMemo(() => calculateTax(price, 0.0825), [price]);
 	const amount = useMemo(() => price + Number(tax), [price]);
 
-	const processFreeCourse = async () => {
+	const handleSubscription = async () => {
 		try {
-			const { data } = await subscribeToCourse({ variables: { courseId: String(resource.id) } });
-			if (data?.subscribeToCourse.id) {
-				dispatch(
-					updateUserProfile({
-						...user,
-						subscriptions: user?.subscriptions.concat(data?.subscribeToCourse),
-					}),
-				);
-				router.replace(`/success/${SubscriptionType.COURSE}/${resource.id}`);
+			let data;
+			let error;
+			if (reason === "course") {
+				const { data: res, errors } = await subscribeToCourse();
+				data = res?.subscribeToCourse;
+				error = errors;
+			} else if (reason === "workshop") {
+				const { data: res, errors } = await subscribeToWorkshop();
+				data = res?.subscribeToWorkshop;
+				error = errors;
+			}
+			if (data?.id) {
+				dispatch(updateUserProfile({ ...user, subscriptions: user?.subscriptions.concat(data) }));
+				router.replace(`/success/${reason}/${resource.id}`);
 			} else {
-				console.log({ error: data?.subscribeToCourse });
+				setToConfirmPayment(true);
+				console.log({ error, data });
 				toast.error("Subscription failed", { ...ToastDefaultOptions(), toastId });
 			}
 		} catch (error) {
@@ -81,11 +97,11 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 			if (errMsg === ResponseMessages.ALREADY_SUBSCRIBED) {
 				toast.info(errMsg, { ...ToastDefaultOptions(), toastId });
 				if (reason === "course") router.replace(`/courses/${resource.id}/learn`);
-			} else
-				toast.error(errMsg || "Something went wrong. Please try again.", {
-					...ToastDefaultOptions(),
-					toastId,
-				});
+				else if (reason === "workshop") router.replace("/profile/my-workshop");
+			} else {
+				setToConfirmPayment(true);
+				toast.error(errMsg || "Something went wrong. Please try again.", { ...ToastDefaultOptions(), toastId });
+			}
 		}
 	};
 
@@ -94,13 +110,16 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 			openModal(
 				<PaymentModal
 					amount={amount}
-					callbackUrl={`/success/${reason}/${resource.id}`}
+					next={() => {
+						handleSubscription();
+						closeModal();
+					}}
 					selectedCurrency={selectedCurrency}
 					resourceId={String(resource.id)}
 					resourceType={reason.toUpperCase()}
 				/>,
 				{
-					animate: !false,
+					animate: true,
 					closeOnBackgroundClick: false,
 					containerClassName: "flex justify-center items-center fixed h-auto w-auto top-10",
 				},
@@ -108,10 +127,6 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 		} catch (error) {
 			console.error({ error });
 			const errMsg = formatGqlError(error);
-			// if (errMsg === ResponseMessages.ALREADY_SUBSCRIBED) {
-			// 	toast.info(errMsg, { ...ToastDefaultOptions(), toastId });
-			// 	if (reason === "course") router.replace(`/courses/${resource.id}/learn`);
-			// } else
 			toast.error(errMsg || "Something went wrong. Please try again.", {
 				...ToastDefaultOptions(),
 				toastId,
@@ -121,11 +136,16 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 
 	const handleSubmit = async () => {
 		if (reason === "course") {
-			if (price === 0) await processFreeCourse();
+			if (price === 0) await handleSubscription();
 			else if (price > 0) await processPayment();
 		} else if (reason === "workshop") {
 			if (price > 0) await processPayment();
 		}
+	};
+
+	const handleVerifyPayment = async () => {
+		//Todo
+		console.log("handleVerifyPayment");
 	};
 
 	return (
@@ -235,12 +255,23 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 									<div className="mt-4">
 										<PrimaryButton
 											onClick={handleSubmit}
-											icon={priceLoading || loading ? <ActivityIndicator /> : null}
-											title={priceLoading || loading ? "" : "Continue"}
-											disabled={priceLoading || loading}
+											icon={loading ? <ActivityIndicator /> : null}
+											title={loading ? "" : "Continue"}
+											disabled={loading}
 											className={`flex p-4 w-full justify-center`}
 										/>
 									</div>
+									{toConfirmPayment && (
+										<div className="mt-4">
+											<PrimaryButton
+												onClick={handleVerifyPayment}
+												icon={loading ? <ActivityIndicator /> : null}
+												title={loading ? "" : "Verify Payment"}
+												disabled={loading}
+												className={`flex p-4 w-full justify-center bg-[#FFB100] text-[#094B10]`}
+											/>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>

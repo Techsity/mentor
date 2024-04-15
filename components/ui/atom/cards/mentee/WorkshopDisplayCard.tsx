@@ -15,7 +15,7 @@ const WorkshopDisplayCard = ({ workshop, profile = false, owner = false }: Works
 	const user = useSelector(currentUser);
 	const router = useRouter();
 	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
-	const isLive = new Date(workshop.scheduled_date) <= new Date();
+	const isLive = new Date(workshop.scheduled_date) <= new Date(); // Todo
 
 	useEffect(() => {
 		if (user) setIsSubscribed(Boolean(user.subscriptions.find((sub) => sub.workshop_id === workshop.id)));

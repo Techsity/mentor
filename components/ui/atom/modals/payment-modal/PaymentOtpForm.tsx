@@ -52,7 +52,6 @@ const PaymentModalOTPForm = ({ onInputComplete, reference }: { onInputComplete: 
 		}
 		try {
 			const { data: res } = await verifyOtp();
-			console.log({ res: res?.verifyPayment });
 			if (res?.verifyPayment.data) {
 				if (res?.verifyPayment.data.status !== "success") {
 					if (res?.verifyPayment.display_text) setMessage(res?.verifyPayment.display_text);
