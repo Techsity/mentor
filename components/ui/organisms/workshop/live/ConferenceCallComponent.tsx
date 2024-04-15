@@ -11,6 +11,7 @@ import {
 	IMicrophoneAudioTrack,
 	ICameraVideoTrack,
 	useCurrentUID,
+	useRTCClient,
 } from "agora-rtc-react";
 import { VideocamOffOutline, VideocamOutline } from "react-ionicons";
 import { client } from "../../../../../hooks/agora";
@@ -44,15 +45,21 @@ const ConferenceCallComponent = ({
 
 	const workshopHost = participants.find((participant) => participant.uid === mentorEmail);
 
+	const rtcClient = useRTCClient(client);
+
 	useEffect(() => {
-		client.on("user-info-updated", (uid, msg) => {
-			console.log({ uid, msg });
+		rtcClient.on("user-info-updated", (uid, msg) => {
+			console.log({ uid, msg, hostVideoActive });
 			if (workshopHost?.uid === uid) {
 				if (msg === "mute-video") setHostVideoActive(false);
 				else if (msg === "unmute-video") setHostVideoActive(true);
 			}
 		});
-	}, []);
+	}, [participants]);
+
+	useEffect(() => {
+		if (isWorkshopOwner) setHostVideoActive(Boolean(localCameraTrack?.enabled));
+	}, [handleToggleCamera]);
 
 	return (
 		<div className="relative md:max-w-[95%] md:w-full md:h-full flex-grow group z-10">
@@ -75,10 +82,9 @@ const ConferenceCallComponent = ({
 						{!isWorkshopOwner && workshopHost ? (
 							<RemoteUser user={workshopHost} playAudio playVideo height={100} width={100} />
 						) : (
-							<p>Host is yet to join</p>
+							<p>Host is not in the meeting</p>
 						)}
-						{/* {!isWorkshopOwner && !workshopHost &&} */}
-						{(workshopHost || isWorkshopOwner) && !hostVideoActive && (
+						{!hostVideoActive && (
 							<div className="absolute">
 								<Avatar user={workshop.mentor.user} useName className="w-32 h-32" />
 							</div>

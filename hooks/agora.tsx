@@ -8,15 +8,12 @@ const AgoraRTCProviderPrimitive = dynamic(
 		ssr: false,
 	},
 );
-const { createClient } = (await import("agora-rtc-react")).default;
+const { createClient, disableLogUpload } = (await import("agora-rtc-react")).default;
 const config: ClientConfig = { codec: "vp8", mode: "rtc" };
 
 export const client = createClient(config);
 
 export default function AgoraRTCProvider(props: { children?: ReactNode }) {
-	// const { onLoad } = props || {};
-	// useEffect(() => {
-	// 	if (onLoad) if (client !== null) onLoad();
-	// }, [client]);
+	disableLogUpload();
 	return client !== null && <AgoraRTCProviderPrimitive client={client}>{props.children}</AgoraRTCProviderPrimitive>;
 }

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { MicMuted, SpeakingIcon } from "../../icons/svgs/call";
-import { IAgoraRTCRemoteUser } from "agora-rtc-react";
+import { IAgoraRTCRemoteUser, useRemoteUsers } from "agora-rtc-react";
 import dynamic from "next/dynamic";
 import { client } from "../../../../../hooks/agora";
 const RemoteAudioTrack = dynamic(() => import("agora-rtc-react").then(({ RemoteAudioTrack }) => RemoteAudioTrack), {
@@ -10,6 +10,12 @@ const RemoteAudioTrack = dynamic(() => import("agora-rtc-react").then(({ RemoteA
 const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost, user }: Props) {
 	const [muted, setMuted] = useState<boolean>(true);
 
+	const remoteUsers = useRemoteUsers();
+	// useEffect(() => {
+	// 	const currentUser = remoteUsers.find((p) => p.uid === user.uid);
+	// 	console.log({ currentUser });
+	// }, [remoteUsers]);
+
 	useEffect(() => {
 		client.on("user-info-updated", (uid, msg) => {
 			if (uid == user.uid) {
@@ -17,7 +23,7 @@ const VideoCallParticipantCard = memo(function VideoCallParticipantCard({ isHost
 				else if (msg === "unmute-audio") setMuted(false);
 			}
 		});
-	}, []);
+	}, [remoteUsers]);
 
 	return !user ? (
 		<></>
