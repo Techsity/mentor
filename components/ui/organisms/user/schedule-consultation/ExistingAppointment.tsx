@@ -74,6 +74,7 @@ const ExistingAppointment = ({
 	};
 
 	const refreshData = () => {
+		console.log("Done");
 		dispatch(fetchUserProfile() as any);
 		if (refetch) refetch();
 	};
@@ -113,7 +114,6 @@ const ExistingAppointment = ({
 						<PaymentModal
 							amount={Number(response?.amount)}
 							next={() => {
-								console.log("Done");
 								refreshData();
 								closeModal();
 							}}

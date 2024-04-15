@@ -24,6 +24,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 	}, [viewMentorProfile, refetch]);
 
 	const appointment = useMemo(() => {
+		console.log({ apps: user?.appointments });
 		return user?.appointments.find(
 			(a) =>
 				a.mentor.id == mentor?.id &&

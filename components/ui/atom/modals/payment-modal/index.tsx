@@ -191,7 +191,7 @@ const PaymentModal = ({
 							<PrimaryButton
 								disabled={loading}
 								onClick={handleSubmit}
-								title={loading ? "" : "Pay"}
+								title={loading ? "" : "Continue"}
 								icon={loading ? <ActivityIndicator /> : <></>}
 								className="mt-6 text-sm flex w-full rounded p-3 justify-center"
 							/>

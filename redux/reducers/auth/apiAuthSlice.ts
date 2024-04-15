@@ -72,12 +72,13 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
 
 export const fetchUserProfile = createAsyncThunk(
 	"user/fetchUserProfile",
-	async (args: { ssr?: boolean; token?: string } | undefined, { dispatch }) => {
+	async (args: { ssr?: boolean; token?: string } | undefined, { dispatch, signal }) => {
 		const { ssr, token } = args || {};
 		try {
 			const { data, error } = await client({ authToken: token, ssr }).query<{ userProfile: IUser }, any>({
 				query: GET_USER_PROFILE,
 			});
+
 			if (data.userProfile) {
 				dispatch(updateUserProfile({ ...data.userProfile }));
 				dispatch(updateLoginStatus(true));
