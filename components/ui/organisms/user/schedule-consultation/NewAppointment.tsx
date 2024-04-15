@@ -24,6 +24,7 @@ import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlic
 import { useModal } from "../../../../../context/modal.context";
 import PaymentModal from "../../../atom/modals/payment-modal";
 import ResponseMessages from "../../../../../constants/response-codes";
+import { ChevronDown } from "react-ionicons";
 
 const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => void }) => {
 	const router = useRouter();
@@ -258,24 +259,25 @@ const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => 
 						{loading ? (
 							<ActivityIndicator className="border-[#06310B] border-r-transparent" />
 						) : (
-							<select
-								// readOnly
-								disabled={loading}
-								value={selectedCurrency.name}
-								id=""
-								className="px-4 p-2">
-								{supportedCurrencies.map((currency, i) => {
-									return (
-										<option
-											key={i}
-											onClick={() => handleCurrencyExchange(currency)}
-											value={currency.name}
-											className="">
-											{currency.name}
-										</option>
-									);
-								})}
-							</select>
+							<div className="flex items-center justify-between w-full relative border border-[#094B10]">
+								<select
+									// readOnly
+									disabled={loading}
+									onChange={({ target: { value } }) => {
+										const currency = JSON.parse(value);
+										handleCurrencyExchange(currency);
+									}}
+									className="appearance-none w-full px-4 p-2">
+									{supportedCurrencies.map((currency, i) => {
+										return (
+											<option key={i} value={JSON.stringify(currency)} className="">
+												{currency.name}
+											</option>
+										);
+									})}
+								</select>
+								<ChevronDown cssClasses="absolute right-3 top-3" />
+							</div>
 						)}
 					</div>
 				</div>
