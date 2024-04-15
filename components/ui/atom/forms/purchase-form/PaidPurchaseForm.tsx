@@ -21,7 +21,7 @@ import CartSummary from "../../cards/purchase/CartSummary";
 import { processExchangeRate } from "../../../../../services/api";
 import { SubscriptionType } from "../../../../../services/enums";
 import { useModal } from "../../../../../context/modal.context";
-import PaymentModal from "../../modals/PaymentModal";
+import PaymentModal from "../../modals/payment-modal";
 
 const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICourse | IWorkshop }) => {
 	const user = useSelector(currentUser);
@@ -94,6 +94,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 			openModal(
 				<PaymentModal
 					amount={amount}
+					callbackUrl={`/success/${reason}/${resource.id}`}
 					selectedCurrency={selectedCurrency}
 					resourceId={String(resource.id)}
 					resourceType={reason.toUpperCase()}

@@ -1,30 +1,40 @@
 import React, { ChangeEvent, memo, useEffect, useId, useMemo, useRef, useState } from "react";
-import { InitializePaymentInput, INITIATE_PAYMENT } from "../../../../services/graphql/mutations/payment";
+import {
+	InitializePaymentInput,
+	INITIATE_PAYMENT,
+	VERIFY_PAYMENT,
+} from "../../../../../services/graphql/mutations/payment";
 import { useMutation, useQuery } from "@apollo/client";
-import { useModal } from "../../../../context/modal.context";
-import { supportedCurrencies, ToastDefaultOptions } from "../../../../constants";
-import { PrimaryButton } from "../buttons";
-import { Bank, FETCH_BANKS } from "../../../../services/graphql/queries/payment";
+import { useModal } from "../../../../../context/modal.context";
+import { supportedCurrencies, ToastDefaultOptions } from "../../../../../constants";
+import { PrimaryButton } from "../../buttons";
+import { Bank, FETCH_BANKS } from "../../../../../services/graphql/queries/payment";
 import { toast } from "react-toastify";
-import ActivityIndicator from "../loader/ActivityIndicator";
-import { formatGqlError } from "../../../../utils/auth";
+import ActivityIndicator from "../../loader/ActivityIndicator";
+import { formatGqlError } from "../../../../../utils/auth";
 import classNames from "classnames";
+import PaymentModalOTPForm from "./PaymentOtpForm";
+import { useRouter } from "next/router";
 
 const PaymentModal = ({
 	resourceId,
 	resourceType,
 	selectedCurrency,
 	amount,
-}: { selectedCurrency?: (typeof supportedCurrencies)[0] } & Pick<
+	callbackUrl,
+}: { selectedCurrency?: (typeof supportedCurrencies)[0]; callbackUrl: string } & Pick<
 	InitializePaymentInput,
 	"resourceId" | "resourceType" | "amount"
 >) => {
 	const toastId = useId();
+	const router = useRouter();
 	const [submissionStage, setSubmissionStage] = useState<"details" | "first_otp" | "second_otp">("details");
 	const { closeModal } = useModal();
 	const [currency, setCurrency] = useState<(typeof supportedCurrencies)[0]>(
 		selectedCurrency || supportedCurrencies[0],
 	);
+	const [reference, setReference] = useState<string>("");
+
 	const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
 	// const { data: banksData, loading: banksLoading } = useQuery<{ fetchBanks: Bank[] }, any>(FETCH_BANKS);
 	// const banks = banksData?.fetchBanks;
@@ -38,7 +48,7 @@ const PaymentModal = ({
 		currency: currency.name.toUpperCase(),
 		amount: Number(amount.toFixed(2)),
 	});
-	const [initializePayment, { loading: initializePaymentLoading }] = useMutation<
+	const [initializePayment, { loading: initializePaymentLoading, reset }] = useMutation<
 		{ initiatePayment: any },
 		{ input: InitializePaymentInput }
 	>(INITIATE_PAYMENT);
@@ -51,17 +61,31 @@ const PaymentModal = ({
 			});
 
 	const handleSubmit = async () => {
+		let timeout;
 		try {
 			const { data: res } = await initializePayment({ variables: { input: input as InitializePaymentInput } });
+			let timeout = setTimeout(function () {
+				reset();
+				clearTimeout(timeout);
+			}, 5000); // to avoid stalled requests
 			if (res?.initiatePayment) {
-				toast.success(res?.initiatePayment.display_text, { toastId, ...ToastDefaultOptions() });
+				setReference(res.initiatePayment.reference);
+				clearTimeout(timeout);
+				// toast.success(res?.initiatePayment.display_text, { toastId, ...ToastDefaultOptions() });
 				setSubmissionStage("first_otp");
 			}
 		} catch (error: any) {
+			clearTimeout(timeout);
+			reset();
 			console.error({ err: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
 			toast.error(errMsg || "Something went wrong", { toastId, ...ToastDefaultOptions() });
 		}
+	};
+
+	const paymentSuccessful = () => {
+		closeModal();
+		router.replace(callbackUrl);
 	};
 
 	useEffect(() => {
@@ -71,19 +95,27 @@ const PaymentModal = ({
 		}
 	}, [resourceId, resourceType]);
 
-	// useEffect(() => {
-	// 	console.log({ selectedBank });
-	// }, [selectedBank]);
-
 	const loading = initializePaymentLoading;
 
 	return (
 		<div className="bg-white h-auto w-[95vw] min-w-[50vw] xs:w-auto rounded p-6 pb-10 inline-grid gap-3 overflow-hidden">
 			<>
 				{submissionStage === "first_otp" ? (
-					<PaymentModalOTPForm {...{ onInputComplete: () => {} }} />
+					<PaymentModalOTPForm
+						{...{
+							onInputComplete: () => {
+								setSubmissionStage("second_otp");
+							},
+							reference,
+						}}
+					/>
 				) : submissionStage === "second_otp" ? (
-					<PaymentModalOTPForm {...{ onInputComplete: () => {}, reset: true }} />
+					<PaymentModalOTPForm
+						{...{
+							onInputComplete: paymentSuccessful,
+							reference,
+						}}
+					/>
 				) : (
 					<div className="flex justify-center items-center">
 						<div className="h-auto bg-white relative">
@@ -163,78 +195,4 @@ const PaymentModal = ({
 	);
 };
 
-const PaymentModalOTPForm = ({
-	onInputComplete,
-	reset = false,
-}: {
-	onInputComplete: (otp: string) => void;
-	reset?: boolean;
-}) => {
-	const otpInputRefs = useRef<HTMLInputElement[]>([]);
-	const otpInputRefsCurrent = otpInputRefs.current;
-
-	useEffect(() => {
-		if (reset) {
-			// empty input
-		}
-	}, [reset]);
-
-	const handleChange =
-		(index: number) =>
-		({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-			if (otpInputRefsCurrent) {
-				otpInputRefsCurrent[index].value = value;
-				if (index + 1 < 6 && index !== 0) otpInputRefsCurrent[index + 1].focus();
-				if (otpInputRefsCurrent[index].value == "" && index - 1 >= 0) {
-					otpInputRefsCurrent[index - 1].focus();
-					otpInputRefsCurrent[index].value = "";
-				}
-			}
-		};
-
-	const handleSubmit = async () => {};
-
-	const arr = Array(6).fill("");
-
-	return (
-		<div className="h-full w-full animate__animated animate__fadeIn animate__fast">
-			<h1 className="font-medium">Enter OTP</h1>
-			<div className="flex gap-2 sm:gap-4 items-center py-5 max-w-xl justify-center">
-				{arr.map((_, index) => (
-					<div
-						key={index}
-						className={classNames(
-							"border-2 w-full flex focus-within:border-[#70C5A1] duration-300 items-center justify-center overflow-hidden",
-							!true ? "border-[#70C5A1]" : "border-zinc-300",
-						)}>
-						<input
-							ref={(node) => {
-								if (otpInputRefsCurrent)
-									if (node) otpInputRefsCurrent[index] = node;
-									else delete otpInputRefsCurrent[index];
-							}}
-							autoFocus={index === 0}
-							type="text"
-							className="sm:p-3 p-2 bg-transparent text-center border-none outline-none focus:ring-0 w-full h-full"
-							// value={otpInput[index]}
-							onChange={handleChange(index)}
-							size={1}
-							max={1}
-							maxLength={1}
-						/>
-					</div>
-				))}
-			</div>
-			<PrimaryButton
-				// disabled={loading}
-				onClick={handleSubmit}
-				title="Continue"
-				// title={loading ? "" : "Pay"}
-				// icon={loading ? <ActivityIndicator /> : <></>}
-				className="mt-6 text-sm flex w-full rounded p-3 justify-center"
-			/>
-		</div>
-	);
-};
-
-export default memo(PaymentModal);
+export default PaymentModal;

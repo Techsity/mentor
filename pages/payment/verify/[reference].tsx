@@ -115,46 +115,46 @@ const VerifyPaymentPage = ({ reference, error, subscription, access_code }: Prop
 };
 export default protectedPageWrapper(VerifyPaymentPage);
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
-	const reference = ctx.query.reference as string;
-	const authToken = checkAuthServerSide(ctx.req);
-	if (!reference)
-		return {
-			notFound: true,
-			props: { reference: "", subscription: null },
-		};
-	// verify payment
-	try {
-		const mutation = client({ ssr: true, authToken }).mutate;
-		const { data } = await mutation<
-			{ verifyPayment: { subscription?: Subscription; appointment?: IAppointment } },
-			{ reference: string }
-		>({ mutation: VERIFY_PAYMENT, variables: { reference } });
-		const response = data?.verifyPayment;
-		if (response?.appointment) {
-			return {
-				redirect: { destination: `/mentors/${response.appointment.mentor.id}/consult`, permanent: true },
-				props: {
-					reference,
-					subscription: null,
-				},
-			};
-		}
-		return { props: { reference, subscription: response?.subscription as Subscription | null } };
-	} catch (error) {
-		const err = formatGqlError(error);
-		const access_code = err.split(" | ")[1];
-		if (access_code) {
-			return {
-				props: { reference, subscription: null, access_code, error: err.split(" | ")[0] },
-			};
-		}
-		console.log({ error: JSON.stringify(error) });
-		return {
-			props: { reference: "", subscription: null, error: err || "Something went wrong" },
-		};
-	}
-};
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> => {
+// 	const reference = ctx.query.reference as string;
+// 	const authToken = checkAuthServerSide(ctx.req);
+// 	if (!reference)
+// 		return {
+// 			notFound: true,
+// 			props: { reference: "", subscription: null },
+// 		};
+// 	// verify payment
+// 	try {
+// 		const mutation = client({ ssr: true, authToken }).mutate;
+// 		const { data } = await mutation<
+// 			{ verifyPayment: { subscription?: Subscription; appointment?: IAppointment } },
+// 			{ reference: string }
+// 		>({ mutation: VERIFY_PAYMENT, variables: { reference } });
+// 		const response = data?.verifyPayment;
+// 		if (response?.appointment) {
+// 			return {
+// 				redirect: { destination: `/mentors/${response.appointment.mentor.id}/consult`, permanent: true },
+// 				props: {
+// 					reference,
+// 					subscription: null,
+// 				},
+// 			};
+// 		}
+// 		return { props: { reference, subscription: response?.subscription as Subscription | null } };
+// 	} catch (error) {
+// 		const err = formatGqlError(error);
+// 		const access_code = err.split(" | ")[1];
+// 		if (access_code) {
+// 			return {
+// 				props: { reference, subscription: null, access_code, error: err.split(" | ")[0] },
+// 			};
+// 		}
+// 		console.log({ error: JSON.stringify(error) });
+// 		return {
+// 			props: { reference: "", subscription: null, error: err || "Something went wrong" },
+// 		};
+// 	}
+// };
 
 type Props = {
 	reference: string;
