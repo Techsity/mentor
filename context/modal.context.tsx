@@ -11,7 +11,7 @@ export interface ModalProps {
 interface ModalContextType {
 	modalContent: ReactNode | null;
 	openModal: (content: ReactNode, props?: ModalProps) => void;
-	closeModal: (next?: () => void) => void;
+	closeModal: () => void;
 }
 
 interface ModalProviderProps {
@@ -46,9 +46,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		setModalContent(content);
 	};
 
-	const closeModal = (next?: () => void) => {
+	const closeModal = () => {
 		setModalContent(null);
-		if (next) next();
 	};
 
 	const stopPageScrolling = () => {
