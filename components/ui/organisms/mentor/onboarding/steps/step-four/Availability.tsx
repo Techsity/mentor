@@ -4,8 +4,10 @@ import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
 import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
+import { daysOfTheWeek } from "../../../../../../../constants";
 
 const Availability = () => {
+	const days = daysOfTheWeek;
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const initialSchedule: IMentorAvailability = {
@@ -201,7 +203,5 @@ const Availability = () => {
 		</div>
 	);
 };
-
-const days: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export default Availability;
