@@ -50,7 +50,9 @@ const Availability = () => {
 
 	const updateSchedule = (args: { field: keyof TimeSlot; time: ICurrentTime; day: string }) => {
 		const { day, time, field } = args;
-		const formattedTime = `${String(time.hr).padStart(2, "0")}:${String(time.min).padStart(2, "0")}${time.meridan}`;
+		const formattedTime = `${String(time.min).padStart(2, "0")}:${String(time.secs).padStart(2, "0")}${
+			time.meridan
+		}`;
 
 		setSchedule((prev) => {
 			const updated = { ...prev };

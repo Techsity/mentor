@@ -4,8 +4,8 @@ import { ChevronDown, ChevronUp } from "react-ionicons";
 import { PrimaryButton } from "../buttons";
 
 export interface ICurrentTime {
-	hr: number | null;
-	min: number | null;
+	min: string;
+	secs: string;
 	meridan: "am" | "pm";
 }
 interface TimePickerProps {
@@ -18,37 +18,44 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 	const { className, onChange, closeTimePicker } = props;
 
 	const initialTime: ICurrentTime = {
-		hr: 12,
-		min: 0,
+		min: "12",
+		secs: "00",
 		meridan: "am",
 	};
 	const [currentTime, setCurrentTime] = useState<ICurrentTime>(initialTime);
 
 	const incrementMinute = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newMin = prev.hr !== null && prev.hr < 12 ? prev.hr + 1 : 1;
-			return { ...prev, hr: newMin };
+			const newMin =
+				prev.min !== null && parseInt(prev.min) < 12 ? String(parseInt(prev.min) + 1).padStart(2, "0") : "01";
+			return { ...prev, min: newMin };
 		});
 	}, []);
 
 	const decrementMinute = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newMin = prev.hr !== null && prev.hr > 1 ? prev.hr - 1 : 12;
-			return { ...prev, hr: newMin };
+			const newMin =
+				prev.min !== null && parseInt(prev.min) > 1 ? String(parseInt(prev.min) - 1).padStart(2, "0") : "12";
+			return { ...prev, min: newMin };
 		});
 	}, []);
 
 	const incrementSeconds = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newSecs = prev.min !== null && prev.min < 59 ? prev.min + 1 : 0;
-			return { ...prev, min: newSecs };
+			const newSecs =
+				prev.secs !== null && parseInt(prev.secs) < 59
+					? String(parseInt(prev.secs) + 1).padStart(2, "0")
+					: "00";
+			console.log({ newSecs });
+			return { ...prev, secs: newSecs };
 		});
 	}, []);
 
 	const decrementSeconds = useCallback(() => {
 		setCurrentTime((prev) => {
-			const newSecs = prev.min !== null && prev.min > 0 ? prev.min - 1 : 59;
-			return { ...prev, min: newSecs };
+			const newSecs =
+				prev.secs !== null && parseInt(prev.secs) > 0 ? String(parseInt(prev.secs) - 1).padStart(2, "0") : "59";
+			return { ...prev, secs: newSecs };
 		});
 	}, []);
 
@@ -67,29 +74,65 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 	};
 	return (
 		<>
-			{/* <div className="z-40 absolute top-0 left-0 bg-[#0000001A] backdrop-blur-sm w-full min-w-screen h-full min-h-screen" /> */}
 			<div
 				ref={ref}
 				className={classNames(
-					"text-3xl relative z-20 shadow-lg rounded-lg flex items-center flex-col gap-5 max-w-md w-full h-full min-h-[200px] min-w-[300px] bg-white",
+					"text-3xl relative z-20 shadow-lg rounded-lg flex items-center flex-col gap-5 max-w-md w-full h-full min-h-[200px] min-w-[300px] bg-white overflow-hidden",
 					className,
 				)}>
 				<div className="bg-[#00D569] w-full h-auto py-5 rounded-tl-lg rounded-tr-lg flex justify-center items-center gap-3 font-semibold">
-					<h1 className="">{currentTime.hr ? String(currentTime.hr).padStart(2, "0") : "00"}</h1>
-					<h1 className="">:</h1>
 					<h1 className="">{currentTime.min ? String(currentTime.min).padStart(2, "0") : "00"}</h1>
+					<h1 className="">:</h1>
+					<h1 className="">{currentTime.secs ? String(currentTime.secs).padStart(2, "0") : "00"}</h1>
 					<h1 className="uppercase">{currentTime.meridan}</h1>
 				</div>
 				<div className="bg-white h-auto py-3 w-full flex justify-between items-center px-10">
-					<div className="flex gap-3 flex-col items-center justify-center">
+					<div className="flex gap-3 flex-col items-center justify-center w-[40%]">
 						<ChevronUp cssClasses="cursor-pointer" onClick={incrementMinute} />
-						<p className="">{currentTime.hr ? String(currentTime.hr).padStart(2, "0") : "00"}</p>
+						<input
+							type="text"
+							maxLength={2}
+							max={12}
+							className="bg-transparent focus:ring-0 outline-none w-full"
+							value={currentTime.min || ""}
+							onChange={({ target: { value } }) => {
+								setCurrentTime((prev) => {
+									const updated = { ...prev };
+									value = value.replace(/\D/g, "");
+									if (value == "00") value = "12";
+									else if (parseInt(value) > 12) {
+										value = String((parseInt(value) % 12) % 24).padStart(2, "0");
+										updated.meridan = "pm";
+									}
+									updated.min = value;
+									return updated;
+								});
+							}}
+						/>
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementMinute} />
 					</div>
 					<h1 className="">:</h1>
-					<div className="flex gap-3 flex-col items-center justify-center">
+					<div className="flex gap-3 flex-col items-center justify-center w-[40%]">
 						<ChevronUp cssClasses="cursor-pointer" onClick={incrementSeconds} />
-						<p className="">{currentTime.min ? String(currentTime.min).padStart(2, "0") : "00"}</p>
+						<input
+							max={59}
+							type="text"
+							maxLength={2}
+							className="bg-transparent focus:ring-0 outline-none w-full"
+							value={currentTime.secs || ""}
+							onChange={({ target: { value } }) => {
+								setCurrentTime((prev) => {
+									const updated = { ...prev };
+									value = value.replace(/\D/g, "");
+									if (parseInt(value) > 59) {
+										value = String(parseInt(value) % 60).padStart(2, "0");
+										updated.min = String(parseInt(updated.min) + 1).padStart(2, "0");
+									}
+									updated.secs = value;
+									return updated;
+								});
+							}}
+						/>
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementSeconds} />
 					</div>
 					<div
