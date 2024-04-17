@@ -29,7 +29,7 @@ export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
 
 export type IMentorSkills = {
 	skill_name: string;
-	years_of_exp: number;
+	years_of_exp: number|null;
 };
 export type TimeSlot = { endTime: string; startTime: string; isOpen: boolean };
 

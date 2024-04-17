@@ -13,7 +13,7 @@ const HomepageHero = () => {
 	];
 	return (
 		<div
-			className="h-screen w-screen text-white relative z-10"
+			className="h-auto min-h-[80vh] sm:h-screen w-screen text-white relative z-10"
 			style={{
 				background: `url("/assets/images/landing_hero.png")`,
 				backgroundSize: "100% 100%",

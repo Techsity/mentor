@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,9 +15,17 @@ const StepOneMentorOnboarding = () => {
 	const { SuggestionsComponent } = useSuggestions<string>({
 		suggestions: mentorRoles.map((item) => item),
 		inputValue: role,
+		showSuggestion: true,
+		animated: true,
 	});
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setRole(e.target.value);
+		dispatch(
+			setOnboardingMentor({
+				...onboardingMentor,
+				role: e.target.value,
+			}),
+		);
 	};
 
 	return (
@@ -38,9 +46,7 @@ const StepOneMentorOnboarding = () => {
 						name="job_title"
 						id="job_title"
 						className="bg-white"
-						containerprops={{
-							className: "border border-[#00D569]",
-						}}
+						containerprops={{ className: "border border-[#00D569]" }}
 					/>
 					<div className="absolute top-20 left-0 w-full">
 						<SuggestionsComponent

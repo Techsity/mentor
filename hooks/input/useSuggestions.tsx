@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
 
 interface SuggestionsProps<T> {
 	suggestions: T[];
 	inputValue?: T;
 	animated?: boolean;
+	showSuggestion?: boolean;
 }
 
 function useSuggestions<T>(props: SuggestionsProps<T>) {
-	const { suggestions, inputValue, animated = false } = props;
+	const { suggestions, inputValue, animated = false, showSuggestion = false } = props;
 	const [selectedSuggestions, setSelectedSuggestions] = useState<T[]>([]);
 
 	const filteredSuggestions: T[] = suggestions.filter((s: any) =>
@@ -21,9 +22,8 @@ function useSuggestions<T>(props: SuggestionsProps<T>) {
 	);
 
 	useEffect(() => {
-		if (inputValue) {
-			setSelectedSuggestions(filteredSuggestions);
-		}
+		if (inputValue) setSelectedSuggestions(filteredSuggestions);
+
 		return () => {
 			setSelectedSuggestions([]);
 		};

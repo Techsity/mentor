@@ -3,10 +3,7 @@ import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import TagsInput from "../../../../../atom/inputs/TagsInput";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
 import Projects from "./Projects";
@@ -17,7 +14,7 @@ import { IMentorSkills } from "../../../../../../../interfaces/mentor.interface"
 const StepTwoMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: 1 };
+	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: null };
 	const [currentSkill, setCurrentSkill] = useState<IMentorSkills>(emptySkillState);
 
 	const addSkill = (skill: IMentorSkills) => {
@@ -82,8 +79,10 @@ const StepTwoMentorOnboarding = () => {
 								min={1}
 								inputType="number"
 								textLength={2}
-								tagsState={onboardingMentor.skills.map((item) => item.years_of_exp.toString())}
-								value={currentSkill.years_of_exp.toString()}
+								tagsState={onboardingMentor.skills.map(
+									({ years_of_exp }) => years_of_exp?.toString() || "",
+								)}
+								value={currentSkill.years_of_exp?.toString()}
 								onChange={(value) => {
 									setCurrentSkill((prev) => {
 										return { ...prev, years_of_exp: value as number };
@@ -96,27 +95,30 @@ const StepTwoMentorOnboarding = () => {
 						</div>
 						<div className="flex justify-start">
 							<PrimaryButton
+								disabled={!currentSkill.years_of_exp || !currentSkill.skill_name}
 								onClick={() => {
-									if (typeof currentSkill.years_of_exp !== "number") {
-										currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
+									if (currentSkill.years_of_exp) {
+										if (typeof currentSkill.years_of_exp !== "number")
+											currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
+
+										if (
+											onboardingMentor.skills.length > 0 &&
+											onboardingMentor.skills.every(
+												(item) => item.skill_name === currentSkill.skill_name,
+											)
+										) {
+											toast.info(
+												"Tag has already been added!",
+												ToastDefaultOptions({
+													id: "info",
+													theme: "dark",
+												}),
+											);
+											return;
+										}
+										if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
+											addSkill(currentSkill);
 									}
-									if (
-										onboardingMentor.skills.length > 0 &&
-										onboardingMentor.skills.every(
-											(item) => item.skill_name === currentSkill.skill_name,
-										)
-									) {
-										toast.info(
-											"Tag has already been added!",
-											ToastDefaultOptions({
-												id: "info",
-												theme: "dark",
-											}),
-										);
-										return;
-									}
-									if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
-										addSkill(currentSkill);
 								}}
 								title="Add"
 								className="flex justify-center w-full px-5 p-4 h-full"
