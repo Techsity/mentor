@@ -10,7 +10,7 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 	bio: "",
 	role: "",
 	skills: [],
-	yearsOfExp: 1,
+	yearsOfExp: 0,
 	workHistory: [],
 	projects: [],
 	education: [],

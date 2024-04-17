@@ -165,7 +165,7 @@ const StepTwoMentorOnboarding = () => {
 								}),
 							)
 						}
-						value={onboardingMentor.yearsOfExp}
+						value={onboardingMentor.yearsOfExp < 1 ? "" : onboardingMentor.yearsOfExp}
 						className="bg-white"
 						containerprops={{
 							className: "border border-[#00D569]",
