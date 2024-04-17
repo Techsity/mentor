@@ -1,5 +1,6 @@
 import "animate.css";
 import "animate.css/animate.min.css";
+import "animate.css/animate.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import "nprogress/nprogress.css";

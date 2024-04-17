@@ -9,27 +9,30 @@ import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../../../constan
 import Availability from "./Availability";
 import Languages from "./Languages";
 import { useModal } from "../../../../../../../context/modal.context";
-import { TimeSlot } from "../../../../../../../interfaces/mentor.interface";
+import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
 import { slugify } from "../../../../../../../utils";
 import classNames from "classnames";
 import { Checkmark, Close } from "react-ionicons";
 
-type TimeSlotSubSet = { day: string; timeSlot: Omit<TimeSlot, "isOpen">; isAvailable: boolean };
+// type TimeSlotSubSet = { day: string; timeSlot: Omit<TimeSlot, "isOpen">; isAvailable: boolean };
+interface TimeSlotSubSet extends Omit<IMentorAvailability, "id" | "timeSlots"> {
+	isAvailable: boolean;
+	timeSlots: Omit<TimeSlot, "isOpen">[];
+}
 
 const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const { openModal } = useModal();
-	const [timeSlots, setTimeSlots] = useState<TimeSlotSubSet[]>(
+	const [availability, setAvailability] = useState<TimeSlotSubSet[]>(
 		daysOfTheWeek.map((day) => {
-			return { day, isAvailable: false, timeSlot: { endTime: "00:00", startTime: "00:00" } };
+			return { day, isAvailable: false, timeSlots: [] };
 		}),
 	);
 
 	const updateTimeSlot = (day: string, input: Partial<Omit<TimeSlotSubSet, "day">>) => {
-		const { isAvailable, timeSlot } = input;
-		const { endTime, startTime } = timeSlot || {};
-		setTimeSlots((p) => {
+		const { isAvailable } = input;
+		setAvailability((p) => {
 			let updated = [...p];
 			const updateIndex = updated.findIndex((slot) => slot.day === day);
 			if (updateIndex !== -1) {
@@ -39,6 +42,10 @@ const StepFourMentorOnboarding = () => {
 			return updated;
 		});
 	};
+
+	useEffect(() => {
+		dispatch(setOnboardingMentor({ ...onboardingMentor, availability: [] }));
+	}, [availability]);
 
 	return (
 		<div className="animate__animated animate__fadeInLeft">
@@ -51,21 +58,60 @@ const StepFourMentorOnboarding = () => {
 				Create the dates and time you would be available for mentorship sessions.
 			</p>
 			<div className="grid gap-5 mt-8">
-				{timeSlots.map(({ day, isAvailable }, i) => {
+				{availability.map(({ day, isAvailable, timeSlots }, i) => {
 					return (
 						<div
 							key={i}
-							className="text-sm xs:flex sm:block lg:flex gap-4 items-center bg-white border border-[#00D569] p-3">
+							className="text-sm flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4 items-start bg-white border border-[#00D569] p-3">
 							<ToggleSwitch
+								animated
 								{...{
 									isActive: isAvailable,
 									handleToggle: () => updateTimeSlot(day, { isAvailable: !isAvailable }),
 								}}
 							/>
-							<div className={classNames("font-medium duration-300", !isAvailable ? "text-[#bbb]" : "")}>
-								<h1 className="capitalize">
-									{day} {!isAvailable && <span className="text-xs"> - Unavailable</span>}
-								</h1>
+							<div className="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-4 gap-2 flex-grow h-full lg:w-auto md:w-full sm:w-auto w-full">
+								<div
+									className={classNames(
+										"font-medium duration-300",
+										!isAvailable ? "text-[#bbb] col-span-4" : "col-span-1",
+									)}>
+									<h1 className="capitalize">
+										{day} {!isAvailable && <span className="text-xs"> - Unavailable</span>}
+									</h1>
+								</div>
+								{isAvailable && (
+									<div className="w-full col-span-3 flex items-center gap-5">
+										{isAvailable && (
+											<div className="text-[#70C5A1] lg:block md:hidden sm:block hidden">|</div>
+										)}
+										{timeSlots.length < 1 ? (
+											<div className="text-[#70C5A1] cursor-pointer select-none">
+												+Create time slots
+											</div>
+										) : (
+											<>
+												<h1 className="capitalize font-medium">Time slots</h1>
+												<div className="mt-1.5 w-full gap-2 grid grid-cols-2 md:grid-cols-3 xs:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 animate__animated animate__fadeIn animate__faster">
+													{timeSlots.map(({ endTime, startTime }, index) => {
+														return (
+															<>
+																<div key={index} className="flex items-center gap-1">
+																	<span className="">{endTime}</span>
+																	<span>-</span>
+																	<span className="">{startTime}</span>
+																</div>
+															</>
+														);
+													})}
+													<div className="text-[#70C5A1] cursor-pointer select-none">
+														+Add more
+													</div>
+												</div>
+											</>
+										)}
+									</div>
+								)}
 							</div>
 						</div>
 					);
@@ -85,25 +131,30 @@ const StepFourMentorOnboarding = () => {
 const ToggleSwitch = ({
 	handleToggle,
 	isActive,
+	className,
+	animated,
 }: {
 	isActive: boolean;
 	handleToggle: () => void;
 	animated?: boolean;
+	className?: string;
 }) => {
 	return (
 		<div
 			onClick={handleToggle}
 			className={classNames(
-				"cursor-pointer flex gap-3 h-full w-10 items-center rounded-full relative duration-300 overflow-hidden",
-				isActive ? "bg-[#00D569]" : "bg-[#bbb]",
+				"cursor-pointer flex gap-3 sm:h-[20px] md:h-8 h-8 lg:h-[20px] w-10 items-center justify-center rounded-full relative overflow-hidden",
+				animated ? "duration-300" : "",
+				isActive ? "bg-[#70C5A1]" : "bg-[#bbb]",
+				className,
 			)}>
 			{isActive ? (
-				<div className="flex justify-center absolute right-0 items-center p-[3px] rounded-full animate__animated animate__fadeInLeft animate__fastest bg-white">
-					<Checkmark color="#555" width={"15px"} height={"15px"} />
+				<div className="flex justify-center absolute h-full right-0 items-center p-[3px] rounded-full bg-white animate__animated animate__fadeInLeft animate__fastest">
+					<Checkmark color="#00D569" width={"15px"} height={"15px"} />
 				</div>
 			) : (
-				<div className="flex justify-center absolute left-0 items-center p-[3px] rounded-full animate__animated animate__fadeInRight animate__fastest bg-white">
-					<Close color="#555" width={"15px"} height={"15px"} />
+				<div className="flex justify-center absolute h-full left-0 items-center p-[3px] rounded-full bg-white animate__animated animate__fadeInLeft animate__fastest">
+					<Close color="#00D569" width={"15px"} height={"15px"} />
 				</div>
 			)}
 		</div>
