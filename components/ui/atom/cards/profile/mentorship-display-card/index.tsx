@@ -24,6 +24,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { openModal } = useModal();
+	const isMentor = !session.mentor;
 
 	const [acceptRequest, { loading: acceptLoading }] = useMutation<
 		{ acceptAppointment: IAppointment },
@@ -34,7 +35,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 	// const [declineRequest, { loading: declineLoading }] = useMutation(ACCEPT_MENTORSHIP_REQUEST);
 
 	const updateLocalState = (data: IAppointment) => {
-		if (user?.is_mentor && user.mentor !== null && user.mentor) {
+		if (isMentor) {
 			let mentorAppointments = user?.mentor?.appointments || [];
 			const index = mentorAppointments.findIndex((appointment) => appointment.id === data.id);
 			if (index !== -1) {
@@ -56,7 +57,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 	};
 
 	const handleAcceptRequest = async () => {
-		if (user?.is_mentor) {
+		if (isMentor) {
 			try {
 				const { data } = await acceptRequest({ variables: { acceptAppointmentId: session.id } });
 				console.log({ data: data?.acceptAppointment });
@@ -82,7 +83,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 
 	const handleDeclineRequest = async () => {
 		try {
-			if (user?.is_mentor) {
+			if (isMentor) {
 				if (session.status == AppointmentStatus.PENDING) {
 					console.log("request declined");
 					// Continue
@@ -99,7 +100,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 		session.status !== AppointmentStatus.CANCELLED_BY_MENTOR;
 
 	const navigateToMentorProfile = () => {
-		if (isValid) if (session.mentor && !user?.is_mentor) router.push(`/mentors/${session.mentor.id}/consult`);
+		if (isValid) if (session.mentor && !isMentor) router.push(`/mentors/${session.mentor.id}/consult`);
 	};
 
 	const checkRefundStatus = async () => {
@@ -120,7 +121,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 					className={classNames(
 						"flex items-center gap-3 p-2",
 						!isValid && "grayscale",
-						session.mentor && !user?.is_mentor && isValid && "cursor-pointer",
+						session.mentor && !isMentor && isValid && "cursor-pointer",
 					)}
 					onClick={navigateToMentorProfile}>
 					<Avatar
@@ -137,7 +138,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 			</div>
 
 			{/* CTA Buttons For User */}
-			{!user?.is_mentor && isValid && (
+			{!isMentor && isValid && (
 				<div className="flex justify-between items-center">
 					<PrimaryButton
 						title="cancel"
@@ -147,7 +148,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 					/>
 				</div>
 			)}
-			{!user?.is_mentor &&
+			{!isMentor &&
 				(session.status === AppointmentStatus.CANCELLED_BY_USER ||
 					session.status === AppointmentStatus.CANCELLED_BY_MENTOR) && (
 					<div className="flex justify-between items-center">
@@ -160,7 +161,7 @@ const MentorshipDisplayCard = (session: IAppointment) => {
 					</div>
 				)}
 			{/* CTA Buttons For Mentor */}
-			{user?.is_mentor && isValid && (
+			{isMentor && isValid && (
 				<div className="flex justify-between items-center">
 					<PrimaryButton
 						title={

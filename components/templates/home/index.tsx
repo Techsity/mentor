@@ -14,8 +14,10 @@ import NewsLetterForm from "../../ui/atom/forms/NewsLetterForm";
 const HomepageTemplate = () => {
 	return (
 		<>
-			<HomepageHero />
-			<HomepageTestimonialSection className="pt-52 lg:pt-80" />
+			<div className="w-auto h-auto bg-[#E9E8E7]">
+				<HomepageHero />
+				<HomepageTestimonialSection />
+			</div>
 			<Companies />
 			<HomepageCourseSection />
 			<LiveWorkshops />

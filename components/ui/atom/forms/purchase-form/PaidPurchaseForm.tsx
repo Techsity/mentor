@@ -179,7 +179,7 @@ const PaidPurchaseForm = (props: { reason: "course" | "workshop"; resource: ICou
 										<div className="grid gap-3">
 											<div className="grid mb-2 gap-2">
 												<p className="font-medium">Select Currency</p>
-												<div className="flex items-center justify-between relative w-full border border-[#094B10]">
+												<div className="flex items-center justify-between relative w-full border border-[#094B10] outline-none focus:ring-0">
 													<select
 														disabled={priceLoading}
 														onChange={({ target: { value } }) => {

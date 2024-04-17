@@ -8,7 +8,7 @@ const HomepageTestimonialSection = ({ className }: { className?: string }) => {
 	return (
 		<div
 			className={classNames(
-				`lg:flex justify-between items-start gap-6 px-5 sm:px-10 lg:px-12 xl:px-24 bg-[#E9E8E7] -mt-60 py-16 overflow-hidden `,
+				`lg:flex justify-between items-start gap-6 px-5 sm:px-10 lg:px-12 xl:px-24 py-16 overflow-hidden `,
 				className,
 			)}>
 			<AnimationOnScroll animateOnce animateIn="animate__fadeInUp">

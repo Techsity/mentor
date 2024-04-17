@@ -82,13 +82,13 @@ const CoursesList = ({ activeCategory, activeCourseType, loadMore = false }: Cou
 				{!loading && error && <h1 className="text-[#d31119] tracking-tight">Network Error.</h1>}
 			</div>
 			{/* {!loading && !error && allCourses.length >= THRESHOLD && ( */}
-			<div className="max-w-xs mx-auto py-4">
+			{!loading &&<div className="max-w-xs mx-auto py-4 animate__animated animate__fadeIn">
 				<PrimaryButton
 					title="See more"
 					className="w-full p-1 flex justify-center items-center rounded-lg"
 					onClick={fetchMore}
 				/>
-			</div>
+			</div>}
 			{/* )} */}
 		</>
 	);
