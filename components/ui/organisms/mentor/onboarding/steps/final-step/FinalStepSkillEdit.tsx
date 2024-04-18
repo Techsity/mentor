@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../../redux/reducers/onboardingSlice";
 import TagsInput from "../../../../../atom/inputs/TagsInput";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -71,8 +68,8 @@ const FinalStepSkillEdit = () => {
 								min={1}
 								inputType="number"
 								textLength={2}
-								tagsState={onboardingMentor.skills.map((item) => item.years_of_exp.toString())}
-								value={currentSkill.years_of_exp.toString()}
+								tagsState={onboardingMentor.skills.map((item) => item.years_of_exp?.toString() || "")}
+								value={currentSkill.years_of_exp?.toString()}
 								onChange={(value) => {
 									setCurrentSkill((prev) => {
 										return { ...prev, years_of_exp: value as number };
@@ -86,9 +83,10 @@ const FinalStepSkillEdit = () => {
 						<div className="flex justify-start">
 							<PrimaryButton
 								onClick={() => {
-									if (typeof currentSkill.years_of_exp !== "number") {
-										currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
-									}
+									if (currentSkill.years_of_exp)
+										if (typeof currentSkill.years_of_exp !== "number") {
+											currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
+										}
 									if (
 										onboardingMentor.skills.length > 0 &&
 										onboardingMentor.skills.every(
@@ -104,8 +102,9 @@ const FinalStepSkillEdit = () => {
 										);
 										return;
 									}
-									if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
-										addSkill(currentSkill);
+									if (currentSkill.years_of_exp)
+										if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
+											addSkill(currentSkill);
 								}}
 								title="Add"
 								className="flex justify-center w-full px-5 p-4 h-full"
@@ -141,7 +140,8 @@ const FinalStepSkillEdit = () => {
 				<div className="grid grid-cols-2 gap-2 text-sm font-[300] max-w-md">
 					{onboardingMentor.skills.map((skill, index) => (
 						<span key={skill.skill_name}>
-							{index + 1}. {skill.skill_name} | {skill.years_of_exp > 1 ? skill.years_of_exp : "<1"}y
+							{index + 1}. {skill.skill_name} |{" "}
+							{skill?.years_of_exp && skill?.years_of_exp > 1 ? skill?.years_of_exp : "<1"}y
 						</span>
 					))}
 				</div>
