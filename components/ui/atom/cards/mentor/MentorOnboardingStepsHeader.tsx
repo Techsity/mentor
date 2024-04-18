@@ -11,7 +11,7 @@ const MentorOnboardingStepsHeader = (props: { stepsLength?: number; currentStep:
 	const onboardingMentor = useSelector(onboardingMentorState);
 
 	return (
-		<div className="relative grid grid-cols-4 w-full justify-between mb-6 py-6 items-center sticky z-10 top-20 h-full bg-[#F6F9F85A] backdrop-blur-sm">
+		<div className="grid grid-cols-4 w-full justify-between mb-6 py-6 items-center sticky z-10 top-20 h-full bg-[#F6F9F85A] backdrop-blur-sm">
 			{stepNumbers.map((step, id) => (
 				<div key={id} className="relative w-full flex justify-start items-center select-none">
 					<div
@@ -24,7 +24,7 @@ const MentorOnboardingStepsHeader = (props: { stepsLength?: number; currentStep:
 							);
 							scrollToTop();
 						}}
-						className={`cursor-pointer h-10 z-10 h-9 sm:h-16 sm:w-16 p-3.5 sm:p-5 items-center flex justify-center rounded-full ${
+						className={`cursor-pointer z-10 h-9 sm:h-16 sm:w-16 p-3.5 sm:p-5 items-center flex justify-center rounded-full ${
 							currentStep >= step
 								? "text-white bg-[#70C5A1] md:animate__animated animate__bounceIn animate__slow"
 								: "text-black bg-zinc-200"
@@ -32,7 +32,7 @@ const MentorOnboardingStepsHeader = (props: { stepsLength?: number; currentStep:
 						{step}
 					</div>
 					{step < stepsLength - 1 && <div className="absolute h-1 w-full bg-zinc-200" />}
-					{step < stepsLength - 1 ? (
+					{step < stepsLength - 1 && (
 						<div
 							className={`absolute h-1 ${
 								currentStep === step
@@ -42,7 +42,7 @@ const MentorOnboardingStepsHeader = (props: { stepsLength?: number; currentStep:
 									: ""
 							}`}
 						/>
-					) : null}
+					)}
 				</div>
 			))}
 		</div>

@@ -12,6 +12,7 @@ interface TimePickerProps {
 	onChange?: (time: ICurrentTime) => void;
 	className?: string;
 	closeTimePicker: any;
+	initialState?: Partial<ICurrentTime>;
 }
 
 const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: ForwardedRef<HTMLDivElement>) {
@@ -46,7 +47,6 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 				prev.secs !== null && parseInt(prev.secs) < 59
 					? String(parseInt(prev.secs) + 1).padStart(2, "0")
 					: "00";
-			console.log({ newSecs });
 			return { ...prev, secs: newSecs };
 		});
 	}, []);
@@ -93,7 +93,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 							type="text"
 							maxLength={2}
 							max={12}
-							className="bg-transparent focus:ring-0 outline-none w-full"
+							className="bg-transparent focus:ring-0 outline-none w-full text-center"
 							value={currentTime.min || ""}
 							onChange={({ target: { value } }) => {
 								setCurrentTime((prev) => {
@@ -118,7 +118,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 							max={59}
 							type="text"
 							maxLength={2}
-							className="bg-transparent focus:ring-0 outline-none w-full"
+							className="bg-transparent focus:ring-0 outline-none w-full text-center"
 							value={currentTime.secs || ""}
 							onChange={({ target: { value } }) => {
 								setCurrentTime((prev) => {

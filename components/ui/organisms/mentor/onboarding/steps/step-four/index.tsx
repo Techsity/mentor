@@ -13,7 +13,7 @@ import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/m
 import { slugify } from "../../../../../../../utils";
 import classNames from "classnames";
 import { Checkmark, Close } from "react-ionicons";
-import TimePicker from "../../../../../atom/common/TimePicker";
+import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
 
 // type TimeSlotSubSet = { day: string; timeSlot: Omit<TimeSlot, "isOpen">; isAvailable: boolean };
 interface TimeSlotSubSet extends Omit<IMentorAvailability, "id" | "timeSlots"> {
@@ -24,14 +24,15 @@ interface TimeSlotSubSet extends Omit<IMentorAvailability, "id" | "timeSlots"> {
 const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const { openModal } = useModal();
 	const [availability, setAvailability] = useState<TimeSlotSubSet[]>(
 		daysOfTheWeek.map((day) => {
 			return { day, isAvailable: false, timeSlots: [] };
 		}),
 	);
+	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIdx?: number }>({ index: 0, slotIdx: 0 });
 	const [timePickerOpen, setTimePickerOpen] = useState<boolean>(false);
 	const timepickerRef = useRef<HTMLDivElement>(null);
+	
 
 	const updateAvailability = (day: string, input: Partial<Omit<TimeSlotSubSet, "day">>) => {
 		const { isAvailable } = input;
@@ -46,8 +47,22 @@ const StepFourMentorOnboarding = () => {
 		});
 	};
 
-	const updateTimeSlot = (index: number, input: any) => {
-		console.log({ input, index });
+	const updateTimeSlot = (input: ICurrentTime) => {
+		// console.log({ currentIndex, input });
+		setAvailability((p) => {
+			let updated = [...p];
+			const updateIndex = currentIndex.index;
+			const slotIndex = currentIndex.slotIdx;
+			if (updateIndex !== undefined && updateIndex !== -1)
+				if (slotIndex !== undefined && slotIndex !== -1)
+					updated[updateIndex].timeSlots[slotIndex] = {
+						startTime: `${input.min}:${input.secs}`,
+						endTime: "00:00",
+					};
+			// updated[updateIndex].timeSlots = [];
+
+			return updated;
+		});
 	};
 
 	useEffect(() => {
@@ -57,6 +72,7 @@ const StepFourMentorOnboarding = () => {
 	const closeTimePicker = () => {
 		setTimePickerOpen(false);
 	};
+
 	return (
 		<>
 			<div className="animate__animated animate__fadeInLeft">
@@ -71,65 +87,76 @@ const StepFourMentorOnboarding = () => {
 				<div className="grid gap-5 mt-8">
 					{availability.map(({ day, isAvailable, timeSlots }, i) => {
 						return (
-							<div
-								key={i}
-								className="text-sm flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4 items-start bg-white border border-[#00D569] p-3">
-								<ToggleSwitch
-									animated
-									{...{
-										isActive: isAvailable,
-										handleToggle: () => updateAvailability(day, { isAvailable: !isAvailable }),
-									}}
-								/>
-								<div className="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-4 gap-2 flex-grow h-full lg:w-auto md:w-full sm:w-auto w-full">
-									<div
-										className={classNames(
-											"font-medium duration-300",
-											!isAvailable ? "text-[#bbb] col-span-4" : "col-span-1",
-										)}>
-										<h1 className="capitalize">
-											{day} {!isAvailable && <span className="text-xs"> - Unavailable</span>}
-										</h1>
-									</div>
-									{isAvailable && (
-										<div className="w-full col-span-3 flex items-center gap-5">
-											{isAvailable && (
-												<div className="text-[#70C5A1] lg:block md:hidden sm:block hidden">
-													|
-												</div>
-											)}
-											{timeSlots.length < 1 ? (
+							<div key={i} className="text-sm bg-white border border-[#00D569] p-3">
+								<div className="flex gap-4 items-center">
+									<ToggleSwitch
+										animated
+										{...{
+											isActive: isAvailable,
+											handleToggle: () => updateAvailability(day, { isAvailable: !isAvailable }),
+										}}
+									/>
+									<div className="flex items-center justify-between gap-2 flex-grow h-full lg:w-auto md:w-full sm:w-auto w-full">
+										<div
+											className={classNames(
+												"font-medium duration-300",
+												!isAvailable ? "text-[#bbb]" : "text-[16px]",
+											)}>
+											<h1 className="capitalize">
+												{day} {!isAvailable && <span className="text-xs"> - Unavailable</span>}
+											</h1>
+										</div>
+										{isAvailable && (
+											<div className="text-[#70C5A1]">
 												<div
-													onClick={() => setTimePickerOpen((p) => !p)}
-													className="text-[#70C5A1] cursor-pointer select-none">
-													+Add time slots
+													onClick={() => {
+														setAvailability((p) => {
+															let updated = [...p];
+															const updateIndex = currentIndex.index;
+															console.log({ updateIndex });
+															if (updateIndex !== undefined && updateIndex !== -1)
+																updated[updateIndex].timeSlots.push({
+																	endTime: "00:00",
+																	startTime: "00:00",
+																});
+															return updated;
+														});
+													}}
+													className="text-[#00D569] cursor-pointer select-none">
+													+Add time slot
 												</div>
-											) : (
-												<>
-													<h1 className="capitalize font-medium">Time slots</h1>
-													<div className="mt-1.5 w-full gap-2 grid grid-cols-2 md:grid-cols-3 xs:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 animate__animated animate__fadeIn animate__faster">
-														{timeSlots.map(({ endTime, startTime }, index) => {
-															return (
-																<>
-																	<div
-																		key={index}
-																		className="flex items-center gap-1">
-																		<span className="">{endTime}</span>
-																		<span>-</span>
-																		<span className="">{startTime}</span>
-																	</div>
-																</>
-															);
-														})}
-														<div className="text-[#70C5A1] cursor-pointer select-none">
-															+Add more
+											</div>
+										)}
+									</div>
+								</div>
+								{isAvailable && timeSlots.length >= 1 && (
+									<div className="mt-4 px-1">
+										<h1 className="capitalize font-medium">Time slots</h1>
+										<div className="mt-1.5 w-full gap-2 grid xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 lg:grid-cols-2 animate__animated animate__fadeIn animate__faster">
+											{timeSlots.map(({ endTime, startTime }, index) => {
+												return (
+													<div
+														key={index}
+														className="bg-white border-[#00D569] border p-2 w-full flex items-center justify-between">
+														<div className="flex items-center gap-1 flex-grow px-1">
+															<span className="">{startTime}</span>
+															<span>-</span>
+															<span className="">{endTime}</span>
+														</div>
+														<div
+															onClick={() => {
+																setTimePickerOpen((p) => !p);
+																setCurrentIndex({ index: i, slotIdx: index });
+															}}
+															className="text-[#70C5A1] cursor-pointer select-none">
+															Change
 														</div>
 													</div>
-												</>
-											)}
+												);
+											})}
 										</div>
-									)}
-								</div>
+									</div>
+								)}
 							</div>
 						);
 					})}
@@ -147,9 +174,18 @@ const StepFourMentorOnboarding = () => {
 					<div className="absolute bg-black/50 backdrop-blur-sm w-full h-full top-0 left-0" />
 					<div className="max-h-md max-w-md mx-auto relative z-50">
 						<TimePicker
+							initialState={(() => {
+								const currentId = currentIndex.index;
+								const slotIndex = currentIndex.index;
+								if (currentId !== undefined && slotIndex !== undefined) {
+									const state = availability[currentId].timeSlots[slotIndex];
+									return {};
+								}
+								return {};
+							})()}
 							ref={timepickerRef}
 							closeTimePicker={closeTimePicker}
-							onChange={(time) => updateTimeSlot(0, time)}
+							onChange={(time) => updateTimeSlot(time)}
 						/>
 					</div>
 				</div>

@@ -138,7 +138,8 @@ const MentorProjects = ({
 const AvailabiltySchedule = (mentor: IMentor) => {
 	const router = useRouter();
 	return (
-		<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[65vh] text-white sticky top-28 overflow-y-auto  animate__animated animate__slideInRight">
+		<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[65vh] text-white sticky top-28 animate__animated animate__slideInRight overflow-hidden">
+			{/* <div className="animate__animated animate__fadeInLeftBig animate__infinite fixed bg-gradient-to-tr opacity-15 from-[#70C5A1] via-[#70C5A1]/50 to-[#fff] top-0 left-0 w-full h-full" /> */}
 			<div className="w-full mb-24 lg:mb-0">
 				<div className="flex w-full items-center justify-between">
 					<h1 className="font-medium">Availability</h1>
@@ -162,20 +163,6 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 							</div>
 						);
 					})}
-					{/* {mentor.availability.map((date, index) => {
-						return (
-							<div className="animate__animated animate__fadeIn" key={index}>
-								<div className="flex justify-between w-full items-center text-sm">
-									<h1 className="font-medium">{date.day}</h1>
-									{date.timeSlots && (
-										<p className="font-[300]">
-											{date.timeSlots[0].startTime} - {date.timeSlots[0].endTime}
-										</p>
-									)}
-								</div>
-							</div>
-						);
-					})} */}
 				</div>
 			</div>
 			<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
@@ -183,7 +170,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 					onClick={() => router.push(`/mentors/${mentor.id}/consult`)}
 					className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black"
 					style={{ fontFamily: "Days One" }}>
-					Consult
+					Check availability
 				</div>
 			</div>
 		</div>

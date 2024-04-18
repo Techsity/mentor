@@ -66,10 +66,12 @@ const MentorOnboardingSteps = () => {
 
 	return (
 		<div className="flex h-full flex-col md:flex-row justify-between items-start sm:max-w-[85dvw] 2xl:max-w-[65dvw] mx-5 sm:mx-auto md:py-[10dvh] pb-20 min-h-screen">
-			<div className="w-full md:max-w-[50%]">
-				{currentStep <= totalSteps - 1 && (
-					<MentorOnboardingStepsHeader currentStep={currentStep} stepsLength={totalSteps} />
-				)}
+			<div className="w-full lg:max-w-[50%]">
+				<div className="flex w-full justify-center items-center mx-auto">
+					{currentStep <= totalSteps - 1 && (
+						<MentorOnboardingStepsHeader currentStep={currentStep} stepsLength={totalSteps} />
+					)}
+				</div>
 				{currentStep === 1 ? (
 					<StepOneMentorOnboarding />
 				) : currentStep === 2 ? (
@@ -118,7 +120,7 @@ const MentorOnboardingSteps = () => {
 					)}
 				</div>
 			</div>
-			<div className="pb-10 md:pb-0 md:flex hidden sticky top-24 h-full">
+			<div className="pb-10 md:pb-0 lg:flex hidden sticky top-24 h-full">
 				<MentorOnboardingSvg width={400} height={350} className="animate__animated animate__fadeInRight" />
 			</div>
 		</div>
