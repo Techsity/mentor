@@ -10,7 +10,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 	onRemove?: (exp: IMentorExperience) => void;
 }) => {
 	return (
-		<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeInUp animate__fastest">
+		<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative animate__animated animate__fadeIn animate__fastest">
 			<span className="absolute top-2 right-3 cursor-pointer z-10">
 				<svg
 					onClick={() => {
@@ -66,9 +66,7 @@ const OnboardingWorkHistoryDisplayCard = ({
 					className="text-black select-none"
 					placeholder="End Date"
 					value={experience.to_year}
-					containerprops={{
-						className: "border border-zinc-200",
-					}}
+					containerprops={{ className: "border border-zinc-200" }}
 					readOnly
 				/>
 			</div>

@@ -6,6 +6,7 @@ import { slugify } from "../../../../../../utils";
 import { toast } from "react-toastify";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
 import { IMentorExperience } from "../../../../../../interfaces/mentor.interface";
+import { useModal } from "../../../../../../context/modal.context";
 
 const EditWorkHistoryCard = ({
 	experience,
@@ -23,10 +24,10 @@ const EditWorkHistoryCard = ({
 		job_role: "",
 		description: "",
 	};
-	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
-	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
+
 	const [workExperience, setWorkExperience] = useState<IMentorExperience>(experience || initialState);
 	const [loading, setLoading] = useState<boolean>(false);
+	const { openModal, closeModal } = useModal();
 
 	const isDuplicate = useMemo(() => {
 		return allExperiences.some(
@@ -89,6 +90,29 @@ const EditWorkHistoryCard = ({
 			if (updateWorkExperiences) updateWorkExperiences(updatedWorkHistory);
 		}
 	};
+
+	const onCalendarUpdate = (name: "from" | "to", val: any) => {
+		const date = new Date(val as Date).toLocaleDateString();
+		if (name === "from")
+			setWorkExperience({
+				...workExperience,
+				from_year: date,
+			});
+		else
+			setWorkExperience({
+				...workExperience,
+				to_year: date,
+			});
+		closeModal();
+	};
+
+	const handleOpenCalendarModal = (name: "from" | "to", minDate?: Date) => {
+		openModal(<CalendarModal minDate={minDate} onChange={(val) => onCalendarUpdate(name, val)} />, {
+			animate: true,
+			closeOnBackgroundClick: true,
+		});
+	};
+
 	return (
 		<>
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative pt-8">
@@ -121,15 +145,10 @@ const EditWorkHistoryCard = ({
 						placeholder="Company"
 						className="text-black"
 						onChange={(e) => {
-							setWorkExperience({
-								...workExperience,
-								company: e.target.value,
-							});
+							setWorkExperience({ ...workExperience, company: e.target.value });
 						}}
 						value={workExperience.company}
-						containerprops={{
-							className: "border border-zinc-200",
-						}}
+						containerprops={{ className: "border border-zinc-200" }}
 					/>
 				</div>
 				<div className="col-span-2 grid gap-1 relative z-10">
@@ -138,7 +157,6 @@ const EditWorkHistoryCard = ({
 							Start Date
 						</label>
 					)}
-
 					<CustomTextInput
 						name="start_date"
 						id="start_date"
@@ -146,30 +164,10 @@ const EditWorkHistoryCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
 						value={workExperience.from_year}
-						containerprops={{
-							className: "border cursor-pointer border-zinc-200",
-						}}
+						containerprops={{ className: "border cursor-pointer border-zinc-200" }}
 						readOnly
-						onClick={() => {
-							setEndDateCalendarIsOpen(false);
-							setStartDateCalendarIsOpen(!startDateCalendarIsOpen);
-						}}
+						onClick={() => handleOpenCalendarModal("from")}
 					/>
-					{startDateCalendarIsOpen && !endDateCalendarIsOpen && (
-						<div className="absolute right-0 top-16">
-							<Calendar
-								onChange={(props) => {
-									const date = new Date(props as Date).toLocaleDateString();
-									setWorkExperience({
-										...workExperience,
-										from_year: date,
-									});
-									setStartDateCalendarIsOpen(false);
-								}}
-								maxDate={new Date()}
-							/>
-						</div>
-					)}
 				</div>
 				<div className="col-span-2 grid gap-1 relative z-10">
 					{experience && (
@@ -185,31 +183,10 @@ const EditWorkHistoryCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
 						value={workExperience.to_year}
-						containerprops={{
-							className: "border cursor-pointer border-zinc-200",
-						}}
+						containerprops={{ className: "border cursor-pointer border-zinc-200" }}
 						readOnly
-						onClick={() => {
-							setStartDateCalendarIsOpen(false);
-							setEndDateCalendarIsOpen(!endDateCalendarIsOpen);
-						}}
+						onClick={() => handleOpenCalendarModal("to", new Date(workExperience.from_year))}
 					/>
-					{endDateCalendarIsOpen && !startDateCalendarIsOpen && (
-						<div className="absolute right-0 top-16">
-							<Calendar
-								onChange={(props) => {
-									const date = new Date(props as Date).toLocaleDateString();
-									setWorkExperience({
-										...workExperience,
-										to_year: date,
-									});
-									setEndDateCalendarIsOpen(false);
-								}}
-								maxDate={new Date()}
-								minDate={new Date(workExperience.from_year)}
-							/>
-						</div>
-					)}
 				</div>
 				<div className="col-span-4 grid gap-1">
 					{experience && (
@@ -224,9 +201,7 @@ const EditWorkHistoryCard = ({
 						type="text"
 						placeholder="Your Role"
 						className="text-black"
-						containerprops={{
-							className: "border border-zinc-200",
-						}}
+						containerprops={{ className: "border border-zinc-200" }}
 						value={workExperience.job_role}
 						onChange={(e) =>
 							setWorkExperience({
@@ -274,7 +249,7 @@ const EditWorkHistoryCard = ({
 					<div className="flex justify-end gap-4 items-center w-full">
 						<PrimaryButton
 							title={loading ? "" : "Update"}
-							icon={loading ? <ActivityIndicator /> : null}
+							icon={loading ? <ActivityIndicator /> : <></>}
 							disabled={loading}
 							className="px-8 p-1 rounded"
 							onClick={() => {
@@ -284,6 +259,16 @@ const EditWorkHistoryCard = ({
 					</div>
 				)
 			)}
+		</>
+	);
+};
+
+const CalendarModal = ({ onChange, minDate }: { onChange: (val: any, e: any) => void; minDate?: Date }) => {
+	return (
+		<>
+			<div className="">
+				<Calendar onChange={onChange} maxDate={new Date()} minDate={minDate} />
+			</div>
 		</>
 	);
 };

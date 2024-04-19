@@ -1,8 +1,5 @@
 import React from "react";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import EditWorkHistoryCard from "../../../../../atom/cards/mentor/onboarding/EditWorkHistoryCard";
 import OnboardingWorkHistoryDisplayCard from "../../../../../atom/cards/mentor/onboarding/OnboardingWorkHistoryDisplayCard";
@@ -21,22 +18,17 @@ const WorkHistory = ({ reEdit = false }: { reEdit?: boolean }) => {
 					onboardingMentor.workHistory.map((work, index) => {
 						return reEdit ? (
 							<EditWorkHistoryCard
+								key={index}
 								allExperiences={onboardingMentor?.workHistory || []}
 								updateWorkExperiences={(updated) => {
-									dispatch(
-										setOnboardingMentor({
-											...onboardingMentor,
-											workHistory: updated,
-										}),
-									);
+									dispatch(setOnboardingMentor({ ...onboardingMentor, workHistory: updated }));
 								}}
 								experience={work}
-								key={work.company}
 							/>
 						) : (
 							<OnboardingWorkHistoryDisplayCard
 								experience={work}
-								key={work.company}
+								key={index}
 								onRemove={(exp) => {
 									dispatch(
 										setOnboardingMentor({
@@ -57,12 +49,7 @@ const WorkHistory = ({ reEdit = false }: { reEdit?: boolean }) => {
 			<EditWorkHistoryCard
 				allExperiences={onboardingMentor?.workHistory || []}
 				updateWorkExperiences={(updated) => {
-					dispatch(
-						setOnboardingMentor({
-							...onboardingMentor,
-							workHistory: updated,
-						}),
-					);
+					dispatch(setOnboardingMentor({ ...onboardingMentor, workHistory: updated }));
 				}}
 			/>
 		</div>
