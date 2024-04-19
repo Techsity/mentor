@@ -1,16 +1,10 @@
-import React, { MouseEvent, useEffect, useRef, useState } from "react";
-import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
-import TagsInput from "../../../../../atom/inputs/TagsInput";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
-import { toast } from "react-toastify";
-import { daysOfTheWeek, ToastDefaultOptions } from "../../../../../../../constants";
-import Availability from "./Availability";
+import { daysOfTheWeek } from "../../../../../../../constants";
 import Languages from "./Languages";
-import { useModal } from "../../../../../../../context/modal.context";
 import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
-import { slugify } from "../../../../../../../utils";
 import classNames from "classnames";
 import { Checkmark, Close } from "react-ionicons";
 import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
@@ -30,7 +24,7 @@ const StepFourMentorOnboarding = () => {
 		}),
 	);
 	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIdx?: number }>({ index: 0, slotIdx: 0 });
-	const [timePickerOpen, setTimePickerOpen] = useState<boolean>(false);
+	const [currentTimerOpen, setCurrentTimerOpen] = useState<"start" | "end" | null>(null);
 	const timepickerRef = useRef<HTMLDivElement>(null);
 
 	const updateAvailability = (day: string, input: Partial<Omit<TimeSlotSubSet, "day">>) => {
@@ -47,19 +41,32 @@ const StepFourMentorOnboarding = () => {
 	};
 
 	const updateTimeSlot = (input: ICurrentTime) => {
-		// console.log({ currentIndex, input });
+		console.log({ currentIndex, input });
 		setAvailability((p) => {
 			let updated = [...p];
 			const updateIndex = currentIndex.index;
 			const slotIndex = currentIndex.slotIdx;
 			if (updateIndex !== undefined && updateIndex !== -1)
-				if (slotIndex !== undefined && slotIndex !== -1)
-					updated[updateIndex].timeSlots[slotIndex] = {
-						startTime: `${input.min}:${input.secs}`,
-						endTime: "00:00",
-					};
-			// updated[updateIndex].timeSlots = [];
-
+				if (slotIndex !== undefined && slotIndex !== -1) {
+					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
+					if (currentTimerOpen === "start") {
+						const timeout = setTimeout(function () {
+							setCurrentTimerOpen("end");
+							clearTimeout(timeout);
+						}, 100);
+						timeToUpdate = {
+							startTime: `${input.min}:${input.secs}`,
+							endTime: timeToUpdate.endTime,
+						};
+					} else if (currentTimerOpen === "end") {
+						setCurrentTimerOpen(null);
+						timeToUpdate = {
+							startTime: timeToUpdate.startTime,
+							endTime: `${input.min}:${input.secs}`,
+						};
+					}
+					updated[updateIndex].timeSlots[slotIndex] = timeToUpdate;
+				}
 			return updated;
 		});
 	};
@@ -68,8 +75,12 @@ const StepFourMentorOnboarding = () => {
 		dispatch(setOnboardingMentor({ ...onboardingMentor, availability: [] }));
 	}, [availability]);
 
-	const closeTimePicker = () => {
-		setTimePickerOpen(false);
+	const handleDeleteTimeSlot = (index: number, slotIndex: number) => {
+		const updatedAvailability = [...availability];
+		if (index >= 0 && index < updatedAvailability.length) {
+			updatedAvailability[index].timeSlots.splice(slotIndex, 1);
+			setAvailability(updatedAvailability);
+		}
 	};
 
 	return (
@@ -111,8 +122,7 @@ const StepFourMentorOnboarding = () => {
 													onClick={() => {
 														setAvailability((p) => {
 															let updated = [...p];
-															const updateIndex = currentIndex.index;
-															console.log({ updateIndex });
+															const updateIndex = i;
 															if (updateIndex !== undefined && updateIndex !== -1)
 																updated[updateIndex].timeSlots.push({
 																	endTime: "00:00",
@@ -122,7 +132,7 @@ const StepFourMentorOnboarding = () => {
 														});
 													}}
 													className="text-[#00D569] cursor-pointer select-none">
-													+Add time slot
+													+Add {timeSlots.length < 1 ? "a" : "new"} time slot
 												</div>
 											</div>
 										)}
@@ -136,7 +146,12 @@ const StepFourMentorOnboarding = () => {
 												return (
 													<div
 														key={index}
-														className="bg-white border-[#00D569] border p-2 w-full flex items-center justify-between">
+														className="bg-white border-[#00D569] border p-1.5 px-2 w-full flex items-center justify-between">
+														<span
+															onClick={() => handleDeleteTimeSlot(i, index)}
+															className="text-[18px] text-[#ffb300] select-none cursor-pointer">
+															&times;
+														</span>
 														<div className="flex items-center gap-1 flex-grow px-1">
 															<span className="">{startTime}</span>
 															<span>-</span>
@@ -144,10 +159,10 @@ const StepFourMentorOnboarding = () => {
 														</div>
 														<div
 															onClick={() => {
-																setTimePickerOpen((p) => !p);
+																setCurrentTimerOpen("start");
 																setCurrentIndex({ index: i, slotIdx: index });
 															}}
-															className="text-[#70C5A1] cursor-pointer select-none">
+															className="text-[#70C5A1] cursor-pointer select-none text-sm">
 															{parseInt(endTime) == 0 && parseInt(startTime) == 0
 																? "Set"
 																: "Update"}
@@ -170,24 +185,26 @@ const StepFourMentorOnboarding = () => {
 					<Languages />
 				</div>
 			</div>
-			{timePickerOpen && (
+			{currentTimerOpen !== null && (
 				<div className="fixed top-0 left-0 flex items-center justify-center h-full w-full z-40 px-6 sm:px-0">
 					<div className="absolute bg-black/50 backdrop-blur-sm w-full h-full top-0 left-0" />
 					<div className="max-h-md max-w-md mx-auto relative z-50">
 						<TimePicker
+							capitalizeTitle
+							title={currentTimerOpen.concat(" time")}
 							className="animate__animated animate__bounceIn animate__fastest"
 							initialState={(() => {
 								const currentId = currentIndex.index;
 								const slotIndex = currentIndex.index;
 								if (currentId !== undefined && slotIndex !== undefined) {
 									const state = availability[currentId].timeSlots[slotIndex];
-									return {};
+									return { meridan: "pm" };
 								}
-								return {};
+								return { meridan: "pm" };
 							})()}
 							ref={timepickerRef}
-							closeTimePicker={closeTimePicker}
-							onChange={(time) => updateTimeSlot(time)}
+							closeTimePicker={() => setCurrentTimerOpen(null)}
+							onChange={updateTimeSlot}
 						/>
 					</div>
 				</div>
