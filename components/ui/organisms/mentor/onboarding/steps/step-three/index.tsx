@@ -1,14 +1,4 @@
-import React, { MouseEvent } from "react";
-import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
-import TagsInput from "../../../../../atom/inputs/TagsInput";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
-import { toast } from "react-toastify";
-import { ToastDefaultOptions } from "../../../../../../../constants";
+import React from "react";
 import Education from "./Education";
 import Certificates from "./Certificates";
 
@@ -24,7 +14,7 @@ const StepThreeMentorOnboarding = () => {
 				First, what are your top skills, how many years of experience do you have, then where have you worked,
 				what project have you completed.
 			</p>
-			<div className="grid gap-5 mt-8">
+			<div className="grid gap-2 mt-8">
 				<Education />
 				<Certificates />
 			</div>

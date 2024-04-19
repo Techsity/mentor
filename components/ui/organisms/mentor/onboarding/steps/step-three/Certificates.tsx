@@ -1,8 +1,5 @@
 import React from "react";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import EditCertificateCard from "../../../../../atom/cards/mentor/onboarding/EditCertificateCard";
 
@@ -12,11 +9,7 @@ const Certificates = ({ reEdit = false }: { reEdit?: boolean }) => {
 
 	return (
 		<div className="">
-			{!reEdit && (
-				<h1 className="text-sm text-[#B1B1B1] mb-3">
-					Professional Certificates
-				</h1>
-			)}
+			{!reEdit && <h1 className="text-sm text-[#B1B1B1] mb-3">Professional Certificates</h1>}
 			<div className="flex flex-col gap-4 items-center mb-5">
 				{onboardingMentor?.certificates &&
 					onboardingMentor.certificates.length >= 1 &&

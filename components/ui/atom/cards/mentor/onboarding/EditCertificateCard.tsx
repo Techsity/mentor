@@ -7,6 +7,8 @@ import { slugify } from "../../../../../../utils";
 import { PrimaryButton } from "../../../buttons";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
 import { toast } from "react-toastify";
+import { useModal } from "../../../../../../context/modal.context";
+import CalendarModal from "../../../modals/CalendarModal";
 
 type CertificateType = IMentorOnboardingState["certificates"][0];
 
@@ -28,7 +30,7 @@ const EditCertificateCard = ({
 	};
 
 	const [certificate, setCertificate] = useState<CertificateType>(existingCert || initalState);
-	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
+	const { openModal } = useModal();
 
 	const isDuplicate = useMemo(() => {
 		return (
@@ -76,6 +78,23 @@ const EditCertificateCard = ({
 			if (updateCerts) updateCerts(updatedCertificates);
 		}
 	};
+
+	const handleOpenCalendarModal = () => {
+		openModal(
+			<CalendarModal
+				onChange={(val) =>
+					setCertificate((p) => {
+						return { ...p, year: val };
+					})
+				}
+			/>,
+			{
+				animate: true,
+				closeOnBackgroundClick: true,
+			},
+		);
+	};
+
 	return (
 		<>
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 relative pt-8 mt-2">
@@ -144,25 +163,8 @@ const EditCertificateCard = ({
 							className: "border cursor-pointer border-zinc-200",
 						}}
 						readOnly
-						onClick={() => {
-							setCalendarIsOpen(!calendarIsOpen);
-						}}
+						onClick={handleOpenCalendarModal}
 					/>
-					{calendarIsOpen && (
-						<div className="absolute right-0 top-16 z-30">
-							<Calendar
-								onChange={(props) => {
-									const date = new Date(props as Date).toLocaleDateString();
-									setCertificate({
-										...certificate,
-										year: date,
-									});
-									setCalendarIsOpen(false);
-								}}
-								maxDate={new Date()}
-							/>
-						</div>
-					)}
 				</div>
 			</div>
 			{!reEdit && !existingCert ? (

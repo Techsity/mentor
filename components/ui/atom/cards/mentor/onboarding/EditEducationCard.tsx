@@ -7,6 +7,8 @@ import { PrimaryButton } from "../../../buttons";
 import { toast } from "react-toastify";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
 import { slugify } from "../../../../../../utils";
+import { useModal } from "../../../../../../context/modal.context";
+import CalendarModal from "../../../modals/CalendarModal";
 
 type ExtractedEducationType = IMentorOnboardingState["education"][0];
 
@@ -28,10 +30,11 @@ const EditEducationCard = ({
 		school: "",
 		to_year: "",
 	};
-	const [startDateCalendarIsOpen, setStartDateCalendarIsOpen] = useState<boolean>(false);
 	const [endDateCalendarIsOpen, setEndDateCalendarIsOpen] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [education, setEducation] = useState<ExtractedEducationType>(exisitingEducation || initalState);
+
+	const { closeModal, openModal } = useModal();
 
 	const isDuplicate = useMemo(() => {
 		return allEducationData.some(
@@ -44,22 +47,14 @@ const EditEducationCard = ({
 
 	const handleUpdate = () => {
 		setLoading(true);
-		/** //! To-do:  
-		 * Avoid too many clicks
-		// const controller = new AbortController();
-		// controller.signal
-		 */
 		const updatedEducation = [...allEducationData];
 		// This adds a new education
 		if (!exisitingEducation && !isDuplicate)
 			if (education.school && education.from_year && education.to_year) {
 				updatedEducation.push(education);
-				console.log({ updatedEducation, allEducationData });
-				setTimeout(function () {
-					onUpdate && onUpdate(updatedEducation);
-					setLoading(false);
-					setEducation(initalState);
-				}, 1000);
+				onUpdate && onUpdate(updatedEducation);
+				setLoading(false);
+				setEducation(initalState);
 			}
 		// this updates the existing education
 		const updateEducationIndex = updatedEducation.findIndex(
@@ -75,11 +70,9 @@ const EditEducationCard = ({
 				...updatedEducation[updateEducationIndex],
 				...education,
 			};
-		setTimeout(function () {
-			onUpdate && onUpdate(updatedEducation);
-			exisitingEducation && toast.success("Field updated successfully");
-			setLoading(false);
-		}, 1000);
+		onUpdate && onUpdate(updatedEducation);
+		exisitingEducation && toast.success("Field updated successfully");
+		setLoading(false);
 	};
 
 	const handleRemoveEducation = () => {
@@ -94,6 +87,28 @@ const EditEducationCard = ({
 				onUpdate(updated);
 			}
 		}
+	};
+
+	const onCalendarUpdate = (name: "from" | "to", val: any) => {
+		const date = new Date(val as Date).toLocaleDateString();
+		if (name === "from")
+			setEducation({
+				...education,
+				from_year: date,
+			});
+		else
+			setEducation({
+				...education,
+				to_year: date,
+			});
+		closeModal();
+	};
+
+	const handleOpenCalendarModal = (name: "from" | "to", minDate?: Date) => {
+		openModal(<CalendarModal minDate={minDate} onChange={(val) => onCalendarUpdate(name, val)} />, {
+			animate: true,
+			closeOnBackgroundClick: true,
+		});
 	};
 
 	return (
@@ -127,15 +142,10 @@ const EditEducationCard = ({
 						placeholder="Name of School"
 						className="text-black"
 						onChange={(e) => {
-							setEducation({
-								...education,
-								school: e.target.value,
-							});
+							setEducation({ ...education, school: e.target.value });
 						}}
 						value={education.school}
-						containerprops={{
-							className: "border border-zinc-200",
-						}}
+						containerprops={{ className: "border border-zinc-200" }}
 					/>
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
@@ -151,30 +161,10 @@ const EditEducationCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="Start Date"
 						value={education.from_year}
-						containerprops={{
-							className: "border cursor-pointer border-zinc-200",
-						}}
+						containerprops={{ className: "border cursor-pointer border-zinc-200" }}
 						readOnly
-						onClick={() => {
-							setEndDateCalendarIsOpen(false);
-							setStartDateCalendarIsOpen(!startDateCalendarIsOpen);
-						}}
+						onClick={() => handleOpenCalendarModal("from")}
 					/>
-					{startDateCalendarIsOpen && !endDateCalendarIsOpen && (
-						<div className="absolute right-0 top-16">
-							<Calendar
-								onChange={(props) => {
-									const date = new Date(props as Date).toLocaleDateString();
-									setEducation({
-										...education,
-										from_year: date,
-									});
-									setStartDateCalendarIsOpen(false);
-								}}
-								maxDate={new Date()}
-							/>
-						</div>
-					)}
 				</div>
 				<div className="col-span-2 grid gap-1 relative">
 					{exisitingEducation && (
@@ -189,31 +179,10 @@ const EditEducationCard = ({
 						className="text-black cursor-pointer select-none"
 						placeholder="End Date"
 						value={education.to_year}
-						containerprops={{
-							className: "border cursor-pointer border-zinc-200",
-						}}
+						containerprops={{ className: "border cursor-pointer border-zinc-200" }}
 						readOnly
-						onClick={() => {
-							setStartDateCalendarIsOpen(false);
-							setEndDateCalendarIsOpen(!endDateCalendarIsOpen);
-						}}
+						onClick={() => handleOpenCalendarModal("to", new Date(education.from_year))}
 					/>
-					{endDateCalendarIsOpen && !startDateCalendarIsOpen && (
-						<div className="absolute right-0 top-16">
-							<Calendar
-								onChange={(props) => {
-									const date = new Date(props as Date).toLocaleDateString();
-									setEducation({
-										...education,
-										to_year: date,
-									});
-									setEndDateCalendarIsOpen(false);
-								}}
-								maxDate={new Date()}
-								minDate={new Date(education.from_year)}
-							/>
-						</div>
-					)}
 				</div>
 				<div className="col-span-4 grid gap-1">
 					{exisitingEducation && (
@@ -227,9 +196,7 @@ const EditEducationCard = ({
 						type="text"
 						placeholder="Degree"
 						className="text-black"
-						containerprops={{
-							className: "border border-zinc-200",
-						}}
+						containerprops={{ className: "border border-zinc-200" }}
 						value={education.credential_type}
 						onChange={(e) =>
 							setEducation({
@@ -258,9 +225,7 @@ const EditEducationCard = ({
 								course_of_study: e.target.value,
 							})
 						}
-						containerprops={{
-							className: "border border-zinc-200",
-						}}
+						containerprops={{ className: "border border-zinc-200" }}
 					/>
 				</div>
 			</div>

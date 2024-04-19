@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ActivityIndicator from "../../../loader/ActivityIndicator";
 import { IMentorExperience } from "../../../../../../interfaces/mentor.interface";
 import { useModal } from "../../../../../../context/modal.context";
+import CalendarModal from "../../../modals/CalendarModal";
 
 const EditWorkHistoryCard = ({
 	experience,
@@ -259,16 +260,6 @@ const EditWorkHistoryCard = ({
 					</div>
 				)
 			)}
-		</>
-	);
-};
-
-const CalendarModal = ({ onChange, minDate }: { onChange: (val: any, e: any) => void; minDate?: Date }) => {
-	return (
-		<>
-			<div className="">
-				<Calendar onChange={onChange} maxDate={new Date()} minDate={minDate} />
-			</div>
 		</>
 	);
 };
