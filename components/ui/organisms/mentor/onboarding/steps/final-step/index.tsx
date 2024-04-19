@@ -46,12 +46,15 @@ const FinalMentorOnboardingStep = () => {
 	const handleSubmit = async () => {
 		setLoading(true);
 
+		const availability: any[] = [];
+		// onboardingMentor.availability
+
 		try {
 			const response = await createMentorProfile({
 				variables: {
 					createMentorInput: {
 						about: onboardingMentor.bio,
-						availability: onboardingMentor.availability,
+						availability,
 						certifications: onboardingMentor.certificates,
 						education_bg: onboardingMentor.education,
 						exp_level: IMentorExpLevel.LEVEL_2, //Todo: remove this and set exp_level properly from the form

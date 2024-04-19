@@ -2,10 +2,7 @@ import React, { ChangeEvent, useRef, useState } from "react";
 import CustomTextArea from "../../../../../atom/inputs/CustomTextArea";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { FinalStepEditButton } from "./index";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MENTOR_ROLES } from "../../../../../../../constants/mentor";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
@@ -46,7 +43,7 @@ const FinalStepAboutYouEdit = () => {
 						id="job_title"
 						className="bg-transparent"
 						containerprops={{
-							className: "bg-transparent border-transparent w-full",
+							className: "bg-white border-transparent w-full",
 						}}
 						autoCorrect="none"
 						autoCapitalize="none"
@@ -84,18 +81,9 @@ const FinalStepAboutYouEdit = () => {
 						autoComplete="none"
 						ref={bioInputRef}
 						value={onboardingMentor.bio}
-						className="resize-none h-[160px] bg-transparent px-0"
-						containerprops={{
-							className: "bg-transparent border-transparent w-full",
-						}}
-						onChange={(e) =>
-							dispatch(
-								setOnboardingMentor({
-									...onboardingMentor,
-									bio: e.target.value,
-								}),
-							)
-						}
+						className="resize-none h-[180px] bg-transparent px-4"
+						containerprops={{ className: "bg-white border-transparent w-full" }}
+						onChange={(e) => dispatch(setOnboardingMentor({ ...onboardingMentor, bio: e.target.value }))}
 					/>
 				</div>
 			</div>

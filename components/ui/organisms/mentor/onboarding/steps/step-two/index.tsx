@@ -83,7 +83,8 @@ const StepTwoMentorOnboarding = () => {
 									({ years_of_exp }) => years_of_exp?.toString() || "",
 								)}
 								value={currentSkill.years_of_exp?.toString()}
-								onChange={(value) => {
+								onChange={(value: any) => {
+									value = value.replace(/\D/g, "");
 									setCurrentSkill((prev) => {
 										return { ...prev, years_of_exp: value as number };
 									});
@@ -95,30 +96,25 @@ const StepTwoMentorOnboarding = () => {
 						</div>
 						<div className="flex justify-start">
 							<PrimaryButton
-								disabled={!currentSkill.years_of_exp || !currentSkill.skill_name}
+								disabled={currentSkill.skill_name.trim().length < 1}
 								onClick={() => {
-									if (currentSkill.years_of_exp) {
+									if (currentSkill.years_of_exp && !isNaN(currentSkill.years_of_exp)) {
 										if (typeof currentSkill.years_of_exp !== "number")
 											currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
-
-										if (
-											onboardingMentor.skills.length > 0 &&
-											onboardingMentor.skills.every(
-												(item) => item.skill_name === currentSkill.skill_name,
-											)
-										) {
-											toast.info(
-												"Tag has already been added!",
-												ToastDefaultOptions({
-													id: "info",
-													theme: "dark",
-												}),
-											);
-											return;
-										}
-										if (currentSkill.skill_name && !isNaN(currentSkill.years_of_exp))
-											addSkill(currentSkill);
 									}
+
+									if (
+										onboardingMentor.skills.length > 0 &&
+										onboardingMentor.skills.every(
+											(item) => item.skill_name === currentSkill.skill_name,
+										)
+									) {
+										toast.info("Tag has already been added!", {
+											...ToastDefaultOptions({ id: "info" }),
+										});
+										return;
+									}
+									if (currentSkill.skill_name) addSkill(currentSkill);
 								}}
 								title="Add"
 								className="flex justify-center w-full px-5 p-4 h-full"
@@ -131,7 +127,7 @@ const StepTwoMentorOnboarding = () => {
 								<span
 									key={id}
 									className="animate__fadeInDown animate__animated flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-[#fff]">
-									{tag.skill_name} | {tag.years_of_exp}y
+									{tag.skill_name} {tag.years_of_exp && " - " + tag.years_of_exp + "y"}
 									<svg
 										onClick={() => {
 											removeSkill(tag);

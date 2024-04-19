@@ -12,7 +12,7 @@ const FinalStepSkillEdit = () => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const dispatch = useDispatch();
 	const [showSkillTagsEdit, setShowSkillTagsEdit] = useState<boolean>(false);
-	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: 0 };
+	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: null };
 	const [currentSkill, setCurrentSkill] = useState<IMentorSkills>(emptySkillState);
 
 	const addSkill = (skill: IMentorSkills) => {
@@ -65,14 +65,13 @@ const FinalStepSkillEdit = () => {
 						</div>
 						<div className="sm:max-w-[30%] md:max-w-[25%]">
 							<TagsInput
-								min={1}
-								inputType="number"
 								textLength={2}
 								tagsState={onboardingMentor.skills.map((item) => item.years_of_exp?.toString() || "")}
 								value={currentSkill.years_of_exp?.toString()}
-								onChange={(value) => {
+								onChange={(value: any) => {
+									value = value.replace(/\D/g, "");
 									setCurrentSkill((prev) => {
-										return { ...prev, years_of_exp: value as number };
+										return { ...prev, years_of_exp: parseInt(String(value)) };
 									});
 								}}
 								showAddBtn={false}
@@ -117,7 +116,7 @@ const FinalStepSkillEdit = () => {
 								<span
 									key={id}
 									className="animate__fadeInDown animate__animated flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-[#fff]">
-									{tag.skill_name} | {tag.years_of_exp}y
+									{tag.skill_name} - {tag.years_of_exp}y
 									<svg
 										onClick={() => {
 											removeSkill(tag);
@@ -140,7 +139,8 @@ const FinalStepSkillEdit = () => {
 				<div className="grid grid-cols-2 gap-2 text-sm font-[300] max-w-md">
 					{onboardingMentor.skills.map((skill, index) => (
 						<span key={skill.skill_name}>
-							{index + 1}. {skill.skill_name} |{" "}
+							{/* {index + 1}.  */}
+							{skill.skill_name} -{" "}
 							{skill?.years_of_exp && skill?.years_of_exp > 1 ? skill?.years_of_exp : "<1"}y
 						</span>
 					))}
