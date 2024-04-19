@@ -61,25 +61,27 @@ const EditWorkHistoryCard = ({
 		}
 	};
 	const handleExperienceUpdate = (updatedExp: IMentorExperience) => {
-		setLoading(true);
-		const updatedExperiences = [...allExperiences];
-		const indexOfExperienceToUpdate = updatedExperiences.findIndex(
-			(experience) =>
-				experience.company === updatedExp.company &&
-				experience.from_year === updatedExp.from_year &&
-				experience.to_year === updatedExp.to_year,
-		);
-		if (indexOfExperienceToUpdate !== -1) {
-			updatedExperiences[indexOfExperienceToUpdate] = {
-				...updatedExperiences[indexOfExperienceToUpdate],
-				...updatedExp,
-			};
-			if (updateWorkExperiences) updateWorkExperiences(updatedExperiences);
-
-			setTimeout(function () {
-				setLoading(false);
-				toast.success("Field updated successfully");
-			}, 1000);
+		const updateExp = experience || updatedExp;
+		if (experience) {
+			setLoading(true);
+			const updatedExperiences = [...allExperiences];
+			const indexOfExperienceToUpdate = updatedExperiences.findIndex(
+				(experience) =>
+					experience.company === updateExp.company &&
+					experience.from_year === updateExp.from_year &&
+					experience.to_year === updateExp.to_year,
+			);
+			if (indexOfExperienceToUpdate !== -1) {
+				updatedExperiences[indexOfExperienceToUpdate] = {
+					...updatedExperiences[indexOfExperienceToUpdate],
+					...updatedExp,
+				};
+				setTimeout(function () {
+					if (updateWorkExperiences) updateWorkExperiences(updatedExperiences);
+					setLoading(false);
+					toast.success("Field updated successfully");
+				}, 500);
+			}
 		}
 	};
 	const handleRemoveExperience = () => {

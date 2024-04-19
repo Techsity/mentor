@@ -116,7 +116,7 @@ const FinalStepSkillEdit = () => {
 								<span
 									key={id}
 									className="animate__fadeInDown animate__animated flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-[#fff]">
-									{tag.skill_name} - {tag.years_of_exp}y
+									{tag.skill_name} {tag.years_of_exp && "- " + tag.years_of_exp + "y"}
 									<svg
 										onClick={() => {
 											removeSkill(tag);
@@ -138,10 +138,9 @@ const FinalStepSkillEdit = () => {
 			) : (
 				<div className="grid grid-cols-2 gap-2 text-sm font-[300] max-w-md">
 					{onboardingMentor.skills.map((skill, index) => (
-						<span key={skill.skill_name}>
+						<span key={index}>
 							{/* {index + 1}.  */}
-							{skill.skill_name} -{" "}
-							{skill?.years_of_exp && skill?.years_of_exp > 1 ? skill?.years_of_exp : "<1"}y
+							{skill.skill_name} {skill?.years_of_exp && "- " + skill?.years_of_exp + "y"}
 						</span>
 					))}
 				</div>

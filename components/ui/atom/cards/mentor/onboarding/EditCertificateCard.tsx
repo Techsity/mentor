@@ -30,7 +30,7 @@ const EditCertificateCard = ({
 	};
 
 	const [certificate, setCertificate] = useState<CertificateType>(existingCert || initalState);
-	const { openModal } = useModal();
+	const { closeModal, openModal } = useModal();
 
 	const isDuplicate = useMemo(() => {
 		return (
@@ -82,11 +82,12 @@ const EditCertificateCard = ({
 	const handleOpenCalendarModal = () => {
 		openModal(
 			<CalendarModal
-				onChange={(val) =>
+				onChange={(val) => {
 					setCertificate((p) => {
-						return { ...p, year: val };
-					})
-				}
+						return { ...p, year: new Date(val as Date).getFullYear().toString() };
+					});
+					closeModal();
+				}}
 			/>,
 			{
 				animate: true,
