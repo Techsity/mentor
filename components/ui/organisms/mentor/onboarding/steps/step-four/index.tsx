@@ -76,8 +76,8 @@ const StepFourMentorOnboarding = () => {
 			if (updateIndex !== undefined && updateIndex !== -1)
 				if (slotIndex !== undefined && slotIndex !== -1) {
 					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
-					// input.min =
-					// 	meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
+					input.min =
+						meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
 					if (currentTimerOpen === "start") {
 						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
 						setCurrentTimerOpen(null);
