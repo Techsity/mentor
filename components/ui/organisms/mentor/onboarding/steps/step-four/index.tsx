@@ -22,13 +22,17 @@ const StepFourMentorOnboarding = () => {
 		slotIndex: 0,
 	});
 
+	const updateAvailability = (updated: MentorOnboardingTimeSlot[]) => {
+		dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updated }));
+	};
+
 	const [currentTimerOpen, setCurrentTimerOpen] = useState<"start" | "end" | false>(false);
 
 	const toggleAvailability = (index: number) => {
 		let arr = [...availability];
 		if (index !== -1) {
 			arr[index] = { ...arr[index], isAvailable: !arr[index].isAvailable };
-			dispatch(setOnboardingMentor({ ...onboardingMentor, availability: arr }));
+			updateAvailability(arr);
 		}
 	};
 
@@ -36,7 +40,7 @@ const StepFourMentorOnboarding = () => {
 		let updated = [...availability];
 		if (index >= 0) {
 			updated[index] = { ...updated[index], timeSlots: [...updated[index].timeSlots, initialState] };
-			dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updated }));
+			updateAvailability(updated);
 			setCurrentIndex({
 				index,
 				slotIndex: updated[index].timeSlots.length,
@@ -84,7 +88,7 @@ const StepFourMentorOnboarding = () => {
 						{ ...timeToUpdate },
 					],
 				};
-				dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updated }));
+				updateAvailability(updated);
 			}
 	};
 
@@ -162,16 +166,7 @@ const StepFourMentorOnboarding = () => {
 															<span>-</span>
 															<span className="">{endTime}</span>
 														</div>
-														{/* <div
-															onClick={() => {
-																setCurrentTimerOpen("start");
-																setCurrentIndex({ index: i, slotIdx: index });
-															}}
-															className="text-[#70C5A1] cursor-pointer select-none text-sm">
-															{parseInt(endTime) == 0 && parseInt(startTime) == 0
-																? "Set"
-																: "Update"}
-														</div> */}
+														{/* .split(":").join(" : ") */}
 													</div>
 												);
 											})}
