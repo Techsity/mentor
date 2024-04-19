@@ -99,9 +99,10 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 								setCurrentTime((prev) => {
 									const updated = { ...prev };
 									value = value.replace(/\D/g, "");
-									if (value == "00") value = "12";
-									else if (parseInt(value) > 12) {
+									if (value.length >= 2 && parseInt(value) == 0) value = "12";
+									if (parseInt(value) > 12) {
 										value = String((parseInt(value) % 12) % 24).padStart(2, "0");
+										if (parseInt(value) == 0) value = "12";
 										updated.meridan = "pm";
 									}
 									updated.min = value;
@@ -127,6 +128,11 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 									if (parseInt(value) > 59) {
 										value = String(parseInt(value) % 60).padStart(2, "0");
 										updated.min = String(parseInt(updated.min) + 1).padStart(2, "0");
+										if (parseInt(updated.min) > 12) {
+											updated.min = String((parseInt(value) % 12) % 24).padStart(2, "0");
+											if (parseInt(updated.min) == 0) value = "12";
+											updated.meridan = "pm";
+										}
 									}
 									updated.secs = value;
 									return updated;

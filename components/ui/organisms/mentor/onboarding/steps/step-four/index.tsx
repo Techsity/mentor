@@ -32,7 +32,6 @@ const StepFourMentorOnboarding = () => {
 	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIdx?: number }>({ index: 0, slotIdx: 0 });
 	const [timePickerOpen, setTimePickerOpen] = useState<boolean>(false);
 	const timepickerRef = useRef<HTMLDivElement>(null);
-	
 
 	const updateAvailability = (day: string, input: Partial<Omit<TimeSlotSubSet, "day">>) => {
 		const { isAvailable } = input;
@@ -149,7 +148,9 @@ const StepFourMentorOnboarding = () => {
 																setCurrentIndex({ index: i, slotIdx: index });
 															}}
 															className="text-[#70C5A1] cursor-pointer select-none">
-															Change
+															{parseInt(endTime) == 0 && parseInt(startTime) == 0
+																? "Set"
+																: "Update"}
 														</div>
 													</div>
 												);
@@ -170,10 +171,11 @@ const StepFourMentorOnboarding = () => {
 				</div>
 			</div>
 			{timePickerOpen && (
-				<div className="fixed top-0 left-0 flex items-center justify-center h-full w-full z-40">
+				<div className="fixed top-0 left-0 flex items-center justify-center h-full w-full z-40 px-6 sm:px-0">
 					<div className="absolute bg-black/50 backdrop-blur-sm w-full h-full top-0 left-0" />
 					<div className="max-h-md max-w-md mx-auto relative z-50">
 						<TimePicker
+							className="animate__animated animate__bounceIn animate__fastest"
 							initialState={(() => {
 								const currentId = currentIndex.index;
 								const slotIndex = currentIndex.index;
@@ -209,7 +211,7 @@ const ToggleSwitch = ({
 		<div
 			onClick={handleToggle}
 			className={classNames(
-				"cursor-pointer flex gap-3 sm:h-[20px] md:h-8 h-8 lg:h-[20px] w-10 items-center justify-center rounded-full relative overflow-hidden",
+				"cursor-pointer flex gap-3 h-[20px] w-10 items-center justify-center rounded-full relative overflow-hidden",
 				animated ? "duration-300" : "",
 				isActive ? "bg-[#70C5A1]" : "bg-[#bbb]",
 				className,

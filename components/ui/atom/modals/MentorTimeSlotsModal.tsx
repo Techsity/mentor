@@ -3,9 +3,7 @@ import { PrimaryButton } from "../buttons";
 import { useModal } from "../../../../context/modal.context";
 import { TimeSlot } from "../../../../interfaces/mentor.interface";
 
-type Props = {
-	next: (slots: TimeSlotSubSet[]) => void;
-};
+type Props = { next: (slots: TimeSlotSubSet[]) => void };
 
 const MentorTimeSlotsModal = (props: Props) => {
 	const { next } = props;
