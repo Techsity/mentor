@@ -1,4 +1,13 @@
-import React, { ForwardedRef, RefObject, forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+	ChangeEvent,
+	ForwardedRef,
+	RefObject,
+	forwardRef,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import classNames from "classnames";
 import { ChevronDown, ChevronUp } from "react-ionicons";
 import { PrimaryButton } from "../buttons";
@@ -68,29 +77,87 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 		}));
 	};
 	const setTimeFrame = () => {
-		closeTimePicker();
 		if (onChange) {
 			onChange(currentTime as ICurrentTime);
 			return;
-		}
+		} else closeTimePicker();
 	};
 
-	const handleTimerFormat = useCallback(() => {
-		console.log({ initialState });
+	const handleTimeFormat = () => {
 		setCurrentTime((p) => {
-			return { min: String(p.min).padStart(2, "0"), secs: String(p.secs).padStart(2, "0"), meridan: p.meridan };
+			const updated = { ...p };
+			if (updated.min) {
+				updated.min = updated.min.replace(/\D/g, "");
+				if (updated.min.length >= 2 && parseInt(updated.min) == 0) updated.min = "12";
+				if (parseInt(updated.min) > 12) {
+					updated.min = String((parseInt(updated.min) % 12) % 24).padStart(2, "0");
+					if (parseInt(updated.min) == 0) updated.min = "12";
+					updated.meridan = "pm";
+				}
+				updated.min = String(updated.min).padStart(2, "0");
+			}
+			if (updated.secs) {
+				updated.secs = updated.secs.replace(/\D/g, "");
+				if (parseInt(updated.secs) > 59) {
+					updated.secs = String(parseInt(updated.secs) % 60).padStart(2, "0");
+					updated.min = String(parseInt(String(updated.min)) + 1).padStart(2, "0");
+					if (parseInt(updated.min) > 12) {
+						updated.min = String((parseInt(updated.secs) % 12) % 24).padStart(2, "0");
+						if (parseInt(updated.min) == 0) updated.secs = "12";
+						updated.meridan = "pm";
+					}
+				}
+				updated.secs = String(updated.secs).padStart(2, "0");
+			}
+			return updated;
 		});
-	}, [initialState]);
+	};
 
 	useEffect(() => {
+		handleTimeFormat();
 		startTimeRef.current?.focus();
-		startTimeRef.current?.addEventListener("blur", handleTimerFormat);
-		endTimeRef.current?.addEventListener("blur", handleTimerFormat);
+		startTimeRef.current?.addEventListener("blur", handleTimeFormat);
+		endTimeRef.current?.addEventListener("blur", handleTimeFormat);
 		return () => {
-			startTimeRef.current?.removeEventListener("blur", handleTimerFormat);
-			endTimeRef.current?.removeEventListener("blur", handleTimerFormat);
+			startTimeRef.current?.removeEventListener("blur", handleTimeFormat);
+			endTimeRef.current?.removeEventListener("blur", handleTimeFormat);
 		};
 	}, []);
+
+	const handleChange =
+		(name: keyof ICurrentTime) =>
+		({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+			setCurrentTime((prev) => {
+				const updated = { ...prev };
+				if (name === "min") {
+					value = value.replace(/\D/g, "");
+					if (value.length >= 2 && parseInt(value) == 0) value = "12";
+					if (parseInt(value) > 12) {
+						value = String((parseInt(value) % 12) % 24).padStart(2, "0");
+						if (parseInt(value) == 0) value = "12";
+						updated.meridan = "pm";
+					}
+					updated.min = value;
+				} else if (name === "secs") {
+					setCurrentTime((prev) => {
+						const updated = { ...prev };
+						value = value.replace(/\D/g, "");
+						if (parseInt(value) > 59) {
+							value = String(parseInt(value) % 60).padStart(2, "0");
+							updated.min = String(parseInt(String(updated.min)) + 1).padStart(2, "0");
+							if (parseInt(updated.min) > 12) {
+								updated.min = String((parseInt(value) % 12) % 24).padStart(2, "0");
+								if (parseInt(updated.min) == 0) value = "12";
+								updated.meridan = "pm";
+							}
+						}
+						updated.secs = value;
+						return updated;
+					});
+				}
+				return updated;
+			});
+		};
 
 	return (
 		<>
@@ -102,11 +169,10 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 				)}>
 				<div
 					className={classNames(
-						"bg-[#00D569] w-full h-auto py-5 px-8 rounded-tl-lg rounded-tr-lg flex flex-wrap gap-3 font-semibold",
-						title ? "justify-between items-start text-[25px]" : "justify-center items-center",
+						"bg-[#00D569] w-full h-auto py-5 px- rounded-tl-lg rounded-tr-lg flex flex-wrap gap-3 font-semibold px-10",
+						title ? "justify-between items-start text-[20px]" : "justify-center items-center",
 					)}>
 					<h1 className={classNames(capitalizeTitle && "capitalize")}>{title}</h1>
-					{/* <div className="">|</div> */}
 					<div className="flex items-center gap-1">
 						<h1 className="">{currentTime.min ? String(currentTime.min).padStart(2, "0") : "00"}</h1>
 						<h1 className="">:</h1>
@@ -124,20 +190,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 							className="bg-transparent focus:ring-0 outline-none w-full text-center"
 							value={currentTime.min || ""}
 							ref={startTimeRef}
-							onChange={({ target: { value } }) => {
-								setCurrentTime((prev) => {
-									const updated = { ...prev };
-									value = value.replace(/\D/g, "");
-									if (value.length >= 2 && parseInt(value) == 0) value = "12";
-									if (parseInt(value) > 12) {
-										value = String((parseInt(value) % 12) % 24).padStart(2, "0");
-										if (parseInt(value) == 0) value = "12";
-										updated.meridan = "pm";
-									}
-									updated.min = value;
-									return updated;
-								});
-							}}
+							onChange={handleChange("min")}
 						/>
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementMinute} />
 					</div>
@@ -151,28 +204,12 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 							maxLength={2}
 							className="bg-transparent focus:ring-0 outline-none w-full text-center"
 							value={currentTime.secs || ""}
-							onChange={({ target: { value } }) => {
-								setCurrentTime((prev) => {
-									const updated = { ...prev };
-									value = value.replace(/\D/g, "");
-									if (parseInt(value) > 59) {
-										value = String(parseInt(value) % 60).padStart(2, "0");
-										updated.min = String(parseInt(String(updated.min)) + 1).padStart(2, "0");
-										if (parseInt(updated.min) > 12) {
-											updated.min = String((parseInt(value) % 12) % 24).padStart(2, "0");
-											if (parseInt(updated.min) == 0) value = "12";
-											updated.meridan = "pm";
-										}
-									}
-									updated.secs = value;
-									return updated;
-								});
-							}}
+							onChange={handleChange("secs")}
 						/>
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementSeconds} />
 					</div>
 					<div
-						className="flex gap-3 flex-col items-center cursor-pointer select-none w-full"
+						className="flex gap-3 flex-col items-center cursor-pointer select-none w-full px-8"
 						onClick={toggleMeridian}>
 						<h1
 							className={classNames(
@@ -190,10 +227,10 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 						</h1>
 					</div>
 				</div>
-				<div className="flex justify-between w-full max-w-sm mx-auto items-center gap-6 my-5">
+				<div className="flex justify-between w-full max-w-sm mx-auto items-center gap-6 my-5 px-5">
 					<div
 						onClick={closeTimePicker}
-						className="px-8 p-1 hover:bg-rose-100 duration-300 cursor-pointer select-none">
+						className="p-1 hover:bg-rose-100 duration-300 cursor-pointer select-none">
 						Cancel
 					</div>
 					<PrimaryButton title="OK" className="px-8 p-1 rounded" onClick={setTimeFrame} />

@@ -40,40 +40,24 @@ const StepFourMentorOnboarding = () => {
 		});
 	};
 
-	const updateTimeSlot = (input: ICurrentTime) => {
-		const { meridan } = input;
+	const addNewTimeSlot = (i: number) => {
 		setAvailability((p) => {
 			let updated = [...p];
-			const updateIndex = currentIndex.index;
-			const slotIndex = currentIndex.slotIdx;
-			if (updateIndex !== undefined && updateIndex !== -1)
-				if (slotIndex !== undefined && slotIndex !== -1) {
-					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
-					// input.min =
-					// 	meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
-
-					if (currentTimerOpen === "start") {
-						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
-						const timeout = setTimeout(function () {
-							setCurrentTimerOpen("end");
-							clearTimeout(timeout);
-						}, 100);
-					} else if (currentTimerOpen === "end") {
-						setCurrentTimerOpen(null);
-						timeToUpdate = {
-							startTime: timeToUpdate.startTime,
-							endTime: `${input.min}:${input.secs}`,
-						};
-					}
-					updated[updateIndex].timeSlots[slotIndex] = timeToUpdate;
-				}
+			const updateIndex = i;
+			if (updateIndex !== undefined && updateIndex !== -1) {
+				updated[updateIndex].timeSlots.push({
+					endTime: "00:00",
+					startTime: "00:00",
+				});
+				setCurrentIndex({
+					index: i,
+					slotIdx: updated[updateIndex].timeSlots.length,
+				});
+			}
 			return updated;
 		});
+		setCurrentTimerOpen("start");
 	};
-
-	useEffect(() => {
-		dispatch(setOnboardingMentor({ ...onboardingMentor, availability: [] }));
-	}, [availability]);
 
 	const handleDeleteTimeSlot = (index: number, slotIndex: number) => {
 		const updatedAvailability = [...availability];
@@ -82,6 +66,44 @@ const StepFourMentorOnboarding = () => {
 			setAvailability(updatedAvailability);
 		}
 	};
+
+	const updateTimeSlot = (input: ICurrentTime) => {
+		const { meridan } = input;
+		setAvailability((p) => {
+			let updated = [...p];
+			const updateIndex = currentIndex.index;
+			const slotIndex = Number(currentIndex.slotIdx) - 1;
+			if (updateIndex !== undefined && updateIndex !== -1)
+				if (slotIndex !== undefined && slotIndex !== -1) {
+					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
+					// input.min =
+					// 	meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
+					if (currentTimerOpen === "start") {
+						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
+						setCurrentTimerOpen(null);
+						const t = setTimeout(function () {
+							setCurrentTimerOpen("end");
+							clearTimeout(t);
+						}, 50);
+					} else if (currentTimerOpen === "end") {
+						timeToUpdate = { startTime: timeToUpdate.startTime, endTime: `${input.min}:${input.secs}` };
+						setCurrentTimerOpen(null);
+					}
+					updated[updateIndex].timeSlots[slotIndex] = timeToUpdate;
+				}
+			return updated;
+		});
+	};
+
+	const handleCloseTimePicker = () => {
+		if (currentIndex?.index !== undefined && currentIndex.slotIdx !== undefined)
+			handleDeleteTimeSlot(currentIndex.index, currentIndex.slotIdx - 1);
+		setCurrentTimerOpen(null);
+	};
+
+	// useEffect(() => {
+	// 	dispatch(setOnboardingMentor({ ...onboardingMentor, availability: [] }));
+	// }, [availability]);
 
 	return (
 		<>
@@ -119,18 +141,7 @@ const StepFourMentorOnboarding = () => {
 										{isAvailable && (
 											<div className="text-[#70C5A1]">
 												<div
-													onClick={() => {
-														setAvailability((p) => {
-															let updated = [...p];
-															const updateIndex = i;
-															if (updateIndex !== undefined && updateIndex !== -1)
-																updated[updateIndex].timeSlots.push({
-																	endTime: "00:00",
-																	startTime: "00:00",
-																});
-															return updated;
-														});
-													}}
+													onClick={() => addNewTimeSlot(i)}
 													className="text-[#00D569] cursor-pointer select-none">
 													+Add {timeSlots.length < 1 ? "a" : "new"} time slot
 												</div>
@@ -141,23 +152,23 @@ const StepFourMentorOnboarding = () => {
 								{isAvailable && timeSlots.length >= 1 && (
 									<div className="mt-4 px-1">
 										<h1 className="capitalize font-medium">Time slots</h1>
-										<div className="mt-1.5 w-full gap-2 grid xs:grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 lg:grid-cols-2 animate__animated animate__fadeIn animate__faster">
+										<div className="mt-1.5 w-full gap-2 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 animate__animated animate__fadeIn animate__faster">
 											{timeSlots.map(({ endTime, startTime }, index) => {
 												return (
 													<div
 														key={index}
-														className="bg-white border-[#00D569] border p-1.5 px-2 w-full flex items-center justify-between">
+														className="bg-[#00D569] text-[white] border p-1.5 px-2 w-full flex items-center justify-center gap-3">
 														<span
 															onClick={() => handleDeleteTimeSlot(i, index)}
-															className="text-[18px] text-[#ffb300] select-none cursor-pointer">
+															className="text-[20px] text-[#fff] select-none cursor-pointer">
 															&times;
 														</span>
-														<div className="flex items-center gap-1 flex-grow px-1">
+														<div className="flex items-center gap-1 px-1">
 															<span className="">{startTime}</span>
 															<span>-</span>
 															<span className="">{endTime}</span>
 														</div>
-														<div
+														{/* <div
 															onClick={() => {
 																setCurrentTimerOpen("start");
 																setCurrentIndex({ index: i, slotIdx: index });
@@ -166,7 +177,7 @@ const StepFourMentorOnboarding = () => {
 															{parseInt(endTime) == 0 && parseInt(startTime) == 0
 																? "Set"
 																: "Update"}
-														</div>
+														</div> */}
 													</div>
 												);
 											})}
@@ -193,25 +204,27 @@ const StepFourMentorOnboarding = () => {
 							capitalizeTitle
 							title={currentTimerOpen.concat(" time")}
 							className="animate__animated animate__fadeIn animate__faster"
-							initialState={(() => {
-								const currentId = currentIndex.index;
-								const slotIndex = currentIndex.index;
-								if (currentId !== undefined && slotIndex !== undefined) {
-									const state = availability[currentId].timeSlots[slotIndex];
-									console.log({ state });
-									const min = state.startTime.split(":")[0];
-									const secs = state.endTime.split(":")[1];
-									const min24H = parseInt(min) + 12;
-									console.log({ min24H });
-									const meridan: ICurrentTime["meridan"] =
-										min24H === 24 ? "am" : parseInt(min) >= 12 ? "pm" : "am";
-									console.log({ min: parseInt(min) });
-									return { min, secs, meridan };
-								}
-								return { meridan: "pm" };
-							})()}
+							// initialState={(() => {
+							// 	const currentId = currentIndex.index;
+							// 	const slotIndex = currentIndex.index;
+							// 	if (currentId !== undefined && slotIndex !== undefined) {
+							// 		const state = availability[currentId].timeSlots[slotIndex];
+							// 		if (state !== undefined) {
+							// 			console.log({ state });
+							// 			const min = state.startTime.split(":")[0];
+							// 			const secs = state.endTime.split(":")[1];
+							// 			const min24H = parseInt(min) + 12;
+							// 			console.log({ min24H });
+							// 			const meridan: ICurrentTime["meridan"] =
+							// 				min24H === 24 ? "am" : parseInt(min) >= 12 ? "pm" : "am";
+							// 			console.log({ min: parseInt(min) });
+							// 			return { min, secs, meridan };
+							// 		}
+							// 	}
+							// })()}
+							initialState={{ meridan: "am", min: "00", secs: "00" }}
 							ref={timepickerRef}
-							closeTimePicker={() => setCurrentTimerOpen(null)}
+							closeTimePicker={handleCloseTimePicker}
 							onChange={updateTimeSlot}
 						/>
 					</div>
