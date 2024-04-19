@@ -1,7 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IMentorOnboardingState } from "../../interfaces/mentor.interface";
+import { IMentorOnboardingState, MentorOnboardingTimeSlot } from "../../interfaces/mentor.interface";
 import { IUserOnboardingState } from "../../interfaces/user.interface";
 import { RootState } from "../store";
+import { daysOfTheWeek } from "../../constants";
+
+const initialAvailabilityState: MentorOnboardingTimeSlot[] = [
+	{
+		day: "monday",
+		isAvailable: true,
+		timeSlots: [
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "18:00", startTime: "16:00" },
+		],
+	},
+	{
+		day: "wednesday",
+		isAvailable: true,
+		timeSlots: [
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "18:00", startTime: "16:00" },
+		],
+	},
+];
+
+// Todo: temporary
+const mergedAvailabilityState = daysOfTheWeek.map((day) => {
+	const initialStateForDay = initialAvailabilityState.find((state) => state.day.toLowerCase() === day.toLowerCase());
+	return initialStateForDay
+		? { ...initialStateForDay, timeSlots: [...initialStateForDay.timeSlots] }
+		: { day, isAvailable: false, timeSlots: [] };
+});
 
 export const initialMentorOnboardingState: IMentorOnboardingState = {
 	currentStep: 1,
@@ -16,7 +46,7 @@ export const initialMentorOnboardingState: IMentorOnboardingState = {
 	education: [],
 	certificates: [],
 	languages: [],
-	availability: [],
+	availability: mergedAvailabilityState,
 };
 export const initialUserOnboardingState: IUserOnboardingState = {
 	country: "",
@@ -37,8 +67,6 @@ const onboardingSlice = createSlice({
 		setOnboardingMentor: (state, action: { payload: IMentorOnboardingState | null }) => {
 			if (action.payload !== null) state.mentor = action.payload;
 			else state.mentor = initialMentorOnboardingState;
-			// action.payload.user = null;
-			// setLocalStorage("onboardingMentor", JSON.stringify({ ...action.payload }));
 		},
 		setOnboardingUser: (state, action: { payload: IUserOnboardingState | null }) => {
 			if (action.payload !== null) state.user = action.payload;

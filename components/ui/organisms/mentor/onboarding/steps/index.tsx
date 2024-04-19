@@ -11,6 +11,9 @@ import { onboardingMentorState, setOnboardingMentor } from "../../../../../../re
 import StepThreeMentorOnboarding from "./step-three";
 import StepFourMentorOnboarding from "./step-four";
 import FinalMentorOnboardingStep from "./final-step";
+import { toast } from "react-toastify";
+import { ToastDefaultOptions } from "../../../../../../constants";
+import { MentorOnboardingTimeSlot } from "../../../../../../interfaces/mentor.interface";
 
 const MentorOnboardingSteps = () => {
 	const dispatch = useDispatch();
@@ -22,15 +25,10 @@ const MentorOnboardingSteps = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const moveToNextStep = () => {
-		console.log("Next", { step: onboardingMentor.currentStep });
+		// console.log("Next", { step: onboardingMentor.currentStep });
 		setLoading(true);
 		if (currentStep < totalSteps) {
-			dispatch(
-				setOnboardingMentor({
-					...onboardingMentor,
-					currentStep: onboardingMentor.currentStep + 1,
-				}),
-			);
+			dispatch(setOnboardingMentor({ ...onboardingMentor, currentStep: onboardingMentor.currentStep + 1 }));
 			scrollToTop();
 		}
 		setLoading(false);
@@ -43,6 +41,7 @@ const MentorOnboardingSteps = () => {
 				moveToNextStep();
 			} else {
 				setLoading(false);
+				toast.error("Your role and bio cannot be empty", { ...ToastDefaultOptions({ id: "error" }) });
 			}
 		}
 		if (currentStep === 2 || currentStep === 3 || currentStep === 4) {
@@ -54,14 +53,8 @@ const MentorOnboardingSteps = () => {
 		setLoading(false);
 		scrollToTop();
 		if (onboardingMentor)
-			if (currentStep > 1) {
-				dispatch(
-					setOnboardingMentor({
-						...onboardingMentor,
-						currentStep: onboardingMentor.currentStep - 1,
-					}),
-				);
-			}
+			if (currentStep > 1)
+				dispatch(setOnboardingMentor({ ...onboardingMentor, currentStep: onboardingMentor.currentStep - 1 }));
 	};
 
 	return (
@@ -79,7 +72,12 @@ const MentorOnboardingSteps = () => {
 				) : currentStep === 3 ? (
 					<StepThreeMentorOnboarding />
 				) : currentStep === 4 ? (
-					<StepFourMentorOnboarding />
+					<StepFourMentorOnboarding
+					// onUpdate={(state: MentorOnboardingTimeSlot[]) => {
+					// 	console.log({ state });
+					// 	dispatch(setOnboardingMentor({ ...onboardingMentor, availability: state }));
+					// }}
+					/>
 				) : currentStep === 5 ? (
 					<FinalMentorOnboardingStep />
 				) : (

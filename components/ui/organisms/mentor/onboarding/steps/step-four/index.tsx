@@ -1,130 +1,103 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
-import { daysOfTheWeek } from "../../../../../../../constants";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../../redux/reducers/onboardingSlice";
 import Languages from "./Languages";
-import { IMentorAvailability, TimeSlot } from "../../../../../../../interfaces/mentor.interface";
 import classNames from "classnames";
 import { Checkmark, Close } from "react-ionicons";
 import TimePicker, { ICurrentTime } from "../../../../../atom/common/TimePicker";
+import { MentorOnboardingTimeSlot } from "../../../../../../../interfaces/mentor.interface";
 
-// type TimeSlotSubSet = { day: string; timeSlot: Omit<TimeSlot, "isOpen">; isAvailable: boolean };
-interface TimeSlotSubSet extends Omit<IMentorAvailability, "id" | "timeSlots"> {
-	isAvailable: boolean;
-	timeSlots: Omit<TimeSlot, "isOpen">[];
-}
-const initialState: TimeSlotSubSet[] = [
-	{
-		day: "monday",
-		isAvailable: true,
-		timeSlots: [
-			{ endTime: "15:50", startTime: "12:00" },
-			{ endTime: "15:50", startTime: "12:00" },
-			{ endTime: "18:00", startTime: "16:00" },
-		],
-	},
-	{
-		day: "wednesday",
-		isAvailable: true,
-		timeSlots: [
-			{ endTime: "15:50", startTime: "12:00" },
-			{ endTime: "15:50", startTime: "12:00" },
-			{ endTime: "18:00", startTime: "16:00" },
-		],
-	},
-];
+const initialState: MentorOnboardingTimeSlot["timeSlots"][0] = {
+	endTime: "00:00",
+	startTime: "00:00",
+};
 
 const StepFourMentorOnboarding = () => {
-	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const mergedState = daysOfTheWeek.map((day) => {
-		const initialStateForDay = initialState.find((state) => state.day.toLowerCase() === day.toLowerCase());
-		return initialStateForDay
-			? { ...initialStateForDay, timeSlots: [...initialStateForDay.timeSlots] }
-			: { day, isAvailable: false, timeSlots: [] };
+	const dispatch = useDispatch();
+	const availability = useMemo(() => onboardingMentor.availability, [onboardingMentor.availability]);
+	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIndex?: number }>({
+		index: 0,
+		slotIndex: 0,
 	});
-	const [availability, setAvailability] = useState<TimeSlotSubSet[]>([...mergedState]);
-	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIdx?: number }>({ index: 0, slotIdx: 0 });
-	const [currentTimerOpen, setCurrentTimerOpen] = useState<"start" | "end" | null>(null);
-	const timepickerRef = useRef<HTMLDivElement>(null);
 
-	const updateAvailability = (day: string, input: Partial<Omit<TimeSlotSubSet, "day">>) => {
-		const { isAvailable } = input;
-		setAvailability((p) => {
-			let updated = [...p];
-			const updateIndex = updated.findIndex((slot) => slot.day === day);
-			if (updateIndex !== -1) {
-				const slot = updated[updateIndex];
-				updated[updateIndex] = { ...slot, ...input };
-			}
-			return updated;
-		});
-	};
+	const [currentTimerOpen, setCurrentTimerOpen] = useState<"start" | "end" | false>(false);
 
-	const addNewTimeSlot = (i: number) => {
-		setAvailability((p) => {
-			let updated = [...p];
-			const updateIndex = i;
-			if (updateIndex !== undefined && updateIndex !== -1) {
-				updated[updateIndex].timeSlots.push({
-					endTime: "00:00",
-					startTime: "00:00",
-				});
-				setCurrentIndex({
-					index: i,
-					slotIdx: updated[updateIndex].timeSlots.length,
-				});
-			}
-			return updated;
-		});
-		setCurrentTimerOpen("start");
-	};
-
-	const handleDeleteTimeSlot = (index: number, slotIndex: number) => {
-		const updatedAvailability = [...availability];
-		if (index >= 0 && index < updatedAvailability.length) {
-			updatedAvailability[index].timeSlots.splice(slotIndex, 1);
-			setAvailability(updatedAvailability);
+	const toggleAvailability = (index: number) => {
+		let arr = [...availability];
+		if (index !== -1) {
+			arr[index] = { ...arr[index], isAvailable: !arr[index].isAvailable };
+			dispatch(setOnboardingMentor({ ...onboardingMentor, availability: arr }));
 		}
+	};
+
+	const addNewTimeSlot = (index: number) => {
+		let updated = [...availability];
+		if (index >= 0) {
+			updated[index] = { ...updated[index], timeSlots: [...updated[index].timeSlots, initialState] };
+			dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updated }));
+			setCurrentIndex({
+				index,
+				slotIndex: updated[index].timeSlots.length,
+			});
+			setCurrentTimerOpen("start");
+		}
+	};
+
+	const handleCloseTimePicker = () => {
+		if (currentIndex?.index !== undefined && currentIndex.slotIndex !== undefined)
+			handleDeleteTimeSlot(currentIndex.index, currentIndex.slotIndex - 1);
+		setCurrentTimerOpen(false);
 	};
 
 	const updateTimeSlot = (input: ICurrentTime) => {
 		const { meridan } = input;
-		setAvailability((p) => {
-			let updated = [...p];
-			const updateIndex = currentIndex.index;
-			const slotIndex = Number(currentIndex.slotIdx) - 1;
-			if (updateIndex !== undefined && updateIndex !== -1)
-				if (slotIndex !== undefined && slotIndex !== -1) {
-					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
-					input.min =
-						meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
-					if (currentTimerOpen === "start") {
-						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
-						setCurrentTimerOpen(null);
-						setTimeout(() => {
-							setCurrentTimerOpen("end");
-						}, 50);
-					} else if (currentTimerOpen === "end") {
-						timeToUpdate = { startTime: timeToUpdate.startTime, endTime: `${input.min}:${input.secs}` };
-						setCurrentTimerOpen(null);
-					}
-					updated[updateIndex].timeSlots[slotIndex] = timeToUpdate;
+		let updated = [...availability];
+		const updateIndex = currentIndex.index;
+		const slotIndex = Number(currentIndex.slotIndex) - 1;
+		if (updateIndex !== undefined && updateIndex !== -1)
+			if (slotIndex !== undefined && slotIndex !== -1) {
+				let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
+				input.min =
+					meridan === "am" && input.min == "12"
+						? "00"
+						: meridan === "am"
+						? String(input.min).padStart(2, "0")
+						: parseInt(input.min) + 12 === 24
+						? "12"
+						: String(parseInt(input.min) + 12);
+				if (currentTimerOpen === "start") {
+					timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
+					setCurrentTimerOpen(false);
+					setTimeout(() => {
+						setCurrentTimerOpen("end");
+					}, 50);
+				} else if (currentTimerOpen === "end") {
+					timeToUpdate = { startTime: timeToUpdate.startTime, endTime: `${input.min}:${input.secs}` };
+					setCurrentTimerOpen(false);
 				}
-			return updated;
-		});
+				updated[updateIndex] = {
+					...updated[updateIndex],
+					timeSlots: [
+						...updated[updateIndex].timeSlots.filter((slot, i) => i !== slotIndex),
+						{ ...timeToUpdate },
+					],
+				};
+				dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updated }));
+			}
 	};
 
-	const handleCloseTimePicker = () => {
-		if (currentIndex?.index !== undefined && currentIndex.slotIdx !== undefined)
-			handleDeleteTimeSlot(currentIndex.index, currentIndex.slotIdx - 1);
-		setCurrentTimerOpen(null);
+	const handleDeleteTimeSlot = (index: number, slotIndex: number) => {
+		let updatedAvailability = [...availability];
+		if (index >= 0 && slotIndex >= 0) {
+			updatedAvailability[index] = {
+				...updatedAvailability[index],
+				timeSlots: updatedAvailability[index].timeSlots.filter((slot, i) => i !== slotIndex),
+			};
+			dispatch(setOnboardingMentor({ ...onboardingMentor, availability: updatedAvailability }));
+		}
 	};
-
-	// useEffect(() => {
-	// 	dispatch(setOnboardingMentor({ ...onboardingMentor, availability: [] }));
-	// }, [availability]);
 
 	return (
 		<>
@@ -146,7 +119,7 @@ const StepFourMentorOnboarding = () => {
 										animated
 										{...{
 											isActive: isAvailable,
-											handleToggle: () => updateAvailability(day, { isAvailable: !isAvailable }),
+											handleToggle: () => toggleAvailability(i),
 										}}
 									/>
 									<div className="flex items-center justify-between gap-2 flex-grow h-full lg:w-auto md:w-full sm:w-auto w-full">
@@ -217,7 +190,7 @@ const StepFourMentorOnboarding = () => {
 					<Languages />
 				</div>
 			</div>
-			{currentTimerOpen !== null && (
+			{currentTimerOpen !== false && (
 				<div className="fixed top-0 left-0 flex items-center justify-center h-full w-full z-40 px-6 sm:px-0">
 					<div className="absolute bg-black/50 backdrop-blur-sm w-full h-full top-0 left-0" />
 					<div className="max-h-md max-w-md mx-auto relative z-50">
@@ -225,26 +198,7 @@ const StepFourMentorOnboarding = () => {
 							capitalizeTitle
 							title={currentTimerOpen.concat(" time")}
 							className="animate__animated animate__fadeIn animate__faster"
-							// initialState={(() => {
-							// 	const currentId = currentIndex.index;
-							// 	const slotIndex = currentIndex.index;
-							// 	if (currentId !== undefined && slotIndex !== undefined) {
-							// 		const state = availability[currentId].timeSlots[slotIndex];
-							// 		if (state !== undefined) {
-							// 			console.log({ state });
-							// 			const min = state.startTime.split(":")[0];
-							// 			const secs = state.endTime.split(":")[1];
-							// 			const min24H = parseInt(min) + 12;
-							// 			console.log({ min24H });
-							// 			const meridan: ICurrentTime["meridan"] =
-							// 				min24H === 24 ? "am" : parseInt(min) >= 12 ? "pm" : "am";
-							// 			console.log({ min: parseInt(min) });
-							// 			return { min, secs, meridan };
-							// 		}
-							// 	}
-							// })()}
 							initialState={{ meridan: "am", min: "00", secs: "00" }}
-							ref={timepickerRef}
 							closeTimePicker={handleCloseTimePicker}
 							onChange={updateTimeSlot}
 						/>
@@ -288,5 +242,5 @@ const ToggleSwitch = ({
 	);
 };
 
-export default StepFourMentorOnboarding;
+export default memo(StepFourMentorOnboarding);
 // && and sign

@@ -9,6 +9,11 @@ export interface IMentorEducation {
 	school: string;
 	to_year: string;
 }
+
+export interface MentorOnboardingTimeSlot extends Omit<IMentorAvailability, "id" | "timeSlots"> {
+	isAvailable: boolean;
+	timeSlots: Omit<TimeSlot, "isOpen">[];
+}
 export interface IMentorOnboardingState {
 	currentStep: number;
 	agreedToTerms: boolean;
@@ -22,14 +27,14 @@ export interface IMentorOnboardingState {
 	workHistory?: IMentorExperience[];
 	education: IMentorEducation[];
 	languages: string[];
-	availability: IMentorAvailability[];
+	availability: MentorOnboardingTimeSlot[];
 }
 
 export type RefrencedMentorType = Omit<IMentor, "projects" | "experience">;
 
 export type IMentorSkills = {
 	skill_name: string;
-	years_of_exp: number|null;
+	years_of_exp: number | null;
 };
 export type TimeSlot = { endTime: string; startTime: string; isOpen: boolean };
 
