@@ -75,11 +75,12 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 		}
 	};
 
-	const handleTimerFormat = () => {
+	const handleTimerFormat = useCallback(() => {
+		console.log({ initialState });
 		setCurrentTime((p) => {
 			return { min: String(p.min).padStart(2, "0"), secs: String(p.secs).padStart(2, "0"), meridan: p.meridan };
 		});
-	};
+	}, [initialState]);
 
 	useEffect(() => {
 		startTimeRef.current?.focus();
@@ -96,12 +97,12 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 			<div
 				ref={ref}
 				className={classNames(
-					"text-3xl relative z-20 shadow-lg rounded-lg flex items-center flex-col gap-5 max-w-md w-full h-full min-h-[200px] min-w-[300px] bg-white overflow-hidden",
+					"relative z-20 shadow-lg rounded-lg max-w-md w-full h-full min-h-[200px] min-w-[300px] mx-auto bg-white overflow-hidden",
 					className,
 				)}>
 				<div
 					className={classNames(
-						"bg-[#00D569] w-full h-auto py-5 p-3 rounded-tl-lg rounded-tr-lg flex flex-wrap gap-3 font-semibold",
+						"bg-[#00D569] w-full h-auto py-5 px-8 rounded-tl-lg rounded-tr-lg flex flex-wrap gap-3 font-semibold",
 						title ? "justify-between items-start text-[25px]" : "justify-center items-center",
 					)}>
 					<h1 className={classNames(capitalizeTitle && "capitalize")}>{title}</h1>
@@ -113,8 +114,8 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 						<h1 className="uppercase">{currentTime.meridan}</h1>
 					</div>
 				</div>
-				<div className="bg-white h-auto py-3 w-full flex justify-between items-center px-10">
-					<div className="flex gap-3 flex-col items-center justify-center w-[40%]">
+				<div className="text-3xl bg-white h-auto py-3 w-full flex justify-start items-center">
+					<div className="flex gap-3 flex-col items-center">
 						<ChevronUp cssClasses="cursor-pointer" onClick={incrementMinute} />
 						<input
 							type="text"
@@ -141,7 +142,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementMinute} />
 					</div>
 					<h1 className="">:</h1>
-					<div className="flex gap-3 flex-col items-center justify-center w-[40%]">
+					<div className="flex gap-3 flex-col items-center">
 						<ChevronUp cssClasses="cursor-pointer" onClick={incrementSeconds} />
 						<input
 							max={59}
@@ -171,7 +172,7 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 						<ChevronDown cssClasses="cursor-pointer" onClick={decrementSeconds} />
 					</div>
 					<div
-						className="flex gap-3 flex-col items-center justify-center cursor-pointer select-none"
+						className="flex gap-3 flex-col items-center cursor-pointer select-none w-full"
 						onClick={toggleMeridian}>
 						<h1
 							className={classNames(
@@ -189,15 +190,13 @@ const TimePicker = forwardRef(function TimePicker(props: TimePickerProps, ref: F
 						</h1>
 					</div>
 				</div>
-				<div className="flex items-center gap-6 my-5 text-[18px]">
+				<div className="flex justify-between w-full max-w-sm mx-auto items-center gap-6 my-5">
 					<div
 						onClick={closeTimePicker}
 						className="px-8 p-1 hover:bg-rose-100 duration-300 cursor-pointer select-none">
 						Cancel
 					</div>
-					<div className="flex items-center">
-						<PrimaryButton title="OK" className="px-8 p-1" onClick={setTimeFrame} />
-					</div>
+					<PrimaryButton title="OK" className="px-8 p-1 rounded" onClick={setTimeFrame} />
 				</div>
 			</div>
 		</>

@@ -41,7 +41,7 @@ const StepFourMentorOnboarding = () => {
 	};
 
 	const updateTimeSlot = (input: ICurrentTime) => {
-		console.log({ currentIndex, input });
+		const { meridan } = input;
 		setAvailability((p) => {
 			let updated = [...p];
 			const updateIndex = currentIndex.index;
@@ -49,15 +49,15 @@ const StepFourMentorOnboarding = () => {
 			if (updateIndex !== undefined && updateIndex !== -1)
 				if (slotIndex !== undefined && slotIndex !== -1) {
 					let timeToUpdate = updated[updateIndex].timeSlots[slotIndex];
+					// input.min =
+					// 	meridan === "am" ? String(input.min).padStart(2, "0") : String(parseInt(input.min) + 12);
+
 					if (currentTimerOpen === "start") {
+						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
 						const timeout = setTimeout(function () {
 							setCurrentTimerOpen("end");
 							clearTimeout(timeout);
 						}, 100);
-						timeToUpdate = {
-							startTime: `${input.min}:${input.secs}`,
-							endTime: timeToUpdate.endTime,
-						};
 					} else if (currentTimerOpen === "end") {
 						setCurrentTimerOpen(null);
 						timeToUpdate = {
@@ -192,13 +192,21 @@ const StepFourMentorOnboarding = () => {
 						<TimePicker
 							capitalizeTitle
 							title={currentTimerOpen.concat(" time")}
-							className="animate__animated animate__bounceIn animate__fastest"
+							className="animate__animated animate__fadeIn animate__faster"
 							initialState={(() => {
 								const currentId = currentIndex.index;
 								const slotIndex = currentIndex.index;
 								if (currentId !== undefined && slotIndex !== undefined) {
 									const state = availability[currentId].timeSlots[slotIndex];
-									return { meridan: "pm" };
+									console.log({ state });
+									const min = state.startTime.split(":")[0];
+									const secs = state.endTime.split(":")[1];
+									const min24H = parseInt(min) + 12;
+									console.log({ min24H });
+									const meridan: ICurrentTime["meridan"] =
+										min24H === 24 ? "am" : parseInt(min) >= 12 ? "pm" : "am";
+									console.log({ min: parseInt(min) });
+									return { min, secs, meridan };
 								}
 								return { meridan: "pm" };
 							})()}
