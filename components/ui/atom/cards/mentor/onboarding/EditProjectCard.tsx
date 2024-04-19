@@ -19,9 +19,6 @@ const EditProjectCard = ({
 	reEdit?: boolean;
 }) => {
 	const initialState: IMentorProjectType = {
-		// link: "",
-		// title: "",
-		// type: "",
 		company: "",
 		description: "",
 		job_role: "",
@@ -50,17 +47,7 @@ const EditProjectCard = ({
 	const handleProjectUpdate = () => {
 		if (project.company && project.description && project.job_role) {
 			const updatedProjects = [...projectsArr];
-			// if (!isValidUrl(project.link)) {
-			// 	// check if project link is a valid url
-			// 	toast.error(
-			// 		"Invalid project URL",
-			// 		ToastDefaultOptions({
-			// 			id: "error",
-			// 			theme: "dark",
-			// 		}),
-			// 	);
-			// 	return;
-			// }
+
 			// Add new project
 			if (!existingProject && !isDuplicate) {
 				updatedProjects.push(project);
@@ -96,7 +83,7 @@ const EditProjectCard = ({
 	};
 
 	return (
-		<div>
+		<div className="w-full">
 			<div className="text-sm grid gap-3 md:grid-cols-8 bg-white border border-[#00D569] p-3 pt-8 relative">
 				{existingProject && (
 					<span className="absolute top-2 right-3 cursor-pointer z-10">

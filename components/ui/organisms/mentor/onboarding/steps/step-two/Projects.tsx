@@ -1,8 +1,5 @@
 import React from "react";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { slugify } from "../../../../../../../utils";
@@ -13,25 +10,19 @@ const Projects = ({ reEdit = false }: { reEdit?: boolean }) => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 
 	return (
-		<div className="">
+		<div className="w-full">
 			<h1 className="text-sm text-[#B1B1B1] mb-3">Any Project(s) you worked on?</h1>
-			<div className="flex flex-col gap-4 items-center mb-5">
+			<div className="flex flex-col gap-4 items-center mb-5 w-full">
 				{onboardingMentor?.projects &&
 					onboardingMentor.projects?.length >= 1 &&
 					onboardingMentor.projects.map((project, index) => {
-						const id = slugify(project.company);
 						return (
 							<EditProjectCard
 								key={index}
 								existingProject={project}
 								projectsArr={onboardingMentor.projects}
 								onUpdate={(updated) => {
-									dispatch(
-										setOnboardingMentor({
-											...onboardingMentor,
-											projects: updated,
-										}),
-									);
+									dispatch(setOnboardingMentor({ ...onboardingMentor, projects: updated }));
 								}}
 							/>
 						);

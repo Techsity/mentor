@@ -146,7 +146,7 @@ const StepTwoMentorOnboarding = () => {
 						</div>
 					)}
 				</div>
-				<div className="grid gap-2">
+				<div className="grid gap-2 w-full">
 					<h1 className="text-sm text-[#B1B1B1]">How many years of professional working experience?</h1>
 					<CustomTextInput
 						type="number"
