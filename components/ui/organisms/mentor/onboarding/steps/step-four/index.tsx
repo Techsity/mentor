@@ -14,15 +14,37 @@ interface TimeSlotSubSet extends Omit<IMentorAvailability, "id" | "timeSlots"> {
 	isAvailable: boolean;
 	timeSlots: Omit<TimeSlot, "isOpen">[];
 }
+const initialState: TimeSlotSubSet[] = [
+	{
+		day: "monday",
+		isAvailable: true,
+		timeSlots: [
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "18:00", startTime: "16:00" },
+		],
+	},
+	{
+		day: "wednesday",
+		isAvailable: true,
+		timeSlots: [
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "15:50", startTime: "12:00" },
+			{ endTime: "18:00", startTime: "16:00" },
+		],
+	},
+];
 
 const StepFourMentorOnboarding = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
-	const [availability, setAvailability] = useState<TimeSlotSubSet[]>(
-		daysOfTheWeek.map((day) => {
-			return { day, isAvailable: false, timeSlots: [] };
-		}),
-	);
+	const mergedState = daysOfTheWeek.map((day) => {
+		const initialStateForDay = initialState.find((state) => state.day.toLowerCase() === day.toLowerCase());
+		return initialStateForDay
+			? { ...initialStateForDay, timeSlots: [...initialStateForDay.timeSlots] }
+			: { day, isAvailable: false, timeSlots: [] };
+	});
+	const [availability, setAvailability] = useState<TimeSlotSubSet[]>([...mergedState]);
 	const [currentIndex, setCurrentIndex] = useState<{ index?: number; slotIdx?: number }>({ index: 0, slotIdx: 0 });
 	const [currentTimerOpen, setCurrentTimerOpen] = useState<"start" | "end" | null>(null);
 	const timepickerRef = useRef<HTMLDivElement>(null);
@@ -81,9 +103,8 @@ const StepFourMentorOnboarding = () => {
 					if (currentTimerOpen === "start") {
 						timeToUpdate = { startTime: `${input.min}:${input.secs}`, endTime: timeToUpdate.endTime };
 						setCurrentTimerOpen(null);
-						const t = setTimeout(function () {
+						setTimeout(() => {
 							setCurrentTimerOpen("end");
-							clearTimeout(t);
 						}, 50);
 					} else if (currentTimerOpen === "end") {
 						timeToUpdate = { startTime: timeToUpdate.startTime, endTime: `${input.min}:${input.secs}` };
