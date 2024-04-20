@@ -87,7 +87,7 @@ const Availability = () => {
 		// Reflect Updates
 		const newArr = [...onboardingMentor.availability];
 		if (!isDuplicate && schedule !== initialSchedule) {
-			newArr.push(schedule);
+			newArr.push({ ...schedule, isAvailable: true });
 			// setSchedule(initialSchedule);
 		}
 		const toBeUpdated = onboardingMentor.availability.findIndex((sch) => sch.day === schedule.day);
