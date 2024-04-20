@@ -66,8 +66,8 @@ const EditProjectCard = ({
 				};
 			}
 			if (onUpdate) onUpdate(updatedProjects);
-			existingProject && toast.success("Field updated successfully");
-			setProject(initialState);
+			existingProject && toast.success("Field updated successfully", ToastDefaultOptions({ id: "info" }));
+			// setProject(initialState);
 		}
 	};
 
@@ -162,18 +162,18 @@ const EditProjectCard = ({
 			) : (
 				reEdit && (
 					<div className="flex justify-end gap-4 items-center w-full mt-2">
-						<PrimaryButton
+						{/* <PrimaryButton
 							title=""
 							icon={<TrashBinOutline color="#fff" />}
 							className="px-2 rounded p-1 bg-rose-500"
 							onClick={() => {
 								// onRemove && onRemove(experience.company.name);
 							}}
-						/>
+						/> */}
 						<PrimaryButton
 							title={"Update"}
 							// icon={loading ? <ActivityIndicator /> : null}
-							className="px-8 p-1 rounded"
+							className="px-8 p-1 rounded text-sm"
 							onClick={handleProjectUpdate}
 						/>
 					</div>

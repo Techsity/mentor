@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { FinalStepEditButton } from "./index";
-import {
-	onboardingMentorState,
-	setOnboardingMentor,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { onboardingMentorState, setOnboardingMentor } from "../../../../../../../redux/reducers/onboardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MentorProjects } from "../../../details";
 import EditProjectCard from "../../../../../atom/cards/mentor/onboarding/EditProjectCard";
@@ -15,16 +12,10 @@ const FinalStepProjectsEdit = () => {
 
 	return (
 		<div className="grid gap-2 my-2">
-			<FinalStepEditButton
-				title="Your Projects"
-				editAction={() => setShowEdit(!showEdit)}
-			/>
+			<FinalStepEditButton title="Your Projects" editAction={() => setShowEdit(!showEdit)} />
 			<div className="">
 				{!showEdit ? (
-					<MentorProjects
-						projects={onboardingMentor.projects}
-						reEdit
-					/>
+					<MentorProjects projects={onboardingMentor.projects} reEdit />
 				) : (
 					<div className="grid gap-4">
 						{onboardingMentor.projects.map((project, index) => (

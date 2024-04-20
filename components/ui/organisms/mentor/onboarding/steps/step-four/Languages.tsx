@@ -1,10 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import useSuggestions from "../../../../../../../hooks/input/useSuggestions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	setOnboardingMentor,
-	onboardingMentorState,
-} from "../../../../../../../redux/reducers/onboardingSlice";
+import { setOnboardingMentor, onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 import CustomTextInput from "../../../../../atom/inputs/CustomTextInput";
 
 const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
@@ -12,21 +9,10 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 	const onboardingMentor = useSelector(onboardingMentorState);
 	const languageInputRef = useRef<HTMLInputElement>(null);
 
-	const languageSuggestions = [
-		"English",
-		"French",
-		"Russia",
-		"German",
-		"Spanish",
-		"Chinese",
-	];
+	const languageSuggestions = ["English", "French", "Russia", "German", "Spanish", "Chinese"];
 	const [language, setLanguage] = useState<string>("");
 	const [languageInput, setLanguageInput] = useState<string>("");
-	const {
-		SuggestionsComponent,
-		setSelectedSuggestions,
-		selectedSuggestions,
-	} = useSuggestions({
+	const { SuggestionsComponent, setSelectedSuggestions, selectedSuggestions } = useSuggestions({
 		suggestions: onboardingMentor.languages
 			? [...languageSuggestions, ...onboardingMentor.languages]
 			: languageSuggestions,
@@ -35,17 +21,11 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 
 	const updateLanguages = (lang: string) => {
 		languageInputRef.current && languageInputRef.current?.focus();
-		if (
-			lang &&
-			onboardingMentor.languages &&
-			!onboardingMentor.languages.some((l) => l === lang)
-		)
+		if (lang && onboardingMentor.languages && !onboardingMentor.languages.some((l) => l === lang))
 			dispatch(
 				setOnboardingMentor({
 					...onboardingMentor,
-					languages:
-						onboardingMentor.languages &&
-						onboardingMentor.languages.concat(lang),
+					languages: onboardingMentor.languages && onboardingMentor.languages.concat(lang),
 				}),
 			);
 	};
@@ -60,28 +40,19 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 	useEffect(() => {
 		if (language) {
 			if (languageSuggestions.filter((l) => l !== language))
-				setSelectedSuggestions([
-					language,
-					...languageSuggestions.filter((lang) =>
-						lang.includes(language),
-					),
-				]);
+				setSelectedSuggestions([language, ...languageSuggestions.filter((lang) => lang.includes(language))]);
 		}
 	}, [language]);
 
 	return (
 		<div className="grid gap-2 relative">
-			{!reEdit && (
-				<h1 className="text-sm text-[#B1B1B1]">
-					Languages Spoken Fluently
-				</h1>
-			)}
+			{!reEdit && <h1 className="text-sm text-[#B1B1B1]">Languages Spoken Fluently</h1>}
 			<CustomTextInput
 				type="text"
 				onChange={handleChange}
 				value={languageInput}
 				ref={languageInputRef}
-				className="bg-white"
+				className="bg-white text-sm"
 				containerprops={{
 					className: "border border-[#00D569]",
 				}}
@@ -95,9 +66,11 @@ const Languages = ({ reEdit = false }: { reEdit?: boolean }) => {
 					}}
 				/>
 			</div>
-			<span className="text-sm text-[#B1B1B1]">
+			<span className="text-sm text-[#B1B1B1] flex gap-2 items-center">
 				{onboardingMentor.languages &&
-					onboardingMentor.languages.join(", ")}
+					onboardingMentor.languages.map((item, i) => {
+						return <span className="bg-white border border-[#00D569] p-1 px-2">{item}</span>;
+					})}
 			</span>
 		</div>
 	);

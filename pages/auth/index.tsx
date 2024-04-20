@@ -10,7 +10,7 @@ const AuthPage = () => {
 	const auth = useSelector(isLoggedIn);
 	const user = useSelector(currentUser);
 	const next = router.query.next as string;
-
+	
 	useEffect(() => {
 		if (auth || user) {
 			if (next) router.replace(decodeURIComponent(next));

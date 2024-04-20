@@ -32,11 +32,21 @@ import { formatGqlError } from "../../../../../../../utils/auth";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastDefaultOptions } from "../../../../../../../constants";
-import { updateMentorProfile, updateUserProfile } from "../../../../../../../redux/reducers/auth/authSlice";
+import {
+	currentUser,
+	isLoggedIn,
+	updateMentorProfile,
+	updateUserProfile,
+} from "../../../../../../../redux/reducers/auth/authSlice";
+import { setCurrentProfile } from "../../../../../../../redux/reducers/userSlice";
+import ResponseMessages from "../../../../../../../constants/response-codes";
+import { fetchUserProfile } from "../../../../../../../redux/reducers/auth/apiAuthSlice";
 
 const FinalMentorOnboardingStep = () => {
 	const dispatch = useDispatch();
 	const onboardingMentor = useSelector(onboardingMentorState);
+	const isAuth = useSelector(isLoggedIn);
+	const user = useSelector(currentUser);
 	const [loading, setLoading] = useState<boolean>(false);
 	const router = useRouter();
 	const [createMentorProfile] = useMutation<OnboardingMentorMutationResponse, OnboardingMentorMutationVariables>(
@@ -46,8 +56,13 @@ const FinalMentorOnboardingStep = () => {
 	const handleSubmit = async () => {
 		setLoading(true);
 
-		const availability: any[] = [];
-		// onboardingMentor.availability
+		const availability: any[] = [
+			...onboardingMentor.availability
+				.filter((slot) => slot.isAvailable && slot.timeSlots.length >= 1)
+				.map((item) => {
+					return { day: item.day, timeSlots: item.timeSlots };
+				}),
+		];
 
 		try {
 			const response = await createMentorProfile({
@@ -58,7 +73,7 @@ const FinalMentorOnboardingStep = () => {
 						certifications: onboardingMentor.certificates,
 						education_bg: onboardingMentor.education,
 						exp_level: IMentorExpLevel.LEVEL_2, //Todo: remove this and set exp_level properly from the form
-						hourly_rate: 10,
+						hourly_rate: 0,
 						language: onboardingMentor.languages,
 						projects: onboardingMentor.projects,
 						role: onboardingMentor.role,
@@ -67,31 +82,36 @@ const FinalMentorOnboardingStep = () => {
 					},
 				},
 			});
-			console.log(response.data?.createMentorProfile);
+
 			if (response.data?.createMentorProfile) {
-				setLoading(false);
 				dispatch(updateUserProfile({ is_mentor: true }));
 				dispatch(updateMentorProfile({ ...response.data?.createMentorProfile }));
+				dispatch(setCurrentProfile("mentor"));
 				router.replace("/profile").then((done) => {
 					if (done) dispatch(setOnboardingMentor(initialMentorOnboardingState));
 				});
 			}
 		} catch (err) {
 			console.error(err);
-			setLoading(false);
 			const errMessage = formatGqlError(err);
 			if (errMessage === "Unauthorized") {
 				const next = router.basePath.concat(router.asPath);
 				router.replace(`/auth?login&next=${encodeURIComponent(next)}`);
-				toast.error("Please Login", ToastDefaultOptions({ id: "error" }));
+				toast.error("Unauthenticated", ToastDefaultOptions({ id: "error" }));
 			}
 			if (
-				errMessage.includes(`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`)
+				errMessage.includes(
+					`duplicate key value violates unique constraint "REL_b81a5e23718af21c0d316a9a64"`,
+				) ||
+				errMessage.includes(ResponseMessages.MENTOR_PROFILE_ALREADY_EXISTS)
 			) {
 				// Account already created
-				toast.info("Redirecting...", ToastDefaultOptions({ id: "error" }));
+				// toast.info("Redirecting...", ToastDefaultOptions({ id: "error" }));
+				dispatch(fetchUserProfile() as any);
 				router.replace("/profile");
-			}
+			} else toast.error("Something went wrong", ToastDefaultOptions({ id: "error" }));
+		} finally {
+			setLoading(false);
 		}
 	};
 	return (
@@ -148,13 +168,7 @@ export const FinalStepEditButton = ({
 			<p
 				className="text-[#70C5A1] select-none cursor-pointer"
 				onClick={() => {
-					if (step)
-						dispatch(
-							setOnboardingMentor({
-								...onboardingMentor,
-								currentStep: step,
-							}),
-						);
+					if (step) dispatch(setOnboardingMentor({ ...onboardingMentor, currentStep: step }));
 					if (editAction) editAction();
 				}}>
 				Edit

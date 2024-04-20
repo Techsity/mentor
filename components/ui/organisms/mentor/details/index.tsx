@@ -114,10 +114,10 @@ const MentorProjects = ({
 												<h1 className="font-[500]">{project.company}</h1>
 												<p className="font-[300] my-2">{project.job_role}</p>
 											</div>
-											<div className="">
+											{/* <div className="">
 												<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
 												<p className="font-[400] my-2">project.link</p>
-											</div>
+											</div> */}
 										</div>
 									</div>
 								))

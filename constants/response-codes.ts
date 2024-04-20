@@ -11,6 +11,7 @@ const ResponseMessages = {
 	USER_VERIFIED: "User verified successfully",
 	FORGOT_PASSWORD_EMAIL_SENT: "To reset password, please check your email for otp!",
 	MENTOR_PROFILE_NOT_FOUND: "Mentor profile not found",
+	MENTOR_PROFILE_ALREADY_EXISTS: "Mentor profile already exists for this user",
 	ALREADY_SUBSCRIBED: "Already subscribed",
 	TRANSACTION_COMPLETED: "Transaction is already completed",
 	PENDING_MENTORSHIP_APPOINTMENT: "You already have an appointment with this mentor",

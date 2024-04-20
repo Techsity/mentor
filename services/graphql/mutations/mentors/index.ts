@@ -33,6 +33,7 @@ export const ONBOARD_MENTOR = gql`
 				timeSlots {
 					startTime
 					endTime
+					isOpen
 				}
 			}
 			language

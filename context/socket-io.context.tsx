@@ -21,7 +21,8 @@ export const SocketContextProvider = ({ children }: any) => {
 		transports: ["websocket"],
 		autoConnect: true,
 		reconnection: true,
-		reconnectionAttempts: Infinity,
+		// reconnectionAttempts: Infinity,
+		reconnectionAttempts: 3,
 		closeOnBeforeunload: true,
 		multiplex: true,
 	});
@@ -42,7 +43,7 @@ export const SocketContextProvider = ({ children }: any) => {
 			setConnected(false);
 		});
 		return socket;
-	}, [user]);
+	}, []);
 
 	useEffect(() => {
 		const errorHandler = (error: Error) => {
@@ -57,7 +58,7 @@ export const SocketContextProvider = ({ children }: any) => {
 			client.off("connect_timeout", errorHandler);
 			client.off("error", errorHandler);
 		};
-	}, [client]);
+	}, []);
 
 	useEffect(() => {
 		if (!user) {
@@ -65,7 +66,7 @@ export const SocketContextProvider = ({ children }: any) => {
 			client.close();
 		}
 		// else if (user) client.connect();
-	}, [user, client]);
+	}, [user]);
 
 	return <SocketContext.Provider {...{ value: { client, connected, manager } }}>{children}</SocketContext.Provider>;
 };
