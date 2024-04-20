@@ -9,15 +9,15 @@ import { GET_ALL_MENTORS } from "../../../../../../services/graphql/queries/ment
 const MentorsSection = () => {
 	const [tab, setTab] = useState<"all" | "online">("all");
 	const { data, loading, error, refetch } = useQuery<{ viewAllMentors: IMentor[] }>(GET_ALL_MENTORS);
-	const mentors = data?.viewAllMentors;
+	const mentors = useMemo(() => (data?.viewAllMentors && [...data.viewAllMentors]) || [], [data?.viewAllMentors]);
 
 	const mentorsOnline = mentors?.filter((mentor) => mentor.user.is_online);
 
 	const filteredMentors = useMemo(() => {
 		return tab === "all" ? (
 			mentors
-				?.sort((a, b) => b.followers.length - a.followers.length || b.reviews.length - a.reviews.length)
-				?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
+				.sort((a, b) => b.followers.length - a.followers.length || b.reviews.length - a.reviews.length)
+				.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
 		) : tab === "online" && Number(mentorsOnline?.length) < 1 ? (
 			<div>No Mentors online at the moment. Check again later.</div>
 		) : (

@@ -30,7 +30,7 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 		<>
 			{/* && */}
 			<div className="min-h-screen pt-5 h-full">
-				<div className="animate__animated animate__slideInDown sm:px-12 px-6">
+				<div className="sm:px-12 px-6">
 					<MentorProfileCard mentor={mentor} detailsPage loading={loading} />
 				</div>
 				<div className="flex flex-col lg:flex-row justify-between gap-5 py-6 w-full mt-10 items-start sm:px-12 px-6">
