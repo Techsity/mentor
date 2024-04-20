@@ -2,25 +2,6 @@ import React from "react";
 import { formatAmount } from "../../../../../utils";
 
 const MentorProfileOverview = () => {
-	const categroiesStats: { title: string; value: number }[] = [
-		{ title: "Registered Courses", value: 20 },
-		{ title: "Completed Courses", value: 10 },
-		{ title: "Courses Created", value: 15 },
-		{ title: "Courses in Draft", value: 2 },
-		{ title: "Registered Workshop", value: 20 },
-		{ title: "Attended Workshop", value: 14 },
-		{ title: "Upcoming", value: 6 },
-		{ title: "My Workshop", value: 4 },
-		{ title: "Mentors Session", value: 8 },
-		{ title: "Pending Mentor Session", value: 10 },
-		{ title: "Mentee Session", value: 15 },
-		{ title: "Pending Mentee Session", value: 2 },
-	];
-	const totalStats: { title: string; value: number; measure?: string }[] = [
-		{ title: "Total Courses Watch Hours", value: 4000, measure: "hrs" },
-		{ title: "Total Students", value: 450000 },
-		{ title: "Total Workshop Participants", value: 400 },
-	];
 	return (
 		<div className="flex flex-col gap-6 w-full">
 			<div className="">
@@ -31,7 +12,7 @@ const MentorProfileOverview = () => {
 			</div>
 
 			<div className="grid xs:grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-3 w-full">
-				{categroiesStats.map((item, index) => {
+				{categoriesStats.map((item, index) => {
 					return (
 						<div
 							key={index}
@@ -62,3 +43,23 @@ const MentorProfileOverview = () => {
 };
 
 export default MentorProfileOverview;
+
+const categoriesStats: { title: string; value: number }[] = [
+	{ title: "Registered Courses", value: 20 },
+	{ title: "Completed Courses", value: 10 },
+	{ title: "Courses Created", value: 15 },
+	{ title: "Courses in Draft", value: 2 },
+	{ title: "Registered Workshop", value: 20 },
+	{ title: "Attended Workshop", value: 14 },
+	{ title: "Upcoming", value: 6 },
+	{ title: "My Workshop", value: 4 },
+	{ title: "Mentors Session", value: 8 },
+	{ title: "Pending Mentor Session", value: 10 },
+	{ title: "Mentee Session", value: 15 },
+	{ title: "Pending Mentee Session", value: 2 },
+];
+const totalStats: { title: string; value: number; measure?: string }[] = [
+	{ title: "Total Courses Watch Hours", value: 4000, measure: "hrs" },
+	{ title: "Total Students", value: 450000 },
+	{ title: "Total Workshop Participants", value: 400 },
+];

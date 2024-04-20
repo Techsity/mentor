@@ -1,7 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import React, { useEffect, useId, useMemo, useState } from "react";
-import { calculateOverallExperience, calculateRatingInReviews, formatFollowersCount } from "../../../../../utils";
+import {
+	calculateOverallExperience,
+	calculateRatingInReviews,
+	formatAmount,
+	formatFollowersCount,
+} from "../../../../../utils";
 import { PrimaryButton } from "../../buttons";
 import { GlobeIconSvg } from "../../icons/svgs";
 import * as FlagIcons from "react-country-flags-select";
@@ -33,7 +38,9 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 	const router = useRouter();
 	const user = useSelector(currentUser);
 	const auth = useSelector(isLoggedIn);
-	const [followMentorMutation, { loading: followLoading, data }] = useMutation(FOLLOW_MENTOR);
+	const [followMentorMutation, { loading: followLoading, data }] = useMutation<{ toggleFollowMentor: boolean }, any>(
+		FOLLOW_MENTOR,
+	);
 	const [followersCount, setFollowersCount] = useState<number>(0);
 	const [followingMentor, setFollowingMentor] = useState<boolean>(false);
 
@@ -56,13 +63,16 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 			return;
 		}
 
-		if (!loading && mentor)
+		if (Boolean(user && user.mentor?.id !== mentor?.id) && !loading && mentor)
 			await followMentorMutation({ variables: { mentorId: mentor.id, follow: !followingMentor } })
-				.then(() => {
+				.then(({ data }) => {
+					// const follow = Boolean(data?.toggleFollowMentor);
 					setFollowingMentor((p) => !p);
+					// if (follow) {
 					if (!followingMentor) setFollowersCount((p) => (p += 1));
 					else setFollowersCount((p) => (p -= 1));
 					if (onFollow) onFollow();
+					// }
 				})
 				.catch((err) => console.error(`Error following mentor ${mentor.id}: `, err));
 	};
@@ -83,17 +93,15 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 			<div className="z-20 bg-white border border-[#70C5A12A] p-2 md:p-5 flex md:flex-row flex-col items-start gap-4 justify-between h-full w-full relative group-hover:shadow duration-300 md:divide-x-2 divide-[#D9D9D9]">
 				<div className="relative h-full md:w-[52%] w-full flex md:flex-row flex-col items-start gap-2">
 					<div className="w-[75px] h-[75px] xs:w-20 xs:h-20 sm:w-16 md:w-20 sm:h-16 lg:w-40 lg:h-28 xl:w-[100px] xl:h-[89px] rounded-full overflow-hidden">
-						{loading ? (
+						{loading && (
 							<div className="bg-zinc-200 absolute w-full h-full animate__animated animate__fadeOut animate__infinite left-0 top-0" />
-						) : (
-							<Avatar className="w-full text-2xl h-full" user={mentor?.user} />
 						)}
+						{!loading && <Avatar className="w-full text-2xl h-full" user={mentor?.user} />}
 					</div>
 					<div className="w-full">
-						<div className="flex xl:flex-row flex-col items-start xl:items-center gap-2">
-							{loading ? (
-								<span className="bg-zinc-200 h-1 w-20" />
-							) : (
+						<div className="flex xl:flex-row flex-col items-start xl:items-center gap-1">
+							{loading && <span className="bg-zinc-200 h-1 w-20" />}
+							{!loading && (
 								<h1 className="text-lg text-[#094B10] font-semibold flex items-center gap-2">
 									{mentorNameLength && mentorNameLength >= 3
 										? mentor?.user.name.split(" ")[0] + " " + mentor?.user.name.split(" ")[1]
@@ -113,27 +121,31 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 									)}
 								</h1>
 							)}
+
 							<div className="flex items-start xs:items-center gap-2 w-full xs:w-auto whitespace-nowrap">
 								{loading ? (
 									<span className="bg-zinc-200 h-1 w-5" />
 								) : (
 									<p className="text-sm">{formatFollowersCount(followersCount)} followers</p>
 								)}
-								{!loading && !followLoading ? (
-									<button
-										onClick={handleFollow}
-										className={classNames(
-											"text-sm hover:underline",
-											followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
-										)}>
-										{followingMentor ? "Unfollow" : "+ Follow"}
-									</button>
-								) : (
-									followLoading && <ActivityIndicator className="border-[.1em]" size={10} />
-								)}
+								{Boolean(user && user.mentor?.id !== mentor?.id) &&
+									(!loading && !followLoading ? (
+										<button
+											onClick={handleFollow}
+											className={classNames(
+												"text-sm hover:underline",
+												followingMentor ? "text-[#E96850]" : "text-[#70C5A1]",
+											)}>
+											{followingMentor ? "Unfollow" : "+ Follow"}
+										</button>
+									) : (
+										followLoading && <ActivityIndicator className="border-[.1em]" size={10} />
+									))}
 							</div>
+
+							{/* )} */}
 						</div>
-						<div className="mt-2 whitespace-nowrap">
+						<div className="mt-1 whitespace-nowrap">
 							<span className="flex flex-wrap gap-2 xs:text-sm text-xs text-[#B1B1B1] items-center">
 								{!loading ? (
 									<p className="capitalize text-black">
@@ -158,7 +170,8 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								mentor?.skills
 									.map((skill, i) => (
 										<p className="text-xs" key={i}>
-											{skill.skill_name}
+											{skill.skill_name} 
+											{/* {skill.years_of_exp && `- ${skill.years_of_exp}y`} */}
 										</p>
 									))
 									.slice(0, 3)}
@@ -194,7 +207,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								<div
 									className="px-4 p-2 select-none bg-[#A3A6A7] text-sm text-white"
 									style={{ fontFamily: "Days One" }}>
-									${mentor?.hourly_rate} / hour
+									${formatAmount(Number(mentor?.hourly_rate)).toLocaleString()}/hour
 								</div>
 							) : (
 								<span className="bg-zinc-100 h-8 w-20" />
@@ -212,7 +225,11 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 					{loading ? (
 						<span className="bg-zinc-200 h-1 w-20" />
 					) : (
-						<p className="text-xs text-[#9A9898]">{mentor?.about}</p>
+						<p className="text-xs text-[#9A9898]">
+							{mentor?.about && mentor?.about.length >= 255
+								? mentor?.about.slice(0, 255) + "..."
+								: mentor?.about}
+						</p>
 					)}
 					{!loading ? (
 						!detailsPage ? (

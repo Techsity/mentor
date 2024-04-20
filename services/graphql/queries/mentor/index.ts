@@ -47,6 +47,7 @@ export const GET_MENTOR_PROFILE = gql`
 				timeSlots {
 					startTime
 					endTime
+					isOpen
 				}
 			}
 			appointments {

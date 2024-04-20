@@ -39,7 +39,7 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 	const unreadNotifications = useMemo(() => {
 		return notifications.filter((n) => !n.read);
 	}, [notifications, user]);
-	// const [notificationsCount, setNotificationsCount] = useState<number>(unreadNotifications.length || 0);
+
 	const [fetchNotifications, { loading: fetchLoading, refetch, data }] = useLazyQuery<
 		{ viewAllNotifications: Notification[] },
 		any
@@ -100,7 +100,7 @@ export const NotificationsContextProvider = ({ children }: { children?: ReactNod
 			});
 			refetch();
 		});
-	}, [client]);
+	}, []);
 
 	// useEffect(() => {
 	// 	if (isOpen) refetch();

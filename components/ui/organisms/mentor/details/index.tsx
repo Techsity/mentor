@@ -7,6 +7,7 @@ import { IMentor, IMentorExperience, IMentorProjectType } from "../../../../../i
 import { useRouter } from "next/router";
 import { daysOfTheWeek } from "../../../../../constants";
 import classNames from "classnames";
+import { useModal } from "../../../../../context/modal.context";
 
 const Skills = ({ skills, loading }: { skills: IMentor["skills"] | undefined; loading?: boolean }) => (
 	<div className="grid gap-3">
@@ -24,57 +25,60 @@ const Skills = ({ skills, loading }: { skills: IMentor["skills"] | undefined; lo
 				: skills &&
 				  skills.map((skill, i) => (
 						<span key={i}>
-							<span className="font-[400] text-[#70C5A1]">
+							<span className="font-[500] text-[#70C5A1]">
 								{skill.skill_name}
-								{/* :{" "} */}
-								{/* {skill.years_of_exp === 1
-									? skill.years_of_exp + " yr"
-									: skill.years_of_exp < 1
-									? "<1 yr"
-									: skill.years_of_exp + " yrs"}{" "} */}
+								{/* {skill.years_of_exp && `- ${skill.years_of_exp}y`} */}
 							</span>
-							{/* {skills.length - 1 > i && <span className="text-[#70C5A1]"> | </span>} */}
 						</span>
 				  ))}
 		</span>
 	</div>
 );
-const Experience = ({ experience, loading }: { experience: IMentorExperience[] | undefined; loading?: boolean }) => (
-	<div className="grid gap-3 mt-9">
-		<h1 className="font-semibold">Experience</h1>
-		<span className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-xl w-full">
-			{loading ? (
-				Array.from({ length: 3 }).map((_, index) => {
-					return (
-						<span
-							key={index}
-							className="bg-zinc-100 h-32 w-full lg:px-16 animate__fadeIn animate__infinite animate__animated"
-						/>
-					);
-				})
-			) : (
-				<>
-					{experience &&
-						experience?.length >= 1 &&
-						experience
-							?.map((experience, index) => (
-								<div className="w-full overflow-hidden" key={index}>
-									<AnimationOnScroll animateIn="animate__slideInUp" animateOnce>
+const Experience = ({ experience, loading }: { experience: IMentorExperience[] | undefined; loading?: boolean }) => {
+	const { openModal } = useModal();
+	const handleOpen = () => {
+		openModal(<ExtraDetailsModal {...{ experience }} />, {
+			animate: true,
+			closeOnBackgroundClick: true,
+			showCloseIcon: true,
+			containerClassName: "fixed top-3",
+		});
+	};
+	return (
+		<div className="grid gap-3 mt-9">
+			<h1 className="font-semibold">Experience</h1>
+			<div className="grid sm:grid-cols-2 lg:grid-cols-1 items-center gap-3 lg:max-w-xl w-full">
+				{loading &&
+					Array.from({ length: 3 }).map((_, index) => {
+						return (
+							<span
+								key={index}
+								className="bg-zinc-100 h-32 w-full lg:px-16 animate__fadeIn animate__infinite animate__animated"
+							/>
+						);
+					})}
+				{!loading && (
+					<>
+						{experience &&
+							experience?.length >= 1 &&
+							experience
+								?.map((experience, index) => (
+									<div className="w-full overflow-hidden" key={index}>
 										<MentorExperienceCard experience={experience} />
-									</AnimationOnScroll>
-								</div>
-							))
-							.slice(0, 2)}
-					{experience && experience?.length >= 1 && (
-						<div className="mt-3 sm:col-span-2 lg:col-span-1">
-							<PrimaryButton title="View all Experiences" link="#" className="p-2.5 px-8" />
-						</div>
-					)}
-				</>
-			)}
-		</span>
-	</div>
-);
+									</div>
+								))
+								.slice(0, 2)}
+						{experience && experience?.length > 2 && (
+							<div onClick={handleOpen} className="mt-3 text-sm sm:col-span-2 lg:col-span-1">
+								<PrimaryButton title="View all Experiences" className="p-2.5 px-8" />
+							</div>
+						)}
+					</>
+				)}
+			</div>
+		</div>
+	);
+};
 
 const MentorProjects = ({
 	projects,
@@ -85,7 +89,15 @@ const MentorProjects = ({
 	reEdit?: boolean;
 	loading?: boolean;
 }) => {
-	const router = useRouter();
+	const { openModal } = useModal();
+	const handleOpen = () => {
+		openModal(<ExtraDetailsModal {...{ projects }} />, {
+			animate: true,
+			closeOnBackgroundClick: true,
+			showCloseIcon: true,
+			containerClassName: "fixed top-3",
+		});
+	};
 	return (
 		<div className={"grid gap-3 relative"}>
 			{!reEdit && <h1 className=" font-semibold">Projects</h1>}
@@ -114,18 +126,14 @@ const MentorProjects = ({
 												<h1 className="font-[500]">{project.company}</h1>
 												<p className="font-[300] my-2">{project.job_role}</p>
 											</div>
-											{/* <div className="">
-												<h1 className="font-[500] text-[#BEBEBE]">Link</h1>
-												<p className="font-[400] my-2">project.link</p>
-											</div> */}
 										</div>
 									</div>
 								))
 								.slice(0, 2)}
 
-						{!reEdit && projects && projects.length >= 1 && (
-							<div className="mt-3 sm:col-span-2 lg:col-span-1">
-								<PrimaryButton title="View all Projects" link="#" className="p-2.5 px-8" />
+						{!reEdit && projects && projects.length > 2 && (
+							<div className="mt-3 sm:col-span-2 text-sm lg:col-span-1">
+								<PrimaryButton onClick={handleOpen} title="View all Projects" className="p-2.5 px-8" />
 							</div>
 						)}
 					</>
@@ -168,10 +176,47 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 			<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
 				<div
 					onClick={() => router.push(`/mentors/${mentor.id}/consult`)}
-					className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black"
+					className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black text-[15px]"
 					style={{ fontFamily: "Days One" }}>
 					Check availability
 				</div>
+			</div>
+		</div>
+	);
+};
+
+const ExtraDetailsModal = ({
+	experience,
+	projects,
+}: {
+	experience?: IMentorExperience[];
+	projects?: IMentor["projects"];
+}) => {
+	// and &&&&&&&&&& &&
+	return (
+		<div className="w-full sm:w-[60vw] max-w-[90vw] max-h-[65vh] bg-white rounded-lg overflow-hidden overflow-y-scroll p-5">
+			<div className="w-full grid gap-4">
+				{experience && experience?.length >= 1 && (
+					<>
+						<h1 className="font-semibold text-center">Experience</h1>
+						{experience?.map((experience, index) => (
+							<MentorExperienceCard experience={experience} key={index} />
+						))}
+					</>
+				)}
+				{projects && (
+					<>
+						<h1 className="font-semibold text-center">Projects</h1>
+						{projects.map((project, index) => (
+							<div
+								key={index}
+								className={`border border-[#70C5A1] text-sm p-4 w-full cursor-default bg-white`}>
+								<h1 className="font-[500]">{project.company}</h1>
+								<p className="font-[300] my-2">{project.job_role}</p>
+							</div>
+						))}
+					</>
+				)}
 			</div>
 		</div>
 	);

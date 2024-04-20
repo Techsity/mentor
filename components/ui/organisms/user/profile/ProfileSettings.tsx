@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import { currentUser, updateUserProfile } from "../../../../../redux/reducers/auth/authSlice";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../../../services/graphql/mutations/user";
+import { activeProfile } from "../../../../../redux/reducers/userSlice";
+import MentorProfileSettings from "./MentorProfileSettings";
 
 const phoneRegex = /^[0-9]{11}$/;
 
@@ -19,6 +21,7 @@ const ProfileSettings = () => {
 	const dispatch = useDispatch();
 	const [state, setState] = useState<Partial<IUser>>({ ...user });
 	// const [loading, setLoading] = useState<boolean>(false);
+	const profile = useSelector(activeProfile);
 	const toastId = useId();
 	const [updateProfile, { loading }] = useMutation<
 		{ updateUserProfile: IUser },
@@ -108,7 +111,7 @@ const ProfileSettings = () => {
 				<div className="grid md:grid-cols-2 2xl:grid-cols-3 gap-6 2xl:gap-3">
 					<div className="flex flex-col gap-1">
 						<label className="w-full text-[#BEBEBE] text-sm" htmlFor="fullName">
-							FullName
+							Full Name
 						</label>
 						<CustomTextInput
 							value={state?.name}
@@ -231,6 +234,11 @@ const ProfileSettings = () => {
 					/>
 				</div>
 			</form>
+			{user?.is_mentor && profile === "mentor" && (
+				<div className="mt-4">
+					<MentorProfileSettings />
+				</div>
+			)}
 		</div>
 	);
 };

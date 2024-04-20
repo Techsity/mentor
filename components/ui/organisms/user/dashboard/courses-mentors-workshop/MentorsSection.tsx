@@ -15,7 +15,9 @@ const MentorsSection = () => {
 
 	const filteredMentors = useMemo(() => {
 		return tab === "all" ? (
-			mentors?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
+			mentors
+				?.sort((a, b) => b.followers.length - a.followers.length || b.reviews.length - a.reviews.length)
+				?.map((mentor, index) => <MentorProfileCard mentor={mentor} key={index} />)
 		) : tab === "online" && Number(mentorsOnline?.length) < 1 ? (
 			<div>No Mentors online at the moment. Check again later.</div>
 		) : (

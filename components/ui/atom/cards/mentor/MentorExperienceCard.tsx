@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { formatDateDifference } from "../../../../../utils";
 import classNames from "classnames";
 import { IMentorExperience } from "../../../../../interfaces/mentor.interface";
@@ -28,29 +28,15 @@ const MentorExperienceCard = ({ experience, className }: { experience: IMentorEx
 					</svg>
 				</div>
 			</div>
-			{/* {experience.roles && experience.roles.length >= 1 && (
-				<div className="mb-4">
-					<span className="text-[#BEBEBE] text-xs">My Roles</span>
-					<div className="my-2 grid">
-						{experience.roles?.slice(0, 5).join(" | ")}
-						{experience.role && experience.role}
-					</div>
-				</div>
-			)}*/}
+
 			{experience.description && (
 				<div className="my-2">
 					<span className="text-[#BEBEBE] text-xs">About the role</span>
 					<div className="my-2 break-words">{experience.description}</div>
 				</div>
 			)}
-			{/* {experience..length >= 1 && (
-				<div className="flex sm:flex-col md:flex-row text-sm md:items-center items-start gap-3">
-					<span className="text-[#BEBEBE] text-xs">Top Skills</span>
-					{experience.topSkills.slice(0, 4).join(` | `)}
-				</div>
-			)} */}
 		</div>
 	);
 };
 
-export default MentorExperienceCard;
+export default memo(MentorExperienceCard);

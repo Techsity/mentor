@@ -6,6 +6,7 @@ export interface ModalProps {
 	closeOnBackgroundClick?: boolean;
 	animate?: boolean;
 	containerClassName?: string;
+	showCloseIcon?: boolean;
 }
 
 interface ModalContextType {
@@ -23,6 +24,7 @@ interface ModalContainerProps {
 	closeModal: () => void;
 	closeOnBackgroundClick: boolean;
 	animate: boolean;
+	showCloseIcon?: boolean;
 	className?: string;
 }
 
@@ -34,6 +36,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	const [closeOnBackgroundClick, setCloseOnBackgroundClick] = useState<boolean>(true);
 	const [animate, setAnimate] = useState<boolean>(false);
 	const [containerClassName, setContainerClassName] = useState<string>("");
+	const [showCloseIcon, setShowCloseIcon] = useState<boolean>(true);
 
 	const openModal = (content: ReactNode, props?: ModalProps) => {
 		if (props) {
@@ -41,6 +44,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 				setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
 			if (props.containerClassName && props.containerClassName !== undefined)
 				setContainerClassName(String(props.containerClassName));
+			setShowCloseIcon(Boolean(props.showCloseIcon));
 			setAnimate(Boolean(props.animate));
 		}
 		setModalContent(content);
@@ -73,7 +77,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 		<ModalContext.Provider value={{ modalContent, openModal, closeModal }}>
 			{children}
 			{modalContent && (
-				<ModalContainer {...{ closeModal, closeOnBackgroundClick, animate, className: containerClassName }}>
+				<ModalContainer
+					{...{ closeModal, showCloseIcon, closeOnBackgroundClick, animate, className: containerClassName }}>
 					{modalContent}
 				</ModalContainer>
 			)}
@@ -81,7 +86,14 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	);
 };
 
-const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate, className }: ModalContainerProps) => {
+const ModalContainer = ({
+	children,
+	closeModal,
+	closeOnBackgroundClick,
+	animate,
+	className,
+	showCloseIcon,
+}: ModalContainerProps) => {
 	const handleBackgroundClick = () => {
 		if (closeOnBackgroundClick) closeModal();
 	};
@@ -100,14 +112,18 @@ const ModalContainer = ({ children, closeModal, closeOnBackgroundClick, animate,
 				)}>
 				<div
 					className={classNames(
-						animate ? "animate__animated animate__fadeIn animate__fast" : "",
+						animate ? "animate__animated animate__fadeInDown animate__fastest" : "",
 						"relative w-auto h-auto",
 					)}>
-					<div className="w-full flex items-end justify-end">
-						<div className="text-3xl text-[#FFB100] cursor-pointer" onClick={() => closeModal()}>
-							&times;
+					{showCloseIcon && (
+						<div className="w-full flex items-center justify-center mb-2">
+							<div
+								className="text-3xl text-[#FFB100] cursor-pointer bg-white rounded-full w-10 h-10 flex justify-center items-center"
+								onClick={() => closeModal()}>
+								&times;
+							</div>
 						</div>
-					</div>
+					)}
 					{children}
 				</div>
 			</div>
