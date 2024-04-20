@@ -194,27 +194,35 @@ const ExtraDetailsModal = ({
 }) => {
 	// and &&&&&&&&&& &&
 	return (
-		<div className="w-full sm:w-[60vw] max-w-[90vw] max-h-[65vh] bg-white rounded-lg overflow-hidden overflow-y-scroll p-5">
-			<div className="w-full grid gap-4">
+		<div className="w-full sm:w-[60vw] max-w-[90vw] max-h-[65vh] bg-white rounded-lg overflow-hidden overflow-y-scroll relative hide-scroll-bar">
+			<div className="w-full">
 				{experience && experience?.length >= 1 && (
 					<>
-						<h1 className="font-semibold text-center">Experience</h1>
-						{experience?.map((experience, index) => (
-							<MentorExperienceCard experience={experience} key={index} />
-						))}
+						<h1 className="font-semibold text-center sticky h-6 top-0 bg-black/10 backdrop-blur-md py-5 flex items-center justify-center">
+							Experience
+						</h1>
+						<div className="px-5 grid gap-4 w-full py-3">
+							{experience?.map((experience, index) => (
+								<MentorExperienceCard experience={experience} key={index} />
+							))}
+						</div>
 					</>
 				)}
 				{projects && (
 					<>
-						<h1 className="font-semibold text-center">Projects</h1>
-						{projects.map((project, index) => (
-							<div
-								key={index}
-								className={`border border-[#70C5A1] text-sm p-4 w-full cursor-default bg-white`}>
-								<h1 className="font-[500]">{project.company}</h1>
-								<p className="font-[300] my-2">{project.job_role}</p>
-							</div>
-						))}
+						<h1 className="font-semibold text-center sticky h-6 top-0 bg-black/10 backdrop-blur-md py-5 flex items-center justify-center">
+							Projects
+						</h1>
+						<div className="px-5 grid gap-4 w-full py-3">
+							{projects.map((project, index) => (
+								<div
+									key={index}
+									className={`border border-[#70C5A1] text-sm p-4 w-full cursor-default bg-white`}>
+									<h1 className="font-[500]">{project.company}</h1>
+									<p className="font-[300] my-2">{project.job_role}</p>
+								</div>
+							))}
+						</div>
 					</>
 				)}
 			</div>

@@ -5,13 +5,13 @@ import { useSelector } from "react-redux";
 import { onboardingMentorState } from "../../../../../../../redux/reducers/onboardingSlice";
 
 const FinalStepLanguageEdit = () => {
-	const [editAvailability, setEditAvailability] = useState<boolean>(false);
+	const [editLanguage, setEditLanguage] = useState<boolean>(false);
 	const onboardingMentor = useSelector(onboardingMentorState);
 	return (
 		<div className="my-2 relative z-10">
-			<FinalStepEditButton title="Languages Spoken" editAction={() => setEditAvailability(!editAvailability)} />
+			<FinalStepEditButton title="Languages Spoken" editAction={() => setEditLanguage(!editLanguage)} />
 			<div className="my-4">
-				{editAvailability ? (
+				{editLanguage ? (
 					<Languages reEdit />
 				) : (
 					<span className="text-sm text-[#B1B1B1] flex gap-2 items-center">
