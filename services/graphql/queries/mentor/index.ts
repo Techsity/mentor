@@ -248,7 +248,7 @@ export const VIEW_MENTOR_PROFILE = gql`
 export const VIEW_MENTOR_AVAILABILITY = gql`
 	query ViewMentor($viewMentorId: String!) {
 		viewMentor(id: $viewMentorId) {
-			id
+			# id
 			availability {
 				id
 				day

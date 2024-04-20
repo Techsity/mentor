@@ -44,6 +44,8 @@ export const getServerSideProps = async (
 	ctx: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<Partial<MentorDetailsProps>>> => {
 	const username = String(ctx.query.username);
+	if (!username) return { props: {}, redirect: { destination: "/mentors", permanent: true } };
+
 	try {
 		const query = client({ ssr: true }).query;
 		const {

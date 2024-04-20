@@ -19,8 +19,8 @@ export const SocketContextProvider = ({ children }: any) => {
 	const manager = new Manager(socketUrl, {
 		// reconnectionDelayMax: 10000,
 		transports: ["websocket"],
-		autoConnect: true,
-		reconnection: true,
+		autoConnect: false,
+		// reconnection: !true,
 		// reconnectionAttempts: Infinity,
 		reconnectionAttempts: 3,
 		closeOnBeforeunload: true,
@@ -66,6 +66,9 @@ export const SocketContextProvider = ({ children }: any) => {
 			client.close();
 		}
 		// else if (user) client.connect();
+		return () => {
+			client.close();
+		};
 	}, [user]);
 
 	return <SocketContext.Provider {...{ value: { client, connected, manager } }}>{children}</SocketContext.Provider>;
