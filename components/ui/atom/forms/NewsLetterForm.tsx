@@ -1,21 +1,22 @@
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, memo, useState } from "react";
+import { toast } from "react-toastify";
 
-const NewsLetterForm = ({
-	handleSubmit,
-}: {
-	handleSubmit: (email: string) => void;
-}) => {
+const NewsLetterForm = ({ handleSubmit }: { handleSubmit: (email: string) => void }) => {
 	const [email, setEmail] = useState<string>("");
 	const next = (e: FormEvent) => {
 		e.preventDefault();
-		if (email) handleSubmit(email);
+		if (email) {
+			handleSubmit(email);
+			setEmail("");
+			toast.success("We'll send you an email shortly to confirm your subscription");
+			// Todo: api implementation
+		}
 	};
 	return (
 		<form
 			onSubmit={next}
-			className="flex relative min-w-[40vw] justify-between items-center border border-[#FFB100] p-2 mx-3"
-		>
+			className="flex relative mx-auto min-w-[40vw] justify-between items-center border border-[#FFB100] p-2">
 			<input
 				type="email"
 				required
@@ -28,12 +29,11 @@ const NewsLetterForm = ({
 			/>
 			<div
 				onClick={() => (email ? handleSubmit(email) : null)}
-				className="bg-[#094B10] select-none p-3 px-6 cursor-pointer text-white duration-300 hover:bg-[#052909]"
-			>
+				className="bg-[#094B10] select-none p-3 px-6 cursor-pointer text-white duration-300 hover:bg-[#052909]">
 				Subscribe
 			</div>
 		</form>
 	);
 };
 
-export default NewsLetterForm;
+export default memo(NewsLetterForm);

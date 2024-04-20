@@ -17,7 +17,7 @@ const Footer = () => {
 	return hideFooter ? (
 		<></>
 	) : (
-		<footer className="bg-[#021A05] pt-5 z-20">
+		<footer className="bg-[#021A05] pt-5 z-20 max-w-[1200px]mx-auto">
 			<div className="mx-auto w-full max-w-screen-2xl">
 				<div className="grid grid-cols-2 gap-8 px-4 py-8 lg:py-20 md:grid-cols-4 xl:grid-cols-5 md:px-20 xl:px-40">
 					<div>
@@ -92,29 +92,20 @@ const Footer = () => {
 							</Link>
 						</ul>
 					</div>
-					<div className="flex justify-center items-center">
+					<div className="flex xl:justify-center xl:items-center">
 						<div className="grid" style={{ fontWeight: "300" }}>
-							<div
-								className=""
-								onClick={() => {
-									router.push("/");
-								}}>
+							<div className="" onClick={() => router.push("/")}>
 								<MentorLogoLight />
 							</div>
 							<span className="mb-4 text-white cursor-pointer text-[14px]">from Techsity</span>
 							<span className="mb-4 text-white cursor-pointer text-[14px]">
-								(c) Copyright mentör 2023
+								(c) Copyright Mentör™ {new Date().getFullYear()}
 								<br />
 								All rights reserved
 							</span>
 						</div>
 					</div>
 				</div>
-				{/* <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between md:px-20 xl:px-40">
-					<span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
-						© 2023 <span>Mentör™</span> | All Rights Reserved.
-					</span>
-				</div> */}
 			</div>
 		</footer>
 	);

@@ -59,14 +59,14 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 					</>
 				)}
 			</div>
-			<div className="mt-24">
+			{/* <div className="mt-24">
 				<h1 className="text-center" style={{ fontFamily: "Days One" }}>
 					Subscribe to our Newsletter
 				</h1>
 				<div className="flex justify-center my-5 mb-10">
 					<NewsLetterForm handleSubmit={(email) => console.log(email)} />
 				</div>
-			</div>
+			</div> */}
 		</>
 	);
 };

@@ -27,7 +27,7 @@ const messages = {
 
 const MainProfile: FC<{ activetab?: ProfileTabLinkType }> = ({ activetab }) => {
 	const user = useSelector(currentUser);
-	const { closeModal, openModal } = useModal();
+	const { openModal } = useModal();
 	const router = useRouter();
 	const isMentor = user?.mentor;
 	const currentProfile = useSelector(activeProfile);

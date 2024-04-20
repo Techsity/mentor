@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { daysOfTheWeek } from "../../../../../constants";
 import classNames from "classnames";
 import { useModal } from "../../../../../context/modal.context";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../../../redux/reducers/auth/authSlice";
 
 const Skills = ({ skills, loading }: { skills: IMentor["skills"] | undefined; loading?: boolean }) => (
 	<div className="grid gap-3">
@@ -145,6 +147,8 @@ const MentorProjects = ({
 
 const AvailabiltySchedule = (mentor: IMentor) => {
 	const router = useRouter();
+	const user = useSelector(currentUser);
+
 	return (
 		<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[65vh] text-white sticky top-28 animate__animated animate__slideInRight overflow-hidden">
 			{/* <div className="animate__animated animate__fadeInLeftBig animate__infinite fixed bg-gradient-to-tr opacity-15 from-[#70C5A1] via-[#70C5A1]/50 to-[#fff] top-0 left-0 w-full h-full" /> */}
@@ -175,10 +179,17 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 			</div>
 			<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
 				<div
-					onClick={() => router.push(`/mentors/${mentor.id}/consult`)}
+					onClick={() => {
+						if (user) {
+							if (user.mentor && user.mentor.id === mentor.id) {
+								return router.push(`/profile`);
+							}
+						}
+						router.push(`/mentors/${mentor.id}/consult`);
+					}}
 					className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black text-[15px]"
 					style={{ fontFamily: "Days One" }}>
-					Check availability
+					Book a session
 				</div>
 			</div>
 		</div>

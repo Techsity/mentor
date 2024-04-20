@@ -24,7 +24,7 @@ const Navbar = () => {
 	const { toggleVisibility, isOpen: showNotificationPanel, notificationsCount } = useNotificationContext();
 
 	return (
-		<nav className="sticky h-20 top-0 w-full z-40 items-center bg-white shadow flex 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__fadeIn">
+		<nav className="sticky h-20 top-0 w-full z-40 items-center bg-white shadow flex 2xl:gap-6 justify-between p-4 sm:px-12 tracking-tight oveflow-hidden animate__animated animate__fadeIn max-w-[1200px]mx-auto">
 			<div onClick={() => router.push("/")} className="relative cursor-pointer">
 				<MentorLogoDark />
 				<span className="absolute -right-5 -top-3 text-[#70C5A1] text-xs">Beta</span>

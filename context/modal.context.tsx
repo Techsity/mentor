@@ -44,7 +44,10 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 				setCloseOnBackgroundClick(Boolean(props.closeOnBackgroundClick));
 			if (props.containerClassName && props.containerClassName !== undefined)
 				setContainerClassName(String(props.containerClassName));
-			if (props.showCloseIcon && props.showCloseIcon !== undefined) setShowCloseIcon(props.showCloseIcon);
+			if (props.showCloseIcon !== undefined) {
+				if (props.showCloseIcon == false) setShowCloseIcon(false);
+				else setShowCloseIcon(true);
+			}
 			setAnimate(Boolean(props.animate));
 		}
 		setModalContent(content);

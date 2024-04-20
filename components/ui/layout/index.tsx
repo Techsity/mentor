@@ -16,7 +16,7 @@ const LayoutContainer = ({ children }: { children: ReactNode }) => {
 						<Progressbar />
 						<Sidebar />
 						<Navbar />
-						<div className="relative">{children}</div>
+						<div className="relative max-w-[1200px]mx-auto">{children}</div>
 						<Footer />
 					</NotificationsContextProvider>
 				</ModalProvider>

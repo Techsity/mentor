@@ -17,7 +17,11 @@ const FinalStepLanguageEdit = () => {
 					<span className="text-sm text-[#B1B1B1] flex gap-2 items-center">
 						{onboardingMentor.languages &&
 							onboardingMentor.languages.map((item, i) => {
-								return <span className="bg-white border border-[#00D569] p-1 px-2">{item}</span>;
+								return (
+									<span key={i} className="bg-white border border-[#00D569] p-1 px-2">
+										{item}
+									</span>
+								);
 							})}
 					</span>
 				)}
