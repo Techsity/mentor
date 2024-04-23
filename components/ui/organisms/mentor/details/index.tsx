@@ -152,7 +152,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 	return (
 		<div className="lg:max-w-[35%] w-full bg-[#06310B] p-8 lg:min-h-[65vh] text-white sticky top-28 animate__animated animate__slideInRight overflow-hidden">
 			{/* <div className="animate__animated animate__fadeInLeftBig animate__infinite fixed bg-gradient-to-tr opacity-15 from-[#70C5A1] via-[#70C5A1]/50 to-[#fff] top-0 left-0 w-full h-full" /> */}
-			<div className="w-full mb-24 lg:mb-0">
+			<div className="w-full">
 				<div className="flex w-full items-center justify-between">
 					<h1 className="font-medium">Availability</h1>
 					{/* //Todo: dynamically get timezone per mentor */}
@@ -177,21 +177,19 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 					})}
 				</div>
 			</div>
-			<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
-				<div
-					onClick={() => {
-						if (user) {
-							if (user.mentor && user.mentor.id === mentor.id) {
-								return router.push(`/profile`);
-							}
-						}
-						router.push(`/mentors/${mentor.id}/consult`);
-					}}
-					className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black text-[15px]"
-					style={{ fontFamily: "Days One" }}>
-					Book a session
+			{user?.mentor && user.mentor.id !== mentor.id && (
+				<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
+					<div
+						onClick={() => {
+							if (user?.mentor && user?.mentor.id === mentor.id) return router.push(`/profile`);
+							else router.push(`/mentors/${mentor.id}/consult`);
+						}}
+						className="w-full text-center p-2.5 bg-white select-none cursor-pointer text-black text-[15px]"
+						style={{ fontFamily: "Days One" }}>
+						Book a session
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 };

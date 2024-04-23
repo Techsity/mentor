@@ -170,7 +170,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 								mentor?.skills
 									.map((skill, i) => (
 										<p className="text-xs" key={i}>
-											{skill.skill_name} 
+											{skill.skill_name}
 											{/* {skill.years_of_exp && `- ${skill.years_of_exp}y`} */}
 										</p>
 									))
@@ -179,7 +179,7 @@ const MentorProfileCard = ({ detailsPage = false, loading = false, mentor, onFol
 						<div className="mt-2 text-xs flex gap-3 sm:items-center text-[#b1b1b1] whitespace-nowrap">
 							{!loading ? (
 								<p className="">
-									{mentor && overallExperience <= 1 ? "<1" : overallExperience} year(s) of Experience
+									{mentor && formatFollowersCount(overallExperience)} year(s) of Experience
 								</p>
 							) : (
 								<span className="bg-zinc-200 h-1 w-40 animate__animated animate__fadeIn animate__infinite animate__slow" />

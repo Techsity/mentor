@@ -21,7 +21,12 @@ const CourseDetailsBody = (course: ICourse) => {
 
 	const handleOpenModal = () => {
 		if (!auth || !user) navigateToAuthPage(router, router.pathname);
-		else openModal(<ReportMentorModal mentorId={course.mentor.id} />, { closeOnBackgroundClick: false, animate: true });
+		else
+			openModal(<ReportMentorModal mentorId={course.mentor.id} />, {
+				closeOnBackgroundClick: false,
+				animate: true,
+				showCloseIcon: true,
+			});
 	};
 
 	return (
@@ -34,16 +39,18 @@ const CourseDetailsBody = (course: ICourse) => {
 					<div className="my-8">
 						<ListReviews {...{ reviews: course.reviews }} />
 					</div>
-					<div className="">
-						<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
-							<p
-								onClick={handleOpenModal}
-								className="text-[#F15E63] cursor-pointer hover:underline text-sm">
-								Report Mentor
-							</p>
-							<Socials />
+					{user?.mentor && user.mentor.id !== course.mentor.id && (
+						<div className="">
+							<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
+								<p
+									onClick={handleOpenModal}
+									className="text-[#F15E63] cursor-pointer hover:underline text-sm">
+									Report Mentor
+								</p>
+								<Socials />
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				<CourseContents className="lg:max-w-[30%]" course={course} />
 			</div>
