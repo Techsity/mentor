@@ -47,6 +47,11 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 			setSelectedAppointmentSlot(null);
 		}
 	};
+	const handleSubmit = async () => {
+		const { timeSlot, day, id, ...rest } = selectedAppointmentSlot || {};
+		const appointment = { id, day, timeSlot };
+		console.log({ appointment });
+	};
 
 	return (
 		<div className="py-10 h-full lg:px-20 sm:px-12 px-6 min-w-screen">
@@ -130,16 +135,15 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 									<div className="flex snap-x duration-300 snap-mandatory items-center gap-3 w-full overflow-x-scroll hide-scroll-bar">
 										{selectedAvailability.timeSlots.length >= 1 ? (
 											selectedAvailability.timeSlots
-												.filter((slot, index, self) => {
-													const { startTime, endTime } = slot;
-
-													return (
+												.filter(
+													(slot, index, self) =>
 														index ===
 														self.findIndex(
-															(s) => s.startTime === startTime && s.endTime === endTime,
-														)
-													);
-												})
+															(s) =>
+																s.startTime === slot.startTime &&
+																s.endTime === slot.endTime,
+														),
+												)
 												.map((slot, index) => {
 													const { endTime, startTime } = slot;
 													const isTime =
@@ -175,14 +179,13 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 											</>
 										)}
 									</div>
-									{/* { && ( */}
 									<PrimaryButton
 										// title="Continue"
+										onClick={handleSubmit}
 										title="Book a free trial"
 										disabled={selectedAppointmentSlot === null}
 										className="my-5 p-2.5 text-sm rounded px-5 flex justify-center items-center animate__animated animate__fadeIn animate__fast"
 									/>
-									{/* )} */}
 								</div>
 							)}
 						</div>
