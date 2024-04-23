@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import MentorProfileCard from "../../../ui/atom/cards/mentor/MentorProfileCard";
 import { IMentor, IMentorAvailability, TimeSlot } from "../../../../interfaces/mentor.interface";
 import { daysOfTheWeek } from "../../../../constants";
@@ -7,31 +7,23 @@ import { currentUser } from "../../../../redux/reducers/auth/authSlice";
 import { useSelector } from "react-redux";
 import { PrimaryButton } from "../../../ui/atom/buttons";
 import { CalendarOutline, TimeOutline } from "react-ionicons";
-import ActivityIndicator from "../../../ui/atom/loader/ActivityIndicator";
 
 type AvailabilitySubset = { id?: string; day: string; date: Date; timeSlots: TimeSlot[] };
 type SelectedAppointmentSlot = Omit<AvailabilitySubset, "timeSlots"> & { timeSlot: TimeSlot };
+const currentDate = new Date();
 
 const sortMentorAvailability = (availability: IMentorAvailability[]) => {
 	let availableDates: AvailabilitySubset[] = [];
 	if (availability) {
-		const currentDate = new Date();
 		for (const slot of availability) {
 			const { day, timeSlots, id } = slot;
 			let date = new Date();
 			const dayIndex = daysOfTheWeek.indexOf(day.toLowerCase());
 			date.setDate(date.getDate() + ((dayIndex - date.getDay()) % 7));
-			const availableSlot = { id, day, date, timeSlots: timeSlots.filter((slot) => slot.isOpen) };
-			availableDates.push(availableSlot);
-			if (date.getDay() < currentDate.getDay()) {
-				const newDateIndex = availableDates.findIndex((d) => d.date === date);
-				if (newDateIndex !== -1) {
-					// delete availableDates[newDateIndex];
-					availableDates.splice(newDateIndex, 1);
-					date.setDate(date.getDate() + ((dayIndex - date.getDay() + 7) % 7));
-					const slot = { id, day, date, timeSlots: timeSlots.filter((slot) => slot.isOpen) };
-					availableDates.push(slot);
-				}
+			// + 7
+			if (date.getDay() > currentDate.getDay()) {
+				const availableSlot = { id, day, date, timeSlots: timeSlots.filter((slot) => slot.isOpen) };
+				availableDates.push(availableSlot);
 			}
 		}
 	}
@@ -41,14 +33,19 @@ const sortMentorAvailability = (availability: IMentorAvailability[]) => {
 const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; loading?: boolean }) => {
 	const user = useSelector(currentUser);
 
-	const { availableDates } = sortMentorAvailability([...(mentor?.availability || [])]);
+	const { availableDates } = useMemo(
+		() => sortMentorAvailability([...(mentor?.availability || [])]),
+		[mentor?.availability],
+	);
 	const [selectedAvailability, setSelectedAvailability] = useState<AvailabilitySubset | null>(availableDates[0]);
 	const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState<SelectedAppointmentSlot | null>(null);
 
 	const handleSelect = (input: AvailabilitySubset) => {
-		setSelectedAvailability(input);
-		// setSelectedAppointmentSlot({ ...input, timeSlot: input.timeSlots[0] });
-		setSelectedAppointmentSlot(null);
+		if (input.id !== selectedAvailability?.id) {
+			setSelectedAvailability(input);
+			// setSelectedAppointmentSlot({ ...input, timeSlot: input.timeSlots[0] });
+			setSelectedAppointmentSlot(null);
+		}
 	};
 
 	return (
@@ -82,9 +79,11 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 				<div className="flex-grow w-full lg:w-[35%] mt-10 lg:mt-0">
 					<h1 className="text-[15px] font-medium">
 						Select a convenient date and time for a 1:1 mentorship session with{" "}
-						<span className="capitalize">{`${mentor?.user.name.split(" ")[0]} ${
-							mentor?.user.name.split(" ")[1]
-						}`}</span>
+						<span className="capitalize">
+							{Number(mentor?.user?.name?.split(" ").length) > 1
+								? `${mentor?.user.name.split(" ")[0]} ${mentor?.user.name.split(" ")[1]}`
+								: mentor?.user.name}
+						</span>
 					</h1>
 					<div className="w-full">
 						<div className="w-full mt-4">
@@ -133,6 +132,7 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 											selectedAvailability.timeSlots
 												.filter((slot, index, self) => {
 													const { startTime, endTime } = slot;
+
 													return (
 														index ===
 														self.findIndex(
@@ -188,7 +188,6 @@ const ScheduleConsultationTemplate = ({ loading, mentor }: { mentor?: IMentor; l
 						</div>
 					</div>
 					<br />
-					<ActivityIndicator />
 					<p className="max-w-sm text-[15px]">
 						Schedules are inconvenient for you?
 						<br />

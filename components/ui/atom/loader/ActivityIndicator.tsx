@@ -10,8 +10,10 @@ interface IActivityIndicator extends HtmlHTMLAttributes<HTMLDivElement> {
 const ActivityIndicator = (props: IActivityIndicator) => {
 	const { color, size, style, className, forButton, ...rest } = props;
 
-	const arr = Array.from({ length: 4 });
-	return forButton ? (
+	// const arr = Array.from({ length: 4 });
+	// Todo: implement simple dots loader 
+	// forButton
+	return (
 		<div
 			{...rest}
 			className={classNames(
@@ -23,21 +25,6 @@ const ActivityIndicator = (props: IActivityIndicator) => {
 			style={{ height: size, width: size, ...style }}
 			role="status"
 		/>
-	) : (
-		<div className="flex justify-center items-center gap-4">
-			{arr.map((_, i) => {
-				return (
-					<span
-						className={classNames(
-							"rounded-full h-4 w-4",
-							"animate__animated animate__bounceInUp animate__infinite animate__fast",
-							color ? `bg-[${color}]` : "bg-zinc-500",
-						)}
-						key={i}
-					/>
-				);
-			})}
-		</div>
 	);
 };
 
