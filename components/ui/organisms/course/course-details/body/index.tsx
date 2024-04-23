@@ -39,7 +39,7 @@ const CourseDetailsBody = (course: ICourse) => {
 					<div className="my-8">
 						<ListReviews {...{ reviews: course.reviews }} />
 					</div>
-					{user?.mentor && user.mentor.id !== course.mentor.id && (
+					{user?.mentor?.id !== course.mentor.id && (
 						<div className="">
 							<div className="flex flex-wrap max-w-xl justify-between items-center mt-5">
 								<p

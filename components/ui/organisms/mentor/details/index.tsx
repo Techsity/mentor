@@ -177,7 +177,7 @@ const AvailabiltySchedule = (mentor: IMentor) => {
 					})}
 				</div>
 			</div>
-			{user?.mentor && user.mentor.id !== mentor.id && (
+			{user?.mentor?.id !== mentor.id && (
 				<div className="flex justify-center absolute bottom-10 w-full mx-auto left-0 px-8 md:px-10">
 					<div
 						onClick={() => {

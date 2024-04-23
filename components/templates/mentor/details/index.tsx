@@ -47,7 +47,7 @@ const MentorDetailsTemplate = ({ mentor, loading }: { mentor: IMentor | undefine
 						</div>
 						<ListReviews reviews={mentor?.reviews || []} />
 						<div className="flex max-w-xl justify-between items-center mt-5">
-							{user?.mentor && user.mentor.id !== mentor?.id && (
+							{user?.mentor?.id !== mentor?.id && (
 								<p
 									onClick={handleOpenModal}
 									className="text-[#F15E63] cursor-pointer hover:underline text-sm">
