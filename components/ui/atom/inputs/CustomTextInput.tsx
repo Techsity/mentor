@@ -58,6 +58,7 @@ const CustomTextInput = forwardRef(function CustomTextInput(
 						"[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
 					rightIcon ? "w-[93%]" : leftIcon ? "w-[93%]" : "w-full flex-grow",
 					inputProps?.className,
+					inputProps.disabled && "text-[#999] cursor-not-allowed",
 				)}
 			/>
 			{rightButton ? rightButton : null}
