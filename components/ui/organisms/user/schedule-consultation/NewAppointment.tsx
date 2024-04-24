@@ -9,7 +9,7 @@ import {
 	supportedCurrencies,
 	ToastDefaultOptions,
 } from "../../../../../constants";
-import { IAppointment, IMentor, TimeSlot } from "../../../../../interfaces/mentor.interface";
+import { IAppointment, IMentor, IMentorAvailability, TimeSlot } from "../../../../../interfaces/mentor.interface";
 import { updateUserProfile, currentUser } from "../../../../../redux/reducers/auth/authSlice";
 import { BOOK_MENTOR } from "../../../../../services/graphql/mutations/user";
 import { formatGqlError } from "../../../../../utils/auth";
@@ -24,17 +24,43 @@ import { fetchUserProfile } from "../../../../../redux/reducers/auth/apiAuthSlic
 import { useModal } from "../../../../../context/modal.context";
 import PaymentModal from "../../../atom/modals/payment-modal";
 import ResponseMessages from "../../../../../constants/response-codes";
-import { ChevronDown } from "react-ionicons";
+import { CalendarOutline, ChevronDown, TimeOutline } from "react-ionicons";
+
+type AvailabilitySubset = { id?: string; day: string; date: Date; timeSlots: TimeSlot[] };
+type SelectedAppointmentSlot = Omit<AvailabilitySubset, "timeSlots"> & { timeSlot: TimeSlot };
+const currentDate = new Date();
+
+const sortMentorAvailability = (availability: IMentorAvailability[]) => {
+	let availableDates: AvailabilitySubset[] = [];
+	if (availability) {
+		for (const slot of availability) {
+			const { day, timeSlots, id } = slot;
+			let date = new Date();
+			const dayIndex = daysOfTheWeek.indexOf(day.toLowerCase());
+			date.setDate(date.getDate() + ((dayIndex - date.getDay()) % 7));
+			// + 7
+			if (date.getDay() > currentDate.getDay()) {
+				const availableSlot = { id, day, date, timeSlots: timeSlots.filter((slot) => slot.isOpen) };
+				availableDates.push(availableSlot);
+			}
+		}
+	}
+	return { availableDates };
+};
 
 const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => void }) => {
 	const router = useRouter();
 	const toastId = useId();
-	const [selectedSlot, setSelectedSlot] = useState<Partial<SelectedSlot>>({});
-	const [selectedDay, setSelectedDay] = useState<string>("");
-	const [selectedCurrency, setSelectedCurrency] = useState<(typeof supportedCurrencies)[0]>(supportedCurrencies[0]);
 	const [amount, setAmount] = useState<number>(mentor.hourly_rate);
-	const [initLoading, setInitLoading] = useState<boolean>(false);
 	const { closeModal, openModal } = useModal();
+
+	const { availableDates } = useMemo(
+		() => sortMentorAvailability([...(mentor?.availability || [])]),
+		[mentor?.availability],
+	);
+
+	const [selectedAvailability, setSelectedAvailability] = useState<AvailabilitySubset | null>(availableDates[0]);
+	const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState<SelectedAppointmentSlot | null>(null);
 
 	const dispatch = useDispatch();
 
@@ -43,96 +69,92 @@ const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => 
 		{ createAppointmentInput: CreateAppointmentInput; mentor: string }
 	>(BOOK_MENTOR);
 
-	const currentDate = new Date();
-	const currentDayOfTheWeek = currentDate.getDay();
-	const selectedDayIndex = daysOfTheWeek.findIndex((day) => day.toLowerCase() === selectedDay.toLowerCase());
+	const handleSelect = (input: AvailabilitySubset) => {
+		if (input.id !== selectedAvailability?.id) {
+			setSelectedAvailability(input);
+			// setSelectedAppointmentSlot({ ...input, timeSlot: input.timeSlots[0] });
+			setSelectedAppointmentSlot(null);
+		}
+	};
 
 	const refreshData = () => {
 		dispatch(fetchUserProfile() as any);
 		if (refetch) refetch();
 	};
 
-	const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
-		if (currency.name !== selectedCurrency.name && !appointmentLoading) {
-			try {
-				setInitLoading(true);
-				const rate = await processExchangeRate(currency.name);
-				if (rate) {
-					setSelectedCurrency(currency);
-					setAmount(mentor.hourly_rate * rate);
-				}
-			} catch (error) {
-				console.error("error while processing exchange: ", { error: JSON.stringify(error) });
-				toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
-			} finally {
-				setInitLoading(false);
-			}
-		}
-	};
+	// const handleCurrencyExchange = async (currency: (typeof supportedCurrencies)[0]) => {
+	// 	if (currency.name !== selectedCurrency.name && !appointmentLoading) {
+	// 		try {
+	// 			setInitLoading(true);
+	// 			const rate = await processExchangeRate(currency.name);
+	// 			if (rate) {
+	// 				setSelectedCurrency(currency);
+	// 				setAmount(mentor.hourly_rate * rate);
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("error while processing exchange: ", { error: JSON.stringify(error) });
+	// 			toast.error("Something went wrong. Please try again", { ...ToastDefaultOptions(), toastId });
+	// 		} finally {
+	// 			setInitLoading(false);
+	// 		}
+	// 	}
+	// };
 
-	const processPayment = async (resourceId: string) => {
-		try {
-			openModal(
-				<PaymentModal
-					amount={amount}
-					next={() => {
-						console.log("Done");
-						refreshData();
-						closeModal();
-					}}
-					{...{ resourceId }}
-					resourceType={SubscriptionType.MENTORSHIP_APPOINTMENT}
-					selectedCurrency={selectedCurrency}
-				/>,
-				{ closeOnBackgroundClick: false, containerClassName: PAYMENT_MODAL_CONTAINER_CLASS },
-			);
-		} catch (error) {
-			console.error({ error });
-			const errMsg = formatGqlError(error);
-			toast.error(errMsg || "Something went wrong. Please try again.", {
-				...ToastDefaultOptions(),
-				toastId,
-			});
-		}
-		// finally {
-		// 	refreshData();
-		// }
-	};
-
-	const date = useMemo(() => {
-		const isAM = selectedSlot?.time?.startTime.slice(-2).toUpperCase() === "AM";
-		let hour = parseInt(String(selectedSlot?.time?.startTime.split(":")[0]));
-		hour = isAM ? hour : hour === 12 ? 12 : hour + 12;
-		const minutes = parseInt(String(selectedSlot?.time?.startTime.split(":")[1]));
-		const currentHour = currentDate.getHours();
-
-		const daysToAdd =
-			currentDayOfTheWeek === selectedDayIndex && currentHour >= hour
-				? 7
-				: currentDayOfTheWeek >= selectedDayIndex
-				? selectedDayIndex - currentDayOfTheWeek + 7
-				: currentDayOfTheWeek === selectedDayIndex && currentHour < hour
-				? 0
-				: selectedDayIndex - currentDayOfTheWeek;
-
-		const scheduledDate = new Date(currentDate);
-		scheduledDate.setDate(scheduledDate.getDate() + daysToAdd);
-		scheduledDate.setHours(hour, minutes, 0);
-		return scheduledDate;
-	}, [selectedSlot, selectedDay]);
+	// const processPayment = async (resourceId: string) => {
+	// 	try {
+	// 		// openModal(
+	// 		// 	<PaymentModal
+	// 		// 		amount={amount}
+	// 		// 		next={() => {
+	// 		// 			console.log("Done");
+	// 		// 			refreshData();
+	// 		// 			closeModal();
+	// 		// 		}}
+	// 		// 		{...{ resourceId }}
+	// 		// 		resourceType={SubscriptionType.MENTORSHIP_APPOINTMENT}
+	// 		// 		// selectedCurrency={}
+	// 		// 	/>,
+	// 		// 	{ closeOnBackgroundClick: false, containerClassName: PAYMENT_MODAL_CONTAINER_CLASS },
+	// 		// );
+	// 	} catch (error) {
+	// 		console.error({ error });
+	// 		const errMsg = formatGqlError(error);
+	// 		toast.error(errMsg || "Something went wrong. Please try again.", {
+	// 			...ToastDefaultOptions(),
+	// 			toastId,
+	// 		});
+	// 	}
+	// };
 
 	const handleSubmit = async () => {
-		if (selectedDayIndex === -1) {
-			console.error("Invalid selected day");
-			return;
+		const { timeSlot, day, id, date, ...rest } = selectedAppointmentSlot || {};
+		const { startTime } = timeSlot || {};
+		const meridian = startTime?.slice(-2) as "am" | "pm";
+		let [hours, minutes] = (startTime?.split(":") || []) as any;
+		hours = parseInt(hours);
+		minutes = parseInt(minutes);
+		if (meridian === "pm") {
+			hours = hours + 12;
+			if (hours === 24) hours = 12;
 		}
-		const time = date.getTime().toString();
+		const appointmentDate = new Date();
+		appointmentDate.setDate(date?.getDate() as number);
+		appointmentDate?.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+		const appointment = { id, day, date: appointmentDate, timeSlot };
+		console.log({ appointment });
+
 		try {
 			await createAppointment({
-				variables: { createAppointmentInput: { date, time }, mentor: String(mentor?.id) },
+				variables: {
+					createAppointmentInput: { date: appointment.date, time: `${appointment.timeSlot?.startTime}` },
+					mentor: String(mentor?.id),
+				},
 			})
-				.then(async (data) => {
-					if (data.data) processPayment(data.data.createAppointment.id);
+				.then(({ data }) => {
+					console.log({ data: data?.createAppointment });
+					if (data?.createAppointment.id) {
+						toast.success("Session scheduled successfully", { toastId, ...ToastDefaultOptions() });
+					}
 				})
 				.catch((err) => {
 					throw err;
@@ -140,200 +162,132 @@ const NewAppointment = ({ mentor, refetch }: { mentor: IMentor; refetch?: () => 
 		} catch (error) {
 			console.error({ error: JSON.stringify(error) });
 			const errMsg = formatGqlError(error);
-			// console.log({ errMsg });
-			// if (errMsg.includes(ResponseMessages.PENDING_MENTORSHIP_APPOINTMENT)) {
-			// 	if (errMsg.split("-")[1]) processPayment(errMsg.split("-")[1]);
-			// } else {
 			toast.error(errMsg || "Something went wrong. Please try again", { toastId, ...ToastDefaultOptions() });
-			// }
 		} finally {
 			refreshData();
 		}
 	};
-	const loading = appointmentLoading || initLoading;
-	const btnDisabled = loading || appointmentLoading || !selectedCurrency;
+
+	const btnDisabled = appointmentLoading || selectedAppointmentSlot === null;
+	const loading = appointmentLoading;
 
 	return (
 		<>
-			<>
-				{!selectedSlot.date && !selectedSlot.time && (
-					<span className="text-sm text-[#9A9898]">
-						Select a suitable {!selectedSlot.date ? "day" : "time"} to schedule a virtual meeting with this
-						mentor;
-					</span>
-				)}
-				{selectedSlot.date && selectedSlot.time && (
-					<div className="flex sm:flex-row flex-col items-center justify-between gap-2 animate__animated animate__fadeIn text-[#094B10] ">
-						<div
-							className="text-sm border border-[#70C5A1] p-3 w-full text-center capitalize"
-							style={{ fontFamily: "Days One" }}>
-							{date.toDateString()}
-						</div>
-						<div
-							className="text-sm flex items-center justify-center border border-[#70C5A1] p-3 w-full text-center"
-							style={{ fontFamily: "Days One" }}>
-							{selectedSlot.time.startTime} - {selectedSlot.time.endTime}
-						</div>
+			<h1 className="text-[15px] font-medium">
+				Select a convenient date and time for a 1:1 mentorship session with{" "}
+				<span className="capitalize">
+					{Number(mentor?.user?.name?.split(" ").length) > 1
+						? `${mentor?.user.name.split(" ")[0]} ${mentor?.user.name.split(" ")[1]}`
+						: mentor?.user.name}
+				</span>
+			</h1>
+			<div className="w-full">
+				<div className="w-full mt-4">
+					<p className="my-1 text-sm">Available dates</p>
+					<div className="flex items-center gap-3 w-full overflow-x-scroll hide-scroll-bar">
+						{availableDates.map((slot, index) => {
+							let { date, day, timeSlots } = slot;
+							const remainingSlots = timeSlots.filter((slot) => slot.isOpen).length;
+							const month = date.toDateString().split(" ")[1];
+							return (
+								<div
+									key={index}
+									onClick={() => handleSelect(slot)}
+									className={classNames(
+										"select-none rounded border border-[#70C5A1] inline-flex p-2 justify-between items-start h-20 w-full min-w-36 max-w-36 overflow-hidden cursor-pointer duration-300",
+										selectedAvailability?.id === slot.id
+											? "bg-[#70C5A1] text-white"
+											: "hover:bg-[#70C5A1]/10",
+									)}>
+									<div className="grid text-sm">
+										<span className="capitalize text-[15px]">{day.slice(0, 3)}</span>
+										<div className="space-x-1 font-medium text-[16.5px]">
+											<span className="">{date.getDate()}</span>
+											<span className="">{month}</span>
+										</div>
+										<span className="opacity-40">
+											{remainingSlots} slot
+											{remainingSlots == 1 ? "" : "s"}
+											{/* available */}
+										</span>
+									</div>
+									<CalendarOutline
+										color={selectedAvailability?.id === slot.id ? "#fff" : "#000"}
+										width={"18px"}
+										height="18px"
+									/>
+								</div>
+							);
+						})}
 					</div>
-				)}
-				{!selectedSlot?.date && (
-					<div className="animate__animated animate__fadeIn">
-						<div className="grid xs:grid-cols-2 sm:grid-cols-3 gap-4 mt-3 text-sm">
-							{mentor?.availability.map((slot, index) => {
-								return (
-									<span
-										onClick={() => setSelectedDay(slot.day)}
-										className={classNames("flex items-center gap-2 cursor-pointer")}
-										key={index}>
-										<input readOnly type="radio" checked={selectedDay == slot.day} />
-										{slot.day}
-									</span>
-								);
-							})}
-						</div>
-					</div>
-				)}
-				{/* selectedSlot.date !== "" && */}
-				{selectedSlot.date && selectedSlot.date !== "" && !selectedSlot.time && (
-					<div className="flex flex-col gap-2 mt-3 animate__animated animate__fadeIn">
-						{mentor?.availability
-							.find((d) => d.day == selectedSlot.date)
-							?.timeSlots.map((slot, i) => {
-								const hour = parseInt(slot.startTime.split(":")[0]);
-								const endMinutes = parseInt(slot.startTime.split(":")[1]);
-								const isAM = slot.startTime.slice(-2).toUpperCase() === "AM";
-								const startTime = new Date();
-
-								if (isAM && hour === 12) {
-									startTime.setDate(currentDate.getDate() + 1);
-									startTime.setHours(0, 0, 0);
-								} else startTime.setHours(isAM ? hour : hour + 12, endMinutes, 0);
-
-								// const slotExpired = isToday && currentDate >= startTime;
-								const isBooked = !slot.isOpen;
-
-								return (
-									<span
-										className={classNames(
-											isBooked ? "cursor-disabled text-gray-300" : "",
-											"flex items-center gap-2 cursor-pointer select-none",
-										)}
-										key={i}
-										onClick={() => {
-											if (!isBooked)
-												setSelectedSlot((p) => {
-													return { ...p, time: slot };
-												});
-										}}>
-										<input
-											readOnly
-											disabled={isBooked}
-											type="radio"
-											checked={selectedSlot?.time == slot}
-										/>
-										{slot.startTime} - {slot.endTime}
-										{isBooked && (
-											<span className="text-sm italic text-[#F6937B] grayscale-0">
-												session booked
-											</span>
-										)}
-									</span>
-								);
-							})}
-					</div>
-				)}
-			</>
-
-			{selectedSlot?.date && selectedSlot?.time && (
-				<div className="flex flex-col w-full mt-2">
-					<p className="text-sm my-2">
-						You will be redirected to make a payment of{" "}
-						<span className="font-medium">
-							{selectedCurrency.symbol}
-							{Number(amount.toFixed()).toLocaleString()}
-						</span>
-						/hr for this session;
-					</p>
-					<div className="grid mb-2 gap-2 sm:w-1/2 h-16">
-						<p className="font-medium text-sm">Select Currency</p>
-						{loading ? (
-							<ActivityIndicator className="border-[#06310B] border-r-transparent" />
-						) : (
-							<div className="flex items-center justify-between w-full relative border border-[#094B10]">
-								<select
-									// readOnly
-									disabled={loading}
-									onChange={({ target: { value } }) => {
-										const currency = JSON.parse(value);
-										handleCurrencyExchange(currency);
-									}}
-									className="appearance-none w-full px-4 p-2 outline-none focus:ring-0">
-									{supportedCurrencies.map((currency, i) => {
-										return (
-											<option key={i} value={JSON.stringify(currency)} className="">
-												{currency.name}
-											</option>
-										);
-									})}
-								</select>
-								<ChevronDown cssClasses="absolute right-3 top-3" />
+					{selectedAvailability && (
+						<div className="w-full mt-4">
+							<p className="my-1 text-sm">Available Slots</p>
+							<div className="flex snap-x duration-300 snap-mandatory items-center gap-3 w-full overflow-x-scroll hide-scroll-bar">
+								{selectedAvailability.timeSlots.length >= 1 ? (
+									selectedAvailability.timeSlots
+										.filter(
+											(slot, index, self) =>
+												index ===
+												self.findIndex(
+													(s) => s.startTime === slot.startTime && s.endTime === slot.endTime,
+												),
+										)
+										.map((slot, index) => {
+											const { endTime, startTime } = slot;
+											const isTime =
+												selectedAppointmentSlot?.timeSlot?.endTime === endTime &&
+												selectedAppointmentSlot?.timeSlot?.startTime === startTime;
+											return (
+												<div
+													onClick={() =>
+														setSelectedAppointmentSlot({
+															...selectedAvailability,
+															timeSlot: slot,
+														})
+													}
+													key={index}
+													className={classNames(
+														"select-none rounded border inline-flex justify-center gap-2 items-center p-2 min-w-28 w-full max-w-28 overflow-hidden cursor-pointer duration-300 text-sm",
+														isTime
+															? "bg-[#FFB100] border-[#FFB100] text-[#06310B]"
+															: "hover:bg-[#FFB100]/10 border-[#06310B]",
+													)}>
+													<TimeOutline
+														color={isTime ? "#06310B" : "#000"}
+														width={"16px"}
+														height="16px"
+													/>
+													<span>{startTime}</span>
+												</div>
+											);
+										})
+								) : (
+									<>
+										<p className="text-sm">No available slots</p>
+									</>
+								)}
 							</div>
-						)}
-					</div>
+							<PrimaryButton
+								// title="Continue"
+								onClick={handleSubmit}
+								icon={loading ? <ActivityIndicator /> : <></>}
+								title={loading ? "" : "Book a free trial"}
+								disabled={btnDisabled}
+								className="my-5 p-2.5 text-sm rounded px-5 flex justify-center items-center animate__animated animate__fadeIn animate__fast"
+							/>
+						</div>
+					)}
 				</div>
-			)}
-
-			<div className="flex gap-2 items-center justify-between sm:justify-start">
-				{selectedSlot.date && (
-					<PrimaryButton
-						onClick={() => {
-							if (selectedSlot.date && selectedSlot.time)
-								setSelectedSlot((p) => {
-									return { ...p, date: p.date, time: undefined };
-								});
-							else if (selectedSlot.date && !selectedSlot.time) {
-								setSelectedSlot({});
-							}
-						}}
-						title={"Back"}
-						className="text-sm mt-4 p-2 px-8 rounded bg-[#FFB100] text-[#06310B]"
-					/>
-				)}
-
-				{!selectedSlot.date && (
-					<PrimaryButton
-						disabled={
-							!selectedDay || selectedDay == ""
-							// ||
-							// (selectedDay && !selectedSlot.time ? true : false)
-						}
-						onClick={() => {
-							if (selectedDay && selectedDay !== "") setSelectedSlot({ date: selectedDay });
-						}}
-						title={"Continue"}
-						className="text-sm mt-4 p-2 px-8 rounded"
-					/>
-				)}
-
-				{selectedSlot && selectedSlot?.date && selectedSlot?.time && (
-					<div className="mt-4">
-						<PrimaryButton
-							onClick={handleSubmit}
-							disabled={btnDisabled}
-							title={loading && !initLoading ? "" : "Continue"}
-							icon={loading && !initLoading ? <ActivityIndicator /> : <></>}
-							className="text-sm p-2 px-8 animate__animated animate__fadeIn rounded"
-						/>
-					</div>
-				)}
 			</div>
-			<span className="text-[15px] mt-6">
+			<br />
+			<p className="max-w-sm text-[15px]">
 				Schedules are inconvenient for you?
-				<span className="text-[#06310B] cursor-pointer hover:underline font-medium">
-					{" "}
+				<br />
+				<span className="text-[#70C5A1] cursor-pointer hover:underline font-medium">
 					Schedule a private appointment
 				</span>
-			</span>
+			</p>
 		</>
 	);
 };
@@ -346,3 +300,42 @@ export type CreateAppointmentInput = {
 };
 
 export default NewAppointment;
+
+// {selectedSlot?.date && selectedSlot?.time && (
+// 				<div className="flex flex-col w-full mt-2">
+// 					<p className="text-sm my-2">
+// 						You will be redirected to make a payment of{" "}
+// 						<span className="font-medium">
+// 							{selectedCurrency.symbol}
+// 							{Number(amount.toFixed()).toLocaleString()}
+// 						</span>
+// 						/hr for this session;
+// 					</p>
+// 					<div className="grid mb-2 gap-2 sm:w-1/2 h-16">
+// 						<p className="font-medium text-sm">Select Currency</p>
+// 						{loading ? (
+// 							<ActivityIndicator className="border-[#06310B] border-r-transparent" />
+// 						) : (
+// 							<div className="flex items-center justify-between w-full relative border border-[#094B10]">
+// 								<select
+// 									// readOnly
+// 									disabled={loading}
+// 									onChange={({ target: { value } }) => {
+// 										const currency = JSON.parse(value);
+// 										handleCurrencyExchange(currency);
+// 									}}
+// 									className="appearance-none w-full px-4 p-2 outline-none focus:ring-0">
+// 									{supportedCurrencies.map((currency, i) => {
+// 										return (
+// 											<option key={i} value={JSON.stringify(currency)} className="">
+// 												{currency.name}
+// 											</option>
+// 										);
+// 									})}
+// 								</select>
+// 								<ChevronDown cssClasses="absolute right-3 top-3" />
+// 							</div>
+// 						)}
+// 					</div>
+// 				</div>
+// 			)}

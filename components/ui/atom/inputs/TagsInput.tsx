@@ -34,7 +34,7 @@ const TagsInput = ({
 	const [currentTag, setCurrentTag] = useState<string>(value || "");
 
 	useEffect(() => {
-		if (!showAddBtn) {
+		if (!showAddBtn && currentTag.trim() !== "") {
 			if (tagsState.includes(currentTag)) {
 				toast.info(
 					"Tag has aleady been added!",
@@ -61,9 +61,7 @@ const TagsInput = ({
 							maxLength={textLength}
 							onChange={(e) => {
 								if (!onChange) setCurrentTag(e.target.value);
-								else {
-									onChange(e.target.value);
-								}
+								else onChange(e.target.value);
 							}}
 							min={min}
 							value={value || currentTag}

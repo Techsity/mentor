@@ -9,6 +9,8 @@ import { PrimaryButton } from "../atom/buttons";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../redux/reducers/auth/apiAuthSlice";
 import { activeProfile } from "../../../redux/reducers/userSlice";
+import classNames from "classnames";
+import { Menu } from "react-ionicons";
 
 type Props = { children: ReactNode; onTabUpdate?: (tab: ProfileTabLinkType) => void };
 
@@ -63,8 +65,8 @@ const ProfileLayout = ({ children }: Props) => {
 	return (
 		<>
 			<div className="flex lg:grid grid-cols-6 xl:flex flex-col xl:flex-row item-start w-full h-full min-w-screen">
-				<div className="col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
-					<div className="w-full overflow-hidden hide-scroll-bar">
+				<div className="hidden lg:flex flex-col col-span-2 px-4 md:px-12 xl:px-0 xl:pl-12 pt-10 sticky z-10 top-11 md:top-[9dvh] xl:top-20 w-full xl:max-w-xs 2xl:max-w-sm h-[50%]">
+					<div className="w-full hide-scroll-bar">
 						<ProfileNavCard
 							tabLinks={tabLinks.filter((nav) => nav !== "edit-course")}
 							activetab={activetab}
@@ -72,25 +74,35 @@ const ProfileLayout = ({ children }: Props) => {
 						/>
 					</div>
 				</div>
+				<div className="lg:hidden flex justify-start items-start px-4 md:px-12 sticky z-10 py-4 top-20 bg-white backdrop-blur-sm">
+					<Menu cssClasses="cursor-pointer" />
+				</div>
 				<div
 					className={`flex-grow py-10 min-h-screen w-full px-4 col-span-4 h-full ${
 						isEditCourse ? "xl:pr-12" : isEditWorkshop ? "xl:pr-12" : isPaymentsTab ? "xl:pr-12" : "xl:pr-0"
 					}`}>
-					{!isEditCourse && !isEditWorkshop && !isCourseContentPage && !isNewItemPage && (
-						<div className="hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4 xl:pl-3">
-							<h1 className="capitalize">
+					{!isEditCourse &&
+						!isEditWorkshop &&
+						!isCourseContentPage &&
+						!isNewItemPage &&
+						activetab !== "settings" && (
+							<div
+								className={classNames(
+									"hidden lg:flex justify-between items-center mb-3 animate__animated animate__fadeIn lg:sticky top-20 bg-white/50 backdrop-blur-md w-full z-20 py-4 xl:pl-3",
+								)}>
+								{/* <h1 className="capitalize">
 								{activetab === "settings" ? "Profile Settings" : activetab.split("-").join(" ")}
-							</h1>
-							{tab === "courses" && (
-								<PrimaryButton
-									style={{ color: "#000" }}
-									title="+ New Course"
-									className="bg-[#FFB100] p-2 px-4"
-									link="/profile/courses/new"
-								/>
-							)}
-						</div>
-					)}
+							</h1> */}
+								{tab === "courses" && (
+									<PrimaryButton
+										style={{ color: "#000" }}
+										title="+ New Course"
+										className="bg-[#FFB100] p-2 px-4"
+										link="/profile/courses/new"
+									/>
+								)}
+							</div>
+						)}
 					<div className="xl:px-3">
 						{React.Children.map(children, (child) => {
 							if (React.isValidElement(child)) return React.cloneElement<any>(child, { activetab });
