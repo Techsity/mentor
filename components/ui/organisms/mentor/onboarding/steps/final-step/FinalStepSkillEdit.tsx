@@ -45,15 +45,12 @@ export const SkillEdit = ({
 	limit?: number;
 }) => {
 	const [skills, setSkills] = useState<IMentorSkills[]>([...skillsArr]);
-	const emptySkillState: IMentorSkills = { skill_name: "", years_of_exp: null };
-	const [currentSkill, setCurrentSkill] = useState<IMentorSkills>({ ...emptySkillState });
+	const emptySkillState = { skill_name: "", years_of_exp: "" };
+	const [currentSkill, setCurrentSkill] = useState<typeof emptySkillState>({ ...emptySkillState });
 
-	const addSkill = useCallback(() => {
+	const addSkill = () => {
+		console.log({ skills });
 		if (currentSkill.skill_name.trim() !== "") {
-			if (currentSkill.years_of_exp)
-				if (typeof currentSkill.years_of_exp !== "number") {
-					currentSkill.years_of_exp = parseInt(currentSkill.years_of_exp as string);
-				}
 			if (skills.length >= limit)
 				return toast.error("Skills limit reached!", ToastDefaultOptions({ id: "error", theme: "dark" }));
 			if (skills.every((item) => item.skill_name === currentSkill.skill_name)) {
@@ -66,12 +63,22 @@ export const SkillEdit = ({
 				);
 			}
 			setSkills((p) => {
-				return [...p, currentSkill];
+				let updated = [...p];
+				console.log({ updated });
+				let skill = { ...currentSkill } as any;
+				if (
+					currentSkill.years_of_exp &&
+					currentSkill.years_of_exp &&
+					!isNaN(parseInt(currentSkill.years_of_exp))
+				)
+					skill.years_of_exp = parseInt(skill.years_of_exp);
+				updated = [...updated, skill];
+				if (onUpdateSkills) onUpdateSkills([...updated]);
+				return updated;
 			});
-			if (onUpdateSkills) onUpdateSkills([...skills, currentSkill]);
 			setCurrentSkill(emptySkillState);
 		}
-	}, []);
+	};
 
 	const removeSkill = (skillToRemove: IMentorSkills) => {
 		if (skillToRemove) {
@@ -109,7 +116,7 @@ export const SkillEdit = ({
 						onChange={(value: any) => {
 							value = value.replace(/\D/g, "");
 							setCurrentSkill((prev) => {
-								return { ...prev, years_of_exp: parseInt(String(value)) };
+								return { ...prev, years_of_exp: String(value) };
 							});
 						}}
 						showAddBtn={false}
@@ -120,7 +127,7 @@ export const SkillEdit = ({
 				<div className="flex justify-start">
 					<PrimaryButton
 						disabled={currentSkill.skill_name.trim() === ""}
-						onClick={addSkill}
+						onClick={() => addSkill()}
 						title="Add"
 						className="flex justify-center w-full px-5 p-4 h-full"
 					/>
