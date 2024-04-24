@@ -141,7 +141,7 @@ const ProfileSettings = () => {
 	return (
 		<div className="min-h-screen">
 			<>
-				<h1 className="capitalize mb-4">Account Settings</h1>
+				<h1 className="capitalize mb-4 font-semibold">Basic Information</h1>
 				<div
 					className="text-sm rounded-full w-32 h-32 cursor-pointer overflow-hidden relative group my-3"
 					onClick={() => imageRef.current?.click()}>

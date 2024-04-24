@@ -36,7 +36,7 @@ const MainProfile: FC<{ activetab?: ProfileTabLinkType }> = ({ activetab }) => {
 	const suffix = " To update your mentor profile, simply click on the 'Continue' button below.";
 
 	const showAlert = useCallback(() => {
-		let title = "Update mentor profile";
+		let title = "Complete your mentor profile";
 		let msg = messages.regular;
 		const { availability } = mentorProfile || {};
 		if (!availability || availability?.length <= 0) {
